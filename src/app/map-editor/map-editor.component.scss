@@ -1,0 +1,37 @@
+$mainBackground: #262626;
+$mainForeground: #181818;
+
+.map-editor{
+  position: absolute;
+  top:0;
+  right:0;
+  left:0;
+  bottom: 0;
+  background: $mainBackground;
+}
+.right-tools{
+  position: absolute;
+  top:0;
+  right:0;
+  width: 280px;
+  height: 100%;
+  border-left: 1px solid #000;
+  background: $mainForeground;
+  z-index: 90;
+}
+.left-tools{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 280px;
+  height: 100%;
+  border-right: 1px solid #000;
+  background: $mainForeground;
+  z-index: 90;
+}
+
+
+// MAP
+.map{
+ position: absolute;
+}

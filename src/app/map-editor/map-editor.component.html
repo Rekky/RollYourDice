@@ -1,0 +1,14 @@
+<div class="map-editor">
+  <div class="map-container" (mousewheel)="setScale($event)">
+    <canvas #mapEl class="map" style="border:1px solid #d3d3d3;"
+            [style.left.px]="map.x"
+            [style.top.px]="map.y"
+            [style.width.px]="map.width"
+            [style.height.px]="map.height"
+            [style.transform]="'scale('+ map.scale + ')'"
+    ></canvas>
+  </div>
+
+  <div class="left-tools"></div>
+  <div class="right-tools"></div>
+</div>
