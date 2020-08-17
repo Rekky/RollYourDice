@@ -5,8 +5,10 @@
        (mousewheel)="setScale($event)"
        (mousedown)="onMouseDown($event)"
        (mousemove)="onMouseMove($event)"
-       (mouseup)="onMouseUp($event)">
+       (mouseup)="onMouseUp($event)"
+       (click)="setCurrentObjectSelected($event, null)">
     <canvas #mapEl class="map" style="border:1px solid #d3d3d3;"
+            (click)="setCurrentObjectSelected($event, map)"
             [style.left.px]="map.x"
             [style.top.px]="map.y"
             [style.width.px]="map.width"
@@ -14,9 +16,11 @@
             [style.transform]="'scale('+ map.scale + ')'"
     ></canvas>
   </div>
-
+<!--  <div class="top-column"></div>-->
   <div class="left-column">
     <div class="left-column-tools"></div>
   </div>
-  <div class="right-column"></div>
+  <div class="right-column">
+    <app-map-properties [map]="map" *ngIf="currentObjectSelected == map"></app-map-properties>
+  </div>
 </div>

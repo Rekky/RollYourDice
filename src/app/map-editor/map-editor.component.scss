@@ -1,5 +1,5 @@
 $mainBackground: #262626;
-$mainForeground: #181818;
+$mainForeground: rgba(0,0,0,0.6);
 $columnsBorderColor: #000;
 
 .map-editor{
@@ -10,6 +10,15 @@ $columnsBorderColor: #000;
   bottom: 0;
   background: $mainBackground;
   overflow: hidden;
+}
+.top-column{
+  position: relative;
+  top:0;
+  left:0;
+  right:0;
+  height: 50px;
+  border-bottom: 1px solid $columnsBorderColor;
+  background: $columnsBorderColor;
 }
 .right-column{
   position: absolute;
@@ -28,7 +37,6 @@ $columnsBorderColor: #000;
   left:0;
   width: 280px;
   height: 100%;
-  border-right: 1px solid $columnsBorderColor;
   background: $mainForeground;
   z-index: 90;
 

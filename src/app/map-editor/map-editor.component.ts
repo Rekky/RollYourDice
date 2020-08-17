@@ -10,6 +10,7 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mapEl') canvasEl: ElementRef;
   map: Map = {width: 400, height: 400, y: 100, x: 500, scale: 1};
+  currentObjectSelected: any = null;
 
   private context: CanvasRenderingContext2D;
   protected isDraggable: boolean = false;
@@ -37,39 +38,43 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.context = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
-    this.drawCell();
+    this.drawGrid(200, 200);
   }
 
-  drawCell(): void {
-    let s = 28
-    let pL = s
-    let pT = s
-    let pR = s
-    let pB = s
+  setCurrentObjectSelected(ev, object): void {
+    ev.stopPropagation();
+    this.currentObjectSelected = object;
+  }
 
-    this.context.canvas.width  = 400;
-    this.context.canvas.height = 400;
+  drawGrid(width: number, height: number): void {
+    const s = 32;
+    const pL = 0;
+    const pT = 0;
+    const pR = 0;
+    const pB = 0;
+
+    this.context.canvas.width = width;
+    this.context.canvas.height = height;
 
     this.context.strokeStyle = 'lightgrey';
     this.context.beginPath();
-    for (let x = pL; x <= 400 - pR; x += s) {
+    for (let x = pL; x <= width - pR; x += s) {
       this.context.moveTo(x, pT);
-      this.context.lineTo(x, 400 - pB);
+      this.context.lineTo(x, width - pB);
     }
-    for (let y = pT; y <= 400 - pB; y += s) {
+    for (let y = pT; y <= height - pB; y += s) {
       this.context.moveTo(pL, y);
-      this.context.lineTo(400 - pR, y);
+      this.context.lineTo(height - pR, y);
     }
     this.context.stroke();
   }
 
   setScale(ev): void {
-    console.log(ev);
-    if (ev.deltaY > 0 && this.map.scale < 10) {
-      this.map.scale = this.map.scale + 1;
+    if (ev.deltaY < 0) {
+      this.map.scale = this.map.scale + 0.5;
     } else {
       if (this.map.scale !== 1) {
-        this.map.scale = this.map.scale - 1;
+        this.map.scale = this.map.scale - 0.5;
       }
     }
   }
@@ -81,7 +86,6 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
   }
 
   onMouseMove(ev: MouseEvent): void {
-    // console.log('mousemove', ev);
     if (this.isDraggable) {
       this.map.x = ev.clientX - this.startX;
       this.map.y = ev.clientY - this.startY;
