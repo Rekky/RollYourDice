@@ -1,5 +1,11 @@
 <div class="map-editor">
-  <div class="map-container" (mousewheel)="setScale($event)">
+  <div class="map-container"
+       [style.width.px]="windowWidth"
+       [style.height.px]="windowHeight"
+       (mousewheel)="setScale($event)"
+       (mousedown)="onMouseDown($event)"
+       (mousemove)="onMouseMove($event)"
+       (mouseup)="onMouseUp($event)">
     <canvas #mapEl class="map" style="border:1px solid #d3d3d3;"
             [style.left.px]="map.x"
             [style.top.px]="map.y"
@@ -9,6 +15,8 @@
     ></canvas>
   </div>
 
-  <div class="left-tools"></div>
-  <div class="right-tools"></div>
+  <div class="left-column">
+    <div class="left-column-tools"></div>
+  </div>
+  <div class="right-column"></div>
 </div>

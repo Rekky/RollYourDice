@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import { Map } from '../interfaces/Map';
 
 @Component({
@@ -9,14 +9,30 @@ import { Map } from '../interfaces/Map';
 export class MapEditorComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mapEl') canvasEl: ElementRef;
-  map: Map = {width: 500, height: 500, y: 200, x: 1000, scale: 1};
+  map: Map = {width: 400, height: 400, y: 100, x: 500, scale: 1};
 
   private context: CanvasRenderingContext2D;
+  protected isDraggable: boolean = false;
+  protected startX: number;
+  protected startY: number;
+  protected endX: number;
+  protected endY: number;
+  protected offsetX: number = 0;
+  protected offsetY: number = 0;
+
+  windowWidth = window.innerWidth;
+  windowHeight = window.innerHeight;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.windowWidth = event.target.innerWidth;
+  }
 
   constructor() { }
 
 
   ngOnInit(): void {
+    console.log(window.innerWidth);
   }
 
   ngAfterViewInit(): void {
@@ -24,35 +40,26 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
     this.drawCell();
   }
 
-  drawCell() {
-    // const c = <HTMLCanvasElement> document.getElementById('map');
+  drawCell(): void {
+    let s = 28
+    let pL = s
+    let pT = s
+    let pR = s
+    let pB = s
 
-    // this.context.fillStyle = "#D74022";
-    // this.context.fillRect(25, 25, 150, 150);
+    this.context.canvas.width  = 400;
+    this.context.canvas.height = 400;
 
-    // ctx.fillStyle = "rgba(0,0,0,0.5)";
-    // ctx.clearRect(60, 60, 120, 120);
-    // ctx.strokeRect(90, 90, 80, 80);
-    // this.context.fillText("@realappiee", 50, 50);
-
-    // Box width
-    const bw = 40;
-    // Box height
-    const bh = 40;
-    // Padding
-    const p = 0;
-
-    for (let x = 0; x <= bw; x += 40) {
-      this.context.moveTo(0.5 + x + p, p);
-      this.context.lineTo(0.5 + x + p, bh + p);
+    this.context.strokeStyle = 'lightgrey';
+    this.context.beginPath();
+    for (let x = pL; x <= 400 - pR; x += s) {
+      this.context.moveTo(x, pT);
+      this.context.lineTo(x, 400 - pB);
     }
-
-    for (let x = 0; x <= bh; x += 40) {
-      this.context.moveTo(p, 0.5 + x + p);
-      this.context.lineTo(bw + p, 0.5 + x + p);
+    for (let y = pT; y <= 400 - pB; y += s) {
+      this.context.moveTo(pL, y);
+      this.context.lineTo(400 - pR, y);
     }
-
-    this.context.strokeStyle = "black";
     this.context.stroke();
   }
 
@@ -65,6 +72,27 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
         this.map.scale = this.map.scale - 1;
       }
     }
+  }
+
+  onMouseDown(ev: MouseEvent): void {
+    this.isDraggable = true;
+    this.startX = ev.clientX - this.offsetX;
+    this.startY = ev.clientY - this.offsetY;
+  }
+
+  onMouseMove(ev: MouseEvent): void {
+    // console.log('mousemove', ev);
+    if (this.isDraggable) {
+      this.map.x = ev.clientX - this.startX;
+      this.map.y = ev.clientY - this.startY;
+    }
+
+    this.offsetX = this.map.x;
+    this.offsetY = this.map.y;
+  }
+
+  onMouseUp(ev: MouseEvent): void {
+    this.isDraggable = false;
   }
 
 }

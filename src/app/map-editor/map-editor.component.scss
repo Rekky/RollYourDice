@@ -1,5 +1,6 @@
 $mainBackground: #262626;
 $mainForeground: #181818;
+$columnsBorderColor: #000;
 
 .map-editor{
   position: absolute;
@@ -8,30 +9,52 @@ $mainForeground: #181818;
   left:0;
   bottom: 0;
   background: $mainBackground;
+  overflow: hidden;
 }
-.right-tools{
+.right-column{
   position: absolute;
   top:0;
   right:0;
   width: 280px;
   height: 100%;
-  border-left: 1px solid #000;
+  border-left: 1px solid $columnsBorderColor;
   background: $mainForeground;
+  overflow: hidden;
   z-index: 90;
 }
-.left-tools{
+.left-column{
   position: absolute;
   top:0;
   left:0;
   width: 280px;
   height: 100%;
-  border-right: 1px solid #000;
+  border-right: 1px solid $columnsBorderColor;
   background: $mainForeground;
   z-index: 90;
-}
 
+  .left-column-tools {
+    position: absolute;
+    width: 50px;
+    top:0;
+    right: -50px;
+    height: 100%;
+    border-left: 1px solid $columnsBorderColor;
+    border-right: 1px solid $columnsBorderColor;
+    background: $mainForeground;
+  }
+}
+.map-container{
+  background: #262626;
+  position: absolute;
+  top: 0;
+  left:0 ;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
 
 // MAP
 .map{
  position: absolute;
 }
+
