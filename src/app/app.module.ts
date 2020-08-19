@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MapEditorComponent } from './map-editor/map-editor.component';
 import { MapPropertiesComponent } from './map-editor/map-properties/map-properties.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,10 +15,11 @@ import { MapPropertiesComponent } from './map-editor/map-properties/map-properti
     MapEditorComponent,
     MapPropertiesComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

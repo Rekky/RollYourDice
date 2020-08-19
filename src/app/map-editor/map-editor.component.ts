@@ -9,24 +9,26 @@ import { Map } from '../interfaces/Map';
 export class MapEditorComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mapEl') canvasEl: ElementRef;
-  map: Map = {width: 400, height: 400, y: 100, x: 500, scale: 1};
+  map: Map = {columns: 800, rows: 800, scale: 1};
   currentObjectSelected: any = null;
 
   private context: CanvasRenderingContext2D;
-  protected isDraggable: boolean = false;
-  protected startX: number;
-  protected startY: number;
-  protected endX: number;
-  protected endY: number;
-  protected offsetX: number = 0;
-  protected offsetY: number = 0;
-
-  windowWidth = window.innerWidth;
-  windowHeight = window.innerHeight;
+  private isDraggable: boolean = false;
+  private startX: number;
+  private startY: number;
+  private offsetX: number = 0;
+  private offsetY: number = 0;
+  screenWidth = window.innerWidth;
+  screenHeight = window.innerHeight;
+  mapPositionX = window.innerWidth / 4;
+  mapPositionY = 200;
+  mapWidth: number = window.innerWidth;
+  mapHeight: number = window.innerHeight;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.windowWidth = event.target.innerWidth;
+    this.screenWidth = event.target.innerWidth;
+    this.screenHeight = event.target.innerHeight;
   }
 
   constructor() { }
@@ -38,7 +40,7 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.context = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
-    this.drawGrid(200, 200);
+    this.drawGrid(80, 5);
   }
 
   setCurrentObjectSelected(ev, object): void {
@@ -46,35 +48,39 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
     this.currentObjectSelected = object;
   }
 
-  drawGrid(width: number, height: number): void {
-    const s = 32;
-    const pL = 0;
-    const pT = 0;
-    const pR = 0;
-    const pB = 0;
+  updateMap(ev): void {
+    console.log('update', ev);
+    this.context.clearRect(0, 0, this.map.columns, this.map.rows);
+    // this.drawGrid(80, 50);
+  }
 
-    this.context.canvas.width = width;
-    this.context.canvas.height = height;
+  drawGrid(columns: number, rows: number): void {
+    const boxSize = 70;
+    const boxes = Math.floor(this.mapWidth / boxSize);
 
-    this.context.strokeStyle = 'lightgrey';
     this.context.beginPath();
-    for (let x = pL; x <= width - pR; x += s) {
-      this.context.moveTo(x, pT);
-      this.context.lineTo(x, width - pB);
+    this.context.fillStyle = 'white';
+    this.context.lineWidth = 2;
+    this.context.strokeStyle = 'black';
+    for (let row = 0; row < boxes; row++) {
+      for (let column = 0; column < boxes; column++) {
+        const x = column * boxSize;
+        const y = row * boxSize;
+        this.context.rect(x, y, boxSize, boxSize);
+        this.context.fill();
+        this.context.stroke();
+      }
     }
-    for (let y = pT; y <= height - pB; y += s) {
-      this.context.moveTo(pL, y);
-      this.context.lineTo(height - pR, y);
-    }
-    this.context.stroke();
+    this.context.closePath();
   }
 
   setScale(ev): void {
+    console.log(this.map.scale > 0.1);
     if (ev.deltaY < 0) {
-      this.map.scale = this.map.scale + 0.5;
+      this.map.scale = this.map.scale + 0.1;
     } else {
-      if (this.map.scale !== 1) {
-        this.map.scale = this.map.scale - 0.5;
+      if (this.map.scale > 0.2 && this.map.scale > -0.1) {
+        this.map.scale = this.map.scale - 0.1;
       }
     }
   }
@@ -87,12 +93,12 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
 
   onMouseMove(ev: MouseEvent): void {
     if (this.isDraggable) {
-      this.map.x = ev.clientX - this.startX;
-      this.map.y = ev.clientY - this.startY;
+      this.mapPositionX = ev.clientX - this.startX;
+      this.mapPositionY = ev.clientY - this.startY;
     }
 
-    this.offsetX = this.map.x;
-    this.offsetY = this.map.y;
+    this.offsetX = this.mapPositionX;
+    this.offsetY = this.mapPositionY;
   }
 
   onMouseUp(ev: MouseEvent): void {

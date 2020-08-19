@@ -1,7 +1,5 @@
 export interface Map {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
+  columns: number;
+  rows: number;
   scale: number;
 }

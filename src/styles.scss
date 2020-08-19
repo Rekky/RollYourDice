@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+body{
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.font-normal{
+  font-size: 14px;
+}
+label{
+  display: block;
+}
+// Auxiliars
+.mb-1{
+  margin-bottom: 1rem;
+}

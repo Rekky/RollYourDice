@@ -1,26 +1,35 @@
 <div class="map-editor">
   <div class="map-container"
-       [style.width.px]="windowWidth"
-       [style.height.px]="windowHeight"
+       [style.width.px]="screenWidth"
+       [style.height.px]="screenHeight"
        (mousewheel)="setScale($event)"
        (mousedown)="onMouseDown($event)"
        (mousemove)="onMouseMove($event)"
        (mouseup)="onMouseUp($event)"
        (click)="setCurrentObjectSelected($event, null)">
-    <canvas #mapEl class="map" style="border:1px solid #d3d3d3;"
-            (click)="setCurrentObjectSelected($event, map)"
-            [style.left.px]="map.x"
-            [style.top.px]="map.y"
-            [style.width.px]="map.width"
-            [style.height.px]="map.height"
+
+    <canvas *ngIf="map" #mapEl class="map"
+            [width]="mapWidth"
+            [height]="mapHeight"
+            [style.left.px]="mapPositionX"
+            [style.top.px]="mapPositionY"
             [style.transform]="'scale('+ map.scale + ')'"
+            (click)="setCurrentObjectSelected($event, map)"
     ></canvas>
   </div>
-<!--  <div class="top-column"></div>-->
+
   <div class="left-column">
+    <div class="left-column-content">
+      <label class="mb-1">Libraries</label>
+      <div class="list-items">
+        <div class="item font-normal">Maps</div>
+        <div class="item font-normal" style="background: rgb(242,90,90)">Monsters</div>
+        <div class="item font-normal" style="background: rgb(87,99,116)">Objects & Tokens</div>
+      </div>
+    </div>
     <div class="left-column-tools"></div>
   </div>
   <div class="right-column">
-    <app-map-properties [map]="map" *ngIf="currentObjectSelected == map"></app-map-properties>
+    <app-map-properties [map]="map" (mapChange)="updateMap($event)" *ngIf="currentObjectSelected == map"></app-map-properties>
   </div>
 </div>
