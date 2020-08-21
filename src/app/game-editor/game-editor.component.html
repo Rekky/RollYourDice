@@ -27,15 +27,12 @@
         <div>page 1</div>
       </ng-container>
       <ng-container *ngIf="tabs == 1">
-        <label class="mb-1">Libraries</label>
-        <div class="list-items">
-          <div class="item font-normal cursor-pointer bg-green">Maps</div>
-          <div class="item font-normal cursor-pointer bg-red">Monsters</div>
-          <div class="item font-normal cursor-pointer bg-dark-gray">Objects & Tokens</div>
-        </div>
+        <app-editor-libraries></app-editor-libraries>
       </ng-container>
     </div>
-    <div class="left-column-tools"></div>
+    <div class="left-column-tools">
+      <app-editor-tools (toolSelectedChange)="onToolSelected($event)"></app-editor-tools>
+    </div>
   </div>
 
   <div class="right-column">

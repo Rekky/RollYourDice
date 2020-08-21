@@ -7,13 +7,17 @@ import { HomeComponent } from './home/home.component';
 import { MapPropertiesComponent } from './game-editor/map-properties/map-properties.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { GameEditorComponent } from './game-editor/game-editor.component';
+import { EditorToolsComponent } from './game-editor/editor-tools/editor-tools.component';
+import { EditorLibrariesComponent } from './game-editor/editor-libraries/editor-libraries.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MapPropertiesComponent,
-    GameEditorComponent
+    GameEditorComponent,
+    EditorToolsComponent,
+    EditorLibrariesComponent
   ],
     imports: [
         BrowserModule,
