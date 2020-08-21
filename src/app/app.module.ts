@@ -4,16 +4,16 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { MapEditorComponent } from './map-editor/map-editor.component';
-import { MapPropertiesComponent } from './map-editor/map-properties/map-properties.component';
+import { MapPropertiesComponent } from './game-editor/map-properties/map-properties.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { GameEditorComponent } from './game-editor/game-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MapEditorComponent,
-    MapPropertiesComponent
+    MapPropertiesComponent,
+    GameEditorComponent
   ],
     imports: [
         BrowserModule,

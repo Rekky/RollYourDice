@@ -1,5 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+@import "colors";
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 body{
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,7 +11,54 @@ body{
 label{
   display: block;
 }
-// Auxiliars
+
+
+// --------------- BGS
+.bg-green {
+  background: rgb(116,205,120);
+}
+.bg-red {
+  background: rgb(242,90,90);
+}
+.bg-dark-gray{
+  background: rgb(87,99,116);
+}
+
+
+// ------------ Auxiliars
 .mb-1{
   margin-bottom: 1rem;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+// -------------- TABS
+.tabs {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+
+  &.adjust {
+    .tab{
+      flex: 1;
+    }
+  }
+
+  .tab{
+    border-top: 1px solid $editorColumnsBorderColor;
+    padding: .7rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+
+    &.active{
+      background: lighten($editorMainForeground, 5%);
+    }
+
+    &:last-child {
+      border-right: 1px solid $editorColumnsBorderColor;
+    }
+  }
 }

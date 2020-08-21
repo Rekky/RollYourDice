@@ -1,6 +1,4 @@
-$mainBackground: rgba(38,38,38,1);
-$mainForeground: rgba(24,24,24,0.9);
-$columnsBorderColor: #000;
+@import "../../colors";
 
 .map-editor{
   position: absolute;
@@ -8,7 +6,7 @@ $columnsBorderColor: #000;
   right:0;
   left:0;
   bottom: 0;
-  background: $mainBackground;
+  background: $editorMainBackground;
   overflow: hidden;
 }
 .map-container{
@@ -28,24 +26,25 @@ $columnsBorderColor: #000;
   left:0;
   bottom: 0;
   color: #d3d3d3;
-  background: $mainForeground;
+  background: $editorMainForeground;
   z-index: 90;
 
   .left-column-tools {
     position: absolute;
     width: 40px;
     top:0;
-    right: -40px;
+    right: -41px;
     height: 100%;
-    border-right: 1px solid $columnsBorderColor;
-    background: $mainForeground;
+    border-top: 1px solid $editorColumnsBorderColor;
+    border-right: 1px solid $editorColumnsBorderColor;
+    background: $editorMainForeground;
   }
   .left-column-content{
     position: relative;
     width: 250px;
     height: 100%;
     padding: 1rem;
-    border-right: 1px solid $columnsBorderColor;
+    border-right: 1px solid $editorColumnsBorderColor;
   }
 }
 .list-items{
@@ -63,7 +62,6 @@ $columnsBorderColor: #000;
     display: flex;
     align-items: center;
     color: #fff;
-    background: rgb(116,205,120);
   }
 }
 
@@ -74,8 +72,9 @@ $columnsBorderColor: #000;
   right:0;
   bottom: 0;
   width: 280px;
-  border-left: 1px solid $columnsBorderColor;
-  background: $mainForeground;
+  border-top: 1px solid $editorColumnsBorderColor;
+  border-left: 1px solid $editorColumnsBorderColor;
+  background: $editorMainForeground;
   overflow: hidden;
   z-index: 90;
 }
@@ -83,6 +82,6 @@ $columnsBorderColor: #000;
 
 // MAP
 .map{
- position: absolute;
+  position: absolute;
 }
 

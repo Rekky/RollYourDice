@@ -1,15 +1,17 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import { Map } from '../interfaces/Map';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Map} from '../interfaces/Map';
+import {ApiService} from '../services/api.service';
 
 @Component({
-  selector: 'app-map-editor',
-  templateUrl: './map-editor.component.html',
-  styleUrls: ['./map-editor.component.scss']
+  selector: 'app-game-editor',
+  templateUrl: './game-editor.component.html',
+  styleUrls: ['./game-editor.component.scss']
 })
-export class MapEditorComponent implements OnInit, AfterViewInit {
+export class GameEditorComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mapEl') canvasEl: ElementRef;
-  map: Map = {columns: 800, rows: 800, scale: 1};
+  map: Map = null;
+  tabs: number = 0;
   currentObjectSelected: any = null;
 
   private context: CanvasRenderingContext2D;
@@ -18,24 +20,18 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
   private startY: number;
   private offsetX: number = 0;
   private offsetY: number = 0;
+  mapPositionX = window.innerWidth / 3;
+  mapPositionY = 200;
+
   screenWidth = window.innerWidth;
   screenHeight = window.innerHeight;
-  mapPositionX = window.innerWidth / 4;
-  mapPositionY = 200;
-  mapWidth: number = window.innerWidth;
-  mapHeight: number = window.innerHeight;
+  mapWidth: number = 500;
+  mapHeight: number = 500;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.screenWidth = event.target.innerWidth;
-    this.screenHeight = event.target.innerHeight;
-  }
-
-  constructor() { }
-
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    console.log(window.innerWidth);
+    this.map = this.apiService.getMap();
   }
 
   ngAfterViewInit(): void {
@@ -45,13 +41,16 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
 
   setCurrentObjectSelected(ev, object): void {
     ev.stopPropagation();
-    this.currentObjectSelected = object;
-  }
 
-  updateMap(ev): void {
-    console.log('update', ev);
-    this.context.clearRect(0, 0, this.map.columns, this.map.rows);
-    // this.drawGrid(80, 50);
+    if (this.currentObjectSelected !== null) {
+      this.currentObjectSelected.ev.srcElement.style.border = '';
+    }
+
+    if (object !== null) {
+      this.currentObjectSelected = {ev: ev, object: object};
+      this.currentObjectSelected.ev.srcElement.style.border = '2px solid rgb(91, 146, 226)';
+    }
+
   }
 
   drawGrid(columns: number, rows: number): void {
@@ -74,17 +73,13 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
     this.context.closePath();
   }
 
-  setScale(ev): void {
-    console.log(this.map.scale > 0.1);
-    if (ev.deltaY < 0) {
-      this.map.scale = this.map.scale + 0.1;
-    } else {
-      if (this.map.scale > 0.2 && this.map.scale > -0.1) {
-        this.map.scale = this.map.scale - 0.1;
-      }
-    }
+  updateProperties(ev): void {
+    console.log('update', ev);
+    // this.context.clearRect(0, 0, this.map.columns, this.map.rows);
+    // this.drawGrid(80, 50);
   }
 
+  /** --------- EVENTS FOR MOVE MAP ----------- */
   onMouseDown(ev: MouseEvent): void {
     this.isDraggable = true;
     this.startX = ev.clientX - this.offsetX;
@@ -96,13 +91,22 @@ export class MapEditorComponent implements OnInit, AfterViewInit {
       this.mapPositionX = ev.clientX - this.startX;
       this.mapPositionY = ev.clientY - this.startY;
     }
-
     this.offsetX = this.mapPositionX;
     this.offsetY = this.mapPositionY;
   }
 
   onMouseUp(ev: MouseEvent): void {
     this.isDraggable = false;
+  }
+
+  setScale(ev): void {
+    if (ev.deltaY < 0) {
+      this.map.scale = this.map.scale + 0.1;
+    } else {
+      if (this.map.scale > 0.2 && this.map.scale > -0.1) {
+        this.map.scale = this.map.scale - 0.1;
+      }
+    }
   }
 
 }

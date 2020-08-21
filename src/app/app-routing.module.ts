@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MapEditorComponent} from './map-editor/map-editor.component';
 import {HomeComponent} from './home/home.component';
+import {GameEditorComponent} from './game-editor/game-editor.component';
 
 const routes: Routes = [
   {
-    path: 'map-editor',
-    component: MapEditorComponent,
+    path: 'game-editor',
+    component: GameEditorComponent,
   },
   {
     path: 'home',

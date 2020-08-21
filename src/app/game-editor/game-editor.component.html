@@ -1,0 +1,44 @@
+<div class="map-editor">
+  <div class="map-container"
+       [style.width.px]="screenWidth"
+       [style.height.px]="screenHeight"
+       (mousewheel)="setScale($event)"
+       (mousedown)="onMouseDown($event)"
+       (mousemove)="onMouseMove($event)"
+       (mouseup)="onMouseUp($event)"
+       (click)="setCurrentObjectSelected($event, null)">
+
+    <canvas *ngIf="map" #mapEl class="map"
+            [width]="mapWidth"
+            [height]="mapHeight"
+            [style.left.px]="mapPositionX"
+            [style.top.px]="mapPositionY"
+            (click)="setCurrentObjectSelected($event, map)"
+    ></canvas>
+  </div>
+
+  <div class="left-column">
+    <div class="tabs adjust">
+      <div class="tab" [class.active]="tabs == 0" (click)="tabs = 0">Pages</div>
+      <div class="tab" [class.active]="tabs == 1" (click)="tabs = 1">Libraries</div>
+    </div>
+    <div class="left-column-content">
+      <ng-container *ngIf="tabs == 0">
+        <div>page 1</div>
+      </ng-container>
+      <ng-container *ngIf="tabs == 1">
+        <label class="mb-1">Libraries</label>
+        <div class="list-items">
+          <div class="item font-normal cursor-pointer bg-green">Maps</div>
+          <div class="item font-normal cursor-pointer bg-red">Monsters</div>
+          <div class="item font-normal cursor-pointer bg-dark-gray">Objects & Tokens</div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="left-column-tools"></div>
+  </div>
+
+  <div class="right-column">
+    <app-map-properties [map]="map" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected == map"></app-map-properties>
+  </div>
+</div>
