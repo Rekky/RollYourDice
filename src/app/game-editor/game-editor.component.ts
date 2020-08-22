@@ -25,7 +25,7 @@ export class GameEditorComponent implements OnInit {
 
     switch (ev) {
       case 'text':
-        // this.drawTextCanvas();
+        console.log('es text');
         break;
       case 'draw-square':
         console.log('es draw square');

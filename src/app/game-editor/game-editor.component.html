@@ -15,11 +15,11 @@
       </ng-container>
     </div>
     <div class="left-column-tools">
-      <app-editor-tools (toolSelectedChange)="onToolSelected($event)"></app-editor-tools>
+      <app-editor-tools [currentToolSelected]="currentToolSelected" (toolSelectedChange)="onToolSelected($event)"></app-editor-tools>
     </div>
   </div>
 
   <div class="right-column">
-    <app-map-properties [map]="map" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected == map"></app-map-properties>
+    <app-map-properties [map]="map" (mapChange)="updateProperties($event)"></app-map-properties>
   </div>
 </div>

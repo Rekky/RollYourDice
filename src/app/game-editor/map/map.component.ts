@@ -10,9 +10,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mapEl') canvasEl: ElementRef;
   @Input() map: Map = null;
-  @Input() currentToolSelected: string = null;
   @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
   @Output() currentObjectSelected: any = null;
+  @Input() currentToolSelected: string = null;
 
   private ctx: CanvasRenderingContext2D;
   private isDraggable: boolean = false;
@@ -44,13 +44,25 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.ctx = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
     this.drawGrid(80, 5);
     this.canvasEl.nativeElement.addEventListener('mousemove', (e) => {
-      this.findxy('move', e);
+      if (this.currentToolSelected === 'move') {
+        this.mapMove('mousemove', e);
+      } else if (this.currentToolSelected === 'draw') {
+        this.findxy('mousemove', e);
+      }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mousedown', (e) => {
-      this.findxy('down', e);
+      if (this.currentToolSelected === 'move') {
+        this.mapMove('mousedown', e);
+      } else if (this.currentToolSelected === 'draw') {
+        this.findxy('mousedown', e);
+      }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mouseup', (e) => {
-      this.findxy('up', e);
+      if (this.currentToolSelected === 'move') {
+        this.mapMove('mouseup', e);
+      } else if (this.currentToolSelected === 'draw') {
+        this.findxy('mouseup', e);
+      }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mouseout', (e) => {
       this.findxy('out', e);
@@ -142,7 +154,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   findxy(res, e): void {
-    if (res === 'down') {
+    if (res === 'mousedown') {
       this.prevX = this.currX;
       this.prevY = this.currY;
       this.currX = e.clientX - this.canvasEl.nativeElement.offsetLeft;
@@ -158,10 +170,10 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.dotFlag = false;
       }
     }
-    if (res === 'up' || res === 'out') {
+    if (res === 'mouseup' || res === 'mouseout') {
       this.flag = false;
     }
-    if (res === 'move') {
+    if (res === 'mousemove') {
       if (this.flag) {
         this.prevX = this.currX;
         this.prevY = this.currY;
@@ -179,16 +191,14 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   /** --------- EVENTS FOR MOVE MAP ----------- */
-  onMouseDown(ev: MouseEvent): void {
-    if (this.currentToolSelected === 'move') {
-      this.isDraggable = true;
-      this.startX = ev.clientX - this.offsetX;
-      this.startY = ev.clientY - this.offsetY;
+  mapMove(res, ev: MouseEvent): void {
+    if (res === 'mousedown') {
+        this.isDraggable = true;
+        this.startX = ev.clientX - this.offsetX;
+        this.startY = ev.clientY - this.offsetY;
     }
-  }
 
-  onMouseMove(ev: MouseEvent): void {
-    if (this.currentToolSelected === 'move') {
+    if (res === 'mousemove') {
       if (this.isDraggable) {
         this.mapPositionX = ev.clientX - this.startX;
         this.mapPositionY = ev.clientY - this.startY;
@@ -196,10 +206,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.offsetX = this.mapPositionX;
       this.offsetY = this.mapPositionY;
     }
-  }
 
-  onMouseUp(ev: MouseEvent): void {
-    if (this.currentToolSelected === 'move') {
+    if (res === 'mouseup') {
       this.isDraggable = false;
     }
   }

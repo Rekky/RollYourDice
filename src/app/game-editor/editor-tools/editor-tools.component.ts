@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-editor-tools',
@@ -7,6 +7,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class EditorToolsComponent implements OnInit {
 
+  @Input() currentToolSelected: string = 'move';
   @Output() toolSelectedChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
@@ -15,7 +16,8 @@ export class EditorToolsComponent implements OnInit {
   }
 
   onToolSelected(type: string): void {
-    this.toolSelectedChange.emit(type);
+    this.currentToolSelected = type;
+    this.toolSelectedChange.emit(this.currentToolSelected);
   }
 
 }

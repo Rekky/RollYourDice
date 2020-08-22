@@ -17,5 +17,8 @@
     &:hover {
       background: darken($editorMainForeground, 5%);
     }
+    &.active {
+      background: darken($editorMainForeground, 5%);
+    }
   }
 }
