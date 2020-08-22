@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { GameEditorComponent } from './game-editor/game-editor.component';
 import { EditorToolsComponent } from './game-editor/editor-tools/editor-tools.component';
 import { EditorLibrariesComponent } from './game-editor/editor-libraries/editor-libraries.component';
+import { MapComponent } from './game-editor/map/map.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { EditorLibrariesComponent } from './game-editor/editor-libraries/editor-
     MapPropertiesComponent,
     GameEditorComponent,
     EditorToolsComponent,
-    EditorLibrariesComponent
+    EditorLibrariesComponent,
+    MapComponent
   ],
     imports: [
         BrowserModule,

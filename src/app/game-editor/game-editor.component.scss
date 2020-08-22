@@ -9,15 +9,6 @@
   background: $editorMainBackground;
   overflow: hidden;
 }
-.map-container{
-  background: $editorMainBackground;
-  position: absolute;
-  top: 0;
-  left:0 ;
-  right: 0;
-  bottom: 0;
-  overflow: auto;
-}
 
 // LEFT COLUMN
 .left-column{
@@ -59,11 +50,5 @@
   background: $editorMainForeground;
   overflow: hidden;
   z-index: 90;
-}
-
-
-// MAP
-.map{
-  position: absolute;
 }
 

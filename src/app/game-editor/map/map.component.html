@@ -1,0 +1,17 @@
+<div class="map-container"
+     [style.width.px]="screenWidth"
+     [style.height.px]="screenHeight"
+     (mousewheel)="setScale($event)"
+     (mousedown)="onMouseDown($event)"
+     (mousemove)="onMouseMove($event)"
+     (mouseup)="onMouseUp($event)"
+     (click)="setCurrentObjectSelected($event, null)">
+
+  <canvas *ngIf="map" #mapEl class="map"
+          [width]="mapWidth"
+          [height]="mapHeight"
+          [style.left.px]="mapPositionX"
+          [style.top.px]="mapPositionY"
+          (click)="setCurrentObjectSelected($event, map)"
+  ></canvas>
+</div>
