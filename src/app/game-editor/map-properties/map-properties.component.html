@@ -8,6 +8,10 @@
       <label>height</label>
       <input type="text" [formControlName]="'height'">
     </div>
+    <div>
+      <input type="file">
+      <button (click)="setBackgroundImage()">load image</button>
+    </div>
     <button type="submit">Apply</button>
   </form>
 </div>

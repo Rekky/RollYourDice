@@ -1,5 +1,5 @@
 <div class="map-editor">
-  <app-map [map]="map" [currentToolSelected]="currentToolSelected"></app-map>
+  <app-map [map]="map" [currentToolSelected]="currentToolSelected" (currentObjectSelected)="onSetCurrentObjectSelected($event)"></app-map>
 
   <div class="left-column">
     <div class="tabs adjust">
@@ -20,6 +20,6 @@
   </div>
 
   <div class="right-column">
-    <app-map-properties [map]="map" (mapChange)="updateProperties($event)"></app-map-properties>
+    <app-map-properties [map]="map" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected.type == 'map'"></app-map-properties>
   </div>
 </div>

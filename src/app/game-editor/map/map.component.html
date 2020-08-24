@@ -2,13 +2,13 @@
      [style.width.px]="screenWidth"
      [style.height.px]="screenHeight"
      (mousewheel)="setScale($event)"
-     (click)="setCurrentObjectSelected($event, null)">
+     (click)="setCurrentObjectSelected($event, null, null)">
 
   <canvas *ngIf="map" #mapEl class="map cursor-{{currentToolSelected}}"
           [width]="mapWidth"
           [height]="mapHeight"
           [style.left.px]="mapPositionX"
           [style.top.px]="mapPositionY"
-          (click)="setCurrentObjectSelected($event, map)"
+          (click)="setCurrentObjectSelected($event, map, 'map')"
   ></canvas>
 </div>

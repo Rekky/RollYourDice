@@ -23,6 +23,12 @@ export class MapPropertiesComponent implements OnInit {
     });
   }
 
+  setBackgroundImage(): void {
+    const background = new Image();
+    background.src = 'https://triumvene.com/content/images/2019/08/f54890248-1-.jpg';
+    this.map.background = background.src;
+  }
+
   save(): void {
     console.log('entra en save', this.map);
     // this.map.width = this.mapForm.get('width').value;

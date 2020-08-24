@@ -1,4 +1,15 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {Map} from '../../interfaces/Map';
 
 @Component({
@@ -6,14 +17,15 @@ import {Map} from '../../interfaces/Map';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('mapEl') canvasEl: ElementRef;
   @Input() map: Map = null;
   @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
-  @Output() currentObjectSelected: any = null;
+  @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
   @Input() currentToolSelected: string = null;
 
+  _currentObjectSelected: any = null;
   private ctx: CanvasRenderingContext2D;
   private isDraggable: boolean = false;
   private startX: number;
@@ -42,7 +54,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.ctx = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
-    this.drawGrid(80, 5);
+    // this.drawGrid(80, 5);
     this.canvasEl.nativeElement.addEventListener('mousemove', (e) => {
       if (this.currentToolSelected === 'move') {
         this.mapMove('mousemove', e);
@@ -69,17 +81,28 @@ export class MapComponent implements OnInit, AfterViewInit {
     }, false);
   }
 
-  setCurrentObjectSelected(ev, object): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.map != null) {
+      setTimeout(() => {
+        this.drawGrid(80, 5);
+      });
+
+    }
+  }
+
+  setCurrentObjectSelected(ev, object, type): void {
     ev.stopPropagation();
 
-    if (this.currentObjectSelected !== null) {
-      this.currentObjectSelected.ev.srcElement.style.border = '';
+    if (this._currentObjectSelected !== null) {
+      this._currentObjectSelected.ev.srcElement.style.border = '';
     }
 
     if (object !== null) {
-      this.currentObjectSelected = {ev, object};
-      this.currentObjectSelected.ev.srcElement.style.border = '2px solid rgb(91, 146, 226)';
+      this._currentObjectSelected = {ev, object, type};
+      this._currentObjectSelected.ev.srcElement.style.border = '2px solid rgb(91, 146, 226)';
     }
+
+    this.currentObjectSelected.emit(this._currentObjectSelected);
   }
 
   drawGrid(columns: number, rows: number): void {
@@ -100,59 +123,65 @@ export class MapComponent implements OnInit, AfterViewInit {
     //   }
     // }
 
-
-
-
     const step = 25;
 
     // our end points
     const width = 500;
     const height = 500;
 
-    // set our styles
-    this.ctx.save();
-    this.ctx.strokeStyle = 'lightgray'; // line colors
-    this.ctx.fillStyle = 'white'; // text color
-    this.ctx.font = '14px Monospace';
-    this.ctx.lineWidth = 0.35;
+    const background = new Image();
+    background.src = this.map.background;
 
-    // draw vertical from X to Height
-    for (let x = 0; x < width; x += step) {
-      this.ctx.beginPath();
-      this.ctx.moveTo(x, 0);
-      this.ctx.lineTo(x, height);
-      this.ctx.stroke();
-
-      // draw text
-      this.ctx.fillText(String(x), x, 12);
+    if (background.src === null) {
+      return;
     }
 
-    // draw horizontal from Y to Width
-    for (let y = 0; y < height; y += step) {
-      // draw horizontal line
-      this.ctx.beginPath();
-      this.ctx.moveTo(0, y);
-      this.ctx.lineTo(width, y);
-      this.ctx.stroke();
+    background.onload = () => {
+      this.ctx.drawImage(background, 0, 0, width, height);
 
-      // draw text
-      this.ctx.fillText(String(y), 0, y);
+
+      // set our styles
+      this.ctx.save();
+      this.ctx.strokeStyle = 'lightgray'; // line colors
+      this.ctx.fillStyle = 'white'; // text color
+      this.ctx.font = '14px Monospace';
+      this.ctx.lineWidth = 0.35;
+
+      // draw vertical from X to Height
+      for (let x = 0; x < width; x += step) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, 0);
+        this.ctx.lineTo(x, height);
+        this.ctx.stroke();
+
+        // draw text
+        this.ctx.fillText(String(x), x, 12);
+      }
+
+      // draw horizontal from Y to Width
+      for (let y = 0; y < height; y += step) {
+        // draw horizontal line
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, y);
+        this.ctx.lineTo(width, y);
+        this.ctx.stroke();
+
+        // draw text
+        this.ctx.fillText(String(y), 0, y);
+      }
+
+      // restore the styles from before this function was called
+      this.ctx.restore();
     }
-
-    // restore the styles from before this function was called
-    this.ctx.restore();
   }
 
-  drawFreeWithMouse(): void {
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.prevX, this.prevY);
-    this.ctx.lineTo(this.currX, this.currY);
-    this.ctx.strokeStyle = 'red';
-    this.ctx.lineWidth = 2;
-    this.ctx.stroke();
-    this.ctx.closePath();
+  drawTextCanvas(): void {
+    this.ctx.font = '30px Arial';
+    this.ctx.fillStyle = 'red';
+    this.ctx.fillText('Hello World', 10, 50);
   }
 
+  /** --------- EVENTS FOR DRAW FREE ---------- */
   findxy(res, e): void {
     if (res === 'mousedown') {
       this.prevX = this.currX;
@@ -184,10 +213,14 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  drawTextCanvas(): void {
-    this.ctx.font = '30px Arial';
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillText('Hello World', 10, 50);
+  drawFreeWithMouse(): void {
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.prevX, this.prevY);
+    this.ctx.lineTo(this.currX, this.currY);
+    this.ctx.strokeStyle = 'red';
+    this.ctx.lineWidth = 2;
+    this.ctx.stroke();
+    this.ctx.closePath();
   }
 
   /** --------- EVENTS FOR MOVE MAP ----------- */

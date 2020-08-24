@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Map} from '../interfaces/Map';
+import {EditorObjectSelected, Map} from '../interfaces/Map';
 import {ApiService} from '../services/api.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class GameEditorComponent implements OnInit {
   map: Map = null;
   tabs: number = 0;
   currentToolSelected: string = 'move';
+  currentObjectSelected: EditorObjectSelected = {ev: null, object: null, type: null};
 
   constructor(private apiService: ApiService) { }
 
@@ -35,6 +36,11 @@ export class GameEditorComponent implements OnInit {
 
   updateProperties(ev): void {
     console.log('update', ev);
+  }
+
+  onSetCurrentObjectSelected(ev): void {
+    this.currentObjectSelected = ev;
+    console.log(this.currentObjectSelected);
   }
 
 }
