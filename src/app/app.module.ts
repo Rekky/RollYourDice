@@ -10,6 +10,7 @@ import { GameEditorComponent } from './game-editor/game-editor.component';
 import { EditorToolsComponent } from './game-editor/editor-tools/editor-tools.component';
 import { EditorLibrariesComponent } from './game-editor/editor-libraries/editor-libraries.component';
 import { MapComponent } from './game-editor/map/map.component';
+import {KonvaModule} from 'ng2-konva';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MapComponent } from './game-editor/map/map.component';
   ],
     imports: [
         BrowserModule,
+        KonvaModule,
         AppRoutingModule,
         ReactiveFormsModule
     ],

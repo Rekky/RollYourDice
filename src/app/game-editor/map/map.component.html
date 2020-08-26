@@ -11,4 +11,12 @@
           [style.top.px]="mapPositionY"
           (click)="setCurrentObjectSelected($event, map, 'map')"
   ></canvas>
+
+  <div style="position:absolute;left:400px;width: 500px;height:500px;border: 1px solid gray;">
+  <ko-stage [config]="configStage">
+    <ko-layer>
+      <ko-circle [config]="configCircle"></ko-circle>
+    </ko-layer>
+  </ko-stage>
+  </div>
 </div>

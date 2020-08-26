@@ -11,6 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {Map} from '../../interfaces/Map';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -46,10 +47,24 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   prevY = 0;
   currY = 0;
   dotFlag = false;
+  configStage: any = null;
+
+  public configCircle: Observable<any> = of({
+    x: 100,
+    y: 100,
+    radius: 70,
+    fill: 'red',
+    stroke: 'black',
+    strokeWidth: 4
+  });
 
   constructor() { }
 
   ngOnInit(): void {
+  this.configStage = new BehaviorSubject({
+      width: 200,
+      height: 200
+    });
   }
 
   ngAfterViewInit(): void {
