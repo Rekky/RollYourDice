@@ -36,6 +36,7 @@ export class GameEditorComponent implements OnInit {
 
   updateProperties(ev): void {
     console.log('update', ev);
+    this.map = {...ev};
   }
 
   onSetCurrentObjectSelected(ev): void {

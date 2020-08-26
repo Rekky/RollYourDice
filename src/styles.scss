@@ -55,9 +55,10 @@ label{
     cursor: pointer;
     display: flex;
     justify-content: center;
+    background: lighten($editorMainForeground, 5%);
 
     &.active{
-      background: lighten($editorMainForeground, 5%);
+      background: transparent;
     }
 
     &:last-child {

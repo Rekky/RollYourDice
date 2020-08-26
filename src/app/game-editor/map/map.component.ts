@@ -11,7 +11,8 @@ import {
   ViewChild
 } from '@angular/core';
 import {Map} from '../../interfaces/Map';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import Konva from 'konva';
 
 @Component({
   selector: 'app-map',
@@ -20,7 +21,7 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
-  @ViewChild('mapEl') canvasEl: ElementRef;
+  @ViewChild('map') canvasEl: ElementRef;
   @Input() map: Map = null;
   @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
   @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
@@ -47,47 +48,43 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   prevY = 0;
   currY = 0;
   dotFlag = false;
-  configStage: any = null;
 
-  public configCircle: Observable<any> = of({
-    x: 100,
-    y: 100,
-    radius: 70,
-    fill: 'red',
-    stroke: 'black',
-    strokeWidth: 4
-  });
+  // KONVA LIB
+  gridLayer: any = null;
+  gridCellWidth: number = 90;
+
+  // KONVA STAGES
+  gridStage: any = null;
 
   constructor() { }
 
   ngOnInit(): void {
-  this.configStage = new BehaviorSubject({
-      width: 200,
-      height: 200
-    });
+
   }
 
   ngAfterViewInit(): void {
-    this.ctx = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
-    // this.drawGrid(80, 5);
+    // this.ctx = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
     this.canvasEl.nativeElement.addEventListener('mousemove', (e) => {
       if (this.currentToolSelected === 'move') {
         this.mapMove('mousemove', e);
-      } else if (this.currentToolSelected === 'draw') {
+      }
+      if (this.currentToolSelected === 'draw') {
         this.findxy('mousemove', e);
       }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mousedown', (e) => {
       if (this.currentToolSelected === 'move') {
         this.mapMove('mousedown', e);
-      } else if (this.currentToolSelected === 'draw') {
+      }
+      if (this.currentToolSelected === 'draw') {
         this.findxy('mousedown', e);
       }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mouseup', (e) => {
       if (this.currentToolSelected === 'move') {
         this.mapMove('mouseup', e);
-      } else if (this.currentToolSelected === 'draw') {
+      }
+      if (this.currentToolSelected === 'draw') {
         this.findxy('mouseup', e);
       }
     }, false);
@@ -97,11 +94,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('entra en ngChanges');
     if (this.map != null) {
+      this.gridCellWidth = this.map.cellWidth;
       setTimeout(() => {
-        this.drawGrid(80, 5);
+        this.drawGrid();
+        this.drawGridBackgroundImage();
+        this.gridStage.add(this.gridLayer);
       });
-
     }
   }
 
@@ -120,74 +120,46 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     this.currentObjectSelected.emit(this._currentObjectSelected);
   }
 
-  drawGrid(columns: number, rows: number): void {
-    const boxSize = 70;
-    const boxes = Math.floor(this.mapWidth / boxSize);
+  drawGrid(): void {
+    this.gridLayer = new Konva.Layer();
+    this.gridStage = new Konva.Stage({
+      container: 'map',
+      width: this.mapWidth,
+      height: this.mapHeight
+    });
 
-    // this.ctx.beginPath();
-    // this.ctx.fillStyle = 'white';
-    // this.ctx.lineWidth = 2;
-    // this.ctx.strokeStyle = 'black';
-    // for (let row = 0; row < boxes; row++) {
-    //   for (let column = 0; column < boxes; column++) {
-    //     const x = column * boxSize;
-    //     const y = row * boxSize;
-    //     this.ctx.rect(x, y, boxSize, boxSize);
-    //     this.ctx.fill();
-    //     this.ctx.stroke();
-    //   }
-    // }
-
-    const step = 25;
-
-    // our end points
-    const width = 500;
-    const height = 500;
-
-    const background = new Image();
-    background.src = this.map.background;
-
-    if (background.src === null) {
-      return;
+    for (let i = 0; i < this.mapWidth / this.gridCellWidth; i++) {
+      this.gridLayer.add(new Konva.Line({
+        points: [Math.round(i * this.gridCellWidth) + 0.5, 0, Math.round(i * this.gridCellWidth) + 0.5, this.mapHeight],
+        stroke: '#ddd',
+        strokeWidth: 1,
+      }));
     }
 
-    background.onload = () => {
-      this.ctx.drawImage(background, 0, 0, width, height);
-
-
-      // set our styles
-      this.ctx.save();
-      this.ctx.strokeStyle = 'lightgray'; // line colors
-      this.ctx.fillStyle = 'white'; // text color
-      this.ctx.font = '14px Monospace';
-      this.ctx.lineWidth = 0.35;
-
-      // draw vertical from X to Height
-      for (let x = 0; x < width; x += step) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, 0);
-        this.ctx.lineTo(x, height);
-        this.ctx.stroke();
-
-        // draw text
-        this.ctx.fillText(String(x), x, 12);
-      }
-
-      // draw horizontal from Y to Width
-      for (let y = 0; y < height; y += step) {
-        // draw horizontal line
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, y);
-        this.ctx.lineTo(width, y);
-        this.ctx.stroke();
-
-        // draw text
-        this.ctx.fillText(String(y), 0, y);
-      }
-
-      // restore the styles from before this function was called
-      this.ctx.restore();
+    this.gridLayer.add(new Konva.Line({points: [0, 0, 10, 10]}));
+    for (let j = 0; j < this.mapHeight / this.gridCellWidth; j++) {
+      this.gridLayer.add(new Konva.Line({
+        points: [0, Math.round(j * this.gridCellWidth), this.mapWidth, Math.round(j * this.gridCellWidth)],
+        stroke: '#ddd',
+        strokeWidth: 0.5,
+      }));
     }
+  }
+
+  drawGridBackgroundImage(): void {
+    const layer = new Konva.Layer();
+    this.gridStage.add(layer);
+    Konva.Image.fromURL('./../assets/backgrounds/CROSSING_THE_RIVER.jpg', (image) => {
+      layer.add(image);
+      image.setAttrs({
+        x: 0,
+        y: 0,
+        width: this.mapWidth,
+        height: this.mapHeight
+      });
+      image.cache();
+      layer.draw();
+    });
   }
 
   drawTextCanvas(): void {

@@ -9,8 +9,13 @@
       <input type="text" [formControlName]="'height'">
     </div>
     <div>
-      <input type="file">
-      <button (click)="setBackgroundImage()">load image</button>
+      <label>cell width</label>
+      <input type="text" [formControlName]="'cellWidth'">
+    </div>
+    <div>
+      <input #file type="file" (change)="preview(file.files)">
+      <img [src]="imgURL" height="100" *ngIf="imgURL">
+      <span style="color:red;" *ngIf="errorMessage">{{errorMessage}}</span>
     </div>
     <button type="submit">Apply</button>
   </form>

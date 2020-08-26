@@ -4,19 +4,19 @@
      (mousewheel)="setScale($event)"
      (click)="setCurrentObjectSelected($event, null, null)">
 
-  <canvas *ngIf="map" #mapEl class="map cursor-{{currentToolSelected}}"
-          [width]="mapWidth"
-          [height]="mapHeight"
-          [style.left.px]="mapPositionX"
-          [style.top.px]="mapPositionY"
-          (click)="setCurrentObjectSelected($event, map, 'map')"
-  ></canvas>
+<!--  <canvas *ngIf="map" #mapEl class="map cursor-{{currentToolSelected}}"-->
+<!--          [width]="mapWidth"-->
+<!--          [height]="mapHeight"-->
+<!--          [style.left.px]="mapPositionX"-->
+<!--          [style.top.px]="mapPositionY"-->
+<!--          (click)="setCurrentObjectSelected($event, map, 'map')"-->
+<!--  ></canvas>-->
 
-  <div style="position:absolute;left:400px;width: 500px;height:500px;border: 1px solid gray;">
-  <ko-stage [config]="configStage">
-    <ko-layer>
-      <ko-circle [config]="configCircle"></ko-circle>
-    </ko-layer>
-  </ko-stage>
+  <div class="map cursor-{{currentToolSelected}}"
+       [style.width.px]="mapWidth"
+       [style.height.px]="mapHeight"
+       [style.left.px]="mapPositionX"
+       [style.top.px]="mapPositionY">
+    <div #map id="map" (click)="setCurrentObjectSelected($event, map, 'map')"></div>
   </div>
 </div>
