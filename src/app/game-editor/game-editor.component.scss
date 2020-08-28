@@ -1,6 +1,6 @@
 @import "../../colors";
 
-.map-editor{
+.game-editor{
   position: absolute;
   top:0;
   right:0;
@@ -34,7 +34,6 @@
     position: relative;
     width: 250px;
     height: 100%;
-    padding: 1rem;
     border-right: 1px solid $editorColumnsBorderColor;
   }
 }
@@ -52,3 +51,32 @@
   z-index: 90;
 }
 
+// -------------- TABS
+.tabs {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+
+  &.adjust {
+    .tab{
+      flex: 1;
+    }
+  }
+
+  .tab{
+    border-top: 1px solid $editorColumnsBorderColor;
+    padding: .7rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    background: lighten($editorMainForeground, 5%);
+
+    &.active{
+      background: transparent;
+    }
+
+    &:last-child {
+      border-right: 1px solid $editorColumnsBorderColor;
+    }
+  }
+}

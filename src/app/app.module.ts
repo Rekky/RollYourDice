@@ -10,7 +10,8 @@ import { GameEditorComponent } from './game-editor/game-editor.component';
 import { EditorToolsComponent } from './game-editor/editor-tools/editor-tools.component';
 import { EditorLibrariesComponent } from './game-editor/editor-libraries/editor-libraries.component';
 import { MapComponent } from './game-editor/map/map.component';
-import {KonvaModule} from 'ng2-konva';
+import { PagesListComponent } from './game-editor/pages-list/pages-list.component';
+import {DragulaModule} from 'ng2-dragula';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import {KonvaModule} from 'ng2-konva';
     GameEditorComponent,
     EditorToolsComponent,
     EditorLibrariesComponent,
-    MapComponent
+    MapComponent,
+    PagesListComponent
   ],
     imports: [
         BrowserModule,
-        KonvaModule,
+        DragulaModule.forRoot(),
         AppRoutingModule,
         ReactiveFormsModule
     ],

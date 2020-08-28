@@ -11,7 +11,6 @@ import {
   ViewChild
 } from '@angular/core';
 import {Map} from '../../interfaces/Map';
-import {Observable, of} from 'rxjs';
 import Konva from 'konva';
 
 @Component({
@@ -28,7 +27,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() currentToolSelected: string = null;
 
   _currentObjectSelected: any = null;
-  private ctx: CanvasRenderingContext2D;
   private isDraggable: boolean = false;
   private startX: number;
   private startY: number;
@@ -51,7 +49,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   // KONVA LIB
   gridLayer: any = null;
-  gridCellWidth: number = 90;
+  gridCellWidth: number = 80;
 
   // KONVA STAGES
   gridStage: any = null;
@@ -63,13 +61,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    // this.ctx = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
-    this.canvasEl.nativeElement.addEventListener('mousemove', (e) => {
+    /*this.canvasEl.nativeElement.addEventListener('mousemove', (e) => {
       if (this.currentToolSelected === 'move') {
         this.mapMove('mousemove', e);
       }
       if (this.currentToolSelected === 'draw') {
-        this.findxy('mousemove', e);
+        console.log('DRAW');
       }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mousedown', (e) => {
@@ -77,7 +74,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         this.mapMove('mousedown', e);
       }
       if (this.currentToolSelected === 'draw') {
-        this.findxy('mousedown', e);
+        console.log('DRAW');
       }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mouseup', (e) => {
@@ -85,16 +82,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         this.mapMove('mouseup', e);
       }
       if (this.currentToolSelected === 'draw') {
-        this.findxy('mouseup', e);
+        console.log('DRAW');
       }
     }, false);
     this.canvasEl.nativeElement.addEventListener('mouseout', (e) => {
-      this.findxy('out', e);
-    }, false);
+      console.log('DRAW');
+    }, false);*/
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('entra en ngChanges');
+    console.log('ngChanges map');
     if (this.map != null) {
       this.gridCellWidth = this.map.cellWidth;
       setTimeout(() => {
@@ -102,6 +99,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         this.drawGridBackgroundImage();
         this.gridStage.add(this.gridLayer);
       });
+    } else {
+      this.map = null;
     }
   }
 
@@ -162,53 +161,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
-  drawTextCanvas(): void {
-    this.ctx.font = '30px Arial';
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillText('Hello World', 10, 50);
-  }
-
   /** --------- EVENTS FOR DRAW FREE ---------- */
-  findxy(res, e): void {
-    if (res === 'mousedown') {
-      this.prevX = this.currX;
-      this.prevY = this.currY;
-      this.currX = e.clientX - this.canvasEl.nativeElement.offsetLeft;
-      this.currY = e.clientY - this.canvasEl.nativeElement.offsetTop;
 
-      this.flag = true;
-      this.dotFlag = true;
-      if (this.dotFlag) {
-        this.ctx.beginPath();
-        this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(this.currX, this.currY, 2, 2);
-        this.ctx.closePath();
-        this.dotFlag = false;
-      }
-    }
-    if (res === 'mouseup' || res === 'mouseout') {
-      this.flag = false;
-    }
-    if (res === 'mousemove') {
-      if (this.flag) {
-        this.prevX = this.currX;
-        this.prevY = this.currY;
-        this.currX = e.clientX - this.canvasEl.nativeElement.offsetLeft;
-        this.currY = e.clientY - this.canvasEl.nativeElement.offsetTop;
-        this.drawFreeWithMouse();
-      }
-    }
-  }
-
-  drawFreeWithMouse(): void {
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.prevX, this.prevY);
-    this.ctx.lineTo(this.currX, this.currY);
-    this.ctx.strokeStyle = 'red';
-    this.ctx.lineWidth = 2;
-    this.ctx.stroke();
-    this.ctx.closePath();
-  }
 
   /** --------- EVENTS FOR MOVE MAP ----------- */
   mapMove(res, ev: MouseEvent): void {

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EditorObjectSelected, Map} from '../interfaces/Map';
 import {ApiService} from '../services/api.service';
+import {Game, Page} from '../interfaces/Game';
 
 @Component({
   selector: 'app-game-editor',
@@ -10,6 +11,8 @@ import {ApiService} from '../services/api.service';
 export class GameEditorComponent implements OnInit {
 
   map: Map = null;
+  game: Game = null;
+
   tabs: number = 0;
   currentToolSelected: string = 'move';
   currentObjectSelected: EditorObjectSelected = {ev: null, object: null, type: null};
@@ -17,7 +20,8 @@ export class GameEditorComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.map = this.apiService.getMap();
+    this.game = this.apiService.getGameEditor();
+
   }
 
   onToolSelected(ev): void {
@@ -37,6 +41,15 @@ export class GameEditorComponent implements OnInit {
   updateProperties(ev): void {
     console.log('update', ev);
     this.map = {...ev};
+  }
+
+  onSelectedPage(ev: Page): void {
+    if (ev.layers.length > 0) {
+      const mapFound = ev.layers.find((layer) => layer.type === 'map');
+      this.map = mapFound.content;
+    } else {
+      this.map = null;
+    }
   }
 
   onSetCurrentObjectSelected(ev): void {

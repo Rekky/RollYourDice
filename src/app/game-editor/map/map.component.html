@@ -4,15 +4,10 @@
      (mousewheel)="setScale($event)"
      (click)="setCurrentObjectSelected($event, null, null)">
 
-<!--  <canvas *ngIf="map" #mapEl class="map cursor-{{currentToolSelected}}"-->
-<!--          [width]="mapWidth"-->
-<!--          [height]="mapHeight"-->
-<!--          [style.left.px]="mapPositionX"-->
-<!--          [style.top.px]="mapPositionY"-->
-<!--          (click)="setCurrentObjectSelected($event, map, 'map')"-->
-<!--  ></canvas>-->
-
-  <div class="map cursor-{{currentToolSelected}}"
+  <div class="map cursor-{{currentToolSelected}}" *ngIf="map != null"
+       (mousedown)="mapMove('mousedown', $event)"
+       (mousemove)="mapMove('mousemove', $event)"
+       (mouseup)="mapMove('mouseup', $event)"
        [style.width.px]="mapWidth"
        [style.height.px]="mapHeight"
        [style.left.px]="mapPositionX"
