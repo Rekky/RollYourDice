@@ -13,6 +13,7 @@ export class GameEditorComponent implements OnInit {
 
     map: Map;
     game: Game;
+    selectedPage: Page;
 
     tabs: number = 0;
     currentToolSelected: string = 'move';
@@ -23,6 +24,7 @@ export class GameEditorComponent implements OnInit {
     ngOnInit(): void {
         const game: Game = this.gameInteractor.getGameEditor('123132123');
         this.game = game;
+        this.selectedPage = this.game.pages.find((page) => page.id === this.game.selectedPageId);
     }
 
     onToolSelected(ev): void {

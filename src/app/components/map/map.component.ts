@@ -94,7 +94,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         console.log('ngChanges map');
         if (this.map) {
-            console.log('this.map.grid.cellSize', this.map.grid);
             this.gridCellWidth = this.map.grid.cellSize;
             setTimeout(() => {
                 this.drawGrid();
@@ -122,23 +121,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     drawGrid(): void {
         this.gridLayer = new Konva.Layer();
         this.gridStage = new Konva.Stage({
-            container: 'map',
-            width: this.mapWidth,
-            height: this.mapHeight
+            container: 'map' + this.map.id,
+            width: this.map.columns * this.map.grid.cellSize,
+            height: this.map.rows * this.map.grid.cellSize
         });
 
-        for (let i = 0; i < this.mapWidth / this.gridCellWidth; i++) {
+        for (let i = 0; i < this.map.columns; i++) {
             this.gridLayer.add(new Konva.Line({
-                points: [Math.round(i * this.gridCellWidth) + 0.5, 0, Math.round(i * this.gridCellWidth) + 0.5, this.mapHeight],
+                points: [Math.round(i * this.map.grid.cellSize) + 0.5, 0, Math.round(i * this.map.grid.cellSize) + 0.5, this.map.rows * this.map.grid.cellSize],
                 stroke: '#ddd',
                 strokeWidth: 1,
             }));
         }
 
         this.gridLayer.add(new Konva.Line({points: [0, 0, 10, 10]}));
-        for (let j = 0; j < this.mapHeight / this.gridCellWidth; j++) {
+        for (let j = 0; j < this.map.rows; j++) {
             this.gridLayer.add(new Konva.Line({
-                points: [0, Math.round(j * this.gridCellWidth), this.mapWidth, Math.round(j * this.gridCellWidth)],
+                points: [0, Math.round(j * this.map.grid.cellSize), this.map.columns * this.map.grid.cellSize, Math.round(j * this.map.grid.cellSize)],
                 stroke: '#ddd',
                 strokeWidth: 0.5,
             }));
@@ -153,8 +152,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             image.setAttrs({
                 x: 0,
                 y: 0,
-                width: this.mapWidth,
-                height: this.mapHeight
+                width: this.map.columns * this.map.grid.cellSize,
+                height: this.map.rows * this.map.grid.cellSize
             });
             image.cache();
             layer.draw();

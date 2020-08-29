@@ -1,5 +1,5 @@
 <div class="game-editor">
-  <app-map [map]="game.pages[0].maps[0]" [currentToolSelected]="currentToolSelected" (currentObjectSelected)="onSetCurrentObjectSelected($event)"></app-map>
+  <app-page [page]="selectedPage"></app-page>
 
   <div class="left-column">
     <div class="tabs adjust">

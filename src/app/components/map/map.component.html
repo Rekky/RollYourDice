@@ -12,5 +12,5 @@
      [style.height.px]="mapHeight"
      [style.left.px]="map.position.x"
      [style.top.px]="map.position.y">
-    <div #mapEl id="map" (click)="setCurrentObjectSelected($event, map, 'map')"></div>
+    <div #mapEl id="map{{map.id}}" (click)="setCurrentObjectSelected($event, map, 'map')"></div>
 </div>
