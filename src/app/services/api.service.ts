@@ -9,7 +9,7 @@ export class ApiService {
 
     getGameEditor(id: string): any {
         const map: any = {id: '1', name: 'map-1', grid: {cellSize: 40}, position: {x: 200, y: 200}, columns: 20, rows: 20};
-        const map2: any = {id: '2', name: 'map-2', grid: {cellSize: 80}, position: {x: 400, y: 300}, columns: 50, rows: 50};
+        const map2: any = {id: '2', name: 'map-2', grid: {cellSize: 80}, position: {x: 800, y: 600}, columns: 4, rows: 4};
 
         const page: any = {
             id: 'page-id-1',

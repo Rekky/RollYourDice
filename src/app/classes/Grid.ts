@@ -1,3 +1,5 @@
+import {Position} from './Position';
+
 export class Grid {
     cellSize: number;
     opacity: number;
@@ -24,6 +26,13 @@ export class Grid {
         return grid;
     }
 
+    static correctPosition(pos: Position, cellSize: number): Position {
+        const position = new Position();
+        position.x = Math.round(pos.x / cellSize) * cellSize;
+        position.y = Math.round(pos.y / cellSize) * cellSize;
+        return position;
+    }
+
     toJSON(grid: Grid): any {
         const json: any = {};
         json.cellSize = grid.cellSize;
@@ -32,4 +41,6 @@ export class Grid {
         json.squareFeet = grid.squareFeet;
         return grid;
     }
+
+
 }

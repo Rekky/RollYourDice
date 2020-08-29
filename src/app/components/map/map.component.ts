@@ -13,6 +13,8 @@ import {
 import Konva from 'konva';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import {Map} from '../../classes/Map';
+import {Position} from '../../classes/Position';
+import {Grid} from '../../classes/Grid';
 
 @Component({
     selector: 'app-map',
@@ -142,6 +144,61 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 strokeWidth: 0.5,
             }));
         }
+
+
+        const shadowRectangle = new Konva.Rect({
+            x: 0,
+            y: 0,
+            width: this.map.grid.cellSize * 6,
+            height: this.map.grid.cellSize * 3,
+            fill: '#FF7B17',
+            opacity: 0.6,
+            stroke: '#CF6412',
+            strokeWidth: 3,
+            dash: [20, 2]
+        });
+        const rectangle = new Konva.Rect({
+            x: 50,
+            y: 50,
+            width: this.map.grid.cellSize * 6,
+            height: this.map.grid.cellSize * 3,
+            fill: '#fff',
+            stroke: '#ddd',
+            strokeWidth: 1,
+            shadowColor: 'black',
+            shadowBlur: 2,
+            shadowOffset: {x : 1, y : 1},
+            shadowOpacity: 0.4,
+            draggable: true
+        });
+        shadowRectangle.hide();
+        this.gridLayer.add(shadowRectangle);
+
+        rectangle.on('dragstart', (e) => {
+            console.log('entras');
+            shadowRectangle.show();
+            shadowRectangle.moveToTop();
+            rectangle.moveToTop();
+        });
+        rectangle.on('dragend', (e) => {
+            const newPosition = Grid.correctPosition(new Position(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
+            rectangle.position({
+                x: newPosition.x,
+                y: newPosition.y
+            });
+            this.gridStage.batchDraw();
+            shadowRectangle.hide();
+        });
+        rectangle.on('dragmove', (e) => {
+            const newPosition = Grid.correctPosition(new Position(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
+            shadowRectangle.position({
+                x: newPosition.x,
+                y: newPosition.y
+            });
+            this.gridStage.batchDraw();
+        });
+        this.gridLayer.add(rectangle);
+
     }
 
     drawGridBackgroundImage(): void {
@@ -165,7 +222,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     /** --------- EVENTS FOR MOVE MAP ----------- */
     mapMove(res, ev: MouseEvent): void {
-        if (res === 'mousedown') {
+        /*if (res === 'mousedown') {
             this.isDraggable = true;
             this.startX = ev.clientX - this.offsetX;
             this.startY = ev.clientY - this.offsetY;
@@ -183,7 +240,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         if (res === 'mouseup') {
             this.isDraggable = false;
             this.mapInteractor.setMapPosition(this.map.id, this.map.position);
-        }
+        }*/
     }
 
     setScale(ev): void {
