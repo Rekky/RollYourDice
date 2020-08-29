@@ -1,5 +1,5 @@
 <div class="game-editor">
-  <app-map [map]="map" [currentToolSelected]="currentToolSelected" (currentObjectSelected)="onSetCurrentObjectSelected($event)"></app-map>
+  <app-map [map]="game.pages[0].maps[0]" [currentToolSelected]="currentToolSelected" (currentObjectSelected)="onSetCurrentObjectSelected($event)"></app-map>
 
   <div class="left-column">
     <div class="tabs adjust">

@@ -1,0 +1,16 @@
+<!--<div class="map-container"
+     [style.width.px]="screenWidth"
+     [style.height.px]="screenHeight"
+     (mousewheel)="setScale($event)"
+     (click)="setCurrentObjectSelected($event, null, null)">-->
+
+<div class="map cursor-{{currentToolSelected}}" *ngIf="map"
+     (mousedown)="mapMove('mousedown', $event)"
+     (mousemove)="mapMove('mousemove', $event)"
+     (mouseup)="mapMove('mouseup', $event)"
+     [style.width.px]="mapWidth"
+     [style.height.px]="mapHeight"
+     [style.left.px]="map.position.x"
+     [style.top.px]="map.position.y">
+    <div #mapEl id="map" (click)="setCurrentObjectSelected($event, map, 'map')"></div>
+</div>

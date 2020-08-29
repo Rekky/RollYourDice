@@ -1,41 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Map } from '../interfaces/Map';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ApiService {
 
-  constructor() { }
+    constructor() { }
 
-  getGameEditor(): any {
-    const map: Map = {columns: 150, rows: 150, scale: 1, cellWidth: 40, background: null};
+    getGameEditor(id: string): any {
+        const map: any = {id: '1231231', name: 'teste1', grid: {cellSize: 40}, position: {x: 200, y: 200}};
+        const page: any = {
+            id: 'page-id-1',
+            name: 'entrada cueva',
+            maps: [map]
+        };
+        const page2: any = {
+            id: 'page-id-2',
+            name: 'salida cueva',
+            maps: [map]
+        };
 
-    const game: any = {
-      id: '12312411242',
-      pages: [
-        {
-          id: 'asdasdasd',
-          name: 'entrada cueva',
-          layers: [
-            {type: 'map', content: map},
-            {type: 'objects', content: 'aun_por_decidir'},
-            {type: 'GM_view', content: 'aun_por decidir'}
-            ]
-        },
-        {
-          id: 'qweqweqwe',
-          name: 'salida cueva',
-          layers: []
-        }
-      ]
-    };
+        const game: any = {
+            id: '12312411242',
+            pages: [page, page2]
+        };
+        return game;
+    }
 
-    return game;
-  }
+    setMapPosition(request: any): any {
 
-  getMap(): Map {
-    const map: Map = {columns: 150, rows: 150, scale: 1, cellWidth: 40, background: null};
-    return map;
-  }
+    }
+
 }

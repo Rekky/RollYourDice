@@ -3,15 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { MapPropertiesComponent } from './game-editor/map-properties/map-properties.component';
+import { HomeComponent } from './pages/home/home.component';
+import { MapPropertiesComponent } from './pages/game-editor/map-properties/map-properties.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { GameEditorComponent } from './game-editor/game-editor.component';
-import { EditorToolsComponent } from './game-editor/editor-tools/editor-tools.component';
-import { EditorLibrariesComponent } from './game-editor/editor-libraries/editor-libraries.component';
-import { MapComponent } from './game-editor/map/map.component';
-import { PagesListComponent } from './game-editor/pages-list/pages-list.component';
+import { GameEditorComponent } from './pages/game-editor/game-editor.component';
+import { EditorToolsComponent } from './components/editor-tools/editor-tools.component';
+import { EditorLibrariesComponent } from './pages/game-editor/editor-libraries/editor-libraries.component';
+import { MapComponent } from './components/map/map.component';
+import { PagesListComponent } from './pages/game-editor/pages-list/pages-list.component';
 import {DragulaModule} from 'ng2-dragula';
+import { PageComponent } from './pages/game-editor/page/page.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {DragulaModule} from 'ng2-dragula';
     EditorToolsComponent,
     EditorLibrariesComponent,
     MapComponent,
-    PagesListComponent
+    PagesListComponent,
+    PageComponent
   ],
     imports: [
         BrowserModule,

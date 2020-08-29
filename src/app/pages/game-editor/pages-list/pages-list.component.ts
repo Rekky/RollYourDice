@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Page} from '../../interfaces/Game';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Page} from '../../../classes/Page';
 
 @Component({
   selector: 'app-pages-list',
@@ -31,7 +31,7 @@ export class PagesListComponent implements OnInit {
   }
 
   onAddNewPage(): void {
-    const newPage: Page = {id: '-1', name: this.newPageForm.get('name').value, layers: []};
+    const newPage: Page = new Page();
     this.pages.push(newPage);
     this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
     this.showNewPageForm = false;
