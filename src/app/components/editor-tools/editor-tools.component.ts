@@ -1,23 +1,23 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MouseService} from '../../services/mouse.service';
 
 @Component({
-  selector: 'app-editor-tools',
-  templateUrl: './editor-tools.component.html',
-  styleUrls: ['./editor-tools.component.scss']
+    selector: 'app-editor-tools',
+    templateUrl: './editor-tools.component.html',
+    styleUrls: ['./editor-tools.component.scss']
 })
 export class EditorToolsComponent implements OnInit {
 
-  @Input() currentToolSelected: string = 'move';
-  @Output() toolSelectedChange: EventEmitter<string> = new EventEmitter<string>();
+    currentToolSelected: string = 'cursor';
 
-  constructor() { }
+    constructor(private mouseService: MouseService) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  onToolSelected(type: string): void {
-    this.currentToolSelected = type;
-    this.toolSelectedChange.emit(this.currentToolSelected);
-  }
+    onToolSelected(type: string): void {
+        this.currentToolSelected = type;
+        this.mouseService.setMouse(type);
+    }
 
 }

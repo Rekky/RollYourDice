@@ -1,4 +1,4 @@
-export class Position {
+export class Coords {
     x: number;
     y: number;
     z: number;
@@ -9,8 +9,8 @@ export class Position {
         this.z = z ? z : 0;
     }
 
-    fromJSON(json: any): Position {
-        const pos = new Position();
+    fromJSON(json: any): Coords {
+        const pos = new Coords();
         pos.x = json.x;
         pos.y = json.y;
         pos.z = json.z;

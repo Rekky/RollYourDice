@@ -1,4 +1,4 @@
-import {Position} from './Position';
+import {Coords} from './Coords';
 
 export class Grid {
     cellSize: number;
@@ -26,8 +26,8 @@ export class Grid {
         return grid;
     }
 
-    static correctPosition(pos: Position, cellSize: number): Position {
-        const position = new Position();
+    static correctPosition(pos: Coords, cellSize: number): Coords {
+        const position = new Coords();
         position.x = Math.round(pos.x / cellSize) * cellSize;
         position.y = Math.round(pos.y / cellSize) * cellSize;
         return position;

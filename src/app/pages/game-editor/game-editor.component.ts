@@ -17,29 +17,14 @@ export class GameEditorComponent implements OnInit {
     selectedPage: Page;
 
     tabs: number = 0;
-    currentToolSelected: string = 'move';
     currentObjectSelected: any = {ev: null, object: null, type: null};
 
-    constructor(private gameInteractor: GameInteractor, private mouseService: MouseService) { }
+    constructor(private gameInteractor: GameInteractor,
+                private mouseService: MouseService) { }
 
     ngOnInit(): void {
-        const game: Game = this.gameInteractor.getGameEditor('123132123');
-        this.game = game;
+        this.game = this.gameInteractor.getGameEditor('123132123');
         this.selectedPage = this.game.pages.find((page) => page.id === this.game.selectedPageId);
-    }
-
-    onToolSelected(ev): void {
-        this.currentToolSelected = ev;
-        this.mouseService.setMouse(ev);
-
-        switch (ev) {
-            case 'text':
-                console.log('es text');
-                break;
-            case 'draw-square':
-                console.log('es draw square');
-                break;
-        }
     }
 
     updateProperties(ev): void {

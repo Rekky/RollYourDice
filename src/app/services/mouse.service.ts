@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import {Observable, Subject, Subscriber} from 'rxjs';
+import {ElementRef, Injectable} from '@angular/core';
+import {Observable, BehaviorSubject, Subscriber} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MouseService {
 
-    mouse: Subject<string> = new Subject<string>();
+    mouse: BehaviorSubject<string> = new BehaviorSubject<string>('cursor');
 
     constructor() { }
 
@@ -17,4 +17,5 @@ export class MouseService {
     getMouseObservable(): Observable<string> {
         return this.mouse.asObservable();
     }
+
 }

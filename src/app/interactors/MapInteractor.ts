@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MapService} from '../services/map.service';
-import { Position } from '../classes/Position';
+import { Coords } from '../classes/Coords';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +11,7 @@ export class MapInteractor {
 
     }
 
-    setMapPosition(id: string | number, pos: Position): void {
+    setMapPosition(id: string | number, pos: Coords): void {
         this.mapService.setMapPosition(id, pos);
     }
 }

@@ -13,7 +13,7 @@ import {
 import Konva from 'konva';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import {Map} from '../../classes/Map';
-import {Position} from '../../classes/Position';
+import {Coords} from '../../classes/Coords';
 import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
 
@@ -28,7 +28,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() map: Map;
     @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
-    @Input() currentToolSelected: string = 'move';
+    currentToolSelected: string = 'cursor';
     _currentObjectSelected: any = null;
 
     // MAP VARS
@@ -49,42 +49,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     gridLayer: any = null;
     gridStage: any = null;
 
-    constructor(private mapInteractor: MapInteractor, private mouseService: MouseService) { }
+    constructor(private mapInteractor: MapInteractor,
+                private mouseService: MouseService) { }
 
     ngOnInit(): void {
         this.mouseService.getMouseObservable().subscribe((res) => {
             this.currentToolSelected = res;
-            console.log(this.currentToolSelected);
         });
     }
 
     ngAfterViewInit(): void {
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
-            if (this.currentToolSelected === 'move') {
-                this.mapMove('mousedown', e);
-            }
-            if (this.currentToolSelected === 'draw') {
-                this.drawFree('mousedown', e);
-            }
+            this.stateOnMouseDown(e);
         }, false);
         this.mapEl.nativeElement.addEventListener('mousemove', (e) => {
-            if (this.currentToolSelected === 'move') {
-                this.mapMove('mousemove', e);
-            }
-            if (this.currentToolSelected === 'draw') {
-                this.drawFree('mousemove', e);
-            }
+            this.stateOnMouseMove(e);
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
-            if (this.currentToolSelected === 'move') {
-                this.mapMove('mouseup', e);
-            }
-            if (this.currentToolSelected === 'draw') {
-                this.drawFree('mouseup', e);
-            }
+            this.stateOnMouseUp(e);
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
-
+            this.stateOnMouseOut(e);
         }, false);
     }
 
@@ -177,7 +162,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             rectangle.moveToTop();
         });
         rectangle.on('dragend', (e) => {
-            const newPosition = Grid.correctPosition(new Position(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
+            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             rectangle.position({
                 x: newPosition.x,
                 y: newPosition.y
@@ -186,7 +171,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             shadowRectangle.hide();
         });
         rectangle.on('dragmove', (e) => {
-            const newPosition = Grid.correctPosition(new Position(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
+            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             shadowRectangle.position({
                 x: newPosition.x,
                 y: newPosition.y
@@ -279,4 +264,62 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }*/
     }
 
+    ////////////////////////////////////////////////
+    stateOnMouseDown(e: MouseEvent): void {
+        switch (this.currentToolSelected) {
+            case 'cursor':
+                break;
+            case 'move':
+                this.mapMove('mousedown', e);
+                break;
+            case 'draw':
+                this.drawFree('mousedown', e);
+                break;
+            default:
+                break;
+        }
+    }
+
+    stateOnMouseMove(e: MouseEvent): void {
+        switch (this.currentToolSelected) {
+            case 'cursor':
+                break;
+            case 'move':
+                this.mapMove('mousemove', e);
+                break;
+            case 'draw':
+                this.drawFree('mousemove', e);
+                break;
+            default:
+                break;
+        }
+    }
+
+    stateOnMouseUp(e: MouseEvent): void {
+        switch (this.currentToolSelected) {
+            case 'cursor':
+                break;
+            case 'move':
+                this.mapMove('mouseup', e);
+                break;
+            case 'draw':
+                this.drawFree('mouseup', e);
+                break;
+            default:
+                break;
+        }
+    }
+
+    stateOnMouseOut(e: MouseEvent): void {
+        switch (this.currentToolSelected) {
+            case 'cursor':
+                break;
+            case 'move':
+                break;
+            case 'draw':
+                break;
+            default:
+                break;
+        }
+    }
 }

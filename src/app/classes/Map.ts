@@ -1,11 +1,11 @@
 import {Grid} from './Grid';
-import {Position} from './Position';
+import {Coords} from './Coords';
 
 export class Map {
     id: string | number;
     name: string | null;
     grid: Grid;
-    position: Position;
+    position: Coords;
     columns: number;
     rows: number;
     fogOfWar: boolean;
@@ -17,7 +17,7 @@ export class Map {
     constructor(id?: string,
                 name?: string,
                 grid?: Grid,
-                position?: Position,
+                position?: Coords,
                 columns?: number,
                 rows?: number,
                 fogOfWar?: boolean,
@@ -28,7 +28,7 @@ export class Map {
         this.id = id ? id : -1;
         this.name = name ? name : 'new map';
         this.grid = grid ? grid : new Grid();
-        this.position = position ? position : new Position();
+        this.position = position ? position : new Coords();
         this.columns = columns ? columns : 10;
         this.rows = rows ? rows : 10;
         this.fogOfWar = fogOfWar ? fogOfWar : false;
