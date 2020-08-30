@@ -3,6 +3,7 @@ import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game} from '../../classes/Game';
 import {Map} from '../../classes/Map';
 import {Page} from '../../classes/Page';
+import {MouseService} from '../../services/mouse.service';
 
 @Component({
     selector: 'app-game-editor',
@@ -19,7 +20,7 @@ export class GameEditorComponent implements OnInit {
     currentToolSelected: string = 'move';
     currentObjectSelected: any = {ev: null, object: null, type: null};
 
-    constructor(private gameInteractor: GameInteractor) { }
+    constructor(private gameInteractor: GameInteractor, private mouseService: MouseService) { }
 
     ngOnInit(): void {
         const game: Game = this.gameInteractor.getGameEditor('123132123');
@@ -28,8 +29,8 @@ export class GameEditorComponent implements OnInit {
     }
 
     onToolSelected(ev): void {
-        console.log(ev);
         this.currentToolSelected = ev;
+        this.mouseService.setMouse(ev);
 
         switch (ev) {
             case 'text':

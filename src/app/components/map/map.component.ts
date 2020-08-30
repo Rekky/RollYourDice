@@ -15,6 +15,7 @@ import {MapInteractor} from '../../interactors/MapInteractor';
 import {Map} from '../../classes/Map';
 import {Position} from '../../classes/Position';
 import {Grid} from '../../classes/Grid';
+import {MouseService} from '../../services/mouse.service';
 
 @Component({
     selector: 'app-map',
@@ -23,11 +24,11 @@ import {Grid} from '../../classes/Grid';
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
-    @ViewChild('mapEl') canvasEl: ElementRef;
+    @ViewChild('mapEl') mapEl: ElementRef;
     @Input() map: Map;
     @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
-    @Input() currentToolSelected: string = null;
+    @Input() currentToolSelected: string = 'move';
 
     _currentObjectSelected: any = null;
     private isDraggable: boolean = false;
@@ -35,13 +36,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     private startY: number;
     private offsetX: number = 0;
     private offsetY: number = 0;
-    // map.position.x = window.innerWidth / 3;
-    // map.position.y = 200;
 
-    screenWidth = window.innerWidth;
-    screenHeight = window.innerHeight;
     mapWidth: number = 500;
     mapHeight: number = 500;
+    gridCellWidth: number = 80;
 
     flag = false;
     prevX = 0;
@@ -52,45 +50,45 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     // KONVA LIB
     gridLayer: any = null;
-    gridCellWidth: number = 80;
-
-    // KONVA STAGES
     gridStage: any = null;
 
-    constructor(private mapInteractor: MapInteractor) { }
+    constructor(private mapInteractor: MapInteractor, private mouseService: MouseService) { }
 
     ngOnInit(): void {
-
+        this.mouseService.getMouseObservable().subscribe((res) => {
+            this.currentToolSelected = res;
+        });
     }
 
     ngAfterViewInit(): void {
-        /*this.canvasEl.nativeElement.addEventListener('mousemove', (e) => {
-          if (this.currentToolSelected === 'move') {
-            this.mapMove('mousemove', e);
-          }
-          if (this.currentToolSelected === 'draw') {
-            console.log('DRAW');
-          }
+        this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
+            if (this.currentToolSelected === 'move') {
+                console.log('entras', this.currentToolSelected);
+                this.mapMove('mousedown', e);
+            }
+            if (this.currentToolSelected === 'draw') {
+                console.log('DRAW');
+            }
         }, false);
-        this.canvasEl.nativeElement.addEventListener('mousedown', (e) => {
-          if (this.currentToolSelected === 'move') {
-            this.mapMove('mousedown', e);
-          }
-          if (this.currentToolSelected === 'draw') {
-            console.log('DRAW');
-          }
+        this.mapEl.nativeElement.addEventListener('mousemove', (e) => {
+            if (this.currentToolSelected === 'move') {
+                this.mapMove('mousemove', e);
+            }
+            if (this.currentToolSelected === 'draw') {
+                console.log('DRAW');
+            }
         }, false);
-        this.canvasEl.nativeElement.addEventListener('mouseup', (e) => {
-          if (this.currentToolSelected === 'move') {
-            this.mapMove('mouseup', e);
-          }
-          if (this.currentToolSelected === 'draw') {
-            console.log('DRAW');
-          }
+        this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
+            if (this.currentToolSelected === 'move') {
+                this.mapMove('mouseup', e);
+            }
+            if (this.currentToolSelected === 'draw') {
+                console.log('DRAW');
+            }
         }, false);
-        this.canvasEl.nativeElement.addEventListener('mouseout', (e) => {
-          console.log('DRAW');
-        }, false);*/
+        this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
+
+        }, false);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -127,6 +125,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             width: this.map.columns * this.map.grid.cellSize,
             height: this.map.rows * this.map.grid.cellSize
         });
+        this.mapWidth = this.map.columns * this.map.grid.cellSize;
+        this.mapHeight = this.map.rows * this.map.grid.cellSize;
 
         for (let i = 0; i < this.map.columns; i++) {
             this.gridLayer.add(new Konva.Line({
@@ -222,7 +222,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     /** --------- EVENTS FOR MOVE MAP ----------- */
     mapMove(res, ev: MouseEvent): void {
-        /*if (res === 'mousedown') {
+        if (res === 'mousedown') {
             this.isDraggable = true;
             this.startX = ev.clientX - this.offsetX;
             this.startY = ev.clientY - this.offsetY;
@@ -240,7 +240,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         if (res === 'mouseup') {
             this.isDraggable = false;
             this.mapInteractor.setMapPosition(this.map.id, this.map.position);
-        }*/
+        }
     }
 
     setScale(ev): void {
