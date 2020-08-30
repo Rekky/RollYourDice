@@ -29,24 +29,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
     @Input() currentToolSelected: string = 'move';
-
     _currentObjectSelected: any = null;
+
+    // MAP VARS
     private isDraggable: boolean = false;
     private startX: number;
     private startY: number;
     private offsetX: number = 0;
     private offsetY: number = 0;
-
     mapWidth: number = 500;
     mapHeight: number = 500;
     gridCellWidth: number = 80;
 
-    flag = false;
-    prevX = 0;
-    currX = 0;
-    prevY = 0;
-    currY = 0;
-    dotFlag = false;
+    // DRAW FREE VARS
+    isPaint: boolean = false;
+    lastLine: any;
 
     // KONVA LIB
     gridLayer: any = null;
@@ -57,17 +54,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     ngOnInit(): void {
         this.mouseService.getMouseObservable().subscribe((res) => {
             this.currentToolSelected = res;
+            console.log(this.currentToolSelected);
         });
     }
 
     ngAfterViewInit(): void {
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
             if (this.currentToolSelected === 'move') {
-                console.log('entras', this.currentToolSelected);
                 this.mapMove('mousedown', e);
             }
             if (this.currentToolSelected === 'draw') {
-                console.log('DRAW');
+                this.drawFree('mousedown', e);
             }
         }, false);
         this.mapEl.nativeElement.addEventListener('mousemove', (e) => {
@@ -75,7 +72,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 this.mapMove('mousemove', e);
             }
             if (this.currentToolSelected === 'draw') {
-                console.log('DRAW');
+                this.drawFree('mousemove', e);
             }
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
@@ -83,7 +80,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 this.mapMove('mouseup', e);
             }
             if (this.currentToolSelected === 'draw') {
-                console.log('DRAW');
+                this.drawFree('mouseup', e);
             }
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
@@ -175,7 +172,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         this.gridLayer.add(shadowRectangle);
 
         rectangle.on('dragstart', (e) => {
-            console.log('entras');
             shadowRectangle.show();
             shadowRectangle.moveToTop();
             rectangle.moveToTop();
@@ -218,10 +214,40 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     /** --------- EVENTS FOR DRAW FREE ---------- */
+    drawFree(res: string, ev: MouseEvent): void {
+        const mode = 'brush';
+
+        if (res === 'mousedown') {
+            console.log('entrasssss', res);
+            this.isPaint = true;
+            const pos = this.gridStage.getPointerPosition();
+            this.lastLine = new Konva.Line({
+                stroke: '#df4b26',
+                strokeWidth: 5,
+                globalCompositeOperation: mode === 'brush' ? 'source-over' : 'destination-out',
+                points: [pos.x, pos.y],
+            });
+            this.gridLayer.add(this.lastLine);
+        }
+
+        if (res === 'mousemove') {
+            if (this.isPaint) {
+                const pos = this.gridStage.getPointerPosition();
+                const newPoints = this.lastLine.points().concat([pos.x, pos.y]);
+                this.lastLine.points(newPoints);
+                this.gridLayer.batchDraw();
+            }
+        }
+
+        if (res === 'mouseup') {
+            this.isPaint = false;
+        }
+
+    }
 
 
     /** --------- EVENTS FOR MOVE MAP ----------- */
-    mapMove(res, ev: MouseEvent): void {
+    mapMove(res: string, ev: MouseEvent): void {
         if (res === 'mousedown') {
             this.isDraggable = true;
             this.startX = ev.clientX - this.offsetX;
