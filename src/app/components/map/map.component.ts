@@ -260,7 +260,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     drawText(res: string): void {
         if (res === 'mousedown') {
-            const pos = this.gridStage.getPointerPosition();
+            /*const pos = this.gridStage.getPointerPosition();
             const textNode = new Konva.Text({
                 text: 'Some text here',
                 x: pos.x,
@@ -328,7 +328,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 textarea.style.color = textNode.fill();
                 const rotation = textNode.rotation();
                 const transform = '';
-            });
+            });*/
         }
 
         if (res === 'mousemove') {
