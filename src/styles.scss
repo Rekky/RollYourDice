@@ -45,15 +45,9 @@ label{
   }
 }
 
-.separator{
-    position: absolute;
-    bottom: 0;
-    left:0;
-    display: flex;
-    height: 8px;
-    width: 100%;
-    cursor: n-resize;
-    background: $editorColumnsBorderColor;
+.page-list{
+    height: 200px;
+    border-bottom: 8px solid $editorColumnsBorderColor;
 }
 .list-title{
     display: grid;
@@ -81,6 +75,8 @@ label{
     flex-direction: column;
     width: 100%;
     font-size: 14px;
+    overflow: hidden;
+    overflow-y: auto;
 
     .item{
         display: flex;

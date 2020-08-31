@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Map} from '../../../classes/Map';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Page} from '../../../classes/Page';
+import {Coords} from '../../../classes/Coords';
 
 @Component({
     selector: 'app-maps-list',
@@ -20,7 +22,7 @@ export class MapsListComponent implements OnInit {
 
     ngOnInit(): void {
         this.newMapForm = new FormGroup({
-            name: new FormControl(`Map$(this.maps.length + 1)`),
+            name: new FormControl('Map' + (this.maps.length + 1)),
         });
     }
 
@@ -30,7 +32,13 @@ export class MapsListComponent implements OnInit {
     }
 
     onAddNewMap(): void {
-
+        const newMap: Map = new Map();
+        newMap.id = '-' + Math.floor(Math.random() * 1000);
+        newMap.position = new Coords(300, 10, 0);
+        newMap.name = this.newMapForm.get('name').value;
+        this.maps.push(newMap);
+        this.newMapForm.reset({name: 'Map' + (this.maps.length + 1)});
+        this.showNewMapForm = false;;
     }
 
 }

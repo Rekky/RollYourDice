@@ -15,7 +15,6 @@ export class PagesListComponent implements OnInit {
     showNewPageForm: boolean = false;
     currentPage: Page = null;
     newPageForm: FormGroup;
-    listHeight: number = 300;
 
     constructor() { }
 
@@ -35,10 +34,6 @@ export class PagesListComponent implements OnInit {
         this.pages.push(newPage);
         this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
         this.showNewPageForm = false;
-    }
-
-    setListHeight(ev: MouseEvent): void {
-        this.listHeight = ev.clientY;
     }
 
 }
