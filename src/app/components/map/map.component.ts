@@ -46,8 +46,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     lastLine: any;
 
     // KONVA LIB
-    gridLayer: any = null;
-    gridStage: any = null;
+    gridLayer: Konva.Layer = null;
+    gridStage: Konva.Stage = null;
+    selectedObjectAttrs: any;
+    activeTr: any;
 
     constructor(private mapInteractor: MapInteractor,
                 private mouseService: MouseService) { }
@@ -74,7 +76,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('ngChanges map');
         if (this.map) {
             this.gridCellWidth = this.map.grid.cellSize;
             setTimeout(() => {
@@ -107,6 +108,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             width: this.map.columns * this.map.grid.cellSize,
             height: this.map.rows * this.map.grid.cellSize
         });
+        this.gridStage.on('click', (e) => {
+            if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
+                this.activeTr.hide();
+                this.gridStage.batchDraw();
+            }
+        });
         this.mapWidth = this.map.columns * this.map.grid.cellSize;
         this.mapHeight = this.map.rows * this.map.grid.cellSize;
 
@@ -127,6 +134,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             }));
         }
 
+        this.addImageToKonva();
 
         const shadowRectangle = new Konva.Rect({
             x: 0,
@@ -179,7 +187,56 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             this.gridStage.batchDraw();
         });
         this.gridLayer.add(rectangle);
+    }
 
+    addImageToKonva(): void {
+        Konva.Image.fromURL(
+            'https://konvajs.org/assets/darth-vader.jpg',
+            (img: Konva.Image) => {
+                img.setAttrs({
+                    width: 300,
+                    height: 100,
+                    x: 80,
+                    y: 100,
+                    name: 'image',
+                    draggable: true,
+                });
+                img.on('dragstart', (e) => {
+                    const imgAttrs = e.currentTarget.attrs;
+                    imgAttrs.mapId = this.map.id;
+                    // this.mouseService.setDragImage(imgAttrs);
+                    // img.hide();
+                    img.setAttrs({opacity: 0.5});
+                });
+                img.on('dragend', () => {
+                    // this.mouseService.setDragImage(null);
+                    // img.show();
+                    img.setAttrs({opacity: 1});
+                    this.gridStage.batchDraw();
+                });
+                const tr = new Konva.Transformer({
+                    nodes: [img],
+                    padding: 5,
+                    // limit transformer size
+                    boundBoxFunc: (oldBox, newBox) => {
+                        if (newBox.width < 20) {
+                            return oldBox;
+                        }
+                        return newBox;
+                    },
+                });
+                tr.hide();
+                this.gridLayer.add(tr);
+                img.on('dblclick', (e) => {
+                    this.selectedObjectAttrs = img.getAttrs();
+                    this.activeTr = tr;
+                    tr.show();
+                    this.gridStage.batchDraw();
+                });
+                this.gridLayer.add(tr);
+                this.gridLayer.add(img);
+            }
+        );
     }
 
     drawGridBackgroundImage(): void {

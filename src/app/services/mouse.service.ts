@@ -6,7 +6,8 @@ import {Observable, BehaviorSubject, Subscriber} from 'rxjs';
 })
 export class MouseService {
 
-    mouse: BehaviorSubject<string> = new BehaviorSubject<string>('cursor');
+    private mouse: BehaviorSubject<string> = new BehaviorSubject<string>('cursor');
+    private dragImage: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     constructor() { }
 
@@ -14,8 +15,19 @@ export class MouseService {
         this.mouse.next(type);
     }
 
+    setDragImage(url: any): void {
+        this.dragImage.next(url);
+    }
+
     getMouseObservable(): Observable<string> {
         return this.mouse.asObservable();
     }
+
+    getDragImage(): Observable<any> {
+        return this.dragImage.asObservable();
+    }
+}
+
+export class DraggedImageAttributes {
 
 }

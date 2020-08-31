@@ -1,3 +1,4 @@
-<div>
+<div class="page-container">
     <app-map *ngFor="let map of page.maps" [map]="map"></app-map>
+    <img *ngIf="draggedImage !== null" id="draggedImage" [src]="draggedImage.image.src">
 </div>
