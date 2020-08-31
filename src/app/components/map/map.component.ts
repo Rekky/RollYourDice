@@ -41,9 +41,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     mapHeight: number = 500;
     gridCellWidth: number = 80;
 
-    // DRAW FREE VARS
+    // DRAW FREE
     isPaint: boolean = false;
     lastLine: any;
+
+    // DRAW TEXT
+    isWriteText: boolean = false;
 
     // KONVA LIB
     gridLayer: Konva.Layer = null;
@@ -139,8 +142,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         const shadowRectangle = new Konva.Rect({
             x: 0,
             y: 0,
-            width: this.map.grid.cellSize * 6,
-            height: this.map.grid.cellSize * 3,
+            width: this.map.grid.cellSize * 2,
+            height: this.map.grid.cellSize * 2,
             fill: '#FF7B17',
             opacity: 0.6,
             stroke: '#CF6412',
@@ -150,8 +153,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         const rectangle = new Konva.Rect({
             x: 50,
             y: 50,
-            width: this.map.grid.cellSize * 6,
-            height: this.map.grid.cellSize * 3,
+            width: this.map.grid.cellSize * 2,
+            height: this.map.grid.cellSize * 2,
             fill: '#fff',
             stroke: '#ddd',
             strokeWidth: 1,
@@ -255,16 +258,98 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         });
     }
 
+    drawText(res: string): void {
+        if (res === 'mousedown') {
+            const pos = this.gridStage.getPointerPosition();
+            const textNode = new Konva.Text({
+                text: 'Some text here',
+                x: pos.x,
+                y: pos.y,
+                fontSize: 20,
+                draggable: true,
+                width: 200,
+            });
+            this.gridLayer.add(textNode);
+
+            const tr = new Konva.Transformer({
+                node: textNode,
+                enabledAnchors: ['middle-left', 'middle-right'],
+                boundBoxFunc: (oldBox, newBox) => {
+                    newBox.width = Math.max(30, newBox.width);
+                    return newBox;
+                },
+            });
+
+            this.gridLayer.add(tr);
+            this.gridLayer.draw();
+            this.mouseService.setMouse('select');
+
+            textNode.on('transform', () => {
+                // reset scale, so only with is changing by transformer
+                textNode.setAttrs({
+                    width: textNode.width() * textNode.scaleX(),
+                    scaleX: 1,
+                });
+            });
+            textNode.on('dblclick', () => {
+                console.log('entrasssstee');
+                textNode.hide();
+                tr.hide();
+                this.gridLayer.draw();
+
+                const textPosition = textNode.absolutePosition();
+                const stageBox = this.gridStage.container().getBoundingClientRect();
+                const areaPosition = {
+                    x: stageBox.left + textPosition.x,
+                    y: stageBox.top + textPosition.y,
+                };
+
+                const textarea = document.createElement('textarea');
+                document.body.appendChild(textarea);
+                textarea.value = textNode.text();
+                textarea.style.position = 'absolute';
+                textarea.style.top = areaPosition.y + 'px';
+                textarea.style.left = areaPosition.x + 'px';
+                textarea.style.width = textNode.width() - textNode.padding() * 2 + 'px';
+                textarea.style.height =
+                textNode.height() - textNode.padding() * 2 + 5 + 'px';
+                textarea.style.fontSize = textNode.fontSize() + 'px';
+                textarea.style.border = 'none';
+                textarea.style.padding = '0px';
+                textarea.style.margin = '0px';
+                textarea.style.overflow = 'hidden';
+                textarea.style.background = 'none';
+                textarea.style.outline = 'none';
+                textarea.style.resize = 'none';
+                textarea.style.lineHeight = textNode.lineHeight();
+                textarea.style.fontFamily = textNode.fontFamily();
+                textarea.style.transformOrigin = 'left top';
+                textarea.style.textAlign = textNode.align();
+                textarea.style.color = textNode.fill();
+                const rotation = textNode.rotation();
+                const transform = '';
+            });
+        }
+
+        if (res === 'mousemove') {
+
+        }
+
+        if (res === 'mouseup') {
+
+        }
+
+    }
+
     /** --------- EVENTS FOR DRAW FREE ---------- */
     drawFree(res: string, ev: MouseEvent): void {
         const mode = 'brush';
 
         if (res === 'mousedown') {
-            console.log('entrasssss', res);
             this.isPaint = true;
             const pos = this.gridStage.getPointerPosition();
             this.lastLine = new Konva.Line({
-                stroke: '#df4b26',
+                stroke: '#ffc107',
                 strokeWidth: 5,
                 globalCompositeOperation: mode === 'brush' ? 'source-over' : 'destination-out',
                 points: [pos.x, pos.y],
@@ -332,6 +417,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             case 'draw':
                 this.drawFree('mousedown', e);
                 break;
+            case 'text':
+                this.drawText('mousedown');
+                break;
             default:
                 break;
         }
@@ -347,6 +435,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             case 'draw':
                 this.drawFree('mousemove', e);
                 break;
+            case 'text':
+                this.drawText('mousemove');
+                break;
             default:
                 break;
         }
@@ -361,6 +452,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 break;
             case 'draw':
                 this.drawFree('mouseup', e);
+                break;
+            case 'text':
+                this.drawText('mouseup');
                 break;
             default:
                 break;
