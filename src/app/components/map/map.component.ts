@@ -137,7 +137,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             }));
         }
 
-        this.addImageToKonva();
+        this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
 
         const shadowRectangle = new Konva.Rect({
             x: 0,
@@ -192,9 +192,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         this.gridLayer.add(rectangle);
     }
 
-    addImageToKonva(): void {
+    addImageToKonva(url: string): void {
         Konva.Image.fromURL(
-            'https://konvajs.org/assets/darth-vader.jpg',
+            url,
             (img: Konva.Image) => {
                 img.setAttrs({
                     width: 300,
