@@ -1,7 +1,7 @@
 <div class="list-title">
     <i class="fas fa-chevron-down cursor-pointer"></i>
     <div class="title">Pages</div>
-    <i class="fas fa-plus cursor-pointer" (click)="showNewPageForm = true"></i>
+    <i class="fas fa-plus cursor-pointer" (click)="showNewPageForm = true;currentPage=null;"></i>
 </div>
 <div class="content-list page-list">
     <div dragula="PAGES" [(dragulaModel)]="pages">

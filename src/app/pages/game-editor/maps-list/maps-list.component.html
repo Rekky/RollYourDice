@@ -1,7 +1,7 @@
 <div class="list-title">
     <i class="fas fa-chevron-down cursor-pointer"></i>
     <div class="title">Maps</div>
-    <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true"></i>
+    <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true;this.currentMap = null;"></i>
 </div>
 <div class="content-list" dragula="MAPS" [(dragulaModel)]="maps">
     <div class="item" [class.active]="currentMap === map" *ngFor="let map of maps" (click)="onSelectMap(map)">{{map.name}}</div>

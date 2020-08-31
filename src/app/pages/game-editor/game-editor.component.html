@@ -1,5 +1,5 @@
 <div class="game-editor">
-    <app-page [page]="selectedPage"></app-page>
+    <app-page *ngIf="selectedPage" [page]="selectedPage"></app-page>
 
     <div class="left-column">
         <div class="tabs adjust">
@@ -9,7 +9,7 @@
         <div class="left-column-content">
             <ng-container *ngIf="tabs == 0">
                 <app-pages-list [pages]="game.pages" (selectedPage)="onSelectedPage($event)"></app-pages-list>
-                <app-maps-list [maps]="selectedPage.maps" (selectedMap)="onSelectedMap($event)"></app-maps-list>
+                <app-maps-list  *ngIf="selectedPage" [maps]="selectedPage.maps" (selectedMap)="onSelectedMap($event)"></app-maps-list>
             </ng-container>
             <ng-container *ngIf="tabs == 1">
                 <app-editor-libraries></app-editor-libraries>

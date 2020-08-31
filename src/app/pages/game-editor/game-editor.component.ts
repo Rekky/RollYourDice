@@ -14,7 +14,7 @@ export class GameEditorComponent implements OnInit {
 
     map: Map;
     game: Game;
-    selectedPage: Page;
+    selectedPage: Page = null;
 
     tabs: number = 0;
     currentObjectSelected: any = {ev: null, object: null, type: null};
@@ -24,7 +24,7 @@ export class GameEditorComponent implements OnInit {
 
     ngOnInit(): void {
         this.game = this.gameInteractor.getGameEditor('123132123');
-        this.selectedPage = this.game.pages.find((page) => page.id === this.game.selectedPageId);
+        this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
     }
 
     updateProperties(ev): void {
@@ -33,13 +33,11 @@ export class GameEditorComponent implements OnInit {
     }
 
     onSelectedPage(ev: Page): void {
-        /*if (ev..length > 0) {
-            const mapFound = ev.find((layer) => layer.type === 'map');
-            this.map = mapFound.content;
-        } else {
-            this.map = null;
-        }*/
-        this.map = ev.maps[0];
+        console.log('onSelectedPage', ev);
+        this.selectedPage = ev;
+        if (ev.maps) {
+            this.map = ev.maps[0];
+        }
     }
 
     onSelectedMap(ev: Map): void {

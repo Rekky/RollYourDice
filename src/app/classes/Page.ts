@@ -6,9 +6,9 @@ export class Page {
     maps: Map[];
 
     constructor(id?: number, name?: any, maps?: Map[]) {
-        this.id = id ? id : -1;
-        this.name = name ? name : null;
-        this.maps = maps ? maps : null;
+        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
+        this.name = name ? name : 'new page';
+        this.maps = maps ? maps : [];
     }
 
     static fromJSON(json: any): Page {

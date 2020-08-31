@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Page} from '../../../classes/Page';
+import {Coords} from '../../../classes/Coords';
 
 @Component({
     selector: 'app-pages-list',
@@ -31,6 +32,8 @@ export class PagesListComponent implements OnInit {
 
     onAddNewPage(): void {
         const newPage: Page = new Page();
+        newPage.name = this.newPageForm.get('name').value;
+
         this.pages.push(newPage);
         this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
         this.showNewPageForm = false;

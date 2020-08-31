@@ -25,7 +25,7 @@ export class Map {
                 mastersDarkness?: number,
                 dndDiagonalSystem?: boolean,
                 zoom?: number) {
-        this.id = id ? id : -1;
+        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.name = name ? name : 'new map';
         this.grid = grid ? grid : new Grid();
         this.position = position ? position : new Coords();

@@ -33,9 +33,9 @@ export class MapsListComponent implements OnInit {
 
     onAddNewMap(): void {
         const newMap: Map = new Map();
-        newMap.id = '-' + Math.floor(Math.random() * 1000);
         newMap.position = new Coords(300, 10, 0);
         newMap.name = this.newMapForm.get('name').value;
+
         this.maps.push(newMap);
         this.newMapForm.reset({name: 'Map' + (this.maps.length + 1)});
         this.showNewMapForm = false;;
