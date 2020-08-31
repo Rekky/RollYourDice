@@ -8,7 +8,7 @@
         </div>
         <div class="left-column-content">
             <ng-container *ngIf="tabs == 0">
-                <app-pages-list [pages]="game.pages" (selectedPage)="onSelectedPage($event)"></app-pages-list>
+                <app-pages-list [pages]="game.pages" [currentPage]="selectedPage" (selectedPage)="onSelectedPage($event)"></app-pages-list>
                 <app-maps-list  *ngIf="selectedPage" [maps]="selectedPage.maps" (selectedMap)="onSelectedMap($event)"></app-maps-list>
             </ng-container>
             <ng-container *ngIf="tabs == 1">

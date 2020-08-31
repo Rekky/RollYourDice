@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Page} from '../../../classes/Page';
-import {Coords} from '../../../classes/Coords';
 
 @Component({
     selector: 'app-pages-list',
@@ -14,10 +13,10 @@ export class PagesListComponent implements OnInit {
     @Output() selectedPage: EventEmitter<Page> = new EventEmitter<Page>();
 
     showNewPageForm: boolean = false;
-    currentPage: Page = null;
+    @Input() currentPage: Page = null;
     newPageForm: FormGroup;
 
-    constructor() { }
+    constructor(private ref: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.newPageForm = new FormGroup({
