@@ -45,6 +45,56 @@ label{
   }
 }
 
+.separator{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    display: flex;
+    height: 8px;
+    width: 100%;
+    cursor: n-resize;
+    background: $editorColumnsBorderColor;
+}
+.list-title{
+    display: grid;
+    grid-template-columns: 40px auto 40px;
+    grid-template-rows: 40px;
+    align-items: center;
+    overflow: hidden;
+
+    &:hover{
+        background: darken($editorMainForeground, 5%);
+    }
+    .title{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .fas{
+        margin: 0 10px;
+    }
+}
+.content-list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 14px;
+
+    .item{
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 0 10px;
+        height: 40px;
+
+        &.active {
+            background: $editorSelectedColor;
+        }
+    }
+}
+
 // ------------ DRAGULA
 /* in-flight clone */
 .gu-mirror {

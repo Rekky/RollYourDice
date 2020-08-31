@@ -13,6 +13,7 @@ import { MapComponent } from './components/map/map.component';
 import { PagesListComponent } from './pages/game-editor/pages-list/pages-list.component';
 import {DragulaModule} from 'ng2-dragula';
 import { PageComponent } from './pages/game-editor/page/page.component';
+import { MapsListComponent } from './pages/game-editor/maps-list/maps-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PageComponent } from './pages/game-editor/page/page.component';
     EditorLibrariesComponent,
     MapComponent,
     PagesListComponent,
-    PageComponent
+    PageComponent,
+    MapsListComponent
   ],
     imports: [
         BrowserModule,

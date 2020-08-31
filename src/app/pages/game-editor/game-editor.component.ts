@@ -42,6 +42,10 @@ export class GameEditorComponent implements OnInit {
         this.map = ev.maps[0];
     }
 
+    onSelectedMap(ev: Map): void {
+
+    }
+
     onSetCurrentObjectSelected(ev): void {
         this.currentObjectSelected = ev;
         console.log(this.currentObjectSelected);

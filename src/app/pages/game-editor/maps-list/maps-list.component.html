@@ -1,0 +1,11 @@
+<div class="list-title">
+    <i class="fas fa-chevron-down cursor-pointer"></i>
+    <div class="title">Maps</div>
+    <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true"></i>
+</div>
+<div class="content-list" dragula="MAPS" [(dragulaModel)]="maps">
+    <div class="item" [class.active]="currentMap === map" *ngFor="let map of maps" (click)="onSelectMap(map)">{{map.name}}</div>
+    <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
+        <div class="item active"><input type="text" placeholder="Map ..." autofocus [formControlName]="'name'"></div>
+    </form>
+</div>
