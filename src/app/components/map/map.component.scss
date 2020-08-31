@@ -1,12 +1,20 @@
 .map-container{
-  position: absolute;
-  top: 0;
-  left:0 ;
-  right: 0;
-  bottom: 0;
-  overflow: auto;
+    position: absolute;
+    top: 0;
+    left:0 ;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
 }
 // MAP
 .map{
-  position: absolute;
+    position: absolute;
+}
+.mapbox-details{
+    font-size: 13px;
+    color: #fff;
+
+    .mapbox-details-columns{
+        color: #607d8b;
+    }
 }
