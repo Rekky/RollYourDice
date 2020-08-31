@@ -16,6 +16,7 @@ import {Map} from '../../classes/Map';
 import {Coords} from '../../classes/Coords';
 import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
+import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
 
 @Component({
     selector: 'app-map',
@@ -65,16 +66,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     ngAfterViewInit(): void {
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
-            this.stateOnMouseDown(e);
+            this.stateOnMouseAction(e, 'mousedown');
         }, false);
         this.mapEl.nativeElement.addEventListener('mousemove', (e) => {
-            this.stateOnMouseMove(e);
+            this.stateOnMouseAction(e, 'mousemove');
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
-            this.stateOnMouseUp(e);
+            this.stateOnMouseAction(e, 'mouseup');
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
-            this.stateOnMouseOut(e);
+            this.stateOnMouseAction(e, 'mouseout');
         }, false);
     }
 
@@ -138,7 +139,59 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }
 
         this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
+        this.addRectangleToKonva();
+    }
 
+    addImageToKonva(url: string): void {
+        Konva.Image.fromURL(url, (img: Konva.Image) => {
+            img.setAttrs({
+                width: 300,
+                height: 100,
+                x: 200,
+                y: 200,
+                name: 'id',
+                draggable: true,
+            });
+            img.on('dragstart', (e) => {
+                const imgAttrs = e.currentTarget.attrs;
+                imgAttrs.mapId = this.map.id;
+                // this.mouseService.setDragImage(imgAttrs);
+                // img.hide();
+                img.setAttrs({opacity: 0.5});
+            });
+            img.on('dragend', () => {
+                // this.mouseService.setDragImage(null);
+                // img.show();
+                img.setAttrs({opacity: 1});
+                this.gridStage.batchDraw();
+            });
+            img.on('dblclick', (e) => {
+                this.selectedObjectAttrs = img.getAttrs();
+                this.activeTr = tr;
+                tr.show();
+                this.gridStage.batchDraw();
+            });
+
+            const tr = new Konva.Transformer({
+                nodes: [img],
+                padding: 5,
+                // limit transformer size
+                boundBoxFunc: (oldBox, newBox) => {
+                    if (newBox.width < 20) {
+                        return oldBox;
+                    }
+                    return newBox;
+                },
+            });
+            tr.hide();
+
+            this.gridLayer.add(tr);
+            this.gridLayer.add(img);
+            this.gridStage.batchDraw();
+        });
+    }
+
+    addRectangleToKonva(): void {
         const shadowRectangle = new Konva.Rect({
             x: 0,
             y: 0,
@@ -190,56 +243,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             this.gridStage.batchDraw();
         });
         this.gridLayer.add(rectangle);
-    }
-
-    addImageToKonva(url: string): void {
-        Konva.Image.fromURL(
-            url,
-            (img: Konva.Image) => {
-                img.setAttrs({
-                    width: 300,
-                    height: 100,
-                    x: 80,
-                    y: 100,
-                    name: 'image',
-                    draggable: true,
-                });
-                img.on('dragstart', (e) => {
-                    const imgAttrs = e.currentTarget.attrs;
-                    imgAttrs.mapId = this.map.id;
-                    // this.mouseService.setDragImage(imgAttrs);
-                    // img.hide();
-                    img.setAttrs({opacity: 0.5});
-                });
-                img.on('dragend', () => {
-                    // this.mouseService.setDragImage(null);
-                    // img.show();
-                    img.setAttrs({opacity: 1});
-                    this.gridStage.batchDraw();
-                });
-                const tr = new Konva.Transformer({
-                    nodes: [img],
-                    padding: 5,
-                    // limit transformer size
-                    boundBoxFunc: (oldBox, newBox) => {
-                        if (newBox.width < 20) {
-                            return oldBox;
-                        }
-                        return newBox;
-                    },
-                });
-                tr.hide();
-                this.gridLayer.add(tr);
-                img.on('dblclick', (e) => {
-                    this.selectedObjectAttrs = img.getAttrs();
-                    this.activeTr = tr;
-                    tr.show();
-                    this.gridStage.batchDraw();
-                });
-                this.gridLayer.add(tr);
-                this.gridLayer.add(img);
-            }
-        );
     }
 
     drawGridBackgroundImage(): void {
@@ -407,67 +410,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ////////////////////////////////////////////////
-    stateOnMouseDown(e: MouseEvent): void {
+    stateOnMouseAction(e: MouseEvent, type: string): void {
         switch (this.currentToolSelected) {
             case 'cursor':
                 break;
             case 'move':
-                this.mapMove('mousedown', e);
+                this.mapMove(type, e);
                 break;
             case 'draw':
-                this.drawFree('mousedown', e);
+                this.drawFree(type, e);
                 break;
             case 'text':
-                this.drawText('mousedown');
-                break;
-            default:
-                break;
-        }
-    }
-
-    stateOnMouseMove(e: MouseEvent): void {
-        switch (this.currentToolSelected) {
-            case 'cursor':
-                break;
-            case 'move':
-                this.mapMove('mousemove', e);
-                break;
-            case 'draw':
-                this.drawFree('mousemove', e);
-                break;
-            case 'text':
-                this.drawText('mousemove');
-                break;
-            default:
-                break;
-        }
-    }
-
-    stateOnMouseUp(e: MouseEvent): void {
-        switch (this.currentToolSelected) {
-            case 'cursor':
-                break;
-            case 'move':
-                this.mapMove('mouseup', e);
-                break;
-            case 'draw':
-                this.drawFree('mouseup', e);
-                break;
-            case 'text':
-                this.drawText('mouseup');
-                break;
-            default:
-                break;
-        }
-    }
-
-    stateOnMouseOut(e: MouseEvent): void {
-        switch (this.currentToolSelected) {
-            case 'cursor':
-                break;
-            case 'move':
-                break;
-            case 'draw':
+                this.drawText(type);
                 break;
             default:
                 break;

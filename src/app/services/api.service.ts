@@ -14,7 +14,7 @@ export class ApiService {
         const page: any = {
             id: 'page-id-1',
             name: 'entrada cueva',
-            maps: [map, map2]
+            maps: [map]
         };
         const page2: any = {
             id: 'page-id-2',
