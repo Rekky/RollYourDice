@@ -65,6 +65,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit(): void {
+        this.initializeMap();
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.stateOnMouseAction(e, 'mousedown');
         }, false);
@@ -90,6 +91,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }
     }
 
+    initializeMap(): void {
+        this.gridLayer = new Konva.Layer();
+        this.gridStage = new Konva.Stage({
+            container: 'map' + this.map.id,
+            width: this.map.columns * this.map.grid.cellSize,
+            height: this.map.rows * this.map.grid.cellSize
+        });
+        this.gridStage.on('click', (e) => {
+            if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
+                this.activeTr.hide();
+                this.gridStage.batchDraw();
+            }
+        });
+    }
+
     setCurrentObjectSelected(ev, object, type): void {
         ev.stopPropagation();
 
@@ -106,18 +122,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     drawGrid(): void {
-        this.gridLayer = new Konva.Layer();
-        this.gridStage = new Konva.Stage({
-            container: 'map' + this.map.id,
-            width: this.map.columns * this.map.grid.cellSize,
-            height: this.map.rows * this.map.grid.cellSize
-        });
-        this.gridStage.on('click', (e) => {
-            if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
-                this.activeTr.hide();
-                this.gridStage.batchDraw();
-            }
-        });
         this.mapWidth = this.map.columns * this.map.grid.cellSize;
         this.mapHeight = this.map.rows * this.map.grid.cellSize;
 
