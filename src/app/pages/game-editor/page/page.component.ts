@@ -25,7 +25,7 @@ export class PageComponent implements OnInit, OnDestroy {
     constructor(private mouseService: MouseService) { }
 
     ngOnInit(): void {
-        this.getDragImageUrlSubscription = this.mouseService.getDragImage().subscribe((res => {
+        this.getDragImageUrlSubscription = this.mouseService.getDragImageObservable().subscribe((res => {
             this.draggedImage = res;
         }));
     }

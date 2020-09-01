@@ -1,15 +1,5 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit,
+        Output, SimpleChanges, ViewChild } from '@angular/core';
 import Konva from 'konva';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import {Map} from '../../classes/Map';
@@ -17,6 +7,7 @@ import {Coords} from '../../classes/Coords';
 import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
 import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
+import {CursorOptions, Mouse, MouseOptions, PaintOptions} from '../../classes/Mouse';
 
 @Component({
     selector: 'app-map',
@@ -43,7 +34,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     gridCellWidth: number = 80;
 
     // DRAW FREE
-    isPaint: boolean = false;
+    isPainting: boolean = false;
     lastLine: any;
 
     // DRAW TEXT
@@ -54,29 +45,41 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     gridStage: Konva.Stage = null;
     selectedObjectAttrs: any;
     activeTr: any;
+    mouse: Mouse;
+
+    mouseOptions: MouseOptions = new MouseOptions();
 
     constructor(private mapInteractor: MapInteractor,
                 private mouseService: MouseService) { }
 
     ngOnInit(): void {
         this.mouseService.getMouseObservable().subscribe((res) => {
-            this.currentToolSelected = res;
+            this.mouse = res;
         });
     }
 
     ngAfterViewInit(): void {
         this.initializeMap();
+        this.mouseOptions.paintOptions = new PaintOptions(this.gridStage, this.gridLayer, this.lastLine, this.isPainting);
+        this.mouseOptions.cursorOptions.map = this.map;
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
-            this.stateOnMouseAction(e, 'mousedown');
+            this.mouseOptions.paintOptions.isPainting = true;
+            this.mouseOptions.cursorOptions.isDragging = true;
+            this.mouseOptions.cursorOptions.ev = e;
+            this.mouse.mouseDown(this.mouseOptions);
         }, false);
+
         this.mapEl.nativeElement.addEventListener('mousemove', (e) => {
-            this.stateOnMouseAction(e, 'mousemove');
+            this.mouseOptions.cursorOptions.ev = e;
+            this.mouse.mouseMove(this.mouseOptions);
         }, false);
+
         this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
-            this.stateOnMouseAction(e, 'mouseup');
+            this.mouseOptions.paintOptions.isPainting = false;
+            this.mouseOptions.cursorOptions.isDragging = false;
+            this.mouse.mouseUp(this.mouseOptions);
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
-            this.stateOnMouseAction(e, 'mouseout');
         }, false);
     }
 
@@ -348,61 +351,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     }
 
-    /** --------- EVENTS FOR DRAW FREE ---------- */
-    drawFree(res: string, ev: MouseEvent): void {
-        const mode = 'brush';
-
-        if (res === 'mousedown') {
-            this.isPaint = true;
-            const pos = this.gridStage.getPointerPosition();
-            this.lastLine = new Konva.Line({
-                stroke: '#ffc107',
-                strokeWidth: 5,
-                globalCompositeOperation: mode === 'brush' ? 'source-over' : 'destination-out',
-                points: [pos.x, pos.y],
-            });
-            this.gridLayer.add(this.lastLine);
-        }
-
-        if (res === 'mousemove') {
-            if (this.isPaint) {
-                const pos = this.gridStage.getPointerPosition();
-                const newPoints = this.lastLine.points().concat([pos.x, pos.y]);
-                this.lastLine.points(newPoints);
-                this.gridLayer.batchDraw();
-            }
-        }
-
-        if (res === 'mouseup') {
-            this.isPaint = false;
-        }
-
-    }
-
-
-    /** --------- EVENTS FOR MOVE MAP ----------- */
-    mapMove(res: string, ev: MouseEvent): void {
-        if (res === 'mousedown') {
-            this.isDraggable = true;
-            this.startX = ev.clientX - this.offsetX;
-            this.startY = ev.clientY - this.offsetY;
-        }
-
-        if (res === 'mousemove') {
-            if (this.isDraggable) {
-                this.map.position.x = ev.clientX - this.startX;
-                this.map.position.y = ev.clientY - this.startY;
-            }
-            this.offsetX = this.map.position.x;
-            this.offsetY = this.map.position.y;
-        }
-
-        if (res === 'mouseup') {
-            this.isDraggable = false;
-            this.mapInteractor.setMapPosition(this.map.id, this.map.position);
-        }
-    }
-
     setScale(ev): void {
         /*if (ev.deltaY < 0) {
             this.map.scale = this.map.scale + 0.1;
@@ -411,24 +359,5 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 this.map.scale = this.map.scale - 0.1;
             }
         }*/
-    }
-
-    ////////////////////////////////////////////////
-    stateOnMouseAction(e: MouseEvent, type: string): void {
-        switch (this.currentToolSelected) {
-            case 'cursor':
-                break;
-            case 'move':
-                this.mapMove(type, e);
-                break;
-            case 'draw':
-                this.drawFree(type, e);
-                break;
-            case 'text':
-                this.drawText(type);
-                break;
-            default:
-                break;
-        }
     }
 }

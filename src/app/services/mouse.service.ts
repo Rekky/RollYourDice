@@ -1,17 +1,18 @@
 import {ElementRef, Injectable} from '@angular/core';
 import {Observable, BehaviorSubject, Subscriber} from 'rxjs';
+import {Mouse} from '../classes/Mouse';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MouseService {
 
-    private mouse: BehaviorSubject<string> = new BehaviorSubject<string>('cursor');
+    private mouse: BehaviorSubject<Mouse> = new BehaviorSubject<Mouse>(new Mouse());
     private dragImage: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     constructor() { }
 
-    setMouse(type: string): void {
+    setMouse(type: Mouse): void {
         this.mouse.next(type);
     }
 
@@ -19,11 +20,11 @@ export class MouseService {
         this.dragImage.next(url);
     }
 
-    getMouseObservable(): Observable<string> {
+    getMouseObservable(): Observable<Mouse> {
         return this.mouse.asObservable();
     }
 
-    getDragImage(): Observable<any> {
+    getDragImageObservable(): Observable<any> {
         return this.dragImage.asObservable();
     }
 }
