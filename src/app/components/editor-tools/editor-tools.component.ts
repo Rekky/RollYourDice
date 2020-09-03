@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MouseService} from '../../services/mouse.service';
-import {Mouse, Cursor, Brush, MoveMap} from 'src/app/classes/Mouse';
+import {Mouse, Pointer, Brush, MoveMap, Text} from 'src/app/classes/Mouse';
 
 @Component({
     selector: 'app-editor-tools',
@@ -20,18 +20,22 @@ export class EditorToolsComponent implements OnInit {
 
     onToolSelected(type: string): void {
         this.currentToolSelected = type;
+        console.log('tool-selected', this.currentToolSelected);
         switch (type) {
             case 'cursor':
-                this.mouseService.setMouse(new Cursor());
+                this.mouseService.setMouse(new Pointer(null, null));
                 break;
             case 'moveMap':
-                this.mouseService.setMouse(new MoveMap());
+                this.mouseService.setMouse(new MoveMap(null, null));
                 break;
             case 'brush':
-                this.mouseService.setMouse(new Brush());
+                this.mouseService.setMouse(new Brush(null, null));
+                break;
+            case 'text':
+                this.mouseService.setMouse(new Text(null, null));
                 break;
             default:
-                this.mouseService.setMouse(new Cursor());
+                this.mouseService.setMouse(new Pointer(null, null));
                 break;
         }
     }

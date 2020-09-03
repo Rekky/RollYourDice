@@ -7,7 +7,7 @@ import {Coords} from '../../classes/Coords';
 import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
 import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
-import {CursorOptions, Mouse, MouseOptions, PaintOptions} from '../../classes/Mouse';
+import {PointerOptions, Mouse, MouseOptions, PaintOptions, TextOptions} from '../../classes/Mouse';
 
 @Component({
     selector: 'app-map',
@@ -33,6 +33,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     // DRAW TEXT
     isWriteText: boolean = false;
+    lastText: any;
 
     // KONVA LIB
     gridLayer: Konva.Layer = null;
@@ -41,7 +42,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     activeTr: any;
     mouse: Mouse;
 
-    mouseOptions: MouseOptions = new MouseOptions();
+    mouseOptions: MouseOptions;
 
     constructor(private mapInteractor: MapInteractor,
                 private mouseService: MouseService) { }
@@ -55,28 +56,27 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
-        this.mouseOptions.paintOptions = new PaintOptions(this.gridStage, this.gridLayer, this.lastLine, false);
-        this.mouseOptions.cursorOptions.map = this.map;
 
         // SETEAMOS LISTENERS EN EL MAP
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
-            this.mouseOptions.paintOptions.isPainting = true;
-            this.mouseOptions.cursorOptions.isDragging = true;
-            this.mouseOptions.cursorOptions.ev = e;
+            this.mouseOptions.isActive = true;
+            this.mouseOptions.pointerOptions.ev = e;
             this.mouse.mouseDown(this.mouseOptions);
         }, false);
 
         this.mapEl.nativeElement.addEventListener('mousemove', (e) => {
-            this.mouseOptions.cursorOptions.ev = e;
+            this.mouseOptions.pointerOptions.ev = e;
             this.mouse.mouseMove(this.mouseOptions);
         }, false);
 
         this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
-            this.mouseOptions.paintOptions.isPainting = false;
-            this.mouseOptions.cursorOptions.isDragging = false;
+            this.mouseOptions.isActive = false;
+            this.mouseOptions.pointerOptions.ev = e;
+            this.mouse.mouseUp(this.mouseOptions);
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
-            this.mouseOptions.cursorOptions.isDragging = false;
+            this.mouseOptions.isActive = false;
+            this.mouseOptions.pointerOptions.ev = e;
             this.mouse.mouseOut(this.mouseOptions);
         }, false);
     }
@@ -105,6 +105,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 this.gridStage.batchDraw();
             }
         });
+
+        this.mouseOptions = new MouseOptions(this.gridStage, this.gridLayer);
+        this.mouseOptions.paintOptions = new PaintOptions(this.lastLine);
+        this.mouseOptions.textOptions = new TextOptions(this.lastText);
+        this.mouseOptions.pointerOptions.map = this.map;
     }
 
     setCurrentObjectSelected(ev, object, type): void {

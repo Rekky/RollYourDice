@@ -5,41 +5,50 @@ import {Coords} from './Coords';
 import {Map} from './Map';
 
 export class Mouse {
+    isActive: boolean;
+    stage: Konva.Stage;
+    layer: Konva.Layer;
+
+    constructor(stage: Konva.Stage, layer: Konva.Layer, isActive?: boolean) {
+        this.isActive = isActive ? isActive : false;
+        this.stage = stage;
+        this.layer = layer;
+    }
     mouseDown(options: MouseOptions): void {}
     mouseMove(options: MouseOptions): void {}
     mouseUp(options: MouseOptions): void {}
     mouseOut(options: MouseOptions): void {}
 }
 
-export class Cursor extends Mouse {
+export class Pointer extends Mouse {
     mouseDown(options: MouseOptions): void {
         super.mouseDown(options);
-        options.cursorOptions.startCoords.x = options.cursorOptions.ev.clientX - options.cursorOptions.offsetCoords.x;
-        options.cursorOptions.startCoords.y = options.cursorOptions.ev.clientY - options.cursorOptions.offsetCoords.y;
+        options.pointerOptions.startCoords.x = options.pointerOptions.ev.clientX - options.pointerOptions.offsetCoords.x;
+        options.pointerOptions.startCoords.y = options.pointerOptions.ev.clientY - options.pointerOptions.offsetCoords.y;
     }
 
     mouseMove(options: MouseOptions): void {
         super.mouseMove(options);
-        options.cursorOptions.offsetCoords.x = options.cursorOptions.ev.clientX - options.cursorOptions.startCoords.x;
-        options.cursorOptions.offsetCoords.y = options.cursorOptions.ev.clientY - options.cursorOptions.startCoords.y;
+        options.pointerOptions.offsetCoords.x = options.pointerOptions.ev.clientX - options.pointerOptions.startCoords.x;
+        options.pointerOptions.offsetCoords.y = options.pointerOptions.ev.clientY - options.pointerOptions.startCoords.y;
     }
 }
 
 export class MoveMap extends Mouse {
     mouseDown(options: MouseOptions): void {
         super.mouseDown(options);
-        options.cursorOptions.startCoords.x = options.cursorOptions.ev.clientX - options.cursorOptions.offsetCoords.x;
-        options.cursorOptions.startCoords.y = options.cursorOptions.ev.clientY - options.cursorOptions.offsetCoords.y;
+        options.pointerOptions.startCoords.x = options.pointerOptions.ev.clientX - options.pointerOptions.offsetCoords.x;
+        options.pointerOptions.startCoords.y = options.pointerOptions.ev.clientY - options.pointerOptions.offsetCoords.y;
     }
 
     mouseMove(options: MouseOptions): void {
         super.mouseMove(options);
-        if (options.cursorOptions.isDragging) {
-            options.cursorOptions.map.position.x = options.cursorOptions.ev.clientX - options.cursorOptions.startCoords.x;
-            options.cursorOptions.map.position.y = options.cursorOptions.ev.clientY - options.cursorOptions.startCoords.y;
+        if (options.isActive) {
+            options.pointerOptions.map.position.x = options.pointerOptions.ev.clientX - options.pointerOptions.startCoords.x;
+            options.pointerOptions.map.position.y = options.pointerOptions.ev.clientY - options.pointerOptions.startCoords.y;
         }
-        options.cursorOptions.offsetCoords.x = options.cursorOptions.map.position.x;
-        options.cursorOptions.offsetCoords.y = options.cursorOptions.map.position.y;
+        options.pointerOptions.offsetCoords.x = options.pointerOptions.map.position.x;
+        options.pointerOptions.offsetCoords.y = options.pointerOptions.map.position.y;
     }
 
     mouseUp(options: MouseOptions): void {
@@ -54,63 +63,100 @@ export class MoveMap extends Mouse {
 export class Brush extends Mouse {
     mouseDown(options: MouseOptions): void {
         super.mouseDown(options);
-        const pos = options.paintOptions.stage.getPointerPosition();
+        const pos = options.stage.getPointerPosition();
         options.paintOptions.line = new Konva.Line({
             stroke: '#ffc107',
             strokeWidth: 5,
             globalCompositeOperation: 'source-over',
             points: [pos.x, pos.y],
         });
-        options.paintOptions.layer.add(options.paintOptions.line);
+        options.layer.add(options.paintOptions.line);
     }
 
     mouseMove(options: MouseOptions): void {
-        if (options.paintOptions.isPainting) {
+        if (options.isActive) {
             super.mouseMove(options);
-            const pos = options.paintOptions.stage.getPointerPosition();
+            const pos = options.stage.getPointerPosition();
             const newPoints = options.paintOptions.line.points().concat([pos.x, pos.y]);
             options.paintOptions.line.points(newPoints);
-            options.paintOptions.layer.batchDraw();
+            options.layer.batchDraw();
         }
+    }
+}
+
+export class Text extends Mouse {
+    mouseDown(options: MouseOptions): void {
+        super.mouseDown(options);
+        const pos = options.stage.getPointerPosition();
+        options.textOptions.text = new Konva.Text({
+            text: 'Some text here',
+            x: pos.x,
+            y: pos.y,
+            fontSize: 20,
+            draggable: true,
+            width: 200,
+        });
+        options.layer.add(options.textOptions.text);
+
+        /*const transformer = new Konva.Transformer({
+            node: options.textOptions.text,
+            enabledAnchors: ['middle-left', 'middle-right'],
+            boundBoxFunc: (oldBox, newBox) => {
+                newBox.width = Math.max(30, newBox.width);
+                return newBox;
+            },
+        });
+
+        options.layer.add(transformer);*/
+        options.layer.batchDraw();
     }
 }
 
 export class MouseOptions {
     paintOptions: PaintOptions;
-    cursorOptions: CursorOptions;
+    pointerOptions: PointerOptions;
+    textOptions: TextOptions;
+    stage: Konva.Stage;
+    layer: Konva.Layer;
+    isActive: boolean;
 
-    constructor(cursorOptions?: CursorOptions, paintOptions?: PaintOptions) {
-        this.cursorOptions = cursorOptions ? cursorOptions : new CursorOptions();
+    constructor(stage: Konva.Stage, layer: Konva.Layer, isActive?: boolean,
+                pointerOptions?: PointerOptions, paintOptions?: PaintOptions, textOptions?: TextOptions) {
+        this.pointerOptions = pointerOptions ? pointerOptions : new PointerOptions();
         this.paintOptions = paintOptions ? paintOptions : new PaintOptions();
+        this.textOptions = textOptions ? textOptions : new TextOptions();
+        this.stage = stage;
+        this.layer = layer;
+        this.isActive = isActive;
     }
 }
 
-export class CursorOptions {
+export class PointerOptions {
     ev?: MouseEvent;
     startCoords?: Coords;
     offsetCoords?: Coords;
     map?: Map;
-    isDragging?: boolean;
 
-    constructor(ev?: MouseEvent, startCoords?: Coords, offsetCoords?: Coords, map?: Map, isDragging?: boolean) {
+    constructor(ev?: MouseEvent, startCoords?: Coords, offsetCoords?: Coords, map?: Map) {
         this.startCoords = startCoords ? startCoords : new Coords();
         this.offsetCoords = offsetCoords ? offsetCoords : new Coords();
         this.map = map ? map : new Map();
         this.ev = ev ? ev : null;
-        this.isDragging = isDragging ? isDragging : false;
     }
 }
 
 export class PaintOptions {
-    stage?: Konva.Stage;
-    layer?: Konva.Layer;
     line?: Konva.Line;
-    isPainting?: boolean;
 
-    constructor(stage?: Konva.Stage, layer?: Konva.Layer, line?: Konva.Line, isPainting?: boolean) {
-        this.stage = stage ? stage : null;
-        this.layer = layer ? layer : null;
+    constructor(line?: Konva.Line) {
         this.line = line ? line : null;
-        this.isPainting = isPainting ? isPainting : false;
+    }
+}
+
+export class TextOptions {
+    text?: Konva.Text;
+
+    constructor(text?: Konva.Text) {
+        this.text = text ? text : null;
     }
 }
