@@ -9,10 +9,10 @@ export class Mouse {
     stage: Konva.Stage;
     layer: Konva.Layer;
 
-    constructor(stage: Konva.Stage, layer: Konva.Layer, isActive?: boolean) {
+    constructor(stage?: Konva.Stage, layer?: Konva.Layer, isActive?: boolean) {
         this.isActive = isActive ? isActive : false;
-        this.stage = stage;
-        this.layer = layer;
+        this.stage = stage ? stage : null;
+        this.layer = layer ? layer : null;
     }
     mouseDown(options: MouseOptions): void {}
     mouseMove(options: MouseOptions): void {}

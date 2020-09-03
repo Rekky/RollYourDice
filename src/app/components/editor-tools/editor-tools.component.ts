@@ -23,19 +23,19 @@ export class EditorToolsComponent implements OnInit {
         console.log('tool-selected', this.currentToolSelected);
         switch (type) {
             case 'cursor':
-                this.mouseService.setMouse(new Pointer(null, null));
+                this.mouseService.setMouse(new Pointer());
                 break;
             case 'moveMap':
-                this.mouseService.setMouse(new MoveMap(null, null));
+                this.mouseService.setMouse(new MoveMap());
                 break;
             case 'brush':
-                this.mouseService.setMouse(new Brush(null, null));
+                this.mouseService.setMouse(new Brush());
                 break;
             case 'text':
-                this.mouseService.setMouse(new Text(null, null));
+                this.mouseService.setMouse(new Text());
                 break;
             default:
-                this.mouseService.setMouse(new Pointer(null, null));
+                this.mouseService.setMouse(new Pointer());
                 break;
         }
     }
