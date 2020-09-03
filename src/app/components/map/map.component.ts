@@ -59,9 +59,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit(): void {
+        // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
         this.mouseOptions.paintOptions = new PaintOptions(this.gridStage, this.gridLayer, this.lastLine, this.isPainting);
         this.mouseOptions.cursorOptions.map = this.map;
+
+        // SETEAMOS LISTENERS EN EL MAP
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.mouseOptions.paintOptions.isPainting = true;
             this.mouseOptions.cursorOptions.isDragging = true;
@@ -80,6 +83,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             this.mouse.mouseUp(this.mouseOptions);
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
+            this.mouseOptions.cursorOptions.isDragging = false;
+            this.mouse.mouseOut(this.mouseOptions);
         }, false);
     }
 

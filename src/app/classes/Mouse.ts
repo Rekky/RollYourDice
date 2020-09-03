@@ -1,6 +1,4 @@
 import Konva from 'konva';
-import {BrushInteractor} from '../interactors/BrushInteractor';
-import {StageConfig} from 'konva/types/Stage';
 import {Coords} from './Coords';
 import {Map} from './Map';
 
@@ -8,6 +6,7 @@ export class Mouse {
     mouseDown(options: MouseOptions): void {}
     mouseMove(options: MouseOptions): void {}
     mouseUp(options: MouseOptions): void {}
+    mouseOut(options: MouseOptions): void {}
 }
 
 export class Cursor extends Mouse {
@@ -48,6 +47,10 @@ export class MoveMap extends Mouse {
 
     mouseUp(options: MouseOptions): void {
         super.mouseUp(options);
+    }
+
+    mouseOut(options: MouseOptions): void {
+        super.mouseOut(options);
     }
 }
 

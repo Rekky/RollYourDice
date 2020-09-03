@@ -28,12 +28,11 @@ export class GameEditorComponent implements OnInit {
     }
 
     updateProperties(ev): void {
-        console.log('update', ev);
+        console.log('updateProperties', ev);
         this.map = {...ev};
     }
 
     onSelectedPage(ev: Page): void {
-        console.log('onSelectedPage', ev);
         this.selectedPage = ev;
         if (ev.maps) {
             this.map = ev.maps[0];

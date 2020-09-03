@@ -12,7 +12,7 @@ export class GameInteractor {
     }
 
     getGameEditor(id: string): Game {
-        console.log('gameinteractor', this.gameService.getGameEditor(id));
+        console.log('GAME_INTERACTOR', this.gameService.getGameEditor(id));
         return this.gameService.getGameEditor(id);
     }
 }
