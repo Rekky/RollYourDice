@@ -19,7 +19,7 @@ export class ApiService {
         const page2: any = {
             id: 'page_id_2',
             name: 'salida cueva',
-            maps: [map2]
+            maps: [map]
         };
 
         const game: any = {

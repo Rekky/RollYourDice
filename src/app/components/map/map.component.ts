@@ -24,17 +24,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     _currentObjectSelected: any = null;
 
     // MAP VARS
-    private isDraggable: boolean = false;
-    private startX: number;
-    private startY: number;
-    private offsetX: number = 0;
-    private offsetY: number = 0;
     mapWidth: number = 500;
     mapHeight: number = 500;
     gridCellWidth: number = 80;
 
     // DRAW FREE
-    isPainting: boolean = false;
     lastLine: any;
 
     // DRAW TEXT
@@ -60,7 +54,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
     ngAfterViewInit(): void {
         this.initializeMap();
-        this.mouseOptions.paintOptions = new PaintOptions(this.gridStage, this.gridLayer, this.lastLine, this.isPainting);
+        this.mouseOptions.paintOptions = new PaintOptions(this.gridStage, this.gridLayer, this.lastLine, false);
         this.mouseOptions.cursorOptions.map = this.map;
         this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.mouseOptions.paintOptions.isPainting = true;
@@ -77,7 +71,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
             this.mouseOptions.paintOptions.isPainting = false;
             this.mouseOptions.cursorOptions.isDragging = false;
-            this.mouse.mouseUp(this.mouseOptions);
         }, false);
         this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
         }, false);
