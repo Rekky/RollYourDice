@@ -98,7 +98,7 @@ export class Text extends Mouse {
         });
         options.layer.add(options.textOptions.text);
 
-        /*const transformer = new Konva.Transformer({
+        const transformer = new Konva.Transformer({
             node: options.textOptions.text,
             enabledAnchors: ['middle-left', 'middle-right'],
             boundBoxFunc: (oldBox, newBox) => {
@@ -107,7 +107,7 @@ export class Text extends Mouse {
             },
         });
 
-        options.layer.add(transformer);*/
+        options.layer.add(transformer);
         options.layer.batchDraw();
     }
 }
