@@ -1,4 +1,6 @@
 import Konva from 'konva';
+import {BrushInteractor} from '../interactors/BrushInteractor';
+import {StageConfig} from 'konva/types/Stage';
 import {Coords} from './Coords';
 import {Map} from './Map';
 
@@ -21,16 +23,11 @@ export class Cursor extends Mouse {
         options.cursorOptions.offsetCoords.x = options.cursorOptions.ev.clientX - options.cursorOptions.startCoords.x;
         options.cursorOptions.offsetCoords.y = options.cursorOptions.ev.clientY - options.cursorOptions.startCoords.y;
     }
-
-    mouseUp(options: MouseOptions): void {
-        super.mouseUp(options);
-    }
 }
 
 export class MoveMap extends Mouse {
     mouseDown(options: MouseOptions): void {
         super.mouseDown(options);
-        console.log('options =', options);
         options.cursorOptions.startCoords.x = options.cursorOptions.ev.clientX - options.cursorOptions.offsetCoords.x;
         options.cursorOptions.startCoords.y = options.cursorOptions.ev.clientY - options.cursorOptions.offsetCoords.y;
     }
