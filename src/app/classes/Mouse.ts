@@ -99,7 +99,7 @@ export class Text extends Mouse {
         options.layer.add(options.textOptions.text);
 
         const transformer = new Konva.Transformer({
-            node: options.textOptions.text,
+            nodes: [options.textOptions.text],
             enabledAnchors: ['middle-left', 'middle-right'],
             boundBoxFunc: (oldBox, newBox) => {
                 newBox.width = Math.max(30, newBox.width);
