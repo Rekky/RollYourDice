@@ -9,21 +9,21 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./editor-tools.component.scss']
 })
 export class EditorToolsComponent implements OnInit, OnDestroy {
-
-    currentToolSelected: string = 'cursor';
+    currentToolSelected: string = 'pointer';
     getMouseObservableSubscription: Subscription;
-    mouse: Mouse;
 
     constructor(private mouseService: MouseService) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
-            // this.mouse = res;
+            if (res) {
+                this.currentToolSelected = res.state;
+            }
         });
-        this.onToolSelected('cursor');
+        this.onToolSelected('pointer');
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.getMouseObservableSubscription) {
             this.getMouseObservableSubscription.unsubscribe();
         }
@@ -32,7 +32,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     onToolSelected(type: string): void {
         this.currentToolSelected = type;
         switch (type) {
-            case 'cursor':
+            case 'pointer':
                 this.mouseService.setMouse(new Pointer());
                 break;
             case 'moveMap':

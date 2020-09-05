@@ -8,6 +8,7 @@ export class Mouse {
     isActive: boolean;
     stage: Konva.Stage;
     layer: Konva.Layer;
+    state: string;
 
     constructor(stage?: Konva.Stage, layer?: Konva.Layer, isActive?: boolean) {
         this.isActive = isActive ? isActive : false;
@@ -21,6 +22,8 @@ export class Mouse {
 }
 
 export class Pointer extends Mouse {
+    state: string = 'pointer';
+
     mouseDown(options: MouseOptions): void {
         super.mouseDown(options);
         options.pointerOptions.startCoords.x = options.pointerOptions.ev.clientX - options.pointerOptions.offsetCoords.x;
@@ -35,6 +38,8 @@ export class Pointer extends Mouse {
 }
 
 export class MoveMap extends Mouse {
+    state: string = 'moveMap';
+
     mouseDown(options: MouseOptions): void {
         super.mouseDown(options);
         options.pointerOptions.startCoords.x = options.pointerOptions.ev.clientX - options.pointerOptions.offsetCoords.x;
@@ -61,6 +66,8 @@ export class MoveMap extends Mouse {
 }
 
 export class Brush extends Mouse {
+    state: string = 'brush';
+
     mouseDown(options: MouseOptions): void {
         super.mouseDown(options);
         const pos = options.stage.getPointerPosition();
@@ -85,6 +92,8 @@ export class Brush extends Mouse {
 }
 
 export class Text extends Mouse {
+    state: string = 'text';
+
     mouseDown(options: MouseOptions): Pointer {
         super.mouseDown(options);
         const pos = options.stage.getPointerPosition();
