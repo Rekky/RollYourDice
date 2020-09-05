@@ -14,7 +14,7 @@ export class Mouse {
         this.stage = stage ? stage : null;
         this.layer = layer ? layer : null;
     }
-    mouseDown(options: MouseOptions): void {}
+    mouseDown(options: MouseOptions): void | Pointer {}
     mouseMove(options: MouseOptions): void {}
     mouseUp(options: MouseOptions): void {}
     mouseOut(options: MouseOptions): void {}
@@ -85,7 +85,7 @@ export class Brush extends Mouse {
 }
 
 export class Text extends Mouse {
-    mouseDown(options: MouseOptions): void {
+    mouseDown(options: MouseOptions): Pointer {
         super.mouseDown(options);
         const pos = options.stage.getPointerPosition();
         options.textOptions.text = new Konva.Text({
@@ -111,15 +111,13 @@ export class Text extends Mouse {
         options.layer.batchDraw();
 
         options.textOptions.text.on('transform', () => {
-            // with enabled anchors we can only change scaleX
-            // so we don't need to reset height
-            // just width
             options.textOptions.text.setAttrs({
                 width: Math.max(options.textOptions.text.width() * options.textOptions.text.scaleX(), 30),
                 scaleX: 1,
                 scaleY: 1,
             });
         });
+        return new Pointer();
     }
 }
 
@@ -159,15 +157,15 @@ export class PointerOptions {
 export class PaintOptions {
     line?: Konva.Line;
 
-    constructor(line?: Konva.Line) {
-        this.line = line ? line : null;
+    constructor() {
+        this.line = null;
     }
 }
 
 export class TextOptions {
     text?: Konva.Text;
 
-    constructor(text?: Konva.Text) {
-        this.text = text ? text : null;
+    constructor() {
+        this.text = null;
     }
 }

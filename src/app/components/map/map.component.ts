@@ -29,13 +29,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     mapHeight: number = 500;
     gridCellWidth: number = 80;
 
-    // DRAW FREE
-    lastLine: any;
-
-    // DRAW TEXT
-    isWriteText: boolean = false;
-    lastText: any;
-
     // KONVA LIB
     gridLayer: Konva.Layer = null;
     gridStage: Konva.Stage = null;
@@ -55,7 +48,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
-        this.mouseInteractor.setMouseEvents(this.mapEl, this.mouseOptions);
+        this.mouseInteractor.setMouseOptions(this.gridStage, this.gridLayer, this.map);
+        this.mouseInteractor.setMouseEvents(this.mapEl);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -82,11 +76,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 this.gridStage.batchDraw();
             }
         });
-        this.mouseOptions = new MouseOptions(this.gridStage, this.gridLayer);
-        this.mouseOptions.paintOptions = new PaintOptions(this.lastLine);
-        this.mouseOptions.textOptions = new TextOptions(this.lastText);
-        this.mouseOptions.pointerOptions.map = this.map;
-
     }
 
     setCurrentObjectSelected(ev, object, type): void {

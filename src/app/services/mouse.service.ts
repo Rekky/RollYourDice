@@ -6,7 +6,6 @@ import {Mouse} from '../classes/Mouse';
     providedIn: 'root'
 })
 export class MouseService {
-
     private mouse: BehaviorSubject<Mouse> = new BehaviorSubject<Mouse>(null);
     private dragImage: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
