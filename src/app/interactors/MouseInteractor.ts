@@ -1,22 +1,30 @@
-import {ElementRef, Injectable} from '@angular/core';
+import {ElementRef, Injectable, OnDestroy} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
 import {Mouse, MouseOptions, PaintOptions, TextOptions, PointerOptions} from '../classes/Mouse';
 import Konva from 'konva';
 import {Map} from '../classes/Map';
+import {Subscription} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
-export class MouseInteractor {
+export class MouseInteractor implements OnDestroy {
     mouse: Mouse = new Mouse();
     mouseOptions: MouseOptions;
     lastLine: any;
     lastText: any;
+    getMouseObservableSubscription: Subscription;
 
     constructor(private mouseService: MouseService) {
-        this.mouseService.getMouseObservable().subscribe((res) => {
+        this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             this.mouse = res;
         });
+    }
+
+    ngOnDestroy(): void {
+        if (this.getMouseObservableSubscription) {
+            this.getMouseObservableSubscription.unsubscribe();
+        }
     }
 
     setMouseOptions(stage: Konva.Stage, layer: Konva.Layer, map: Map): void {
