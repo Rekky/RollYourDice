@@ -109,6 +109,17 @@ export class Text extends Mouse {
 
         options.layer.add(transformer);
         options.layer.batchDraw();
+
+        options.textOptions.text.on('transform', () => {
+            // with enabled anchors we can only change scaleX
+            // so we don't need to reset height
+            // just width
+            options.textOptions.text.setAttrs({
+                width: Math.max(options.textOptions.text.width() * options.textOptions.text.scaleX(), 30),
+                scaleX: 1,
+                scaleY: 1,
+            });
+        });
     }
 }
 

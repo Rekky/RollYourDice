@@ -8,6 +8,7 @@ import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
 import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
 import {PointerOptions, Mouse, MouseOptions, PaintOptions, TextOptions} from '../../classes/Mouse';
+import {MouseInteractor} from '../../interactors/MouseInteractor';
 
 @Component({
     selector: 'app-map',
@@ -45,40 +46,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     mouseOptions: MouseOptions;
 
     constructor(private mapInteractor: MapInteractor,
+                private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService) { }
 
     ngOnInit(): void {
-        this.mouseService.getMouseObservable().subscribe((res) => {
-            this.mouse = res;
-        });
     }
 
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
-
-        // SETEAMOS LISTENERS EN EL MAP
-        this.mapEl.nativeElement.addEventListener('mousedown', (e) => {
-            this.mouseOptions.isActive = true;
-            this.mouseOptions.pointerOptions.ev = e;
-            this.mouse.mouseDown(this.mouseOptions);
-        }, false);
-
-        this.mapEl.nativeElement.addEventListener('mousemove', (e) => {
-            this.mouseOptions.pointerOptions.ev = e;
-            this.mouse.mouseMove(this.mouseOptions);
-        }, false);
-
-        this.mapEl.nativeElement.addEventListener('mouseup', (e) => {
-            this.mouseOptions.isActive = false;
-            this.mouseOptions.pointerOptions.ev = e;
-            this.mouse.mouseUp(this.mouseOptions);
-        }, false);
-        this.mapEl.nativeElement.addEventListener('mouseout', (e) => {
-            this.mouseOptions.isActive = false;
-            this.mouseOptions.pointerOptions.ev = e;
-            this.mouse.mouseOut(this.mouseOptions);
-        }, false);
+        this.mouseInteractor.setMouseEvents(this.mapEl, this.mouseOptions);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -105,11 +82,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 this.gridStage.batchDraw();
             }
         });
-
         this.mouseOptions = new MouseOptions(this.gridStage, this.gridLayer);
         this.mouseOptions.paintOptions = new PaintOptions(this.lastLine);
         this.mouseOptions.textOptions = new TextOptions(this.lastText);
         this.mouseOptions.pointerOptions.map = this.map;
+
     }
 
     setCurrentObjectSelected(ev, object, type): void {
