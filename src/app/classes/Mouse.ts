@@ -85,7 +85,7 @@ export class Brush extends Mouse {
 }
 
 export class Text extends Mouse {
-    mouseDown(options: MouseOptions): Pointer {
+    mouseDown(options: MouseOptions): {Pointer, activeTransform: Konva.Transform, selectedObjectAttr: any} {
         super.mouseDown(options);
         const pos = options.stage.getPointerPosition();
         options.textOptions.text = new Konva.Text({
@@ -117,7 +117,43 @@ export class Text extends Mouse {
                 scaleY: 1,
             });
         });
-        return new Pointer();
+
+        options.textOptions.text.on('dblclick', () => {
+            options.textOptions.text.hide();
+            transformer.hide();
+            options.textOptions.text.draw();
+
+            const textPosition = options.textOptions.text.absolutePosition();
+            const stageBox = options.stage.container().getBoundingClientRect();
+            const areaPosition = {
+                x: stageBox.left + textPosition.x,
+                y: stageBox.top + textPosition.y,
+            };
+
+            const textarea = document.createElement('textarea');
+            document.body.appendChild(textarea);
+            textarea.value = options.textOptions.text.text();
+            textarea.style.position = 'absolute';
+            textarea.style.top = areaPosition.y + 'px';
+            textarea.style.left = areaPosition.x + 'px';
+            textarea.style.width = options.textOptions.text.width() - options.textOptions.text.padding() * 2 + 'px';
+            textarea.style.height = options.textOptions.text.height() - options.textOptions.text.padding() * 2 + 5 + 'px';
+            textarea.style.fontSize = options.textOptions.text.fontSize() + 'px';
+            textarea.style.border = 'none';
+            textarea.style.padding = '0px';
+            textarea.style.margin = '0px';
+            textarea.style.overflow = 'hidden';
+            textarea.style.background = 'none';
+            textarea.style.outline = 'none';
+            textarea.style.resize = 'none';
+            textarea.style.fontFamily = options.textOptions.text.fontFamily();
+            textarea.style.transformOrigin = 'left top';
+            textarea.style.textAlign = options.textOptions.text.align();
+            textarea.style.color = options.textOptions.text.fill();
+            const rotation = options.textOptions.text.rotation();
+            const transform = '';
+        });
+        // return new Pointer();
     }
 }
 
@@ -128,15 +164,20 @@ export class MouseOptions {
     stage: Konva.Stage;
     layer: Konva.Layer;
     isActive: boolean;
+    selectedObjectAttrs: any;
+    activeTransformation: any;
 
     constructor(stage: Konva.Stage, layer: Konva.Layer, isActive?: boolean,
-                pointerOptions?: PointerOptions, paintOptions?: PaintOptions, textOptions?: TextOptions) {
+                pointerOptions?: PointerOptions, paintOptions?: PaintOptions, textOptions?: TextOptions,
+                selectedObjectAttrs?: any, activeTransformation?: any) {
         this.pointerOptions = pointerOptions ? pointerOptions : new PointerOptions();
         this.paintOptions = paintOptions ? paintOptions : new PaintOptions();
         this.textOptions = textOptions ? textOptions : new TextOptions();
         this.stage = stage;
         this.layer = layer;
         this.isActive = isActive;
+        this.selectedObjectAttrs = selectedObjectAttrs;
+        this.activeTransformation = activeTransformation;
     }
 }
 
