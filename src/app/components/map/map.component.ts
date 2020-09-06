@@ -87,7 +87,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridStage.on('click', (e) => {
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
                 this.activeTr.hide();
-                this.gridStage.batchDraw();
+                this.gridStage.draw();
             }
         });
     }

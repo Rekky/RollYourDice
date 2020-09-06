@@ -125,7 +125,6 @@ export class Text extends Mouse {
             draggable: true,
             width: 200,
         });
-        this.layer.add(this.text);
 
         const transformer = new Konva.Transformer({
             nodes: [this.text],
@@ -136,9 +135,6 @@ export class Text extends Mouse {
             },
         });
 
-        this.layer.add(transformer);
-        this.layer.batchDraw();
-
         this.text.on('transform', () => {
             this.text.setAttrs({
                 width: Math.max(this.text.width() * this.text.scaleX(), 30),
@@ -147,10 +143,15 @@ export class Text extends Mouse {
             });
         });
 
+        // EVENTS FOR TEXT
+        this.text.on('click', () => {
+            transformer.show();
+            this.layer.batchDraw();
+        });
+
         this.text.on('dblclick', () => {
             this.text.hide();
-            transformer.hide();
-            this.text.draw();
+            // transformer.hide();
 
             const textPosition = this.text.absolutePosition();
             const stageBox = this.stage.container().getBoundingClientRect();
@@ -179,9 +180,23 @@ export class Text extends Mouse {
             textarea.style.transformOrigin = 'left top';
             textarea.style.textAlign = this.text.align();
             textarea.style.color = this.text.fill();
-            const rotation = this.text.rotation();
-            const transform = '';
+            textarea.focus();
+
+            textarea.addEventListener('keydown', (e: KeyboardEvent) => {
+                // hide on enter
+                if (e.keyCode === 13) {
+                    this.text.text(textarea.value);
+                    this.text.show();
+                    transformer.hide();
+                    this.layer.batchDraw();
+                    document.body.removeChild(textarea);
+                }
+            });
         });
+
+        this.layer.add(this.text);
+        this.layer.add(transformer);
+        this.layer.batchDraw();
 
         return new CurrentSelectedObject(transformer, this.text.getAttrs());
     }
