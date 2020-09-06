@@ -1,14 +1,16 @@
 import {ElementRef, Injectable, OnDestroy} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
-import {Mouse} from '../classes/Mouse';
+import {Mouse, Pointer, CurrentSelectedObject} from '../classes/Mouse';
 import Konva from 'konva';
 import {Map} from '../classes/Map';
-import {Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MouseInteractor implements OnDestroy {
+    private selectedObject: BehaviorSubject<CurrentSelectedObject> = new BehaviorSubject<CurrentSelectedObject>(null);
+
     mouse: Mouse = new Mouse();
     lastLine: any;
     lastText: any;
@@ -35,11 +37,19 @@ export class MouseInteractor implements OnDestroy {
         this.layer = layer;
     }
 
+    getCurrentSelectedObjectObservable(): Observable<CurrentSelectedObject> {
+        return this.selectedObject.asObservable();
+    }
+
     setMouseEvents(mapEl: ElementRef): void {
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.mouse.isActive = true;
             this.mouse.ev = e;
             const mouseDownReturns = this.mouse.mouseDown();
+            if (mouseDownReturns) {
+                this.mouseService.setMouse(new Pointer());
+                this.selectedObject.next(mouseDownReturns);
+            }
         }, false);
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {

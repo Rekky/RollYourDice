@@ -15,7 +15,7 @@ export class Mouse {
         this.ev = ev ? ev : null;
     }
 
-    mouseDown(): void {}
+    mouseDown(): void | CurrentSelectedObject {}
     mouseMove(): void {}
     mouseUp(): void {}
     mouseOut(): void {}
@@ -114,7 +114,7 @@ export class Text extends Mouse {
         this.text = new Konva.Text();
     }
 
-    mouseDown(): void {
+    mouseDown(): CurrentSelectedObject {
         super.mouseDown();
         const pos = this.stage.getPointerPosition();
         this.text = new Konva.Text({
@@ -182,5 +182,17 @@ export class Text extends Mouse {
             const rotation = this.text.rotation();
             const transform = '';
         });
+
+        return new CurrentSelectedObject(transformer, this.text.getAttrs());
+    }
+}
+
+export class CurrentSelectedObject {
+    transformer: Konva.Transformer;
+    attr: any;
+
+    constructor(tr: Konva.Transformer, attr: any) {
+        this.transformer = tr;
+        this.attr = attr;
     }
 }

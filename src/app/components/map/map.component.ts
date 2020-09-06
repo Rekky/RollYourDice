@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit,
-        Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+    AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit,
+    Output, SimpleChanges, ViewChild
+} from '@angular/core';
 import Konva from 'konva';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import {Map} from '../../classes/Map';
@@ -9,13 +11,14 @@ import {MouseService} from '../../services/mouse.service';
 import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
 import {Mouse} from '../../classes/Mouse';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
     styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, AfterViewInit, OnChanges {
+export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     @ViewChild('mapEl') mapEl: ElementRef;
     @Input() map: Map;
@@ -36,11 +39,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     activeTr: any;
     mouse: Mouse;
 
+    getCurrentSelectedObjectSub: Subscription;
+
     constructor(private mapInteractor: MapInteractor,
-                private mouseInteractor: MouseInteractor,
-                private mouseService: MouseService) { }
+                private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
+        this.getCurrentSelectedObjectSub = this.mouseInteractor.getCurrentSelectedObjectObservable().subscribe(res => {
+            if (res) {
+                this.activeTr = res.transformer;
+                this.selectedObjectAttrs = res.attr;
+            }
+        });
     }
 
     ngAfterViewInit(): void {
@@ -61,6 +71,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }
     }
 
+    ngOnDestroy(): void {
+        if (this.getCurrentSelectedObjectSub) {
+            this.getCurrentSelectedObjectSub.unsubscribe();
+        }
+    }
+
     initializeMap(): void {
         this.gridLayer = new Konva.Layer();
         this.gridStage = new Konva.Stage({
@@ -69,10 +85,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             height: this.map.rows * this.map.grid.cellSize
         });
         this.gridStage.on('click', (e) => {
-            console.log(e.target.attrs);
-            console.log(e.target.attrs !== this.selectedObjectAttrs);
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
-                console.log('es diferente');
                 this.activeTr.hide();
                 this.gridStage.batchDraw();
             }
