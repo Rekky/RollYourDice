@@ -1,8 +1,5 @@
 import Konva from 'konva';
-import {BrushInteractor} from '../interactors/BrushInteractor';
-import {StageConfig} from 'konva/types/Stage';
 import {Coords} from './Coords';
-import {Map} from './Map';
 
 export class Mouse {
     isActive: boolean;
@@ -10,7 +7,6 @@ export class Mouse {
     layer: Konva.Layer;
     state: string;
     ev: MouseEvent;
-    options: MouseOptions;
 
     constructor(stage?: Konva.Stage, layer?: Konva.Layer, ev?: MouseEvent, isActive?: boolean) {
         this.isActive = isActive ? isActive : false;
@@ -19,7 +15,7 @@ export class Mouse {
         this.ev = ev ? ev : null;
     }
 
-    mouseDown(): void | Pointer {}
+    mouseDown(): void {}
     mouseMove(): void {}
     mouseUp(): void {}
     mouseOut(): void {}
@@ -27,23 +23,25 @@ export class Mouse {
 
 export class Pointer extends Mouse {
     state: string = 'pointer';
-    options: PointerOptions;
+    startCoords: Coords;
+    offsetCoords: Coords;
 
     constructor() {
         super();
-        this.options = new PointerOptions();
+        this.startCoords = new Coords();
+        this.offsetCoords = new Coords();
     }
 
     mouseDown(): void {
         super.mouseDown();
-        this.options.startCoords.x = this.ev.clientX - this.options.offsetCoords.x;
-        this.options.startCoords.y = this.ev.clientY - this.options.offsetCoords.y;
+        this.startCoords.x = this.ev.clientX - this.offsetCoords.x;
+        this.startCoords.y = this.ev.clientY - this.offsetCoords.y;
     }
 
     mouseMove(): void {
         super.mouseMove();
-        this.options.offsetCoords.x = this.ev.clientX - this.options.startCoords.x;
-        this.options.offsetCoords.y = this.ev.clientY - this.options.startCoords.y;
+        this.offsetCoords.x = this.ev.clientX - this.startCoords.x;
+        this.offsetCoords.y = this.ev.clientY - this.startCoords.y;
     }
 }
 
@@ -77,31 +75,31 @@ export class Pointer extends Mouse {
 
 export class Brush extends Mouse {
     state: string = 'brush';
-    options: BrushOptions;
+    line: Konva.Line;
 
     constructor() {
         super();
-        this.options = new BrushOptions();
+        this.line = new Konva.Line();
     }
 
     mouseDown(): void {
         super.mouseDown();
         const pos = this.stage.getPointerPosition();
-        this.options.line = new Konva.Line({
+        this.line = new Konva.Line({
             stroke: '#ffc107',
             strokeWidth: 5,
             globalCompositeOperation: 'source-over',
             points: [pos.x, pos.y],
         });
-        this.layer.add(this.options.line);
+        this.layer.add(this.line);
     }
 
     mouseMove(): void {
         if (this.isActive) {
             super.mouseMove();
             const pos = this.stage.getPointerPosition();
-            const newPoints = this.options.line.points().concat([pos.x, pos.y]);
-            this.options.line.points(newPoints);
+            const newPoints = this.line.points().concat([pos.x, pos.y]);
+            this.line.points(newPoints);
             this.layer.batchDraw();
         }
     }
@@ -109,17 +107,17 @@ export class Brush extends Mouse {
 
 export class Text extends Mouse {
     state: string = 'text';
-    options: TextOptions;
+    text: Konva.Text;
 
     constructor() {
         super();
-        this.options = new TextOptions();
+        this.text = new Konva.Text();
     }
 
-    mouseDown(): Pointer {
+    mouseDown(): void {
         super.mouseDown();
         const pos = this.stage.getPointerPosition();
-        this.options.text = new Konva.Text({
+        this.text = new Konva.Text({
             text: 'Some text here',
             x: pos.x,
             y: pos.y,
@@ -127,10 +125,10 @@ export class Text extends Mouse {
             draggable: true,
             width: 200,
         });
-        this.layer.add(this.options.text);
+        this.layer.add(this.text);
 
         const transformer = new Konva.Transformer({
-            nodes: [this.options.text],
+            nodes: [this.text],
             enabledAnchors: ['middle-left', 'middle-right'],
             boundBoxFunc: (oldBox, newBox) => {
                 newBox.width = Math.max(30, newBox.width);
@@ -141,21 +139,21 @@ export class Text extends Mouse {
         this.layer.add(transformer);
         this.layer.batchDraw();
 
-        this.options.text.on('transform', () => {
-            this.options.text.setAttrs({
-                width: Math.max(this.options.text.width() * this.options.text.scaleX(), 30),
+        this.text.on('transform', () => {
+            this.text.setAttrs({
+                width: Math.max(this.text.width() * this.text.scaleX(), 30),
                 scaleX: 1,
                 scaleY: 1,
             });
         });
 
-        options.textOptions.text.on('dblclick', () => {
-            options.textOptions.text.hide();
+        this.text.on('dblclick', () => {
+            this.text.hide();
             transformer.hide();
-            options.textOptions.text.draw();
+            this.text.draw();
 
-            const textPosition = options.textOptions.text.absolutePosition();
-            const stageBox = options.stage.container().getBoundingClientRect();
+            const textPosition = this.text.absolutePosition();
+            const stageBox = this.stage.container().getBoundingClientRect();
             const areaPosition = {
                 x: stageBox.left + textPosition.x,
                 y: stageBox.top + textPosition.y,
@@ -163,13 +161,13 @@ export class Text extends Mouse {
 
             const textarea = document.createElement('textarea');
             document.body.appendChild(textarea);
-            textarea.value = options.textOptions.text.text();
+            textarea.value = this.text.text();
             textarea.style.position = 'absolute';
             textarea.style.top = areaPosition.y + 'px';
             textarea.style.left = areaPosition.x + 'px';
-            textarea.style.width = options.textOptions.text.width() - options.textOptions.text.padding() * 2 + 'px';
-            textarea.style.height = options.textOptions.text.height() - options.textOptions.text.padding() * 2 + 5 + 'px';
-            textarea.style.fontSize = options.textOptions.text.fontSize() + 'px';
+            textarea.style.width = this.text.width() - this.text.padding() * 2 + 'px';
+            textarea.style.height = this.text.height() - this.text.padding() * 2 + 5 + 'px';
+            textarea.style.fontSize = this.text.fontSize() + 'px';
             textarea.style.border = 'none';
             textarea.style.padding = '0px';
             textarea.style.margin = '0px';
@@ -177,45 +175,12 @@ export class Text extends Mouse {
             textarea.style.background = 'none';
             textarea.style.outline = 'none';
             textarea.style.resize = 'none';
-            textarea.style.fontFamily = options.textOptions.text.fontFamily();
+            textarea.style.fontFamily = this.text.fontFamily();
             textarea.style.transformOrigin = 'left top';
-            textarea.style.textAlign = options.textOptions.text.align();
-            textarea.style.color = options.textOptions.text.fill();
-            const rotation = options.textOptions.text.rotation();
+            textarea.style.textAlign = this.text.align();
+            textarea.style.color = this.text.fill();
+            const rotation = this.text.rotation();
             const transform = '';
         });
-        // return new Pointer();
-    }
-}
-
-export class MouseOptions {
-}
-
-export class PointerOptions extends MouseOptions {
-    startCoords?: Coords;
-    offsetCoords?: Coords;
-
-    constructor() {
-        super();
-        this.startCoords = new Coords();
-        this.offsetCoords = new Coords();
-    }
-}
-
-export class BrushOptions extends MouseOptions {
-    line?: Konva.Line;
-
-    constructor() {
-        super();
-        this.line = new Konva.Line();
-    }
-}
-
-export class TextOptions extends MouseOptions {
-    text?: Konva.Text;
-
-    constructor() {
-        super();
-        this.text = new Konva.Text();
     }
 }
