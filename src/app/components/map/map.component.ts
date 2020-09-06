@@ -7,7 +7,7 @@ import {Coords} from '../../classes/Coords';
 import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
 import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
-import {PointerOptions, Mouse, MouseOptions, PaintOptions, TextOptions} from '../../classes/Mouse';
+import {PointerOptions, Mouse, MouseOptions, BrushOptions, TextOptions} from '../../classes/Mouse';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 
 @Component({
@@ -36,8 +36,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     activeTr: any;
     mouse: Mouse;
 
-    mouseOptions: MouseOptions;
-
     constructor(private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService) { }
@@ -48,7 +46,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
-        this.mouseInteractor.setMouseOptions(this.gridStage, this.gridLayer, this.map);
+        this.mouseInteractor.setMouseKonvaParameters(this.gridStage, this.gridLayer, this.map);
         this.mouseInteractor.setMouseEvents(this.mapEl);
     }
 

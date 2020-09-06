@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MouseService} from '../../services/mouse.service';
-import {Mouse, Pointer, Brush, MoveMap, Text} from 'src/app/classes/Mouse';
+import {Mouse, Pointer, Brush, Text, PointerOptions} from 'src/app/classes/Mouse';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -36,7 +36,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
                 this.mouseService.setMouse(new Pointer());
                 break;
             case 'moveMap':
-                this.mouseService.setMouse(new MoveMap());
+                // this.mouseService.setMouse(new MoveMap());
                 break;
             case 'brush':
                 this.mouseService.setMouse(new Brush());

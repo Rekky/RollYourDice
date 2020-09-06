@@ -1,6 +1,6 @@
 import {ElementRef, Injectable, OnDestroy} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
-import {Mouse, MouseOptions, PaintOptions, TextOptions, PointerOptions} from '../classes/Mouse';
+import {Mouse, MouseOptions, BrushOptions, TextOptions, PointerOptions} from '../classes/Mouse';
 import Konva from 'konva';
 import {Map} from '../classes/Map';
 import {Subscription} from 'rxjs';
@@ -10,14 +10,17 @@ import {Subscription} from 'rxjs';
 })
 export class MouseInteractor implements OnDestroy {
     mouse: Mouse = new Mouse();
-    mouseOptions: MouseOptions;
     lastLine: any;
     lastText: any;
     getMouseObservableSubscription: Subscription;
+    stage: Konva.Stage;
+    layer: Konva.Layer;
 
     constructor(private mouseService: MouseService) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             this.mouse = res;
+            this.mouse.stage = this.stage;
+            this.mouse.layer = this.layer;
         });
     }
 
@@ -27,38 +30,35 @@ export class MouseInteractor implements OnDestroy {
         }
     }
 
-    setMouseOptions(stage: Konva.Stage, layer: Konva.Layer, map: Map): void {
-        this.mouseOptions = new MouseOptions(stage, layer);
-        this.mouseOptions.pointerOptions = new PointerOptions();
-        this.mouseOptions.paintOptions = new PaintOptions();
-        this.mouseOptions.textOptions = new TextOptions();
-        this.mouseOptions.pointerOptions.map = map;
+    setMouseKonvaParameters(stage: Konva.Stage, layer: Konva.Layer, map?: Map): void {
+        this.stage = stage;
+        this.layer = layer;
     }
 
     setMouseEvents(mapEl: ElementRef): void {
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
-            this.mouseOptions.isActive = true;
-            this.mouseOptions.pointerOptions.ev = e;
-            const mouseDownReturns = this.mouse.mouseDown(this.mouseOptions);
+            this.mouse.isActive = true;
+            this.mouse.ev = e;
+            const mouseDownReturns = this.mouse.mouseDown();
             if (mouseDownReturns) {
                 this.mouseService.setMouse(mouseDownReturns);
             }
         }, false);
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {
-            this.mouseOptions.pointerOptions.ev = e;
-            this.mouse.mouseMove(this.mouseOptions);
+            this.mouse.ev = e;
+            this.mouse.mouseMove();
         }, false);
 
         mapEl.nativeElement.addEventListener('mouseup', (e) => {
-            this.mouseOptions.isActive = false;
-            this.mouseOptions.pointerOptions.ev = e;
-            this.mouse.mouseUp(this.mouseOptions);
+            this.mouse.isActive = false;
+            this.mouse.ev = e;
+            this.mouse.mouseUp();
         }, false);
         mapEl.nativeElement.addEventListener('mouseout', (e) => {
-            this.mouseOptions.isActive = false;
-            this.mouseOptions.pointerOptions.ev = e;
-            this.mouse.mouseOut(this.mouseOptions);
+            this.mouse.isActive = false;
+            this.mouse.ev = e;
+            this.mouse.mouseOut();
         }, false);
     }
 }
