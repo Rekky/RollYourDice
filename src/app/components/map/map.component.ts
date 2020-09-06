@@ -69,7 +69,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             height: this.map.rows * this.map.grid.cellSize
         });
         this.gridStage.on('click', (e) => {
+            console.log(e.target.attrs);
+            console.log(e.target.attrs !== this.selectedObjectAttrs);
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
+                console.log('es diferente');
                 this.activeTr.hide();
                 this.gridStage.batchDraw();
             }
@@ -85,7 +88,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
         if (object !== null) {
             this._currentObjectSelected = {ev, object, type};
-            this._currentObjectSelected.ev.srcElement.style.border = '2px solid rgb(91, 146, 226)';
+            this._currentObjectSelected.ev.srcElement.style.border = '1px solid rgb(91, 146, 226)';
         }
 
         this.currentObjectSelected.emit(this._currentObjectSelected);
@@ -139,7 +142,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
                 img.setAttrs({opacity: 1});
                 this.gridStage.batchDraw();
             });
-            img.on('dblclick', (e) => {
+            img.on('click', (e) => {
                 this.selectedObjectAttrs = img.getAttrs();
                 this.activeTr = tr;
                 tr.show();
