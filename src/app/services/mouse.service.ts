@@ -1,6 +1,6 @@
 import {ElementRef, Injectable} from '@angular/core';
 import {Observable, BehaviorSubject, Subscriber} from 'rxjs';
-import {Mouse, MouseOptions} from '../classes/Mouse';
+import {Mouse} from '../classes/Mouse';
 
 @Injectable({
     providedIn: 'root'

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MouseService} from '../../services/mouse.service';
-import {Mouse, Pointer, Brush, Text, PointerOptions} from 'src/app/classes/Mouse';
+import {Mouse, Pointer, Brush, Text} from 'src/app/classes/Mouse';
 import {Subscription} from 'rxjs';
 
 @Component({

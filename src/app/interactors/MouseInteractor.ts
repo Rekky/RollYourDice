@@ -1,6 +1,6 @@
 import {ElementRef, Injectable, OnDestroy} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
-import {Mouse, MouseOptions, BrushOptions, TextOptions, PointerOptions} from '../classes/Mouse';
+import {Mouse} from '../classes/Mouse';
 import Konva from 'konva';
 import {Map} from '../classes/Map';
 import {Subscription} from 'rxjs';
@@ -40,9 +40,6 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.isActive = true;
             this.mouse.ev = e;
             const mouseDownReturns = this.mouse.mouseDown();
-            if (mouseDownReturns) {
-                this.mouseService.setMouse(mouseDownReturns);
-            }
         }, false);
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {

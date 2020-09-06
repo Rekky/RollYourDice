@@ -7,7 +7,7 @@ import {Coords} from '../../classes/Coords';
 import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
 import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
-import {PointerOptions, Mouse, MouseOptions, BrushOptions, TextOptions} from '../../classes/Mouse';
+import {Mouse} from '../../classes/Mouse';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 
 @Component({
