@@ -1,9 +1,10 @@
 import {ElementRef, Injectable, OnDestroy} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
-import {Mouse, Pointer, CurrentSelectedObject} from '../classes/Mouse';
+import {Mouse, CurrentSelectedObject} from '../classes/Mouse';
 import Konva from 'konva';
 import {Map} from '../classes/Map';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {Pointer} from '../classes/Pointer';
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +13,6 @@ export class MouseInteractor implements OnDestroy {
     private selectedObject: BehaviorSubject<CurrentSelectedObject> = new BehaviorSubject<CurrentSelectedObject>(null);
 
     mouse: Mouse = new Mouse();
-    lastLine: any;
-    lastText: any;
     getMouseObservableSubscription: Subscription;
     stage: Konva.Stage;
     layer: Konva.Layer;

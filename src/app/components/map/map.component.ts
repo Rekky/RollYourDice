@@ -24,20 +24,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Input() map: Map;
     @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
-    currentToolSelected: string = 'cursor';
-    _currentObjectSelected: any = null;
+    currentMapObjectSelected: any = null;
 
     // MAP VARS
     mapWidth: number = 500;
     mapHeight: number = 500;
-    gridCellWidth: number = 80;
+    isMovingMap: boolean = false;
+    startCoords: Coords = new Coords();
+    offsetCoords: Coords = new Coords();
 
     // KONVA LIB
     gridLayer: Konva.Layer = null;
     gridStage: Konva.Stage = null;
     selectedObjectAttrs: any;
     activeTr: any;
-    mouse: Mouse;
 
     getCurrentSelectedObjectSub: Subscription;
 
@@ -58,11 +58,22 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.initializeMap();
         this.mouseInteractor.setMouseKonvaParameters(this.gridStage, this.gridLayer, this.map);
         this.mouseInteractor.setMouseEvents(this.mapEl);
+        this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
+            this.moveMap('mousedown', ev);
+        });
+        this.mapEl.nativeElement.addEventListener('mousemove', (ev: MouseEvent) => {
+            this.moveMap('mousemove', ev);
+        });
+        this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
+            this.moveMap('mouseup', ev);
+        });
+        this.mapEl.nativeElement.addEventListener('mouseout', (ev: MouseEvent) => {
+            this.moveMap('mouseout', ev);
+        });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.map) {
-            this.gridCellWidth = this.map.grid.cellSize;
             setTimeout(() => {
                 this.drawGrid();
                 this.drawGridBackgroundImage();
@@ -95,16 +106,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     setCurrentObjectSelected(ev, object, type): void {
         ev.stopPropagation();
 
-        if (this._currentObjectSelected !== null) {
-            this._currentObjectSelected.ev.srcElement.style.border = '';
+        if (this.currentMapObjectSelected !== null) {
+            this.currentMapObjectSelected.ev.target.style.border = '';
         }
 
         if (object !== null) {
-            this._currentObjectSelected = {ev, object, type};
-            this._currentObjectSelected.ev.srcElement.style.border = '1px solid rgb(91, 146, 226)';
+            this.currentMapObjectSelected = {ev, object, type};
+            this.currentMapObjectSelected.ev.target.style.border = '1px solid rgb(91, 146, 226)';
         }
 
-        this.currentObjectSelected.emit(this._currentObjectSelected);
+        this.currentObjectSelected.emit(this.currentMapObjectSelected);
     }
 
     drawGrid(): void {
@@ -132,6 +143,30 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.addRectangleToKonva();
     }
 
+    moveMap(res: string, ev: MouseEvent): void {
+        if (this.mouseInteractor.mouse.state === 'hand') {
+            if (res === 'mousedown') {
+                this.isMovingMap = true;
+                this.startCoords.x = ev.clientX - this.offsetCoords.x;
+                this.startCoords.y = ev.clientY - this.offsetCoords.y;
+            }
+            if (res === 'mousemove') {
+                if (this.isMovingMap) {
+                    this.map.position.x = ev.clientX - this.startCoords.x;
+                    this.map.position.y = ev.clientY - this.startCoords.y;
+                }
+                this.offsetCoords.x = this.map.position.x;
+                this.offsetCoords.y = this.map.position.y;
+            }
+            if (res === 'mouseup') {
+                this.isMovingMap = false;
+            }
+            if (res === 'mouseout') {
+                this.isMovingMap = false;
+            }
+        }
+    }
+
     addImageToKonva(url: string): void {
         Konva.Image.fromURL(url, (img: Konva.Image) => {
             img.setAttrs({
@@ -155,7 +190,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 img.setAttrs({opacity: 1});
                 this.gridStage.batchDraw();
             });
-            img.on('click', (e) => {
+            img.on('click', () => {
                 this.selectedObjectAttrs = img.getAttrs();
                 this.activeTr = tr;
                 tr.show();
@@ -210,12 +245,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         shadowRectangle.hide();
         this.gridLayer.add(shadowRectangle);
 
-        rectangle.on('dragstart', (e) => {
+        rectangle.on('dragstart', () => {
             shadowRectangle.show();
             shadowRectangle.moveToTop();
             rectangle.moveToTop();
         });
-        rectangle.on('dragend', (e) => {
+        rectangle.on('dragend', () => {
             const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             rectangle.position({
                 x: newPosition.x,
@@ -224,7 +259,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             this.gridStage.batchDraw();
             shadowRectangle.hide();
         });
-        rectangle.on('dragmove', (e) => {
+        rectangle.on('dragmove', () => {
             const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             shadowRectangle.position({
                 x: newPosition.x,
@@ -249,98 +284,5 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             image.cache();
             layer.draw();
         });
-    }
-
-    drawText(res: string): void {
-        if (res === 'mousedown') {
-            /*const pos = this.gridStage.getPointerPosition();
-            const textNode = new Konva.Text({
-                text: 'Some text here',
-                x: pos.x,
-                y: pos.y,
-                fontSize: 20,
-                draggable: true,
-                width: 200,
-            });
-            this.gridLayer.add(textNode);
-
-            const tr = new Konva.Transformer({
-                node: textNode,
-                enabledAnchors: ['middle-left', 'middle-right'],
-                boundBoxFunc: (oldBox, newBox) => {
-                    newBox.width = Math.max(30, newBox.width);
-                    return newBox;
-                },
-            });
-
-            this.gridLayer.add(tr);
-            this.gridLayer.draw();
-            this.mouseService.setMouse('select');
-
-            textNode.on('transform', () => {
-                // reset scale, so only with is changing by transformer
-                textNode.setAttrs({
-                    width: textNode.width() * textNode.scaleX(),
-                    scaleX: 1,
-                });
-            });
-            textNode.on('dblclick', () => {
-                console.log('entrasssstee');
-                textNode.hide();
-                tr.hide();
-                this.gridLayer.draw();
-
-                const textPosition = textNode.absolutePosition();
-                const stageBox = this.gridStage.container().getBoundingClientRect();
-                const areaPosition = {
-                    x: stageBox.left + textPosition.x,
-                    y: stageBox.top + textPosition.y,
-                };
-
-                const textarea = document.createElement('textarea');
-                document.body.appendChild(textarea);
-                textarea.value = textNode.text();
-                textarea.style.position = 'absolute';
-                textarea.style.top = areaPosition.y + 'px';
-                textarea.style.left = areaPosition.x + 'px';
-                textarea.style.width = textNode.width() - textNode.padding() * 2 + 'px';
-                textarea.style.height =
-                textNode.height() - textNode.padding() * 2 + 5 + 'px';
-                textarea.style.fontSize = textNode.fontSize() + 'px';
-                textarea.style.border = 'none';
-                textarea.style.padding = '0px';
-                textarea.style.margin = '0px';
-                textarea.style.overflow = 'hidden';
-                textarea.style.background = 'none';
-                textarea.style.outline = 'none';
-                textarea.style.resize = 'none';
-                textarea.style.lineHeight = textNode.lineHeight();
-                textarea.style.fontFamily = textNode.fontFamily();
-                textarea.style.transformOrigin = 'left top';
-                textarea.style.textAlign = textNode.align();
-                textarea.style.color = textNode.fill();
-                const rotation = textNode.rotation();
-                const transform = '';
-            });*/
-        }
-
-        if (res === 'mousemove') {
-
-        }
-
-        if (res === 'mouseup') {
-
-        }
-
-    }
-
-    setScale(ev): void {
-        /*if (ev.deltaY < 0) {
-            this.map.scale = this.map.scale + 0.1;
-        } else {
-            if (this.map.scale > 0.2 && this.map.scale > -0.1) {
-                this.map.scale = this.map.scale - 0.1;
-            }
-        }*/
     }
 }

@@ -1,4 +1,4 @@
-<div id="mapbox{{map.id}}" class="map cursor-{{currentToolSelected}}" *ngIf="map"
+<div id="mapbox{{map.id}}" class="map cursor-{{this.mouseInteractor.mouse.state}}" *ngIf="map"
      [style.width.px]="mapWidth"
      [style.height.px]="mapHeight"
      [style.left.px]="map.position.x"

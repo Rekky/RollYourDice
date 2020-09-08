@@ -14,7 +14,7 @@ export class Map {
     dndDiagonalSystem: boolean;
     zoom: number;
 
-    constructor(id?: string,
+    constructor(id?: string | number,
                 name?: string,
                 grid?: Grid,
                 position?: Coords,

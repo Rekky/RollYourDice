@@ -1,7 +1,11 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MouseService} from '../../services/mouse.service';
-import {Mouse, Pointer, Brush, Text} from 'src/app/classes/Mouse';
 import {Subscription} from 'rxjs';
+import {Pointer} from '../../classes/Pointer';
+import {Brush} from '../../classes/Brush';
+import {Text} from '../../classes/Text';
+import {Hand} from '../../classes/Hand';
+import {MapObject} from '../../classes/MapObject';
 
 @Component({
     selector: 'app-editor-tools',
@@ -17,6 +21,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             if (res) {
+                console.log(res);
                 this.currentToolSelected = res.state;
             }
         });
@@ -35,14 +40,17 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
             case 'pointer':
                 this.mouseService.setMouse(new Pointer());
                 break;
-            case 'moveMap':
-                // this.mouseService.setMouse(new MoveMap());
+            case 'hand':
+                this.mouseService.setMouse(new Hand());
+                break;
+            case 'text':
+                this.mouseService.setMouse(new Text());
                 break;
             case 'brush':
                 this.mouseService.setMouse(new Brush());
                 break;
-            case 'text':
-                this.mouseService.setMouse(new Text());
+            case 'square':
+                this.mouseService.setMouse(new MapObject());
                 break;
             default:
                 this.mouseService.setMouse(new Pointer());
