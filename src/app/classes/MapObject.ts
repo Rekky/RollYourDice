@@ -49,7 +49,7 @@ export class MapObject extends Mouse {
                 return newBox;
             },
         });
-
+        this.adaptPositionToGrid(object);
         this.layer.add(object);
         this.layer.batchDraw();
         return new CurrentSelectedObject(transformer, object.getAttrs());
