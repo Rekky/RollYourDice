@@ -9,7 +9,7 @@ export class GameEditorService {
 
   constructor(private apiService: ApiService) { }
 
-  getGameEditor(): Game {
-      return this.apiService.getGameEditor('555');
+  getGameEditor() {
+      // return this.apiService.getGameEditor('555');
   }
 }

@@ -10,20 +10,31 @@ export class ApiService {
     getGameEditor(id: string): any {
 
         // MONSTERS
-        const monster: any = {
+        const objects: any = {
             id: '1231231',
             name: 'orco',
-            damage: 20,
-            hp: 50,
             position: {
                 x: 100,
                 y: 2,
             }
         };
+        const objects2: any = {
+            id: '1231231',
+            name: 'cofre',
+            position: {
+                x: 200,
+                y: 20,
+            }
+        };
+
+        // LAYERS
+        const layer: any = {id: 'layer-id-1', objects: [objects, objects2], grid: {cellSize: 40}};
+        const layer2: any = {id: 'layer-id-2', objects: [objects], grid: {cellSize: 40}};
+        const layer3: any = {id: 'layer-id-3', objects: [objects], grid: {cellSize: 40}};
 
         // MAPS
-        const map: any = {id: 'map_id_1', name: 'map-1', grid: {cellSize: 40}, position: {x: 400, y: 200}, columns: 20, rows: 20, monsters: [monster]};
-        const map2: any = {id: 'map_id_2', name: 'map-2', grid: {cellSize: 80}, position: {x: 800, y: 600}, columns: 4, rows: 4};
+        const map: any = {id: 'map_id_1', name: 'map-1', position: {x: 400, y: 200}, columns: 20, rows: 20, layers: {background: layer, objects: layer2, gm: layer3}};
+        const map2: any = {id: 'map_id_2', name: 'map-2', position: {x: 800, y: 600}, columns: 4, rows: 4, layers: {background: layer, objects: layer2, gm: layer3}};
 
         // PAGES
         const page: any = {
