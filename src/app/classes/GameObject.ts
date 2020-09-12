@@ -5,13 +5,9 @@ export class GameObject {
     name: string;
     position: Coords;
 
-    constructor(id?: string) {
-    }
-}
-
-export class Character extends GameObject {
-
-    constructor() {
-        super();
+    constructor(id?: string, name?: string, position?: Coords) {
+        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
+        this.name = name ? name : 'new object';
+        this.position = position ? position : new Coords();
     }
 }

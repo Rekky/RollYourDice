@@ -1,22 +1,10 @@
 import {Coords} from './Coords';
+import {Character} from './Character';
 
-export class Monster {
-    id: string | number;
-    name: string;
-    hp: number;
-    damage: number;
-    position: Coords;
+export class Monster extends Character {
 
-    constructor(id?: string | number,
-                name?: string,
-                hp?: number,
-                damage?: number,
-                position?: Coords) {
-        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
-        this.name = name ? name : 'new monster';
-        this.hp = hp ? hp : 100;
-        this.damage = damage ? damage : 10;
-        this.position = position ? position : new Coords();
+    constructor() {
+        super();
     }
 
     static fromJSON(json: any): Monster {
