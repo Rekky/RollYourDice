@@ -1,6 +1,6 @@
-import {Coords} from './Coords';
+import {Coords} from '../Coords';
 
-export class Grid {
+export class OurKonvaGrid {
     cellSize: number;
     opacity: number;
     color: string;
@@ -17,8 +17,8 @@ export class Grid {
         this.squareFeet = squareFeet ? squareFeet : 5;
     }
 
-    static fromJSON(json: any): Grid {
-        const grid = new Grid();
+    static fromJSON(json: any): OurKonvaGrid {
+        const grid = new OurKonvaGrid();
         grid.cellSize = json.cellSize;
         grid.opacity = json.opacity;
         grid.color = json.color;
@@ -33,7 +33,7 @@ export class Grid {
         return position;
     }
 
-    toJSON(grid: Grid): any {
+    toJSON(grid: OurKonvaGrid): any {
         const json: any = {};
         json.cellSize = grid.cellSize;
         json.opacity = grid.opacity;

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game} from '../../classes/Game';
-import {Map} from '../../classes/Map';
 import {Page} from '../../classes/Page';
 import {MouseService} from '../../services/mouse.service';
+import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 
 @Component({
     selector: 'app-game-editor',
@@ -12,7 +12,7 @@ import {MouseService} from '../../services/mouse.service';
 })
 export class GameEditorComponent implements OnInit {
 
-    map: Map;
+    map: OurKonvaMap;
     game: Game;
     selectedPage: Page = null;
 
@@ -39,7 +39,7 @@ export class GameEditorComponent implements OnInit {
         }
     }
 
-    onSelectedMap(ev: Map): void {
+    onSelectedMap(ev: OurKonvaMap): void {
 
     }
 

@@ -1,8 +1,8 @@
-import {Coords} from './Coords';
-import {Grid} from './Grid';
-import {MapObject} from './MapObject';
+import {Coords} from '../Coords';
+import {OurKonvaGrid} from './OurKonvaGrid';
+import {OurKonvaObject} from './OurKonvaObject';
 
-export class Map {
+export class OurKonvaMap {
     id: string | number;
     name: string | null;
     position: Coords;
@@ -13,8 +13,8 @@ export class Map {
     mastersDarkness: number;
     dndDiagonalSystem: boolean;
     zoom: number;
-    grid: Grid;
-    objects: MapObject[];
+    grid: OurKonvaGrid;
+    objects: OurKonvaObject[];
 
     constructor(id?: string | number,
                 name?: string,
@@ -26,10 +26,10 @@ export class Map {
                 mastersDarkness?: number,
                 dndDiagonalSystem?: boolean,
                 zoom?: number,
-                grid?: Grid,
-                objects?: MapObject[]) {
+                grid?: OurKonvaGrid,
+                objects?: OurKonvaObject[]) {
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
-        this.name = name ? name : 'new map';
+        this.name = name ? name : 'new ourKonva';
         this.position = position ? position : new Coords();
         this.columns = columns ? columns : 10;
         this.rows = rows ? rows : 10;
@@ -38,12 +38,12 @@ export class Map {
         this.mastersDarkness = mastersDarkness ? mastersDarkness : 50;
         this.dndDiagonalSystem = dndDiagonalSystem ? dndDiagonalSystem : false;
         this.zoom = zoom ? zoom : 100;
-        this.grid = grid ? grid : new Grid();
+        this.grid = grid ? grid : new OurKonvaGrid();
         this.objects = objects ? objects : [];
     }
 
-    static fromJSON(json: any): Map {
-        const map = new Map();
+    static fromJSON(json: any): OurKonvaMap {
+        const map = new OurKonvaMap();
         map.id = json.id;
         map.name = json.name;
         map.position = json.position;
@@ -54,7 +54,7 @@ export class Map {
         map.mastersDarkness = json.mastersDarkness;
         map.dndDiagonalSystem = json.dndDiagonalSystem;
         map.zoom = json.zoom;
-        map.grid = Grid.fromJSON(json.grid);
+        map.grid = OurKonvaGrid.fromJSON(json.grid);
         map.objects = json.objects;
         return map;
     }

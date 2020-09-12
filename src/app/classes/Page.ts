@@ -1,11 +1,11 @@
-import {Map} from './Map';
+import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
 export class Page {
     id: string | number;
     name: string;
-    maps: Map[];
+    maps: OurKonvaMap[];
 
-    constructor(id?: number, name?: any, maps?: Map[]) {
+    constructor(id?: number, name?: any, maps?: OurKonvaMap[]) {
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.name = name ? name : 'new page';
         this.maps = maps ? maps : [];
@@ -15,7 +15,7 @@ export class Page {
         const page = new Page();
         page.id = json.id;
         page.name = json.name;
-        page.maps = json.maps.map(el => Map.fromJSON(el));
+        page.maps = json.maps.map(el => OurKonvaMap.fromJSON(el));
         return page;
     }
 

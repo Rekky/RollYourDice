@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MouseService} from '../../services/mouse.service';
 import {Subscription} from 'rxjs';
-import {Pointer} from '../../classes/Pointer';
-import {Brush} from '../../classes/Brush';
-import {Text} from '../../classes/Text';
-import {Hand} from '../../classes/Hand';
-import {MapObject} from '../../classes/MapObject';
+import {OurKonvaPointer} from '../../classes/ourKonva/OurKonvaPointer';
+import {OurKonvaHand} from '../../classes/ourKonva/OurKonvaHand';
+import {OurKonvaBrush} from '../../classes/ourKonva/OurKonvaBrush';
+import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
+import {OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 
 @Component({
     selector: 'app-editor-tools',
@@ -38,22 +38,22 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         this.currentToolSelected = type;
         switch (type) {
             case 'pointer':
-                this.mouseService.setMouse(new Pointer());
+                this.mouseService.setMouse(new OurKonvaPointer());
                 break;
             case 'hand':
-                this.mouseService.setMouse(new Hand());
+                this.mouseService.setMouse(new OurKonvaHand());
                 break;
             case 'text':
-                this.mouseService.setMouse(new Text());
+                this.mouseService.setMouse(new OurKonvaText());
                 break;
             case 'brush':
-                this.mouseService.setMouse(new Brush());
+                this.mouseService.setMouse(new OurKonvaBrush());
                 break;
             case 'square':
-                this.mouseService.setMouse(new MapObject());
+                this.mouseService.setMouse(new OurKonvaObject());
                 break;
             default:
-                this.mouseService.setMouse(new Pointer());
+                this.mouseService.setMouse(new OurKonvaPointer());
                 break;
         }
     }

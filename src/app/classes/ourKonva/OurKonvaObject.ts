@@ -1,9 +1,8 @@
-import {Coords} from './Coords';
-import {CurrentSelectedObject, Mouse} from './Mouse';
+import {Coords} from '../Coords';
 import Konva from 'konva';
-import {Grid} from './Grid';
+import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 
-export class MapObject extends Mouse {
+export class OurKonvaObject extends OurKonvaMouse {
     id: string | number;
     position: Coords;
     state: string = 'square';
@@ -14,8 +13,8 @@ export class MapObject extends Mouse {
         this.position = position ? position : new Coords();
     }
 
-    static fromJSON(json: any): MapObject {
-        const mapObject = new MapObject();
+    static fromJSON(json: any): OurKonvaObject {
+        const mapObject = new OurKonvaObject();
         mapObject.id = json.id;
         mapObject.position = json.position;
         return mapObject;
@@ -28,7 +27,7 @@ export class MapObject extends Mouse {
         return json;
     }
 
-    mouseDown(): void | CurrentSelectedObject {
+    mouseDown(): void | CurrentSelectedKonvaObject {
         super.mouseDown();
         const pos = this.stage.getPointerPosition();
         const object = new Konva.Rect({
@@ -52,6 +51,6 @@ export class MapObject extends Mouse {
         this.adaptPositionToGrid(object);
         this.layer.add(object);
         this.layer.batchDraw();
-        return new CurrentSelectedObject(transformer, object.getAttrs());
+        return new CurrentSelectedKonvaObject(transformer, object.getAttrs());
     }
 }

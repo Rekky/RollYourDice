@@ -1,7 +1,7 @@
-import {Coords} from './Coords';
-import {Mouse} from './Mouse';
+import {Coords} from '../Coords';
+import {OurKonvaMouse} from './OurKonvaMouse';
 
-export class Pointer extends Mouse {
+export class OurKonvaPointer extends OurKonvaMouse {
     state: string = 'pointer';
     startCoords: Coords;
     offsetCoords: Coords;

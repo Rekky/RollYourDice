@@ -4,14 +4,13 @@ import {
 } from '@angular/core';
 import Konva from 'konva';
 import {MapInteractor} from '../../interactors/MapInteractor';
-import {Map} from '../../classes/Map';
 import {Coords} from '../../classes/Coords';
-import {Grid} from '../../classes/Grid';
 import {MouseService} from '../../services/mouse.service';
 import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
-import {Mouse} from '../../classes/Mouse';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {Subscription} from 'rxjs';
+import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
+import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
 
 @Component({
     selector: 'app-map',
@@ -21,8 +20,8 @@ import {Subscription} from 'rxjs';
 export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     @ViewChild('mapEl') mapEl: ElementRef;
-    @Input() map: Map;
-    @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
+    @Input() map: OurKonvaMap;
+    @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
     currentMapObjectSelected: any = null;
 
@@ -253,7 +252,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             rectangle.moveToTop();
         });
         rectangle.on('dragend', () => {
-            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             rectangle.position({
                 x: newPosition.x,
                 y: newPosition.y
@@ -262,7 +261,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             shadowRectangle.hide();
         });
         rectangle.on('dragmove', () => {
-            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             shadowRectangle.position({
                 x: newPosition.x,
                 y: newPosition.y

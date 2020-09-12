@@ -1,16 +1,14 @@
 import Konva from 'konva';
-import {CurrentSelectedObject, Mouse} from './Mouse';
-import {Grid} from './Grid';
-import {Coords} from './Coords';
+import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 
-export class Text extends Mouse {
+export class OurKonvaText extends OurKonvaMouse {
     state: string = 'text';
 
     constructor() {
         super();
     }
 
-    mouseDown(): CurrentSelectedObject {
+    mouseDown(): CurrentSelectedKonvaObject {
         super.mouseDown();
         const pos = this.stage.getPointerPosition();
         const text = new Konva.Text({
@@ -94,6 +92,6 @@ export class Text extends Mouse {
         this.layer.add(transformer);
         this.layer.batchDraw();
 
-        return new CurrentSelectedObject(transformer, text.getAttrs());
+        return new CurrentSelectedKonvaObject(transformer, text.getAttrs());
     }
 }

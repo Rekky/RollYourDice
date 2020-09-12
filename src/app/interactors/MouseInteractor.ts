@@ -1,18 +1,18 @@
 import {ElementRef, Injectable, OnDestroy} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
-import {Mouse, CurrentSelectedObject} from '../classes/Mouse';
 import Konva from 'konva';
-import {Map} from '../classes/Map';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {Pointer} from '../classes/Pointer';
+import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../classes/ourKonva/OurKonvaMouse';
+import {OurKonvaPointer} from '../classes/ourKonva/OurKonvaPointer';
+import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MouseInteractor implements OnDestroy {
-    private selectedObject: BehaviorSubject<CurrentSelectedObject> = new BehaviorSubject<CurrentSelectedObject>(null);
+    private selectedObject: BehaviorSubject<CurrentSelectedKonvaObject> = new BehaviorSubject<CurrentSelectedKonvaObject>(null);
 
-    mouse: Mouse = new Mouse();
+    mouse: OurKonvaMouse = new OurKonvaMouse();
     getMouseObservableSubscription: Subscription;
     stage: Konva.Stage;
     layer: Konva.Layer;
@@ -31,12 +31,12 @@ export class MouseInteractor implements OnDestroy {
         }
     }
 
-    setMouseKonvaParameters(stage: Konva.Stage, layer: Konva.Layer, map?: Map): void {
+    setMouseKonvaParameters(stage: Konva.Stage, layer: Konva.Layer, map?: OurKonvaMap): void {
         this.stage = stage;
         this.layer = layer;
     }
 
-    getCurrentSelectedObjectObservable(): Observable<CurrentSelectedObject> {
+    getCurrentSelectedObjectObservable(): Observable<CurrentSelectedKonvaObject> {
         return this.selectedObject.asObservable();
     }
 
@@ -46,7 +46,7 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.ev = e;
             const mouseDownReturns = this.mouse.mouseDown();
             if (mouseDownReturns) {
-                this.mouseService.setMouse(new Pointer());
+                this.mouseService.setMouse(new OurKonvaPointer());
                 this.selectedObject.next(mouseDownReturns);
             }
         }, false);

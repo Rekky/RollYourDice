@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Map} from '../../../classes/Map';
+import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 
 @Component({
     selector: 'app-map-properties',
@@ -9,8 +9,8 @@ import {Map} from '../../../classes/Map';
 })
 export class MapPropertiesComponent implements OnInit {
 
-    @Input() map: Map;
-    @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
+    @Input() map: OurKonvaMap;
+    @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
     mapForm: FormGroup;
     imgURL: any = null;
@@ -30,7 +30,7 @@ export class MapPropertiesComponent implements OnInit {
     setBackgroundImage(): void {
         const background = new Image();
         background.src = 'https://triumvene.com/content/images/2019/08/f54890248-1-.jpg';
-        // this.map.background = background.src;
+        // this.ourKonva.background = background.src;
     }
 
     preview(files): void {
@@ -55,8 +55,8 @@ export class MapPropertiesComponent implements OnInit {
 
     save(): void {
         console.log('SAVE', this.map);
-        // this.map.width = this.mapForm.get('width').value;
-        // this.map.height = this.mapForm.get('height').value;
+        // this.ourKonva.width = this.mapForm.get('width').value;
+        // this.ourKonva.height = this.mapForm.get('height').value;
         this.map.grid.cellSize = this.mapForm.get('cellWidth').value;
         this.mapChange.emit(this.map);
     }

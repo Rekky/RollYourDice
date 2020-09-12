@@ -28,8 +28,8 @@ export class ApiService {
         };
 
         // MAPS
-        const map: any = {id: 'map_id_1', name: 'map-1', position: {x: 400, y: 200}, grid: {cellSize: 40}, columns: 20, rows: 20, objects: [objects, objects2]};
-        const map2: any = {id: 'map_id_2', name: 'map-2', position: {x: 800, y: 600}, grid: {cellSize: 40}, columns: 4, rows: 4, objects: [objects]};
+        const map: any = {id: 'map_id_1', name: 'ourKonva-1', position: {x: 400, y: 200}, grid: {cellSize: 40}, columns: 20, rows: 20, objects: [objects, objects2]};
+        const map2: any = {id: 'map_id_2', name: 'ourKonva-2', position: {x: 800, y: 600}, grid: {cellSize: 40}, columns: 4, rows: 4, objects: [objects]};
 
         // PAGES
         const page: any = {

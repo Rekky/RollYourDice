@@ -1,7 +1,7 @@
 import Konva from 'konva';
-import {Mouse} from './Mouse';
+import {OurKonvaMouse} from './OurKonvaMouse';
 
-export class Brush extends Mouse {
+export class OurKonvaBrush extends OurKonvaMouse {
     state: string = 'brush';
     line: Konva.Line;
 

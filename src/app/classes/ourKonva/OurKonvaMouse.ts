@@ -1,8 +1,8 @@
 import Konva from 'konva';
-import {Grid} from './Grid';
-import {Coords} from './Coords';
+import {Coords} from '../Coords';
+import {OurKonvaGrid} from './OurKonvaGrid';
 
-export class Mouse {
+export class OurKonvaMouse {
     isActive: boolean;
     stage: Konva.Stage;
     layer: Konva.Layer;
@@ -18,7 +18,7 @@ export class Mouse {
         this.cellSize = cellSize ? cellSize : 40;
     }
 
-    mouseDown(): void | CurrentSelectedObject {}
+    mouseDown(): void | CurrentSelectedKonvaObject {}
     mouseMove(): void {}
     mouseUp(): void {}
     mouseOut(): void {}
@@ -28,7 +28,7 @@ export class Mouse {
             object.moveToTop();
         });
         object.on('dragend', () => {
-            const newPosition = Grid.correctPosition(new Coords(object.x(), object.y()), this.cellSize);
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(object.x(), object.y()), this.cellSize);
             object.position({
                 x: newPosition.x,
                 y: newPosition.y
@@ -36,13 +36,13 @@ export class Mouse {
             this.stage.batchDraw();
         });
         object.on('dragmove', () => {
-            const newPosition = Grid.correctPosition(new Coords(object.x(), object.y()), this.cellSize);
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(object.x(), object.y()), this.cellSize);
             this.stage.batchDraw();
         });
     }
 }
 
-export class CurrentSelectedObject {
+export class CurrentSelectedKonvaObject {
     transformer: Konva.Transformer;
     attr: any;
 
