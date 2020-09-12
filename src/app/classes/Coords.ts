@@ -9,7 +9,7 @@ export class Coords {
         this.z = z ? z : 0;
     }
 
-    fromJSON(json: any): Coords {
+    static fromJSON(json: any): Coords {
         const pos = new Coords();
         pos.x = json.x;
         pos.y = json.y;

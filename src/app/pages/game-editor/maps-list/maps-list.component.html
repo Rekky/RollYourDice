@@ -4,7 +4,10 @@
     <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true;this.currentMap = null;"></i>
 </div>
 <div class="content-list" dragula="MAPS" [(dragulaModel)]="maps">
-    <div class="item" [class.active]="currentMap === map" *ngFor="let map of maps" (click)="onSelectMap(map)">{{map.name}}</div>
+    <div class="item" [class.active]="currentMap === map" *ngFor="let map of maps" (click)="onSelectMap(map)">
+        {{map.name}}
+        <div>monster 1</div>
+    </div>
     <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
         <div class="item active"><input type="text" placeholder="Map ..." autofocus [formControlName]="'name'"></div>
     </form>

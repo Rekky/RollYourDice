@@ -1,5 +1,7 @@
 import {Grid} from './Grid';
 import {Coords} from './Coords';
+import {MapObject} from './MapObject';
+import {Monster} from './Monster';
 
 export class Map {
     id: string | number;
@@ -13,6 +15,7 @@ export class Map {
     mastersDarkness: number;
     dndDiagonalSystem: boolean;
     zoom: number;
+    monsters: Monster[];
 
     constructor(id?: string | number,
                 name?: string,
@@ -24,7 +27,8 @@ export class Map {
                 backgroundColor?: string,
                 mastersDarkness?: number,
                 dndDiagonalSystem?: boolean,
-                zoom?: number) {
+                zoom?: number,
+                monsters?: Monster[]) {
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.name = name ? name : 'new map';
         this.grid = grid ? grid : new Grid();
@@ -36,6 +40,7 @@ export class Map {
         this.mastersDarkness = mastersDarkness ? mastersDarkness : 50;
         this.dndDiagonalSystem = dndDiagonalSystem ? dndDiagonalSystem : false;
         this.zoom = zoom ? zoom : 100;
+        this.monsters = monsters ? monsters : null;
     }
 
     static fromJSON(json: any): Map {
