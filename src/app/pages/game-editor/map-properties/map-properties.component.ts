@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Map} from '../../../classes/Map';
-import {Layer} from '../../../classes/Layer';
 
 @Component({
     selector: 'app-map-properties',
@@ -17,16 +16,14 @@ export class MapPropertiesComponent implements OnInit {
     imgURL: any = null;
     imagePath: string = null;
     errorMessage: string = null;
-    currentLayer: Layer;
 
     constructor() { }
 
     ngOnInit(): void {
-        this.currentLayer = this.map.layers.getActiveLayer();
         this.mapForm = new FormGroup({
             width: new FormControl(this.map.columns),
             height: new FormControl(this.map.rows),
-            cellWidth: new FormControl(this.map.layers.getActiveLayer().grid.cellSize)
+            cellWidth: new FormControl(this.map.grid.cellSize)
         });
     }
 
@@ -60,7 +57,7 @@ export class MapPropertiesComponent implements OnInit {
         console.log('SAVE', this.map);
         // this.map.width = this.mapForm.get('width').value;
         // this.map.height = this.mapForm.get('height').value;
-        this.currentLayer.grid.cellSize = this.mapForm.get('cellWidth').value;
+        this.map.grid.cellSize = this.mapForm.get('cellWidth').value;
         this.mapChange.emit(this.map);
     }
 

@@ -1,5 +1,6 @@
 import {Coords} from './Coords';
-import {Layers} from './Layer';
+import {Grid} from './Grid';
+import {MapObject} from './MapObject';
 
 export class Map {
     id: string | number;
@@ -12,7 +13,8 @@ export class Map {
     mastersDarkness: number;
     dndDiagonalSystem: boolean;
     zoom: number;
-    layers: Layers;
+    grid: Grid;
+    objects: MapObject[];
 
     constructor(id?: string | number,
                 name?: string,
@@ -24,7 +26,8 @@ export class Map {
                 mastersDarkness?: number,
                 dndDiagonalSystem?: boolean,
                 zoom?: number,
-                layers?: Layers) {
+                grid?: Grid,
+                objects?: MapObject[]) {
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.name = name ? name : 'new map';
         this.position = position ? position : new Coords();
@@ -35,7 +38,8 @@ export class Map {
         this.mastersDarkness = mastersDarkness ? mastersDarkness : 50;
         this.dndDiagonalSystem = dndDiagonalSystem ? dndDiagonalSystem : false;
         this.zoom = zoom ? zoom : 100;
-        this.layers = layers ? layers : new Layers();
+        this.grid = grid ? grid : new Grid();
+        this.objects = objects ? objects : [];
     }
 
     static fromJSON(json: any): Map {
@@ -50,7 +54,8 @@ export class Map {
         map.mastersDarkness = json.mastersDarkness;
         map.dndDiagonalSystem = json.dndDiagonalSystem;
         map.zoom = json.zoom;
-        map.layers = Layers.fromJSON(json.layers);
+        map.grid = Grid.fromJSON(json.grid);
+        map.objects = json.objects;
         return map;
     }
 
@@ -64,7 +69,8 @@ export class Map {
         json.mastersDarkness = this.mastersDarkness;
         json.dndDiagonalSystem = this.dndDiagonalSystem;
         json.zoom = this.zoom;
-        json.layers = this.layers;
+        json.grid = this.grid;
+        json.objects = this.objects;
         return json;
     }
 }

@@ -12,7 +12,6 @@ import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
 import {Mouse} from '../../classes/Mouse';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {Subscription} from 'rxjs';
-import {Layer, Layers} from '../../classes/Layer';
 
 @Component({
     selector: 'app-map',
@@ -26,7 +25,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Output() mapChange: EventEmitter<Map> = new EventEmitter<Map>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
     currentMapObjectSelected: any = null;
-    currentLayer: Layer;
 
     // MAP VARS
     mapWidth: number = 500;
@@ -57,9 +55,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
-        // const layers = new Layers();
-        // this.currentLayer = layers.getActiveLayer();
-        this.currentLayer = this.map.layers.getActiveLayer();
         this.initializeMap();
         this.mouseInteractor.setMouseKonvaParameters(this.gridStage, this.gridLayer, this.map);
         this.mouseInteractor.setMouseEvents(this.mapEl);
@@ -97,8 +92,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridLayer = new Konva.Layer();
         this.gridStage = new Konva.Stage({
             container: 'map' + this.map.id,
-            width: this.map.columns * this.currentLayer.grid.cellSize,
-            height: this.map.rows * this.currentLayer.grid.cellSize
+            width: this.map.columns * this.map.grid.cellSize,
+            height: this.map.rows * this.map.grid.cellSize
         });
         this.gridStage.on('click', (e) => {
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
@@ -124,13 +119,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     drawGrid(): void {
-        this.mapWidth = this.map.columns * this.currentLayer.grid.cellSize;
-        this.mapHeight = this.map.rows * this.currentLayer.grid.cellSize;
+        this.mapWidth = this.map.columns * this.map.grid.cellSize;
+        this.mapHeight = this.map.rows * this.map.grid.cellSize;
 
         for (let i = 0; i < this.map.columns; i++) {
             this.gridLayer.add(new Konva.Line({
-                points: [Math.round(i * this.currentLayer.grid.cellSize) + 0.5, 0,
-                    Math.round(i * this.currentLayer.grid.cellSize) + 0.5, this.map.rows * this.currentLayer.grid.cellSize],
+                points: [Math.round(i * this.map.grid.cellSize) + 0.5, 0,
+                    Math.round(i * this.map.grid.cellSize) + 0.5, this.map.rows * this.map.grid.cellSize],
                 stroke: '#ddd',
                 strokeWidth: 1,
             }));
@@ -139,8 +134,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridLayer.add(new Konva.Line({points: [0, 0, 10, 10]}));
         for (let j = 0; j < this.map.rows; j++) {
             this.gridLayer.add(new Konva.Line({
-                points: [0, Math.round(j * this.currentLayer.grid.cellSize),
-                    this.map.columns * this.currentLayer.grid.cellSize, Math.round(j * this.currentLayer.grid.cellSize)],
+                points: [0, Math.round(j * this.map.grid.cellSize),
+                    this.map.columns * this.map.grid.cellSize, Math.round(j * this.map.grid.cellSize)],
                 stroke: '#ddd',
                 strokeWidth: 0.5,
             }));
@@ -227,8 +222,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         const shadowRectangle = new Konva.Rect({
             x: 0,
             y: 0,
-            width: this.currentLayer.grid.cellSize * 2,
-            height: this.currentLayer.grid.cellSize * 2,
+            width: this.map.grid.cellSize * 2,
+            height: this.map.grid.cellSize * 2,
             fill: '#FF7B17',
             opacity: 0.6,
             stroke: '#CF6412',
@@ -238,8 +233,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         const rectangle = new Konva.Rect({
             x: 50,
             y: 50,
-            width: this.currentLayer.grid.cellSize * 2,
-            height: this.currentLayer.grid.cellSize * 2,
+            width: this.map.grid.cellSize * 2,
+            height: this.map.grid.cellSize * 2,
             fill: '#fff',
             stroke: '#ddd',
             strokeWidth: 1,
@@ -258,7 +253,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             rectangle.moveToTop();
         });
         rectangle.on('dragend', () => {
-            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.currentLayer.grid.cellSize);
+            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             rectangle.position({
                 x: newPosition.x,
                 y: newPosition.y
@@ -267,7 +262,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             shadowRectangle.hide();
         });
         rectangle.on('dragmove', () => {
-            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.currentLayer.grid.cellSize);
+            const newPosition = Grid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
             shadowRectangle.position({
                 x: newPosition.x,
                 y: newPosition.y
@@ -285,8 +280,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             image.setAttrs({
                 x: 0,
                 y: 0,
-                width: this.map.columns * this.currentLayer.grid.cellSize,
-                height: this.map.rows * this.currentLayer.grid.cellSize
+                width: this.map.columns * this.map.grid.cellSize,
+                height: this.map.rows * this.map.grid.cellSize
             });
             image.cache();
             layer.draw();
