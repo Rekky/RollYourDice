@@ -5,7 +5,9 @@
 </div>
 <div class="content-list page-list">
     <div dragula="PAGES" [(dragulaModel)]="pages">
-        <div class="item" [class.active]="currentPage === page" *ngFor="let page of pages" (click)="onSelectPage(page)">{{page.name}}</div>
+        <div class="item" [class.active]="currentPage === page" *ngFor="let page of pages" (click)="onSelectPage(page)">
+            <div class="item-name">{{page.name}}</div>
+        </div>
     </div>
     <form [formGroup]="newPageForm" (submit)="onAddNewPage()" *ngIf="showNewPageForm">
         <div class="item active"><input type="text" placeholder="Page ..." autofocus [formControlName]="'name'"></div>

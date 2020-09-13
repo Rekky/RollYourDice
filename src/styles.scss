@@ -48,9 +48,13 @@ label{
   }
 }
 
+// --------------- LISTS styles
 .page-list{
     height: 200px;
     border-bottom: 8px solid $editorColumnsBorderColor;
+}
+.h-100{
+    height: 100%;
 }
 .list-title{
     display: grid;
@@ -82,16 +86,40 @@ label{
     overflow-y: auto;
 
     .item{
-        display: flex;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 40px;
         align-items: center;
         position: relative;
-        padding: 0 10px;
-        height: 40px;
 
-        &.active {
-            background: $editorSelectedColor;
+        &.active{
+            >.item-name {
+                background: $editorSelectedColor;
+            }
+
+            background: rgba($editorSelectedColor, 0.3);
         }
     }
+
+    .item-name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        height: 100%;
+        padding: 0 10px;
+
+        &:hover{
+            background: darken($editorMainForeground, 5%);
+        }
+
+        .item-name-icon {
+            width: 20px;
+            align-items: center;
+            padding: 0 8px;
+        }
+    }
+
 }
 
 // ------------ DRAGULA

@@ -11,7 +11,7 @@ export class ApiService {
 
         // MONSTERS
         const objects: any = {
-            id: '1231231',
+            id: Math.floor(Math.random() * 1000),
             name: 'orco',
             position: {
                 x: 100,
@@ -19,7 +19,7 @@ export class ApiService {
             }
         };
         const objects2: any = {
-            id: '1231231',
+            id: Math.floor(Math.random() * 1000),
             name: 'cofre',
             position: {
                 x: 200,
@@ -28,17 +28,18 @@ export class ApiService {
         };
 
         // MAPS
-        const map: any = {id: 'map_id_1', name: 'ourKonva-1', position: {x: 400, y: 200}, grid: {cellSize: 40}, columns: 20, rows: 20, objects: [objects, objects2]};
-        const map2: any = {id: 'map_id_2', name: 'ourKonva-2', position: {x: 800, y: 600}, grid: {cellSize: 40}, columns: 4, rows: 4, objects: [objects]};
+        const map: any = {id: 'map_id_' + Math.floor(Math.random() * 1000), name: 'ourKonva-' + Math.floor(Math.random() * 1000), position: {x: 400, y: 200}, grid: {cellSize: 40}, columns: 20, rows: 20, objects: [objects, objects2]};
+        const map2: any = {id: 'map_id_' + Math.floor(Math.random() * 1000), name: 'ourKonva-' + Math.floor(Math.random() * 1000), position: {x: 1200, y: 700}, grid: {cellSize: 40}, columns: 4, rows: 4, objects: [objects]};
+        const map3: any = {id: 'map_id_' + Math.floor(Math.random() * 1000), name: 'ourKonva-' + Math.floor(Math.random() * 1000), position: {x: 1287, y: 10}, grid: {cellSize: 40}, columns: 16, rows: 16, objects: []};
 
         // PAGES
         const page: any = {
-            id: 'page_id_1',
+            id: 'page_id_' + Math.floor(Math.random() * 1000),
             name: 'entrada cueva',
-            maps: [map, map2]
+            maps: [map, map2, map3]
         };
         const page2: any = {
-            id: 'page_id_2',
+            id: 'page_id_' + Math.floor(Math.random() * 1000),
             name: 'salida cueva',
             maps: [map]
         };
@@ -47,7 +48,7 @@ export class ApiService {
         const game: any = {
             id: '12312411242',
             pages: [page, page2],
-            selectedPageId: 'page_id_2'
+            selectedPageId: page.id
         };
         return game;
     }
