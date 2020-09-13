@@ -6,7 +6,7 @@
 <div class="content-list" dragula="MAPS" [(dragulaModel)]="maps">
     <div class="item" [class.active]="currentMap === map" *ngFor="let map of maps" (click)="onSelectMap(map)">
         {{map.name}}
-        <div>monster 1</div>
+        <div class="item" *ngFor="let object of map.objects">{{object.name}}</div>
     </div>
     <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
         <div class="item active"><input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'"></div>

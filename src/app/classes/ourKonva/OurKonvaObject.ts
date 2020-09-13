@@ -4,18 +4,21 @@ import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 
 export class OurKonvaObject extends OurKonvaMouse {
     id: string | number;
+    name: string;
     position: Coords;
     state: string = 'square';
 
-    constructor(id?: string | number, name?: string, position?: Coords, type?: string ) {
+    constructor(id?: string | number, name?: string, position?: Coords) {
         super();
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
+        this.name = name ? name : 'new Object';
         this.position = position ? position : new Coords();
     }
 
     static fromJSON(json: any): OurKonvaObject {
         const mapObject = new OurKonvaObject();
         mapObject.id = json.id;
+        mapObject.name = json.name;
         mapObject.position = json.position;
         return mapObject;
     }
@@ -23,6 +26,7 @@ export class OurKonvaObject extends OurKonvaMouse {
     toJSON(): any {
         const json: any = {};
         json.id = this.id;
+        json.name = this.name;
         json.position = this.position;
         return json;
     }
