@@ -3,17 +3,27 @@
     <div class="title">Maps</div>
     <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true;this.currentMap = null;"></i>
 </div>
-<div class="content-list h-100" dragula="MAPS" [(dragulaModel)]="maps">
-    <div class="item" [class.active]="currentMap === map" *ngFor="let map of maps" (click)="onSelectMap($event, map)">
-        <div class="item-name">
-            <i class="fas fa-chevron-right" *ngIf="map.objects && map.objects.length > 0"></i>
-            <img class="item-name-icon" src="../../../../assets/icons/fabric-color.svg" alt="map-icon">
-            <div>{{map.name}}</div>
-        </div>
-        <div class="item" [class.active]="currentMapObject === object" *ngFor="let object of map.objects" (click)="onSelectMapObject($event, object)">
-            <div class="item-name">{{object.name}}</div>
+<div class="list-content h-100">
+    <div class="recursive-list" dragula="MAPS" [(dragulaModel)]="maps">
+        <div class="item" *ngFor="let map of maps" (click)="onSelectMap($event, map)">
+            <div class="item-name">
+                <i class="fas fa-chevron-right" *ngIf="map.objects && map.objects.length > 0"></i>
+                <img class="item-icon" src="../../../../assets/icons/fabric-color.svg" alt="map-icon">
+                <div>{{map.name}}</div>
+            </div>
+            <app-recursive-list [list]="map.objects"></app-recursive-list>
         </div>
     </div>
+<!--    <div class="item" [class.active]="currentMap === map" *ngFor="let map of maps" (click)="onSelectMap($event, map)">-->
+<!--        <div class="item-name">-->
+<!--            <i class="fas fa-chevron-right" *ngIf="map.objects && map.objects.length > 0"></i>-->
+<!--            <img class="item-name-icon" src="../../../../assets/icons/fabric-color.svg" alt="map-icon">-->
+<!--            <div>{{map.name}}</div>-->
+<!--        </div>-->
+<!--        <div class="item" [class.active]="currentMapObject === object" *ngFor="let object of map.objects" (click)="onSelectMapObject($event, object)">-->
+<!--            <div class="item-name">{{object.name}}</div>-->
+<!--        </div>-->
+<!--    </div>-->
     <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
         <div class="item active"><input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'"></div>
     </form>

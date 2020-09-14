@@ -13,6 +13,7 @@ export class ApiService {
         const objects: any = {
             id: Math.floor(Math.random() * 1000),
             name: 'orco',
+            objects: [],
             position: {
                 x: 100,
                 y: 2,
@@ -21,6 +22,7 @@ export class ApiService {
         const objects2: any = {
             id: Math.floor(Math.random() * 1000),
             name: 'cofre',
+            objects: [objects],
             position: {
                 x: 200,
                 y: 20,

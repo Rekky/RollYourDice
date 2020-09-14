@@ -122,6 +122,49 @@ label{
 
 }
 
+// ----------------RECURSIVE LIST --------------------------
+.recursive-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+
+    .item{
+        position: relative;
+        display: grid;
+        overflow: hidden;
+
+        &.active{
+            >.item-name {
+                background: $editorSelectedColor;
+            }
+
+            background: rgba($editorSelectedColor, 0.3);
+        }
+    }
+
+    .item-name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        height: 40px;
+        font-size: 14px;
+        padding: 0 5px;
+
+        &:hover{
+            background: darken($editorMainForeground, 5%);
+        }
+    }
+
+    .item-icon {
+        width: 20px;
+        align-items: center;
+        padding: 0 8px;
+    }
+}
+
 // ------------ DRAGULA
 /* in-flight clone */
 .gu-mirror {

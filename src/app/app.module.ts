@@ -14,6 +14,7 @@ import { PagesListComponent } from './pages/game-editor/pages-list/pages-list.co
 import {DragulaModule} from 'ng2-dragula';
 import { PageComponent } from './pages/game-editor/page/page.component';
 import { MapsListComponent } from './pages/game-editor/maps-list/maps-list.component';
+import { RecursiveListComponent } from './components/recursive-list/recursive-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MapsListComponent } from './pages/game-editor/maps-list/maps-list.compo
     MapComponent,
     PagesListComponent,
     PageComponent,
-    MapsListComponent
+    MapsListComponent,
+    RecursiveListComponent
   ],
     imports: [
         BrowserModule,
