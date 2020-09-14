@@ -1,8 +1,8 @@
 @import "colors";
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
 
 body{
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 .font-normal{
@@ -145,13 +145,14 @@ label{
     }
 
     .item-name {
-        display: flex;
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: 20px 30px auto;
+        grid-template-rows: 40px;
         align-items: center;
         cursor: pointer;
         height: 40px;
         font-size: 14px;
-        padding: 0 5px;
+        // padding: 0 5px;
 
         &:hover{
             background: darken($editorMainForeground, 5%);
@@ -159,10 +160,11 @@ label{
     }
 
     .item-icon {
-        width: 20px;
+        justify-self: center;
         align-items: center;
-        padding: 0 8px;
-        text-align: center;
+    }
+    img.item-icon{
+        width: 20px;
     }
 }
 
