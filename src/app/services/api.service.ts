@@ -19,10 +19,19 @@ export class ApiService {
                 y: 2,
             }
         };
+        const objects3: any = {
+            id: Math.floor(Math.random() * 1000),
+            name: 'moneda',
+            objects: [],
+            position: {
+                x: 200,
+                y: 20,
+            }
+        };
         const objects2: any = {
             id: Math.floor(Math.random() * 1000),
             name: 'cofre',
-            objects: [objects],
+            objects: [objects3],
             position: {
                 x: 200,
                 y: 20,

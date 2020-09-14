@@ -12,6 +12,7 @@ export class RecursiveListComponent implements OnInit, OnChanges {
     @Input() list = [];
     currentItem: OurKonvaMouse = null;
 
+
     constructor() {
     }
 
