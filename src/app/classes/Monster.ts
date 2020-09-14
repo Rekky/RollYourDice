@@ -1,4 +1,3 @@
-import {Coords} from './Coords';
 import {Character} from './Character';
 
 export class Monster extends Character {
@@ -12,7 +11,6 @@ export class Monster extends Character {
         monster.id = json.id;
         monster.name = json.name;
         monster.hp = json.hp;
-        monster.damage = json.damage;
         monster.position = json.position;
         return monster;
     }
@@ -22,7 +20,6 @@ export class Monster extends Character {
         json.id = this.id;
         json.name = this.name;
         json.hp = this.hp;
-        json.damage = this.damage;
         json.position = this.position;
         return json;
     }

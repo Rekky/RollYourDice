@@ -1,14 +1,23 @@
-<div class="recursive-list">
-    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: list }"></ng-container>
-</div>
-<ng-template #recursiveListTmpl let-list="list">
-    <div class="item" *ngFor="let item of list;let i = index">
-        <div class="item-name" style="padding-inline-start: {{i + 1 + 'rem'}}">{{item.name}}</div>
-        <div *ngIf="item.objects && item.objects.length > 0">
-            <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.objects }"></ng-container>
-        </div>
+<!--<div class="recursive-list">-->
+<!--    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: list }"></ng-container>-->
+<!--</div>-->
+<!--<ng-template #recursiveListTmpl let-list="list">-->
+<!--    <div class="item" *ngFor="let item of list;let i = index">-->
+<!--        <div class="item-name" style="padding-inline-start: {{i + 1 + 'rem'}}">{{item.name}}</div>-->
+<!--        <div *ngIf="item.objects && item.objects.length > 0">-->
+<!--            <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.objects }"></ng-container>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</ng-template>-->
+
+
+<!--------LO MIO-------->
+<div class="item" *ngFor="let item of list; let i = index">
+    <div class="item-name" style="padding-inline-start: {{i + 1 + 'rem'}}">{{item.name}}</div>
+    <div *ngIf="item.objects && item.objects.length > 0">
+        <app-recursive-list [list]="item.objects"></app-recursive-list>
     </div>
-</ng-template>
+</div>
 
 <!--<div class="recursive-list">-->
 <!--    <div class="item" *ngFor="let item of list" (click)="onSelectItem(item)">-->
