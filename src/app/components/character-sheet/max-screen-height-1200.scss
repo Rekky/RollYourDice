@@ -1,0 +1,213 @@
+@import "../../../colors";
+
+@media only screen and (max-height: 1200px) {
+    .character-sheet-box {
+        position: absolute;
+        z-index: 100;
+        top: calc(50vh - 450px);
+        left: calc(50vw - 350px);
+
+        width: 700px;
+        height: 900px;
+        border: 1px solid #EAEAEA;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.12),
+        0 2px 4px rgba(0,0,0,0.12),
+        0 4px 8px rgba(0,0,0,0.12),
+        0 8px 16px rgba(0,0,0,0.12),
+        0 16px 32px rgba(0,0,0,0.12);
+
+        background-image: url('../../../assets/character-sheet.jpg');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+    }
+
+    .character-name {
+        position: absolute;
+        top: 100px;
+        left: 50px;
+        width: 300px;
+    }
+
+    .class-and-level {
+        position: absolute;
+        top: 80px;
+        left: 395px;
+        width: 160px;
+    }
+
+    .background {
+        position: absolute;
+        top: 80px;
+        left: 570px;
+        width: 140px;
+    }
+
+    .player-name {
+        position: absolute;
+        top: 80px;
+        left: 722px;
+        width: 130px;
+    }
+
+    .race {
+        position: absolute;
+        top: 120px;
+        left: 395px;
+        width: 160px;
+    }
+
+    .alignment {
+        position: absolute;
+        top: 120px;
+        left: 570px;
+        width: 140px;
+    }
+
+    .experience-points {
+        position: absolute;
+        top: 120px;
+        left: 722px;
+        width: 130px;
+    }
+
+    .strength-adder, .dexterity-adder, .constitution-adder, .intelligence-adder, .wisdom-adder, .charisma-adder {
+        position: absolute;
+        top: 236px;
+        left: 28px;
+        width: 72px;
+        font-size: 40px;
+        text-align: center;
+        //background-color: red;
+    }
+    .dexterity-adder {
+        top: 348px;
+    }
+    .constitution-adder {
+        top: 459px;
+    }
+    .intelligence-adder {
+        top: 571px;
+    }
+    .wisdom-adder {
+        top: 682px;
+    }
+    .charisma-adder {
+        top: 793px;
+    }
+
+    .strength-points, .dexterity-points, .constitution-points, .intelligence-points, .wisdom-points, .charisma-points {
+        position: absolute;
+        top: 285px;
+        left: 28px;
+        width: 72px;
+        font-size: 25px;
+        text-align: center;
+    }
+    .dexterity-points {
+        top: 397px;
+    }
+    .constitution-points {
+        top: 508px;
+    }
+    .intelligence-points {
+        top: 620px;
+    }
+    .wisdom-points {
+        top: 731px;
+    }
+    .charisma-points {
+        top: 842px;
+    }
+
+    .inspiration {
+        position: absolute;
+        top: 202px;
+        left: 126px;
+        width: 32px;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .proficiency-bonus {
+        position: absolute;
+        top: 260px;
+        left: 128px;
+        width: 32px;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .saving-throws {
+        position: absolute;
+        top: 318px;
+        left: 134px;
+
+        display: flex;
+        flex-flow: row nowrap;
+
+        .st-dots-box {
+            display: flex;
+            flex-flow: column nowrap;
+            margin: 7px 11px 0 0;
+
+            .st-dot {
+                width: 6px;
+                height: 6px;
+                margin-bottom: 15px;
+                border-radius: 50%;
+                background-color: black;
+            }
+        }
+
+        .st-box {
+            display: flex;
+            flex-flow: column nowrap;
+
+            .st {
+                height: 21px;
+                width: 22px;
+                text-align: center;
+            }
+        }
+    }
+
+    .skills {
+        position: absolute;
+        top: 495px;
+        left: 134px;
+
+        display: flex;
+        flex-flow: row nowrap;
+
+        width: 32px;
+        font-size: 18px;
+        text-align: center;
+
+        .sk-dots-box {
+            display: flex;
+            flex-flow: column nowrap;
+            margin: 9px 9px 0 0;
+
+            .sk-dot {
+                width: 6px;
+                height: 6px;
+                margin-bottom: 15px;
+                border-radius: 50%;
+                background-color: black;
+            }
+        }
+
+        .sk-box {
+            display: flex;
+            flex-flow: column nowrap;
+
+            .sk {
+                position: relative;
+                height: 21px;
+                width: 23px;
+                text-align: center;
+            }
+        }
+    }
+}
