@@ -19,6 +19,7 @@ export class MapsListComponent implements OnInit {
 
     showNewMapForm: boolean = false;
     newMapForm: FormGroup;
+    selectedItemsArray: any[] = [];
 
     constructor() { }
 
@@ -32,8 +33,19 @@ export class MapsListComponent implements OnInit {
         console.log('entras select map', map);
         ev.stopPropagation();
         this.currentMap = map;
-        this.currentMapObject = null;
         this.selectedMap.emit(this.currentMap);
+    }
+
+    openListItem(ev: any, item: any): void {
+        ev.stopPropagation();
+        console.log('openListItem', this.currentMap);
+        // this.currentMap = this.currentMap !== item ? item : null;
+        const foundItem = this.selectedItemsArray.find((res) => res === item);
+        if (foundItem) {
+            this.selectedItemsArray.splice(item, 1);
+            return;
+        }
+        this.selectedItemsArray.push(item);
     }
 
     onAddNewMap(): void {
@@ -49,7 +61,6 @@ export class MapsListComponent implements OnInit {
     onSelectMapObject(ev, mapObject: OurKonvaObject): void {
         console.log('entras select object', mapObject);
         ev.stopPropagation();
-        this.currentMapObject = mapObject;
         this.currentMap = null;
     }
 

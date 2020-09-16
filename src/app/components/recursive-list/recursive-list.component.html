@@ -1,6 +1,6 @@
 <div class="item" *ngFor="let item of list; let i = index">
     <div class="item-name">
-        <div><!--<i class="fas fa-chevron-right" *ngIf="item.objects && item.objects.length != 0"></i>--></div>
+        <div><i class="fas fa-chevron-right item-icon" *ngIf="item.objects && item.objects.length > 0"></i></div>
         <div><i class="fas fa-cube item-icon"></i></div>
         <div>{{item.name}}</div>
     </div>

@@ -142,6 +142,10 @@ label{
 
             background: rgba($editorSelectedColor, 0.3);
         }
+
+        &.open{
+            height: 40px;
+        }
     }
 
     .item-name {
