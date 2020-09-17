@@ -6,6 +6,7 @@ import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import io from 'socket.io-client';
 import {ApiService} from '../../services/api.service';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'app-game-editor',
@@ -17,6 +18,7 @@ export class GameEditorComponent implements OnInit {
     map: OurKonvaMap;
     game: Game;
     selectedPage: Page = null;
+    gameSubscription: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
 
     tabs: number = 0;
     currentObjectSelected: any = {ev: null, object: null, type: null};
@@ -32,11 +34,16 @@ export class GameEditorComponent implements OnInit {
         });
         socket.on('game-editor', (data) => {
             console.log('msg recibido', data);
-            this.game = data;
+            this.gameSubscription.next(data);
             this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
         });
         socket.on('disconnect', () => {
             console.log('socket desconectado!');
+        });
+
+        this.gameSubscription.subscribe((game: Game) => {
+            this.game = game;
+            console.log(this.game);
         });
     }
 
