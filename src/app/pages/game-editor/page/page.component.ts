@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, HostListener} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, HostListener, OnChanges, SimpleChanges, EventEmitter, Output} from '@angular/core';
 import {Page} from '../../../classes/Page';
 import {MouseService} from '../../../services/mouse.service';
 import {Subscription} from 'rxjs';
@@ -10,17 +10,18 @@ import { Coords } from 'src/app/classes/Coords';
     styleUrls: ['./page.component.scss']
 })
 export class PageComponent implements OnInit, OnDestroy {
+
+    @Input() page: Page;
+    @Output() pageChange: EventEmitter<Page> = new EventEmitter<Page>();
+    getDragImageUrlSubscription: Subscription = new Subscription();
+    draggedImage: any = null;
+
     @HostListener('document:mousemove', ['$event'])
     setMousePosition(e: MouseEvent): void {
         if (this.draggedImage !== null) {
             this.attachImageToMouse(e);
         }
     }
-
-    @Input() page: Page;
-
-    getDragImageUrlSubscription: Subscription = new Subscription();
-    draggedImage: any = null;
 
     constructor(private mouseService: MouseService) { }
 
@@ -34,6 +35,11 @@ export class PageComponent implements OnInit, OnDestroy {
         if (this.getDragImageUrlSubscription) {
             this.getDragImageUrlSubscription.unsubscribe();
         }
+    }
+
+    onMapChange(ev: any): void {
+        console.log('onMapChange', ev);
+        this.pageChange.emit(this.page);
     }
 
     attachImageToMouse(e: MouseEvent): void {

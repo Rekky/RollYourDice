@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game} from '../../classes/Game';
 import {Page} from '../../classes/Page';
@@ -23,24 +23,26 @@ export class GameEditorComponent implements OnInit {
     tabs: number = 0;
     currentObjectSelected: any = {ev: null, object: null, type: null};
 
+    // Socket io
+    socket = io(this.apiService.API_URL);
+
     constructor(private gameInteractor: GameInteractor,
                 private mouseService: MouseService,
                 private apiService: ApiService) { }
 
     ngOnInit(): void {
-        const socket = io(this.apiService.API_URL);
-        socket.on('connect', () => {
+        this.socket.on('connect', () => {
             console.log('conectado al socket correctamente');
         });
-        socket.on('game-editor', (data) => {
+        this.socket.on('game-editor', (data) => {
             console.log('msg recibido', data);
             this.gameSubscription.next(data);
             this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
         });
-        socket.on('disconnect', () => {
+        this.socket.on('disconnect', () => {
             console.log('socket desconectado!');
         });
-
+        // subscription del game
         this.gameSubscription.subscribe((game: Game) => {
             this.game = game;
             console.log(this.game);
@@ -61,6 +63,10 @@ export class GameEditorComponent implements OnInit {
 
     onSelectedMap(ev: OurKonvaMap): void {
 
+    }
+
+    onPageChange(ev: any): void {
+        this.socket.emit('game-editor', this.game);
     }
 
     onSetCurrentObjectSelected(ev): void {

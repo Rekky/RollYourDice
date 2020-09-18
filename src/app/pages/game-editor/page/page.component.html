@@ -1,6 +1,6 @@
 <div class="page-container">
     <ng-container *ngIf="page.maps">
-        <app-map *ngFor="let map of page.maps" [map]="map"></app-map>
+        <app-map *ngFor="let map of page.maps" [map]="map" (mapChange)="onMapChange($event)"></app-map>
     </ng-container>
     <img *ngIf="draggedImage !== null" id="draggedImage" [src]="draggedImage.image.src">
 </div>

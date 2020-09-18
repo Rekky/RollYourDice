@@ -161,6 +161,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }
             if (res === 'mouseup') {
                 this.isMovingMap = false;
+                this.mapChange.emit(this.map);
             }
             if (res === 'mouseout') {
                 this.isMovingMap = false;
