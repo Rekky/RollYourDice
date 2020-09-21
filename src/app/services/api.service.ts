@@ -6,7 +6,8 @@ import {environment} from '../../environments/environment';
 })
 export class ApiService {
 
-    API_URL: string = environment.api_socket;
+    API_URL: string = environment.api_url;
+    API_SOCKET: string = environment.api_socket;
 
     constructor() { }
 

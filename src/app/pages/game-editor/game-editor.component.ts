@@ -24,7 +24,7 @@ export class GameEditorComponent implements OnInit {
     currentObjectSelected: any = {ev: null, object: null, type: null};
 
     // Socket io
-    socket = io(this.apiService.API_URL);
+    socket = io(this.apiService.API_SOCKET);
 
     constructor(private gameInteractor: GameInteractor,
                 private mouseService: MouseService,

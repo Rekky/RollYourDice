@@ -16,6 +16,9 @@ import { PageComponent } from './pages/game-editor/page/page.component';
 import { MapsListComponent } from './pages/game-editor/maps-list/maps-list.component';
 import { RecursiveListComponent } from './components/recursive-list/recursive-list.component';
 import { CharacterSheetComponent } from './components/character-sheet/character-sheet.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,10 +33,13 @@ import { CharacterSheetComponent } from './components/character-sheet/character-
     PageComponent,
     MapsListComponent,
     RecursiveListComponent,
-    CharacterSheetComponent
+    CharacterSheetComponent,
+    SignInComponent,
+    SignUpComponent
   ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         DragulaModule.forRoot(),
         AppRoutingModule,
         ReactiveFormsModule
