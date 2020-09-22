@@ -15,14 +15,17 @@ export class UserInteractor {
     constructor(private userService: UserService, private router: Router ) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
         this.user = this.userSubject.asObservable();
+        console.log(this.userSubject);
     }
 
-    signIn(email: string, password: string): void {
-        this.userService.signIn(email, password);
+    async signIn(email: string, password: string): Promise<any> {
+        const res = await this.userService.signIn(email, password);
+        this.userSubject.next(res);
+        return res;
     }
 
-    signUp(user: User): void {
-        this.userService.signUp(user);
+    signUp(user: User): Promise<any> {
+        return this.userService.signUp(user);
     }
 
     logout(): void {

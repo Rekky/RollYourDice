@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UserInteractor} from '../../interactors/UserInteractor';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-sign-in',
@@ -11,7 +12,7 @@ export class SignInComponent implements OnInit {
 
     signInForm: FormGroup;
 
-    constructor(private userInteractor: UserInteractor) { }
+    constructor(private userInteractor: UserInteractor, private router: Router) { }
 
     ngOnInit(): void {
         this.signInForm = new FormGroup({
@@ -20,10 +21,18 @@ export class SignInComponent implements OnInit {
         });
     }
 
-    signIn(): void  {
+    async signIn(): Promise<void> {
         const email = this.signInForm.get('email').value;
         const pass = this.signInForm.get('password').value;
-        this.userInteractor.signIn(email, pass);
+
+        try {
+            await this.userInteractor.signIn(email, pass);
+            this.userInteractor.user.subscribe((res) => {
+                this.router.navigate(['/home']);
+            });
+        } catch (e) {
+            console.log(e.error);
+        }
     }
 
 }

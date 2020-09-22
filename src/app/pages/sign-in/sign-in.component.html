@@ -3,11 +3,11 @@
     <form [formGroup]="signInForm" (submit)="signIn()">
         <div>
             <label>Email</label>
-            <input  type="text" [formControlName]="'email'">
+            <input type="email" [formControlName]="'email'">
         </div>
         <div>
             <label>Password</label>
-            <input  type="text" [formControlName]="'password'">
+            <input type="text" [formControlName]="'password'">
         </div>
         <button type="submit">Login</button>
     </form>

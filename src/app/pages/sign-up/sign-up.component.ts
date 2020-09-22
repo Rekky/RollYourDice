@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
         });
     }
 
-    signUp(): void  {
+    async signUp(): Promise<void>  {
         const username = this.signUpForm.get('username').value;
         const email = this.signUpForm.get('email').value;
         const pass = this.signUpForm.get('password').value;
@@ -31,7 +31,12 @@ export class SignUpComponent implements OnInit {
         user.username = username;
         user.email = email;
         user.password = pass;
-        this.userInteractor.signUp(user);
+
+        try {
+            await this.userInteractor.signUp(user);
+        } catch (e) {
+            console.log(e.error);
+        }
     }
 
 }
