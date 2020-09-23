@@ -15,7 +15,6 @@ export class UserInteractor {
     constructor(private userService: UserService, private router: Router ) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
         this.user = this.userSubject.asObservable();
-        console.log(this.userSubject);
     }
 
     async signIn(email: string, password: string): Promise<any> {
