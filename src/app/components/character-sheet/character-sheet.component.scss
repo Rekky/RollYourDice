@@ -1,6 +1,4 @@
 @import "../../../colors";
-//@import "./max-screen-height-1200";
-//@import "./min-screen-height-1201";
 
 .character-sheet-box {
     position: absolute;
@@ -8,24 +6,28 @@
     top: calc(50vh - 600px);
     left: calc(50vw - 450px);
 
-    width: 900px;
-    height: 1200px;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 10px;
+
+    width: 1000px;
+    min-height: 1200px;
     border: 1px solid #EAEAEA;
     box-shadow: 0 1px 2px rgba(0,0,0,0.12),
     0 2px 4px rgba(0,0,0,0.12),
     0 4px 8px rgba(0,0,0,0.12),
     0 8px 16px rgba(0,0,0,0.12),
     0 16px 32px rgba(0,0,0,0.12);
-
-    //background-image: url('../../../assets/character-sheet.jpg');
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 .header {
-    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+
+    position: relative;
     height: 160px;
+    width: 100%;
     background-image: url('../../../assets/character-sheet/header.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -34,26 +36,28 @@
     .name {
         position: absolute;
         top: 80px;
-        left: 80px;
-        width: 290px;
+        left: 90px;
+        width: 300px;
         font-size: 18px;
         font-weight: bold;
     }
 
     .data {
         position: absolute;
-        top: 60px;
-        left: 390px;
+        top: 50px;
+        left: 428px;
 
         display: flex;
         flex-flow: column nowrap;
-        height: 70px;
-        width: 450px;
+        justify-content: flex-end;
+        height: 93px;
+        width: 509px;
 
         .data-row {
             display: flex;
             flex-flow: row nowrap;
             justify-content: flex-start;
+            align-items: center;
 
             position: relative;
             height: calc(100% / 2);
@@ -84,20 +88,38 @@
     }
 }
 
-.attributes {
-    position: absolute;
-    top: 176px;
-    left: 28px;
+.body {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
 
+    width: 100%;
+
+    .column {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: calc(100% / 3);
+    }
+}
+
+.attr-block {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+
+    width: 100%;
+}
+
+.attributes {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
 
-    height: 600px;
-    width: 82px;
+    height: 570px;
     padding: 20px 0;
-
     background-image: url('../../../assets/character-sheet/attributes-box.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -164,26 +186,32 @@
     }
 }
 
-.inspiration {
-    position: absolute;
-    top: 180px;
-    left: 130px;
+.inspiration-block {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: center;
 
+    height: 850px;
+    width: calc(100% * 2 / 3);
+}
+
+.inspiration {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
 
-    height: 50px;
-    width: 200px;
+    height: 70px;
+    width: 100%;
     background-image: url('../../../assets/character-sheet/inspiration.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
 
     .inspiration-value {
-        width: 41px;
-        margin: 0 9px;
+        width: 46px;
+        margin: 0 10px;
         font-size: 25px;
         font-weight: bold;
         text-align: center;
@@ -197,25 +225,21 @@
 }
 
 .proficiency {
-    position: absolute;
-    top: 240px;
-    left: 130px;
-
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
 
-    height: 50px;
-    width: 200px;
+    height: 70px;
+    width: 100%;
     background-image: url('../../../assets/character-sheet/proficiency-bonus.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
 
     .proficiency-value {
-        width: 41px;
-        margin: 0 11px;
+        width: 46px;
+        margin: 0 13px;
         font-size: 25px;
         font-weight: bold;
         text-align: center;
@@ -229,17 +253,13 @@
 }
 
 .saving-throws {
-    position: absolute;
-    top: 305px;
-    left: 130px;
-
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
 
-    width: 200px;
-    height: 180px;
+    height: 200px;
+    width: 100%;
     background-image: url('../../../assets/character-sheet/saving-throws.png');
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -251,7 +271,7 @@
         justify-content: space-evenly;
 
         width: 100%;
-        height: 80%;
+        height: calc(100% - 30px);
         padding-top: 10px;
 
         .st-row {
@@ -269,13 +289,10 @@
                 justify-content: center;
                 align-items: center;
 
+                position: relative;
                 width: 6px;
                 height: 6px;
                 margin: 0 0 0 30px;
-            }
-
-            .st-dot {
-                position: relative;
             }
 
             .st-dot label {
@@ -339,47 +356,1136 @@
         justify-content: center;
         align-items: center;
 
-        height: 20%;
+        height: 32px;
         width: 100%;
         font-size: 12px;
     }
 }
 
+
 .skills {
-    position: absolute;
-    top: 495px;
-    left: 134px;
-
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
 
-    width: 32px;
-    font-size: 18px;
-    text-align: center;
-
-    .sk-dots-box {
-        display: flex;
-        flex-flow: column nowrap;
-        margin: 9px 9px 0 0;
-
-        .sk-dot {
-            width: 6px;
-            height: 6px;
-            margin-bottom: 15px;
-            border-radius: 50%;
-            background-color: black;
-        }
-    }
+    height: 520px;
+    width: 100%;
+    background-image: url('../../../assets/character-sheet/skills.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
 
     .sk-box {
         display: flex;
         flex-flow: column nowrap;
+        justify-content: space-evenly;
 
-        .sk {
-            position: relative;
-            height: 21px;
-            width: 23px;
+        width: 100%;
+        height: calc(100% - 30px);
+        padding-top: 10px;
+
+        .sk-row {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            width: 100%;
+            height: 23px;
+
+            .sk-dot {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                width: 8px;
+                height: 8px;
+                margin: 0 0 0 30px;
+            }
+
+            .sk-dot {
+                position: relative;
+            }
+
+            .sk-dot label {
+                position: absolute;
+
+                height: 8px;
+                width: 8px;
+                border: 1px solid black;
+                border-radius: 50%;
+                background-color: #fff;
+
+                cursor: pointer;
+            }
+
+            .sk-dot label:after {
+                position: absolute;
+
+                height: 8px;
+                width: 8px;
+                border: 2px solid #fff;
+                border-top: none;
+                border-right: none;
+
+                content: "";
+                opacity: 0;
+                transform: rotate(-45deg);
+            }
+
+            .sk-dot input[type="checkbox"] {
+                visibility: hidden;
+            }
+
+            .sk-dot input[type="checkbox"]:checked + label {
+                background-color: black;
+                border-color: black;
+            }
+
+            .sk-dot input[type="checkbox"]:checked + label:after {
+                opacity: 0;
+            }
+
+            .sk-value {
+                width: 25px;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bold;
+                border-bottom: 1px solid black;
+                margin: 0 10px 0 10px;
+            }
+
+            .sk-title {
+                width: 96px;
+                font-size: 13px;
+
+                span {
+                    margin-left: 5px;
+                    color: lightgrey;
+                    font-style: italic;
+                }
+            }
+        }
+    }
+
+    .sk-box-title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: 32px;
+        width: 100%;
+        font-size: 12px;
+    }
+}
+
+.passive-wisdom {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 50px;
+    width: 100%;
+    font-size: 12px;
+    background-image: url('../../../assets/character-sheet/passive-wisdom.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+
+    .value {
+        width: 46px;
+        margin: 0 20px 0 10px;
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .title {
+        width: 236px;
+        text-align: center;
+        font-size: 13px;
+    }
+}
+
+.proficiencies-and-languages {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 276px;
+    width: 88%;
+    font-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 20px solid transparent;
+    border-image-source: url('../../../assets/character-sheet/proficiencies-and-languages.png');
+    border-image-repeat: round;
+    border-image-slice: 30;
+
+    .pal-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-evenly;
+
+        width: 100%;
+        height: calc(100% - 30px);
+
+        .pal-data-box {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-evenly;
+
+            width: 100%;
+
+            .pal-cell-title {
+                width: 40%;
+                padding: 7px;
+                margin: 0 0 5px 0;
+                overflow: hidden;
+                font-weight: bold;
+            }
+
+            .pal-cell-type {
+                width: 40%;
+                padding: 7px;
+                margin: 0 0 5px 0;
+                border-radius: 5px 0 0 5px;
+                background-color: rgba(lightgrey, 0.6);
+                overflow: hidden;
+
+                text-overflow: ellipsis;
+                text-transform: capitalize;
+            }
+
+            .pal-cell-name {
+                width: 40%;
+                padding: 7px;
+                margin: 0 0 5px 0;
+                border-radius: 0 5px 5px 0;
+                background-color: rgba(lightgrey, 0.6);
+                overflow: hidden;
+
+                text-overflow: ellipsis;
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    .pal-box-title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-end;
+
+        height: 30px;
+        width: 100%;
+        font-size: 12px;
+    }
+}
+
+.armor-class-box {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 462px;
+    width: 100%;
+    margin-bottom: 5px;
+
+    background-image: url('../../../assets/character-sheet/armor-class-box-background.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+
+    .armor-class-row {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+        align-items: flex-end;
+
+        height: 120px;
+        width: 100%;
+        margin-bottom: 10px;
+
+        .fake-row {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100%;
+        }
+
+        .armor-class {
+            height: 100px;
+            width: 90px;
+            background-image: url('../../../assets/character-sheet/armor-class.png');
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover; /* Resize the background image to cover the entire container */
+
+            .value {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: flex-end;
+
+                height: 50px;
+                width: 100%;
+                font-size: 25px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .title {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 35px;
+                width: 80%;
+                padding: 0 10%;
+                font-size: 13px;
+                text-align: center;
+            }
+        }
+
+        .initiative {
+            height: 90px;
+            width: 90px;
+            background-image: url('../../../assets/character-sheet/initiative.png');
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover; /* Resize the background image to cover the entire container */
+        }
+
+        .speed {
+            height: 90px;
+            width: 90px;
+            background-image: url('../../../assets/character-sheet/speed.png');
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover; /* Resize the background image to cover the entire container */
+        }
+
+
+        .value {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            height: 64px;
+            width: 100%;
+            font-size: 25px;
+            font-weight: bold;
             text-align: center;
         }
+
+        .title {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            height: 20px;
+            width: 80%;
+            padding: 0 10%;
+            font-size: 13px;
+            text-align: center;
+        }
+    }
+
+    .current-hit-points {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+
+        height: 115px;
+        width: 90%;
+        background-image: url('../../../assets/character-sheet/current-hit-points.png');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+
+        .hp-maximum {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 30px;
+
+            .title {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-start;
+                align-items: center;
+
+                height: 20px;
+                padding: 0 10px 0 20px;
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .value {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 20px;
+                width: 40%;
+                border-bottom: 1px solid lightgrey;
+                font-size: 13px;
+                text-align: center;
+            }
+        }
+
+        .current-hp {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            width: 100%;
+            height: 80px;
+
+            .title {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 20px;
+                width: 100%;
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .value {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 60px;
+                width: 100%;
+                font-size: 36px;
+                font-weight: bold;
+                text-align: center;
+            }
+        }
+    }
+
+    .temporary-hit-points {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+
+        height: 95px;
+        width: 90%;
+        background-image: url('../../../assets/character-sheet/temporary-hit-points.png');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+
+        .title {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            height: 20px;
+            width: 100%;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .value {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            height: 70px;
+            width: 100%;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    .hit-dice-box-row {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+        align-items: center;
+
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .hit-dice-box {
+        height: 90px;
+        width: 150px;
+
+        background-image: url('../../../assets/character-sheet/hit-dice.png');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+
+        .total {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            height: 30px;
+            width: 80%;
+            padding: 0 15px;
+
+            .title {
+                width: 40px;
+                color: lightgrey;
+                font-size: 13px;
+            }
+
+            .value {
+                width: 80px;
+                border-bottom: 1px solid lightgrey;
+                text-align: center;
+            }
+        }
+
+        .hit-dice {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            height: 60px;
+            width: 100%;
+
+            .value {
+                display: flex;
+                flex-flow: column nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 35px;
+                width: 80px;
+
+                font-size: 25px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .title-row {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: flex-end;
+
+                height: 23px;
+                width: 100%;
+
+                .title {
+                    width: 60px;
+                    font-size: 13px;
+                }
+
+                .title-hit-dice {
+                    width: 40px;
+                    color: lightgrey;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+
+    .death-saves-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: 90px;
+        width: 150px;
+
+        background-image: url('../../../assets/character-sheet/death-saves.png');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+
+        .row {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            height: 30px;
+            width: 100%;
+
+            .title {
+                width: 66px;
+                font-size: 13px;
+                text-align: end;
+            }
+
+            .checks {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                margin-left: 5px;
+
+                .green-check {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    justify-content: center;
+                    align-items: center;
+
+                    position: relative;
+                    width: 14px;
+                    height: 14px;
+                    margin: 0 2px;
+                }
+
+                .green-check label {
+                    position: absolute;
+
+                    height: 14px;
+                    width: 14px;
+                    border: 1px solid black;
+                    border-radius: 50%;
+                    background-color: #fff;
+
+                    cursor: pointer;
+                }
+
+                .green-check label:after {
+                    position: absolute;
+
+                    height: 14px;
+                    width: 14px;
+                    border: 2px solid #fff;
+                    border-top: none;
+                    border-right: none;
+
+                    content: "";
+                    opacity: 0;
+                    transform: rotate(-45deg);
+                }
+
+                .green-check input[type="checkbox"] {
+                    visibility: hidden;
+                }
+
+                .green-check input[type="checkbox"]:checked + label {
+                    background-color: greenyellow;
+                    border-color: black;
+                }
+
+                .green-check input[type="checkbox"]:checked + label:after {
+                    opacity: 0;
+                }
+
+                .red-check {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    justify-content: center;
+                    align-items: center;
+
+                    position: relative;
+                    width: 14px;
+                    height: 14px;
+                    margin: 0 2px;
+                }
+
+                .red-check label {
+                    position: absolute;
+
+                    height: 14px;
+                    width: 14px;
+                    border: 1px solid black;
+                    border-radius: 50%;
+                    background-color: #fff;
+
+                    cursor: pointer;
+                }
+
+                .red-check label:after {
+                    position: absolute;
+
+                    height: 14px;
+                    width: 14px;
+                    border: 2px solid #fff;
+                    border-top: none;
+                    border-right: none;
+
+                    content: "";
+                    opacity: 0;
+                    transform: rotate(-45deg);
+                }
+
+                .red-check input[type="checkbox"] {
+                    visibility: hidden;
+                }
+
+                .red-check input[type="checkbox"]:checked + label {
+                    background-color: red;
+                    border-color: black;
+                }
+
+                .red-check input[type="checkbox"]:checked + label:after {
+                    opacity: 0;
+                }
+            }
+        }
+
+        .death-saves-title {
+            height: 10px;
+            padding-top: 3px;
+            font-size: 13px;
+        }
+    }
+}
+
+.attacks-and-spellcasting {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 276px;
+    width: 92%;
+    margin-bottom: 5px;
+
+    border: 20px solid transparent;
+    border-image-source: url('../../../assets/character-sheet/attacks-and-spellcasting.png');
+    border-image-repeat: round;
+    border-image-slice: 30;
+
+    font-size: 12px;
+
+    .att-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-evenly;
+
+        width: 100%;
+        height: calc(100% - 30px);
+
+        .att-data-box {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-evenly;
+
+            width: 100%;
+
+            .att-cell-title {
+                width: 38%;
+                padding: 7px;
+                margin: 0 0 5px 0;
+                overflow: hidden;
+                font-weight: bold;
+            }
+
+            .att-cell-title-att {
+                width: 20%;
+                padding: 7px;
+                margin: 0 2% 5px 2%;
+                overflow: hidden;
+                font-weight: bold;
+            }
+
+            .att-cell-name {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-start;
+                align-items: center;
+
+                width: 38%;
+                padding: 7px;
+                margin: 0 0 5px 0;
+                border-radius: 5px 0 0 5px;
+                background-color: rgba(lightgrey, 0.6);
+                overflow: hidden;
+
+                text-overflow: ellipsis;
+                text-transform: capitalize;
+            }
+
+            .att-cell-att {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                width: 20%;
+                padding: 7px;
+                margin: 0 2% 5px 2%;
+                background-color: rgba(lightgrey, 0.6);
+                overflow: hidden;
+
+                text-align: center;
+                text-overflow: ellipsis;
+                text-transform: capitalize;
+            }
+
+            .att-cell-type {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-start;
+                align-items: center;
+
+                width: 38%;
+                padding: 7px;
+                margin: 0 0 5px 0;
+                border-radius: 0 5px 5px 0;
+                background-color: rgba(lightgrey, 0.6);
+                overflow: hidden;
+
+                text-overflow: ellipsis;
+
+                .att-cell-type-title {
+                    padding-left: 5px;
+                }
+            }
+        }
+    }
+
+    .att-box-title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-end;
+
+        height: 30px;
+        width: 100%;
+        font-size: 12px;
+    }
+}
+
+.equipment {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    min-height: 276px;
+    width: 92%;
+    font-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    border: 20px solid transparent;
+    border-image-source: url('../../../assets/character-sheet/attacks-and-spellcasting.png');
+    border-image-repeat: round;
+    border-image-slice: 30;
+
+    .equipment-box {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+
+        width: 100%;
+        height: calc(100% - 30px);
+
+        .total-weight-box {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            height: 100%;
+            width: 75px;
+            padding-top: 210px;
+
+            .title {
+                margin-bottom: 2px;
+                font-size: 12px;
+            }
+
+            .value {
+                font-size: 18px;
+                font-weight: bold;
+            }
+        }
+
+        .equipment-inner-box {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            width: calc(100% - 75px);
+
+            .row {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-evenly;
+                align-items: center;
+
+                height: 30px;
+                width: 100%;
+
+                .quantity {
+                    height: 15px;
+                    width: 30px;
+                    padding: 5px 0;
+                    border-radius: 5px 0 0 5px;
+                    background-color: rgba(lightgrey, 0.6);
+                    text-align: center;
+                }
+
+                .name {
+                    height: 15px;
+                    width: 130px;
+                    padding: 5px 10px;
+                    background-color: rgba(lightgrey, 0.6);
+                }
+
+                .weight {
+                    height: 15px;
+                    width: 30px;
+                    padding: 5px 0;
+                    border-radius: 0 5px 5px 0;
+                    background-color: rgba(lightgrey, 0.6);
+                    text-align: center;
+                }
+            }
+
+            .row-title {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-evenly;
+                align-items: center;
+
+                height: 30px;
+                width: 100%;
+                font-weight: bold;
+
+                .quantity {
+                    height: 15px;
+                    width: 30px;
+                    padding: 5px 0;
+                    border-radius: 5px 0 0 5px;
+                    text-align: center;
+                }
+
+                .name {
+                    height: 15px;
+                    width: 130px;
+                    padding: 5px 10px;
+                }
+
+                .weight {
+                    height: 15px;
+                    width: 30px;
+                    padding: 5px 0;
+                    border-radius: 0 5px 5px 0;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .equipment-box-title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-end;
+
+        height: 30px;
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .equipment-currency-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        position: absolute;
+        top: 0;
+        left: -30px;
+        z-index: 10;
+
+        height: 300px;
+        width: 110px;
+
+        .equipment-currency {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            position: relative;
+            height: 40px;
+            width: 90px;
+
+            background-image: url('../../../assets/character-sheet/money.png');
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover; /* Resize the background image to cover the entire container */
+
+            .title {
+                width: 25px;
+                font-size: 9px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .value {
+                width: 56px;
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.personality-traits-box {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    height: 462px;
+    width: 100%;
+    margin-bottom: 5px;
+
+    background-image: url('../../../assets/character-sheet/armor-class-box-background.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+
+    .personality-traits, .ideals, .bonds, .flaws {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        height: 115px;
+        width: 90%;
+        margin-bottom: 5px;
+
+        background-image: url('../../../assets/character-sheet/current-hit-points.png');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+
+        .title {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            height: 20px;
+            width: 100%;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .value {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: flex-start;
+
+            height: 70px;
+            width: 90%;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    .ideals, .bonds {
+        height: 93px;
+        background-image: url('../../../assets/character-sheet/ideals.png');
+
+        .value {
+            height: 50px;
+        }
+    }
+
+    .flaws {
+        height: 95px;
+        background-image: url('../../../assets/character-sheet/temporary-hit-points.png');
+
+        .value {
+            height: 50px;
+        }
+    }
+}
+
+.features-and-traits {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 276px;
+    width: 92%;
+    margin-bottom: 5px;
+
+    border: 20px solid transparent;
+    border-image-source: url('../../../assets/character-sheet/attacks-and-spellcasting.png');
+    border-image-repeat: round;
+    border-image-slice: 30;
+
+    .fat-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-evenly;
+
+        width: 100%;
+        height: calc(100% - 30px);
+
+        .block {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: flex-start;
+
+            width: 100%;
+            padding-left: 20px;
+
+            .name {
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .source {
+                font-size: 12px;
+            }
+        }
+    }
+
+
+    .fat-box-title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-end;
+
+        height: 30px;
+        width: 100%;
+        font-size: 12px;
     }
 }
