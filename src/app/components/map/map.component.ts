@@ -11,6 +11,7 @@ import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {Subscription} from 'rxjs';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
+import {SocketService} from '../../services/socket.service';
 
 @Component({
     selector: 'app-map',
@@ -141,7 +142,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         }
 
         this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
-        this.addRectangleToKonva();
+        const position = new Coords(10, 10, 0);
+        this.addRectangleToKonva(position);
     }
 
     moveMap(res: string, ev: MouseEvent): void {
@@ -218,10 +220,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         });
     }
 
-    addRectangleToKonva(): void {
+    addRectangleToKonva(position: Coords): void {
         const shadowRectangle = new Konva.Rect({
-            x: 0,
-            y: 0,
+            x: position.x,
+            y: position.y,
             width: this.map.grid.cellSize * 2,
             height: this.map.grid.cellSize * 2,
             fill: '#FF7B17',
@@ -231,8 +233,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             dash: [20, 2]
         });
         const rectangle = new Konva.Rect({
-            x: 50,
-            y: 50,
+            x: position.x,
+            y: position.y,
             width: this.map.grid.cellSize * 2,
             height: this.map.grid.cellSize * 2,
             fill: '#fff',

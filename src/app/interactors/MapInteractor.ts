@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {MapService} from '../services/map.service';
 import { Coords } from '../classes/Coords';
+import {SocketService} from '../services/socket.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MapInteractor {
 
-    constructor(private mapService: MapService) {
+    constructor(private mapService: MapService,
+                private socketService: SocketService) {
 
     }
 

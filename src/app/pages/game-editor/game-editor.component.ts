@@ -1,52 +1,47 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game} from '../../classes/Game';
 import {Page} from '../../classes/Page';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
-import io from 'socket.io-client';
 import {ApiService} from '../../services/api.service';
-import {BehaviorSubject} from 'rxjs';
+import {SocketService} from '../../services/socket.service';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-game-editor',
     templateUrl: './game-editor.component.html',
     styleUrls: ['./game-editor.component.scss']
 })
-export class GameEditorComponent implements OnInit {
+export class GameEditorComponent implements OnInit, OnDestroy {
 
     map: OurKonvaMap;
     game: Game;
     selectedPage: Page = null;
-    gameSubscription: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
+    gameSocketSubscription: Subscription;
 
     tabs: number = 0;
     currentObjectSelected: any = {ev: null, object: null, type: null};
 
-    // Socket io
-    socket = io(this.apiService.API_SOCKET);
-
     constructor(private gameInteractor: GameInteractor,
                 private mouseService: MouseService,
-                private apiService: ApiService) { }
+                private apiService: ApiService,
+                private socketService: SocketService) { }
 
     ngOnInit(): void {
-        this.socket.on('connect', () => {
-            console.log('conectado al socket correctamente');
+        this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
+            this.game = socketGame;
+            if (this.game) {
+                this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
+            }
         });
-        this.socket.on('game-editor', (data) => {
-            console.log('msg recibido', data);
-            this.gameSubscription.next(data);
-            this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
-        });
-        this.socket.on('disconnect', () => {
-            console.log('socket desconectado!');
-        });
-        // subscription del game
-        this.gameSubscription.subscribe((game: Game) => {
-            this.game = game;
-            console.log(this.game);
-        });
+    }
+
+
+    ngOnDestroy(): void {
+        if (this.gameSocketSubscription) {
+            this.socketService.gameSocketSubscription.unsubscribe();
+        }
     }
 
     updateProperties(ev): void {
@@ -66,7 +61,7 @@ export class GameEditorComponent implements OnInit {
     }
 
     onPageChange(ev: any): void {
-        this.socket.emit('game-editor', this.game);
+        // this.socket.emit('game-editor', this.game);
     }
 
     onSetCurrentObjectSelected(ev): void {
