@@ -1,140 +1,482 @@
 <div class="character-sheet-box">
     <div class="header">
-        <div class="name">Steiner</div>
+        <div class="name">{{character.name}}</div>
         <div class="data">
             <div class="data-row">
                 <div class="data-el">
-                    <div class="el-data">Paladin 2</div>
+                    <div class="el-data">{{character.class}} {{character.level}}</div>
                     <div class="el-title">Class and level</div>
                 </div>
                 <div class="data-el">
-                    <div class="el-data">Soldier</div>
+                    <div class="el-data">{{character.background.name}}</div>
                     <div class="el-title">Background</div>
                 </div>
             </div>
             <div class="data-row">
                 <div class="data-el">
-                    <div class="el-data">Standard Human</div>
+                    <div class="el-data">{{character.race}}</div>
                     <div class="el-title">Race</div>
                 </div>
                 <div class="data-el">
-                    <div class="el-data">Neutral Good</div>
+                    <div class="el-data">{{character.alignment}}</div>
                     <div class="el-title">Alignment</div>
                 </div>
                 <div class="data-el">
-                    <div class="el-data">700</div>
+                    <div class="el-data">{{character.exp}}</div>
                     <div class="el-title">Experience points</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="attributes">
-        <div class="attribute-invisible-box">
-            <div class="attribute-box">
-                <div class="attr-title">Strength</div>
-                <div class="attr-bonus">2</div>
-                <div class="attr-point">14</div>
-            </div>
-        </div>
-        <div class="attribute-invisible-box">
-            <div class="attribute-box">
-                <div class="attr-title">Dexterity</div>
-                <div class="attr-bonus">-1</div>
-                <div class="attr-point">9</div>
-            </div>
-        </div>
-        <div class="attribute-invisible-box">
-            <div class="attribute-box">
-                <div class="attr-title">Constitution</div>
-                <div class="attr-bonus">2</div>
-                <div class="attr-point">15</div>
-            </div>
-        </div>
-        <div class="attribute-invisible-box">
-            <div class="attribute-box">
-                <div class="attr-title">Intelligence</div>
-                <div class="attr-bonus">0</div>
-                <div class="attr-point">11</div>
-            </div>
-        </div>
-        <div class="attribute-invisible-box">
-            <div class="attribute-box">
-                <div class="attr-title">Wisdom</div>
-                <div class="attr-bonus">1</div>
-                <div class="attr-point">13</div>
-            </div>
-        </div>
-        <div class="attribute-invisible-box">
-            <div class="attribute-box">
-                <div class="attr-title">Charisma</div>
-                <div class="attr-bonus">3</div>
-                <div class="attr-point">16</div>
-            </div>
-        </div>
-    </div>
+    <div class="body">
+        <div class="column">
+            <div class="attr-block">
+                <div class="attributes">
+                    <div class="attribute-invisible-box">
+                        <div class="attribute-box">
+                            <div class="attr-title">Strength</div>
+                            <div class="attr-bonus">{{character.attr.str.bonus}}</div>
+                            <div class="attr-point">{{character.attr.str.points}}</div>
+                        </div>
+                    </div>
+                    <div class="attribute-invisible-box">
+                        <div class="attribute-box">
+                            <div class="attr-title">Dexterity</div>
+                            <div class="attr-bonus">{{character.attr.dex.bonus}}</div>
+                            <div class="attr-point">{{character.attr.dex.points}}</div>
+                        </div>
+                    </div>
+                    <div class="attribute-invisible-box">
+                        <div class="attribute-box">
+                            <div class="attr-title">Constitution</div>
+                            <div class="attr-bonus">{{character.attr.con.bonus}}</div>
+                            <div class="attr-point">{{character.attr.con.points}}</div>
+                        </div>
+                    </div>
+                    <div class="attribute-invisible-box">
+                        <div class="attribute-box">
+                            <div class="attr-title">Intelligence</div>
+                            <div class="attr-bonus">{{character.attr.int.bonus}}</div>
+                            <div class="attr-point">{{character.attr.int.points}}</div>
+                        </div>
+                    </div>
+                    <div class="attribute-invisible-box">
+                        <div class="attribute-box">
+                            <div class="attr-title">Wisdom</div>
+                            <div class="attr-bonus">{{character.attr.wis.bonus}}</div>
+                            <div class="attr-point">{{character.attr.wis.points}}</div>
+                        </div>
+                    </div>
+                    <div class="attribute-invisible-box">
+                        <div class="attribute-box">
+                            <div class="attr-title">Charisma</div>
+                            <div class="attr-bonus">{{character.attr.cha.bonus}}</div>
+                            <div class="attr-point">{{character.attr.cha.points}}</div>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="inspiration">
-        <div class="inspiration-value">1</div>
-        <div class="inspiration-title">Inspiration</div>
-    </div>
+                <div class="inspiration-block">
+                    <div class="inspiration">
+                        <div class="inspiration-value">{{character.inspiration}}</div>
+                        <div class="inspiration-title">Inspiration</div>
+                    </div>
 
-    <div class="proficiency">
-        <div class="proficiency-value">2</div>
-        <div class="proficiency-title">Proficiency bonus</div>
-    </div>
+                    <div class="proficiency">
+                        <div class="proficiency-value">{{character.proficiencyBonus}}</div>
+                        <div class="proficiency-title">Proficiency bonus</div>
+                    </div>
 
-    <div class="saving-throws">
-        <div class="st-box">
-            <div class="st-row">
-                <div class="st-dot">
-                    <input type="checkbox" id="checkbox-strength" />
-                    <label for="checkbox-strength"></label>
+                    <div class="saving-throws">
+                        <div class="st-box">
+                            <div class="st-row">
+                                <div class="st-dot">
+                                    <input type="checkbox" id="checkbox-strength" />
+                                    <label for="checkbox-strength"></label>
+                                </div>
+                                <div class="st-value">{{character.savingThrows.str.value}}</div>
+                                <div class="st-title">Strength</div>
+                            </div>
+                            <div class="st-row">
+                                <div class="st-dot">
+                                    <input type="checkbox" id="checkbox-dexterity" />
+                                    <label for="checkbox-dexterity"></label>
+                                </div>
+                                <div class="st-value">{{character.savingThrows.dex.value}}</div>
+                                <div class="st-title">Dexterity</div>
+                            </div>
+                            <div class="st-row">
+                                <div class="st-dot">
+                                    <input type="checkbox" id="checkbox-constitution" />
+                                    <label for="checkbox-constitution"></label>
+                                </div>
+                                <div class="st-value">{{character.savingThrows.con.value}}</div>
+                                <div class="st-title">Constitution</div>
+                            </div>
+                            <div class="st-row">
+                                <div class="st-dot">
+                                    <input type="checkbox" id="checkbox-intelligence" />
+                                    <label for="checkbox-intelligence"></label>
+                                </div>
+                                <div class="st-value">{{character.savingThrows.int.value}}</div>
+                                <div class="st-title">Intelligence</div>
+                            </div>
+                            <div class="st-row">
+                                <div class="st-dot">
+                                    <input type="checkbox" id="checkbox-wisdom" />
+                                    <label for="checkbox-wisdom"></label>
+                                </div>
+                                <div class="st-value">{{character.savingThrows.wis.value}}</div>
+                                <div class="st-title">Wisdom</div>
+                            </div>
+                            <div class="st-row">
+                                <div class="st-dot">
+                                    <input type="checkbox" id="checkbox-charisma" />
+                                    <label for="checkbox-charisma"></label>
+                                </div>
+                                <div class="st-value">5</div>
+                                <div class="st-title">Charisma</div>
+                            </div>
+                        </div>
+                        <div class="st-box-title">Saving throws</div>
+                    </div>
+
+                    <div class="skills">
+                        <div class="sk-box">
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-acrobatics" [checked]="character.skills.acrobatics.selected"/>
+                                    <label for="checkbox-acrobatics"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.acrobatics.value}}</div>
+                                <div class="sk-title">Acrobatics<span>Dex</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-animalHandling" [checked]="character.skills.animalHandling.selected"/>
+                                    <label for="checkbox-animalHandling"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.animalHandling.value}}</div>
+                                <div class="sk-title">Animal Handling<span>Wis</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-arcana" [checked]="character.skills.arcana.selected"/>
+                                    <label for="checkbox-arcana"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.arcana.value}}</div>
+                                <div class="sk-title">Arcana<span>Int</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-athletics" [checked]="character.skills.athletics.selected"/>
+                                    <label for="checkbox-athletics"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.athletics.value}}</div>
+                                <div class="sk-title">Athletics<span>Str</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-deception" [checked]="character.skills.deception.selected"/>
+                                    <label for="checkbox-deception"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.deception.value}}</div>
+                                <div class="sk-title">Deception<span>Cha</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-history" [checked]="character.skills.history.selected"/>
+                                    <label for="checkbox-history"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.history.value}}</div>
+                                <div class="sk-title">History<span>Int</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-insight" [checked]="character.skills.insight.selected"/>
+                                    <label for="checkbox-insight"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.insight.value}}</div>
+                                <div class="sk-title">Insight<span>Wis</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-intimidation" [checked]="character.skills.intimidation.selected"/>
+                                    <label for="checkbox-intimidation"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.intimidation.value}}</div>
+                                <div class="sk-title">Intimidation<span>Cha</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-investigation" [checked]="character.skills.investigation.selected"/>
+                                    <label for="checkbox-investigation"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.investigation.value}}</div>
+                                <div class="sk-title">Investigation<span>Int</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-medicine" [checked]="character.skills.medicine.selected"/>
+                                    <label for="checkbox-medicine"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.medicine.value}}</div>
+                                <div class="sk-title">Medicine<span>Wis</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-nature" [checked]="character.skills.nature.selected"/>
+                                    <label for="checkbox-nature"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.nature.value}}</div>
+                                <div class="sk-title">Nature<span>Int</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-perception" [checked]="character.skills.perception.selected"/>
+                                    <label for="checkbox-perception"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.perception.value}}</div>
+                                <div class="sk-title">Perception<span>Wis</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-performance" [checked]="character.skills.performance.selected"/>
+                                    <label for="checkbox-performance"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.performance.value}}</div>
+                                <div class="sk-title">Performance<span>Cha</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-persuasion" [checked]="character.skills.persuasion.selected"/>
+                                    <label for="checkbox-persuasion"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.persuasion.value}}</div>
+                                <div class="sk-title">Persuasion<span>Cha</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-religion" [checked]="character.skills.religion.selected"/>
+                                    <label for="checkbox-religion"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.religion.value}}</div>
+                                <div class="sk-title">Religion<span>Int</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-sleightOfHand" [checked]="character.skills.sleightOfHand.selected"/>
+                                    <label for="checkbox-sleightOfHand"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.sleightOfHand.value}}</div>
+                                <div class="sk-title">Sleight of Hand<span>Dex</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-stealth" [checked]="character.skills.stealth.selected"/>
+                                    <label for="checkbox-stealth"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.stealth.value}}</div>
+                                <div class="sk-title">Stealth<span>Dex</span></div>
+                            </div>
+                            <div class="sk-row">
+                                <div class="sk-dot">
+                                    <input type="checkbox" id="checkbox-survival" [checked]="character.skills.survival.selected"/>
+                                    <label for="checkbox-survival"></label>
+                                </div>
+                                <div class="sk-value">{{character.skills.survival.value}}</div>
+                                <div class="sk-title">Survival<span>Wis</span></div>
+                            </div>
+                        </div>
+                        <div class="sk-box-title">Skills</div>
+                    </div>
                 </div>
-                <div class="st-value">2</div>
-                <div class="st-title">Strength</div>
             </div>
-            <div class="st-row">
-                <div class="st-dot">
-                    <input type="checkbox" id="checkbox-dexterity" />
-                    <label for="checkbox-dexterity"></label>
-                </div>
-                <div class="st-value">-1</div>
-                <div class="st-title">Dexterity</div>
+
+            <div class="passive-wisdom">
+                <div class="value">21</div>
+                <div class="title">Passive wisdom (perception)</div>
             </div>
-            <div class="st-row">
-                <div class="st-dot">
-                    <input type="checkbox" id="checkbox-constitution" />
-                    <label for="checkbox-constitution"></label>
+
+            <div class="proficiencies-and-languages">
+                <div class="pal-box">
+                    <div class="pal-data-box">
+                        <div class="pal-cell-title">Type</div>
+                        <div class="pal-cell-title">Name</div>
+                    </div>
+                    <div *ngFor="let pal of character.proficiencies" class="pal-data-box">
+                        <div class="pal-cell-type">{{pal.type}}</div>
+                        <div class="pal-cell-name">{{pal.name}}</div>
+                    </div>
                 </div>
-                <div class="st-value">2</div>
-                <div class="st-title">Constitution</div>
-            </div>
-            <div class="st-row">
-                <div class="st-dot">
-                    <input type="checkbox" id="checkbox-intelligence" />
-                    <label for="checkbox-intelligence"></label>
-                </div>
-                <div class="st-value">0</div>
-                <div class="st-title">Intelligence</div>
-            </div>
-            <div class="st-row">
-                <div class="st-dot">
-                    <input type="checkbox" id="checkbox-wisdom" />
-                    <label for="checkbox-wisdom"></label>
-                </div>
-                <div class="st-value">3</div>
-                <div class="st-title">Wisdom</div>
-            </div>
-            <div class="st-row">
-                <div class="st-dot">
-                    <input type="checkbox" id="checkbox-charisma" />
-                    <label for="checkbox-charisma"></label>
-                </div>
-                <div class="st-value">5</div>
-                <div class="st-title">Charisma</div>
+                <div class="pal-box-title">Proficiencies & languages</div>
             </div>
         </div>
-        <div class="st-box-title">Saving throws</div>
+        <div class="column">
+            <div class="armor-class-box">
+                <div class="armor-class-row">
+                    <div class="fake-row">
+                        <div class="armor-class">
+                            <div class="value">{{character.armorClass}}</div>
+                            <div class="title">Armor class</div>
+                        </div>
+                        <div class="initiative">
+                            <div class="value">{{character.initiative}}</div>
+                            <div class="title">Initiative</div>
+                        </div>
+                        <div class="speed">
+                            <div class="value">{{character.speed}}</div>
+                            <div class="title">Speed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="current-hit-points">
+                    <div class="hp-maximum">
+                        <div class="title">Hit Point Maximum</div>
+                        <div class="value">{{character.hitPointMax}}</div>
+                    </div>
+                    <div class="current-hp">
+                        <div class="value">{{character.currentHP}}</div>
+                        <div class="title">Current Hit Points</div>
+                    </div>
+                </div>
+                <div class="temporary-hit-points">
+                    <div class="value">{{character.hitPointMax}}</div>
+                    <div class="title">Temporary Hit Points</div>
+                </div>
+                <div class="hit-dice-box-row">
+                    <div class="hit-dice-box">
+                        <div class="total">
+                            <div class="title">Total</div>
+                            <div class="value">{{character.totalHitDice}}</div>
+                        </div>
+                        <div class="hit-dice">
+                            <div class="value">{{character.nHitDice}}</div>
+                            <div class="title-row">
+                                <div class="title">Hit Dice</div>
+                                <div class="title-hit-dice">({{character.hitDice}})</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="death-saves-box">
+                        <div class="row">
+                            <div class="title">Successes</div>
+                            <div class="checks">
+                                <div class="green-check" *ngFor="let check of character.deathSaves.success; let i = index;">
+                                    <input type="checkbox" [id]="'success-checkbox' + i" [checked]="check"/>
+                                    <label [for]="'success-checkbox' + i"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="title">Failures</div>
+                            <div class="checks">
+                                <div class="red-check" *ngFor="let check of character.deathSaves.failures; let i = index;">
+                                    <input type="checkbox" [id]="'failure-checkbox' + i" [checked]="check"/>
+                                    <label [for]="'failure-checkbox' + i"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="death-saves-title">Death saves</div>
+                    </div>
+                </div>
+            </div>
+            <div class="attacks-and-spellcasting">
+                <div class="att-box">
+                    <div class="att-data-box">
+                        <div class="att-cell-title">Name</div>
+                        <div class="att-cell-title-att">Attack</div>
+                        <div class="att-cell-title">Damage & Type</div>
+                    </div>
+                    <div *ngFor="let att of character.attacksAndSpellcasting" class="att-data-box">
+                        <div *ngIf="att.name" class="att-cell-name">{{att.name}}</div>
+                        <div *ngIf="att.attack" class="att-cell-att">+{{att.attack}}</div>
+                        <div *ngIf="!att.attack" class="att-cell-att">-</div>
+                        <div class="att-cell-type">
+                            <ng-container *ngIf="att.dice">
+                                <span>{{att.dice.n}}</span>
+                                <span>d{{att.dice.value}}</span>
+                                <span *ngIf="att.dice.bonus !== 0">+{{att.dice.bonus}}</span>
+                            </ng-container>
+                            <span class="att-cell-type-title" *ngIf="att.type">{{att.type}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="att-box-title">Attacks and Spellcasting</div>
+            </div>
+            <div class="equipment">
+                <div class="equipment-box">
+                    <div class="total-weight-box">
+                        <div class="title">Total weight</div>
+                        <div class="value">{{character.totalWeight}}</div>
+                    </div>
+                    <div class="equipment-inner-box">
+                        <div class="row-title">
+                            <div class="quantity">Q</div>
+                            <div class="name">Name</div>
+                            <div class="weight">W</div>
+                        </div>
+                        <div class="row" *ngFor="let item of character.equipment">
+                            <div class="quantity">{{item.quantity}}</div>
+                            <div class="name">{{item.name}}</div>
+                            <div class="weight">{{item.weight}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="equipment-box-title">Equipment</div>
+                <div class="equipment-currency-box">
+                    <div class="equipment-currency">
+                        <div class="title">PP</div>
+                        <div class="value">{{character.currency.pp}}</div>
+                    </div>
+                    <div class="equipment-currency">
+                        <div class="title">GP</div>
+                        <div class="value">{{character.currency.gp}}</div>
+                    </div>
+                    <div class="equipment-currency">
+                        <div class="title">EP</div>
+                        <div class="value">{{character.currency.ep}}</div>
+                    </div>
+                    <div class="equipment-currency">
+                        <div class="title">SP</div>
+                        <div class="value">{{character.currency.sp}}</div>
+                    </div>
+                    <div class="equipment-currency">
+                        <div class="title">CP</div>
+                        <div class="value">{{character.currency.cp}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="personality-traits-box">
+                <div class="personality-traits">
+                    <div class="value">{{character.background.personalityTrait}}</div>
+                    <div class="title">Personality trait</div>
+                </div>
+                <div class="ideals">
+                    <div class="value">{{character.background.ideals}}</div>
+                    <div class="title">Ideals</div>
+                </div>
+                <div class="bonds">
+                    <div class="value">{{character.background.bonds}}</div>
+                    <div class="title">Bonds</div>
+                </div>
+                <div class="flaws">
+                    <div class="value">{{character.background.flaws}}</div>
+                    <div class="title">Flaws</div>
+                </div>
+            </div>
+            <div class="features-and-traits">
+                <div class="fat-box">
+                    <div class="block" *ngFor="let feat of character.featuresAndTraits">
+                        <div class="name">{{feat.name}}</div>
+                        <div class="source">{{feat.source}}: {{feat.sourceType}}</div>
+                    </div>
+                </div>
+                <div class="fat-box-title">Features and Traits</div>
+            </div>
+        </div>
     </div>
 </div>
