@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {User} from '../../classes/User';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-sign-up',
@@ -12,7 +13,7 @@ export class SignUpComponent implements OnInit {
 
     signUpForm: FormGroup;
 
-    constructor(private userInteractor: UserInteractor) { }
+    constructor(private userInteractor: UserInteractor, private router: Router) { }
 
     ngOnInit(): void {
         this.signUpForm = new FormGroup({
@@ -41,6 +42,7 @@ export class SignUpComponent implements OnInit {
 
         try {
             await this.userInteractor.signUp(user);
+            this.router.navigate(['/sign-in']);
         } catch (e) {
             console.log(e.error);
         }
