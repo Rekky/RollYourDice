@@ -27,6 +27,12 @@ export class SignUpComponent implements OnInit {
         const username = this.signUpForm.get('username').value;
         const email = this.signUpForm.get('email').value;
         const pass = this.signUpForm.get('password').value;
+        const repeatPass = this.signUpForm.get('repeatPassword').value;
+
+        if (pass !== repeatPass) {
+            alert('must be the same password');
+            return;
+        }
 
         const user = new User();
         user.username = username;
