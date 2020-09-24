@@ -11,7 +11,11 @@
         </div>
         <div>
             <label>Password</label>
-            <input  type="text" [formControlName]="'password'">
+            <input  type="password" [formControlName]="'password'">
+        </div>
+        <div>
+            <label>Repeat password</label>
+            <input  type="password" [formControlName]="'repeatPassword'">
         </div>
         <button type="submit">Register</button>
     </form>
