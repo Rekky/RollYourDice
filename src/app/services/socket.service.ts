@@ -10,9 +10,9 @@ import {SocketObject} from '../classes/sockets/SocketObject';
 })
 export class SocketService {
 
-    private socket = io(this.apiService.API_SOCKET);
+    socket = io(this.apiService.API_SOCKET);
     gameSocketSubscription: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
-    gameObjectSocketSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
+    gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
 
     constructor(private apiService: ApiService) {
@@ -22,16 +22,18 @@ export class SocketService {
         this.socket.on('disconnect', () => {
             console.log('socket desconectado!');
         });
-        this.getGameEditor();
-    }
 
-    getGameEditor(): void {
         this.socket.on('game-editor', (data) => {
             this.gameSocketSubscription.next(data);
         });
-        this.socket.on('game-object-editor', (data) => {
-            this.gameObjectSocketSubscription.next(data);
+        this.socket.on('game-editor-object', (data) => {
+            console.log('recibo del back game-editor-object', data);
+            this.gameSocketObjectSubscription.next(data);
         });
+    }
+
+    getGameEditor(): void {
+
     }
 
     sendSocketObject(object: any): void {

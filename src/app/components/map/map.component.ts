@@ -9,6 +9,7 @@ import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {Subscription} from 'rxjs';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
+import {SocketService} from '../../services/socket.service';
 
 @Component({
     selector: 'app-map',
@@ -37,16 +38,34 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     activeTr: any;
 
     getCurrentSelectedObjectSub: Subscription;
+
+    // subscriptions for socketObject
     rectangleTest: Konva.Rect = null;
+    socketObjectSubscription: Subscription;
 
     constructor(private mapInteractor: MapInteractor,
-                private mouseInteractor: MouseInteractor) { }
+                private mouseInteractor: MouseInteractor, private socketService: SocketService) { }
 
     ngOnInit(): void {
         this.getCurrentSelectedObjectSub = this.mouseInteractor.getCurrentSelectedObjectObservable().subscribe(res => {
             if (res) {
                 this.activeTr = res.transformer;
                 this.selectedObjectAttrs = res.attr;
+            }
+        });
+        // this.socketObjectSubscription = this.socketService.gameSocketObjectSubscription.subscribe((res) => {
+        //     console.log('subscription----a----cambiado', res);
+        //     if (this.rectangleTest.attrs) {
+        //         this.rectangleTest.attrs = res;
+        //         this.gridStage.batchDraw();
+        //     }
+        // });
+        this.socketService.socket.on('game-editor-object', (data) => {
+            const jsonData = JSON.parse(data);
+            console.log('recibo del back game-editor-object', jsonData);
+            if (this.rectangleTest.attrs) {
+                this.rectangleTest.position({x: jsonData.attrs.x, y: jsonData.attrs.y});
+                this.gridStage.batchDraw();
             }
         });
     }
@@ -83,6 +102,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     ngOnDestroy(): void {
         if (this.getCurrentSelectedObjectSub) {
             this.getCurrentSelectedObjectSub.unsubscribe();
+        }
+        if (this.socketObjectSubscription) {
+            this.socketObjectSubscription.unsubscribe();
         }
     }
 
