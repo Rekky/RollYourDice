@@ -16,4 +16,8 @@ export class MapInteractor {
     setMapPosition(id: string | number, pos: Coords): void {
         this.mapService.setMapPosition(id, pos);
     }
+
+    sendSocketObjectPosition(object: any): void {
+        this.socketService.sendSocketObject(object);
+    }
 }

@@ -33,4 +33,9 @@ export class SocketService {
             this.gameObjectSocketSubscription.next(data);
         });
     }
+
+    sendSocketObject(object: any): void {
+        console.log('sendSocketObject', object);
+        this.socket.emit('game-editor-object', object);
+    }
 }

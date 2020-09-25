@@ -5,13 +5,10 @@ import {
 import Konva from 'konva';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import {Coords} from '../../classes/Coords';
-import {MouseService} from '../../services/mouse.service';
-import {KnownDeclaration} from '@angular/compiler-cli/src/ngtsc/reflection';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {Subscription} from 'rxjs';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
-import {SocketService} from '../../services/socket.service';
 
 @Component({
     selector: 'app-map',
@@ -40,6 +37,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     activeTr: any;
 
     getCurrentSelectedObjectSub: Subscription;
+    rectangleTest: Konva.Rect = null;
 
     constructor(private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor) { }
@@ -232,7 +230,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             strokeWidth: 3,
             dash: [20, 2]
         });
-        const rectangle = new Konva.Rect({
+        this.rectangleTest = new Konva.Rect({
             x: position.x,
             y: position.y,
             width: this.map.grid.cellSize * 2,
@@ -249,29 +247,30 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         shadowRectangle.hide();
         this.gridLayer.add(shadowRectangle);
 
-        rectangle.on('dragstart', () => {
+        this.rectangleTest.on('dragstart', () => {
             shadowRectangle.show();
             shadowRectangle.moveToTop();
-            rectangle.moveToTop();
+            this.rectangleTest.moveToTop();
         });
-        rectangle.on('dragend', () => {
-            const newPosition = OurKonvaGrid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
-            rectangle.position({
+        this.rectangleTest.on('dragend', () => {
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
+            this.rectangleTest.position({
                 x: newPosition.x,
                 y: newPosition.y
             });
             this.gridStage.batchDraw();
             shadowRectangle.hide();
+            this.mapInteractor.sendSocketObjectPosition(this.rectangleTest);
         });
-        rectangle.on('dragmove', () => {
-            const newPosition = OurKonvaGrid.correctPosition(new Coords(rectangle.x(), rectangle.y()), this.map.grid.cellSize);
+        this.rectangleTest.on('dragmove', () => {
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
             shadowRectangle.position({
                 x: newPosition.x,
                 y: newPosition.y
             });
             this.gridStage.batchDraw();
         });
-        this.gridLayer.add(rectangle);
+        this.gridLayer.add(this.rectangleTest);
     }
 
     drawGridBackgroundImage(): void {
