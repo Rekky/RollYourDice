@@ -6,6 +6,11 @@ import {CharacterSheetComponent} from './components/character-sheet/character-sh
 import {SignInComponent} from './pages/sign-in/sign-in.component';
 import {SignUpComponent} from './pages/sign-up/sign-up.component';
 import {AuthGuardService} from './services/auth-guard.service';
+import {AdventureComponent} from './pages/adventures/adventure/adventure.component';
+import {AdventuresSearchComponent} from './pages/adventures/adventures-search/adventures-search.component';
+import {AdventureNewComponent} from './pages/adventures/adventure-new/adventure-new.component';
+import {MyAdventuresComponent} from './pages/adventures/my-adventures/my-adventures.component';
+import {AdventuresComponent} from './pages/adventures/adventures/adventures.component';
 
 const routes: Routes = [
     {
@@ -29,6 +34,16 @@ const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent
+    },
+    {
+        path: 'adventures',
+        component: AdventuresComponent,
+        children: [
+            { path: 'my-adventures', component: MyAdventuresComponent },
+            { path: 'new', component: AdventureNewComponent },
+            { path: 'search', component: AdventuresSearchComponent },
+            { path: ':id', component: AdventureComponent }
+        ]
     },
     {
         path: '**',

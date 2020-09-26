@@ -1,4 +1,4 @@
-<div style="position:relative;">
+<div class="box" style="position:relative;top:0;left:0;">
     <h2>ROLL YOUR DICE</h2>
     <ul>
         <li>
@@ -8,10 +8,22 @@
             <a [routerLink]="'/character-sheet'">GO to character-sheet</a>
         </li>
         <li>
+            <a [routerLink]="'/sign-up'">Sign-up</a>
+        </li>
+        <li>
             <a [routerLink]="'/sign-in'">Sign-in</a>
         </li>
         <li>
-            <a [routerLink]="'/sign-up'">Sign-up</a>
+            <a (click)="logout()" href="javascript:void(0)">Logout</a>
         </li>
     </ul>
+</div>
+
+<div class="box" *ngIf="isLogged">
+    <h2>LAST GAMES</h2>
+    <div>
+        <button><a [routerLink]="'/adventures/my-adventures'">My Games</a></button>
+        <button><a [routerLink]="'/adventures/new'">Create new Game</a></button>
+        <button><a [routerLink]="'/adventures/search'">Join a game</a></button>
+    </div>
 </div>

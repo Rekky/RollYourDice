@@ -19,6 +19,11 @@ import { CharacterSheetComponent } from './components/character-sheet/character-
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import {HttpClientModule} from '@angular/common/http';
+import { AdventureComponent } from './pages/adventures/adventure/adventure.component';
+import { AdventuresSearchComponent } from './pages/adventures/adventures-search/adventures-search.component';
+import { AdventureNewComponent } from './pages/adventures/adventure-new/adventure-new.component';
+import { MyAdventuresComponent } from './pages/adventures/my-adventures/my-adventures.component';
+import { AdventuresComponent } from './pages/adventures/adventures/adventures.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,12 @@ import {HttpClientModule} from '@angular/common/http';
     RecursiveListComponent,
     CharacterSheetComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    AdventureComponent,
+    AdventuresSearchComponent,
+    AdventureNewComponent,
+    MyAdventuresComponent,
+    AdventuresComponent
   ],
     imports: [
         BrowserModule,
