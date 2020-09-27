@@ -1,1 +1,15 @@
-<p>adventure-new works!</p>
+<form [formGroup]="newGameForm" (submit)="createGame()">
+    <div>
+        <label>Adventure Name</label>
+        <input type="text" [formControlName]="'name'">
+    </div>
+
+    <div>
+        <label>Type of game</label>
+        <select [formControlName]="'type'">
+            <option value="dungeonsAndDragons">Dungeons and Dragons</option>
+        </select>
+    </div>
+
+    <button type="submit">Crear</button>
+</form>

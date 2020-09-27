@@ -11,8 +11,11 @@ export class GameInteractor {
 
     }
 
-    getGameEditor(id: string): Game {
-        console.log('GAME_INTERACTOR', this.gameService.getGameEditor(id));
-        return this.gameService.getGameEditor(id);
+    getGameEditor(id: string): void {
+        // return this.gameService.getGameEditor(id);
+    }
+
+    async createGame(game: Game): Promise<any> {
+        return await this.gameService.createGame(game);
     }
 }

@@ -23,8 +23,8 @@ export class UserInteractor {
         return res;
     }
 
-    signUp(user: User): Promise<any> {
-        return this.userService.signUp(user);
+    async signUp(user: User): Promise<any> {
+        return await this.userService.signUp(user);
     }
 
     logout(): void {
