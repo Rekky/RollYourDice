@@ -3,13 +3,13 @@ import {Page} from './Page';
 export class Game {
     id: string | number;
     name: string;
-    pages: Page[] | null;
+    pages: Page[];
     selectedPageId: string | null;
 
     constructor(id?: number, name?: string, pages?: Page[], selectedPageId?: string | null) {
-        this.id = id ? id : -1;
+        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.name = name ? name : 'new Game';
-        this.pages = pages ? pages : null;
+        this.pages = pages ? pages : [];
         this.selectedPageId = selectedPageId ? selectedPageId : null;
     }
 

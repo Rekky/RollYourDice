@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {Game} from '../../../classes/Game';
+import {Page} from '../../../classes/Page';
 
 @Component({
     selector: 'app-adventure-new',
@@ -24,13 +25,14 @@ export class AdventureNewComponent implements OnInit {
     async createGame(): Promise<void> {
         const name = this.newGameForm.get('name').value;
         const type = this.newGameForm.get('type').value;
+
         const game = new Game();
         game.name = name;
 
         try{
             await this.gameInteractor.createGame(game);
         } catch (e) {
-            console.log(e.error);
+            console.log(e);
         }
     }
 

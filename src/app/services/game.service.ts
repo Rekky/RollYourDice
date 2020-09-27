@@ -19,6 +19,7 @@ export class GameService {
 
     createGame(game: Game): Promise<any> {
         const body = game;
-        return this.http.post(`${this.apiService.API_URL}/game`, {user: body}).toPromise();
+        console.log(body);
+        return this.http.post(`${this.apiService.API_URL}/game`, body).toPromise();
     }
 }
