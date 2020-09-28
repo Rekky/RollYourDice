@@ -1,1 +1,7 @@
-<p>adventures-search works!</p>
+<h2>Adventures</h2>
+<div *ngIf="adventures">
+    <div *ngFor="let adventure of adventures">
+        <span>{{adventure.name}}</span> - 
+        <span>{{adventure.createdDate}}</span>
+    </div>
+</div>

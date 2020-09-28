@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {Game} from '../../../classes/Game';
-import {Page} from '../../../classes/Page';
 
 @Component({
     selector: 'app-adventure-new',

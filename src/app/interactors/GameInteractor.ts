@@ -18,4 +18,10 @@ export class GameInteractor {
     async createGame(game: Game): Promise<any> {
         return await this.gameService.createGame(game);
     }
+
+    async getAllGames(): Promise<Game[]> {
+        const games = await this.gameService.getAllGames();
+        console.log(games);
+        return await this.gameService.getAllGames();
+    }
 }

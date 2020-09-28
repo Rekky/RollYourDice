@@ -19,7 +19,11 @@ export class GameService {
 
     createGame(game: Game): Promise<any> {
         const body = game;
-        console.log(body);
         return this.http.post(`${this.apiService.API_URL}/game`, body).toPromise();
+    }
+
+    getAllGames(): Promise<any> {
+        const body = {};
+        return this.http.get(`${this.apiService.API_URL}/game/all`, body).toPromise();
     }
 }
