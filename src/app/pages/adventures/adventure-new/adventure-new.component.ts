@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {Game} from '../../../classes/Game';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-adventure-new',
@@ -12,7 +13,7 @@ export class AdventureNewComponent implements OnInit {
 
     newGameForm: FormGroup;
 
-    constructor(private gameInteractor: GameInteractor) { }
+    constructor(private gameInteractor: GameInteractor, private router: Router) { }
 
     ngOnInit(): void {
         this.newGameForm = new FormGroup({
@@ -30,6 +31,7 @@ export class AdventureNewComponent implements OnInit {
 
         try{
             await this.gameInteractor.createGame(game);
+            this.router.navigate(['/home']);
         } catch (e) {
             console.log(e);
         }
