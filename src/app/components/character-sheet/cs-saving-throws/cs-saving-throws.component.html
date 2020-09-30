@@ -1,0 +1,53 @@
+<div class="saving-throws" *ngIf="savingThrows">
+    <div class="st-box">
+        <div class="st-row">
+            <div class="st-dot">
+                <input type="checkbox" id="checkbox-strength" [checked]="savingThrows.strength.selected"/>
+                <label for="checkbox-strength"></label>
+            </div>
+            <div class="st-value">{{savingThrows.strength.value}}</div>
+            <div class="st-title">Strength</div>
+        </div>
+        <div class="st-row">
+            <div class="st-dot">
+                <input type="checkbox" id="checkbox-dexterity" [checked]="savingThrows.dexterity.selected"/>
+                <label for="checkbox-dexterity"></label>
+            </div>
+            <div class="st-value">{{savingThrows.dexterity.value}}</div>
+            <div class="st-title">Dexterity</div>
+        </div>
+        <div class="st-row">
+            <div class="st-dot">
+                <input type="checkbox" id="checkbox-constitution" [checked]="savingThrows.constitution.selected"/>
+                <label for="checkbox-constitution"></label>
+            </div>
+            <div class="st-value">{{savingThrows.constitution.value}}</div>
+            <div class="st-title">Constitution</div>
+        </div>
+        <div class="st-row">
+            <div class="st-dot">
+                <input type="checkbox" id="checkbox-intelligence" [checked]="savingThrows.intelligence.selected"/>
+                <label for="checkbox-intelligence"></label>
+            </div>
+            <div class="st-value">{{savingThrows.intelligence.value}}</div>
+            <div class="st-title">Intelligence</div>
+        </div>
+        <div class="st-row">
+            <div class="st-dot">
+                <input type="checkbox" id="checkbox-wisdom" [checked]="savingThrows.wisdom.selected"/>
+                <label for="checkbox-wisdom"></label>
+            </div>
+            <div class="st-value">{{savingThrows.wisdom.value}}</div>
+            <div class="st-title">Wisdom</div>
+        </div>
+        <div class="st-row">
+            <div class="st-dot">
+                <input type="checkbox" id="checkbox-charisma" [checked]="savingThrows.charisma.selected"/>
+                <label for="checkbox-charisma"></label>
+            </div>
+            <div class="st-value">{{savingThrows.charisma.value}}</div>
+            <div class="st-title">Charisma</div>
+        </div>
+    </div>
+    <div class="st-box-title">Saving throws</div>
+</div>

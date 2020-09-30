@@ -1,0 +1,75 @@
+@import "../../../../colors";
+
+.attributes {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    height: 570px;
+    padding: 20px 0;
+    background-image: url('../../../../assets/character-sheet/attributes-box.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+
+    .attribute-invisible-box {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: 120px;
+        width: 82px;
+
+        .attribute-box {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+
+            height: 90px;
+            width: 72px;
+
+            background-image: url('../../../../assets/character-sheet/attribute.png');
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover; /* Resize the background image to cover the entire container */
+
+            .attr-title {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 20px;
+                margin-top: 5px;
+                font-size: 10px;
+                text-align: center;
+            }
+
+            .attr-bonus {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 34px;
+                font-size: 36px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .attr-point {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                height: 28px;
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+            }
+        }
+    }
+}

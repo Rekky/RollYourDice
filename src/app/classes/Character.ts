@@ -1,7 +1,7 @@
 import {GameObject} from './GameObject';
 import {Background} from './character-properties/background';
 import {Class} from './character-properties/class';
-import {Stats} from './character-properties/stats';
+import {Stat} from './character-properties/stat';
 import {SavingThrows} from './character-properties/saving-throws';
 import {Skills} from './character-properties/skills';
 import {HitDice} from './character-properties/hit-dice';
@@ -9,46 +9,56 @@ import {Weapon} from './character-properties/weapon';
 import {Equipment} from './character-properties/equipment';
 import {DeathSaves} from './character-properties/death-saves';
 import {Spells} from './character-properties/spells';
-import {Money} from './character-properties/money';
+import {Currency} from './character-properties/currency';
+import {Attributes} from './character-properties/attributes';
 
-export class Character extends GameObject {
+export class Character {
     /* Core properties */
     background: Background;
     name: string;
     race: string;
-    sex: string;
+    sex?: string;
     alignment: string;
-    controlledBy: string;
+    controlledBy?: string;
 
     /* Level modifies properties */
+    attributes: Attributes;
     class: Class;
-    stats: Stats;
+    stats?: Stat[];
     skills: Skills;
     savingThrows: SavingThrows;
     hitDice: HitDice;
-    languages: string[];
-    proficiencies: string[];
+    languages?: string[];
+    proficiencies: any[];
     level: number;
-    hp: number;
-    proficiencyBonus: string;
-    spellCastingAbility: number;
-    spellSaveDc: number;
-    SpellAttackBonus: number;
+    hp?: number;
+    proficiencyBonus: number;
+    spellCastingAbility?: number;
+    spellSaveDc?: number;
+    SpellAttackBonus?: number;
+    inspiration: number;
+    hitPointMax: number;
+    totalHitDice: number;
+    featuresAndTraits: any[];
 
     /* Dynamic properties */
-    weapons: Weapon[];
-    equipment: Equipment;
+    weapons?: Weapon[];
+    equipment: Equipment[];
     deathSaves: DeathSaves;
-    spells: Spells;
-    money: Money;
-    armor: number;
+    spells?: Spells;
+    currency: Currency;
     speed: number;
-    currentHp: number;
-    experience: number;
+    currentHp?: number;
+    exp: number;
     initiative: number;
+    armorClass: number;
+    currentHP: number;
+    temporaryHP: number;
+    nHitDice: number;
+    attacksAndSpellcasting: any[];
+    totalWeight: number;
 
     constructor(hp?: number) {
-        super();
         this.hp = hp ? hp : 100;
     }
 }

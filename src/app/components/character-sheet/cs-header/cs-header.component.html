@@ -1,0 +1,29 @@
+<div *ngIf="character" class="header">
+    <div class="name">{{character.name}}</div>
+    <div class="data">
+        <div class="data-row">
+            <div class="data-el">
+                <div class="el-data">{{character.class}} {{character.level}}</div>
+                <div class="el-title">Class and level</div>
+            </div>
+            <div class="data-el">
+                <div class="el-data">{{character.background.name}}</div>
+                <div class="el-title">Background</div>
+            </div>
+        </div>
+        <div class="data-row">
+            <div class="data-el">
+                <div class="el-data">{{character.race}}</div>
+                <div class="el-title">Race</div>
+            </div>
+            <div class="data-el">
+                <div class="el-data">{{character.alignment}}</div>
+                <div class="el-title">Alignment</div>
+            </div>
+            <div class="data-el">
+                <div class="el-data">{{character.exp}}</div>
+                <div class="el-title">Experience points</div>
+            </div>
+        </div>
+    </div>
+</div>
