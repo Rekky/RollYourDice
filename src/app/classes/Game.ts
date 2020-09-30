@@ -7,7 +7,7 @@ export class Game {
     selectedPageId: string | null;
     privacy: 'private' | 'public'; // public | private
     gameType: 'dungeonsAndDragons5e';
-    author: string;
+    author: string | number;
     createdDate: Date;
 
     constructor(id?: number,
@@ -16,7 +16,7 @@ export class Game {
                 selectedPageId?: string | null,
                 privacy?: 'private' | 'public',
                 gameType?: 'dungeonsAndDragons5e',
-                author?: string,
+                author?: string | number,
                 createdDate?: Date
     ) {
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);

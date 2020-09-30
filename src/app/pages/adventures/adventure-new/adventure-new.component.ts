@@ -3,6 +3,10 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {Game} from '../../../classes/Game';
 import {Router} from '@angular/router';
+import {UserInteractor} from '../../../interactors/UserInteractor';
+import {map} from 'rxjs/operators';
+import {User} from '../../../classes/User';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-adventure-new',
@@ -12,8 +16,9 @@ import {Router} from '@angular/router';
 export class AdventureNewComponent implements OnInit {
 
     newGameForm: FormGroup;
+    userSubscription: Subscription;
 
-    constructor(private gameInteractor: GameInteractor, private router: Router) { }
+    constructor(private gameInteractor: GameInteractor, private router: Router, private userInteractor: UserInteractor) { }
 
     ngOnInit(): void {
         this.newGameForm = new FormGroup({
@@ -26,15 +31,22 @@ export class AdventureNewComponent implements OnInit {
         const name = this.newGameForm.get('name').value;
         const type = this.newGameForm.get('type').value;
 
-        const game = new Game();
-        game.name = name;
+        this.userSubscription = this.userInteractor.user.subscribe(async (user: User) => {
+            if (user) {
+                const game = new Game();
+                game.name = name;
+                game.author = user.id;
+                game.gameType = type;
 
-        try{
-            await this.gameInteractor.createGame(game);
-            this.router.navigate(['/home']);
-        } catch (e) {
-            console.log(e);
-        }
+                try{
+                    await this.gameInteractor.createGame(game);
+                    this.router.navigate(['/home']);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        });
+
     }
 
 }

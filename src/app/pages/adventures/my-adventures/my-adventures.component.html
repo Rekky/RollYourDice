@@ -1,1 +1,7 @@
 <p>my-adventures works!</p>
+<div *ngIf="adventures">
+    <div *ngFor="let adventure of adventures">
+        <span>{{adventure.name}}</span> -
+        <span>{{adventure.createdDate}}</span>
+    </div>
+</div>

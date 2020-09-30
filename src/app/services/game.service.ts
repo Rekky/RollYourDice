@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Game} from '../classes/Game';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {User} from '../classes/User';
 
 @Injectable({
     providedIn: 'root'
@@ -25,5 +26,11 @@ export class GameService {
     getAllGames(): Promise<any> {
         const body = {};
         return this.http.get(`${this.apiService.API_URL}/game/all`, body).toPromise();
+    }
+
+    getMyGames(user: User): Promise<any> {
+        const params = new HttpParams()
+        .set('userId', user.id.toString());
+        return this.http.get(`${this.apiService.API_URL}/game/my-games`, {headers: {}, params: params}).toPromise();
     }
 }
