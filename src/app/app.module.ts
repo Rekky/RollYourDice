@@ -24,6 +24,11 @@ import { AdventuresSearchComponent } from './pages/adventures/adventures-search/
 import { AdventureNewComponent } from './pages/adventures/adventure-new/adventure-new.component';
 import { MyAdventuresComponent } from './pages/adventures/my-adventures/my-adventures.component';
 import { AdventuresComponent } from './pages/adventures/adventures/adventures.component';
+import { CsHeaderComponent } from './components/character-sheet/cs-header/cs-header.component';
+import { CsAttributesComponent } from './components/character-sheet/cs-attributes/cs-attributes.component';
+import { CsSavingThrowsComponent } from './components/character-sheet/cs-saving-throws/cs-saving-throws.component';
+import { CsSkillsComponent } from './components/character-sheet/cs-skills/cs-skills.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,12 @@ import { AdventuresComponent } from './pages/adventures/adventures/adventures.co
     AdventuresSearchComponent,
     AdventureNewComponent,
     MyAdventuresComponent,
-    AdventuresComponent
+    AdventuresComponent,
+    CsHeaderComponent,
+    CsAttributesComponent,
+    CsSavingThrowsComponent,
+    CsSkillsComponent,
+    NavBarComponent
   ],
     imports: [
         BrowserModule,

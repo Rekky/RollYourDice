@@ -1,0 +1,149 @@
+<div class="skills" *ngIf="skills">
+    <div class="sk-box">
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-acrobatics" [checked]="skills.acrobatics.selected"/>
+                <label for="checkbox-acrobatics"></label>
+            </div>
+            <div class="sk-value">{{skills.acrobatics.value}}</div>
+            <div class="sk-title">Acrobatics<span>Dex</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-animalHandling" [checked]="skills.animalHandling.selected"/>
+                <label for="checkbox-animalHandling"></label>
+            </div>
+            <div class="sk-value">{{skills.animalHandling.value}}</div>
+            <div class="sk-title">Animal Handling<span>Wis</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-arcana" [checked]="skills.arcana.selected"/>
+                <label for="checkbox-arcana"></label>
+            </div>
+            <div class="sk-value">{{skills.arcana.value}}</div>
+            <div class="sk-title">Arcana<span>Int</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-athletics" [checked]="skills.athletics.selected"/>
+                <label for="checkbox-athletics"></label>
+            </div>
+            <div class="sk-value">{{skills.athletics.value}}</div>
+            <div class="sk-title">Athletics<span>Str</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-deception" [checked]="skills.deception.selected"/>
+                <label for="checkbox-deception"></label>
+            </div>
+            <div class="sk-value">{{skills.deception.value}}</div>
+            <div class="sk-title">Deception<span>Cha</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-history" [checked]="skills.history.selected"/>
+                <label for="checkbox-history"></label>
+            </div>
+            <div class="sk-value">{{skills.history.value}}</div>
+            <div class="sk-title">History<span>Int</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-insight" [checked]="skills.insight.selected"/>
+                <label for="checkbox-insight"></label>
+            </div>
+            <div class="sk-value">{{skills.insight.value}}</div>
+            <div class="sk-title">Insight<span>Wis</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-intimidation" [checked]="skills.intimidation.selected"/>
+                <label for="checkbox-intimidation"></label>
+            </div>
+            <div class="sk-value">{{skills.intimidation.value}}</div>
+            <div class="sk-title">Intimidation<span>Cha</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-investigation" [checked]="skills.investigation.selected"/>
+                <label for="checkbox-investigation"></label>
+            </div>
+            <div class="sk-value">{{skills.investigation.value}}</div>
+            <div class="sk-title">Investigation<span>Int</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-medicine" [checked]="skills.medicine.selected"/>
+                <label for="checkbox-medicine"></label>
+            </div>
+            <div class="sk-value">{{skills.medicine.value}}</div>
+            <div class="sk-title">Medicine<span>Wis</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-nature" [checked]="skills.nature.selected"/>
+                <label for="checkbox-nature"></label>
+            </div>
+            <div class="sk-value">{{skills.nature.value}}</div>
+            <div class="sk-title">Nature<span>Int</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-perception" [checked]="skills.perception.selected"/>
+                <label for="checkbox-perception"></label>
+            </div>
+            <div class="sk-value">{{skills.perception.value}}</div>
+            <div class="sk-title">Perception<span>Wis</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-performance" [checked]="skills.performance.selected"/>
+                <label for="checkbox-performance"></label>
+            </div>
+            <div class="sk-value">{{skills.performance.value}}</div>
+            <div class="sk-title">Performance<span>Cha</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-persuasion" [checked]="skills.persuasion.selected"/>
+                <label for="checkbox-persuasion"></label>
+            </div>
+            <div class="sk-value">{{skills.persuasion.value}}</div>
+            <div class="sk-title">Persuasion<span>Cha</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-religion" [checked]="skills.religion.selected"/>
+                <label for="checkbox-religion"></label>
+            </div>
+            <div class="sk-value">{{skills.religion.value}}</div>
+            <div class="sk-title">Religion<span>Int</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-sleightOfHand" [checked]="skills.sleightOfHand.selected"/>
+                <label for="checkbox-sleightOfHand"></label>
+            </div>
+            <div class="sk-value">{{skills.sleightOfHand.value}}</div>
+            <div class="sk-title">Sleight of Hand<span>Dex</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-stealth" [checked]="skills.stealth.selected"/>
+                <label for="checkbox-stealth"></label>
+            </div>
+            <div class="sk-value">{{skills.stealth.value}}</div>
+            <div class="sk-title">Stealth<span>Dex</span></div>
+        </div>
+        <div class="sk-row">
+            <div class="sk-dot">
+                <input type="checkbox" id="checkbox-survival" [checked]="skills.survival.selected"/>
+                <label for="checkbox-survival"></label>
+            </div>
+            <div class="sk-value">{{skills.survival.value}}</div>
+            <div class="sk-title">Survival<span>Wis</span></div>
+        </div>
+    </div>
+    <div class="sk-box-title">Skills</div>
+</div>

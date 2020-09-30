@@ -1,5 +1,9 @@
 @import "../../../colors";
 
+app-cs-saving-throws, app-cs-skills {
+    width: 100%;
+}
+
 .character-sheet-box {
     position: absolute;
     z-index: 100;
@@ -10,82 +14,15 @@
     flex-flow: column nowrap;
     padding: 10px;
 
-    width: 1000px;
-    min-height: 1200px;
+    width: 1020px;
+    height: 90vh;
+    overflow-y: scroll;
     border: 1px solid #EAEAEA;
     box-shadow: 0 1px 2px rgba(0,0,0,0.12),
     0 2px 4px rgba(0,0,0,0.12),
     0 4px 8px rgba(0,0,0,0.12),
     0 8px 16px rgba(0,0,0,0.12),
     0 16px 32px rgba(0,0,0,0.12);
-}
-
-.header {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-
-    position: relative;
-    height: 160px;
-    width: 100%;
-    background-image: url('../../../assets/character-sheet/header.png');
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-
-    .name {
-        position: absolute;
-        top: 80px;
-        left: 90px;
-        width: 300px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .data {
-        position: absolute;
-        top: 50px;
-        left: 428px;
-
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: flex-end;
-        height: 93px;
-        width: 509px;
-
-        .data-row {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-start;
-            align-items: center;
-
-            position: relative;
-            height: calc(100% / 2);
-            width: 96%;
-            margin: 0 2%;
-
-            .data-el {
-                height: 30px;
-                width: 100%;
-
-                .el-data {
-                    display: flex;
-                    flex-flow: column nowrap;
-                    justify-content: flex-end;
-
-                    height: 18px;
-                    border-bottom: 1px solid black;
-
-                    font-size: 12px;
-                    font-weight: bold;
-                }
-
-                .el-title {
-                    font-size: 10px;
-                }
-            }
-        }
-    }
 }
 
 .body {
@@ -110,80 +47,6 @@
     justify-content: space-evenly;
 
     width: 100%;
-}
-
-.attributes {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-
-    height: 570px;
-    padding: 20px 0;
-    background-image: url('../../../assets/character-sheet/attributes-box.png');
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-
-    .attribute-invisible-box {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-
-        height: 120px;
-        width: 82px;
-
-        .attribute-box {
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: flex-start;
-
-            height: 90px;
-            width: 72px;
-
-            background-image: url('../../../assets/character-sheet/attribute.png');
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat; /* Do not repeat the image */
-            background-size: cover; /* Resize the background image to cover the entire container */
-
-            .attr-title {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: center;
-                align-items: center;
-
-                height: 20px;
-                margin-top: 5px;
-                font-size: 10px;
-                text-align: center;
-            }
-
-            .attr-bonus {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: center;
-                align-items: center;
-
-                height: 34px;
-                font-size: 36px;
-                font-weight: bold;
-                text-align: center;
-            }
-
-            .attr-point {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: center;
-                align-items: center;
-
-                height: 28px;
-                font-size: 16px;
-                font-weight: bold;
-                text-align: center;
-            }
-        }
-    }
 }
 
 .inspiration-block {
@@ -252,236 +115,6 @@
     }
 }
 
-.saving-throws {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-
-    height: 200px;
-    width: 100%;
-    background-image: url('../../../assets/character-sheet/saving-throws.png');
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-
-    .st-box {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: space-evenly;
-
-        width: 100%;
-        height: calc(100% - 30px);
-        padding-top: 10px;
-
-        .st-row {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-start;
-            align-items: center;
-
-            width: 100%;
-            height: 23px;
-
-            .st-dot {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: center;
-                align-items: center;
-
-                position: relative;
-                width: 6px;
-                height: 6px;
-                margin: 0 0 0 30px;
-            }
-
-            .st-dot label {
-                position: absolute;
-
-                height: 8px;
-                width: 8px;
-                border: 1px solid black;
-                border-radius: 50%;
-                background-color: #fff;
-
-                cursor: pointer;
-            }
-
-            .st-dot label:after {
-                position: absolute;
-
-                height: 8px;
-                width: 8px;
-                border: 2px solid #fff;
-                border-top: none;
-                border-right: none;
-
-                content: "";
-                opacity: 0;
-                transform: rotate(-45deg);
-            }
-
-            .st-dot input[type="checkbox"] {
-                visibility: hidden;
-            }
-
-            .st-dot input[type="checkbox"]:checked + label {
-                background-color: black;
-                border-color: black;
-            }
-
-            .st-dot input[type="checkbox"]:checked + label:after {
-                opacity: 0;
-            }
-
-            .st-value {
-                width: 25px;
-                text-align: center;
-                font-size: 16px;
-                font-weight: bold;
-                border-bottom: 1px solid black;
-                margin: 0 10px 0 10px;
-            }
-
-            .st-title {
-                width: 96px;
-                font-size: 13px;
-            }
-        }
-    }
-
-    .st-box-title {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-
-        height: 32px;
-        width: 100%;
-        font-size: 12px;
-    }
-}
-
-
-.skills {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-
-    height: 520px;
-    width: 100%;
-    background-image: url('../../../assets/character-sheet/skills.png');
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-
-    .sk-box {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: space-evenly;
-
-        width: 100%;
-        height: calc(100% - 30px);
-        padding-top: 10px;
-
-        .sk-row {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-start;
-            align-items: center;
-
-            width: 100%;
-            height: 23px;
-
-            .sk-dot {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: center;
-                align-items: center;
-
-                width: 8px;
-                height: 8px;
-                margin: 0 0 0 30px;
-            }
-
-            .sk-dot {
-                position: relative;
-            }
-
-            .sk-dot label {
-                position: absolute;
-
-                height: 8px;
-                width: 8px;
-                border: 1px solid black;
-                border-radius: 50%;
-                background-color: #fff;
-
-                cursor: pointer;
-            }
-
-            .sk-dot label:after {
-                position: absolute;
-
-                height: 8px;
-                width: 8px;
-                border: 2px solid #fff;
-                border-top: none;
-                border-right: none;
-
-                content: "";
-                opacity: 0;
-                transform: rotate(-45deg);
-            }
-
-            .sk-dot input[type="checkbox"] {
-                visibility: hidden;
-            }
-
-            .sk-dot input[type="checkbox"]:checked + label {
-                background-color: black;
-                border-color: black;
-            }
-
-            .sk-dot input[type="checkbox"]:checked + label:after {
-                opacity: 0;
-            }
-
-            .sk-value {
-                width: 25px;
-                text-align: center;
-                font-size: 16px;
-                font-weight: bold;
-                border-bottom: 1px solid black;
-                margin: 0 10px 0 10px;
-            }
-
-            .sk-title {
-                width: 96px;
-                font-size: 13px;
-
-                span {
-                    margin-left: 5px;
-                    color: lightgrey;
-                    font-style: italic;
-                }
-            }
-        }
-    }
-
-    .sk-box-title {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-
-        height: 32px;
-        width: 100%;
-        font-size: 12px;
-    }
-}
-
 .passive-wisdom {
     display: flex;
     flex-flow: row nowrap;
@@ -516,16 +149,19 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+
     min-height: 276px;
     width: 88%;
-    font-size: 12px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
     border: 20px solid transparent;
     border-image-source: url('../../../assets/character-sheet/proficiencies-and-languages.png');
     border-image-repeat: round;
     border-image-slice: 30;
+
+    font-size: 12px;
 
     .pal-box {
         display: flex;

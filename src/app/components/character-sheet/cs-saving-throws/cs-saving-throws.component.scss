@@ -1,0 +1,111 @@
+@import "../../../../colors";
+
+.saving-throws {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    height: 200px;
+    width: 100%;
+    background-image: url('../../../../assets/character-sheet/saving-throws.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+
+    .st-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-evenly;
+
+        width: 100%;
+        height: calc(100% - 30px);
+        padding-top: 10px;
+
+        .st-row {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            width: 100%;
+            height: 23px;
+
+            .st-dot {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                position: relative;
+                width: 6px;
+                height: 6px;
+                margin: 0 0 0 30px;
+            }
+
+            .st-dot label {
+                position: absolute;
+
+                height: 8px;
+                width: 8px;
+                border: 1px solid black;
+                border-radius: 50%;
+                background-color: #fff;
+
+                cursor: pointer;
+            }
+
+            .st-dot label:after {
+                position: absolute;
+
+                height: 8px;
+                width: 8px;
+                border: 2px solid #fff;
+                border-top: none;
+                border-right: none;
+
+                content: "";
+                opacity: 0;
+                transform: rotate(-45deg);
+            }
+
+            .st-dot input[type="checkbox"] {
+                visibility: hidden;
+            }
+
+            .st-dot input[type="checkbox"]:checked + label {
+                background-color: black;
+                border-color: black;
+            }
+
+            .st-dot input[type="checkbox"]:checked + label:after {
+                opacity: 0;
+            }
+
+            .st-value {
+                width: 25px;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bold;
+                border-bottom: 1px solid black;
+                margin: 0 10px 0 10px;
+            }
+
+            .st-title {
+                width: 96px;
+                font-size: 13px;
+            }
+        }
+    }
+
+    .st-box-title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: 32px;
+        width: 100%;
+        font-size: 12px;
+    }
+}

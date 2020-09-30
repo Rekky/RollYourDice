@@ -1,0 +1,69 @@
+@import "../../../../colors";
+
+.header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+
+    position: relative;
+    height: 160px;
+    width: 100%;
+    background-image: url('../../../../assets/character-sheet/header.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+
+    .name {
+        position: absolute;
+        top: 80px;
+        left: 90px;
+        width: 300px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .data {
+        position: absolute;
+        top: 50px;
+        left: 428px;
+
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-end;
+        height: 93px;
+        width: 509px;
+
+        .data-row {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            position: relative;
+            height: calc(100% / 2);
+            width: 96%;
+            margin: 0 2%;
+
+            .data-el {
+                height: 30px;
+                width: 100%;
+
+                .el-data {
+                    display: flex;
+                    flex-flow: column nowrap;
+                    justify-content: flex-end;
+
+                    height: 18px;
+                    border-bottom: 1px solid black;
+
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+
+                .el-title {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}
