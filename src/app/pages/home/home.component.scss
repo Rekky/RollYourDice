@@ -1,0 +1,116 @@
+@import "../../../colors";
+
+app-nav-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.display-block {
+    position: relative;
+    height: 810px;
+    margin-top: 65px;
+
+    .background-blurred-box {
+        position: absolute;
+        left: -5%;
+        top: -20px;
+        height: 740px;
+        width: 110%;
+
+        .background-blurred {
+            height: 740px;
+            width: 100%;
+
+            filter: blur(10px);
+            background-image: url('../../../assets/backgrounds/volcano-island.jpg');
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover; /* Resize the background image to cover the entire container */
+        }
+    }
+
+    .display {
+        position: absolute;
+        top: 70px;
+        left: calc((100% - 900px) / 2);
+        z-index: 10;
+
+        height: 700px;
+        width: 900px;
+
+        background-image: url('../../../assets/backgrounds/volcano-island.jpg');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+    }
+
+    .display-border {
+        position: absolute;
+        top: 60px;
+        left: calc((100% - 935px) / 2);
+        z-index: 11;
+
+        height: 640px;
+        width: 857px;
+
+        border: 40px solid transparent;
+        border-image-source: url('../../../assets/border.png');
+        border-image-repeat: round;
+        border-image-slice: 30;
+    }
+
+    .display-bottom {
+        position: absolute;
+        top: 710px;
+        height: 100px;
+        width: 100%;
+        background-color: white;
+    }
+
+    .play-button-box {
+        position: absolute;
+        top: 600px;
+        left: calc((100% - 200px) / 2);
+        z-index: 13;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: 100px;
+        width: 200px;
+
+        .play-button {
+            position: relative;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            width: 190px;
+            height: 50px;
+            background-color: #82D7DA;
+            box-shadow: 0 0 4px #40E1E7;
+
+            color: #F2F2F2;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .play-button-border {
+            position: absolute;
+            z-index: 2;
+            width: 180px;
+            height: 60px;
+            border: 1px solid #C6D8D8;
+            cursor: pointer;
+        }
+    }
+}

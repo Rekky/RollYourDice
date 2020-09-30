@@ -149,16 +149,19 @@ app-cs-saving-throws, app-cs-skills {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+
     min-height: 276px;
     width: 88%;
-    font-size: 12px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
     border: 20px solid transparent;
     border-image-source: url('../../../assets/character-sheet/proficiencies-and-languages.png');
     border-image-repeat: round;
     border-image-slice: 30;
+
+    font-size: 12px;
 
     .pal-box {
         display: flex;

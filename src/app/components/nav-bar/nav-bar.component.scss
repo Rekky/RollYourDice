@@ -28,6 +28,7 @@
             width: 56px;
             margin-left: 100px;
             margin-right: 25px;
+            cursor: pointer;
         }
 
         .option {
@@ -39,6 +40,10 @@
             height: 100%;
             margin-right: 75px;
             text-transform: uppercase;
+
+            span {
+                cursor: pointer;
+            }
         }
     }
 
@@ -75,6 +80,7 @@
                 font-size: 24px;
                 font-weight: bolder;
                 color: #111316;
+                cursor: pointer;
             }
         }
     }
