@@ -39,6 +39,6 @@ export class UserInteractor {
     logout(): void {
         localStorage.removeItem('user');
         this.userSubject.next(null);
-        this.router.navigate(['/sign-in']);
+        // this.router.navigate(['/sign-in']);
     }
 }

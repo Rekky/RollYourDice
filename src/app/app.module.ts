@@ -30,6 +30,7 @@ import { CsSavingThrowsComponent } from './components/character-sheet/cs-saving-
 import { CsSkillsComponent } from './components/character-sheet/cs-skills/cs-skills.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {SignComponent} from './pages/sign/sign.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {SignComponent} from './pages/sign/sign.component';
         HttpClientModule,
         DragulaModule.forRoot(),
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BrowserAnimationsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

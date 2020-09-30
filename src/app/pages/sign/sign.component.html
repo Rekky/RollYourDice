@@ -1,17 +1,8 @@
 <div class="sign-box">
-    <div class="left-box">
-        <img src="./assets/svg/logo-red-white.svg" alt="logo"/>
+    <div [@leftBox]="test" class="left-box">
+        <img (click)="leave()" src="./assets/svg/logo-red-white.svg" alt="logo"/>
     </div>
-    <div class="right-box">
-        <app-sign-in></app-sign-in>
+    <div [@rightBox]="test" class="right-box">
+        <app-sign-in *ngIf="!isLogged"></app-sign-in>
     </div>
 </div>
-
-<!--<div class="sign-box">-->
-<!--    <div [ngClass]="{'left-box': !isLogged, 'full-box': isLogged}">-->
-<!--        <img src="./assets/svg/logo-red-white.svg" alt="logo"/>-->
-<!--    </div>-->
-<!--    <div *ngIf="!isLogged" class="right-box">-->
-<!--        <app-sign-in></app-sign-in>-->
-<!--    </div>-->
-<!--</div>-->
