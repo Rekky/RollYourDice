@@ -9,23 +9,17 @@ import {map} from 'rxjs/operators';
 })
 export class UserService {
 
-    constructor(private http: HttpClient, private apiService: ApiService) {
+    constructor(private http: HttpClient, private apiService: ApiService) {}
 
-    }
-
-    signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
+    signIn(email: string, password: string): Promise<User> {
         return this.http.post<User>(`${this.apiService.API_URL}/users/authenticate`, { email, password })
             .pipe(map(user => {
-                if (stayLogged) {
-                    localStorage.setItem('user', JSON.stringify(user));
-                }
                 return user;
             })).toPromise();
     }
 
     signUp(user: User): Promise<any> {
-        const body = user;
-        return this.http.post(`${this.apiService.API_URL}/users/register`, {user: body}).toPromise();
+        return this.http.post(`${this.apiService.API_URL}/users/register`, {user: user}).toPromise();
     }
 
 

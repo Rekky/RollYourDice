@@ -38,10 +38,10 @@ export class SignInComponent implements OnInit {
         const stayLogged = this.signInForm.get('stayLogged').value;
 
         try {
-            await this.userInteractor.signIn(email, pass, stayLogged);
-            this.userInteractor.user.subscribe((res) => {
-                this.router.navigate(['/home']);
-            });
+            const user = await this.userInteractor.signIn(email, pass, stayLogged);
+            // if (user) {
+            //     this.router.navigate(['/home']);
+            // }
         } catch (e) {
             console.log(e.error);
         }

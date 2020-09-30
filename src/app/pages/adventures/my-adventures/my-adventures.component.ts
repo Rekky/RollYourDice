@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Game} from '../../../classes/Game';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {User} from '../../../classes/User';
@@ -10,14 +10,14 @@ import {Subscription} from 'rxjs';
     templateUrl: './my-adventures.component.html',
     styleUrls: ['./my-adventures.component.scss']
 })
-export class MyAdventuresComponent implements OnInit {
+export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     adventures: Game[];
     currentUser: User;
     userSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor, private userInteractor: UserInteractor) {
-        this.userSubscription = this.userInteractor.user.subscribe((user: User) => {
+        this.userSubscription = this.userInteractor.getCurrentUserObs().subscribe((user: User) => {
             this.currentUser = user;
         });
     }
@@ -27,6 +27,12 @@ export class MyAdventuresComponent implements OnInit {
             this.adventures = await this.gameInteractor.getMyGames(this.currentUser);
         } catch (e) {
             console.log(e);
+        }
+    }
+
+    ngOnDestroy(): void {
+        if (this.userSubscription) {
+            this.userSubscription.unsubscribe();
         }
     }
 

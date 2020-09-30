@@ -9,18 +9,27 @@ import {Router} from '@angular/router';
 })
 export class UserInteractor {
 
-    private userSubject: BehaviorSubject<User>;
-    public user: Observable<User>;
+    private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
     constructor(private userService: UserService, private router: Router ) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-        this.user = this.userSubject.asObservable();
+    }
+
+    getCurrentUserObs(): Observable<User> {
+        return this.userSubject.asObservable();
+    }
+
+    getCurrentUser(): User {
+        return this.userSubject.getValue();
     }
 
     async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
-        const res = await this.userService.signIn(email, password, stayLogged);
-        this.userSubject.next(res);
-        return res;
+        const user = await this.userService.signIn(email, password);
+        if (user && stayLogged) {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+        this.userSubject.next(user);
+        return user;
     }
 
     async signUp(user: User): Promise<any> {

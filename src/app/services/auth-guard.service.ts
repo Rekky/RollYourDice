@@ -10,18 +10,17 @@ import {User} from '../classes/User';
 export class AuthGuardService implements CanActivate {
     constructor(private router: Router, private userInteractor: UserInteractor) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
         return this.checkLogin();
     }
 
-    checkLogin(): Observable<boolean> {
-        return this.userInteractor.user.pipe(map((loggedIn: User) => {
-            if (loggedIn) {
-                return true;
-            } else {
-                this.router.navigate(['/sign-in']);
-            }
+    checkLogin(): boolean {
+        const user = this.userInteractor.getCurrentUser();
+        if (user) {
+            return true;
+        } else {
+            this.router.navigate(['/sign-in']);
             return false;
-        }));
+        }
     }
 }

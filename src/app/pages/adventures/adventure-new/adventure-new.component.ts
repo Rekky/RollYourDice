@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {Game} from '../../../classes/Game';
@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
     templateUrl: './adventure-new.component.html',
     styleUrls: ['./adventure-new.component.scss']
 })
-export class AdventureNewComponent implements OnInit {
+export class AdventureNewComponent implements OnInit, OnDestroy {
 
     newGameForm: FormGroup;
     userSubscription: Subscription;
@@ -27,11 +27,17 @@ export class AdventureNewComponent implements OnInit {
         });
     }
 
+    ngOnDestroy(): void {
+        if (this.userSubscription) {
+            this.userSubscription.unsubscribe();
+        }
+    }
+
     async createGame(): Promise<void> {
         const name = this.newGameForm.get('name').value;
         const type = this.newGameForm.get('type').value;
 
-        this.userSubscription = this.userInteractor.user.subscribe(async (user: User) => {
+        this.userSubscription = this.userInteractor.getCurrentUserObs().subscribe(async (user: User) => {
             if (user) {
                 const game = new Game();
                 game.name = name;
