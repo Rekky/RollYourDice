@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import {GameEditorComponent} from './pages/game-editor/game-editor.component';
 import {CharacterSheetComponent} from './components/character-sheet/character-sheet.component';
-import {SignInComponent} from './pages/sign-in/sign-in.component';
-import {SignUpComponent} from './pages/sign-up/sign-up.component';
+import {SignComponent} from './pages/sign/sign.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {AdventureComponent} from './pages/adventures/adventure/adventure.component';
 import {AdventuresSearchComponent} from './pages/adventures/adventures-search/adventures-search.component';
@@ -24,12 +23,8 @@ const routes: Routes = [
         canActivate: [AuthGuardService]
     },
     {
-        path: 'sign-in',
-        component: SignInComponent,
-    },
-    {
-        path: 'sign-up',
-        component: SignUpComponent,
+        path: 'sign',
+        component: SignComponent,
     },
     {
         path: 'home',

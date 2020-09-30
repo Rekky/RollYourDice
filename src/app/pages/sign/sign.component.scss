@@ -1,0 +1,54 @@
+@import "../../../colors";
+
+* {
+    box-sizing: border-box;
+}
+
+.sign-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    height: 100vh;
+    width: 100vw;
+    padding: 60px;
+    background-color: #262A31;
+
+    .left-box {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: 100%;
+        width: 50%;
+        border-right: 1px solid #EAEAEA;
+
+        img {
+            height: 50vh;
+            width: 50vw;
+        }
+    }
+
+    .right-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: 100%;
+        width: 50%;
+        border-left: 1px solid #EAEAEA;
+
+        app-sign-in {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+
+            height: 100%;
+            width: 100%;
+        }
+    }
+}

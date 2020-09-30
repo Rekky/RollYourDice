@@ -13,10 +13,12 @@ export class UserService {
 
     }
 
-    signIn(email: string, password: string): Promise<any> {
+    signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
         return this.http.post<User>(`${this.apiService.API_URL}/users/authenticate`, { email, password })
             .pipe(map(user => {
-                localStorage.setItem('user', JSON.stringify(user));
+                if (stayLogged) {
+                    localStorage.setItem('user', JSON.stringify(user));
+                }
                 return user;
             })).toPromise();
     }

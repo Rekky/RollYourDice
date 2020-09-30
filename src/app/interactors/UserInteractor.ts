@@ -17,8 +17,8 @@ export class UserInteractor {
         this.user = this.userSubject.asObservable();
     }
 
-    async signIn(email: string, password: string): Promise<any> {
-        const res = await this.userService.signIn(email, password);
+    async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
+        const res = await this.userService.signIn(email, password, stayLogged);
         this.userSubject.next(res);
         return res;
     }

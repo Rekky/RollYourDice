@@ -6,7 +6,7 @@
     <div class="display"></div>
     <div class="display-border"></div>
     <div class="play-button-box">
-        <div class="play-button">Play</div>
+        <button (click)="play()" class="play-button">Play</button>
         <div class="play-button-border"></div>
     </div>
     <div class="display-bottom"></div>
@@ -22,10 +22,7 @@
             <a [routerLink]="'/character-sheet'">GO to character-sheet</a>
         </li>
         <li>
-            <a [routerLink]="'/sign-up'">Sign-up</a>
-        </li>
-        <li>
-            <a [routerLink]="'/sign-in'">Sign-in</a>
+            <a [routerLink]="'/sign'">Sign-in</a>
         </li>
         <li>
             <a (click)="logout()" href="javascript:void(0)">Logout</a>
@@ -33,7 +30,7 @@
     </ul>
 </div>
 
-<div class="box" *ngIf="isLogged">
+<div class="box">
     <h2>LAST GAMES</h2>
     <div>
         <button><a [routerLink]="'/adventures/my-adventures'">My Games</a></button>

@@ -16,8 +16,8 @@ import { PageComponent } from './pages/game-editor/page/page.component';
 import { MapsListComponent } from './pages/game-editor/maps-list/maps-list.component';
 import { RecursiveListComponent } from './components/recursive-list/recursive-list.component';
 import { CharacterSheetComponent } from './components/character-sheet/character-sheet.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 import {HttpClientModule} from '@angular/common/http';
 import { AdventureComponent } from './pages/adventures/adventure/adventure.component';
 import { AdventuresSearchComponent } from './pages/adventures/adventures-search/adventures-search.component';
@@ -29,6 +29,7 @@ import { CsAttributesComponent } from './components/character-sheet/cs-attribute
 import { CsSavingThrowsComponent } from './components/character-sheet/cs-saving-throws/cs-saving-throws.component';
 import { CsSkillsComponent } from './components/character-sheet/cs-skills/cs-skills.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import {SignComponent} from './pages/sign/sign.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     CsAttributesComponent,
     CsSavingThrowsComponent,
     CsSkillsComponent,
-    NavBarComponent
+    NavBarComponent,
+    SignComponent
   ],
     imports: [
         BrowserModule,
