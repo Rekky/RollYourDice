@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {User} from '../../classes/User';
@@ -11,7 +11,10 @@ import {Router} from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
+    @Output() display: EventEmitter<'signIn'> = new EventEmitter<'signIn'>();
     signUpForm: FormGroup;
+    displayPassword: boolean = false;
+    displayRepeatPassword: boolean = false;
 
     constructor(private userInteractor: UserInteractor, private router: Router) { }
 
@@ -46,6 +49,10 @@ export class SignUpComponent implements OnInit {
         } catch (e) {
             console.log(e.error);
         }
+    }
+
+    alreadyHaveAccount(): void {
+        this.display.emit('signIn');
     }
 
 }

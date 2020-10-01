@@ -1,23 +1,27 @@
-<div class="title-box">Sign in</div>
+<div class="title-box">
+    <span>Sign in</span>
+</div>
 <form class="mid-box" [formGroup]="signInForm" (submit)="signIn()">
-    <div class="username-box">
-        <label class="title" for="email">Email</label>
-        <input class="value" id="email" name="email"
-               placeholder="MyAccountRocks!" type="email" [formControlName]="'email'"/>
-    </div>
-    <div class="password-box">
-        <label class="title" for="password">Password</label>
-        <img class="eye" src="./assets/icons/visibilidad.png"
-             (mousedown)="displayPassword = true" (mouseup)="displayPassword = false"/>
-        <input [type]="displayPassword ? 'text' : 'password'" class="value" id="password"
-               name="password" placeholder="#~#Example123!" [formControlName]="'password'"/>
-    </div>
-    <div class="stay-signed-box">
-        <div class="stay-signed-input">
-            <input type="checkbox" id="checkbox-stay-signed" [formControlName]="'stayLogged'"/>
-            <label for="checkbox-stay-signed"></label>
+    <div class="form">
+        <div class="username-box">
+            <label class="title" for="email">Email</label>
+            <input class="value" id="email" name="email"
+                   placeholder="myaccount@rocks.com" type="email" [formControlName]="'email'"/>
         </div>
-        <label for="checkbox-stay-signed" class="stay-signed-text">Stay signed in</label>
+        <div class="password-box">
+            <label class="title" for="password">Password</label>
+            <img class="eye" src="./assets/icons/visibilidad.png"
+                 (mousedown)="displayPassword = true" (mouseup)="displayPassword = false"/>
+            <input [type]="displayPassword ? 'text' : 'password'" class="value" id="password"
+                   name="password" placeholder="#~#Example123!" [formControlName]="'password'"/>
+        </div>
+        <div class="stay-signed-box">
+            <div class="stay-signed-input">
+                <input type="checkbox" id="checkbox-stay-signed" [formControlName]="'stayLogged'"/>
+                <label for="checkbox-stay-signed"></label>
+            </div>
+            <label for="checkbox-stay-signed" class="stay-signed-text">Stay signed in</label>
+        </div>
     </div>
     <div class="sign-button-box">
         <button class="sign-button" type="submit">Sign in</button>
@@ -25,5 +29,5 @@
 </form>
 <div class="bottom-box">
     <div class="bottom-option">Can't sign in?</div>
-    <div class="bottom-option">Create account</div>
+    <div class="bottom-option" (click)="createAccount()">Create account</div>
 </div>

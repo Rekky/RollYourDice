@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {Router} from '@angular/router';
 import {User} from '../../classes/User';
+import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 
 @Component({
     selector: 'app-sign-in',
@@ -11,6 +12,7 @@ import {User} from '../../classes/User';
 })
 export class SignInComponent implements OnInit {
 
+    @Output() display: EventEmitter<'signUp'> = new EventEmitter<'signUp'>();
     signInForm: FormGroup;
     displayPassword: boolean = false;
 
@@ -36,6 +38,7 @@ export class SignInComponent implements OnInit {
         const email = this.signInForm.get('email').value;
         const pass = this.signInForm.get('password').value;
         const stayLogged = this.signInForm.get('stayLogged').value;
+        console.log('yup?');
 
         try {
             const user = await this.userInteractor.signIn(email, pass, stayLogged);
@@ -45,5 +48,9 @@ export class SignInComponent implements OnInit {
         } catch (e) {
             console.log(e.error);
         }
+    }
+
+    createAccount(): void {
+        this.display.emit('signUp');
     }
 }

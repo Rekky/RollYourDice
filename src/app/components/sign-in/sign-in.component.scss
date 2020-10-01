@@ -8,23 +8,42 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: center;
 
-    height: calc(25vh - 60px);
+    height: calc((100% - 50vh) / 2);
     width: 50%;
     color: #EAEAEA;
     font-size: 48px;
     font-weight: 900;
+
+    span {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        height: 88px;
+    }
 }
 
 .mid-box {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
     height: 50vh;
     width: 100%;
+
+    .form {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+
+        height: calc(50vh - 60px);
+        width: 100%;
+    }
 
     .username-box, .password-box {
         position: relative;
@@ -108,7 +127,8 @@
         justify-content: center;
         align-items: center;
 
-        width: 50%;
+        height: 60px;
+        width: 100%;
 
         .sign-button {
             display: flex;
@@ -118,7 +138,6 @@
 
             height: 60px;
             width: 200px;
-            margin-top: 100px;
             border: none;
             background-color: #EAEAEA;
 
@@ -140,7 +159,7 @@
     justify-content: flex-start;
     align-items: center;
 
-    height: calc(25vh - 60px);
+    height: calc((100% - 50vh) / 2);
     width: 50%;
 
     .bottom-option {
@@ -210,5 +229,93 @@
 
 .stay-signed-input input[type="checkbox"]:checked + label:after {
     opacity: 0;
+}
+
+@media (max-height: 1400px) {
+    .title-box {
+        font-size: 40px;
+
+        span {
+            height: 60px;
+        }
+    }
+
+    .mid-box {
+
+        .form {
+            height: calc(60vh - 40px);
+        }
+
+        .username-box, .password-box {
+
+            .title {
+                height: 40px;
+                font-size: 20px;
+            }
+
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active {
+                font-size: 20px !important;
+            }
+
+            .value {
+                height: 40px;
+                margin-bottom: 20px;
+                padding: 0 16px;
+                font-size: 20px;
+            }
+
+            .eye {
+                top: 50px;
+                right: 20px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .stay-signed-box {
+
+            .stay-signed-text {
+                margin-left: 20px;
+                font-size: 20px;
+            }
+        }
+
+        .sign-button-box {
+            height: 40px;
+
+            .sign-button {
+                height: 40px;
+                width: 180px;
+                font-size: 24px;
+            }
+        }
+    }
+
+    .bottom-box {
+
+        .bottom-option {
+            height: 40px;
+            font-size: 16px;
+        }
+    }
+
+
+    .stay-signed-input {
+        width: 20px;
+        height: 20px;
+    }
+
+    .stay-signed-input label {
+        height: 20px;
+        width: 20px;
+    }
+
+    .stay-signed-input label:after {
+        height: 20px;
+        width: 20px;
+    }
 }
 

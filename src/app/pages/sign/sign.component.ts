@@ -7,43 +7,45 @@ import {
     state,
     style,
     animate,
-    transition,
+    transition, stagger, query,
 } from '@angular/animations';
 
 @Component({
     selector: 'app-sign',
     animations: [
         trigger('leftBox', [
-            state('open', style({
+            state('signIn', style({
                 width: '50%',
                 borderRight: '1px solid #EAEAEA'
             })),
-            state('closed', style({
+            state('signUp', style({
+                width: '50%',
+                borderRight: '1px solid #EAEAEA'
+            })),
+            state('loading', style({
                 width: '100%',
                 borderRight: 'none'
             })),
-            transition('open => closed', [
-                animate('1s')
-            ]),
-            transition('closed => open', [
+            transition('* => *', [
                 animate('0.5s')
-            ]),
+            ])
         ]),
         trigger('rightBox', [
-            state('open', style({
+            state('signIn', style({
                 width: '50%',
                 borderLeft: '1px solid #EAEAEA'
             })),
-            state('closed', style({
+            state('signUp', style({
+                width: '50%',
+                borderLeft: '1px solid #EAEAEA'
+            })),
+            state('loading', style({
                 width: '0',
                 borderLeft: 'none'
             })),
-            transition('open => closed', [
+            transition('* => *', [
                 animate('0.5s')
-            ]),
-            transition('closed => open', [
-                animate('0.5s')
-            ]),
+            ])
         ])
     ],
     templateUrl: './sign.component.html',
@@ -52,17 +54,14 @@ import {
 export class SignComponent implements OnInit, OnDestroy {
 
     getCurrentUserSub: Subscription;
-    test: string = 'open';
+    display: 'signIn' | 'signUp' | 'loading' = 'signIn';
 
-    isLogged: boolean = false;
     constructor(private userInteractor: UserInteractor) {
         this.getCurrentUserSub = this.userInteractor.getCurrentUserObs().subscribe((user: User) => {
-            this.isLogged = user !== null;
-            console.log('loged =', this.isLogged);
-            if (this.isLogged) {
-                this.test = 'closed';
+            if (user !== null) {
+                this.display = 'loading';
             } else {
-                this.test = 'open';
+                this.display = 'signIn';
             }
         });
     }
@@ -78,6 +77,13 @@ export class SignComponent implements OnInit, OnDestroy {
 
     leave(): void {
         this.userInteractor.logout();
+    }
+
+    changeDisplay(display: any): void {
+        // this.display = 'loading';
+        // setTimeout(() => {
+            this.display = display;
+        // }, 500);
     }
 
 }
