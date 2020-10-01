@@ -1,8 +1,6 @@
 <div class="sign-box">
     <div [@leftBox]="display" class="left-box">
-        <div [@imgBox]="display" class="img-box">
-            <img (click)="leave()" src="./assets/svg/logo-red-white.svg" alt="logo"/>
-        </div>
+        <img (click)="leave()" src="./assets/svg/logo-red-white.svg" alt="logo"/>
     </div>
     <div [@rightBox]="display" class="right-box">
         <app-sign-in *ngIf="display === 'signIn'" (display)="changeDisplay($event)"></app-sign-in>

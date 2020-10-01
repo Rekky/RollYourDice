@@ -13,65 +13,54 @@ import {
 @Component({
     selector: 'app-sign',
     animations: [
-        trigger('imgBox', [
-            state('signIn', style({
-                transform: 'rotate(0deg)'
-            })),
-            state('signUp', style({
-                transform: 'rotate(0deg)'
-            })),
-            state('loading', style({
-                transform: 'rotate(360deg)'
-            })),
-            transition('* => *', [
-                animate('0.5s')
-            ]),
-        ]),
         trigger('leftBox', [
             state('signIn', style({
                 width: '50%',
-                borderRight: '1px solid #EAEAEA'
             })),
             state('signUp', style({
                 width: '50%',
-                borderRight: '1px solid #EAEAEA'
             })),
             state('loading', style({
                 width: '100%',
-                borderRight: 'none'
             })),
-            transition('* => signIn', [
-                animate('0.5s')
+            transition('loading => signIn', [
+                animate('0.5s', style({
+                    width: '50%'
+                }))
             ]),
-            transition('* => signUp', [
-                animate('0.5s')
+            transition('loading => signUp', [
+                animate('0.5s', style({
+                    width: '50%'
+                }))
             ]),
             transition('* => loading', [
-                animate('1ms', style({
-                    borderRight: 'none'
-                })),
-                animate('0.5s', style({
-                    width: '100%'
-                }))
+                animate('0.5s')
             ])
         ]),
         trigger('rightBox', [
             state('signIn', style({
+                transform: 'translateX(0)',
                 width: '50%',
+                opacity: 1
             })),
             state('signUp', style({
+                transform: 'translateX(0)',
                 width: '50%',
+                opacity: 1
             })),
             state('loading', style({
+                transform: 'translateX(200%)',
                 width: '0',
+                opacity: 0
             })),
-            transition('* => *', [
+            transition('loading => signIn', [
+                animate('0.5s')
+            ]),
+            transition('loading => signUp', [
                 animate('0.5s')
             ]),
             transition('* => loading', [
-                animate('1ms', style({
-                    width: '0',
-                }))
+                animate('0.5s')
             ])
         ])
     ],
