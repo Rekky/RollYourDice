@@ -16,21 +16,26 @@ import {
         trigger('leftBox', [
             state('signIn', style({
                 width: '50%',
+                transform: 'rotate(0deg)'
             })),
             state('signUp', style({
                 width: '50%',
+                transform: 'rotate(0deg)'
             })),
             state('loading', style({
                 width: '100%',
+                transform: 'rotate(360deg)'
             })),
             transition('loading => signIn', [
                 animate('0.5s', style({
-                    width: '50%'
+                    width: '50%',
+                    transform: 'rotate(0deg)'
                 }))
             ]),
             transition('loading => signUp', [
                 animate('0.5s', style({
-                    width: '50%'
+                    width: '50%',
+                    transform: 'rotate(0deg)'
                 }))
             ]),
             transition('* => loading', [
