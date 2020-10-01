@@ -231,7 +231,7 @@
     opacity: 0;
 }
 
-@media (max-height: 1400px) {
+@media (max-height: 1200px) and (orientation: landscape) {
     .title-box {
         font-size: 40px;
 
