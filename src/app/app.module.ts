@@ -18,7 +18,7 @@ import { RecursiveListComponent } from './components/recursive-list/recursive-li
 import { CharacterSheetComponent } from './components/character-sheet/character-sheet.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { AdventureComponent } from './pages/adventures/adventure/adventure.component';
 import { AdventuresSearchComponent } from './pages/adventures/adventures-search/adventures-search.component';
 import { AdventureNewComponent } from './pages/adventures/adventure-new/adventure-new.component';
@@ -31,6 +31,8 @@ import { CsSkillsComponent } from './components/character-sheet/cs-skills/cs-ski
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {SignComponent} from './pages/sign/sign.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -66,9 +68,21 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         DragulaModule.forRoot(),
         AppRoutingModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
     ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient): any {
+    return new TranslateHttpLoader(http);
+}
