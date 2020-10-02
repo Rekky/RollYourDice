@@ -53,10 +53,6 @@ export class SignComponent implements OnInit, OnDestroy {
         }
     }
 
-    leave(): void {
-        this.userInteractor.logout();
-    }
-
     changeDisplay(display: any): void {
         this.display = display;
     }
@@ -89,7 +85,7 @@ export class SignComponent implements OnInit, OnDestroy {
         leftBox.style.animation = 'leftBoxLeaves 1000ms 500ms';
 
         setTimeout(() => {
-            this.router.navigate(['./']);
+            this.router.navigate(['./game-editor']);
         }, 4000);
     }
 }
