@@ -58,7 +58,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     CsSavingThrowsComponent,
     CsSkillsComponent,
     NavBarComponent,
-    SignComponent
+    SignComponent,
   ],
     imports: [
         BrowserModule,

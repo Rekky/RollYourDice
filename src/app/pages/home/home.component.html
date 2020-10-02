@@ -6,7 +6,7 @@
     <div class="display"></div>
     <div class="display-border"></div>
     <div class="play-button-box">
-        <button (click)="play()" class="play-button">Play</button>
+        <a class="play-button" [routerLink]="'/sign'">Play</a>
         <div class="play-button-border"></div>
     </div>
     <div class="display-bottom"></div>
@@ -16,13 +16,7 @@
     <h2>ROLL YOUR DICE</h2>
     <ul>
         <li>
-            <a [routerLink]="'/game-editor'">GO to editor</a>
-        </li>
-        <li>
             <a [routerLink]="'/character-sheet'">GO to character-sheet</a>
-        </li>
-        <li>
-            <a [routerLink]="'/sign'">Sign-in</a>
         </li>
         <li>
             <a (click)="logout()" href="javascript:void(0)">Logout</a>

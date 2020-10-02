@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserInteractor} from '../../interactors/UserInteractor';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -8,7 +9,8 @@ import {UserInteractor} from '../../interactors/UserInteractor';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private userInteractor: UserInteractor) {
+    constructor(private userInteractor: UserInteractor,
+                private router: Router) {
     }
 
     ngOnInit(): void {
@@ -19,6 +21,6 @@ export class HomeComponent implements OnInit {
     }
 
     play(): void {
-
+        this.router.navigate(['./sign']);
     }
 }

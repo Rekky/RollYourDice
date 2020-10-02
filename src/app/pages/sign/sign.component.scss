@@ -5,56 +5,164 @@
 }
 
 .sign-box {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+    position: relative;
 
     height: 100vh;
     width: 100vw;
-    padding: 60px;
-    background-color: #262A31;
+    background-color: #16191D;
+    overflow: hidden;
 
     .left-box {
+        position: absolute;
+        top: 0;
+        left: 0;
+
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
         align-items: center;
 
         height: 100%;
+        width: 50%;
+        background-color: #262A31;
 
         .img-box {
+            position: relative;
+            box-sizing: content-box;
+
             display: flex;
             flex-flow: row nowrap;
             justify-content: center;
             align-items: center;
 
-            height: 100%;
-            width: 100%;
+            height: calc(50vh + 40px);
+            width: 50vw;
 
-            img {
+            .load-border {
+                position: absolute;
+                height: 100%;
+                width:  100%;
+                transform: rotate(-90deg);
+            }
+
+            .load-value {
+                position: absolute;
+                top: -55px;
+
+                color: #EAEAEA;
+                font-weight: bold;
+                font-size: 40px;
+            }
+
+            .sign-logo {
                 height: 50vh;
-                width: 50vw;
+                width: 50vh;
             }
         }
     }
+}
 
-    .right-box {
+.right-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 14;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 50%;
+    background-color: #16191D;
+
+    app-sign-in, app-sign-up {
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
 
         height: 100%;
+        width: 100%;
+    }
+}
 
-        app-sign-in, app-sign-up {
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: center;
-            align-items: center;
+.loaded-title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
 
-            height: 100%;
-            width: 100%;
-        }
+    width: 100%;
+    height: 100%;
+
+    color: white;
+    font-size: 70px;
+    font-weight: bold;
+
+    opacity: 0;
+    animation: welcome 2s 1s;
+}
+
+@keyframes hideRightBox {
+    from {
+        right: 0;
+    }
+    to {
+        right: -2000px;
+    }
+}
+
+@keyframes rotateImage {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotateImageLeft {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes widthComplete {
+    from {
+        width: 50%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes leftBoxLeaves {
+    from {
+        width: 100%;
+        left: 0;
+    }
+    to {
+        width: 0;
+        left: -2000px;
+    }
+}
+
+@keyframes welcome {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }
