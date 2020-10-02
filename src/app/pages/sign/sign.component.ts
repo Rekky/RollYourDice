@@ -2,6 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {User} from '../../classes/User';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-sign',
@@ -16,7 +17,8 @@ export class SignComponent implements OnInit, OnDestroy {
     percentage: number = 0;
     angle: number = 0;
 
-    constructor(private userInteractor: UserInteractor) {
+    constructor(private userInteractor: UserInteractor,
+                private router: Router) {
         this.getCurrentUserSub = this.userInteractor.getCurrentUserObs().subscribe((user: User) => {
             if (user !== null) {
                 this.preloadState();
@@ -85,5 +87,9 @@ export class SignComponent implements OnInit, OnDestroy {
         }, 500);
         logo.style.animation = 'rotateImageLeft 1000ms 500ms';
         leftBox.style.animation = 'leftBoxLeaves 1000ms 500ms';
+
+        setTimeout(() => {
+            this.router.navigate(['./']);
+        }, 4000);
     }
 }
