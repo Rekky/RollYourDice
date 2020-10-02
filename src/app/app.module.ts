@@ -35,33 +35,33 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    MapPropertiesComponent,
-    GameEditorComponent,
-    EditorToolsComponent,
-    EditorLibrariesComponent,
-    MapComponent,
-    PagesListComponent,
-    PageComponent,
-    MapsListComponent,
-    RecursiveListComponent,
-    CharacterSheetComponent,
-    SignInComponent,
-    SignUpComponent,
-    AdventureComponent,
-    AdventuresSearchComponent,
-    AdventureNewComponent,
-    MyAdventuresComponent,
-    AdventuresComponent,
-    CsHeaderComponent,
-    CsAttributesComponent,
-    CsSavingThrowsComponent,
-    CsSkillsComponent,
-    NavBarComponent,
-    SignComponent,
-  ],
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        MapPropertiesComponent,
+        GameEditorComponent,
+        EditorToolsComponent,
+        EditorLibrariesComponent,
+        MapComponent,
+        PagesListComponent,
+        PageComponent,
+        MapsListComponent,
+        RecursiveListComponent,
+        CharacterSheetComponent,
+        SignInComponent,
+        SignUpComponent,
+        AdventureComponent,
+        AdventuresSearchComponent,
+        AdventureNewComponent,
+        MyAdventuresComponent,
+        AdventuresComponent,
+        CsHeaderComponent,
+        CsAttributesComponent,
+        CsSavingThrowsComponent,
+        CsSkillsComponent,
+        NavBarComponent,
+        SignComponent,
+    ],
     imports: [
         BrowserModule,
         HttpClientModule,
@@ -77,8 +77,8 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
             }
         }),
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
 
