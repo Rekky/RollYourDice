@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../classes/User';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
     templateUrl: './sign.component.html',
     styleUrls: ['./sign.component.scss']
 })
-export class SignComponent implements OnInit, OnDestroy {
+export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
 
     getCurrentUserSub: Subscription;
     display: 'signIn' | 'signUp' | 'preloading' | 'loading' | 'loaded' = 'signIn';
@@ -19,8 +19,15 @@ export class SignComponent implements OnInit, OnDestroy {
 
     constructor(private userInteractor: UserInteractor,
                 private router: Router) {
+    }
+
+    ngOnInit(): void {
+    }
+
+    ngAfterViewInit(): void {
         this.getCurrentUserSub = this.userInteractor.getCurrentUserObs().subscribe((user: User) => {
-            if (user !== null) {
+            console.log('user =', user);
+            if (user) {
                 this.preloadState();
                 setTimeout(() => {
                     this.display = 'loading';
@@ -42,9 +49,6 @@ export class SignComponent implements OnInit, OnDestroy {
                 this.display = 'signIn';
             }
         });
-    }
-
-    ngOnInit(): void {
     }
 
     ngOnDestroy(): void {
