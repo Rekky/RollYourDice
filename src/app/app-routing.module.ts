@@ -33,6 +33,7 @@ const routes: Routes = [
     {
         path: 'adventures',
         component: AdventuresComponent,
+        canActivate: [AuthGuardService],
         children: [
             { path: 'my-adventures', component: MyAdventuresComponent },
             { path: 'new', component: AdventureNewComponent },
