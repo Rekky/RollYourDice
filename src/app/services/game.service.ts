@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Game} from '../classes/Game';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {User} from '../classes/User';
 import {HttpService} from './http.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -30,8 +31,23 @@ export class GameService {
     }
 
     getMyGames(user: User): Promise<any> {
-        const params = new HttpParams()
-        .set('token', user.id.toString());
-        return this.httpService.get(`/game/my-games`, {headers: {}, params: params}).toPromise();
+        const params = new HttpParams().set('token', user.id.toString());
+
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: this.sessionService.getSessionToken()
+            })
+        };
+
+        return new Promise<any>( (resolve, reject) => {
+            this.http.get(`/game/my-games`, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+
     }
 }
