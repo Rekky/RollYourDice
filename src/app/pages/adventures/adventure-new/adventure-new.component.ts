@@ -36,21 +36,21 @@ export class AdventureNewComponent implements OnInit, OnDestroy {
         const name = this.newGameForm.get('name').value;
         const type = this.newGameForm.get('type').value;
 
-        this.userSubscription = this.userInteractor.getCurrentUserObs().subscribe(async (user: User) => {
-            if (user) {
-                const game = new Game();
-                game.name = name;
-                game.author = user.id;
-                game.gameType = type;
+        const user = this.userInteractor.getCurrentUser();
+        if (user) {
+            console.log('entras');
+            const game = new Game();
+            game.name = name;
+            game.author = user.id;
+            game.gameType = type;
 
-                try{
-                    await this.gameInteractor.createGame(game);
-                    this.router.navigate(['/home']);
-                } catch (e) {
-                    console.log(e);
-                }
+            try{
+                await this.gameInteractor.createGame(game);
+                await this.router.navigate(['/home']);
+            } catch (e) {
+                console.log(e);
             }
-        });
+        }
 
     }
 

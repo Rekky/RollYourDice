@@ -21,7 +21,7 @@ export class GameService {
 
     createGame(game: Game): Promise<any> {
         const body = game;
-        return this.httpService.post(`/game`, body, {}).toPromise();
+        return this.httpService.post(`/game`, body, {});
     }
 
     getAllGames(): Promise<any> {
@@ -31,7 +31,7 @@ export class GameService {
 
     getMyGames(user: User): Promise<any> {
         const params = new HttpParams()
-        .set('userId', user.id.toString());
+        .set('token', user.id.toString());
         return this.httpService.get(`/game/my-games`, {headers: {}, params: params}).toPromise();
     }
 }
