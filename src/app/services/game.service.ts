@@ -21,8 +21,24 @@ export class GameService {
     }
 
     createGame(game: Game): Promise<any> {
-        const body = game;
-        return this.httpService.post(`/game`, body, {});
+        // const params = new HttpParams().set('token', user.id.toString());
+
+        const options = {
+            headers: new HttpHeaders({
+                // Authorization: this.sessionService.getSessionToken()
+                Authorization: ''
+            })
+        };
+
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/game`, game, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
     }
 
     getAllGames(): Promise<any> {
@@ -41,7 +57,7 @@ export class GameService {
         };
 
         return new Promise<any>( (resolve, reject) => {
-            this.http.get(`/game/my-games`, options).subscribe(
+            this.httpService.get(`/game/my-games`, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -49,6 +65,5 @@ export class GameService {
                 }
             );
         });
-
     }
 }

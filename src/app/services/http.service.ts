@@ -40,18 +40,18 @@ export class HttpService {
     /**
      * This call sends data to the server
      */
-    public post(url: string, body: any, options?: any): Promise<any> {
-        // return new Observable<any>(observable => {
-        //     this.http.post(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
-        //         (response) => {
-        //             observable.next(response.body);
-        //         }, (error: HttpErrorResponse) => {
-        //             this.httpErrorService.manageError(error);
-        //             observable.error(error);
-        //         }
-        //     );
-        // });
-        return this.http.post(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).toPromise();
+    public post(url: string, body: any, options?: any): Observable<any> {
+        return new Observable<any>(observable => {
+            this.http.post(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
+                (response) => {
+                    observable.next(response.body);
+                }, (error: HttpErrorResponse) => {
+                    this.httpErrorService.manageError(error);
+                    observable.error(error);
+                }
+            );
+        });
+        // return this.http.post(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).toPromise();
     }
 
     /**
