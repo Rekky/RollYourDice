@@ -35,7 +35,8 @@ export class GameService {
 
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.sessionService.getSessionToken()
+                // Authorization: this.sessionService.getSessionToken()
+                Authorization: ''
             })
         };
 

@@ -43,9 +43,7 @@ export class SignInComponent implements OnInit {
         try {
             const user = await this.userInteractor.signIn(email, pass, stayLogged);
             console.log(user);
-            // if (user) {
-            //     this.router.navigate(['/home']);
-            // }
+            this.router.navigate(['/home']);
         } catch (e) {
             console.log(e.error);
         }
