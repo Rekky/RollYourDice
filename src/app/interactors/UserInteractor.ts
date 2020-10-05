@@ -25,7 +25,6 @@ export class UserInteractor {
 
     async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
         const user = await this.userService.signIn(email, password);
-        console.log(user.body);
         if (user && stayLogged) {
             localStorage.setItem('user', JSON.stringify(user));
         }

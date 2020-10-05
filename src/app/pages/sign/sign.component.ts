@@ -38,7 +38,7 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
                         circle.setAttribute('stroke-dasharray', this.totalLoad + ', 20000');
                         if (this.angle >= 360) {
                             clearInterval(interval);
-                            this.loadedState();
+                            // this.loadedState();
                         }
                         this.percentage = Math.round(this.angle / 360 * 100);
                         this.angle += 3;

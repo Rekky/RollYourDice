@@ -21,8 +21,6 @@ export class GameService {
     }
 
     createGame(game: Game): Promise<any> {
-        // const params = new HttpParams().set('token', user.id.toString());
-
         const options = {
             headers: new HttpHeaders({
                 // Authorization: this.sessionService.getSessionToken()
@@ -42,8 +40,18 @@ export class GameService {
     }
 
     getAllGames(): Promise<any> {
-        const body = {};
-        return this.httpService.get(`/game/all`, body).toPromise();
+        // const body = {};
+        // return this.httpService.get(`/game/all`, body).toPromise();
+        const options = {};
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.get(`/game/my-games`, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
     }
 
     getMyGames(user: User): Promise<any> {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {ApiService} from './api.service';
 import {User} from '../classes/User';
 import {map} from 'rxjs/operators';
@@ -14,11 +14,40 @@ export class UserService {
     constructor(private http: HttpClient, private apiService: ApiService, private httpService: HttpService) {}
 
     signIn(email: string, password: string): Promise<any> {
-        return this.httpService.post(`/users/authenticate`, { email, password });
+        const options = {
+            headers: new HttpHeaders({
+                // Authorization: this.sessionService.getSessionToken()
+                Authorization: ''
+            })
+        };
+
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/users/authenticate`, { email, password }, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
     }
 
     signUp(user: User): Promise<any> {
-        return this.httpService.post(`/users/register`, {user: user});
+        const options = {
+            headers: new HttpHeaders({
+                // Authorization: this.sessionService.getSessionToken()
+                Authorization: ''
+            })
+        };
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/users/register`, {user: user}, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
     }
 
 

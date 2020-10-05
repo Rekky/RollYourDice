@@ -51,7 +51,6 @@ export class HttpService {
                 }
             );
         });
-        // return this.http.post(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).toPromise();
     }
 
     /**
