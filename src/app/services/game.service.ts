@@ -44,7 +44,7 @@ export class GameService {
         // return this.httpService.get(`/game/all`, body).toPromise();
         const options = {};
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/my-games`, options).subscribe(
+            this.httpService.get(`/game/search`, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

@@ -23,6 +23,7 @@ export class AdventureNewComponent implements OnInit, OnDestroy {
         this.newGameForm = new FormGroup({
             name: new FormControl(null),
             type: new FormControl(null),
+            privacy: new FormControl('private'),
         });
     }
 
@@ -35,14 +36,15 @@ export class AdventureNewComponent implements OnInit, OnDestroy {
     async createGame(): Promise<void> {
         const name = this.newGameForm.get('name').value;
         const type = this.newGameForm.get('type').value;
+        const privacy = this.newGameForm.get('privacy').value;
 
         const user = this.userInteractor.getCurrentUser();
         if (user) {
-            console.log('entras');
             const game = new Game();
             game.name = name;
             game.author = user.id;
             game.gameType = type;
+            game.privacy = privacy;
 
             try{
                 await this.gameInteractor.createGame(game);
