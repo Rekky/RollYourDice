@@ -4,7 +4,6 @@ import {GameInteractor} from '../../../interactors/GameInteractor';
 import {Game} from '../../../classes/Game';
 import {Router} from '@angular/router';
 import {UserInteractor} from '../../../interactors/UserInteractor';
-import {User} from '../../../classes/User';
 import {Subscription} from 'rxjs';
 
 @Component({

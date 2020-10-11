@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Game} from '../classes/Game';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {User} from '../classes/User';
 import {HttpService} from './http.service';
-import {environment} from '../../environments/environment';
+import {UserService} from './user.service';
+import {UserInteractor} from '../interactors/UserInteractor';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameService {
 
-    constructor(private apiService: ApiService, private http: HttpClient, private httpService: HttpService) { }
+    constructor(private apiService: ApiService, private httpService: HttpService, private userInteractor: UserInteractor) { }
 
     getGameEditor(id: string): void {
         // console.log(this.apiService.getGameEditor(id));
@@ -23,11 +24,9 @@ export class GameService {
     createGame(game: Game): Promise<any> {
         const options = {
             headers: new HttpHeaders({
-                // Authorization: this.sessionService.getSessionToken()
-                Authorization: ''
+                Authorization: this.userInteractor.getToken()
             })
         };
-
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/game`, game, options).subscribe(
                 (response) => {
@@ -40,9 +39,11 @@ export class GameService {
     }
 
     getAllGames(): Promise<any> {
-        // const body = {};
-        // return this.httpService.get(`/game/all`, body).toPromise();
-        const options = {};
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: this.userInteractor.getToken()
+            })
+        };
         return new Promise<any>( (resolve, reject) => {
             this.httpService.get(`/game/search`, options).subscribe(
                 (response) => {
@@ -55,15 +56,11 @@ export class GameService {
     }
 
     getMyGames(user: User): Promise<any> {
-        const params = new HttpParams().set('token', user.id.toString());
-
         const options = {
             headers: new HttpHeaders({
-                // Authorization: this.sessionService.getSessionToken()
-                Authorization: ''
+                Authorization: this.userInteractor.getToken()
             })
         };
-
         return new Promise<any>( (resolve, reject) => {
             this.httpService.get(`/game/my-games`, options).subscribe(
                 (response) => {

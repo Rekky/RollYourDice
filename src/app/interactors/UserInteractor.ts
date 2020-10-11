@@ -23,6 +23,10 @@ export class UserInteractor {
         return this.userSubject.getValue();
     }
 
+    getToken(): string {
+        return this.userSubject.getValue()['token'];
+    }
+
     async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
         const user = await this.userService.signIn(email, password);
         if (user && stayLogged) {
