@@ -6,6 +6,7 @@ import {User} from '../classes/User';
 import {HttpService} from './http.service';
 import {UserService} from './user.service';
 import {UserInteractor} from '../interactors/UserInteractor';
+import {Page} from '../classes/Page';
 
 @Injectable({
     providedIn: 'root'
@@ -62,7 +63,24 @@ export class GameService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/my-games`, options).subscribe(
+            this.httpService.post(`/game/my-games`, {}, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    createPage(page: Page): Promise<any> {
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: this.userInteractor.getToken()
+            })
+        };
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/game/create-page`, page, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

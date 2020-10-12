@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {GameService} from '../services/game.service';
 import {Game} from '../classes/Game';
 import {User} from '../classes/User';
+import {Page} from '../classes/Page';
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +27,9 @@ export class GameInteractor {
 
     async getMyGames(user: User): Promise<Game[]> {
         return await this.gameService.getMyGames(user);
+    }
+
+    async createPage(page: Page): Promise<any> {
+        return await this.gameService.createPage(page);
     }
 }
