@@ -24,7 +24,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     async ngOnInit(): Promise<void> {
         try {
-            this.adventures = await this.gameInteractor.getMyGames(this.currentUser);
+            this.adventures = await this.gameInteractor.getMyGames(this.currentUser.id);
         } catch (e) {
             console.log(e);
         }

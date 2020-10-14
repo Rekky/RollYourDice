@@ -1,7 +1,7 @@
 import {Page} from './Page';
 
 export class Game {
-    id: string | number;
+    id: string;
     name: string;
     pages: Page[];
     selectedPageId: string | null;
@@ -10,7 +10,7 @@ export class Game {
     author: string | number;
     createdDate: Date;
 
-    constructor(id?: number,
+    constructor(id?: string,
                 name?: string,
                 pages?: Page[],
                 selectedPageId?: string | null,

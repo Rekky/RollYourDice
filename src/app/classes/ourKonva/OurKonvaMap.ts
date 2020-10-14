@@ -3,7 +3,7 @@ import {OurKonvaGrid} from './OurKonvaGrid';
 import {OurKonvaObject} from './OurKonvaObject';
 
 export class OurKonvaMap {
-    id: string | number;
+    id: string;
     name: string | null;
     position: Coords;
     columns: number;
@@ -16,7 +16,7 @@ export class OurKonvaMap {
     grid: OurKonvaGrid;
     objects: OurKonvaObject[];
 
-    constructor(id?: string | number,
+    constructor(id?: string,
                 name?: string,
                 position?: Coords,
                 columns?: number,

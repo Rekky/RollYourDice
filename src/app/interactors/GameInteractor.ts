@@ -25,8 +25,8 @@ export class GameInteractor {
         return await this.gameService.getAllGames();
     }
 
-    async getMyGames(user: User): Promise<Game[]> {
-        return await this.gameService.getMyGames(user);
+    async getMyGames(userId: string): Promise<Game[]> {
+        return await this.gameService.getMyGames(userId);
     }
 
     async createPage(page: Page): Promise<any> {

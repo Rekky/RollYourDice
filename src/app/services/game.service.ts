@@ -56,14 +56,14 @@ export class GameService {
         });
     }
 
-    getMyGames(user: User): Promise<any> {
+    getMyGames(userId: string): Promise<any> {
         const options = {
             headers: new HttpHeaders({
                 Authorization: this.userInteractor.getToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game/my-games`, {}, options).subscribe(
+            this.httpService.post(`/game/my-games`, {userId}, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

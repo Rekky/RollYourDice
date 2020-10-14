@@ -1,10 +1,10 @@
 export class User {
-    id: string | number;
+    id: string;
     username: string;
     email: string;
     password: string;
 
-    constructor(id?: number, username?: string, email?: string, password?: string) {
+    constructor(id?: string, username?: string, email?: string, password?: string) {
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.username = username ? username : null;
         this.email = email ? email : null;

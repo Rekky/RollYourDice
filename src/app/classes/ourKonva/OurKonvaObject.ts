@@ -3,13 +3,13 @@ import Konva from 'konva';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 
 export class OurKonvaObject extends OurKonvaMouse {
-    id: string | number;
+    id: string;
     name: string;
     position: Coords;
     objects: OurKonvaObject[];
     state: string = 'square';
 
-    constructor(id?: string | number, name?: string, objects?: OurKonvaObject[], position?: Coords) {
+    constructor(id?: string, name?: string, objects?: OurKonvaObject[], position?: Coords) {
         super();
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.name = name ? name : 'new Object';
