@@ -1,7 +1,8 @@
 <p>my-adventures works!</p>
 <div *ngIf="adventures">
     <div *ngFor="let adventure of adventures">
-        <span><a [routerLink]="'/adventures/' + adventure.id">{{adventure.name}}</a></span> -
+        <span>{{adventure.name}}</span> -
         <span>{{adventure.createdDate}}</span>
+        <button (click)="goToTheGame(adventure)">Play</button>
     </div>
 </div>

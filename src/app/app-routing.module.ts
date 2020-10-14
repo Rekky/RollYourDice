@@ -15,7 +15,10 @@ const routes: Routes = [
     {
         path: 'game-editor',
         component: GameEditorComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
+        children: [
+            { path: ':id', component: GameEditorComponent }
+        ]
     },
     {
         path: 'character-sheet',

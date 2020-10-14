@@ -4,6 +4,7 @@ import {GameInteractor} from '../../../interactors/GameInteractor';
 import {User} from '../../../classes/User';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-my-adventures',
@@ -17,9 +18,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     userSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor, private userInteractor: UserInteractor) {
-        this.userSubscription = this.userInteractor.getCurrentUserObs().subscribe((user: User) => {
-            this.currentUser = user;
-        });
+        this.currentUser = this.userInteractor.getCurrentUser();
     }
 
     async ngOnInit(): Promise<void> {
@@ -34,6 +33,10 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         if (this.userSubscription) {
             this.userSubscription.unsubscribe();
         }
+    }
+
+    goToTheGame(game: Game): void {
+        this.gameInteractor.goToTheGame(game);
     }
 
 }
