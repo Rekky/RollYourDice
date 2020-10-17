@@ -23,6 +23,10 @@ export class SocketService {
             console.log('socket desconectado!');
         });
 
+        this.socket.on('game-editor-load', (data) => {
+            console.log('recibo juego', data);
+            this.gameSocketSubscription.next(data);
+        });
         this.socket.on('game-editor', (data) => {
             this.gameSocketSubscription.next(data);
         });
@@ -32,8 +36,8 @@ export class SocketService {
         });
     }
 
-    getGameEditor(): void {
-
+    sendGameEditorId(gameId: string): void {
+        this.socket.emit('game-editor-load', gameId);
     }
 
     sendSocketObject(object: any): void {

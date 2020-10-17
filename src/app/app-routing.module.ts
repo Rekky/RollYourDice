@@ -13,12 +13,9 @@ import {AdventuresComponent} from './pages/adventures/adventures/adventures.comp
 
 const routes: Routes = [
     {
-        path: 'game-editor',
+        path: 'game-editor/:id',
         component: GameEditorComponent,
-        canActivate: [AuthGuardService],
-        children: [
-            { path: ':id', component: GameEditorComponent }
-        ]
+        canActivate: [AuthGuardService]
     },
     {
         path: 'character-sheet',

@@ -6,7 +6,8 @@ import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {ApiService} from '../../services/api.service';
 import {SocketService} from '../../services/socket.service';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-game-editor',
@@ -26,9 +27,14 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     constructor(private gameInteractor: GameInteractor,
                 private mouseService: MouseService,
                 private apiService: ApiService,
-                private socketService: SocketService) { }
+                private socketService: SocketService,
+                private router: ActivatedRoute) { }
 
     ngOnInit(): void {
+        const gameId = this.router.snapshot.paramMap.get('id');
+        this.socketService.sendGameEditorId(gameId);
+
+        // me subscribo al game que me llega del socket
         this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
             this.game = socketGame;
             if (this.game) {
