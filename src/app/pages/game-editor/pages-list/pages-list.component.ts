@@ -10,6 +10,7 @@ import {Page} from '../../../classes/Page';
 export class PagesListComponent implements OnInit {
 
     @Input() pages: Page[] = [];
+    @Output() pagesChanges: EventEmitter<Page[]> = new EventEmitter<Page[]>();
     @Output() selectedPage: EventEmitter<Page> = new EventEmitter<Page>();
 
     showNewPageForm: boolean = false;
@@ -20,7 +21,7 @@ export class PagesListComponent implements OnInit {
 
     ngOnInit(): void {
         this.newPageForm = new FormGroup({
-            name: new FormControl('new Page'),
+            name: new FormControl('Page' + (this.pages.length + 1)),
         });
     }
 
@@ -36,6 +37,7 @@ export class PagesListComponent implements OnInit {
         this.pages.push(newPage);
         this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
         this.showNewPageForm = false;
+        this.pagesChanges.emit(this.pages);
     }
 
 }

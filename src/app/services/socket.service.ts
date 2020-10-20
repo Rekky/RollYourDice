@@ -17,14 +17,12 @@ export class SocketService {
 
     constructor(private apiService: ApiService) {
         this.socket.on('connect', () => {
-            console.log('conectado al socket correctamente');
+            console.log('socket conectado');
         });
         this.socket.on('disconnect', () => {
             console.log('socket desconectado!');
         });
-
         this.socket.on('game-editor-load', (data) => {
-            console.log('recibo juego', data);
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor', (data) => {
@@ -38,6 +36,10 @@ export class SocketService {
 
     sendGameEditorId(gameId: string): void {
         this.socket.emit('game-editor-load', gameId);
+    }
+
+    sendGamePagesUpdate(game: Game): void {
+        this.socket.emit('game-editor-pages-update', game);
     }
 
     sendSocketObject(object: any): void {
