@@ -1,7 +1,7 @@
 import {Page} from './Page';
 
 export class Game {
-    id: string;
+    id: string | null;
     name: string;
     pages: Page[];
     selectedPageId: string | null;
@@ -19,9 +19,9 @@ export class Game {
                 author?: string | number,
                 createdDate?: Date
     ) {
-        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
+        this.id = id ? id : null;
         this.name = name ? name : 'new Game';
-        this.pages = pages ? pages : [];
+        this.pages = pages ? pages : [new Page()];
         this.selectedPageId = selectedPageId ? selectedPageId : null;
         this.privacy = privacy ? privacy : 'private';
         this.gameType = gameType ? gameType : 'dungeonsAndDragons5e';

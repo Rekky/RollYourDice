@@ -37,7 +37,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         // me subscribo al game que me llega del socket
         this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
             this.game = socketGame;
-            if (this.game) {
+            if (this.game && this.game.pages) {
                 this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
             }
         });

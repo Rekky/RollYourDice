@@ -1,12 +1,12 @@
 import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
 export class Page {
-    id: string;
+    id: string | null;
     name: string;
     maps: OurKonvaMap[];
 
     constructor(id?: string, name?: any, maps?: OurKonvaMap[]) {
-        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
+        this.id = id ? id : null;
         this.name = name ? name : 'new page';
         this.maps = maps ? maps : [];
     }

@@ -20,7 +20,7 @@ export class PagesListComponent implements OnInit {
 
     ngOnInit(): void {
         this.newPageForm = new FormGroup({
-            name: new FormControl('Page' + (this.pages.length + 1)),
+            name: new FormControl('new Page'),
         });
     }
 
