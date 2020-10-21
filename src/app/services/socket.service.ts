@@ -25,6 +25,10 @@ export class SocketService {
         this.socket.on('game-editor-load', (data) => {
             this.gameSocketSubscription.next(data);
         });
+        this.socket.on('game-editor-pages-update', (data) => {
+            console.log('recibo del backend pages', data);
+            this.gameSocketSubscription.next(data);
+        });
         this.socket.on('game-editor', (data) => {
             this.gameSocketSubscription.next(data);
         });
