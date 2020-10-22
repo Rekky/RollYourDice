@@ -66,13 +66,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     }
 
-    onPageChange(ev: any): void {
-        // this.socket.emit('game-editor', this.game);
+    onNewPage(page: Page): void {
+        this.socketService.sendGamePageUpdate(this.game.id, page);
     }
 
-    onPagesChange(ev: Page[]): void {
-        console.log('onPagesChange', this.game);
-        this.socketService.sendGamePagesUpdate(this.game);
+    onPagesChange(pages: Page[]): void {
+        this.socketService.sendGamePagesUpdate(this.game.id, pages);
     }
 
     onSetCurrentObjectSelected(ev): void {

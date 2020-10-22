@@ -12,9 +12,10 @@ export class PagesListComponent implements OnInit {
     @Input() pages: Page[] = [];
     @Output() pagesChanges: EventEmitter<Page[]> = new EventEmitter<Page[]>();
     @Output() selectedPage: EventEmitter<Page> = new EventEmitter<Page>();
+    @Output() newPage: EventEmitter<Page> = new EventEmitter<Page>();
 
-    showNewPageForm: boolean = false;
     @Input() currentPage: Page = null;
+    showNewPageForm: boolean = false;
     newPageForm: FormGroup;
 
     constructor(private ref: ChangeDetectorRef) { }
@@ -37,6 +38,16 @@ export class PagesListComponent implements OnInit {
         this.pages.push(newPage);
         this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
         this.showNewPageForm = false;
+        this.pagesChanges.emit(this.pages);
+        // this.newPage.emit(newPage);
+    }
+
+    editPageName(page: Page): void {
+
+    }
+
+    removePage(page: Page): void {
+        this.pages.splice(this.pages.indexOf(page), 1);
         this.pagesChanges.emit(this.pages);
     }
 

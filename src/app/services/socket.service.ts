@@ -4,6 +4,7 @@ import {ApiService} from './api.service';
 import {BehaviorSubject} from 'rxjs';
 import {Game} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
+import {Page} from '../classes/Page';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +26,10 @@ export class SocketService {
         this.socket.on('game-editor-load', (data) => {
             this.gameSocketSubscription.next(data);
         });
+        this.socket.on('game-editor-page-update', (data) => {
+            console.log('recibo PAGE', data);
+            this.gameSocketSubscription.next(data);
+        });
         this.socket.on('game-editor-pages-update', (data) => {
             console.log('recibo del backend pages', data);
             this.gameSocketSubscription.next(data);
@@ -42,8 +47,12 @@ export class SocketService {
         this.socket.emit('game-editor-load', gameId);
     }
 
-    sendGamePagesUpdate(game: Game): void {
-        this.socket.emit('game-editor-pages-update', game);
+    sendGamePageUpdate(gameId: string, page: Page): void {
+        this.socket.emit('game-editor-page-update', {gameId, page});
+    }
+
+    sendGamePagesUpdate(gameId: string, pages: Page[]): void {
+        this.socket.emit('game-editor-pages-update', {gameId, pages});
     }
 
     sendSocketObject(object: any): void {

@@ -112,9 +112,19 @@ label{
         cursor: pointer;
         height: 100%;
         padding: 0 10px;
+        justify-content: space-between;
+
+        .item-tools {
+            display: none;
+            width: 33px;
+            justify-content: space-between;
+        }
 
         &:hover{
             background: darken($editorMainForeground, 5%);
+            .item-tools {
+                display: flex;
+            }
         }
 
         .item-name-icon {
