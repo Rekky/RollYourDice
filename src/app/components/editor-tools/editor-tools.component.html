@@ -1,20 +1,23 @@
 <div class="tools-container">
-  <div class="tool" [class.active]="currentToolSelected === 'pointer'" (click)="onToolSelected('cursor')">
-    <i class="fas fa-mouse-pointer"></i>
-  </div>
-  <div class="tool" [class.active]="currentToolSelected === 'hand'" (click)="onToolSelected('hand')">
-    <i class="far fa-hand-paper"></i>
-  </div>
-  <div class="tool" [class.active]="currentToolSelected === 'text'" (click)="onToolSelected('text')">
-    <i class="fas fa-text-width"></i>
-  </div>
-  <div class="tool" [class.active]="currentToolSelected === 'brush'" (click)="onToolSelected('brush')">
-    <i class="fas fa-paint-brush"></i>
-  </div>
-  <div class="tool" [class.active]="currentToolSelected === 'square'" (click)="onToolSelected('square')">
-    <i class="far fa-square"></i>
-  </div>
-  <div class="tool" [class.active]="currentToolSelected === 'image'" (click)="onToolSelected('image')">
-    <i class="far fa-image"></i>
-  </div>
+    <div class="multiple-tools" *ngFor="let blockOfTools of blocksOfTools; let i = index"
+         (mouseenter)="displayExtraToolsIndex = i"
+         (mouseleave)="displayExtraToolsIndex = 99">
+        <ng-container *ngFor="let tool of blockOfTools">
+            <div *ngIf="tool.displayed" class="tool"
+                 [class.active]="currentToolSelected === tool.name" (click)="onToolSelected(tool.name)">
+                <i [ngClass]="tool.icon"></i>
+                <div *ngIf="blockOfTools.length > 1" class="triangle"></div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="displayExtraToolsIndex === i">
+            <ng-container *ngFor="let tool of blockOfTools">
+                <div *ngIf="!tool.displayed" class="extra-tools">
+                    <div class="tool"
+                         [class.active]="currentToolSelected === tool.name" (click)="onToolSelected(tool.name)">
+                        <i [ngClass]="tool.icon"></i>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>

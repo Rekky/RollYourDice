@@ -14,13 +14,9 @@ export class OurKonvaHand extends OurKonvaMouse {
 
     mouseDown(): void {
         super.mouseDown();
-        this.startCoords.x = this.ev.clientX - this.offsetCoords.x;
-        this.startCoords.y = this.ev.clientY - this.offsetCoords.y;
     }
 
     mouseMove(): void {
         super.mouseMove();
-        this.offsetCoords.x = this.ev.clientX - this.startCoords.x;
-        this.offsetCoords.y = this.ev.clientY - this.startCoords.y;
     }
 }

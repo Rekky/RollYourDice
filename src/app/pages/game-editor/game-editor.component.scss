@@ -1,82 +1,82 @@
 @import "../../../colors";
 
 .game-editor{
-  position: absolute;
-  top:0;
-  right:0;
-  left:0;
-  bottom: 0;
-  background: $editorMainBackground;
-  overflow: hidden;
+    position: absolute;
+    top:0;
+    right:0;
+    left:0;
+    bottom: 0;
+    background: $editorMainBackground;
+    overflow: hidden;
 }
 
 // LEFT COLUMN
 .left-column{
-  position: absolute;
-  top:0;
-  left:0;
-  bottom: 0;
-  color: #d3d3d3;
-  background: $editorMainForeground;
-  z-index: 90;
-
-  .left-column-tools {
     position: absolute;
-    width: 40px;
     top:0;
-    right: -41px;
-    height: 100%;
-    border-top: 1px solid $editorColumnsBorderColor;
-    border-right: 1px solid $editorColumnsBorderColor;
+    left:0;
+    bottom: 0;
+    color: #d3d3d3;
     background: $editorMainForeground;
-  }
-  .left-column-content{
-    position: relative;
-    width: 250px;
-    height: 100%;
-    border-right: 1px solid $editorColumnsBorderColor;
-  }
+    z-index: 90;
+
+    .left-column-tools {
+        position: absolute;
+        width: 40px;
+        top:0;
+        right: -41px;
+        height: 100%;
+        border-top: 1px solid $editorColumnsBorderColor;
+        border-right: 1px solid $editorColumnsBorderColor;
+        background: $editorMainForeground;
+    }
+    .left-column-content{
+        position: relative;
+        width: 250px;
+        height: 100%;
+        border-right: 1px solid $editorColumnsBorderColor;
+    }
 }
 // RIGHT COLUMN
 .right-column{
-  position: absolute;
-  top:0;
-  right:0;
-  bottom: 0;
-  width: 280px;
-  border-top: 1px solid $editorColumnsBorderColor;
-  border-left: 1px solid $editorColumnsBorderColor;
-  background: $editorMainForeground;
-  overflow: hidden;
-  z-index: 90;
+    position: absolute;
+    top:0;
+    right:0;
+    bottom: 0;
+    width: 280px;
+    border-top: 1px solid $editorColumnsBorderColor;
+    border-left: 1px solid $editorColumnsBorderColor;
+    background: $editorMainForeground;
+    overflow: hidden;
+    z-index: 90;
 }
 
 // -------------- TABS
 .tabs {
-  display: flex;
-  flex-direction: row;
-  font-size: 14px;
-
-  &.adjust {
-    .tab{
-      flex: 1;
-    }
-  }
-
-  .tab{
-    border-top: 1px solid $editorColumnsBorderColor;
-    padding: .7rem 1rem;
-    cursor: pointer;
     display: flex;
-    justify-content: center;
-    background: lighten($editorMainForeground, 5%);
+    flex-direction: row;
+    font-size: 14px;
 
-    &.active{
-      background: transparent;
+    &.adjust {
+        .tab{
+            flex: 1;
+        }
     }
 
-    &:last-child {
-      border-right: 1px solid $editorColumnsBorderColor;
+    .tab{
+        border-top: 1px solid $editorColumnsBorderColor;
+        padding: .7rem 1rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        background: lighten($editorMainForeground, 5%);
+
+        &.active{
+            background: transparent;
+        }
+
+        &:last-child {
+            border-right: 1px solid $editorColumnsBorderColor;
+        }
     }
-  }
 }
