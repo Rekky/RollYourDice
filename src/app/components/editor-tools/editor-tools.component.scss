@@ -1,24 +1,58 @@
 @import "../../../colors";
 
 .tools-container{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-
-  .tool{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     width: 100%;
-    height: 40px;
-    cursor: pointer;
+    height: 100%;
 
-    &:hover {
-      background: darken($editorMainForeground, 5%);
+    .multiple-tools {
+        position: relative;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        min-width: 100%;
     }
-    &.active {
-      background: darken($editorMainForeground, 5%);
+
+    .tool {
+        position: relative;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+        height: 40px;
+        cursor: pointer;
+
+        &:hover {
+            background: darken($editorMainForeground, 5%);
+        }
+        &.active {
+            background: darken($editorMainForeground, 5%);
+        }
+
+        .triangle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
+            width: 0;
+            height: 0;
+            border-bottom: 10px solid #d3d3d3;
+            border-left: 10px solid transparent;
+        }
     }
-  }
+
+    .extra-tools {
+        position: absolute;
+        left: 39px;
+        top:0;
+        width: 40px;
+        border: 1px solid $editorColumnsBorderColor;
+        border-left: 0;
+        background: $editorMainForeground;
+    }
 }

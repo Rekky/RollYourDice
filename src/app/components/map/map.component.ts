@@ -161,7 +161,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }));
         }
 
-        this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
+        // this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
         const position = new Coords(10, 10, 0);
         this.addRectangleToKonva(position);
     }

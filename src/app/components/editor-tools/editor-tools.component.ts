@@ -6,6 +6,7 @@ import {OurKonvaHand} from '../../classes/ourKonva/OurKonvaHand';
 import {OurKonvaBrush} from '../../classes/ourKonva/OurKonvaBrush';
 import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
 import {OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
+import {OurKonvaEraser} from '../../classes/ourKonva/OurKonvaEraser';
 
 @Component({
     selector: 'app-editor-tools',
@@ -13,8 +14,31 @@ import {OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
     styleUrls: ['./editor-tools.component.scss']
 })
 export class EditorToolsComponent implements OnInit, OnDestroy {
+    displayExtraToolsIndex: number = 99;
     currentToolSelected: string = 'pointer';
     getMouseObservableSubscription: Subscription;
+
+    blocksOfTools: any[][] = [
+        [
+            {name: 'pointer', displayed: true, icon: 'fas fa-mouse-pointer'}
+        ],
+        [
+            {name: 'hand', displayed: true, icon: 'far fa-hand-paper'}
+        ],
+        [
+            {name: 'text', displayed: true, icon: 'fas fa-text-width'}
+        ],
+        [
+            {name: 'brush', displayed: true, icon: 'fas fa-paint-brush'},
+            {name: 'eraser', displayed: false, icon: 'fas fa-eraser'}
+        ],
+        [
+            {name: 'square', displayed: true, icon: 'far fa-square'}
+        ],
+        [
+            {name: 'image', displayed: true, icon: 'far fa-image'}
+        ]
+    ];
 
     constructor(private mouseService: MouseService) { }
 
@@ -34,9 +58,11 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         }
     }
 
-    onToolSelected(type: string): void {
-        this.currentToolSelected = type;
-        switch (type) {
+    onToolSelected(name: string): void {
+        this.currentToolSelected = name;
+        this.displayExtraToolsIndex = 99;
+        this.changeDisplayedTool(name);
+        switch (name) {
             case 'pointer':
                 this.mouseService.setMouse(new OurKonvaPointer());
                 break;
@@ -49,6 +75,9 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
             case 'brush':
                 this.mouseService.setMouse(new OurKonvaBrush());
                 break;
+            case 'eraser':
+                this.mouseService.setMouse(new OurKonvaEraser());
+                break;
             case 'square':
                 this.mouseService.setMouse(new OurKonvaObject());
                 break;
@@ -58,4 +87,17 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         }
     }
 
+    changeDisplayedTool(name: string): void {
+        let toolPackIndex = 0;
+        for (let i = 0; i < this.blocksOfTools.length; i++) {
+            for (let j = 0; j < this.blocksOfTools[i].length; j++) {
+                if (name === this.blocksOfTools[i][j].name) {
+                    toolPackIndex = i;
+                }
+            }
+        }
+        this.blocksOfTools[toolPackIndex].map(tool => {
+            tool.displayed = tool.name === name;
+        });
+    }
 }

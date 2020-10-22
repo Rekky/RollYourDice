@@ -44,7 +44,7 @@ export class MouseInteractor implements OnDestroy {
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.mouse.isActive = true;
             this.mouse.ev = e;
-            const mouseDownReturns = this.mouse.mouseDown();
+            const mouseDownReturns = this.mouse.mouseDown(); // After add a new object the cursor changes to pointer
             if (mouseDownReturns) {
                 this.mouseService.setMouse(new OurKonvaPointer());
                 this.selectedObject.next(mouseDownReturns);
