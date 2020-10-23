@@ -7,12 +7,13 @@
     <div dragula="PAGES" [(dragulaModel)]="pages">
         <div class="item" [class.active]="currentPage === page" *ngFor="let page of pages" (click)="onSelectPage(page)">
             <div class="item-name">
-                {{page.name}}
+                <span>{{page.name}}</span>
                 <span class="item-tools">
                     <i class="fas fa-pen" (click)="editPageName(page)"></i>
                     <i class="fas fa-trash" (click)="removePage(page)"></i>
                 </span>
             </div>
+            <input type="text" autofocus [(ngModel)]="editPageInput" *ngIf="editPageInput == page.name">
         </div>
     </div>
     <form [formGroup]="newPageForm" (submit)="onAddNewPage()" *ngIf="showNewPageForm">

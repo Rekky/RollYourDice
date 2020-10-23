@@ -52,6 +52,7 @@ export class SocketService {
     }
 
     sendGamePagesUpdate(gameId: string, pages: Page[]): void {
+        console.log('enviosssssssss', gameId, pages);
         this.socket.emit('game-editor-pages-update', {gameId, pages});
     }
 

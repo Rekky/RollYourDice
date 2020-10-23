@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MapPropertiesComponent } from './pages/game-editor/map-properties/map-properties.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { GameEditorComponent } from './pages/game-editor/game-editor.component';
 import { EditorToolsComponent } from './components/editor-tools/editor-tools.component';
 import { EditorLibrariesComponent } from './pages/game-editor/editor-libraries/editor-libraries.component';
@@ -64,6 +64,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     ],
     imports: [
         BrowserModule,
+        FormsModule,
         HttpClientModule,
         DragulaModule.forRoot(),
         AppRoutingModule,

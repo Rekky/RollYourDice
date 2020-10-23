@@ -16,7 +16,10 @@ export class PagesListComponent implements OnInit {
 
     @Input() currentPage: Page = null;
     showNewPageForm: boolean = false;
+    showEditPageForm: boolean = false;
+
     newPageForm: FormGroup;
+    editPageInput: string = '';
 
     constructor(private ref: ChangeDetectorRef) { }
 
@@ -43,7 +46,9 @@ export class PagesListComponent implements OnInit {
     }
 
     editPageName(page: Page): void {
-
+        this.showEditPageForm = true;
+        this.editPageInput = page.name;
+        this.pagesChanges.emit(this.pages);
     }
 
     removePage(page: Page): void {
