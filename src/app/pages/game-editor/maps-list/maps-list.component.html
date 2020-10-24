@@ -10,6 +10,10 @@
                 <div (click)="openListItem($event, map);"><i class="fas fa-chevron-right item-icon" *ngIf="map.objects && map.objects.length > 0"></i></div>
                 <div><img class="item-icon" style="width: 20px;" src="../../../../assets/icons/fabric-color.svg" alt="map-icon"></div>
                 <div>{{map.name}}</div>
+                <span class="item-tools">
+                    <i class="fas fa-pen"></i>
+                    <i class="fas fa-trash"></i>
+                </span>
             </div>
             <div [style.padding-inline-start.rem]="i + 1">
                 <app-recursive-list [list]="map.objects"></app-recursive-list>
