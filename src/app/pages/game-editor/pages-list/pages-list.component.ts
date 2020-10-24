@@ -16,10 +16,11 @@ export class PagesListComponent implements OnInit {
 
     @Input() currentPage: Page = null;
     showNewPageForm: boolean = false;
-    showEditPageForm: boolean = false;
+    showRenamePageForm: boolean = false;
 
     newPageForm: FormGroup;
-    editPageInput: string = '';
+    renamePageForm: FormGroup;
+    pageToRename: Page;
 
     constructor(private ref: ChangeDetectorRef) { }
 
@@ -42,13 +43,22 @@ export class PagesListComponent implements OnInit {
         this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
         this.showNewPageForm = false;
         this.pagesChanges.emit(this.pages);
-        // this.newPage.emit(newPage);
     }
 
-    editPageName(page: Page): void {
-        this.showEditPageForm = true;
-        this.editPageInput = page.name;
+    onSubmitRenamePage(page: Page): void {
+        const newName = this.renamePageForm.get('name').value;
+        const pageIndex = this.pages.indexOf(page);
+        this.pages[pageIndex].name = newName;
+        this.showRenamePageForm = false;
         this.pagesChanges.emit(this.pages);
+    }
+
+    renamePage(page: Page): void {
+        this.showRenamePageForm = true;
+        this.pageToRename = page;
+        this.renamePageForm = new FormGroup({
+            name: new FormControl(page.name),
+        });
     }
 
     removePage(page: Page): void {
