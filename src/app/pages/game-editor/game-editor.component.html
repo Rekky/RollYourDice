@@ -9,7 +9,7 @@
         <div class="left-column-content">
             <ng-container *ngIf="tabs == 0">
                 <app-pages-list *ngIf="game" [pages]="game.pages" (pagesChanges)="onPagesChange($event)" (newPage)="onNewPage($event)" [currentPage]="selectedPage" (selectedPage)="onSelectedPage($event)"></app-pages-list>
-                <app-maps-list  *ngIf="selectedPage" [maps]="selectedPage.maps" (selectedMap)="onSelectedMap($event)"></app-maps-list>
+                <app-maps-list  *ngIf="selectedPage" [maps]="selectedPage.maps" (mapsChanges)="onMapsChange($event)" (selectedMap)="onSelectedMap($event)"></app-maps-list>
             </ng-container>
             <ng-container *ngIf="tabs == 1">
                 <app-editor-libraries></app-editor-libraries>

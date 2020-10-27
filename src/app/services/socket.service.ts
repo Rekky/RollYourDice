@@ -5,6 +5,8 @@ import {BehaviorSubject} from 'rxjs';
 import {Game} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
 import {Page} from '../classes/Page';
+import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
+import {stringify} from '@angular/compiler/src/util';
 
 @Injectable({
     providedIn: 'root'
@@ -31,10 +33,11 @@ export class SocketService {
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-pages-update', (data) => {
-            console.log('recibo del backend pages', data);
+            console.log('recibo PAGES', data);
             this.gameSocketSubscription.next(data);
         });
-        this.socket.on('game-editor', (data) => {
+        this.socket.on('game-editor-maps-update', (data) => {
+            console.log('recibo MAPS', data);
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-object', (data) => {
@@ -52,8 +55,14 @@ export class SocketService {
     }
 
     sendGamePagesUpdate(gameId: string, pages: Page[]): void {
-        console.log('enviosssssssss', gameId, pages);
         this.socket.emit('game-editor-pages-update', {gameId, pages});
+    }
+
+    sendGameMapsUpdate(gameId: string, pageId: string, maps: OurKonvaMap[]): void {
+        delete maps[1].grid;
+        delete maps[1].position;
+        console.log('------->', maps[1].toJSON());
+        this.socket.emit('game-editor-maps-update', {gameId, pageId, maps: maps[1].toJSON()});
     }
 
     sendSocketObject(object: any): void {

@@ -79,4 +79,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         console.log(this.currentObjectSelected);
     }
 
+    onMapsChange(maps: OurKonvaMap[]): void {
+        this.socketService.sendGameMapsUpdate(this.game.id, this.selectedPage.id, maps);
+    }
+
 }

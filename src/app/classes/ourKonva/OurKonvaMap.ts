@@ -28,7 +28,7 @@ export class OurKonvaMap {
                 zoom?: number,
                 grid?: OurKonvaGrid,
                 objects?: OurKonvaObject[]) {
-        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
+        this.id = id ? id : null;
         this.name = name ? name : 'new ourKonva';
         this.position = position ? position : new Coords();
         this.columns = columns ? columns : 10;
