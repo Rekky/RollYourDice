@@ -39,7 +39,7 @@ export class OurKonvaGrid {
         json.opacity = grid.opacity;
         json.color = grid.color;
         json.squareFeet = grid.squareFeet;
-        return grid;
+        return json;
     }
 
 

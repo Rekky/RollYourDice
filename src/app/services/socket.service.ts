@@ -7,6 +7,7 @@ import {SocketObject} from '../classes/sockets/SocketObject';
 import {Page} from '../classes/Page';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
 import {stringify} from '@angular/compiler/src/util';
+import {OurKonvaGrid} from '../classes/ourKonva/OurKonvaGrid';
 
 @Injectable({
     providedIn: 'root'
@@ -59,10 +60,13 @@ export class SocketService {
     }
 
     sendGameMapsUpdate(gameId: string, pageId: string, maps: OurKonvaMap[]): void {
-        delete maps[1].grid;
-        delete maps[1].position;
-        console.log('------->', maps[1].toJSON());
-        this.socket.emit('game-editor-maps-update', {gameId, pageId, maps: maps[1].toJSON()});
+        maps.map((item: OurKonvaMap) => {
+            console.log(item.grid);
+            delete item.grid;
+        });
+        // delete maps[1].position;
+        console.log('------->', maps);
+        this.socket.emit('game-editor-maps-update', {gameId, pageId, maps: maps});
     }
 
     sendSocketObject(object: any): void {
