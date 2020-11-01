@@ -95,7 +95,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.drawGrid();
                 this.drawGridBackgroundImage();
                 this.gridStage.add(this.gridLayer);
-            });
+            }, 2000);
         }
     }
 

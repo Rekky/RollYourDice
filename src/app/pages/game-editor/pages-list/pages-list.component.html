@@ -4,7 +4,7 @@
     <i class="fas fa-plus cursor-pointer" (click)="showNewPageForm = true;currentPage=null;"></i>
 </div>
 <div class="content-list page-list">
-    <div dragula="PAGES" [(dragulaModel)]="pages">
+    <div dragula="PAGES" [(dragulaModel)]="pages" (dragulaModelChange)="onSortPages()">
         <div class="item" [class.active]="currentPage === page" *ngFor="let page of pages" (click)="onSelectPage(page)">
             <div class="item-name">
                 <span>{{page.name}}</span>

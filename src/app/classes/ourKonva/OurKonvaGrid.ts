@@ -33,12 +33,12 @@ export class OurKonvaGrid {
         return position;
     }
 
-    toJSON(grid: OurKonvaGrid): any {
+    toJSON(): any {
         const json: any = {};
-        json.cellSize = grid.cellSize;
-        json.opacity = grid.opacity;
-        json.color = grid.color;
-        json.squareFeet = grid.squareFeet;
+        json.cellSize = this.cellSize;
+        json.opacity = this.opacity;
+        json.color = this.color;
+        json.squareFeet = this.squareFeet;
         return json;
     }
 

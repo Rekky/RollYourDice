@@ -60,12 +60,6 @@ export class SocketService {
     }
 
     sendGameMapsUpdate(gameId: string, pageId: string, maps: OurKonvaMap[]): void {
-        maps.map((item: OurKonvaMap) => {
-            console.log(item.grid);
-            delete item.grid;
-        });
-        // delete maps[1].position;
-        console.log('------->', maps);
         this.socket.emit('game-editor-maps-update', {gameId, pageId, maps: maps});
     }
 

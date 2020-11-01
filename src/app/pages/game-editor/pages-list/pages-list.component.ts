@@ -45,6 +45,10 @@ export class PagesListComponent implements OnInit {
         this.pagesChanges.emit(this.pages);
     }
 
+    onSortPages(): void {
+        this.pagesChanges.emit(this.pages);
+    }
+
     onSubmitRenamePage(page: Page): void {
         const newName = this.renamePageForm.get('name').value;
         const pageIndex = this.pages.indexOf(page);
