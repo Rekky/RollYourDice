@@ -11,8 +11,24 @@ export class OurKonvaEraser extends OurKonvaMouse {
     }
 
     mouseDown(): void {
+        super.mouseDown();
+        const pos = this.stage.getPointerPosition();
+        this.line = new Konva.Line({
+            stroke: '#ffc107',
+            strokeWidth: 10,
+            globalCompositeOperation: 'destination-out',
+            points: [pos.x, pos.y],
+        });
+        this.layer.add(this.line);
     }
 
     mouseMove(): void {
+        if (this.isActive) {
+            super.mouseMove();
+            const pos = this.stage.getPointerPosition();
+            const newPoints = this.line.points().concat([pos.x, pos.y]);
+            this.line.points(newPoints);
+            this.layer.batchDraw();
+        }
     }
 }
