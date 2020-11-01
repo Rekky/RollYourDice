@@ -40,7 +40,7 @@ export class OurKonvaText extends OurKonvaMouse {
         // EVENTS FOR TEXT
         text.on('click', () => {
             transformer.show();
-            this.layer.batchDraw();
+            this.layers.shapes.batchDraw();
         });
 
         text.on('dblclick', () => {
@@ -82,15 +82,15 @@ export class OurKonvaText extends OurKonvaMouse {
                     text.text(textarea.value);
                     text.show();
                     transformer.hide();
-                    this.layer.batchDraw();
+                    this.layers.shapes.batchDraw();
                     document.body.removeChild(textarea);
                 }
             });
         });
         this.adaptPositionToGrid(text);
-        this.layer.add(text);
-        this.layer.add(transformer);
-        this.layer.batchDraw();
+        this.layers.shapes.add(text);
+        this.layers.shapes.add(transformer);
+        this.layers.shapes.batchDraw();
 
         return new CurrentSelectedKonvaObject(transformer, text.getAttrs());
     }

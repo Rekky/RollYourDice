@@ -57,8 +57,8 @@ export class OurKonvaObject extends OurKonvaMouse {
             },
         });
         this.adaptPositionToGrid(object);
-        this.layer.add(object);
-        this.layer.batchDraw();
+        this.layers.objects.add(object);
+        this.layers.objects.batchDraw();
         return new CurrentSelectedKonvaObject(transformer, object.getAttrs());
     }
 }

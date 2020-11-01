@@ -19,7 +19,7 @@ export class OurKonvaEraser extends OurKonvaMouse {
             globalCompositeOperation: 'destination-out',
             points: [pos.x, pos.y],
         });
-        this.layer.add(this.line);
+        this.layers.draws.add(this.line);
     }
 
     mouseMove(): void {
@@ -28,7 +28,7 @@ export class OurKonvaEraser extends OurKonvaMouse {
             const pos = this.stage.getPointerPosition();
             const newPoints = this.line.points().concat([pos.x, pos.y]);
             this.line.points(newPoints);
-            this.layer.batchDraw();
+            this.layers.draws.batchDraw();
         }
     }
 }

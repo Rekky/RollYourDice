@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../classes/ourKonva/OurKonvaMouse';
 import {OurKonvaPointer} from '../classes/ourKonva/OurKonvaPointer';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
+import {OurKonvaLayers} from '../classes/ourKonva/OurKonvaLayers';
 
 @Injectable({
     providedIn: 'root'
@@ -15,13 +16,13 @@ export class MouseInteractor implements OnDestroy {
     mouse: OurKonvaMouse = new OurKonvaMouse();
     getMouseObservableSubscription: Subscription;
     stage: Konva.Stage;
-    layer: Konva.Layer;
+    layers: OurKonvaLayers;
 
     constructor(private mouseService: MouseService) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             this.mouse = res;
             this.mouse.stage = this.stage;
-            this.mouse.layer = this.layer;
+            this.mouse.layers = this.layers;
         });
     }
 
@@ -31,9 +32,9 @@ export class MouseInteractor implements OnDestroy {
         }
     }
 
-    setMouseKonvaParameters(stage: Konva.Stage, layer: Konva.Layer, map?: OurKonvaMap): void {
+    setMouseKonvaParameters(stage: Konva.Stage, layers: OurKonvaLayers, map?: OurKonvaMap): void {
         this.stage = stage;
-        this.layer = layer;
+        this.layers = layers;
     }
 
     getCurrentSelectedObjectObservable(): Observable<CurrentSelectedKonvaObject> {

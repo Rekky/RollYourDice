@@ -1,19 +1,20 @@
 import Konva from 'konva';
 import {Coords} from '../Coords';
 import {OurKonvaGrid} from './OurKonvaGrid';
+import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaMouse {
     isActive: boolean;
     stage: Konva.Stage;
-    layer: Konva.Layer;
+    layers: OurKonvaLayers;
     state: string;
     ev: MouseEvent;
     cellSize: number;
 
-    constructor(stage?: Konva.Stage, layer?: Konva.Layer, ev?: MouseEvent, isActive?: boolean, cellSize?: number) {
+    constructor(stage?: Konva.Stage, layers?: any, ev?: MouseEvent, isActive?: boolean, cellSize?: number) {
         this.isActive = isActive ? isActive : false;
         this.stage = stage ? stage : null;
-        this.layer = layer ? layer : null;
+        this.layers = layers ? layers : null;
         this.ev = ev ? ev : null;
         this.cellSize = cellSize ? cellSize : 40;
     }

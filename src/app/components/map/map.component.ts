@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
 import {SocketService} from '../../services/socket.service';
+import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 
 @Component({
     selector: 'app-map',
@@ -32,7 +33,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     offsetCoords: Coords = new Coords();
 
     // KONVA LIB
-    gridLayer: Konva.Layer = null;
+    // gridLayer: Konva.Layer = null;
+    layers: OurKonvaLayers = new OurKonvaLayers();
     gridStage: Konva.Stage = null;
     selectedObjectAttrs: any;
     activeTr: any;
@@ -73,7 +75,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
-        this.mouseInteractor.setMouseKonvaParameters(this.gridStage, this.gridLayer, this.map);
+        this.mouseInteractor.setMouseKonvaParameters(this.gridStage, this.layers, this.map);
         this.mouseInteractor.setMouseEvents(this.mapEl);
         this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
             this.moveMap('mousedown', ev);
@@ -94,7 +96,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             setTimeout(() => {
                 this.drawGrid();
                 this.drawGridBackgroundImage();
-                this.gridStage.add(this.gridLayer);
+                this.gridStage.add(this.layers.objects);
+                this.gridStage.add(this.layers.shadows);
+                this.gridStage.add(this.layers.grid);
+                this.gridStage.add(this.layers.shapes);
+                this.gridStage.add(this.layers.draws);
             }, 2000);
         }
     }
@@ -109,33 +115,32 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
-        this.gridLayer = new Konva.Layer();
         this.gridStage = new Konva.Stage({
             container: 'map' + this.map.id,
             width: this.map.columns * this.map.grid.cellSize,
             height: this.map.rows * this.map.grid.cellSize
         });
-        this.gridStage.on('click', (e) => {
-            if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
-                this.activeTr.hide();
-                this.gridStage.draw();
-            }
-        });
+        // this.gridStage.on('click', (e) => {
+        //     if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
+        //         this.activeTr.hide();
+        //         this.gridStage.draw();
+        //     }
+        // });
     }
 
     setCurrentObjectSelected(ev, object, type): void {
-        ev.stopPropagation();
-
-        if (this.currentMapObjectSelected !== null) {
-            this.currentMapObjectSelected.ev.target.style.border = '';
-        }
-
-        if (object !== null) {
-            this.currentMapObjectSelected = {ev, object, type};
-            this.currentMapObjectSelected.ev.target.style.border = '1px solid rgb(91, 146, 226)';
-        }
-
-        this.currentObjectSelected.emit(this.currentMapObjectSelected);
+        // ev.stopPropagation();
+        //
+        // if (this.currentMapObjectSelected !== null) {
+        //     this.currentMapObjectSelected.ev.target.style.border = '';
+        // }
+        //
+        // if (object !== null) {
+        //     this.currentMapObjectSelected = {ev, object, type};
+        //     this.currentMapObjectSelected.ev.target.style.border = '1px solid rgb(91, 146, 226)';
+        // }
+        //
+        // this.currentObjectSelected.emit(this.currentMapObjectSelected);
     }
 
     drawGrid(): void {
@@ -143,7 +148,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mapHeight = this.map.rows * this.map.grid.cellSize;
 
         for (let i = 0; i < this.map.columns; i++) {
-            this.gridLayer.add(new Konva.Line({
+            this.layers.grid.add(new Konva.Line({
                 points: [Math.round(i * this.map.grid.cellSize) + 0.5, 0,
                     Math.round(i * this.map.grid.cellSize) + 0.5, this.map.rows * this.map.grid.cellSize],
                 stroke: '#ddd',
@@ -151,9 +156,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }));
         }
 
-        this.gridLayer.add(new Konva.Line({points: [0, 0, 10, 10]}));
+        this.layers.grid.add(new Konva.Line({points: [0, 0, 10, 10]}));
         for (let j = 0; j < this.map.rows; j++) {
-            this.gridLayer.add(new Konva.Line({
+            this.layers.grid.add(new Konva.Line({
                 points: [0, Math.round(j * this.map.grid.cellSize),
                     this.map.columns * this.map.grid.cellSize, Math.round(j * this.map.grid.cellSize)],
                 stroke: '#ddd',
@@ -233,9 +238,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 },
             });
             tr.hide();
-
-            this.gridLayer.add(tr);
-            this.gridLayer.add(img);
+            this.layers.shapes.add(tr);
+            this.layers.shapes.add(img);
             this.gridStage.batchDraw();
         });
     }
@@ -267,7 +271,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             draggable: true
         });
         shadowRectangle.hide();
-        this.gridLayer.add(shadowRectangle);
+        // this.gridLayer.add(shadowRectangle);
+        this.layers.shapes.add(shadowRectangle);
 
         this.rectangleTest.on('dragstart', () => {
             shadowRectangle.show();
@@ -292,7 +297,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             });
             this.gridStage.batchDraw();
         });
-        this.gridLayer.add(this.rectangleTest);
+        this.layers.shapes.add(this.rectangleTest);
     }
 
     drawGridBackgroundImage(): void {
