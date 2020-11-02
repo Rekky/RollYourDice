@@ -40,7 +40,7 @@ export class OurKonvaText extends OurKonvaMouse {
         // EVENTS FOR TEXT
         text.on('click', () => {
             transformer.show();
-            this.layers.shapes.batchDraw();
+            this.layers.texts.batchDraw();
         });
 
         text.on('dblclick', () => {
@@ -84,7 +84,7 @@ export class OurKonvaText extends OurKonvaMouse {
                     text.text(textarea.value);
                     text.show();
                     transformer.hide();
-                    this.layers.shapes.batchDraw();
+                    this.layers.texts.batchDraw();
                     editing = false;
                     document.body.removeChild(textarea);
                 }
@@ -92,7 +92,7 @@ export class OurKonvaText extends OurKonvaMouse {
                 if (e.keyCode === 27) {
                     text.show();
                     transformer.hide();
-                    this.layers.shapes.batchDraw();
+                    this.layers.texts.batchDraw();
                     editing = false;
                     document.body.removeChild(textarea);
                 }
@@ -104,7 +104,7 @@ export class OurKonvaText extends OurKonvaMouse {
                         text.text(textarea.value);
                         text.show();
                         transformer.hide();
-                        this.layers.shapes.batchDraw();
+                        this.layers.texts.batchDraw();
                         editing = false;
                         document.body.removeChild(textarea);
                     }
@@ -113,9 +113,9 @@ export class OurKonvaText extends OurKonvaMouse {
         });
 
         this.adaptPositionToGrid(text);
-        this.layers.shapes.add(text);
-        this.layers.shapes.add(transformer);
-        this.layers.shapes.batchDraw();
+        this.layers.texts.add(text);
+        this.layers.texts.add(transformer);
+        this.layers.texts.batchDraw();
 
         return new CurrentSelectedKonvaObject(transformer, text.getAttrs());
     }

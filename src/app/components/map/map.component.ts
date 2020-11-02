@@ -97,10 +97,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.drawGrid();
                 this.drawGridBackgroundImage();
                 this.gridStage.add(this.layers.objects);
-                this.gridStage.add(this.layers.shadows);
                 this.gridStage.add(this.layers.grid);
-                this.gridStage.add(this.layers.shapes);
+                this.gridStage.add(this.layers.shadows);
                 this.gridStage.add(this.layers.draws);
+                this.gridStage.add(this.layers.texts);
             }, 2000);
         }
     }
@@ -238,8 +238,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 },
             });
             tr.hide();
-            this.layers.shapes.add(tr);
-            this.layers.shapes.add(img);
+            this.layers.texts.add(tr);
+            this.layers.texts.add(img);
             this.gridStage.batchDraw();
         });
     }
@@ -272,7 +272,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         });
         shadowRectangle.hide();
         // this.gridLayer.add(shadowRectangle);
-        this.layers.shapes.add(shadowRectangle);
+        this.layers.draws.add(shadowRectangle);
 
         this.rectangleTest.on('dragstart', () => {
             shadowRectangle.show();
@@ -297,7 +297,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             });
             this.gridStage.batchDraw();
         });
-        this.layers.shapes.add(this.rectangleTest);
+        this.layers.draws.add(this.rectangleTest);
     }
 
     drawGridBackgroundImage(): void {

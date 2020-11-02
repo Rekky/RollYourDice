@@ -7,6 +7,7 @@ import {OurKonvaBrush} from '../../classes/ourKonva/OurKonvaBrush';
 import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
 import {OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import {OurKonvaEraser} from '../../classes/ourKonva/OurKonvaEraser';
+import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 
 @Component({
     selector: 'app-editor-tools',
@@ -45,7 +46,6 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             if (res) {
-                console.log(res);
                 this.currentToolSelected = res.state;
             }
         });
@@ -79,7 +79,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
                 this.mouseService.setMouse(new OurKonvaEraser());
                 break;
             case 'square':
-                this.mouseService.setMouse(new OurKonvaObject());
+                this.mouseService.setMouse(new OurKonvaRect());
                 break;
             default:
                 this.mouseService.setMouse(new OurKonvaPointer());
