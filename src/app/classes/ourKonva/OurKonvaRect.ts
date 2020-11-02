@@ -79,17 +79,21 @@ export class OurKonvaRect extends OurKonvaMouse {
             draggable: true,
             opacity: 0.5
         });
-        const transformer = new Konva.Transformer({
-            nodes: [rect],
-            enabledAnchors: ['middle-left', 'middle-right'],
-            boundBoxFunc: (oldBox, newBox) => {
-                newBox.width = Math.max(30, newBox.width);
-                return newBox;
-            },
+
+        const transformer = new Konva.Transformer();
+        this.layers.draws.add(transformer);
+        transformer.nodes([rect]);
+        transformer.hide();
+
+        // EVENTS FOR TEXT
+        rect.on('click', () => {
+            transformer.show();
+            this.layers.texts.batchDraw();
         });
+
         this.adaptPositionToGrid(rect);
         this.layers.draws.add(rect);
         this.layers.draws.batchDraw();
-        return new CurrentSelectedKonvaObject(transformer, rect.getAttrs());
+        // return new CurrentSelectedKonvaObject(transformer, rect.getAttrs());
     }
 }

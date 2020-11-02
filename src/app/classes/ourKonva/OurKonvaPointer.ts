@@ -1,5 +1,6 @@
 import {Coords} from '../Coords';
 import {OurKonvaMouse} from './OurKonvaMouse';
+import Konva from 'konva';
 
 export class OurKonvaPointer extends OurKonvaMouse {
     state: string = 'pointer';
