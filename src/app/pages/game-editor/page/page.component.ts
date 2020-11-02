@@ -38,7 +38,6 @@ export class PageComponent implements OnInit, OnDestroy {
     }
 
     onMapChange(ev: any): void {
-        console.log('onMapChange', ev);
         this.pageChange.emit(this.page);
     }
 
@@ -55,7 +54,6 @@ export class PageComponent implements OnInit, OnDestroy {
     calculateImagePosition(e: MouseEvent): Coords {
         const map = document.getElementById('mapbox' + this.draggedImage.mapId);
         const pos: Coords = new Coords();
-        console.log(this.draggedImage.x + map.offsetLeft);
         pos.x = this.draggedImage.x + map.offsetLeft;
         pos.y = this.draggedImage.y + map.offsetTop;
         return pos;

@@ -30,19 +30,15 @@ export class SocketService {
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-page-update', (data) => {
-            console.log('recibo PAGE', data);
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-pages-update', (data) => {
-            console.log('recibo PAGES', data);
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-maps-update', (data) => {
-            console.log('recibo MAPS', data);
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-object', (data) => {
-            console.log('recibo del back game-editor-object', data);
             this.gameSocketObjectSubscription.next(data);
         });
     }
@@ -64,7 +60,6 @@ export class SocketService {
     }
 
     sendSocketObject(object: any): void {
-        console.log('sendSocketObject', object);
         this.socket.emit('game-editor-object', object);
     }
 }

@@ -21,44 +21,23 @@ export class HttpErrorService {
     ) { }
 
     public manageError(httpError: HttpErrorResponse, doNotify: boolean = true): void {
-        console.log('HTTP ERROR');
-
+        console.error('HTTP ERROR');
         const statusCode: number = httpError.status;
-        switch (statusCode) {
-            case 403:
-                this.error403NotifierSubject.next(true);
-                break;
-            case 200:
-                break;
-            default:
-                console.log('Generic Error');
-                break;
-        }
 
+        // if (doNotify) {
+        //     console.error('Error ' + httpError.status + ' received');
+        //     const errorStrKey: string = 'HTTPCODES.' + statusCode + '.MESSAGE';
+        //     let errorMessage: string = this.translateService.instant(errorStrKey);
+        //     if (errorMessage === errorStrKey) {
+        //         // no existe el mensaje específico
+        //         errorMessage = this.translateService.instant('HTTPCODES.DEFAULT');
+        //     }
+        //
+        //     this.notificationsService.showErrorNotification(statusCode, errorMessage);
+        // }
         if (doNotify) {
-            // TODO
-            console.log('Error ' + httpError.status + ' received');
-            // TODO
-
-            const errorStrKey: string = 'HTTPCODES.' + statusCode + '.MESSAGE';
-            let errorMessage: string = this.translateService.instant(errorStrKey);
-            if (errorMessage === errorStrKey) {
-                // no existe el mensaje específico
-                errorMessage = this.translateService.instant('HTTPCODES.DEFAULT');
-            }
-
-            this.notificationsService.showErrorNotification(statusCode, errorMessage);
+            console.error('Error ' + httpError.status + ' received');
+            this.notificationsService.showErrorNotification(statusCode, httpError.message);
         }
-
-
-        // TODO
-
-        // TODO
-
-        // TODO
-    }
-
-    public getError403NotifierSubscription(): Observable<boolean> {
-        return this.error403NotifierSubject.asObservable();
     }
 }

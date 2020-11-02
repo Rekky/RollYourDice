@@ -38,7 +38,6 @@ export class SignInComponent implements OnInit {
         const email = this.signInForm.get('email').value;
         const pass = this.signInForm.get('password').value;
         const stayLogged = this.signInForm.get('stayLogged').value;
-        console.log('yup?');
 
         try {
             await this.userInteractor.signIn(email, pass, stayLogged);

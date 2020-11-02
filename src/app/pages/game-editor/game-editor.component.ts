@@ -49,7 +49,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     updateProperties(ev): void {
-        console.log('updateProperties', ev);
         this.map = {...ev};
     }
 
@@ -74,7 +73,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onSetCurrentObjectSelected(ev): void {
         this.currentObjectSelected = ev;
-        console.log(this.currentObjectSelected);
     }
 
     onMapsChange(maps: OurKonvaMap[]): void {

@@ -30,7 +30,7 @@ export class HttpService {
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
-                    this.httpErrorService.manageError(error);
+                    this.httpErrorService.manageError(error, true);
                     observable.error(error);
                 }
             );
@@ -46,7 +46,7 @@ export class HttpService {
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
-                    this.httpErrorService.manageError(error);
+                    this.httpErrorService.manageError(error, true);
                     observable.error(error);
                 }
             );
@@ -63,7 +63,7 @@ export class HttpService {
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
-                    this.httpErrorService.manageError(error);
+                    this.httpErrorService.manageError(error, true);
                     observable.error(error);
                 }
             );
@@ -80,7 +80,7 @@ export class HttpService {
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
-                    this.httpErrorService.manageError(error);
+                    this.httpErrorService.manageError(error, true);
                     observable.error(error);
                 }
             );

@@ -35,7 +35,6 @@ export class OurKonvaRect extends OurKonvaMouse {
     mouseDown(): void | CurrentSelectedKonvaObject {
         super.mouseDown();
         this.position = new Coords(this.ev.offsetX, this.ev.offsetY);
-        console.log(this.ev);
     }
 
     mouseMove(): void {

@@ -24,7 +24,6 @@ export class RecursiveListComponent implements OnInit, OnChanges {
 
     onSelectItem(map: OurKonvaMouse): void {
         this.currentItem = map;
-        console.log(this.currentItem);
     }
 
 }

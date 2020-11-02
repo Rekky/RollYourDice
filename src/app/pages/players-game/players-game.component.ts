@@ -23,7 +23,6 @@ export class PlayersGameComponent implements OnInit, OnDestroy {
         this.socketService.sendGameEditorId(gameId);
         this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
             const game = socketGame;
-            console.log('game =', game);
             if (game && game.pages) {
                 // this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
                 this.map = game.pages[0].maps[0];

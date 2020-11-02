@@ -31,7 +31,6 @@ export class MapsListComponent implements OnInit {
     }
 
     onSelectMap(ev, map: OurKonvaMap): void {
-        console.log('entras select map', map);
         ev.stopPropagation();
         this.currentMap = map;
         this.selectedMap.emit(this.currentMap);
@@ -39,7 +38,6 @@ export class MapsListComponent implements OnInit {
 
     openListItem(ev: any, item: any): void {
         ev.stopPropagation();
-        console.log('openListItem', this.currentMap);
         // this.currentMap = this.currentMap !== item ? item : null;
         const foundItem = this.selectedItemsArray.find((res) => res === item);
         if (foundItem) {
@@ -61,7 +59,6 @@ export class MapsListComponent implements OnInit {
     }
 
     onSelectMapObject(ev, mapObject: OurKonvaObject): void {
-        console.log('entras select object', mapObject);
         ev.stopPropagation();
         this.currentMap = null;
     }

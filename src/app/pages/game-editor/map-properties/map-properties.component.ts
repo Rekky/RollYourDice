@@ -48,13 +48,11 @@ export class MapPropertiesComponent implements OnInit {
         this.imagePath = files;
         reader.readAsDataURL(files[0]);
         reader.onload = (_event) => {
-            console.log('->>>>>>>>>>>>', reader);
             this.imgURL = reader.result;
         };
     }
 
     save(): void {
-        console.log('SAVE', this.map);
         // this.ourKonva.width = this.mapForm.get('width').value;
         // this.ourKonva.height = this.mapForm.get('height').value;
         this.map.grid.cellSize = this.mapForm.get('cellWidth').value;

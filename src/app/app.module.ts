@@ -34,6 +34,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { PlayersGameComponent } from './pages/players-game/players-game.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -63,6 +65,7 @@ import { PlayersGameComponent } from './pages/players-game/players-game.componen
         NavBarComponent,
         SignComponent,
         PlayersGameComponent,
+        ErrorMessageComponent,
     ],
     imports: [
         BrowserModule,
@@ -79,9 +82,11 @@ import { PlayersGameComponent } from './pages/players-game/players-game.componen
                 deps: [HttpClient]
             }
         }),
+        MatDialogModule
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [ErrorMessageComponent]
 })
 export class AppModule { }
 

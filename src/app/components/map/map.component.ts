@@ -57,7 +57,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }
         });
         // this.socketObjectSubscription = this.socketService.gameSocketObjectSubscription.subscribe((res) => {
-        //     console.log('subscription----a----cambiado', res);
         //     if (this.rectangleTest.attrs) {
         //         this.rectangleTest.attrs = res;
         //         this.gridStage.batchDraw();
@@ -65,7 +64,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // });
         this.socketService.socket.on('game-editor-object', (data) => {
             const jsonData = JSON.parse(data);
-            console.log('recibo del back game-editor-object', jsonData);
             if (this.rectangleTest.attrs) {
                 this.rectangleTest.position({x: jsonData.attrs.x, y: jsonData.attrs.y});
                 this.gridStage.batchDraw();
