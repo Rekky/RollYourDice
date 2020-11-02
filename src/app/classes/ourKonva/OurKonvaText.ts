@@ -44,8 +44,9 @@ export class OurKonvaText extends OurKonvaMouse {
         });
 
         text.on('dblclick', () => {
+            let editing = false;
             text.hide();
-            // transformer.hide();
+            transformer.hide();
 
             const textPosition = text.absolutePosition();
             const stageBox = this.stage.container().getBoundingClientRect();
@@ -75,6 +76,7 @@ export class OurKonvaText extends OurKonvaMouse {
             textarea.style.textAlign = text.align();
             textarea.style.color = text.fill();
             textarea.focus();
+            editing = true;
 
             textarea.addEventListener('keydown', (e: KeyboardEvent) => {
                 // hide on enter
@@ -83,10 +85,33 @@ export class OurKonvaText extends OurKonvaMouse {
                     text.show();
                     transformer.hide();
                     this.layers.shapes.batchDraw();
+                    editing = false;
+                    document.body.removeChild(textarea);
+                }
+                // on esc do not set value back to node
+                if (e.keyCode === 27) {
+                    text.show();
+                    transformer.hide();
+                    this.layers.shapes.batchDraw();
+                    editing = false;
                     document.body.removeChild(textarea);
                 }
             });
+
+            setTimeout(() => {
+                window.addEventListener('click', (e: MouseEvent) => {
+                    if (editing && e.target !== textarea) {
+                        text.text(textarea.value);
+                        text.show();
+                        transformer.hide();
+                        this.layers.shapes.batchDraw();
+                        editing = false;
+                        document.body.removeChild(textarea);
+                    }
+                }, { once: true });
+            }, 500);
         });
+
         this.adaptPositionToGrid(text);
         this.layers.shapes.add(text);
         this.layers.shapes.add(transformer);
