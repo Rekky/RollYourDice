@@ -15,7 +15,6 @@ import {ActivatedRoute} from '@angular/router';
     styleUrls: ['./game-editor.component.scss']
 })
 export class GameEditorComponent implements OnInit, OnDestroy {
-
     map: OurKonvaMap;
     game: Game;
     selectedPage: Page = null;
@@ -42,7 +41,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             }
         });
     }
-
 
     ngOnDestroy(): void {
         if (this.gameSocketSubscription) {

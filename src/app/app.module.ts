@@ -33,6 +33,7 @@ import {SignComponent} from './pages/sign/sign.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { PlayersGameComponent } from './pages/players-game/players-game.component';
 
 @NgModule({
     declarations: [
@@ -61,6 +62,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
         CsSkillsComponent,
         NavBarComponent,
         SignComponent,
+        PlayersGameComponent,
     ],
     imports: [
         BrowserModule,

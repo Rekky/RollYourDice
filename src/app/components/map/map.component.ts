@@ -46,7 +46,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     socketObjectSubscription: Subscription;
 
     constructor(private mapInteractor: MapInteractor,
-                private mouseInteractor: MouseInteractor, private socketService: SocketService) { }
+                private mouseInteractor: MouseInteractor,
+                private socketService: SocketService) { }
 
     ngOnInit(): void {
         this.getCurrentSelectedObjectSub = this.mouseInteractor.getCurrentSelectedObjectObservable().subscribe(res => {
