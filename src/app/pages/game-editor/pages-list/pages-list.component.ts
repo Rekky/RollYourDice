@@ -42,7 +42,8 @@ export class PagesListComponent implements OnInit {
         this.pages.push(newPage);
         this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
         this.showNewPageForm = false;
-        this.pagesChanges.emit(this.pages);
+        // this.pagesChanges.emit(this.pages);
+        this.newPage.emit(newPage);
     }
 
     onSortPages(): void {
