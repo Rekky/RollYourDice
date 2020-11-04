@@ -7,7 +7,6 @@
     <div dragula="PAGES" [(dragulaModel)]="pages" (dragulaModelChange)="onSortPages()">
         <div class="item" [class.active]="currentPage === page" *ngFor="let page of pages" (click)="onSelectPage(page)">
             <div class="item-name">
-                <span>{{page.id}}</span>
                 <span>{{page.name}}</span>
                 <span class="item-tools">
                     <i class="fas fa-pen" (click)="renamePage(page)"></i>

@@ -28,21 +28,16 @@ export class SocketService {
         });
         this.socket.on('game-editor-load', (data) => {
             this.gameSocketSubscription.next(data);
-            setInterval(() => {
-                console.log('LOAD', this.gameSocketSubscription.getValue());
-            }, 4000);
         });
         this.socket.on('game-editor-create-page', (data) => {
-            console.log('reciboooo', data);
+            console.log('reciboooo nueva page', data);
             const game = this.gameSocketSubscription.getValue();
-            game.pages.forEach((page: Page) => {
+            game.pages.forEach((page: Page, index: number) => {
                 if (page.id == null) {
-                    page = data;
-                    console.log('found', page);
+                    game.pages[index] = data;
                 }
             });
             this.gameSocketSubscription.next(game);
-            console.log('final', game);
         });
         this.socket.on('game-editor-page-update', (data) => {
             this.gameSocketSubscription.next(data);
@@ -63,8 +58,6 @@ export class SocketService {
     }
 
     sendGamePageUpdate(gameId: string, page: Page): void {
-        console.log('createnewpage', gameId);
-        console.log('createnewpage', page);
         this.socket.emit('game-editor-page-update', {gameId, page});
     }
 
