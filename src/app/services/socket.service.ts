@@ -28,6 +28,7 @@ export class SocketService {
         });
         this.socket.on('game-editor-load', (data) => {
             this.gameSocketSubscription.next(data);
+            console.log(data);
         });
         this.socket.on('game-editor-create-page', (data) => {
             console.log('reciboooo nueva page', data);
