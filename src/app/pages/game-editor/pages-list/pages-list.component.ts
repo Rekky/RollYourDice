@@ -10,11 +10,13 @@ import {Page} from '../../../classes/Page';
 export class PagesListComponent implements OnInit {
 
     @Input() pages: Page[] = [];
-    @Output() pagesChanges: EventEmitter<Page[]> = new EventEmitter<Page[]>();
-    @Output() selectedPage: EventEmitter<Page> = new EventEmitter<Page>();
-    @Output() newPage: EventEmitter<Page> = new EventEmitter<Page>();
-
     @Input() currentPage: Page = null;
+
+    @Output() pagesChangesEvent: EventEmitter<Page[]> = new EventEmitter<Page[]>();
+    @Output() selectedPageEvent: EventEmitter<Page> = new EventEmitter<Page>();
+    @Output() newPageEvent: EventEmitter<Page> = new EventEmitter<Page>();
+    @Output() removePageEvent: EventEmitter<Page> = new EventEmitter<Page>();
+
     showNewPageForm: boolean = false;
     showRenamePageForm: boolean = false;
 
@@ -32,7 +34,7 @@ export class PagesListComponent implements OnInit {
 
     onSelectPage(page: Page): void {
         this.currentPage = page;
-        this.selectedPage.emit(this.currentPage);
+        this.selectedPageEvent.emit(this.currentPage);
     }
 
     onAddNewPage(): void {
@@ -42,11 +44,11 @@ export class PagesListComponent implements OnInit {
         this.pages.push(newPage);
         this.newPageForm.reset({name: 'Page' + (this.pages.length + 1)});
         this.showNewPageForm = false;
-        this.newPage.emit(newPage);
+        this.newPageEvent.emit(newPage);
     }
 
     onSortPages(): void {
-        this.pagesChanges.emit(this.pages);
+        this.pagesChangesEvent.emit(this.pages);
     }
 
     onSubmitRenamePage(page: Page): void {
@@ -54,7 +56,7 @@ export class PagesListComponent implements OnInit {
         const pageIndex = this.pages.indexOf(page);
         this.pages[pageIndex].name = newName;
         this.showRenamePageForm = false;
-        this.pagesChanges.emit(this.pages);
+        this.pagesChangesEvent.emit(this.pages);
     }
 
     renamePage(page: Page): void {
@@ -67,7 +69,7 @@ export class PagesListComponent implements OnInit {
 
     removePage(page: Page): void {
         this.pages.splice(this.pages.indexOf(page), 1);
-        this.pagesChanges.emit(this.pages);
+        this.removePageEvent.emit(page);
     }
 
 }

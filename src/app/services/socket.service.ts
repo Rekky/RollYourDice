@@ -28,17 +28,26 @@ export class SocketService {
         });
         this.socket.on('game-editor-load', (data) => {
             this.gameSocketSubscription.next(data);
-            console.log(data);
+            console.log('RECIBO_GAME_EDITOR_LOAD', data);
         });
-        this.socket.on('game-editor-create-page', (data) => {
-            console.log('reciboooo nueva page', data);
-            const game = this.gameSocketSubscription.getValue();
-            game.pages.forEach((page: Page, index: number) => {
-                if (page.id == null) {
-                    game.pages[index] = data;
-                }
-            });
-            this.gameSocketSubscription.next(game);
+
+        // ====================== START PAGES ==================================
+        this.socket.on('game-editor-create-page', (data: Page) => {
+            console.log('RECIBO_NUEVA_PAGE', data);
+            const game: Game = this.gameSocketSubscription.getValue();
+            const gamePage: Page = game.pages.find((page: Page) => page.id === null);
+            gamePage.id = data.id;
+
+            // const game = this.gameSocketSubscription.getValue();
+            // game.pages.forEach((page: Page, index: number) => {
+            //     if (page.id == null) {
+            //         game.pages[index] = data;
+            //     }
+            // });
+            // this.gameSocketSubscription.next(game);
+        });
+        this.socket.on('game-editor-remove-page', (data: Page) => {
+
         });
         this.socket.on('game-editor-page-update', (data) => {
             this.gameSocketSubscription.next(data);
@@ -46,6 +55,8 @@ export class SocketService {
         this.socket.on('game-editor-pages-update', (data) => {
             this.gameSocketSubscription.next(data);
         });
+        // ========================= END PAGES =================================
+
         this.socket.on('game-editor-maps-update', (data) => {
             this.gameSocketSubscription.next(data);
         });
@@ -64,6 +75,10 @@ export class SocketService {
 
     sendGameCreatePage(gameId: string, page: Page): void {
         this.socket.emit('game-editor-create-page', {gameId, page});
+    }
+
+    sendGameRemovePage(gameId: string, page: Page): void {
+        this.socket.emit('game-editor-remove-page', {gameId, page});
     }
 
     sendGamePagesUpdate(gameId: string, pages: Page[]): void {
