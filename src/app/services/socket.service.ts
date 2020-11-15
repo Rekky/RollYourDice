@@ -6,8 +6,6 @@ import {Game} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
 import {Page} from '../classes/Page';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
-import {stringify} from '@angular/compiler/src/util';
-import {OurKonvaGrid} from '../classes/ourKonva/OurKonvaGrid';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +31,6 @@ export class SocketService {
 
         // ====================== START PAGES ==================================
         this.socket.on('game-editor-create-page', (data: Page) => {
-            console.log('RECIBO_NUEVA_PAGE', data);
             const game: Game = this.gameSocketSubscription.getValue();
             const gamePage: Page = game.pages.find((page: Page) => page.id === null);
             gamePage.id = data.id;
@@ -44,28 +41,27 @@ export class SocketService {
         this.socket.on('game-editor-remove-page', (data: Page) => {
             // Nothing else
         });
-        this.socket.on('game-editor-pages-update', (data) => {
+        this.socket.on('game-editor-update-pages', (data) => {
             // Nothing else
-        });
-        this.socket.on('game-editor-page-update', (data) => {
-            this.gameSocketSubscription.next(data);
         });
         // ========================= END PAGES =================================
 
-        this.socket.on('game-editor-maps-update', (data) => {
+        // ========================= START MAPS ================================
+        this.socket.on('game-editor-create-map', (data) => {
+            console.log('RECIBO_MAP', data);
+            this.gameSocketSubscription.next(data);
+        });
+        this.socket.on('game-editor-update-map', (data) => {
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-object', (data) => {
             this.gameSocketObjectSubscription.next(data);
         });
+        // ======================== END MAPS ===================================
     }
 
     sendGameEditorId(gameId: string): void {
         this.socket.emit('game-editor-load', gameId);
-    }
-
-    sendGamePageUpdate(gameId: string, page: Page): void {
-        this.socket.emit('game-editor-page-update', {gameId, page});
     }
 
     sendGameCreatePage(gameId: string, page: Page): void {
@@ -82,6 +78,10 @@ export class SocketService {
 
     sendGamePagesUpdate(gameId: string, pages: Page[]): void {
         this.socket.emit('game-editor-pages-update', {gameId, pages});
+    }
+
+    sendGameCreateMap(pageId: string, map: OurKonvaMap): void {
+        this.socket.emit('game-editor-create-map', {pageId, map});
     }
 
     sendGameMapsUpdate(gameId: string, pageId: string, maps: OurKonvaMap[]): void {

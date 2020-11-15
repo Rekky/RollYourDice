@@ -13,6 +13,7 @@ import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
 export class MapsListComponent implements OnInit {
 
     @Input() maps: OurKonvaMap[] = [];
+    @Output() newMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() selectedMap: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     currentMap: OurKonvaMap = null;
@@ -54,7 +55,7 @@ export class MapsListComponent implements OnInit {
 
         this.maps.push(newMap);
         this.newMapForm.reset({name: 'Map' + (this.maps.length + 1)});
-        this.mapsChanges.emit(this.maps);
+        this.newMapEvent.emit(newMap);
         this.showNewMapForm = false;
     }
 
