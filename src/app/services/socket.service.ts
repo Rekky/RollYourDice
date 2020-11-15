@@ -39,15 +39,15 @@ export class SocketService {
             gamePage.id = data.id;
         });
         this.socket.on('game-editor-rename-page', (data: Page) => {
-            // Nothing
+            // Nothing else
         });
         this.socket.on('game-editor-remove-page', (data: Page) => {
-            // Nothing
-        });
-        this.socket.on('game-editor-page-update', (data) => {
-            this.gameSocketSubscription.next(data);
+            // Nothing else
         });
         this.socket.on('game-editor-pages-update', (data) => {
+            // Nothing else
+        });
+        this.socket.on('game-editor-page-update', (data) => {
             this.gameSocketSubscription.next(data);
         });
         // ========================= END PAGES =================================
