@@ -37,17 +37,12 @@ export class SocketService {
             const game: Game = this.gameSocketSubscription.getValue();
             const gamePage: Page = game.pages.find((page: Page) => page.id === null);
             gamePage.id = data.id;
-
-            // const game = this.gameSocketSubscription.getValue();
-            // game.pages.forEach((page: Page, index: number) => {
-            //     if (page.id == null) {
-            //         game.pages[index] = data;
-            //     }
-            // });
-            // this.gameSocketSubscription.next(game);
+        });
+        this.socket.on('game-editor-rename-page', (data: Page) => {
+            // Nothing
         });
         this.socket.on('game-editor-remove-page', (data: Page) => {
-
+            // Nothing
         });
         this.socket.on('game-editor-page-update', (data) => {
             this.gameSocketSubscription.next(data);
@@ -75,6 +70,10 @@ export class SocketService {
 
     sendGameCreatePage(gameId: string, page: Page): void {
         this.socket.emit('game-editor-create-page', {gameId, page});
+    }
+
+    sendGameRenamePage(gameId: string, page: Page): void {
+        this.socket.emit('game-editor-rename-page', {gameId, page});
     }
 
     sendGameRemovePage(gameId: string, page: Page): void {

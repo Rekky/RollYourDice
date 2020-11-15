@@ -21,4 +21,8 @@ export class AdventuresSearchComponent implements OnInit {
         }
     }
 
+    joinAsPlayer(): void {
+        console.log('enter joinAsPlayer');
+    }
+
 }

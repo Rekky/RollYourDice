@@ -67,6 +67,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendGameCreatePage(this.game.id, page);
     }
 
+    onRenamePage(page: Page): void {
+        this.socketService.sendGameRenamePage(this.game.id, page);
+    }
+
     onRemovePage(page: Page): void {
         this.socketService.sendGameRemovePage(this.game.id, page);
     }

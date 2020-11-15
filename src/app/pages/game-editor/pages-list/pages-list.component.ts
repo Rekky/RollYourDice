@@ -16,6 +16,7 @@ export class PagesListComponent implements OnInit {
     @Output() selectedPageEvent: EventEmitter<Page> = new EventEmitter<Page>();
     @Output() newPageEvent: EventEmitter<Page> = new EventEmitter<Page>();
     @Output() removePageEvent: EventEmitter<Page> = new EventEmitter<Page>();
+    @Output() renamePageEvent: EventEmitter<Page> = new EventEmitter<Page>();
 
     showNewPageForm: boolean = false;
     showRenamePageForm: boolean = false;
@@ -56,7 +57,8 @@ export class PagesListComponent implements OnInit {
         const pageIndex = this.pages.indexOf(page);
         this.pages[pageIndex].name = newName;
         this.showRenamePageForm = false;
-        this.pagesChangesEvent.emit(this.pages);
+
+        this.renamePageEvent.emit(this.pages[pageIndex]);
     }
 
     renamePage(page: Page): void {
