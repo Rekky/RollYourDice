@@ -172,6 +172,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     moveMap(res: string, ev: MouseEvent): void {
         if (this.mouseInteractor.mouse.state === 'hand') {
+
             if (res === 'mousedown') {
                 this.isMovingMap = true;
                 this.startCoords.x = ev.clientX - this.offsetCoords.x;

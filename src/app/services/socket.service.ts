@@ -52,10 +52,10 @@ export class SocketService {
             this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-update-map', (data) => {
-            this.gameSocketSubscription.next(data);
+            // this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-object', (data) => {
-            this.gameSocketObjectSubscription.next(data);
+            // this.gameSocketObjectSubscription.next(data);
         });
         // ======================== END MAPS ===================================
     }
