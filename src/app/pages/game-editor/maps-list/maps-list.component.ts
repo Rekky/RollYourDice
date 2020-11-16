@@ -14,14 +14,21 @@ export class MapsListComponent implements OnInit {
 
     @Input() maps: OurKonvaMap[] = [];
     @Output() newMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() removeMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() renameMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() selectedMap: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     currentMap: OurKonvaMap = null;
     currentMapObject: OurKonvaObject = null;
 
     showNewMapForm: boolean = false;
+    showRenameMapForm: boolean = false;
+
     newMapForm: FormGroup;
     selectedItemsArray: any[] = [];
+
+    renameMapForm: FormGroup;
+    mapToRename: OurKonvaMap;
 
     constructor() { }
 
@@ -48,6 +55,15 @@ export class MapsListComponent implements OnInit {
         this.selectedItemsArray.push(item);
     }
 
+    onSubmitRenameMap(map: OurKonvaMap): void {
+        const newName = this.renameMapForm.get('name').value;
+        const pageIndex = this.maps.indexOf(map);
+        this.maps[pageIndex].name = newName;
+        this.showRenameMapForm = false;
+
+        this.renameMapEvent.emit(this.maps[pageIndex]);
+    }
+
     onAddNewMap(): void {
         const newMap: OurKonvaMap = new OurKonvaMap();
         newMap.position = new Coords(300, 10, 0);
@@ -62,6 +78,20 @@ export class MapsListComponent implements OnInit {
     onSelectMapObject(ev, mapObject: OurKonvaObject): void {
         ev.stopPropagation();
         this.currentMap = null;
+    }
+
+    removeMap(map: OurKonvaMap): void {
+        console.log('removed');
+        this.maps.splice(this.maps.indexOf(map), 1);
+        this.removeMapEvent.emit(map);
+    }
+
+    renameMap(map: OurKonvaMap): void {
+        this.showRenameMapForm = true;
+        this.mapToRename = map;
+        this.renameMapForm = new FormGroup({
+            name: new FormControl(map.name),
+        });
     }
 
 }

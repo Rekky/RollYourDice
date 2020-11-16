@@ -48,8 +48,13 @@ export class SocketService {
 
         // ========================= START MAPS ================================
         this.socket.on('game-editor-create-map', (data) => {
-            console.log('RECIBO_MAP', data);
-            this.gameSocketSubscription.next(data);
+            const game: Game = this.gameSocketSubscription.getValue();
+            const gamePage: Page = game.pages.find((page: Page) => page.id === game.selectedPageId);
+            const gameMap: OurKonvaMap = gamePage.maps.find((map: OurKonvaMap) => map.id === null);
+            gameMap.id = data.id;
+
+            console.log('gameMap', gamePage.maps);
+            // this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-update-map', (data) => {
             // this.gameSocketSubscription.next(data);
@@ -82,6 +87,14 @@ export class SocketService {
 
     sendGameCreateMap(pageId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-create-map', {pageId, map});
+    }
+
+    sendGameRemoveMap(pageId: string, map: OurKonvaMap): void {
+        this.socket.emit('game-editor-remove-map', {pageId, map});
+    }
+
+    sendGameRenameMap(pageId: string, map: OurKonvaMap): void {
+        this.socket.emit('game-editor-rename-map', {pageId, map});
     }
 
     sendGameMapsUpdate(gameId: string, pageId: string, maps: OurKonvaMap[]): void {

@@ -24,7 +24,14 @@
         <div class="item" [class.open]="currentMap === map" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)">
             <div class="item-name">
                 <span>{{map.name}}</span>
+                <span class="item-tools">
+                    <i class="fas fa-pen" (click)="renameMap(map)"></i>
+                    <i class="fas fa-trash" (click)="removeMap(map)"></i>
+                </span>
             </div>
+            <form [formGroup]="renameMapForm" (submit)="onSubmitRenameMap(map)" *ngIf="map == mapToRename && showRenameMapForm">
+                <input type="text" placeholder="Map ..." autofocus [formControlName]="'name'">
+            </form>
         </div>
     </div>
     <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">

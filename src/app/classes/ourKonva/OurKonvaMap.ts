@@ -64,6 +64,8 @@ export class OurKonvaMap {
         json.id = this.id;
         json.name = this.name;
         json.position = this.position;
+        json.columns = this.columns;
+        json.rows = this.rows;
         json.fogOfWar = this.fogOfWar;
         json.backgroundColor = this.backgroundColor;
         json.mastersDarkness = this.mastersDarkness;

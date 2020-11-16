@@ -26,8 +26,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     currentMapObjectSelected: any = null;
 
     // MAP VARS
-    mapWidth: number = 500;
-    mapHeight: number = 500;
+    mapWidth: number = 400;
+    mapHeight: number = 400;
     isMovingMap: boolean = false;
     startCoords: Coords = new Coords();
     offsetCoords: Coords = new Coords();
@@ -100,7 +100,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.gridStage.add(this.layers.shadows);
                 this.gridStage.add(this.layers.draws);
                 this.gridStage.add(this.layers.texts);
-            });
+            }, 500);
         }
     }
 
@@ -166,8 +166,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         }
 
         // this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
-        const position = new Coords(10, 10, 0);
-        this.addRectangleToKonva(position);
+        // const position = new Coords(10, 10, 0);
+        // this.addRectangleToKonva(position);
     }
 
     moveMap(res: string, ev: MouseEvent): void {
