@@ -35,6 +35,8 @@
     </div>
 
     <div class="right-column">
-        <app-map-properties [map]="map" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected.type == 'map'"></app-map-properties>
+<!--        <app-map-properties [map]="currentObjectSelected" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected"></app-map-properties>-->
+        <app-konva-brush-properties *ngIf="mouse.state === 'brush'"></app-konva-brush-properties>
+        <app-konva-eraser-properties *ngIf="mouse.state === 'eraser'"></app-konva-eraser-properties>
     </div>
 </div>

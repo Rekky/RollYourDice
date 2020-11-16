@@ -36,6 +36,8 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { PlayersGameComponent } from './pages/players-game/players-game.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { KonvaBrushPropertiesComponent } from './components/konva-tools/konva-brush-properties/konva-brush-properties.component';
+import { KonvaEraserPropertiesComponent } from './components/konva-tools/konva-eraser-properties/konva-eraser-properties.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +68,8 @@ import {MatDialogModule} from '@angular/material/dialog';
         SignComponent,
         PlayersGameComponent,
         ErrorMessageComponent,
+        KonvaBrushPropertiesComponent,
+        KonvaEraserPropertiesComponent,
     ],
     imports: [
         BrowserModule,

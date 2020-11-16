@@ -4,18 +4,24 @@ import {OurKonvaMouse} from './OurKonvaMouse';
 export class OurKonvaBrush extends OurKonvaMouse {
     state: string = 'brush';
     line: Konva.Line;
+    color: string;
+    size: number;
 
     constructor() {
         super();
         this.line = new Konva.Line();
+        this.color = '#ffff00';
+        this.size = 5;
     }
 
     mouseDown(): void {
         super.mouseDown();
         const pos = this.stage.getPointerPosition();
         this.line = new Konva.Line({
-            stroke: '#ffc107',
-            strokeWidth: 5,
+            stroke: this.color,
+            strokeWidth: this.size,
+            lineCap: 'round',
+            lineJoin: 'round',
             globalCompositeOperation: 'source-over',
             points: [pos.x, pos.y],
         });

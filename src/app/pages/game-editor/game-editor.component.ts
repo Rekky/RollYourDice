@@ -18,10 +18,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     map: OurKonvaMap;
     game: Game;
     selectedPage: Page = null;
-    gameSocketSubscription: Subscription;
 
     tabs: number = 0;
-    currentObjectSelected: any = {ev: null, object: null, type: null};
+    currentObjectSelected: any;
+    mouse: any;
+
+    gameSocketSubscription: Subscription;
+    getMouseObservableSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
                 private mouseService: MouseService,
@@ -40,11 +43,18 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
             }
         });
+
+        this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
+            this.mouse = mouse;
+        });
     }
 
     ngOnDestroy(): void {
         if (this.gameSocketSubscription) {
             this.socketService.gameSocketSubscription.unsubscribe();
+        }
+        if (this.getMouseObservableSubscription) {
+            this.getMouseObservableSubscription.unsubscribe();
         }
     }
 
@@ -60,7 +70,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedMap(ev: OurKonvaMap): void {
-
+        // TODO donarli una altre volta
+        this.onSetCurrentObjectSelected(ev);
     }
 
     onNewPage(page: Page): void {
