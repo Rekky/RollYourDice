@@ -72,6 +72,7 @@ export class PagesListComponent implements OnInit {
     removePage(page: Page): void {
         this.pages.splice(this.pages.indexOf(page), 1);
         this.removePageEvent.emit(page);
+        page.maps = [];
     }
 
 }
