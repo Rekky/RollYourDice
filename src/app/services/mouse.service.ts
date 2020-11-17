@@ -19,7 +19,7 @@ export class MouseService {
         this.dragImage.next(url);
     }
 
-    getMouseObservable(): Observable<OurKonvaMouse> {
+    getMouseObservable(): Observable<any> {
         return this.mouse.asObservable();
     }
 

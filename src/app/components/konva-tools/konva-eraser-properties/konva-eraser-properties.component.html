@@ -1,0 +1,10 @@
+<div class="properties-title-box">
+    <div class="properties-title">Eraser settings</div>
+</div>
+<div class="properties-box">
+    <div class="properties-row">
+        <div class="title">Size</div>
+        <input type="number" [ngModel]="eraser.size" (ngModelChange)="sizeModified($event)" min="1" max="100"/>
+        <div class="measure">px</div>
+    </div>
+</div>
