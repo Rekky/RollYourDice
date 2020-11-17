@@ -3,6 +3,6 @@
     <div *ngFor="let adventure of adventures">
         <span>{{adventure.name}}</span> -
         <span>{{adventure.createdDate}}</span>
-        <button (click)="joinAsPlayer()">Join as Player</button>
+        <button (click)="joinAsPlayer(adventure.id)">Join as Player</button>
     </div>
 </div>
