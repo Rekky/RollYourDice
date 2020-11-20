@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Game} from '../../../classes/Game';
 import {GameInteractor} from '../../../interactors/GameInteractor';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-adventures-search',
@@ -11,7 +12,7 @@ export class AdventuresSearchComponent implements OnInit {
 
     adventures: Game[];
 
-    constructor(private gameInteractor: GameInteractor) { }
+    constructor(private gameInteractor: GameInteractor, private router: Router) { }
 
     async ngOnInit(): Promise<void> {
         try {
@@ -21,8 +22,8 @@ export class AdventuresSearchComponent implements OnInit {
         }
     }
 
-    joinAsPlayer(): void {
-        console.log('enter joinAsPlayer');
+    joinAsPlayer(gameId: string): void {
+        this.router.navigate(['/game-play/' + gameId]);
     }
 
 }

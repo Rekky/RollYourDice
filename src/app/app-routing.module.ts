@@ -11,11 +11,17 @@ import {AdventureNewComponent} from './pages/adventures/adventure-new/adventure-
 import {MyAdventuresComponent} from './pages/adventures/my-adventures/my-adventures.component';
 import {AdventuresComponent} from './pages/adventures/adventures/adventures.component';
 import {PlayersGameComponent} from './pages/players-game/players-game.component';
+import {GamePlayComponent} from './pages/game-play/game-play.component';
 
 const routes: Routes = [
     {
         path: 'game-editor/:id',
         component: GameEditorComponent,
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: 'game-play/:id',
+        component: GamePlayComponent,
         canActivate: [AuthGuardService]
     },
     {
