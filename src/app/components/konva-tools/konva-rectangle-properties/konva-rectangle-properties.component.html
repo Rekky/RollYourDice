@@ -1,0 +1,24 @@
+<div class="properties-title-box">
+    <div class="properties-title">Brush settings</div>
+</div>
+<div class="properties-box">
+    <div class="properties-row">
+        <input type="color" name="favcolor" [ngModel]="rectangle.fillColor" (ngModelChange)="fillColorModified($event)">
+        <div class="title">Fill color</div>
+    </div>
+    <div class="properties-row">
+        <div class="title">Square opacity</div>
+        <input type="number" [ngModel]="rectangle.opacity" (ngModelChange)="opacityModified($event)" min="1" max="100"/>
+        <div class="measure">%</div>
+    </div>
+    <div class="properties-row">
+        <div class="title">Stroke size</div>
+        <input type="number" [ngModel]="rectangle.strokeSize" (ngModelChange)="sizeModified($event)" min="1" max="100"/>
+        <div class="measure">px</div>
+    </div>
+    <div class="properties-row">
+        <input type="color" name="favcolor" [ngModel]="rectangle.strokeColor" (ngModelChange)="strokeColorModified($event)">
+        <div class="title">Stroke color</div>
+    </div>
+</div>
+

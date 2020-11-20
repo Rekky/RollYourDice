@@ -8,12 +8,20 @@ export class OurKonvaRect extends OurKonvaMouse {
     position: Coords;
     state: string = 'square';
     tempRect: Konva.Rect;
+    fillColor: string;
+    strokeColor: string;
+    strokeSize: number;
+    opacity: number;
 
     constructor(id?: string, name?: string, position?: Coords) {
         super();
         this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
         this.name = name ? name : 'new Object';
         this.position = position ? position : new Coords();
+        this.fillColor = '#ffff00';
+        this.strokeColor = '#000000';
+        this.strokeSize = 1;
+        this.opacity = 30;
     }
 
     static fromJSON(json: any): OurKonvaRect {
@@ -49,11 +57,11 @@ export class OurKonvaRect extends OurKonvaMouse {
                 y: this.position.y > pos.y ? pos.y : this.position.y,
                 width: Math.abs(this.position.x - pos.x),
                 height: Math.abs(this.position.y - pos.y),
-                fill: '#d3d',
-                stroke: 'black',
-                strokeWidth: 1,
+                fill: this.fillColor,
+                stroke: this.strokeColor,
+                strokeWidth: this.strokeSize,
                 draggable: true,
-                opacity: 0.3
+                opacity: this.opacity / 100
             });
             this.adaptPositionToGrid(this.tempRect);
             this.layers.draws.add(this.tempRect);
@@ -72,11 +80,11 @@ export class OurKonvaRect extends OurKonvaMouse {
             y: this.position.y > pos.y ? pos.y : this.position.y,
             width: Math.abs(this.position.x - pos.x),
             height: Math.abs(this.position.y - pos.y),
-            fill: '#d3d',
-            stroke: 'black',
-            strokeWidth: 1,
+            fill: this.fillColor,
+            stroke: this.strokeColor,
+            strokeWidth: this.strokeSize,
             draggable: true,
-            opacity: 0.5
+            opacity: this.opacity / 100
         });
 
         const transformer = new Konva.Transformer();

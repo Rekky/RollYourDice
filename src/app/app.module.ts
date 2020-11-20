@@ -38,6 +38,8 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
 import {MatDialogModule} from '@angular/material/dialog';
 import { KonvaBrushPropertiesComponent } from './components/konva-tools/konva-brush-properties/konva-brush-properties.component';
 import { KonvaEraserPropertiesComponent } from './components/konva-tools/konva-eraser-properties/konva-eraser-properties.component';
+import { KonvaTextPropertiesComponent } from './components/konva-tools/konva-text-properties/konva-text-properties.component';
+import { KonvaRectanglePropertiesComponent } from './components/konva-tools/konva-rectangle-properties/konva-rectangle-properties.component';
 
 @NgModule({
     declarations: [
@@ -70,6 +72,8 @@ import { KonvaEraserPropertiesComponent } from './components/konva-tools/konva-e
         ErrorMessageComponent,
         KonvaBrushPropertiesComponent,
         KonvaEraserPropertiesComponent,
+        KonvaTextPropertiesComponent,
+        KonvaRectanglePropertiesComponent,
     ],
     imports: [
         BrowserModule,

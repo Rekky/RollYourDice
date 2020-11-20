@@ -3,9 +3,13 @@ import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 
 export class OurKonvaText extends OurKonvaMouse {
     state: string = 'text';
+    color: string;
+    fontSize: number;
 
     constructor() {
         super();
+        this.color = '#000000';
+        this.fontSize = 20;
     }
 
     mouseDown(): CurrentSelectedKonvaObject {
@@ -15,9 +19,10 @@ export class OurKonvaText extends OurKonvaMouse {
             text: 'Some text here',
             x: pos.x,
             y: pos.y,
-            fontSize: 20,
+            fontSize: this.fontSize,
             draggable: true,
             width: 200,
+            fill: this.color
         });
 
         const transformer = new Konva.Transformer({
