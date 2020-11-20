@@ -62,11 +62,25 @@ export class SocketService {
         this.socket.on('game-editor-object', (data) => {
             // this.gameSocketObjectSubscription.next(data);
         });
+        this.socket.on('game-editor-set-players-map', (data) => {
+            // Nothing
+        });
         // ======================== END MAPS ===================================
+
+        // ======================== START GAME PLAY ============================
+        // this.socket.on('game-play-load', (data) => {
+        //     console.log('RECIBO_GAME_PLAY', data);
+        // });
+
+        // ======================== END GAME PLAY ==============================
     }
 
     sendGameEditorId(gameId: string): void {
         this.socket.emit('game-editor-load', gameId);
+    }
+
+    sendGamePlayId(gameId: string): void {
+        this.socket.emit('game-play-load', gameId);
     }
 
     sendGameCreatePage(gameId: string, page: Page): void {
@@ -103,5 +117,9 @@ export class SocketService {
 
     sendSocketObject(object: any): void {
         this.socket.emit('game-editor-object', object);
+    }
+
+    sendGameSetToPlayersMap(gameId: string, pageId: string, map: OurKonvaMap): void {
+        this.socket.emit('game-editor-set-players-map', {gameId, pageId, map});
     }
 }

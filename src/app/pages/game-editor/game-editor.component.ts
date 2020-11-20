@@ -111,4 +111,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendGameMapsUpdate(this.game.id, this.selectedPage.id, maps);
     }
 
+    onToPlayersMap(map: OurKonvaMap): void {
+        this.socketService.sendGameSetToPlayersMap(this.game.id, this.selectedPage.id, map);
+    }
+
 }

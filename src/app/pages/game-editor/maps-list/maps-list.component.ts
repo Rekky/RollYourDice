@@ -18,6 +18,7 @@ export class MapsListComponent implements OnInit {
     @Output() renameMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() selectedMap: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     currentMap: OurKonvaMap = null;
     currentMapObject: OurKonvaObject = null;
 
@@ -92,6 +93,11 @@ export class MapsListComponent implements OnInit {
         this.renameMapForm = new FormGroup({
             name: new FormControl(map.name),
         });
+    }
+
+    toPlayersMap(map: OurKonvaMap): void {
+        map.toPlayers = !map.toPlayers;
+        this.toPlayersMapEvent.emit(map);
     }
 
 }

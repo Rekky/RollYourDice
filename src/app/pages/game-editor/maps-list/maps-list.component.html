@@ -24,7 +24,9 @@
         <div class="item" [class.open]="currentMap === map" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)">
             <div class="item-name">
                 <span>{{map.name}}</span>
+                <i class="fas fa-street-view" style="color: lightgreen;" *ngIf="map.toPlayers"></i>
                 <span class="item-tools">
+                    <i class="fas fa-male" (click)="toPlayersMap(map)"></i>
                     <i class="fas fa-pen" (click)="renameMap(map)"></i>
                     <i class="fas fa-trash" (click)="removeMap(map)"></i>
                 </span>

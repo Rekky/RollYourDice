@@ -33,7 +33,6 @@ import {SignComponent} from './pages/sign/sign.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { PlayersGameComponent } from './pages/players-game/players-game.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { KonvaBrushPropertiesComponent } from './components/konva-tools/konva-brush-properties/konva-brush-properties.component';
@@ -69,7 +68,6 @@ import { GamePlayComponent } from './pages/game-play/game-play.component';
         CsSkillsComponent,
         NavBarComponent,
         SignComponent,
-        PlayersGameComponent,
         ErrorMessageComponent,
         KonvaBrushPropertiesComponent,
         KonvaEraserPropertiesComponent,

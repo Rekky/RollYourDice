@@ -15,6 +15,8 @@ export class OurKonvaMap {
     zoom: number;
     grid: OurKonvaGrid;
     objects: OurKonvaObject[];
+    toPlayers: boolean;
+    players: string[];
 
     constructor(id?: string,
                 name?: string,
@@ -27,7 +29,10 @@ export class OurKonvaMap {
                 dndDiagonalSystem?: boolean,
                 zoom?: number,
                 grid?: OurKonvaGrid,
-                objects?: OurKonvaObject[]) {
+                objects?: OurKonvaObject[],
+                toPlayers?: boolean,
+                players?: string[],
+                ) {
         this.id = id ? id : null;
         this.name = name ? name : 'new ourKonva';
         this.position = position ? position : new Coords();
@@ -40,6 +45,8 @@ export class OurKonvaMap {
         this.zoom = zoom ? zoom : 100;
         this.grid = grid ? grid : new OurKonvaGrid();
         this.objects = objects ? objects : [];
+        this.toPlayers = toPlayers ? toPlayers : false;
+        this.players = players ? players : [];
     }
 
     static fromJSON(json: any): OurKonvaMap {
@@ -56,6 +63,8 @@ export class OurKonvaMap {
         map.zoom = json.zoom;
         map.grid = OurKonvaGrid.fromJSON(json.grid);
         map.objects = json.objects;
+        map.toPlayers = json.toPlayers;
+        map.players = json.players;
         return map;
     }
 
@@ -73,6 +82,8 @@ export class OurKonvaMap {
         json.zoom = this.zoom;
         json.grid = this.grid;
         json.objects = this.objects;
+        json.toPlayers = this.toPlayers;
+        json.players = this.players;
         return json;
     }
 }
