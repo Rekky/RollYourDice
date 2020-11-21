@@ -20,9 +20,11 @@ export class MouseInteractor implements OnDestroy {
 
     constructor(private mouseService: MouseService) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
-            this.mouse = res;
-            this.mouse.stage = this.stage;
-            this.mouse.layers = this.layers;
+            if (res != null) {
+                this.mouse = res;
+                this.mouse.stage = this.stage;
+                this.mouse.layers = this.layers;
+            }
         });
     }
 
