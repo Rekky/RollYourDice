@@ -21,7 +21,7 @@ export class HttpErrorService {
     ) { }
 
     public manageError(httpError: HttpErrorResponse, doNotify: boolean = true): void {
-        console.error('HTTP ERROR');
+        console.error('HTTP ERROR =', httpError);
         const statusCode: number = httpError.status;
 
         // if (doNotify) {
@@ -37,7 +37,7 @@ export class HttpErrorService {
         // }
         if (doNotify) {
             console.error('Error ' + httpError.status + ' received');
-            this.notificationsService.showErrorNotification(statusCode, httpError.message);
+            this.notificationsService.showErrorNotification(statusCode, httpError.error.message);
         }
     }
 }

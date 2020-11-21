@@ -37,10 +37,6 @@ export class MouseInteractor implements OnDestroy {
         this.layers = layers;
     }
 
-    getCurrentSelectedObjectObservable(): Observable<CurrentSelectedKonvaObject> {
-        return this.selectedObject.asObservable();
-    }
-
     setMouseEvents(mapEl: ElementRef): void {
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.mouse.isActive = true;
@@ -67,5 +63,9 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.ev = e;
             this.mouse.mouseOut();
         }, false);
+    }
+
+    getCurrentSelectedObjectObservable(): Observable<CurrentSelectedKonvaObject> {
+        return this.selectedObject.asObservable();
     }
 }
