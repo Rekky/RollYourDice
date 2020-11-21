@@ -11,6 +11,7 @@ import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
 import {SocketService} from '../../services/socket.service';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
+import {MouseService} from '../../services/mouse.service';
 
 @Component({
     selector: 'app-map',
@@ -35,18 +36,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     // KONVA LIB
     // gridLayer: Konva.Layer = null;
     layers: OurKonvaLayers = new OurKonvaLayers();
-    gridStage: Konva.Stage = null;
+    gridStage: Konva.Stage;
     selectedObjectAttrs: any;
     activeTr: any;
 
     getCurrentSelectedObjectSub: Subscription;
+    getMouseSubscription: Subscription;
 
     // subscriptions for socketObject
     rectangleTest: Konva.Rect = null;
     socketObjectSubscription: Subscription;
+    displayCursor: string;
 
     constructor(private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
+                private mouseService: MouseService,
                 private socketService: SocketService) { }
 
     ngOnInit(): void {
@@ -54,6 +58,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             if (res) {
                 this.activeTr = res.transformer;
                 this.selectedObjectAttrs = res.attr;
+            }
+        });
+        // set mouse cursor type
+        this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
+            if (res != null) {
+                this.displayCursor = res.state ? res.state : 'pointer';
             }
         });
         // this.socketObjectSubscription = this.socketService.gameSocketObjectSubscription.subscribe((res) => {
@@ -110,6 +120,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         }
         if (this.socketObjectSubscription) {
             this.socketObjectSubscription.unsubscribe();
+        }
+        if (this.getMouseSubscription) {
+            this.getMouseSubscription.unsubscribe();
         }
     }
 
@@ -171,7 +184,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     moveMap(res: string, ev: MouseEvent): void {
-        if (this.mouseInteractor.mouse.state === 'hand') {
+        if (this.displayCursor === 'hand') {
 
             if (res === 'mousedown') {
                 this.isMovingMap = true;

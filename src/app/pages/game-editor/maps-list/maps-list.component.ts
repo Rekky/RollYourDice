@@ -4,6 +4,7 @@ import {Page} from '../../../classes/Page';
 import {Coords} from '../../../classes/Coords';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
+import Konva from 'konva';
 
 @Component({
     selector: 'app-maps-list',

@@ -1,6 +1,8 @@
 import {Coords} from '../Coords';
 import {OurKonvaGrid} from './OurKonvaGrid';
 import {OurKonvaObject} from './OurKonvaObject';
+import Konva from 'konva';
+import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaMap {
     id: string;
@@ -17,6 +19,8 @@ export class OurKonvaMap {
     objects: OurKonvaObject[];
     toPlayers: boolean;
     players: string[];
+    stage: Konva.Stage;
+    layers: OurKonvaLayers;
 
     constructor(id?: string,
                 name?: string,
@@ -32,6 +36,8 @@ export class OurKonvaMap {
                 objects?: OurKonvaObject[],
                 toPlayers?: boolean,
                 players?: string[],
+                stage?: Konva.Stage,
+                layers?: OurKonvaLayers
                 ) {
         this.id = id ? id : null;
         this.name = name ? name : 'new ourKonva';
@@ -47,6 +53,12 @@ export class OurKonvaMap {
         this.objects = objects ? objects : [];
         this.toPlayers = toPlayers ? toPlayers : false;
         this.players = players ? players : [];
+        this.stage = stage ? stage : new Konva.Stage({
+            container: 'map' + this.id,
+            width: this.columns * this.grid.cellSize,
+            height: this.rows * this.grid.cellSize
+        });
+        this.layers = layers ? layers : new OurKonvaLayers();
     }
 
     static fromJSON(json: any): OurKonvaMap {
