@@ -47,16 +47,22 @@ export class SocketService {
         // ========================= END PAGES =================================
 
         // ========================= START MAPS ================================
-        this.socket.on('game-editor-create-map', (data) => {
+        this.socket.on('game-editor-create-map', (data: OurKonvaMap) => {
             const game: Game = this.gameSocketSubscription.getValue();
             const gamePage: Page = game.pages.find((page: Page) => page.id === game.selectedPageId);
-            const gameMap: OurKonvaMap = gamePage.maps.find((map: OurKonvaMap) => map.id === null);
+            const gameMap: OurKonvaMap = gamePage.maps.find((map: OurKonvaMap) => parseInt(map.id, 0) <= 0);
             gameMap.id = data.id;
-
-            console.log('gameMap', gamePage.maps);
-            // this.gameSocketSubscription.next(data);
         });
-        this.socket.on('game-editor-update-map', (data) => {
+        this.socket.on('game-editor-rename-map', (data: OurKonvaMap) => {
+            // Nothing else
+        });
+        this.socket.on('game-editor-remove-map', (data: OurKonvaMap) => {
+            // Nothing else
+        });
+        this.socket.on('game-editor-update-maps', (data: OurKonvaMap[]) => {
+            // Nothing else
+        });
+        this.socket.on('game-editor-move-map', (data: OurKonvaMap) => {
             // this.gameSocketSubscription.next(data);
         });
         this.socket.on('game-editor-object', (data) => {
@@ -100,6 +106,7 @@ export class SocketService {
     }
 
     sendGameCreateMap(pageId: string, map: OurKonvaMap): void {
+        console.log(map);
         this.socket.emit('game-editor-create-map', {pageId, map});
     }
 

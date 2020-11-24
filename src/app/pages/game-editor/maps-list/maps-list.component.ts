@@ -68,6 +68,7 @@ export class MapsListComponent implements OnInit {
 
     onAddNewMap(): void {
         const newMap: OurKonvaMap = new OurKonvaMap();
+        newMap.id = '' + Math.floor(Math.random() * -1000);
         newMap.position = new Coords(300, 10, 0);
         newMap.name = this.newMapForm.get('name').value;
 
