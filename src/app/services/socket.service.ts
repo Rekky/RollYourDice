@@ -118,6 +118,10 @@ export class SocketService {
         this.socket.emit('game-editor-rename-map', {pageId, map});
     }
 
+    sendGameMoveMap(map: OurKonvaMap): void {
+        this.socket.emit('game-editor-move-map', {map});
+    }
+
     sendGameMapsUpdate(gameId: string, pageId: string, maps: OurKonvaMap[]): void {
         this.socket.emit('game-editor-maps-update', {gameId, pageId, maps: maps});
     }

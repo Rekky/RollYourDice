@@ -23,6 +23,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @ViewChild('mapEl') mapEl: ElementRef;
     @Input() map: OurKonvaMap;
     @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() mapMoveEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
     currentMapObjectSelected: any = null;
 
@@ -201,7 +202,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }
             if (res === 'mouseup') {
                 this.isMovingMap = false;
-                this.mapChange.emit(this.map);
+                this.mapMoveEvent.emit(this.map);
             }
             if (res === 'mouseout') {
                 this.isMovingMap = false;

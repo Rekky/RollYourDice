@@ -3,6 +3,7 @@ import {Page} from '../../../classes/Page';
 import {MouseService} from '../../../services/mouse.service';
 import {Subscription} from 'rxjs';
 import { Coords } from 'src/app/classes/Coords';
+import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 
 @Component({
     selector: 'app-page',
@@ -13,6 +14,7 @@ export class PageComponent implements OnInit, OnDestroy {
 
     @Input() page: Page;
     @Output() pageChange: EventEmitter<Page> = new EventEmitter<Page>();
+    @Output() mapMoveEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     getDragImageUrlSubscription: Subscription = new Subscription();
     draggedImage: any = null;
 
@@ -37,8 +39,8 @@ export class PageComponent implements OnInit, OnDestroy {
         }
     }
 
-    onMapChange(ev: any): void {
-        this.pageChange.emit(this.page);
+    onMapMove(map: OurKonvaMap): void {
+        this.mapMoveEvent.emit(map);
     }
 
     attachImageToMouse(e: MouseEvent): void {

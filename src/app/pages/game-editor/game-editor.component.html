@@ -1,5 +1,5 @@
 <div class="game-editor">
-    <app-page *ngIf="selectedPage" [page]="selectedPage"></app-page>
+    <app-page *ngIf="selectedPage" [page]="selectedPage" (mapMoveEvent)="onMapMove($event)"></app-page>
 
     <div class="left-column">
         <div class="tabs adjust">

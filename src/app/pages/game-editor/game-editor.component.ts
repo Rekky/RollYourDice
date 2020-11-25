@@ -103,6 +103,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendGameRenameMap(this.selectedPage.id, map);
     }
 
+    onMapMove(map: OurKonvaMap): void {
+        this.socketService.sendGameMoveMap(map);
+    }
+
     onSetCurrentObjectSelected(ev): void {
         this.currentObjectSelected = ev;
     }
