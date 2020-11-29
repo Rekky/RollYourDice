@@ -40,6 +40,8 @@ import { KonvaEraserPropertiesComponent } from './components/konva-tools/konva-e
 import { KonvaTextPropertiesComponent } from './components/konva-tools/konva-text-properties/konva-text-properties.component';
 import { KonvaRectanglePropertiesComponent } from './components/konva-tools/konva-rectangle-properties/konva-rectangle-properties.component';
 import { GamePlayComponent } from './pages/game-play/game-play.component';
+import { ImagesCarrouselComponent } from './components/images-carrousel/images-carrousel.component';
+import { EditGameDataComponent } from './components/edit-game-data/edit-game-data.component';
 
 @NgModule({
     declarations: [
@@ -74,6 +76,8 @@ import { GamePlayComponent } from './pages/game-play/game-play.component';
         KonvaTextPropertiesComponent,
         KonvaRectanglePropertiesComponent,
         GamePlayComponent,
+        ImagesCarrouselComponent,
+        EditGameDataComponent,
     ],
     imports: [
         BrowserModule,

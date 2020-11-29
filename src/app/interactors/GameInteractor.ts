@@ -10,7 +10,9 @@ import {Router} from '@angular/router';
 })
 export class GameInteractor {
 
-    constructor(private gameService: GameService, private userInteractor: UserInteractor, private router: Router) {
+    constructor(private gameService: GameService,
+                private userInteractor: UserInteractor,
+                private router: Router) {
 
     }
 

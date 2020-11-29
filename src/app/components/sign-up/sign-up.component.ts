@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {User} from '../../classes/User';
 import {Router} from '@angular/router';
@@ -20,10 +20,10 @@ export class SignUpComponent implements OnInit {
 
     ngOnInit(): void {
         this.signUpForm = new FormGroup({
-            username: new FormControl(null),
-            email: new FormControl(null),
-            password: new FormControl(null),
-            repeatPassword: new FormControl(null)
+            username: new FormControl(null, Validators.required),
+            email: new FormControl(null, Validators.required),
+            password: new FormControl(null, Validators.required),
+            repeatPassword: new FormControl(null, Validators.required)
         });
     }
 

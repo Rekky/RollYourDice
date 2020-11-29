@@ -1,0 +1,361 @@
+
+.form-text-input {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+
+    label {
+        margin-right: 20px;
+
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    input[type=text] {
+        height: 100%;
+        width: 100%;
+        padding: 10px 20px;
+        border: 1px solid #DBDBDB;
+        background-color: transparent;
+
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+}
+
+.form-textarea {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    height: 100px;
+    width: 100%;
+    font-size: 18px;
+
+    label {
+        margin-right: 20px;
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    textarea {
+        height: 100px;
+        width: 100%;
+        padding: 10px 20px;
+        border: 1px solid #DBDBDB;
+        background-color: transparent;
+
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+        resize: none;
+    }
+}
+
+.form-number-input {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+
+    label {
+        margin-right: 20px;
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    input[type=number] {
+        height: 100%;
+        width: 100%;
+        padding: 7px 15px;
+        border: 1px solid #DBDBDB;
+        background-color: transparent;
+
+        color: #DBDBDB;
+        text-align: center;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+}
+
+.form-short-number-input {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+
+    label {
+        margin-right: 20px;
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    input[type=number] {
+        height: 100%;
+        width: 50px;
+        padding: 7px 15px;
+        border: 1px solid #DBDBDB;
+        background-color: transparent;
+
+        color: #DBDBDB;
+        text-align: center;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+}
+
+.form-file-input {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+
+    label:first-child {
+        margin-right: 20px;
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    .fake-input {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+        height: 100%;
+        padding: 10px 20px;
+        border: 1px solid #DBDBDB;
+        background-color: transparent;
+
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+
+        span {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            width: 300px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 18px;
+        }
+
+        svg {
+            width: 25px;
+            stroke: #DBDBDB;
+        }
+    }
+
+    input[type=file] {
+        display: none;
+    }
+}
+
+.form-checkbox-input {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 50%;
+    font-size: 18px;
+
+    .fake-input {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        position: relative;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #EAEAEA;
+        font-size: 18px;
+
+        label {
+            position: absolute;
+            height: 26px;
+            width: 26px;
+            background-color: #EAEAEA;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        label:after {
+            position: absolute;
+            height: 26px;
+            width: 26px;
+            border-top: none;
+            border-right: none;
+
+            content: "";
+            opacity: 0;
+            transform: rotate(-45deg);
+            font-size: 18px;
+        }
+
+        input[type="checkbox"] {
+            visibility: hidden;
+        }
+
+        input[type="checkbox"]:not(:checked) + label {
+            background-color: #16191D;
+        }
+
+        input[type="checkbox"]:not(:checked) + label:after {
+            opacity: 0;
+        }
+    }
+
+    .text {
+        margin-left: 20px;
+        color: #EAEAEA;
+        font-weight: 300;
+        cursor: pointer;
+        font-size: 18px;
+    }
+}
+
+.form-input-dropdown {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+
+    label {
+        margin-right: 20px;
+        color: #DBDBDB;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    select {
+        height: 100%;
+        padding: 7px 15px;
+        border: 1px solid #DBDBDB;
+        background-color: transparent;
+
+        color: #DBDBDB;
+        text-align: center;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-size: 18px;
+
+        &:focus{ outline: none;}
+    }
+}
+
+@media (max-height: 1200px) and (orientation: landscape) {
+
+    .form-file-input, .form-number-input, .form-short-number-input, .form-text-input {
+        height: 30px;
+        font-size: 12px;
+
+        input[type=text], input[type=number] {
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .fake-input {
+            padding: 10px;
+            font-size: 12px;
+
+            span {
+                width: 130px;
+                font-size: 12px;
+            }
+
+            svg {
+                width: 18px;
+                stroke: #DBDBDB;
+            }
+        }
+    }
+
+    .form-textarea {
+        font-size: 12px;
+        height: 60px;
+
+        textarea {
+            height: 60px;
+            font-size: 12px;
+        }
+    }
+
+    .form-checkbox-input {
+        font-size: 12px;
+
+        .fake-input {
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+
+            label {
+                height: 16px;
+                width: 16px;
+                font-size: 12px;
+            }
+
+            label:after {
+                height: 16px;
+                width: 16px;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

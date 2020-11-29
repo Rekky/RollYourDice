@@ -1,8 +1,45 @@
-<p>my-adventures works!</p>
-<div *ngIf="adventures">
-    <div *ngFor="let adventure of adventures">
-        <span>{{adventure.name}}</span> -
-        <span>{{adventure.createdDate}}</span>
-        <button (click)="goToTheGame(adventure)">Play</button>
+<div class="my-adventures-box">
+    <div class="background-image-box">
+        <div class="background"
+             [ngClass]="{'background-image': displayedGameIndex !== 999999}"
+             [style]="{'background-image': displayedGameIndex !== 999999 ? 'url(' + games[displayedGameIndex].image.url + ')' : ''}"></div>
     </div>
+    <div class="carrousel-box">
+        <app-images-carrousel [images]="adventuresImages" [disableArrows]="gameToEdit"
+                              (selectedImageIndex)="displayedGameIndex = $event"></app-images-carrousel>
+    </div>
+    <div *ngIf="!gameToEdit" class="selected-image-data-box">
+        <div *ngIf="displayedGameIndex !== 999999" class="selected-image-data">
+            <div class="click-interface-image"></div>
+            <div class="selected-image-header">
+                <div class="master" *ngIf="games[displayedGameIndex].authorId === currentUser.id">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.17 30.78">
+                        <title>crown</title>
+                        <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><circle class="cls-1" cx="1.9" cy="5.7" r="1.9"/><path class="cls-1" d="M38,7.44,32.39,28.07v2.71H8.74v-3L3.25,7.44a63.45,63.45,0,0,0,5.27,5.1,62.66,62.66,0,0,0,5.65,4.33L20.56,4.08,27,16.87a57.39,57.39,0,0,0,5.7-4.31A58.22,58.22,0,0,0,38,7.44Z"/><circle class="cls-1" cx="20.6" cy="1.9" r="1.9"/><circle class="cls-1" cx="39.27" cy="5.7" r="1.9"/></g></g>
+                    </svg>
+                </div>
+                <div class="n-players">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.78 24.81">
+                        <title>user</title>
+                        <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path class="cls-1" d="M23.78,21.38v.07a.28.28,0,0,1,0,.09c-.21,1.82-5.45,3.27-11.88,3.27S.22,23.36,0,21.54a.28.28,0,0,1,0-.09v-.07C.12,17.89,4.06,15,9.3,14.26l.13-.95a7.69,7.69,0,0,1-3.17-7.4C6.72,3.21,8.92,0,12.17,0s5.49,3.08,5.91,5.91a7.41,7.41,0,0,1-3.76,7.39l.16,1C19.72,15,23.66,17.89,23.78,21.38Z"/></g></g>
+                    </svg>
+                    <div class="number">
+                        {{games[displayedGameIndex].nPlayers}}
+                    </div>
+                </div>
+            </div>
+            <div class="selected-image-box"></div>
+            <div class="selected-image-title">{{games[displayedGameIndex].name}}</div>
+            <div class="selected-image-description">{{games[displayedGameIndex].description}}</div>
+        </div>
+
+        <div class="new-game-interface" *ngIf="displayedGameIndex === 999999">
+            <div class="click-interface" (click)="createNewGame()"></div>
+            <div class="selected-image-header"></div>
+            <div class="selected-image-box"></div>
+            <div class="selected-image-title" (click)="createNewGame()">New adventure</div>
+            <div class="selected-image-description" (click)="createNewGame()"></div>
+        </div>
+    </div>
+    <app-edit-game-data *ngIf="gameToEdit" [game]="gameToEdit" (closeGame)="closeGame()"></app-edit-game-data>
 </div>

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {Router} from '@angular/router';
 import {User} from '../../classes/User';
@@ -10,28 +10,25 @@ import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, AfterViewInit {
 
     @Output() display: EventEmitter<'signUp'> = new EventEmitter<'signUp'>();
     signInForm: FormGroup;
     displayPassword: boolean = false;
 
-    constructor(private userInteractor: UserInteractor, private router: Router) { }
+    constructor(private userInteractor: UserInteractor,
+                private router: Router) { }
 
     ngOnInit(): void {
         this.signInForm = new FormGroup({
-            email: new FormControl(null),
-            password: new FormControl(null),
+            email: new FormControl(null, Validators.required),
+            password: new FormControl(null, Validators.required),
             stayLogged: new FormControl(false),
         });
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-            this.signInForm.patchValue({
-                email: user.email,
-                password: user.password,
-                stayLogged: true
-            });
-        }
+    }
+
+    ngAfterViewInit(): void {
+        document.getElementById('email').focus();
     }
 
     async signIn(): Promise<void> {
