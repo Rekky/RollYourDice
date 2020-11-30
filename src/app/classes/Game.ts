@@ -1,42 +1,31 @@
 import {Page} from './Page';
-import {CustomImage} from './CustomImage';
+import {Asset} from './Asset';
 
 export class Game {
     id: string | null;
-    name: string;
-    description: string;
-    image: CustomImage;
-    nPlayers: number;
-    pages: Page[];
-    selectedPageId: string | null;
-    published: boolean;
-    gameType: GameTypes;
     authorId: string;
     createdDate: Date;
+    description: string;
+    gameType: GameTypes;
+    image: Asset;
+    name: string;
+    nPlayers: number;
+    pages: Page[];
+    published: boolean;
+    selectedPageId: string | null;
 
-    constructor(authorId: string,
-                id?: string,
-                name?: string,
-                description?: string,
-                pages?: Page[],
-                image?: CustomImage,
-                nPlayers?: number,
-                selectedPageId?: string | null,
-                published?: boolean,
-                gameType?: GameTypes,
-                createdDate?: Date
-    ) {
-        this.id = id ? id : null;
-        this.name = name ? name : 'My adventure rocks!';
-        this.pages = pages ? pages : [new Page()];
-        this.selectedPageId = selectedPageId ? selectedPageId : null;
-        this.published = published ? published : false;
-        this.gameType = gameType ? gameType : GameTypes.DungeonsAndDragons5e;
+    constructor(authorId: string) {
+        this.id = null;
+        this.name = 'My adventure rocks!';
+        this.pages = [new Page()];
+        this.selectedPageId = null;
+        this.published = false;
+        this.gameType = GameTypes.DungeonsAndDragons5e;
         this.authorId = authorId;
-        this.createdDate = createdDate ? createdDate : new Date();
-        this.nPlayers = nPlayers ? nPlayers : 6;
-        this.image = image ? image : new CustomImage();
-        this.description = description ? description : '';
+        this.createdDate = new Date();
+        this.nPlayers = 6;
+        this.image = new Asset();
+        this.description = '';
     }
 
     static fromJSON(json: any): Game {
@@ -73,5 +62,4 @@ export class Game {
 
 export enum GameTypes {
     DungeonsAndDragons5e = 'DungeonsAndDragons5e',
-    Test = 'test'
 }
