@@ -75,6 +75,7 @@ app-images-carrousel {
     justify-content: flex-start;
     align-items: center;
 
+    position: relative;
     width: 30vw;
     height: 70vh;
 
@@ -132,6 +133,56 @@ app-images-carrousel {
 .selected-image-box {
     width: 20vw;
     height: 35vh;
+    cursor: pointer;
+}
+
+.more-options {
+    position: absolute;
+    left: 25.5vw;
+    top: 6vh;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    cursor: pointer;
+
+    .dot-box {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-content: flex-start;
+
+        position: relative;
+        height: 25px;
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #DBDBDB;
+        }
+    }
+
+    .options {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-content: flex-start;
+
+        position: relative;
+        padding: 0 10px;
+
+        .option {
+            width: 70px;
+            padding: 5px 10px;
+            background-color: #DBDBDB;
+
+            &:hover {
+                background-color: #F2F2F2;
+            }
+        }
+    }
 }
 
 .selected-image-title {

@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Game, GameTypes } from 'src/app/classes/Game';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CustomImage} from '../../classes/CustomImage';
+import {Asset} from '../../classes/Asset';
+import {Page} from '../../classes/Page';
 
 @Component({
     selector: 'app-edit-game-data',
@@ -11,22 +12,26 @@ import {CustomImage} from '../../classes/CustomImage';
 export class EditGameDataComponent implements OnInit {
 
     @Input() game: Game;
+    @Output() saveGame: EventEmitter<Game> = new EventEmitter<Game>();
     @Output() closeGame: EventEmitter<void> = new EventEmitter<void>();
 
     gameForm: FormGroup;
+    newGame: Game;
     gameTypes: string[] = [];
     loaded: boolean = false;
 
     constructor() { }
 
     ngOnInit(): void {
+        console.log('first game =', this.game);
+        this.newGame = Game.fromJSON(this.game);
         this.gameForm = new FormGroup({
-            name: new FormControl(this.game.name, Validators.required),
-            description: new FormControl(this.game.description),
-            nPlayers: new FormControl(this.game.nPlayers, Validators.required),
-            gameType: new FormControl(this.game.gameType, Validators.required),
-            imageCover: new FormControl(null, Validators.required),
-            publish: new FormControl(this.game.published, Validators.required),
+            name: new FormControl(this.newGame.name, Validators.required),
+            description: new FormControl(this.newGame.description),
+            nPlayers: new FormControl(this.newGame.nPlayers, Validators.required),
+            gameType: new FormControl(this.newGame.gameType, Validators.required),
+            imageCover: new FormControl(null),
+            publish: new FormControl(this.newGame.published, Validators.required),
         });
         this.gameTypes = Object.values(GameTypes);
         setTimeout(() => {
@@ -39,15 +44,25 @@ export class EditGameDataComponent implements OnInit {
     }
 
     acceptChanges(): void {
-        console.log('aa = ', this.gameForm.get('imageCover').value);
-        this.game.gameType = this.gameForm.get('gameType').value;
-        this.game = Game.fromJSON(this.gameForm.value);
-        console.log('wut =', this.game);
+        Object.keys(this.gameForm.value).forEach((key) => {
+            this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
+        });
+        this.saveGame.emit(this.newGame);
     }
 
-    imageChanged(ev: any): void {
-        console.log('image =', ev.files[0]);
-        this.game.image = new CustomImage(ev.files[0].name, 'src');
+    imageChanged(file: File): void {
+        const image = new Asset();
+        image.name = file.name;
+        this.transformFileToBase64(file).then(res => image.data = res);
+        this.newGame.image = image;
     }
 
+    transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
 }

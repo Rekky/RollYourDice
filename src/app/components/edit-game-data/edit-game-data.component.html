@@ -1,5 +1,5 @@
 <div class="edit-game-box">
-    <div class="edit-game-card">
+    <form class="edit-game-card" [formGroup]="gameForm" (submit)="acceptChanges()">
         <div class="header" *ngIf="loaded">
             <div class="exit">
                 <svg (click)="closeEdit()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
@@ -12,31 +12,31 @@
                     </g></g>
                 </svg>
             </div>
-            <div class="title">{{game.name === 'My adventure rocks!' ? 'New adventure' : 'Edit adventure'}}</div>
+            <div class="title">{{newGame.name === 'My adventure rocks!' ? 'New adventure' : 'Edit adventure'}}</div>
         </div>
-        <form class="body" [formGroup]="gameForm" (submit)="acceptChanges()" *ngIf="loaded">
+        <div class="body" *ngIf="loaded && newGame">
             <div class="form-text-input title">
-                <label [for]="'title-game-' + game.id">Title</label>
-                <input type="text" [id]="'title-game-' + game.id" [formControlName]="'name'"/>
+                <label [for]="'title-game-' + newGame.id">Title</label>
+                <input type="text" [id]="'title-game-' + newGame.id" [formControlName]="'name'"/>
             </div>
             <div class="form-textarea">
-                <label [for]="'description-game-' + game.id">Description</label>
-                <textarea [id]="'description-game-' + game.id" [formControlName]="'description'"></textarea>
+                <label [for]="'description-game-' + newGame.id">Description</label>
+                <textarea [id]="'description-game-' + newGame.id" [formControlName]="'description'"></textarea>
             </div>
             <div class="form-input-dropdown">
-                <label [for]="'gameType-game-' + game.id">Game type</label>
-                <select [id]="'gameType-game-' + game.id" [formControlName]="'gameType'">
+                <label [for]="'gameType-game-' + newGame.id">Type</label>
+                <select [id]="'gameType-game-' + newGame.id" [formControlName]="'gameType'">
                     <option *ngFor="let type of gameTypes" [value]="type">{{type}}</option>
                 </select>
             </div>
             <div class="form-short-number-input n-players">
-                <label [for]="'nPlayers-game-' + game.id">Number of players</label>
-                <input type="number" [id]="'nPlayers-game-' + game.id" [formControlName]="'nPlayers'"/>
+                <label [for]="'nPlayers-game-' + newGame.id">Number of players</label>
+                <input type="number" [id]="'nPlayers-game-' + newGame.id" [formControlName]="'nPlayers'"/>
             </div>
             <div class="form-file-input cover-image">
-                <label [for]="'cover-image-game-' + game.id">Cover</label>
-                <label class="fake-input" [for]="'cover-image-game-' + game.id">
-                    <span>{{game.image.name ? game.image.name : 'Select an image'}}</span>
+                <label [for]="'cover-image-game-' + newGame.id">Cover</label>
+                <label class="fake-input" [for]="'cover-image-game-' + newGame.id">
+                    <span>{{newGame.image.name ? newGame.image.name : 'Select an image'}}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.47 30.56">
                         <defs><style>.cls-1{fill:none;stroke-miterlimit:10;stroke-width: 1px}</style></defs>
                         <title>folder</title>
@@ -46,22 +46,22 @@
                         </g></g>
                     </svg>
                 </label>
-                <input type="file" [id]="'cover-image-game-' + game.id"
-                       [name]="'cover-image-game-' + game.id" (change)="imageChanged($event.target)"
+                <input type="file" [id]="'cover-image-game-' + newGame.id"
+                       [name]="'cover-image-game-' + newGame.id" (change)="imageChanged($event.target.files[0])"
                        [accept]="'image/jpeg, image/png'" [formControlName]="'imageCover'"/>
             </div>
             <div class="form-checkbox-input">
                 <div class="fake-input">
-                    <input type="checkbox" [id]="'publish-game-' + game.id"[formControlName]="'publish'"/>
-                    <label [for]="'publish-game-' + game.id"></label>
+                    <input type="checkbox" [id]="'publish-game-' + newGame.id"[formControlName]="'publish'"/>
+                    <label [for]="'publish-game-' + newGame.id"></label>
                 </div>
-                <label class="text" [for]="'publish-game-' + game.id">Publish</label>
-            </div>
-        </form>
-        <div class="footer" *ngIf="loaded">
-            <div class="button-box">
-                <button type="submit" class="big-button" [disabled]="!gameForm.valid">Accept</button>
+                <label class="text" [for]="'publish-game-' + newGame.id">Publish</label>
             </div>
         </div>
-    </div>
+        <div class="footer" *ngIf="loaded">
+            <div class="button-box">
+                <button type="submit" class="big-button">Accept</button>
+            </div>
+        </div>
+    </form>
 </div>

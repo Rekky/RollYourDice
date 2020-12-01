@@ -228,7 +228,6 @@
             content: "";
             opacity: 0;
             transform: rotate(-45deg);
-            font-size: 18px;
         }
 
         input[type="checkbox"] {
@@ -273,6 +272,7 @@
 
     select {
         height: 100%;
+        width: 100%;
         padding: 7px 15px;
         border: 1px solid #DBDBDB;
         background-color: transparent;
@@ -289,17 +289,22 @@
 
 @media (max-height: 1200px) and (orientation: landscape) {
 
-    .form-file-input, .form-number-input, .form-short-number-input, .form-text-input {
+    .form-file-input, .form-number-input, .form-short-number-input,
+    .form-text-input, .form-input-dropdown, .form-textarea, .form-checkbox-input {
         height: 30px;
         font-size: 12px;
 
+        label, label:first-child {
+            font-size: 12px;
+        }
+
         input[type=text], input[type=number] {
-            padding: 10px;
+            padding: 7px;
             font-size: 12px;
         }
 
         .fake-input {
-            padding: 10px;
+            padding: 7px;
             font-size: 12px;
 
             span {
@@ -343,6 +348,18 @@
                 width: 16px;
                 font-size: 12px;
             }
+        }
+
+        .text {
+            font-size: 12px;
+        }
+    }
+
+    .form-input-dropdown {
+
+        select {
+            font-size: 12px;
+            padding: 7px;
         }
     }
 }

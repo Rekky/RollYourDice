@@ -18,8 +18,7 @@ export class ImagesCarrouselComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-    }
+    ngOnInit(): void {}
 
     setPreviousImageIndex(): void {
         if (this.displayedImageIndex === this.images.length - 1) {
@@ -160,6 +159,49 @@ export class ImagesCarrouselComponent implements OnInit {
             this.selectedImageIndex.emit(this.displayedImageIndex);
             this.setNextImageIndex();
             this.setPreviousImageIndex();
+            this.disableChangeImage = false;
+        }
+    }
+
+    rightImageThreeCards(): void {
+        if (!this.disableChangeImage) {
+            this.disableChangeImage = true;
+            if (this.displayedImageIndex === 0) {
+                this.displayedImageIndex++;
+            } else if (this.displayedImageIndex === 1) {
+                this.displayedImageIndex = 999999;
+            } else {
+                this.displayedImageIndex = 0;
+            }
+            this.selectedImageIndex.emit(this.displayedImageIndex);
+            this.disableChangeImage = false;
+        }
+    }
+
+    leftImageThreeCards(): void {
+        if (!this.disableChangeImage) {
+            this.disableChangeImage = true;
+            if (this.displayedImageIndex === 0) {
+                this.displayedImageIndex = 999999;
+            } else if (this.displayedImageIndex === 999999) {
+                this.displayedImageIndex = 1;
+            } else {
+                this.displayedImageIndex = 0;
+            }
+            this.selectedImageIndex.emit(this.displayedImageIndex);
+            this.disableChangeImage = false;
+        }
+    }
+
+    changeCard(): void {
+        if (!this.disableChangeImage) {
+            this.disableChangeImage = true;
+            if (this.displayedImageIndex === 0) {
+                this.displayedImageIndex = 999999;
+            } else {
+                this.displayedImageIndex = 0;
+            }
+            this.selectedImageIndex.emit(this.displayedImageIndex);
             this.disableChangeImage = false;
         }
     }

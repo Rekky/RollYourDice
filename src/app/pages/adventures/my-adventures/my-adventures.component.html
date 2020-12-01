@@ -2,15 +2,25 @@
     <div class="background-image-box">
         <div class="background"
              [ngClass]="{'background-image': displayedGameIndex !== 999999}"
-             [style]="{'background-image': displayedGameIndex !== 999999 ? 'url(' + games[displayedGameIndex].image.url + ')' : ''}"></div>
+             [style]="{'background-image': displayedGameIndex !== 999999 ? 'url(' + games[displayedGameIndex].image.uri + ')' : ''}"></div>
     </div>
     <div class="carrousel-box">
-        <app-images-carrousel [images]="adventuresImages" [disableArrows]="gameToEdit"
+        <app-images-carrousel [images]="adventuresImages" [disableArrows]="this.games.length === 0"
                               (selectedImageIndex)="displayedGameIndex = $event"></app-images-carrousel>
     </div>
     <div *ngIf="!gameToEdit" class="selected-image-data-box">
         <div *ngIf="displayedGameIndex !== 999999" class="selected-image-data">
-            <div class="click-interface-image"></div>
+            <div class="more-options" (click)="displayOptions = true" (mouseleave)="displayOptions = false">
+                <div class="dot-box">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <div *ngIf="displayOptions" class="options">
+                    <div class="option" (click)="editGame()">Edit</div>
+                    <div class="option" (click)="deleteGame()">Delete</div>
+                </div>
+            </div>
             <div class="selected-image-header">
                 <div class="master" *ngIf="games[displayedGameIndex].authorId === currentUser.id">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.17 30.78">
@@ -28,9 +38,9 @@
                     </div>
                 </div>
             </div>
-            <div class="selected-image-box"></div>
-            <div class="selected-image-title">{{games[displayedGameIndex].name}}</div>
-            <div class="selected-image-description">{{games[displayedGameIndex].description}}</div>
+            <div class="selected-image-box" (click)="loadGame()"></div>
+            <div class="selected-image-title" (click)="loadGame()">{{games[displayedGameIndex].name}}</div>
+            <div class="selected-image-description" (click)="loadGame()">{{games[displayedGameIndex].description}}</div>
         </div>
 
         <div class="new-game-interface" *ngIf="displayedGameIndex === 999999">
@@ -41,5 +51,6 @@
             <div class="selected-image-description" (click)="createNewGame()"></div>
         </div>
     </div>
-    <app-edit-game-data *ngIf="gameToEdit" [game]="gameToEdit" (closeGame)="closeGame()"></app-edit-game-data>
+    <app-edit-game-data *ngIf="gameToEdit" [game]="gameToEdit"
+                        (saveGame)="saveGame($event)" (closeGame)="closeEditGame()"></app-edit-game-data>
 </div>

@@ -13,6 +13,7 @@ export class Game {
     pages: Page[];
     published: boolean;
     selectedPageId: string | null;
+    status: GameStatus;
 
     constructor(authorId: string) {
         this.id = null;
@@ -26,40 +27,34 @@ export class Game {
         this.nPlayers = 6;
         this.image = new Asset();
         this.description = '';
+        this.status = GameStatus.Stopped;
     }
 
     static fromJSON(json: any): Game {
         const game = new Game(json.authorId);
-        game.id = json.id;
-        game.name = json.name;
+        Object.keys(game).forEach((key) => {
+            game[key] = json[key] ? json[key] : game[key];
+        });
         game.pages = json.pages ? json.pages.map(el => Page.fromJSON(el)) : [];
-        game.selectedPageId = json.selectedPageId;
-        game.published = json.published;
-        game.gameType = json.gameType;
-        game.createdDate = json.createdDate;
-        game.image = json.image;
-        game.nPlayers = json.nPlayers;
-        game.description = json.description;
         return game;
     }
 
     toJSON(): any {
         const json: any = {};
-        json.id = this.id;
-        json.name = this.name;
+        Object.keys(Game).forEach((key) => {
+            json[key] = this[key];
+        });
         json.pages = this.pages.map(page => page.toJSON());
-        json.selectedPageId = this.selectedPageId;
-        json.published = this.published;
-        json.gameType = this.gameType;
-        json.authorId = this.authorId;
-        json.createdDate = this.createdDate;
-        json.image = this.image;
-        json.nPlayers = this.nPlayers;
-        json.description = this.description;
         return json;
     }
 }
 
 export enum GameTypes {
     DungeonsAndDragons5e = 'DungeonsAndDragons5e',
+}
+
+export enum GameStatus {
+    Running,
+    Paused,
+    Stopped
 }
