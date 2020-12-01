@@ -1,12 +1,14 @@
 import {Page} from './Page';
-
+export enum GameTypes {
+    DungeonsAndDragons5e = 'DungeonsAndDragons5e',
+}
 export class Game {
     id: string | null;
     name: string;
     pages: Page[];
     selectedPageId: string | null;
     privacy: 'private' | 'public'; // public | private
-    gameType: 'dungeonsAndDragons5e';
+    gameType: GameTypes;
     author: string | number;
     gameStatus: boolean;
     createdDate: Date;
@@ -16,7 +18,7 @@ export class Game {
                 pages?: Page[],
                 selectedPageId?: string | null,
                 privacy?: 'private' | 'public',
-                gameType?: 'dungeonsAndDragons5e',
+                gameType?: GameTypes,
                 author?: string | number,
                 gameStatus?: boolean,
                 createdDate?: Date
@@ -26,7 +28,7 @@ export class Game {
         this.pages = pages ? pages : [new Page()];
         this.selectedPageId = selectedPageId ? selectedPageId : null;
         this.privacy = privacy ? privacy : 'private';
-        this.gameType = gameType ? gameType : 'dungeonsAndDragons5e';
+        this.gameType = gameType ? gameType : GameTypes.DungeonsAndDragons5e;
         this.author = author ? author : null;
         this.gameStatus = gameStatus ? gameStatus : false;
         this.createdDate = createdDate ? createdDate : new Date();

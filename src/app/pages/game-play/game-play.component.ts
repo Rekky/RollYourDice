@@ -21,20 +21,10 @@ export class GamePlayComponent implements OnInit {
     ngOnInit(): void {
         const gameId = this.router.snapshot.paramMap.get('id');
         this.socketService.sendGamePlayId(gameId);
-        // this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
-        //     const game = socketGame;
-        //     console.log('game', game);
-        //     if (game && game.pages) {
-        //         this.map = game.pages[0].maps[0];
-        //     }
-        // });
+
         this.socketService.socket.on('game-play-load', (data) => {
             console.log('RECIBO_GAMEPLAY', data);
             this.gamePlay = data;
-        });
-
-        this.socketService.socket.on('game-play-start-status', (data) => {
-
         });
     }
 
