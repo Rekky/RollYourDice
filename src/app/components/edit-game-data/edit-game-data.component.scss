@@ -1,0 +1,106 @@
+@import "src/styles.scss";
+@import "src/assets/scss/form-inputs.scss";
+@import "src/assets/scss/buttons.scss";
+
+.edit-game-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    letter-spacing: 1px;
+}
+
+.edit-game-card {
+    width: 30vw;
+    height: 70vh;
+    background-color: #16191D;
+    animation: expand-card 1s;
+    letter-spacing: 1px;
+}
+
+@keyframes expand-card {
+    from {
+        width: 20vw;
+        height: 60vh;
+    }
+    to {
+        width: 30vw;
+        height: 70vh;
+    }
+}
+
+.header {
+    width: 100%;
+    height: 15%;
+    padding: 3% 3% 3% 5%;
+    border-bottom: 2px solid #EAEAEA;
+    letter-spacing: 1px;
+
+    .exit {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-end;
+        align-items: center;
+
+        width: 100%;
+        height: 30%;
+        cursor: pointer;
+
+        svg {
+            stroke: #EAEAEA;
+            height: 100%;
+
+            &:hover {
+                stroke: #F2F2F2;
+            }
+        }
+    }
+
+    .title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        width: 100%;
+        height: 70%;
+        color: #EAEAEA;
+        font-size: 2.5vh;
+        font-weight: 500;
+    }
+}
+
+
+.body {
+    height: 70%;
+    width: 100%;
+    padding: 5vh 4vw;
+    letter-spacing: 1px;
+
+    & > div {
+        margin-bottom: 3vh;
+    }
+}
+
+.footer {
+    height: 15%;
+    width: 100%;
+    letter-spacing: 1px;
+
+    .button-box {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+    }
+}

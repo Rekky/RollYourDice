@@ -1,0 +1,114 @@
+<div class="carousel-box" *ngIf="images && images.length > 2">
+    <button class="button-left-box" [disabled]="disableArrows" (click)="nextImage()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.78 16.14">
+            <title>arrow</title>
+            <g id="Capa_2" data-name="Capa 2">
+                <g id="Capa_1-2" data-name="Capa 1">
+                    <path class="cls-1" d="M8.57,8.57,1.21,15.94a.72.72,0,0,1-1,0,.69.69,0,0,1-.2-.5.66.66,0,0,1,.2-.5L7.08,8.08.21,1.21a.7.7,0,0,1,0-1,.7.7,0,0,1,1,0L8.57,7.57h0A.69.69,0,0,1,8.57,8.57Z"/>
+                </g>
+            </g>
+        </svg>
+    </button>
+    <div class="carousel-cards-box">
+        <div class="carousel-card previous-card">
+            <img [src]="''">
+        </div>
+        <div class="carousel-card current-card">
+            <img [src]="images[0]">
+        </div>
+        <div class="carousel-card next-card">
+            <img [src]="images[1]">
+        </div>
+        <div class="carousel-card hidden-card">
+            <img [src]="images[images.length - 1]">
+        </div>
+    </div>
+    <button class="button-right-box" [disabled]="disableArrows" (click)="previousImage()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.78 16.14">
+            <title>arrow</title>
+            <g id="Capa_2" data-name="Capa 2">
+                <g id="Capa_1-2" data-name="Capa 1">
+                    <path class="cls-1" d="M8.57,8.57,1.21,15.94a.72.72,0,0,1-1,0,.69.69,0,0,1-.2-.5.66.66,0,0,1,.2-.5L7.08,8.08.21,1.21a.7.7,0,0,1,0-1,.7.7,0,0,1,1,0L8.57,7.57h0A.69.69,0,0,1,8.57,8.57Z"/>
+                </g>
+            </g>
+        </svg>
+    </button>
+</div>
+
+<div class="carousel-box" *ngIf="images && images.length === 2">
+    <button class="button-left-box" [disabled]="disableArrows" (click)="leftImageThreeCards()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.78 16.14">
+            <title>arrow</title>
+            <g id="Capa_2" data-name="Capa 2">
+                <g id="Capa_1-2" data-name="Capa 1">
+                    <path class="cls-1" d="M8.57,8.57,1.21,15.94a.72.72,0,0,1-1,0,.69.69,0,0,1-.2-.5.66.66,0,0,1,.2-.5L7.08,8.08.21,1.21a.7.7,0,0,1,0-1,.7.7,0,0,1,1,0L8.57,7.57h0A.69.69,0,0,1,8.57,8.57Z"/>
+                </g>
+            </g>
+        </svg>
+    </button>
+    <div class="carousel-cards-box">
+        <div class="carousel-card add-image"
+             [ngClass]="{'previous-card': displayedImageIndex !== 999999}">
+            <img [src]="''">
+        </div>
+        <div class="carousel-card"
+             [ngClass]="{'previous-card': displayedImageIndex === 1, 'next-card': displayedImageIndex === 999999}">
+            <img [src]="images[0]">
+        </div>
+        <div class="carousel-card"
+             [ngClass]="{'next-card': displayedImageIndex !== 1}">
+            <img [src]="images[1]">
+        </div>
+    </div>
+    <button class="button-right-box" [disabled]="disableArrows" (click)="rightImageThreeCards()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.78 16.14">
+            <title>arrow</title>
+            <g id="Capa_2" data-name="Capa 2">
+                <g id="Capa_1-2" data-name="Capa 1">
+                    <path class="cls-1" d="M8.57,8.57,1.21,15.94a.72.72,0,0,1-1,0,.69.69,0,0,1-.2-.5.66.66,0,0,1,.2-.5L7.08,8.08.21,1.21a.7.7,0,0,1,0-1,.7.7,0,0,1,1,0L8.57,7.57h0A.69.69,0,0,1,8.57,8.57Z"/>
+                </g>
+            </g>
+        </svg>
+    </button>
+</div>
+
+<div class="carousel-box" *ngIf="images && images.length === 1">
+    <button class="button-left-box" [disabled]="disableArrows" (click)="changeCard()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.78 16.14">
+            <title>arrow</title>
+            <g id="Capa_2" data-name="Capa 2">
+                <g id="Capa_1-2" data-name="Capa 1">
+                    <path class="cls-1" d="M8.57,8.57,1.21,15.94a.72.72,0,0,1-1,0,.69.69,0,0,1-.2-.5.66.66,0,0,1,.2-.5L7.08,8.08.21,1.21a.7.7,0,0,1,0-1,.7.7,0,0,1,1,0L8.57,7.57h0A.69.69,0,0,1,8.57,8.57Z"/>
+                </g>
+            </g>
+        </svg>
+    </button>
+    <div class="carousel-cards-box">
+        <div class="carousel-card add-image"
+             [ngClass]="{'previous-card': displayedImageIndex !== 999999}">
+            <img [src]="''">
+        </div>
+        <div class="carousel-card"
+             [ngClass]="{'previous-card': displayedImageIndex === 1, 'next-card': displayedImageIndex === 999999}">
+            <img [src]="images[0]">
+        </div>
+    </div>
+    <button class="button-right-box" [disabled]="disableArrows" (click)="changeCard()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.78 16.14">
+            <title>arrow</title>
+            <g id="Capa_2" data-name="Capa 2">
+                <g id="Capa_1-2" data-name="Capa 1">
+                    <path class="cls-1" d="M8.57,8.57,1.21,15.94a.72.72,0,0,1-1,0,.69.69,0,0,1-.2-.5.66.66,0,0,1,.2-.5L7.08,8.08.21,1.21a.7.7,0,0,1,0-1,.7.7,0,0,1,1,0L8.57,7.57h0A.69.69,0,0,1,8.57,8.57Z"/>
+                </g>
+            </g>
+        </svg>
+    </button>
+</div>
+
+<div class="carousel-box" *ngIf="images && images.length === 0">
+    <div class="carousel-cards-box">
+        <div class="carousel-card add-image">
+            <img [src]="''">
+        </div>
+    </div>
+</div>

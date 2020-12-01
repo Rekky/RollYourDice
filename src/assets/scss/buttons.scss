@@ -1,0 +1,39 @@
+.big-button {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    height: 45px;
+    padding: 0 30px;
+    border: none;
+    background-color: #EAEAEA;
+    cursor: pointer;
+
+    color: #262A31;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+
+    &:hover {
+        background-color: #F2F2F2;
+    }
+
+    &:disabled {
+        background-color: transparent;
+        color: #DBDBDB;
+        border: 1px solid #DBDBDB;
+        cursor: default;
+    }
+}
+
+@media (max-height: 1200px) and (orientation: landscape) {
+    .big-button {
+        height: 28px;
+        padding: 0 20px;
+
+        font-size: 16px;
+        letter-spacing: 0.1em;
+    }
+}
