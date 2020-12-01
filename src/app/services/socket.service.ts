@@ -90,7 +90,8 @@ export class SocketService {
     }
 
     sendGamePlayId(gameId: string): void {
-        this.socket.emit('game-play-load', gameId);
+        const userId = this.userInteractor.getCurrentUser().id;
+        this.socket.emit('game-play-load', {gameId, userId});
     }
 
     sendGameCreatePage(gameId: string, page: Page): void {

@@ -1,6 +1,6 @@
 <div class="game-play-container">
-    <div class="game-status-overlay">
+    <div class="game-status-overlay" *ngIf="gamePlay && gamePlay.gameStatus === false">
         <h1><i class="far fa-pause-circle"></i> THE GAME IS PAUSED</h1>
     </div>
-    <app-map *ngIf="map" [map]="map"></app-map>
+    <app-map *ngIf="gamePlay && gamePlay.map" [map]="gamePlay.map"></app-map>
 </div>
