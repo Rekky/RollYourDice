@@ -9,6 +9,14 @@
     background: $editorMainBackground;
     overflow: hidden;
 }
+// TOP COLUMN
+.top-column{
+    position: absolute;
+    top:0;
+    left:50%;
+    width: auto;
+    z-index: 999;
+}
 
 // LEFT COLUMN
 .left-column{

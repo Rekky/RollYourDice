@@ -17,6 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 export class GameEditorComponent implements OnInit, OnDestroy {
     map: OurKonvaMap;
     game: Game;
+    gameStartStatus: boolean = false;
     selectedPage: Page = null;
 
     tabs: number = 0;
@@ -42,6 +43,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             if (this.game && this.game.pages) {
                 // this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
                 this.selectedPage = this.game.pages.length > 0 ? this.game.pages[0] : null;
+                this.gameStartStatus = this.game.gameStatus;
             }
         });
 
@@ -117,6 +119,11 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onToPlayersMap(map: OurKonvaMap): void {
         this.socketService.sendGameSetToPlayersMap(this.game.id, this.selectedPage.id, map);
+    }
+
+    onStartGame(): void {
+        this.gameStartStatus = !this.gameStartStatus;
+        this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
     }
 
 }

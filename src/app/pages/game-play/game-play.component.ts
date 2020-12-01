@@ -14,6 +14,7 @@ export class GamePlayComponent implements OnInit {
 
     gameSocketSubscription: Subscription;
     map: OurKonvaMap;
+    gamePlay: {gameStatus: boolean, map: OurKonvaMap};
 
     constructor(private socketService: SocketService, private router: ActivatedRoute) { }
 
@@ -29,7 +30,11 @@ export class GamePlayComponent implements OnInit {
         // });
         this.socketService.socket.on('game-play-load', (data) => {
             console.log('RECIBO_GAMEPLAY', data);
-            this.map = data;
+            this.gamePlay = data;
+        });
+
+        this.socketService.socket.on('game-play-start-status', (data) => {
+
         });
     }
 
