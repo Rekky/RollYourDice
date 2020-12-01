@@ -29,6 +29,7 @@ export class GamePlayComponent implements OnInit {
         // });
         this.socketService.socket.on('game-play-load', (data) => {
             console.log('RECIBO_GAMEPLAY', data);
+            console.log(data);
             this.map = data;
         });
     }

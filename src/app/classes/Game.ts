@@ -8,6 +8,7 @@ export class Game {
     privacy: 'private' | 'public'; // public | private
     gameType: 'dungeonsAndDragons5e';
     author: string | number;
+    gameStatus: boolean;
     createdDate: Date;
 
     constructor(id?: string,
@@ -17,6 +18,7 @@ export class Game {
                 privacy?: 'private' | 'public',
                 gameType?: 'dungeonsAndDragons5e',
                 author?: string | number,
+                gameStatus?: boolean,
                 createdDate?: Date
     ) {
         this.id = id ? id : null;
@@ -26,6 +28,7 @@ export class Game {
         this.privacy = privacy ? privacy : 'private';
         this.gameType = gameType ? gameType : 'dungeonsAndDragons5e';
         this.author = author ? author : null;
+        this.gameStatus = gameStatus ? gameStatus : false;
         this.createdDate = createdDate ? createdDate : new Date();
     }
 
@@ -38,6 +41,7 @@ export class Game {
         game.privacy = json.privacy;
         game.gameType = json.gameType;
         game.author = json.author;
+        game.gameStatus = json.gameStatus;
         game.createdDate = json.createdDate;
         return game;
     }
@@ -51,6 +55,7 @@ export class Game {
         json.privacy = this.privacy;
         json.gameType = this.gameType;
         json.author = this.author;
+        json.gameStatus = this.gameStatus;
         json.createdDate = this.createdDate;
         return json;
     }

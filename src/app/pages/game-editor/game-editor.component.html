@@ -1,5 +1,15 @@
 <div class="game-editor">
     <app-page *ngIf="selectedPage" [page]="selectedPage" (mapMoveEvent)="onMapMove($event)"></app-page>
+    <div class="top-column">
+        <button *ngIf="!gameStartStatus" (click)="onStartGame()">
+            <i class="far fa-play-circle"></i>
+            START GAME
+        </button>
+        <button *ngIf="gameStartStatus" (click)="onStartGame()">
+            <i class="far fa-pause-circle"></i>
+            PAUSE GAME
+        </button>
+    </div>
 
     <div class="left-column">
         <div class="tabs adjust">

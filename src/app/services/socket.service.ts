@@ -6,6 +6,7 @@ import {Game} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
 import {Page} from '../classes/Page';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
+import {UserInteractor} from '../interactors/UserInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,7 @@ export class SocketService {
     gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
 
-    constructor(private apiService: ApiService) {
+    constructor(private apiService: ApiService, private userInteractor: UserInteractor) {
         this.socket.on('connect', () => {
             console.log('socket conectado');
         });
@@ -77,6 +78,9 @@ export class SocketService {
         // this.socket.on('game-play-load', (data) => {
         //     console.log('RECIBO_GAME_PLAY', data);
         // });
+        this.socket.on('game-start-status', (data) => {
+            console.log('RECIBO_GAME_PLAY', data);
+        });
 
         // ======================== END GAME PLAY ==============================
     }
@@ -123,7 +127,7 @@ export class SocketService {
     }
 
     sendGameMapsUpdate(gameId: string, pageId: string, maps: OurKonvaMap[]): void {
-        this.socket.emit('game-editor-maps-update', {gameId, pageId, maps: maps});
+        this.socket.emit('game-editor-maps-update', {gameId, pageId, maps});
     }
 
     sendSocketObject(object: any): void {
@@ -132,5 +136,10 @@ export class SocketService {
 
     sendGameSetToPlayersMap(gameId: string, pageId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-set-players-map', {gameId, pageId, map});
+    }
+
+    sendGameStartStatus(gameId: string, gameStatus: boolean): void {
+        const userId = this.userInteractor.getCurrentUser().id;
+        this.socket.emit('game-play-start-status', {gameId, userId, gameStatus});
     }
 }
