@@ -36,16 +36,8 @@ export class Game {
             game[key] = json[key] ? json[key] : game[key];
         });
         game.pages = json.pages ? json.pages.map(el => Page.fromJSON(el)) : [];
+        game.image = json.image ? Asset.fromJSON(json.image) : new Asset();
         return game;
-    }
-
-    toJSON(): any {
-        const json: any = {};
-        Object.keys(Game).forEach((key) => {
-            json[key] = this[key];
-        });
-        json.pages = this.pages.map(page => page.toJSON());
-        return json;
     }
 }
 

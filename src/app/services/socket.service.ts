@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
 import {ApiService} from './api.service';
 import {BehaviorSubject} from 'rxjs';
-import {Game} from '../classes/Game';
+import {Game, GameStatus} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
 import {Page} from '../classes/Page';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
@@ -139,7 +139,7 @@ export class SocketService {
         this.socket.emit('game-editor-set-players-map', {gameId, pageId, map});
     }
 
-    sendGameStartStatus(gameId: string, gameStatus: boolean): void {
+    sendGameStartStatus(gameId: string, gameStatus: GameStatus): void {
         const userId = this.userInteractor.getCurrentUser().id;
         this.socket.emit('game-play-start-status', {gameId, userId, gameStatus});
     }

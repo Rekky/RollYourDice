@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
-import {Game} from '../../classes/Game';
+import {Game, GameStatus} from '../../classes/Game';
 import {Page} from '../../classes/Page';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
@@ -17,7 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 export class GameEditorComponent implements OnInit, OnDestroy {
     map: OurKonvaMap;
     game: Game;
-    gameStartStatus: boolean = false;
+    gameStartStatus: GameStatus;
     selectedPage: Page = null;
 
     tabs: number = 0;
@@ -43,7 +43,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             if (this.game && this.game.pages) {
                 // this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
                 this.selectedPage = this.game.pages.length > 0 ? this.game.pages[0] : null;
-                this.gameStartStatus = this.game.gameStatus;
+                this.gameStartStatus = this.game.status;
             }
         });
 
@@ -121,8 +121,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendGameSetToPlayersMap(this.game.id, this.selectedPage.id, map);
     }
 
-    onStartGame(): void {
-        this.gameStartStatus = !this.gameStartStatus;
+    onToggleGameStatus(status: GameStatus): void {
+        this.gameStartStatus = status;
         this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
     }
 
