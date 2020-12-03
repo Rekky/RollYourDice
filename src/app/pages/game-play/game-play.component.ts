@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Game} from '../../classes/Game';
+import {GameStatus} from '../../classes/Game';
 import {ActivatedRoute} from '@angular/router';
 import {SocketService} from '../../services/socket.service';
 import {Subscription} from 'rxjs';
@@ -12,19 +12,21 @@ import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 })
 export class GamePlayComponent implements OnInit {
 
-    gameSocketSubscription: Subscription;
+    loading: boolean = false;
     map: OurKonvaMap;
-    gamePlay: {gameStatus: boolean, map: OurKonvaMap};
+    gamePlay: {status: GameStatus, map: OurKonvaMap};
 
     constructor(private socketService: SocketService, private router: ActivatedRoute) { }
 
     ngOnInit(): void {
+        this.loading = true;
         const gameId = this.router.snapshot.paramMap.get('id');
         this.socketService.sendGamePlayId(gameId);
 
         this.socketService.socket.on('game-play-load', (data) => {
             console.log('RECIBO_GAMEPLAY', data);
             this.gamePlay = data;
+            this.loading = false;
         });
     }
 

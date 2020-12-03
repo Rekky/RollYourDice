@@ -33,7 +33,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     async ngOnInit(): Promise<void> {
         try {
             this.adventures = await this.gameInteractor.getMyGames(this.currentUser.id);
-            console.log('adventures', this.adventures);
             this.displayedGameIndex = this.adventures.length > 0 ? 0 : 999999;
             this.updateCarrouselImages();
         } catch (e) {

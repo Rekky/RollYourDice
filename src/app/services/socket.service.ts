@@ -139,8 +139,8 @@ export class SocketService {
         this.socket.emit('game-editor-set-players-map', {gameId, pageId, map});
     }
 
-    sendGameStartStatus(gameId: string, gameStatus: GameStatus): void {
+    sendGameStartStatus(gameId: string, status: GameStatus): void {
         const userId = this.userInteractor.getCurrentUser().id;
-        this.socket.emit('game-play-start-status', {gameId, userId, gameStatus});
+        this.socket.emit('game-play-start-status', {gameId, userId, status});
     }
 }
