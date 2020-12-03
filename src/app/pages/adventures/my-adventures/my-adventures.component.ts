@@ -77,12 +77,11 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     async saveGame(game: Game): Promise<void> {
         // TODO add response as game
         try {
-            console.log('GAME', game);
-            await this.gameInteractor.createGame(game);
-
             if (this.displayedGameIndex === 999999) {
                 this.adventures.push(game);
                 this.displayedGameIndex = this.adventures.length - 1;
+                this.adventures[this.displayedGameIndex] = await this.gameInteractor.createGame(game);
+                console.log('RECIBO', this.adventures[this.displayedGameIndex]);
             } else {
                 this.adventures[this.displayedGameIndex] = game;
             }
@@ -98,6 +97,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     loadGame(): void {
+        console.log(this.adventures[this.displayedGameIndex]);
         this.gameInteractor.goToTheGame(this.adventures[this.displayedGameIndex]);
     }
 
