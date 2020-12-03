@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { KonvaTextPropertiesComponent } from './konva-text-properties.component';
 
@@ -6,7 +6,7 @@ describe('KonvaTextPropertiesComponent', () => {
   let component: KonvaTextPropertiesComponent;
   let fixture: ComponentFixture<KonvaTextPropertiesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ KonvaTextPropertiesComponent ]
     })
