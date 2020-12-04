@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RecursiveListComponent } from './recursive-list.component';
 
@@ -6,7 +6,7 @@ describe('RecursiveListComponent', () => {
   let component: RecursiveListComponent;
   let fixture: ComponentFixture<RecursiveListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RecursiveListComponent ]
     })

@@ -24,6 +24,10 @@ export class GameInteractor {
         return await this.gameService.createGame(game);
     }
 
+    async removeGame(id: string): Promise<any> {
+        return await this.gameService.removeGame(id);
+    }
+
     async getAllGames(): Promise<Game[]> {
         return await this.gameService.getAllGames();
     }

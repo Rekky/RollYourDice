@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { KonvaBrushPropertiesComponent } from './konva-brush-properties.component';
 
@@ -6,7 +6,7 @@ describe('KonvaBrushPropertiesComponent', () => {
   let component: KonvaBrushPropertiesComponent;
   let fixture: ComponentFixture<KonvaBrushPropertiesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ KonvaBrushPropertiesComponent ]
     })
