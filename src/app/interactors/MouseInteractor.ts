@@ -12,6 +12,7 @@ import {OurKonvaLayers} from '../classes/ourKonva/OurKonvaLayers';
 })
 export class MouseInteractor implements OnDestroy {
     private selectedObject: BehaviorSubject<CurrentSelectedKonvaObject> = new BehaviorSubject<CurrentSelectedKonvaObject>(null);
+    private selectedKonvaObject: BehaviorSubject<CurrentSelectedKonvaObject | null> = new BehaviorSubject<CurrentSelectedKonvaObject | null>(null);
 
     mouse: OurKonvaMouse = new OurKonvaMouse();
     getMouseObservableSubscription: Subscription;
@@ -43,11 +44,12 @@ export class MouseInteractor implements OnDestroy {
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.mouse.isActive = true;
             this.mouse.ev = e;
-            const mouseDownReturns = this.mouse.mouseDown(); // After add a new object the cursor changes to pointer
-            if (mouseDownReturns) {
+            const konvaElement = this.mouse.mouseDown(); // After add a new object the cursor changes to pointer
+            if (konvaElement) {
                 this.mouseService.setMouse(new OurKonvaPointer());
-                this.selectedObject.next(mouseDownReturns);
+                // this.selectedObject.next(konvaElement);
             }
+            this.newObjectSelected(konvaElement);
         }, false);
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {
@@ -58,7 +60,8 @@ export class MouseInteractor implements OnDestroy {
         mapEl.nativeElement.addEventListener('mouseup', (e) => {
             this.mouse.isActive = false;
             this.mouse.ev = e;
-            this.mouse.mouseUp();
+            const konvaElement = this.mouse.mouseUp();
+            this.newObjectSelected(konvaElement);
         }, false);
         mapEl.nativeElement.addEventListener('mouseout', (e) => {
             this.mouse.isActive = false;
@@ -67,6 +70,23 @@ export class MouseInteractor implements OnDestroy {
         }, false);
     }
 
+    newObjectSelected(object: any): void {
+        object?.konvaObject.on('click', () => {
+            if (this.selectedKonvaObject?.getValue()?.konvaObject.getAttr('id') !== object?.konvaObject.getAttr('id')) {
+                this.selectedKonvaObject?.getValue()?.transformer.hide();
+                this.selectedKonvaObject?.getValue()?.layer.batchDraw();
+                object?.transformer.show();
+                object?.layer.batchDraw();
+            }
+            this.selectedKonvaObject.next(object);
+        });
+    }
+
+    getSelectedKonvaObjectObservable(): Observable<CurrentSelectedKonvaObject | null> {
+        return this.selectedKonvaObject.asObservable();
+    }
+
+    // TODO mirar com eliminar aquesta funció
     getCurrentSelectedObjectObservable(): Observable<CurrentSelectedKonvaObject> {
         return this.selectedObject.asObservable();
     }

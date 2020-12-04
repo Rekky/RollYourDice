@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {MouseService} from '../../../services/mouse.service';
 import {OurKonvaText} from '../../../classes/ourKonva/OurKonvaText';
+import {CurrentSelectedKonvaObject} from '../../../classes/ourKonva/OurKonvaMouse';
+import {MouseInteractor} from '../../../interactors/MouseInteractor';
 
 @Component({
     selector: 'app-konva-text-properties',
@@ -11,12 +13,23 @@ import {OurKonvaText} from '../../../classes/ourKonva/OurKonvaText';
 export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
     text: OurKonvaText;
     getMouseObservableSubscription: Subscription;
+    getSelectedKonvaObjectSubscription: Subscription;
+    konvaText: CurrentSelectedKonvaObject;
 
-    constructor(private mouseService: MouseService) { }
+    constructor(private mouseService: MouseService,
+                private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
             this.text = mouse;
+        });
+        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva) => {
+            if (konva && konva.type === 'text') {
+                this.konvaText = konva;
+                const konvaAttrs = konva.konvaObject.getAttrs();
+                this.text.color = konvaAttrs.fill;
+                this.text.fontSize = konvaAttrs.fontSize;
+            }
         });
     }
 
@@ -24,15 +37,27 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
         if (this.getMouseObservableSubscription) {
             this.getMouseObservableSubscription.unsubscribe();
         }
+        if (this.getSelectedKonvaObjectSubscription) {
+            this.getSelectedKonvaObjectSubscription.unsubscribe();
+        }
     }
 
     colorModified(ev: string): void {
         this.text.color = ev;
         this.mouseService.setMouse(this.text);
+        if (this.konvaText) {
+            console.log('this.konvaText.konvaObject =', this.konvaText.konvaObject.getAttrs());
+            this.konvaText.konvaObject.setAttr('fill', ev);
+            this.konvaText.layer.batchDraw();
+        }
     }
 
     sizeModified(ev: number): void {
         this.text.fontSize = ev;
         this.mouseService.setMouse(this.text);
+        if (this.konvaText) {
+            this.konvaText.konvaObject.setAttr('fontSize', ev);
+            this.konvaText.layer.batchDraw();
+        }
     }
 }

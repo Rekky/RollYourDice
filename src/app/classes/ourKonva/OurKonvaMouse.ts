@@ -21,7 +21,7 @@ export class OurKonvaMouse {
 
     mouseDown(): void | CurrentSelectedKonvaObject {}
     mouseMove(): void {}
-    mouseUp(): void {}
+    mouseUp(): void | CurrentSelectedKonvaObject {}
     mouseOut(): void {}
 
     public adaptPositionToGrid(object: any): void {
@@ -44,11 +44,15 @@ export class OurKonvaMouse {
 }
 
 export class CurrentSelectedKonvaObject {
+    konvaObject: Konva.Rect | Konva.Text;
+    type: string;
+    layer: Konva.Layer;
     transformer: Konva.Transformer;
-    attr: any;
 
-    constructor(tr: Konva.Transformer, attr: any) {
-        this.transformer = tr;
-        this.attr = attr;
+    constructor() {
+        this.konvaObject = new Konva.Rect();
+        this.type = 'square';
+        this.layer = new Konva.Layer();
+        this.transformer = new Konva.Transformer();
     }
 }

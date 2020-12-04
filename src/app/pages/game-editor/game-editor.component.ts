@@ -8,6 +8,8 @@ import {ApiService} from '../../services/api.service';
 import {SocketService} from '../../services/socket.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import {MouseInteractor} from '../../interactors/MouseInteractor';
+import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 
 @Component({
     selector: 'app-game-editor',
@@ -23,11 +25,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     tabs: number = 0;
     currentObjectSelected: any;
     mouse: any;
+    selectedKonvaObject: CurrentSelectedKonvaObject;
 
     gameSocketSubscription: Subscription;
     getMouseObservableSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
+                private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService,
                 private apiService: ApiService,
                 private socketService: SocketService,
@@ -49,6 +53,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
             this.mouse = mouse;
+        });
+
+        this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
+            this.selectedKonvaObject = konva;
         });
     }
 

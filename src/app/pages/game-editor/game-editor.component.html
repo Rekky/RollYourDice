@@ -47,9 +47,9 @@
 
     <div class="right-column">
 <!--        <app-map-properties [map]="currentObjectSelected" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected"></app-map-properties>-->
-        <app-konva-brush-properties *ngIf="mouse.state === 'brush'"></app-konva-brush-properties>
-        <app-konva-eraser-properties *ngIf="mouse.state === 'eraser'"></app-konva-eraser-properties>
-        <app-konva-text-properties *ngIf="mouse.state === 'text'"></app-konva-text-properties>
-        <app-konva-rectangle-properties *ngIf="mouse.state === 'square'"></app-konva-rectangle-properties>
+        <app-konva-brush-properties *ngIf="mouse.state === 'brush' || selectedKonvaObject?.type === 'brush'"></app-konva-brush-properties>
+        <app-konva-eraser-properties *ngIf="mouse.state === 'eraser' || selectedKonvaObject?.type === 'eraser'"></app-konva-eraser-properties>
+        <app-konva-text-properties *ngIf="mouse.state === 'text' || selectedKonvaObject?.type === 'text'"></app-konva-text-properties>
+        <app-konva-rectangle-properties *ngIf="mouse.state === 'square' || selectedKonvaObject?.type === 'square'"></app-konva-rectangle-properties>
     </div>
 </div>

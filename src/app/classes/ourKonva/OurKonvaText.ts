@@ -2,6 +2,7 @@ import Konva from 'konva';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 
 export class OurKonvaText extends OurKonvaMouse {
+    id: string;
     state: string = 'text';
     color: string;
     fontSize: number;
@@ -10,10 +11,12 @@ export class OurKonvaText extends OurKonvaMouse {
         super();
         this.color = '#000000';
         this.fontSize = 20;
+        this.id = 'text-' + Math.floor(Math.random() * 100000);
     }
 
     mouseDown(): CurrentSelectedKonvaObject {
         super.mouseDown();
+        this.id = 'text-' + Math.floor(Math.random() * 100000);
         const pos = this.stage.getPointerPosition();
         const text = new Konva.Text({
             text: 'Some text here',
@@ -22,7 +25,8 @@ export class OurKonvaText extends OurKonvaMouse {
             fontSize: this.fontSize,
             draggable: true,
             width: 200,
-            fill: this.color
+            fill: this.color,
+            id: this.id
         });
 
         const transformer = new Konva.Transformer({
@@ -40,12 +44,6 @@ export class OurKonvaText extends OurKonvaMouse {
                 scaleX: 1,
                 scaleY: 1,
             });
-        });
-
-        // EVENTS FOR TEXT
-        text.on('click', () => {
-            transformer.show();
-            this.layers.texts.batchDraw();
         });
 
         text.on('dblclick', () => {
@@ -122,6 +120,11 @@ export class OurKonvaText extends OurKonvaMouse {
         this.layers.texts.add(transformer);
         this.layers.texts.batchDraw();
 
-        return new CurrentSelectedKonvaObject(transformer, text.getAttrs());
+        const toEmit = new CurrentSelectedKonvaObject();
+        toEmit.konvaObject = text;
+        toEmit.type = this.state;
+        toEmit.layer = this.layers.texts;
+        toEmit.transformer = transformer;
+        return toEmit;
     }
 }

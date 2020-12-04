@@ -56,9 +56,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     ngOnInit(): void {
         this.getCurrentSelectedObjectSub = this.mouseInteractor.getCurrentSelectedObjectObservable().subscribe(res => {
+            console.log('.-----------------.');
             if (res) {
+                console.log('res ok =', res);
                 this.activeTr = res.transformer;
-                this.selectedObjectAttrs = res.attr;
+                this.selectedObjectAttrs = res.konvaObject.getAttrs();
             }
         });
         // set mouse cursor type

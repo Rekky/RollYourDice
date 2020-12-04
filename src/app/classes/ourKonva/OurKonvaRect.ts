@@ -15,7 +15,7 @@ export class OurKonvaRect extends OurKonvaMouse {
 
     constructor(id?: string, name?: string, position?: Coords) {
         super();
-        this.id = id ? id : '-' + Math.floor(Math.random() * 1000);
+        this.id = id ? id : 'rect-' + Math.floor(Math.random() * 100000);
         this.name = name ? name : 'new Object';
         this.position = position ? position : new Coords();
         this.fillColor = '#ffff00';
@@ -40,8 +40,9 @@ export class OurKonvaRect extends OurKonvaMouse {
         return json;
     }
 
-    mouseDown(): void | CurrentSelectedKonvaObject {
+    mouseDown(): void {
         super.mouseDown();
+        this.id = '-' + Math.floor(Math.random() * 100000);
         this.position = new Coords(this.ev.offsetX, this.ev.offsetY);
     }
 
@@ -69,7 +70,7 @@ export class OurKonvaRect extends OurKonvaMouse {
         }
     }
 
-    mouseUp(): void | CurrentSelectedKonvaObject {
+    mouseUp(): CurrentSelectedKonvaObject {
         super.mouseUp();
         if (this.tempRect) {
             this.tempRect.destroy();
@@ -84,7 +85,8 @@ export class OurKonvaRect extends OurKonvaMouse {
             stroke: this.strokeColor,
             strokeWidth: this.strokeSize,
             draggable: true,
-            opacity: this.opacity / 100
+            opacity: this.opacity / 100,
+            id: 'rect' + this.id
         });
 
         const transformer = new Konva.Transformer();
@@ -92,15 +94,24 @@ export class OurKonvaRect extends OurKonvaMouse {
         transformer.nodes([rect]);
         transformer.hide();
 
-        // EVENTS FOR TEXT
-        rect.on('click', () => {
-            transformer.show();
-            this.layers.texts.batchDraw();
-        });
-
         this.adaptPositionToGrid(rect);
         this.layers.draws.add(rect);
         this.layers.draws.batchDraw();
-        // return new CurrentSelectedKonvaObject(transformer, rect.getAttrs());
+
+        const toEmit = new CurrentSelectedKonvaObject();
+        toEmit.konvaObject = rect;
+        toEmit.type = this.state;
+        toEmit.layer = this.layers.draws;
+        toEmit.transformer = transformer;
+        return toEmit;
     }
 }
+
+// export class CurrentSelectedKonvaBrush extends CurrentSelectedKonvaObject {
+//     konvaObject: Konva.Rect;
+//
+//     constructor() {
+//         super();
+//         this.konvaObject = new Konva.Rect();
+//     }
+// }
