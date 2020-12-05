@@ -60,7 +60,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         this.gameToEdit = new Game(this.currentUser.id);
     }
 
-    editGame(): void {
+    async editGame(): Promise<void> {
         this.displayOptions = false;
         this.gameToEdit = this.adventures[this.displayedGameIndex];
     }

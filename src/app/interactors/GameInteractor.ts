@@ -38,6 +38,10 @@ export class GameInteractor {
         return await this.gameService.removeGame(id);
     }
 
+    async editGame(game: Game): Promise<any> {
+        return await this.gameService.editGame(game);
+    }
+
     async getAllGames(): Promise<Game[]> {
         return await this.gameService.getAllGames();
     }

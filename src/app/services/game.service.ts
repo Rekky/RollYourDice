@@ -56,6 +56,23 @@ export class GameService {
         });
     }
 
+    editGame(game: Game): Promise<any> {
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: this.userInteractor.getToken()
+            })
+        };
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/game/edit`, {game}, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
     getAllGames(): Promise<any> {
         const options = {
             headers: new HttpHeaders({
