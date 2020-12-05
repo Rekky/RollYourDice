@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CsSavingThrowsComponent } from './cs-saving-throws.component';
 
@@ -6,7 +6,7 @@ describe('CsSavingThrowsComponent', () => {
   let component: CsSavingThrowsComponent;
   let fixture: ComponentFixture<CsSavingThrowsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CsSavingThrowsComponent ]
     })

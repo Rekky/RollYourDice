@@ -66,11 +66,15 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         this.gameToEdit = this.adventures[this.displayedGameIndex];
     }
 
-    deleteGame(): void {
-        this.displayOptions = false;
-        // TODO send games to backend, if OK continue
-        this.adventures.splice(this.displayedGameIndex, 1);
-        this.updateCarrouselImages();
+    async deleteGame(): Promise<void> {
+        try {
+            this.displayOptions = false;
+            await this.gameInteractor.removeGame(this.adventures[this.displayedGameIndex].id);
+            this.adventures.splice(this.displayedGameIndex, 1);
+            this.updateCarrouselImages();
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async saveGame(game: Game): Promise<void> {
