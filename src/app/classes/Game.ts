@@ -31,12 +31,13 @@ export class Game {
     }
 
     static fromJSON(json: any): Game {
-        const game = new Game(json.authorId);
-        Object.keys(game).forEach((key) => {
-            game[key] = json[key] ? json[key] : game[key];
-        });
-        game.pages = json.pages ? json.pages.map(el => Page.fromJSON(el)) : [];
-        game.image = json.image ? Asset.fromJSON(json.image) : new Asset();
+        // const game = new Game(json.authorId);
+        // Object.keys(game).forEach((key) => {
+        //     game[key] = json[key] ? json[key] : game[key];
+        // });
+        // game.pages = (json.pages && json.pages.length > 0) ? json.pages.map(el => Page.fromJSON(el)) : [];
+        // game.image = json.image ? Asset.fromJSON(json.image) : new Asset();
+        const game = {...new Game(json.authorId), ...json};
         return game;
     }
 }

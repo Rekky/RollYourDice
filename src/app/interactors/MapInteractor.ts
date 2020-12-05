@@ -18,7 +18,7 @@ export class MapInteractor {
     }
 
     sendSocketObjectPosition(object: any): void {
-        this.socketService.sendSocketObject(object);
+        // this.socketService.sendSocketObject(object);
     }
 
     getSocketObjectPosition(): Observable<any> {

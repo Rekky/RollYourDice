@@ -15,7 +15,7 @@ export class Page {
         const page = new Page();
         page.id = json.id;
         page.name = json.name;
-        page.maps = json.maps.map(el => OurKonvaMap.fromJSON(el));
+        page.maps = (json.maps && json.maps.length > 0) ? json.maps.map(el => OurKonvaMap.fromJSON(el)) : [];
         return page;
     }
 

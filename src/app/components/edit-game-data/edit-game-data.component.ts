@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Game, GameTypes } from 'src/app/classes/Game';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Asset} from '../../classes/Asset';
 import {Page} from '../../classes/Page';
 
@@ -23,7 +23,6 @@ export class EditGameDataComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('first game =', this.game);
         this.newGame = Game.fromJSON(this.game);
         this.gameForm = new FormGroup({
             name: new FormControl(this.newGame.name, Validators.required),
@@ -45,7 +44,7 @@ export class EditGameDataComponent implements OnInit {
 
     acceptChanges(): void {
         Object.keys(this.gameForm.value).forEach((key) => {
-            this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
+             this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
         this.saveGame.emit(this.newGame);
     }

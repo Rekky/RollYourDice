@@ -82,7 +82,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     async saveGame(game: Game): Promise<void> {
-        // TODO add response as game
         try {
             const newAdventure = await this.gameInteractor.createGame(game);
             if (this.displayedGameIndex === 999999) {
