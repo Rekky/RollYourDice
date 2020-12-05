@@ -48,8 +48,6 @@ export class MapsListComponent implements OnInit, OnDestroy {
                 const objectToSelect = map.objects.find(object => {
                     return object.id === konva?.konvaObject.getAttr('id');
                 });
-                console.log('objectToSelect =', objectToSelect);
-                console.log('konvaObject =', konva?.konvaObject.getAttr('id'));
             });
         });
     }

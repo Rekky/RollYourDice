@@ -11,6 +11,7 @@ import {GameInteractor} from './GameInteractor';
 import { Game } from '../classes/Game';
 import {Page} from '../classes/Page';
 import {OurKonvaText} from '../classes/ourKonva/OurKonvaText';
+import {SocketService} from '../services/socket.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,8 @@ export class MouseInteractor implements OnDestroy {
     game: Game | null;
 
     constructor(private mouseService: MouseService,
-                private gameInteractor: GameInteractor) {
+                private gameInteractor: GameInteractor,
+                private socketService: SocketService) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             if (res) {
                 this.mouse = res;
@@ -84,19 +86,20 @@ export class MouseInteractor implements OnDestroy {
     addKonvaObjectToMap(map: OurKonvaMap): void {
         if (this.mouse.state === 'square') {
             map.objects.push(this.mouse as OurKonvaRect);
+            this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaRect);
         }
         if (this.mouse.state === 'text') {
             map.objects.push(this.mouse as OurKonvaText);
+            this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaText);
         }
-        // TODO depen del que fagi el backend s'haurà de gestionar d'una manera o una altre
-        this.game.pages = this.game.pages.map((page: Page) => {
-            const mapToModifyIndex = page.maps.findIndex((pageMap: OurKonvaMap) => {
-                return pageMap.id === map.id;
-            });
-            page[mapToModifyIndex] = map;
-            return page;
-        });
-        this.gameInteractor.setCurrentGame(this.game);
+        // this.game.pages = this.game.pages.map((page: Page) => {
+        //     const mapToModifyIndex = page.maps.findIndex((pageMap: OurKonvaMap) => {
+        //         return pageMap.id === map.id;
+        //     });
+        //     page[mapToModifyIndex] = map;
+        //     return page;
+        // });
+        // this.gameInteractor.setCurrentGame(this.game);
     }
 
     newObjectAddSelectedOption(object: any): void {
