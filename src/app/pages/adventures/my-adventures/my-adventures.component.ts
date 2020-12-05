@@ -46,14 +46,13 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
-    // TODO Fix adventures
     updateCarrouselImages(): void {
         if (this.adventures.length > 0) {
             this.adventuresImages = this.adventures.map(adventure => {
                 return adventure.image.uri;
             });
         } else {
-            this.displayedGameIndex = 999999;
+            this.adventuresImages = [];
         }
     }
 
@@ -68,10 +67,15 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     async deleteGame(): Promise<void> {
         try {
-            this.displayOptions = false;
             await this.gameInteractor.removeGame(this.adventures[this.displayedGameIndex].id);
             this.adventures.splice(this.displayedGameIndex, 1);
+            if (this.displayedGameIndex !== 0) {
+                this.displayedGameIndex--;
+            } else if (this.displayedGameIndex === 0 && this.adventures.length === 0) {
+                this.displayedGameIndex = 999999;
+            }
             this.updateCarrouselImages();
+            this.displayOptions = false;
         } catch (e) {
             console.log(e);
         }

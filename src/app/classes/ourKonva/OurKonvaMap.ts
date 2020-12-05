@@ -3,8 +3,10 @@ import {OurKonvaGrid} from './OurKonvaGrid';
 import {OurKonvaObject} from './OurKonvaObject';
 import Konva from 'konva';
 import {OurKonvaLayers} from './OurKonvaLayers';
+import { OurKonvaRect } from './OurKonvaRect';
+import { OurKonvaText } from './OurKonvaText';
 
-export class OurKonvaMap {
+export class  OurKonvaMap {
     id: string;
     name: string | null;
     position: Coords;
@@ -16,7 +18,7 @@ export class OurKonvaMap {
     dndDiagonalSystem: boolean;
     zoom: number;
     grid: OurKonvaGrid;
-    objects: OurKonvaObject[];
+    objects: (OurKonvaRect | OurKonvaText)[];
     toPlayers: boolean;
     players: string[];
     stage: Konva.Stage;
@@ -33,7 +35,6 @@ export class OurKonvaMap {
                 dndDiagonalSystem?: boolean,
                 zoom?: number,
                 grid?: OurKonvaGrid,
-                objects?: OurKonvaObject[],
                 toPlayers?: boolean,
                 players?: string[],
                 stage?: Konva.Stage,
@@ -50,7 +51,7 @@ export class OurKonvaMap {
         this.dndDiagonalSystem = dndDiagonalSystem ? dndDiagonalSystem : false;
         this.zoom = zoom ? zoom : 100;
         this.grid = grid ? grid : new OurKonvaGrid();
-        this.objects = objects ? objects : [];
+        this.objects = [];
         this.toPlayers = toPlayers ? toPlayers : false;
         this.players = players ? players : [];
         this.stage = stage ? stage : new Konva.Stage({

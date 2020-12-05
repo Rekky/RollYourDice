@@ -1,17 +1,22 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Page} from '../../../classes/Page';
 import {Coords} from '../../../classes/Coords';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
 import Konva from 'konva';
+import {GameInteractor} from '../../../interactors/GameInteractor';
+import {Game} from '../../../classes/Game';
+import {Subscription} from 'rxjs';
+import {MouseInteractor} from '../../../interactors/MouseInteractor';
+import { MapInteractor } from 'src/app/interactors/MapInteractor';
 
 @Component({
     selector: 'app-maps-list',
     templateUrl: './maps-list.component.html',
     styleUrls: ['./maps-list.component.scss']
 })
-export class MapsListComponent implements OnInit {
+export class MapsListComponent implements OnInit, OnDestroy {
 
     @Input() maps: OurKonvaMap[] = [];
     @Output() newMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
@@ -25,19 +30,32 @@ export class MapsListComponent implements OnInit {
 
     showNewMapForm: boolean = false;
     showRenameMapForm: boolean = false;
-
     newMapForm: FormGroup;
     selectedItemsArray: any[] = [];
-
     renameMapForm: FormGroup;
     mapToRename: OurKonvaMap;
 
-    constructor() { }
+    getSelectedKonvaObjectSubscription: Subscription;
+
+    constructor(private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
         this.newMapForm = new FormGroup({
             name: new FormControl('Map' + (this.maps.length + 1)),
         });
+        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva: any) => {
+            this.maps?.find(map => {
+                const objectToSelect = map.objects.find(object => {
+                    return object.id === konva?.konvaObject.getAttr('id');
+                });
+                console.log('objectToSelect =', objectToSelect);
+                console.log('konvaObject =', konva?.konvaObject.getAttr('id'));
+            });
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.getSelectedKonvaObjectSubscription?.unsubscribe();
     }
 
     onSelectMap(ev, map: OurKonvaMap): void {
@@ -68,7 +86,7 @@ export class MapsListComponent implements OnInit {
 
     onAddNewMap(): void {
         const newMap: OurKonvaMap = new OurKonvaMap();
-        newMap.id = '' + Math.floor(Math.random() * -1000);
+        newMap.id = 'map' + Math.floor(Math.random() * -1000000);
         newMap.position = new Coords(300, 10, 0);
         newMap.name = this.newMapForm.get('name').value;
 

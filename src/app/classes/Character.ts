@@ -1,4 +1,3 @@
-import {GameObject} from './GameObject';
 import {Background} from './character-properties/background';
 import {Class} from './character-properties/class';
 import {Stat} from './character-properties/stat';

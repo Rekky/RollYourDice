@@ -6,7 +6,7 @@
     </div>
     <div class="carrousel-box">
         <app-images-carrousel [images]="adventuresImages" [disableArrows]="this.adventures.length === 0"
-                              (selectedImageIndex)="displayedGameIndex = $event"></app-images-carrousel>
+                              [(selectedImageIndex)]="displayedGameIndex"></app-images-carrousel>
     </div>
     <div *ngIf="!gameToEdit" class="selected-image-data-box">
         <div *ngIf="displayedGameIndex !== 999999" class="selected-image-data">

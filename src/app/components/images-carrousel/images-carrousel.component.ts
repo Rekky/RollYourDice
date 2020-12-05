@@ -1,17 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
     selector: 'app-images-carrousel',
     templateUrl: './images-carrousel.component.html',
     styleUrls: ['./images-carrousel.component.scss']
 })
-export class ImagesCarrouselComponent implements OnInit {
+export class ImagesCarrouselComponent implements OnInit, OnChanges {
 
     @Input() images: string[];
     @Input() disableArrows: boolean;
-    @Output() selectedImageIndex: EventEmitter<number> = new EventEmitter<number>();
+    @Input() selectedImageIndex: number = 0;
+    @Output() selectedImageIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
-    displayedImageIndex: number = 0;
     previousImageIndex: number = 1;
     nextImageIndex: number = 999999;
     disableChangeImage: boolean = false;
@@ -20,14 +20,22 @@ export class ImagesCarrouselComponent implements OnInit {
 
     ngOnInit(): void {}
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.hasOwnProperty('images')) {
+            console.log('changes =', changes);
+            this.setNextImageIndex();
+            this.setPreviousImageIndex();
+        }
+    }
+
     setPreviousImageIndex(): void {
-        if (this.displayedImageIndex === this.images.length - 1) {
+        if (this.selectedImageIndex === this.images.length - 1) {
             this.previousImageIndex = 999999;
         }
-        else if (this.displayedImageIndex === 999999) {
+        else if (this.selectedImageIndex === 999999) {
             this.previousImageIndex = 0;
         }
-        else if (this.displayedImageIndex < this.images.length - 1) {
+        else if (this.selectedImageIndex < this.images.length - 1) {
             this.previousImageIndex++;
         }
     }
@@ -45,14 +53,14 @@ export class ImagesCarrouselComponent implements OnInit {
     }
 
     setNextImageIndex(): void {
-        if (this.displayedImageIndex === 0) {
+        if (this.selectedImageIndex === 0) {
             this.nextImageIndex = 999999;
         }
-        else if (this.displayedImageIndex === 999999) {
+        else if (this.selectedImageIndex === 999999) {
             this.nextImageIndex = this.images.length - 1;
         }
-        else if (this.displayedImageIndex <= this.images.length - 1) {
-            this.nextImageIndex = this.displayedImageIndex - 1;
+        else if (this.selectedImageIndex <= this.images.length - 1) {
+            this.nextImageIndex = this.selectedImageIndex - 1;
         }
     }
 
@@ -89,25 +97,25 @@ export class ImagesCarrouselComponent implements OnInit {
             hiddenCard.classList.remove('hidden-card');
             hiddenCard.classList.add('next-card');
 
-            if (this.displayedImageIndex === 999999) {
+            if (this.selectedImageIndex === 999999) {
                 currentCard.classList.remove('add-image');
             }
 
-            if (this.displayedImageIndex === this.images.length - 1) {
-                this.displayedImageIndex = 999999;
+            if (this.selectedImageIndex === this.images.length - 1) {
+                this.selectedImageIndex = 999999;
             }
-            else if (this.displayedImageIndex === 999999) {
-                this.displayedImageIndex = 0;
+            else if (this.selectedImageIndex === 999999) {
+                this.selectedImageIndex = 0;
             }
-            else if (this.displayedImageIndex < this.images.length - 1) {
-                this.displayedImageIndex++;
+            else if (this.selectedImageIndex < this.images.length - 1) {
+                this.selectedImageIndex++;
             }
 
-            if (this.displayedImageIndex === 999999) {
+            if (this.selectedImageIndex === 999999) {
                 nextCard.classList.add('add-image');
             }
 
-            this.selectedImageIndex.emit(this.displayedImageIndex);
+            this.selectedImageIndexChange.emit(this.selectedImageIndex);
             this.setNextImageIndex();
             this.setPreviousImageIndex();
             this.disableChangeImage = false;
@@ -138,25 +146,25 @@ export class ImagesCarrouselComponent implements OnInit {
             hiddenCard.classList.remove('hidden-card');
             hiddenCard.classList.add('previous-card');
 
-            if (this.displayedImageIndex === 999999) {
+            if (this.selectedImageIndex === 999999) {
                 currentCard.classList.remove('add-image');
             }
 
-            if (this.displayedImageIndex === 0) {
-                this.displayedImageIndex = 999999;
+            if (this.selectedImageIndex === 0) {
+                this.selectedImageIndex = 999999;
             }
-            else if (this.displayedImageIndex === 999999) {
-                this.displayedImageIndex = this.images.length - 1;
+            else if (this.selectedImageIndex === 999999) {
+                this.selectedImageIndex = this.images.length - 1;
             }
-            else if (this.displayedImageIndex <= this.images.length - 1) {
-                this.displayedImageIndex--;
+            else if (this.selectedImageIndex <= this.images.length - 1) {
+                this.selectedImageIndex--;
             }
 
-            if (this.displayedImageIndex === 999999) {
+            if (this.selectedImageIndex === 999999) {
                 previousCard.classList.add('add-image');
             }
 
-            this.selectedImageIndex.emit(this.displayedImageIndex);
+            this.selectedImageIndexChange.emit(this.selectedImageIndex);
             this.setNextImageIndex();
             this.setPreviousImageIndex();
             this.disableChangeImage = false;
@@ -166,14 +174,14 @@ export class ImagesCarrouselComponent implements OnInit {
     rightImageThreeCards(): void {
         if (!this.disableChangeImage) {
             this.disableChangeImage = true;
-            if (this.displayedImageIndex === 0) {
-                this.displayedImageIndex++;
-            } else if (this.displayedImageIndex === 1) {
-                this.displayedImageIndex = 999999;
+            if (this.selectedImageIndex === 0) {
+                this.selectedImageIndex++;
+            } else if (this.selectedImageIndex === 1) {
+                this.selectedImageIndex = 999999;
             } else {
-                this.displayedImageIndex = 0;
+                this.selectedImageIndex = 0;
             }
-            this.selectedImageIndex.emit(this.displayedImageIndex);
+            this.selectedImageIndexChange.emit(this.selectedImageIndex);
             this.disableChangeImage = false;
         }
     }
@@ -181,14 +189,14 @@ export class ImagesCarrouselComponent implements OnInit {
     leftImageThreeCards(): void {
         if (!this.disableChangeImage) {
             this.disableChangeImage = true;
-            if (this.displayedImageIndex === 0) {
-                this.displayedImageIndex = 999999;
-            } else if (this.displayedImageIndex === 999999) {
-                this.displayedImageIndex = 1;
+            if (this.selectedImageIndex === 0) {
+                this.selectedImageIndex = 999999;
+            } else if (this.selectedImageIndex === 999999) {
+                this.selectedImageIndex = 1;
             } else {
-                this.displayedImageIndex = 0;
+                this.selectedImageIndex = 0;
             }
-            this.selectedImageIndex.emit(this.displayedImageIndex);
+            this.selectedImageIndexChange.emit(this.selectedImageIndex);
             this.disableChangeImage = false;
         }
     }
@@ -196,12 +204,12 @@ export class ImagesCarrouselComponent implements OnInit {
     changeCard(): void {
         if (!this.disableChangeImage) {
             this.disableChangeImage = true;
-            if (this.displayedImageIndex === 0) {
-                this.displayedImageIndex = 999999;
+            if (this.selectedImageIndex === 0) {
+                this.selectedImageIndex = 999999;
             } else {
-                this.displayedImageIndex = 0;
+                this.selectedImageIndex = 0;
             }
-            this.selectedImageIndex.emit(this.displayedImageIndex);
+            this.selectedImageIndexChange.emit(this.selectedImageIndex);
             this.disableChangeImage = false;
         }
     }

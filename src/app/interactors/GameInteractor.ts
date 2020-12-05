@@ -4,16 +4,26 @@ import {Game} from '../classes/Game';
 import {Page} from '../classes/Page';
 import {UserInteractor} from './UserInteractor';
 import {Router} from '@angular/router';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameInteractor {
+    private currentGame: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
 
     constructor(private gameService: GameService,
                 private userInteractor: UserInteractor,
                 private router: Router) {
 
+    }
+
+    setCurrentGame(game: Game): void {
+        this.currentGame.next(game);
+    }
+
+    getCurrentGame(): Observable<Game> {
+        return this.currentGame.asObservable();
     }
 
     getGameEditor(id: string): void {

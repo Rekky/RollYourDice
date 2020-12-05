@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
+import {PageInteractor} from '../../interactors/PageInteractor';
 
 @Component({
     selector: 'app-game-editor',
@@ -29,9 +30,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     gameSocketSubscription: Subscription;
     getMouseObservableSubscription: Subscription;
+    getSelectedKonvaObjectSubscription: Subscription;
+    getCurrentPageSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
                 private mouseInteractor: MouseInteractor,
+                private pageInteractor: PageInteractor,
                 private mouseService: MouseService,
                 private apiService: ApiService,
                 private socketService: SocketService,
@@ -41,22 +45,25 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         const gameId = this.router.snapshot.paramMap.get('id');
         this.socketService.sendGameEditorId(gameId);
 
-        // me subscribo al game que me llega del socket
         this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
             this.game = socketGame;
+            this.gameInteractor.setCurrentGame(this.game);
             if (this.game && this.game.pages) {
-                // this.selectedPage = this.game.pages.find((page: Page) => page.id === this.game.selectedPageId);
-                this.selectedPage = this.game.pages.length > 0 ? this.game.pages[0] : null;
+                this.pageInteractor.setCurrentPage(this.game.pages[0]);
                 this.gameStartStatus = this.game.status;
             }
         });
-
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
             this.mouse = mouse;
         });
-
-        this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
+        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
             this.selectedKonvaObject = konva;
+        });
+        this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Page) => {
+            this.selectedPage = page;
+            if (this.selectedPage?.maps) {
+                this.map = this.selectedPage.maps[0];
+            }
         });
     }
 
@@ -67,6 +74,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         if (this.getMouseObservableSubscription) {
             this.getMouseObservableSubscription.unsubscribe();
         }
+        if (this.getSelectedKonvaObjectSubscription) {
+            this.getSelectedKonvaObjectSubscription.unsubscribe();
+        }
+        if (this.getCurrentPageSubscription) {
+            this.getCurrentPageSubscription.unsubscribe();
+        }
     }
 
     updateProperties(ev): void {
@@ -74,10 +87,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedPage(ev: Page): void {
-        this.selectedPage = ev;
-        if (ev.maps) {
-            this.map = ev.maps[0];
-        }
+        this.pageInteractor.setCurrentPage(ev);
     }
 
     onSelectedMap(ev: OurKonvaMap): void {
