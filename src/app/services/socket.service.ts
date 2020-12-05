@@ -83,6 +83,12 @@ export class SocketService {
         });
 
         // ======================== END GAME PLAY ==============================
+        // ======================== MAP OBJECTS ================================
+
+        this.socket.on('game-editor-create-map-object', (data: any) => {
+            console.log('RECIBOD OBJECT', data);
+        });
+        // ======================== END OBJECTS ================================
     }
 
     sendGameEditorId(gameId: string): void {
@@ -131,8 +137,12 @@ export class SocketService {
         this.socket.emit('game-editor-maps-update', {gameId, pageId, maps});
     }
 
-    sendSocketObject(object: any): void {
-        this.socket.emit('game-editor-object', object);
+    // sendSocketObject(object: any): void {
+    //     this.socket.emit('game-editor-object', object);
+    // }
+
+    sendGameMapObject(mapId: string, object: any): void {
+        this.socket.emit('game-editor-create-map-object', object);
     }
 
     sendGameSetToPlayersMap(gameId: string, pageId: string, map: OurKonvaMap): void {

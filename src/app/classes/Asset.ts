@@ -20,12 +20,4 @@ export class Asset {
         });
         return asset;
     }
-
-    toJSON(): any {
-        const json: any = {};
-        Object.keys(Asset).forEach((key) => {
-            json[key] = this[key];
-        });
-        return json;
-    }
 }
