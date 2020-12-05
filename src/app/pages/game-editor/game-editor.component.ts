@@ -128,7 +128,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onCreateMapObject(object: any): void {
-        this.socketService.sendGameMapObject(this.map.id, object);
+        this.socketService.sendGameCreateMapObject(this.map.id, object);
     }
 
     onSetCurrentObjectSelected(ev): void {

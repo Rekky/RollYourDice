@@ -137,11 +137,7 @@ export class SocketService {
         this.socket.emit('game-editor-maps-update', {gameId, pageId, maps});
     }
 
-    // sendSocketObject(object: any): void {
-    //     this.socket.emit('game-editor-object', object);
-    // }
-
-    sendGameMapObject(mapId: string, object: any): void {
+    sendGameCreateMapObject(mapId: string, object: any): void {
         this.socket.emit('game-editor-create-map-object', object);
     }
 
