@@ -11,6 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 import {PageInteractor} from '../../interactors/PageInteractor';
+import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 
 @Component({
     selector: 'app-game-editor',
@@ -63,6 +64,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.selectedPage = page;
             if (this.selectedPage?.maps) {
                 this.map = this.selectedPage.maps[0];
+                console.log('--------------------');
+                console.log('map received =', this.selectedPage.maps[2]);
+                const test = {...new OurKonvaRect(), ...this.selectedPage.maps[2].objects[0]};
+                // console.log('test =', test);
             }
         });
     }
