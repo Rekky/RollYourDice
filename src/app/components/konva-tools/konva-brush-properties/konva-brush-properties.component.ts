@@ -32,7 +32,7 @@ export class KonvaBrushPropertiesComponent implements OnInit, OnDestroy {
     }
 
     sizeModified(ev: number): void {
-        this.brush.size = ev;
+        this.brush.brushSize = ev;
         this.mouseService.setMouse(this.brush);
     }
 }

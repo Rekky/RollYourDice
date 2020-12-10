@@ -57,10 +57,12 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.ev = e;
             const konvaElement = this.mouse.mouseDown(); // After add a new object the cursor changes to pointer
             if (konvaElement) {
-                this.mouseService.setMouse(new OurKonvaPointer());
+                // this.mouseService.setMouse(new OurKonvaPointer());
+                if (this.mouse.state === 'text') {
+                    this.addKonvaObjectToMap(map);
+                }
+                this.newObjectAddSelectedOption(konvaElement);
             }
-            this.addKonvaObjectToMap(map);
-            this.newObjectAddSelectedOption(konvaElement);
         }, false);
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {
@@ -72,7 +74,9 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.isActive = false;
             this.mouse.ev = e;
             const konvaElement = this.mouse.mouseUp();
-            this.addKonvaObjectToMap(map);
+            if (this.mouse.state === 'square') {
+                this.addKonvaObjectToMap(map);
+            }
             this.newObjectAddSelectedOption(konvaElement);
         }, false);
 
@@ -92,14 +96,6 @@ export class MouseInteractor implements OnDestroy {
             map.objects.push(this.mouse as OurKonvaText);
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaText);
         }
-        // this.game.pages = this.game.pages.map((page: Page) => {
-        //     const mapToModifyIndex = page.maps.findIndex((pageMap: OurKonvaMap) => {
-        //         return pageMap.id === map.id;
-        //     });
-        //     page[mapToModifyIndex] = map;
-        //     return page;
-        // });
-        // this.gameInteractor.setCurrentGame(this.game);
     }
 
     newObjectAddSelectedOption(object: any): void {
