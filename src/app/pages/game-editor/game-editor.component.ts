@@ -49,7 +49,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
             this.game = socketGame;
             this.gameInteractor.setCurrentGame(this.game);
-            if (this.game && this.game.pages) {
+            if (this.game?.pages) {
+                console.log('--------------------');
+                console.log('socketGame =', socketGame);
                 this.pageInteractor.setCurrentPage(this.game.pages[0]);
                 this.gameStartStatus = this.game.status;
             }
@@ -62,13 +64,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         });
         this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Page) => {
             this.selectedPage = page;
-            if (this.selectedPage?.maps) {
-                this.map = this.selectedPage.maps[0];
-                console.log('--------------------');
-                console.log('map received =', this.selectedPage.maps[2]);
-                const test = {...new OurKonvaRect(), ...this.selectedPage.maps[2].objects[0]};
-                // console.log('test =', test);
-            }
+            // if (this.selectedPage?.maps) {
+            //     this.map = this.selectedPage.maps[0];
+            //     console.log('map received =', this.selectedPage.maps[2]);
+            //     const test = {...new OurKonvaRect(), ...this.selectedPage.maps[2].objects[0]};
+            //     console.log('test =', test);
+            // }
         });
     }
 

@@ -5,13 +5,13 @@ export class OurKonvaBrush extends OurKonvaMouse {
     state: string = 'brush';
     line: Konva.Line;
     color: string;
-    size: number;
+    brushSize: number;
 
     constructor() {
         super();
         this.line = new Konva.Line();
         this.color = '#ffff00';
-        this.size = 5;
+        this.brushSize = 5;
     }
 
     mouseDown(): void {
@@ -19,7 +19,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
         const pos = this.stage.getPointerPosition();
         this.line = new Konva.Line({
             stroke: this.color,
-            strokeWidth: this.size,
+            strokeWidth: this.brushSize,
             lineCap: 'round',
             lineJoin: 'round',
             globalCompositeOperation: 'source-over',

@@ -2,6 +2,7 @@ import Konva from 'konva';
 import {Coords} from '../Coords';
 import {OurKonvaGrid} from './OurKonvaGrid';
 import {OurKonvaLayers} from './OurKonvaLayers';
+import {OurKonvaSize} from './OurKonvaSize';
 
 export class OurKonvaMouse {
     isActive: boolean;
@@ -10,13 +11,15 @@ export class OurKonvaMouse {
     state: string;
     ev: MouseEvent;
     cellSize: number;
+    size: OurKonvaSize;
 
-    constructor(stage?: Konva.Stage, layers?: any, ev?: MouseEvent, isActive?: boolean, cellSize?: number) {
-        this.isActive = isActive ? isActive : false;
-        this.stage = stage ? stage : null;
-        this.layers = layers ? layers : null;
-        this.ev = ev ? ev : null;
-        this.cellSize = cellSize ? cellSize : 40;
+    constructor() {
+        this.isActive = false;
+        this.stage = null;
+        this.layers = null;
+        this.ev = null;
+        this.cellSize = 40;
+        this.size = new OurKonvaSize();
     }
 
     mouseDown(): void | CurrentSelectedKonvaObject {}

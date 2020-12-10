@@ -27,7 +27,7 @@ export class KonvaEraserPropertiesComponent implements OnInit, OnDestroy {
     }
 
     sizeModified(ev: number): void {
-        this.eraser.size = ev;
+        this.eraser.brushSize = ev;
         this.mouseService.setMouse(this.eraser);
     }
 }

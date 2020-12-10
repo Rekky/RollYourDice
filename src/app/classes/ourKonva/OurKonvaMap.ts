@@ -57,23 +57,4 @@ export class  OurKonvaMap {
         map.grid = json.grid ? OurKonvaGrid.fromJSON(json.grid) : map.grid;
         return map;
     }
-
-    toJSON(): any {
-        const json: any = {};
-        json.id = this.id;
-        json.name = this.name;
-        json.position = this.position;
-        json.columns = this.columns;
-        json.rows = this.rows;
-        json.fogOfWar = this.fogOfWar;
-        json.backgroundColor = this.backgroundColor;
-        json.mastersDarkness = this.mastersDarkness;
-        json.dndDiagonalSystem = this.dndDiagonalSystem;
-        json.zoom = this.zoom;
-        json.grid = this.grid;
-        json.objects = this.objects;
-        json.toPlayers = this.toPlayers;
-        json.players = this.players;
-        return json;
-    }
 }

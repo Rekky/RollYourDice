@@ -4,12 +4,12 @@ import {OurKonvaMouse} from './OurKonvaMouse';
 export class OurKonvaEraser extends OurKonvaMouse {
     state: string = 'eraser';
     line: Konva.Line;
-    size: number;
+    brushSize: number;
 
     constructor() {
         super();
         this.line = new Konva.Line();
-        this.size = 5;
+        this.brushSize = 5;
     }
 
     mouseDown(): void {
@@ -17,7 +17,7 @@ export class OurKonvaEraser extends OurKonvaMouse {
         const pos = this.stage.getPointerPosition();
         this.line = new Konva.Line({
             stroke: '#ffc107',
-            strokeWidth: this.size,
+            strokeWidth: this.brushSize,
             globalCompositeOperation: 'destination-out',
             points: [pos.x, pos.y],
         });

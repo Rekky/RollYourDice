@@ -90,21 +90,12 @@ export class MouseInteractor implements OnDestroy {
     addKonvaObjectToMap(map: OurKonvaMap): void {
         if (this.mouse.state === 'square') {
             map.objects.push(this.mouse as OurKonvaRect);
-            console.log('new rect=', this.mouse);
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaRect);
         }
         if (this.mouse.state === 'text') {
             map.objects.push(this.mouse as OurKonvaText);
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaText);
         }
-        // this.game.pages = this.game.pages.map((page: Page) => {
-        //     const mapToModifyIndex = page.maps.findIndex((pageMap: OurKonvaMap) => {
-        //         return pageMap.id === map.id;
-        //     });
-        //     page[mapToModifyIndex] = map;
-        //     return page;
-        // });
-        // this.gameInteractor.setCurrentGame(this.game);
     }
 
     newObjectAddSelectedOption(object: any): void {

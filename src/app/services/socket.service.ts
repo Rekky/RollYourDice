@@ -117,7 +117,6 @@ export class SocketService {
     }
 
     sendGameCreateMap(pageId: string, map: OurKonvaMap): void {
-        console.log(map);
         this.socket.emit('game-editor-create-map', {pageId, map});
     }
 

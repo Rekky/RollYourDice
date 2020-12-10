@@ -56,9 +56,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     ngOnInit(): void {
         this.getCurrentSelectedObjectSub = this.mouseInteractor.getCurrentSelectedObjectObservable().subscribe(res => {
-            console.log('.-----------------.');
             if (res) {
-                console.log('res ok =', res);
                 this.activeTr = res.transformer;
                 this.selectedObjectAttrs = res.konvaObject.getAttrs();
             }
@@ -69,6 +67,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.displayCursor = res.state ? res.state : 'pointer';
             }
         });
+        this.mapInteractor.paintObjectsOnMap(this.map.objects, this.gridStage, this.layers);
         // this.socketObjectSubscription = this.socketService.gameSocketObjectSubscription.subscribe((res) => {
         //     if (this.rectangleTest.attrs) {
         //         this.rectangleTest.attrs = res;

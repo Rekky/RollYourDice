@@ -18,12 +18,4 @@ export class Page {
         page.maps = (json.maps && json.maps.length > 0) ? json.maps.map(el => OurKonvaMap.fromJSON(el)) : [];
         return page;
     }
-
-    toJSON(): any {
-        const json: any = {};
-        json.id = this.id;
-        json.name = this.name;
-        json.maps = this.maps.map(map => map.toJSON());
-        return json;
-    }
 }
