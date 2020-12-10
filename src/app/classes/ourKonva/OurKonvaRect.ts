@@ -32,14 +32,6 @@ export class OurKonvaRect extends OurKonvaMouse {
         return mapObject;
     }
 
-    toJSON(): any {
-        const json: any = {};
-        json.id = this.id;
-        json.name = this.name;
-        json.position = this.position;
-        return json;
-    }
-
     mouseDown(): void {
         super.mouseDown();
         this.id = '-' + Math.floor(Math.random() * 100000);
