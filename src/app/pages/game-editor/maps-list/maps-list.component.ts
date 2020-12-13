@@ -10,6 +10,7 @@ import {Game} from '../../../classes/Game';
 import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import { MapInteractor } from 'src/app/interactors/MapInteractor';
+import {PageInteractor} from '../../../interactors/PageInteractor';
 
 @Component({
     selector: 'app-maps-list',
@@ -18,13 +19,15 @@ import { MapInteractor } from 'src/app/interactors/MapInteractor';
 })
 export class MapsListComponent implements OnInit, OnDestroy {
 
-    @Input() maps: OurKonvaMap[] = [];
+    // @Input() maps: OurKonvaMap[] = [];
     @Output() newMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() removeMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() renameMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() selectedMap: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+
+    maps: OurKonvaMap[];
     currentMap: OurKonvaMap = null;
     currentMapObject: OurKonvaObject = null;
 
@@ -36,13 +39,12 @@ export class MapsListComponent implements OnInit, OnDestroy {
     mapToRename: OurKonvaMap;
 
     getSelectedKonvaObjectSubscription: Subscription;
+    getCurrentPageSubscription: Subscription;
 
-    constructor(private mouseInteractor: MouseInteractor) { }
+    constructor(private mouseInteractor: MouseInteractor,
+                private pageInteractor: PageInteractor) { }
 
     ngOnInit(): void {
-        this.newMapForm = new FormGroup({
-            name: new FormControl('Map' + (this.maps.length + 1)),
-        });
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva: any) => {
             this.maps?.find(map => {
                 const objectToSelect = map.objects.find(object => {
@@ -50,10 +52,17 @@ export class MapsListComponent implements OnInit, OnDestroy {
                 });
             });
         });
+        this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Page) => {
+            this.maps = page.maps;
+        });
+        this.newMapForm = new FormGroup({
+            name: new FormControl('Map' + (this.maps.length + 1)),
+        });
     }
 
     ngOnDestroy(): void {
         this.getSelectedKonvaObjectSubscription?.unsubscribe();
+        this.getCurrentPageSubscription?.unsubscribe();
     }
 
     onSelectMap(ev, map: OurKonvaMap): void {

@@ -61,19 +61,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.selectedObjectAttrs = res.konvaObject.getAttrs();
             }
         });
-        // set mouse cursor type
         this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             if (res != null) {
                 this.displayCursor = res.state ? res.state : 'pointer';
             }
         });
-        this.mapInteractor.paintObjectsOnMap(this.map.objects, this.gridStage, this.layers);
-        // this.socketObjectSubscription = this.socketService.gameSocketObjectSubscription.subscribe((res) => {
-        //     if (this.rectangleTest.attrs) {
-        //         this.rectangleTest.attrs = res;
-        //         this.gridStage.batchDraw();
-        //     }
-        // });
+        this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
         this.socketService.socket.on('game-editor-object', (data) => {
             const jsonData = JSON.parse(data);
             if (this.rectangleTest.attrs) {
@@ -111,6 +104,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.gridStage.add(this.layers.shadows);
                 this.gridStage.add(this.layers.draws);
                 this.gridStage.add(this.layers.texts);
+                this.mouseInteractor.setStage(this.gridStage);
             }, 500);
         }
     }

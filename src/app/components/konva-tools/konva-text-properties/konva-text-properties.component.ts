@@ -4,6 +4,9 @@ import {MouseService} from '../../../services/mouse.service';
 import {OurKonvaText} from '../../../classes/ourKonva/OurKonvaText';
 import {CurrentSelectedKonvaObject} from '../../../classes/ourKonva/OurKonvaMouse';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
+import {OurKonvaRect} from '../../../classes/ourKonva/OurKonvaRect';
+import Konva from 'konva';
+import {SocketService} from '../../../services/socket.service';
 
 @Component({
     selector: 'app-konva-text-properties',
@@ -17,7 +20,8 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
     konvaText: CurrentSelectedKonvaObject;
 
     constructor(private mouseService: MouseService,
-                private mouseInteractor: MouseInteractor) { }
+                private mouseInteractor: MouseInteractor,
+                private socketService: SocketService) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
@@ -46,9 +50,10 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
         this.text.color = ev;
         this.mouseService.setMouse(this.text);
         if (this.konvaText) {
-            console.log('this.konvaText.konvaObject =', this.konvaText.konvaObject.getAttrs());
             this.konvaText.konvaObject.setAttr('fill', ev);
             this.konvaText.layer.batchDraw();
+            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
+            this.socketService.sendGameEditMapObject(ourKonvaRect);
         }
     }
 
@@ -58,6 +63,8 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
         if (this.konvaText) {
             this.konvaText.konvaObject.setAttr('fontSize', ev);
             this.konvaText.layer.batchDraw();
+            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
+            this.socketService.sendGameEditMapObject(ourKonvaRect);
         }
     }
 }

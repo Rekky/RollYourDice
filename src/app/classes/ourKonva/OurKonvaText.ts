@@ -1,17 +1,92 @@
 import Konva from 'konva';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
+import {OurKonvaLayers} from './OurKonvaLayers';
+import {Coords} from '../Coords';
 
 export class OurKonvaText extends OurKonvaMouse {
     id: string;
     state: string = 'text';
     color: string;
     fontSize: number;
+    text: string;
+    position: Coords;
 
     constructor() {
         super();
         this.color = '#000000';
         this.fontSize = 20;
         this.id = 'text-' + Math.floor(Math.random() * 100000);
+        this.text = 'Some text here';
+        this.name = 'new text';
+        this.position = new Coords();
+    }
+
+    static getKonvaText(object: OurKonvaText): Konva.Text {
+        return new Konva.Text({
+            text: object.text,
+            x: object.position.x,
+            y: object.position.y,
+            fontSize: object.fontSize,
+            draggable: false,
+            width: object.size.width,
+            height: object.size.height,
+            fill: object.color,
+            id: object.id,
+            name: object.name
+        });
+    }
+
+    static getOurKonvaText(object: Konva.Text): OurKonvaText {
+        const text = new OurKonvaText();
+        const objectAttrs = object.getAttrs();
+        text.position.x = objectAttrs.x;
+        text.position.y = objectAttrs.y;
+        text.size.height = objectAttrs.height;
+        text.size.width = objectAttrs.width;
+        text.state = 'text';
+        text.color = objectAttrs.fill;
+        text.fontSize = objectAttrs.fontSize;
+        text.text = objectAttrs.text;
+        text.id = objectAttrs.id;
+        text.name = objectAttrs.name;
+        return text;
+    }
+
+    static paint(object: OurKonvaText, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
+        const text = new Konva.Text({
+            text: object.text,
+            x: object.position.x,
+            y: object.position.y,
+            fontSize: object.fontSize,
+            draggable: false,
+            width: object.size.width,
+            height: object.size.height,
+            fill: object.color,
+            id: object.id,
+            name: this.name
+        });
+
+        const transformer = new Konva.Transformer({
+            nodes: [text],
+            enabledAnchors: ['middle-left', 'middle-right'],
+            boundBoxFunc: (oldBox, newBox) => {
+                newBox.width = Math.max(30, newBox.width);
+                return newBox;
+            },
+        });
+        transformer.id('tr-' + object.id);
+
+        // this.adaptPositionToGrid(text);
+        layers.texts.add(text);
+        layers.texts.add(transformer);
+        layers.texts.batchDraw();
+
+        const toEmit = new CurrentSelectedKonvaObject();
+        toEmit.konvaObject = text;
+        toEmit.type = object.state;
+        toEmit.layer = layers.texts;
+        toEmit.transformer = transformer;
+        return toEmit;
     }
 
     mouseDown(): CurrentSelectedKonvaObject {
@@ -23,11 +98,16 @@ export class OurKonvaText extends OurKonvaMouse {
             x: pos.x,
             y: pos.y,
             fontSize: this.fontSize,
-            draggable: true,
-            width: 200,
+            draggable: false,
+            width: this.size.width,
+            height: this.size.height,
             fill: this.color,
-            id: this.id
+            id: this.id,
+            name: this.name
         });
+
+        this.position.x = pos.x;
+        this.position.y = pos.y;
 
         const transformer = new Konva.Transformer({
             nodes: [text],
@@ -37,6 +117,7 @@ export class OurKonvaText extends OurKonvaMouse {
                 return newBox;
             },
         });
+        transformer.id('tr-' + this.id);
 
         text.on('transform', () => {
             text.setAttrs({

@@ -1,6 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
+import {MouseInteractor} from '../../interactors/MouseInteractor';
+import Konva from 'konva';
 
 @Component({
     selector: 'app-recursive-list',
@@ -12,18 +14,19 @@ export class RecursiveListComponent implements OnInit, OnChanges {
     @Input() list = [];
     currentItem: OurKonvaMouse = null;
 
-
-    constructor() {
+    constructor(private mouseInteractor: MouseInteractor) {
     }
 
     ngOnInit(): void {
+        console.log('list =', this.list);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
     }
 
-    onSelectItem(map: OurKonvaMouse): void {
-        this.currentItem = map;
+    onSelectItem(item: any): void {
+        // this.mouseInteractor.setSelectedKonvaObject(item);
+        this.mouseInteractor.clickMapObject(item);
     }
 
 }

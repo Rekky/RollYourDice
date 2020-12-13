@@ -50,8 +50,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.game = socketGame;
             this.gameInteractor.setCurrentGame(this.game);
             if (this.game?.pages) {
-                console.log('--------------------');
-                console.log('socketGame =', socketGame);
                 this.pageInteractor.setCurrentPage(this.game.pages[0]);
                 this.gameStartStatus = this.game.status;
             }

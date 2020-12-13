@@ -140,6 +140,11 @@ export class SocketService {
         this.socket.emit('game-editor-create-map-object', {mapId, object});
     }
 
+    sendGameEditMapObject(object: any): void {
+        console.log('triggered');
+        this.socket.emit('game-editor-edit-map-object', {object});
+    }
+
     sendGameSetToPlayersMap(gameId: string, pageId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-set-players-map', {gameId, pageId, map});
     }

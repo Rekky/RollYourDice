@@ -7,6 +7,7 @@ import { OurKonvaRect } from './OurKonvaRect';
 import { OurKonvaText } from './OurKonvaText';
 import {Page} from '../Page';
 import {Asset} from '../Asset';
+import {OurKonvaImage} from './OurKonvaImage';
 
 export class  OurKonvaMap {
     id: string;
@@ -20,7 +21,7 @@ export class  OurKonvaMap {
     dndDiagonalSystem: boolean;
     zoom: number;
     grid: OurKonvaGrid;
-    objects: (OurKonvaRect | OurKonvaText)[];
+    objects: (OurKonvaRect | OurKonvaText | OurKonvaImage)[];
     toPlayers: boolean;
     players: string[];
     stage: Konva.Stage;

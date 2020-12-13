@@ -84,6 +84,7 @@ label{
         margin: 0 10px;
     }
 }
+
 .content-list {
     position: relative;
     display: flex;
@@ -95,9 +96,9 @@ label{
 
     .item{
         display: grid;
+        align-items: center;
         grid-template-columns: auto;
         grid-template-rows: 40px;
-        align-items: center;
         position: relative;
 
         &.active{
@@ -116,7 +117,7 @@ label{
         cursor: pointer;
         height: 100%;
         padding: 0 10px;
-        justify-content: space-between;
+        justify-content: flex-start;
 
         .item-tools {
             display: none;

@@ -5,6 +5,7 @@ import {OurKonvaRect} from '../../../classes/ourKonva/OurKonvaRect';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import Konva from 'konva';
 import {CurrentSelectedKonvaObject} from '../../../classes/ourKonva/OurKonvaMouse';
+import {SocketService} from '../../../services/socket.service';
 
 @Component({
   selector: 'app-konva-rectangle-properties',
@@ -18,7 +19,8 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
     konvaRectangle: CurrentSelectedKonvaObject;
 
     constructor(private mouseService: MouseService,
-                private mouseInteractor: MouseInteractor) { }
+                private mouseInteractor: MouseInteractor,
+                private socketService: SocketService) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
@@ -51,6 +53,8 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
         if (this.konvaRectangle) {
             this.konvaRectangle.konvaObject.setAttr('fill', ev);
             this.konvaRectangle.layer.batchDraw();
+            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
+            this.socketService.sendGameEditMapObject(ourKonvaRect);
         }
     }
 
@@ -60,6 +64,8 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
         if (this.konvaRectangle) {
             this.konvaRectangle.konvaObject.setAttr('strokeWidth', ev);
             this.konvaRectangle.layer.batchDraw();
+            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
+            this.socketService.sendGameEditMapObject(ourKonvaRect);
         }
     }
 
@@ -69,6 +75,8 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
         if (this.konvaRectangle) {
             this.konvaRectangle.konvaObject.setAttr('stroke', ev);
             this.konvaRectangle.layer.batchDraw();
+            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
+            this.socketService.sendGameEditMapObject(ourKonvaRect);
         }
     }
 
@@ -78,6 +86,8 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
         if (this.konvaRectangle) {
             this.konvaRectangle.konvaObject.setAttr('opacity', ev / 100);
             this.konvaRectangle.layer.batchDraw();
+            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
+            this.socketService.sendGameEditMapObject(ourKonvaRect);
         }
     }
 }
