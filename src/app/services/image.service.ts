@@ -15,7 +15,7 @@ export class ImageService {
 
         formData.append('image', image);
 
-        return this.httpService.post('/image-upload', formData);
+        return this.httpService.post('/image/upload', formData);
     }
 }
 
