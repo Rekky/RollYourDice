@@ -16,6 +16,7 @@ class ImageSnippet {
 export class HomeComponent implements OnInit {
 
     selectedFile: ImageSnippet;
+    imageResponse: any;
 
     constructor(private userInteractor: UserInteractor,
                 private router: Router,
@@ -57,7 +58,8 @@ export class HomeComponent implements OnInit {
             this.selectedFile = new ImageSnippet(event.target.result, file);
 
             this.imageService.uploadImage(this.selectedFile.file).subscribe(
-                (res) => {
+                (res: any) => {
+                    this.imageResponse = res.image;
                     this.onSuccess();
                 },
                 (err) => {
