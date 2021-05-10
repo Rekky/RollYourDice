@@ -17,11 +17,11 @@
         <div class="body" *ngIf="loaded && newGame">
             <div class="form-text-input title">
                 <label [for]="'title-game-' + newGame.id">Title</label>
-                <input type="text" [id]="'title-game-' + newGame.id" [formControlName]="'name'"/>
+                <input type="text" [id]="'title-game-' + newGame.id" maxlength="40" [formControlName]="'name'"/>
             </div>
             <div class="form-textarea">
                 <label [for]="'description-game-' + newGame.id">Description</label>
-                <textarea [id]="'description-game-' + newGame.id" [formControlName]="'description'"></textarea>
+                <textarea [id]="'description-game-' + newGame.id" maxlength="255" [formControlName]="'description'"></textarea>
             </div>
             <div class="form-input-dropdown">
                 <label [for]="'gameType-game-' + newGame.id">Type</label>

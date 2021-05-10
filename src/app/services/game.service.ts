@@ -7,6 +7,8 @@ import {HttpService} from './http.service';
 import {UserService} from './user.service';
 import {UserInteractor} from '../interactors/UserInteractor';
 import {Page} from '../classes/Page';
+import {environment} from '../../environments/environment';
+import {myGames} from '../../assets/fakeAPI/my-games';
 
 @Injectable({
     providedIn: 'root'
@@ -97,13 +99,17 @@ export class GameService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game/my-games`, {userId}, options).subscribe(
-                (response) => {
-                    resolve(response);
-                }, (error: HttpErrorResponse) => {
-                    reject(error);
-                }
-            );
+            if (environment.API) {
+                this.httpService.post(`/game/my-games`, {userId}, options).subscribe(
+                    (response) => {
+                        resolve(response);
+                    }, (error: HttpErrorResponse) => {
+                        reject(error);
+                    }
+                );
+            } else {
+                resolve(myGames);
+            }
         });
     }
 

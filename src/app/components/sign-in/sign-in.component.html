@@ -1,5 +1,5 @@
 <div class="title-box">
-    <span>Sign in</span>
+    <span>Login</span>
 </div>
 <form class="mid-box" [formGroup]="signInForm" (submit)="signIn()">
     <div class="form">
@@ -20,14 +20,14 @@
                 <input type="checkbox" id="checkbox-stay-signed" [formControlName]="'stayLogged'"/>
                 <label for="checkbox-stay-signed"></label>
             </div>
-            <label for="checkbox-stay-signed" class="stay-signed-text">Stay signed in</label>
+            <label for="checkbox-stay-signed" class="stay-signed-text">Stay logged</label>
         </div>
     </div>
     <div class="sign-button-box">
-        <button class="big-button" type="submit" [disabled]="!signInForm.valid">Sign in</button>
+        <button class="big-button" type="submit" [disabled]="!signInForm.valid">Login</button>
     </div>
 </form>
 <div class="bottom-box">
-    <div class="bottom-option">Can't sign in?</div>
+    <div class="bottom-option">Can't login?</div>
     <div class="bottom-option" (click)="createAccount()">Create account</div>
 </div>

@@ -1,56 +1,120 @@
-<div class="my-adventures-box">
-    <div class="background-image-box">
-        <div class="background"
-             [ngClass]="{'background-image': displayedGameIndex !== 999999}"
-             [style]="{'background-image': displayedGameIndex !== 999999 ? 'url(' + adventures[displayedGameIndex].image.uri + ')' : ''}"></div>
+<div class="my-adventures-box container-fluid px-5">
+    <div class="new-adventure row">
+        <button class="col-12 col-md-2 col-xl-2 col-xxl-1" type="button" (click)="createNewGame()">New game</button>
     </div>
-    <div class="carrousel-box">
-        <app-images-carrousel [images]="adventuresImages" [disableArrows]="this.adventures.length === 0"
-                              [(selectedImageIndex)]="displayedGameIndex"></app-images-carrousel>
-    </div>
-    <div *ngIf="!gameToEdit" class="selected-image-data-box">
-        <div *ngIf="displayedGameIndex !== 999999" class="selected-image-data">
-            <div class="more-options" (click)="displayOptions = true" (mouseleave)="displayOptions = false">
-                <div class="dot-box">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-                <div *ngIf="displayOptions" class="options">
-                    <div class="option" (click)="editGame()">Edit</div>
-                    <div class="option" (click)="deleteGame()">Delete</div>
-                </div>
-            </div>
-            <div class="selected-image-header">
-                <div class="master" *ngIf="adventures[displayedGameIndex].authorId === currentUser.id">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.17 30.78">
-                        <title>crown</title>
-                        <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><circle class="cls-1" cx="1.9" cy="5.7" r="1.9"/><path class="cls-1" d="M38,7.44,32.39,28.07v2.71H8.74v-3L3.25,7.44a63.45,63.45,0,0,0,5.27,5.1,62.66,62.66,0,0,0,5.65,4.33L20.56,4.08,27,16.87a57.39,57.39,0,0,0,5.7-4.31A58.22,58.22,0,0,0,38,7.44Z"/><circle class="cls-1" cx="20.6" cy="1.9" r="1.9"/><circle class="cls-1" cx="39.27" cy="5.7" r="1.9"/></g></g>
-                    </svg>
-                </div>
-                <div class="n-players">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.78 24.81">
-                        <title>user</title>
-                        <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path class="cls-1" d="M23.78,21.38v.07a.28.28,0,0,1,0,.09c-.21,1.82-5.45,3.27-11.88,3.27S.22,23.36,0,21.54a.28.28,0,0,1,0-.09v-.07C.12,17.89,4.06,15,9.3,14.26l.13-.95a7.69,7.69,0,0,1-3.17-7.4C6.72,3.21,8.92,0,12.17,0s5.49,3.08,5.91,5.91a7.41,7.41,0,0,1-3.76,7.39l.16,1C19.72,15,23.66,17.89,23.78,21.38Z"/></g></g>
-                    </svg>
-                    <div class="number">
-                        {{adventures[displayedGameIndex].nPlayers}}
+
+    <div class="adventures-grid row">
+        <div class="col-12 col-md-6 col-lg-4 col-xxl-3 my-3"
+             *ngFor="let adventure of adventures; let i = index;"
+             (click)="loadGame(adventure)">
+            <div class="each-adventure col-12"
+                 [style.background-image]="'url(' + adventure.image.uri + ')'">
+                <div *ngIf="displayOptions !== adventure.id" class="inside-data-box container-fluid">
+                    <div class="selected-image-header">
+                        <div class="n-players">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.78 24.81">
+                                <title>user</title>
+                                <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path class="cls-1" d="M23.78,21.38v.07a.28.28,0,0,1,0,.09c-.21,1.82-5.45,3.27-11.88,3.27S.22,23.36,0,21.54a.28.28,0,0,1,0-.09v-.07C.12,17.89,4.06,15,9.3,14.26l.13-.95a7.69,7.69,0,0,1-3.17-7.4C6.72,3.21,8.92,0,12.17,0s5.49,3.08,5.91,5.91a7.41,7.41,0,0,1-3.76,7.39l.16,1C19.72,15,23.66,17.89,23.78,21.38Z"/></g></g>
+                            </svg>
+                            <div class="number">
+                                {{adventure.nPlayers}}
+                            </div>
+                        </div> <div class="master">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.17 30.78">
+                            <title>crown</title>
+                            <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><circle class="cls-1" cx="1.9" cy="5.7" r="1.9"/><path class="cls-1" d="M38,7.44,32.39,28.07v2.71H8.74v-3L3.25,7.44a63.45,63.45,0,0,0,5.27,5.1,62.66,62.66,0,0,0,5.65,4.33L20.56,4.08,27,16.87a57.39,57.39,0,0,0,5.7-4.31A58.22,58.22,0,0,0,38,7.44Z"/><circle class="cls-1" cx="20.6" cy="1.9" r="1.9"/><circle class="cls-1" cx="39.27" cy="5.7" r="1.9"/></g></g>
+                        </svg>
+                    </div>
+                    </div>
+                    <div class="more-options" (click)="selectDisplayOptions($event, adventure.id)">
+                        <div class="dot-box">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="row col-12 justify-content-center">
+                        <div class="adventure-title col-10">{{adventure.name}}</div>
+                    </div>
+                    <div class="row col-12 justify-content-center">
+                        <div class="adventure-description col-10">{{adventure.description}}</div>
                     </div>
                 </div>
+                <div *ngIf="displayOptions === adventure.id" class="display-options">
+                    <div class="display-options-header" (click)="unselectDisplayOptions($event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3"><defs><style>.cls-1{fill:none;stroke:#eaeaea;stroke-miterlimit:10;stroke-width:3px;}</style></defs><title>close</title><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><circle class="cls-1" cx="25.15" cy="25.15" r="23.65"/><line class="cls-1" x1="16.79" y1="16.79" x2="33.51" y2="33.51"/><line class="cls-1" x1="16.79" y1="33.51" x2="33.51" y2="16.79"/></g></g></svg>
+                    </div>
+                    <div class="display-option" (click)="editGame(adventure, $event)">Edit</div>
+                    <div class="display-option">Invite</div>
+                    <div class="display-option" (click)="deleteGame(adventure, i, $event)">Delete</div>
+                </div>
             </div>
-            <div class="selected-image-box" (click)="loadGame()"></div>
-            <div class="selected-image-title" (click)="loadGame()">{{adventures[displayedGameIndex].name}}</div>
-            <div class="selected-image-description" (click)="loadGame()">{{adventures[displayedGameIndex].description}}</div>
-        </div>
-
-        <div class="new-game-interface" *ngIf="displayedGameIndex === 999999">
-            <div class="click-interface" (click)="createNewGame()"></div>
-            <div class="selected-image-header"></div>
-            <div class="selected-image-box"></div>
-            <div class="selected-image-title" (click)="createNewGame()">New adventure</div>
-            <div class="selected-image-description" (click)="createNewGame()"></div>
         </div>
     </div>
-    <app-edit-game-data *ngIf="gameToEdit" [game]="gameToEdit"
-                        (saveGame)="saveGame($event)" (closeGame)="closeEditGame()"></app-edit-game-data>
+
+    <div *ngIf="gameToEdit" class="row">
+        <app-edit-game-data  [game]="gameToEdit"
+                            (saveGame)="saveGame($event)" (closeGame)="closeEditGame()">
+        </app-edit-game-data>
+    </div>
 </div>
+
+
+
+
+<!--<div class="my-adventures-box">-->
+<!--    <div class="background-image-box">-->
+<!--        <div class="background"-->
+<!--             [ngClass]="{'background-image': displayedGameIndex !== 999999}"-->
+<!--             [style]="{'background-image': displayedGameIndex !== 999999 ? 'url(' + adventures[displayedGameIndex].image.uri + ')' : ''}"></div>-->
+<!--    </div>-->
+<!--    <div class="carrousel-box">-->
+<!--        <app-images-carrousel [images]="adventuresImages" [disableArrows]="this.adventures.length === 0"-->
+<!--                              [(selectedImageIndex)]="displayedGameIndex"></app-images-carrousel>-->
+<!--    </div>-->
+<!--    <div *ngIf="!gameToEdit" class="selected-image-data-box">-->
+<!--        <div *ngIf="displayedGameIndex !== 999999" class="selected-image-data">-->
+<!--            <div class="more-options" (click)="displayOptions = true" (mouseleave)="displayOptions = false">-->
+<!--                <div class="dot-box">-->
+<!--                    <span class="dot"></span>-->
+<!--                    <span class="dot"></span>-->
+<!--                    <span class="dot"></span>-->
+<!--                </div>-->
+<!--                <div *ngIf="displayOptions" class="options">-->
+<!--                    <div class="option" (click)="editGame()">Edit</div>-->
+<!--                    <div class="option" (click)="deleteGame()">Delete</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="selected-image-header">-->
+<!--                <div class="master" *ngIf="adventures[displayedGameIndex].authorId === currentUser.id">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.17 30.78">-->
+<!--                        <title>crown</title>-->
+<!--                        <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><circle class="cls-1" cx="1.9" cy="5.7" r="1.9"/><path class="cls-1" d="M38,7.44,32.39,28.07v2.71H8.74v-3L3.25,7.44a63.45,63.45,0,0,0,5.27,5.1,62.66,62.66,0,0,0,5.65,4.33L20.56,4.08,27,16.87a57.39,57.39,0,0,0,5.7-4.31A58.22,58.22,0,0,0,38,7.44Z"/><circle class="cls-1" cx="20.6" cy="1.9" r="1.9"/><circle class="cls-1" cx="39.27" cy="5.7" r="1.9"/></g></g>-->
+<!--                    </svg>-->
+<!--                </div>-->
+<!--                <div class="n-players">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.78 24.81">-->
+<!--                        <title>user</title>-->
+<!--                        <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path class="cls-1" d="M23.78,21.38v.07a.28.28,0,0,1,0,.09c-.21,1.82-5.45,3.27-11.88,3.27S.22,23.36,0,21.54a.28.28,0,0,1,0-.09v-.07C.12,17.89,4.06,15,9.3,14.26l.13-.95a7.69,7.69,0,0,1-3.17-7.4C6.72,3.21,8.92,0,12.17,0s5.49,3.08,5.91,5.91a7.41,7.41,0,0,1-3.76,7.39l.16,1C19.72,15,23.66,17.89,23.78,21.38Z"/></g></g>-->
+<!--                    </svg>-->
+<!--                    <div class="number">-->
+<!--                        {{adventures[displayedGameIndex].nPlayers}}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="selected-image-box" (click)="loadGame()"></div>-->
+<!--            <div class="selected-image-title" (click)="loadGame()">{{adventures[displayedGameIndex].name}}</div>-->
+<!--            <div class="selected-image-description" (click)="loadGame()">{{adventures[displayedGameIndex].description}}</div>-->
+<!--        </div>-->
+
+<!--        <div class="new-game-interface" *ngIf="displayedGameIndex === 999999">-->
+<!--            <div class="click-interface" (click)="createNewGame()"></div>-->
+<!--            <div class="selected-image-header"></div>-->
+<!--            <div class="selected-image-box"></div>-->
+<!--            <div class="selected-image-title" (click)="createNewGame()">New adventure</div>-->
+<!--            <div class="selected-image-description" (click)="createNewGame()"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <app-edit-game-data *ngIf="gameToEdit" [game]="gameToEdit"-->
+<!--                        (saveGame)="saveGame($event)" (closeGame)="closeEditGame()"></app-edit-game-data>-->
+<!--</div>-->

@@ -42,6 +42,7 @@ import { KonvaRectanglePropertiesComponent } from './components/konva-tools/konv
 import { GamePlayComponent } from './pages/game-play/game-play.component';
 import { ImagesCarrouselComponent } from './components/images-carrousel/images-carrousel.component';
 import { EditGameDataComponent } from './components/edit-game-data/edit-game-data.component';
+import { IngameNavbarComponent } from './components/ingame-navbar/ingame-navbar.component';
 
 @NgModule({
     declarations: [
@@ -78,6 +79,7 @@ import { EditGameDataComponent } from './components/edit-game-data/edit-game-dat
         GamePlayComponent,
         ImagesCarrouselComponent,
         EditGameDataComponent,
+        IngameNavbarComponent,
     ],
     imports: [
         BrowserModule,
@@ -94,7 +96,7 @@ import { EditGameDataComponent } from './components/edit-game-data/edit-game-dat
                 deps: [HttpClient]
             }
         }),
-        MatDialogModule
+        MatDialogModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

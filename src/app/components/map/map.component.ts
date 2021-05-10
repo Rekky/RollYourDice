@@ -97,8 +97,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     ngOnChanges(changes: SimpleChanges): void {
         if (this.map) {
             setTimeout(() => {
-                this.drawGrid();
                 this.drawGridBackgroundImage();
+                this.drawGrid();
+                console.log('gridStage =', this.gridStage.getLayers());
                 this.gridStage.add(this.layers.objects);
                 this.gridStage.add(this.layers.grid);
                 this.gridStage.add(this.layers.shadows);
@@ -309,18 +310,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     drawGridBackgroundImage(): void {
-        const layer = new Konva.Layer();
-        this.gridStage.add(layer);
-        Konva.Image.fromURL('./../assets/backgrounds/CROSSING_THE_RIVER.jpg', (image) => {
-            layer.add(image);
-            image.setAttrs({
-                x: 0,
-                y: 0,
-                width: this.map.columns * this.map.grid.cellSize,
-                height: this.map.rows * this.map.grid.cellSize
-            });
-            image.cache();
-            layer.draw();
-        });
+        // Konva.Image.fromURL('./../assets/backgrounds/CROSSING_THE_RIVER.jpg', (image) => {
+        //     this.layers.grid.add(image);
+        //     image.setAttrs({
+        //         x: 0,
+        //         y: 0,
+        //         width: this.map.columns * this.map.grid.cellSize,
+        //         height: this.map.rows * this.map.grid.cellSize,
+        //     });
+        //     image.cache();
+        //     this.layers.grid.draw();
+        // });
+        this.gridStage.container().style.backgroundImage = 'url(../../../assets/backgrounds/CROSSING_THE_RIVER.jpg)';
+        this.gridStage.container().style.backgroundRepeat = 'no-repeat';
+        this.gridStage.container().style.backgroundSize = 'cover';
+        this.gridStage.container().style.backgroundPosition = 'center';
+        this.gridStage.batchDraw();
     }
 }

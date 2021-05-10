@@ -12,7 +12,7 @@ import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 })
 export class SignInComponent implements OnInit, AfterViewInit {
 
-    @Output() display: EventEmitter<'signUp'> = new EventEmitter<'signUp'>();
+    @Output() display: EventEmitter<'signUp' | 'signIn' | 'loaded'> = new EventEmitter<'signUp'>();
     signInForm: FormGroup;
     displayPassword: boolean = false;
 
@@ -38,7 +38,7 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
         try {
             await this.userInteractor.signIn(email, pass, stayLogged);
-            this.router.navigate(['/home']);
+            this.display.emit('loaded');
         } catch (e) {
             console.log(e.error);
         }

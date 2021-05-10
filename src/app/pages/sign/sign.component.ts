@@ -58,6 +58,11 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
 
     changeDisplay(display: any): void {
         this.display = display;
+        if (display === 'loaded') {
+            setTimeout(() => {
+                this.router.navigate(['/adventures/my-adventures']);
+            }, 2500);
+        }
     }
 
     preloadState(): void {

@@ -23,7 +23,6 @@ export class OurKonvaImage extends OurKonvaMouse {
     }
 
     static paint(object: OurKonvaImage, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
-        console.log('trigger');
         const image = new Image();
         image.src = object.src;
         const img = new Konva.Image({
@@ -38,13 +37,13 @@ export class OurKonvaImage extends OurKonvaMouse {
         });
 
         const transformer = new Konva.Transformer();
-        layers.draws.add(transformer);
+        layers.objects.add(transformer);
         transformer.nodes([img]);
         transformer.id('tr-' + object.id);
         transformer.hide();
 
-        layers.draws.add(img);
-        layers.draws.batchDraw();
+        layers.objects.add(img);
+        layers.objects.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = img;
@@ -135,7 +134,8 @@ export class OurKonvaImage extends OurKonvaMouse {
             image: image,
             draggable: false,
             opacity: this.opacity / 100,
-            name: this.name
+            name: this.name,
+            id: this.id
         });
 
         this.size.width = Math.abs(this.position.x - pos.x);

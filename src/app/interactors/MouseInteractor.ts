@@ -13,6 +13,7 @@ import { Game } from '../classes/Game';
 import {Page} from '../classes/Page';
 import {OurKonvaText} from '../classes/ourKonva/OurKonvaText';
 import {SocketService} from '../services/socket.service';
+import {toArray} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -114,10 +115,12 @@ export class MouseInteractor implements OnDestroy {
             map.objects.push(this.mouse as OurKonvaImage);
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaImage);
         }
+        this.mouseService.setMouse(new OurKonvaPointer());
     }
 
     newObjectAddSelectedOption(object: any, mapId: string): void {
         object?.konvaObject.on('click', () => {
+            const target = object.layer.getIntersection(this.stage.getPointerPosition());
             if (this.selectedKonvaObject?.getValue()?.konvaObject.getAttr('id') !== object.konvaObject.getAttr('id')) {
                 if (this.selectedKonvaObject && this.selectedKonvaObject.getValue()) {
                     this.selectedKonvaObject.getValue().konvaObject.draggable(false);
@@ -183,9 +186,31 @@ export class MouseInteractor implements OnDestroy {
                 }
             }
         });
+        this.modifyOtherLayers(obj);
     }
 
-    setStage(stage: any): void {
+    modifyOtherLayers(obj: any): void {
+        const layers = this.stage.getLayers().toArray();
+        const getMyLayerIndex = layers.findIndex(layer => {
+            return layer.getChildren().toArray().find(child => child.getAttr('id') === obj.getAttr('id'));
+        });
+        const test = ['hi', 'ho', 'mo'];
+        layers.splice(getMyLayerIndex, 1);
+        layers.forEach(layer => {
+            layer.getChildren().toArray().forEach(child => {
+                if (child.getAttr('id').startsWith('tr-')) {
+                    child.hide();
+                    child.getLayer().batchDraw();
+                } else {
+                    if (child.getAttr('draggable')) {
+                        child.setAttr('draggable', false);
+                    }
+                }
+            });
+        });
+    }
+
+    setStage(stage: Konva.Stage): void {
         this.stage = stage;
     }
 
