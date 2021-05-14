@@ -43,6 +43,7 @@ import { GamePlayComponent } from './pages/game-play/game-play.component';
 import { ImagesCarrouselComponent } from './components/images-carrousel/images-carrousel.component';
 import { EditGameDataComponent } from './components/edit-game-data/edit-game-data.component';
 import { IngameNavbarComponent } from './components/ingame-navbar/ingame-navbar.component';
+import { MenuComponent } from './pages/adventures/menu/menu.component';
 
 @NgModule({
     declarations: [
@@ -80,6 +81,7 @@ import { IngameNavbarComponent } from './components/ingame-navbar/ingame-navbar.
         ImagesCarrouselComponent,
         EditGameDataComponent,
         IngameNavbarComponent,
+        MenuComponent,
     ],
     imports: [
         BrowserModule,

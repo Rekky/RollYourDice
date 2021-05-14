@@ -1,5 +1,5 @@
 <div class="title-box">
-    <span>Login</span>
+    <span>Sign in</span>
 </div>
 <form class="mid-box" [formGroup]="signInForm" (submit)="signIn()">
     <div class="form">
@@ -24,10 +24,10 @@
         </div>
     </div>
     <div class="sign-button-box">
-        <button class="big-button" type="submit" [disabled]="!signInForm.valid">Login</button>
+        <button class="big-button" type="submit" [disabled]="!signInForm.valid">Sign in</button>
     </div>
 </form>
 <div class="bottom-box">
-    <div class="bottom-option">Can't login?</div>
+    <div class="bottom-option">Can't Sign in?</div>
     <div class="bottom-option" (click)="createAccount()">Create account</div>
 </div>

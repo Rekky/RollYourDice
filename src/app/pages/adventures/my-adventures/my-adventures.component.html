@@ -1,4 +1,6 @@
 <div class="my-adventures-box container-fluid px-5">
+    <div class="my-adventures-title col-12" (click)="logout()">Choose game</div>
+
     <div class="new-adventure row">
         <button class="col-12 col-md-2 col-xl-2 col-xxl-1" type="button" (click)="createNewGame()">New game</button>
     </div>
@@ -11,6 +13,12 @@
                  [style.background-image]="'url(' + adventure.image.uri + ')'">
                 <div *ngIf="displayOptions !== adventure.id" class="inside-data-box container-fluid">
                     <div class="selected-image-header">
+                        <div class="master">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.17 30.78">
+                                <title>crown</title>
+                                <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><circle class="cls-1" cx="1.9" cy="5.7" r="1.9"/><path class="cls-1" d="M38,7.44,32.39,28.07v2.71H8.74v-3L3.25,7.44a63.45,63.45,0,0,0,5.27,5.1,62.66,62.66,0,0,0,5.65,4.33L20.56,4.08,27,16.87a57.39,57.39,0,0,0,5.7-4.31A58.22,58.22,0,0,0,38,7.44Z"/><circle class="cls-1" cx="20.6" cy="1.9" r="1.9"/><circle class="cls-1" cx="39.27" cy="5.7" r="1.9"/></g></g>
+                            </svg>
+                        </div>
                         <div class="n-players">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.78 24.81">
                                 <title>user</title>
@@ -19,25 +27,13 @@
                             <div class="number">
                                 {{adventure.nPlayers}}
                             </div>
-                        </div> <div class="master">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.17 30.78">
-                            <title>crown</title>
-                            <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><circle class="cls-1" cx="1.9" cy="5.7" r="1.9"/><path class="cls-1" d="M38,7.44,32.39,28.07v2.71H8.74v-3L3.25,7.44a63.45,63.45,0,0,0,5.27,5.1,62.66,62.66,0,0,0,5.65,4.33L20.56,4.08,27,16.87a57.39,57.39,0,0,0,5.7-4.31A58.22,58.22,0,0,0,38,7.44Z"/><circle class="cls-1" cx="20.6" cy="1.9" r="1.9"/><circle class="cls-1" cx="39.27" cy="5.7" r="1.9"/></g></g>
-                        </svg>
-                    </div>
+                        </div>
                     </div>
                     <div class="more-options" (click)="selectDisplayOptions($event, adventure.id)">
-                        <div class="dot-box">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
+                        <img class="gear" src="./assets/svg/gear.svg" alt="more options" />
                     </div>
                     <div class="row col-12 justify-content-center">
                         <div class="adventure-title col-10">{{adventure.name}}</div>
-                    </div>
-                    <div class="row col-12 justify-content-center">
-                        <div class="adventure-description col-10">{{adventure.description}}</div>
                     </div>
                 </div>
                 <div *ngIf="displayOptions === adventure.id" class="display-options">
@@ -54,7 +50,7 @@
 
     <div *ngIf="gameToEdit" class="row">
         <app-edit-game-data  [game]="gameToEdit"
-                            (saveGame)="saveGame($event)" (closeGame)="closeEditGame()">
+                             (saveGame)="saveGame($event)" (closeGame)="closeEditGame()">
         </app-edit-game-data>
     </div>
 </div>

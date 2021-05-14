@@ -1,5 +1,12 @@
 @import "colors";
 
+$oswald: 'oswald', sans-serif;
+
+@font-face {
+    font-family: oswald;
+    src: url(assets/fonts/Oswald-VariableFont_wght.ttf) format("opentype");
+}
+
 * {
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
@@ -11,6 +18,7 @@ body{
     margin: 0;
     padding: 0;
 }
+
 .font-normal{
     font-size: 14px;
 }

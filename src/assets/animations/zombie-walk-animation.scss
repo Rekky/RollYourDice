@@ -1,108 +1,64 @@
 
 @keyframes zombie-walking {
     0% {
-        left: 1020px;
-        top: 820px;
-        transform: rotate(110deg);
+        left: -4vw;
+        top: 50vw;
     }
-    4% {
-        left: 820px;
-        top: 820px;
+    100% {
+        left: 104vw;
+        top: 50vw;
     }
-    8% {
-        left: 620px;
-        top: 820px;
-        transform: rotate(110deg);
+}
+
+@keyframes archer-animation {
+    0% {
+        left: 36vw;
+        top: -4vw;
+    }
+    10% {
+        left: 36vw;
+        top: 30.5vw;
+    }
+    89% {
+        left: 36vw;
+        top: 30.5vw;
+    }
+    90% {
+        left: 36vw;
+        top: 35.5vw;
+    }
+    100% {
+        left: 36vw;
+        top: 104vw;
+    }
+}
+
+@keyframes vampire-animation {
+    0% {
+        left: 30.5vw;
+        top: -4vw;
+    }
+    10% {
+        left: 30.5vw;
+        top: 30.5vw;
     }
     12% {
-        left: 620px;
-        top: 820px;
-        transform: rotate(200deg);
+        top: 35.5vw;
+        transform: rotate(0deg);
     }
-    16% {
-        left: 620px;
-        top: 620px;
+    13% {
+        transform: rotate(-90deg) scale(-1, 1);
     }
-    20% {
-        left: 620px;
-        top: 420px;
+    89% {
+        transform: rotate(-90deg) scale(-1, 1);
     }
-    24% {
-        left: 620px;
-        top: 220px;
+    90% {
+        left: 30.5vw;
+        top: 35.5vw;
+        transform: rotate(0deg);
     }
-    28% {
-        left: 620px;
-        top: 20px;
-        transform: rotate(200deg);
-    }
-    32% {
-        left: 620px;
-        top: 20px;
-        transform: rotate(110deg);
-    }
-    36% {
-        left: 420px;
-        top: 20px;
-    }
-    40% {
-        left: 220px;
-        top: 20px;
-        transform: rotate(110deg);
-    }
-    44% {
-        left: 220px;
-        top: 20px;
-        transform: rotate(20deg);
-    }
-    48% {
-        left: 220px;
-        top: 220px;
-    }
-    52% {
-        left: 220px;
-        top: 420px;
-        transform: rotate(20deg);
-    }
-    56% {
-        left: 220px;
-        top: 420px;
-        transform: rotate(-70deg);
-    }
-    60% {
-        left: 420px;
-        top: 420px;
-    }
-    64% {
-        left: 620px;
-        top: 420px;
-    }
-    68% {
-        left: 820px;
-        top: 420px;
-    }
-    72% {
-        left: 1020px;
-        top: 420px;
-        transform: rotate(-70deg);
-    }
-    76% {
-        left: 1020px;
-        top: 420px;
-        transform: rotate(20deg);
-    }
-    80% {
-        left: 1020px;
-        top: 620px;
-    }
-    84% {
-        left: 1020px;
-        top: 820px;
-        transform: rotate(20deg);
-    }
-    88% {
-        left: 1020px;
-        top: 820px;
-        transform: rotate(110deg);
+    100% {
+        left: 30.5vw;
+        top: 104vw;
     }
 }

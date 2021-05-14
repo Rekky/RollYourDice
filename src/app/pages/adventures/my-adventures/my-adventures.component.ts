@@ -105,4 +105,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         this.gameToEdit = null;
     }
 
+    // TODO delete this!!!!
+    logout(): void {
+        this.userInteractor.logout();
+    }
+
 }

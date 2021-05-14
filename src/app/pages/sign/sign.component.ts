@@ -60,7 +60,7 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
         this.display = display;
         if (display === 'loaded') {
             setTimeout(() => {
-                this.router.navigate(['/adventures/my-adventures']);
+                this.router.navigate(['/game/menu']);
             }, 2500);
         }
     }
