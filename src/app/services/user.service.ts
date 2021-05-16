@@ -14,15 +14,15 @@ export class UserService {
     constructor(private http: HttpClient, private apiService: ApiService, private httpService: HttpService) {}
 
     signIn(email: string, password: string): Promise<any> {
+        const data = {email, password};
+
         const options = {
             headers: new HttpHeaders({
-                // Authorization: this.sessionService.getSessionToken()
                 Authorization: ''
             })
         };
-
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/users/authenticate`, { email, password }, options).subscribe(
+            this.httpService.post(`/users/login`, data, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -33,14 +33,15 @@ export class UserService {
     }
 
     signUp(user: User): Promise<any> {
+        const data = {user};
+
         const options = {
             headers: new HttpHeaders({
-                // Authorization: this.sessionService.getSessionToken()
                 Authorization: ''
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/users/register`, {user: user}, options).subscribe(
+            this.httpService.post(`/users/register`, data, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
