@@ -43,6 +43,24 @@ label{
     background: $colorDarkGray;
 }
 
+.btn-roll {
+    background: rgba($colorRed, 78%);
+    color: $colorWhite;
+    padding: 12px 50px;
+    border-color: $colorRed;
+    transition: background-color .3s ease-in-out;
+    font-weight: 400;
+
+    &:hover {
+        color: $colorWhite;
+        text-shadow: 0 0 10px #fff, 0 0 30px rgb(255 255 255 / 0%);
+        background: rgba($colorRed, 100%);
+    }
+}
+// ------------------ CUSTOM BOOSTRAP -----------
+.btn {
+    border-radius: 0;
+}
 // ------------------ Auxiliars ------------------
 .cursor-pointer {
     cursor: pointer;
