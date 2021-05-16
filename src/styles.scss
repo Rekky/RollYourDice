@@ -1,24 +1,29 @@
 @import "colors";
 
 $oswald: 'oswald', sans-serif;
-
 @font-face {
     font-family: oswald;
     src: url(assets/fonts/Oswald-VariableFont_wght.ttf) format("opentype");
 }
 
+
+// ------------------- GENERAL --------------------
 * {
     font-family: 'Montserrat', sans-serif;
-    box-sizing: border-box;
-}
-
-body{
-    font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
+}
+body{
     margin: 0;
     padding: 0;
 }
+a {
+    color: inherit;
+    text-decoration: none;
 
+    &:hover {
+        color: inherit;
+    }
+}
 .font-normal{
     font-size: 14px;
 }
@@ -28,23 +33,17 @@ label{
 .box{
     border: 1px solid #333;
 }
-
-// --------------- BGS
 .bg-green {
-    background: rgb(116,205,120);
+    background: $colorGreen;
 }
 .bg-red {
-    background: rgb(242,90,90);
+    background: $colorRed;
 }
 .bg-dark-gray{
-    background: rgb(87,99,116);
+    background: $colorDarkGray;
 }
 
-
-// ------------ Auxiliars
-.mb-1{
-    margin-bottom: 1rem;
-}
+// ------------------ Auxiliars ------------------
 .cursor-pointer {
     cursor: pointer;
 }
@@ -55,16 +54,16 @@ label{
     cursor: alias;
 }
 
-// ------------- GAME EDITOR STYLES
+// ------------- GAME EDITOR STYLES -------------
 .game-editor {
     input[type="text"] {
         background: $editorMainForeground;
         border: 1px solid $editorColumnsBorderColor;
-        color: #fff;
+        color: $colorWhite;
     }
 }
 
-// --------------- LISTS styles
+// --------------- LISTS styles -----------------
 .page-list{
     height: 200px;
     border-bottom: 8px solid $editorColumnsBorderColor;
@@ -154,7 +153,6 @@ label{
     display: flex;
     flex-direction: column;
     height: 100%;
-    //overflow: hidden;
     overflow-y: auto;
 
     .item{
@@ -199,7 +197,7 @@ label{
     }
 }
 
-// ------------ DRAGULA
+// ------------ DRAGULA --------------------------
 /* in-flight clone */
 .gu-mirror {
     position: fixed !important;
@@ -254,14 +252,9 @@ label{
 
 .dialogBackdrop {
     background-color: transparent;
-    // opacity: 0.5;
-    // -webkit-filter: blur(3px);
-    // -moz-filter: blur(3px);
-    // filter: blur(3px);
 }
 
 ::ng-deep .cdk-overlay-pane {
-    // overflow: auto;
     max-height: 92vh;
 }
 

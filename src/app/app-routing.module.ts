@@ -34,7 +34,7 @@ const routes: Routes = [
         component: SignComponent,
     },
     {
-        path: 'home',
+        path: '',
         component: HomeComponent
     },
     {
