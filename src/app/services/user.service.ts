@@ -22,7 +22,7 @@ export class UserService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/users/login`, data, options).subscribe(
+            this.httpService.post(`/user/login`, data, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -41,7 +41,7 @@ export class UserService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/users/register`, data, options).subscribe(
+            this.httpService.post(`/user/register`, data, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
