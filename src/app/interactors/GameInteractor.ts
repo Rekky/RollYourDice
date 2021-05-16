@@ -55,7 +55,7 @@ export class GameInteractor {
     }
 
     goToTheGame(game): void {
-        const currentUser = this.userInteractor.getCurrentUser();
+        const currentUser = this.userInteractor.getUser();
 
         if (game.authorId === currentUser.id) {
             this.router.navigate(['/game-editor', game.id]);

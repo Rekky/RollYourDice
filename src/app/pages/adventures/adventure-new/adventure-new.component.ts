@@ -35,7 +35,7 @@ export class AdventureNewComponent implements OnInit, OnDestroy {
         const name = this.newGameForm.get('name').value;
         const type = this.newGameForm.get('type').value;
 
-        const user = this.userInteractor.getCurrentUser();
+        const user = this.userInteractor.getUser();
         if (user) {
             const game = new Game(user.id);
             game.name = name;

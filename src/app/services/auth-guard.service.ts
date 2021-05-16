@@ -15,7 +15,7 @@ export class AuthGuardService implements CanActivate {
     }
 
     checkLogin(): boolean {
-        const user = this.userInteractor.getCurrentUser();
+        const user = this.userInteractor.getUser();
         if (user) {
             return true;
         } else {

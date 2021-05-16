@@ -96,7 +96,7 @@ export class SocketService {
     }
 
     sendGamePlayId(gameId: string): void {
-        const userId = this.userInteractor.getCurrentUser().id;
+        const userId = this.userInteractor.getUser().id;
         this.socket.emit('game-play-load', {gameId, userId});
     }
 
@@ -150,7 +150,7 @@ export class SocketService {
     }
 
     sendGameStartStatus(gameId: string, status: GameStatus): void {
-        const userId = this.userInteractor.getCurrentUser().id;
+        const userId = this.userInteractor.getUser().id;
         this.socket.emit('game-play-start-status', {gameId, userId, status});
     }
 }

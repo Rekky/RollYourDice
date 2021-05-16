@@ -23,7 +23,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     constructor(private gameInteractor: GameInteractor,
                 private userInteractor: UserInteractor) {
-        this.currentUser = this.userInteractor.getCurrentUser();
+        this.currentUser = this.userInteractor.getUser();
 
     }
 

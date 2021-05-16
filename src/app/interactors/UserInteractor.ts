@@ -12,28 +12,20 @@ export class UserInteractor {
     private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
     constructor(private userService: UserService, private router: Router ) {
-        this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-    }
-
-    getCurrentUserObs(): Observable<User> {
-        return this.userSubject.asObservable();
-    }
-
-    getCurrentUser(): User {
-        return this.userSubject.getValue();
-    }
-
-    getToken(): string {
-        return this.userSubject.getValue()['token'];
+        const token = this.getToken();
+        if (token) {
+            const user = localStorage.getItem('user');
+            this.setUser(JSON.parse(user));
+        }
     }
 
     async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
-        const user = await this.userService.signIn(email, password);
-        if (user && stayLogged) {
-            localStorage.setItem('user', JSON.stringify(user));
+        const response = await this.userService.signIn(email, password);
+        if (response.user) {
+            this.setUser(response.user);
+            this.setToken(response.token);
         }
-        this.userSubject.next(user);
-        return user;
+        return response;
     }
 
     async signUp(user: User): Promise<any> {
@@ -42,7 +34,29 @@ export class UserInteractor {
 
     logout(): void {
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         this.userSubject.next(null);
         this.router.navigate(['/sign']);
+    }
+
+    getUserObs(): Observable<User> {
+        return this.userSubject.asObservable();
+    }
+
+    getUser(): User {
+        return this.userSubject.getValue();
+    }
+
+    setUser(user: User): void {
+        this.userSubject.next(user);
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+
+    getToken(): string {
+        return localStorage.getItem('token');
+    }
+
+    setToken(text: string): void {
+        localStorage.setItem('token', text);
     }
 }
