@@ -77,8 +77,8 @@
                 align-items: center;
 
                 height: 34px;
-                background: rgba($colorRed, 78%);
-                color: $colorWhite;
+                background: rgba($colorRed, 50%);
+                color: rgba($colorWhite, 90%);
                 padding: 12px 50px;
                 border-color: $colorRed;
                 transition: background-color .3s ease-in-out;
@@ -90,7 +90,6 @@
 
                 &:hover {
                     background: lighten($colorRed, 2);
-                    text-shadow: 0 0 10px #fff, 0 0 30px rgb(255 255 255 / 0%);
                 }
             }
         }
