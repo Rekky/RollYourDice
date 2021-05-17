@@ -49,16 +49,16 @@ label{
 
 .btn-roll {
     font-family: 'Bebas Neue', cursive;
-    background: rgba($colorRed, 50%);
+    background: rgba($colorRed, 60%);
     color: rgba($colorWhite, 90%);
-    padding: 12px 50px;
+    padding: 8px 50px;
     border-color: $colorRed;
     transition: background-color .3s ease-in-out;
     font-weight: 400;
 
     &:hover {
         color: $colorWhite;
-        background: rgba($colorRed, 90%);
+        background: rgba($colorRed, 100%);
     }
 }
 $color3: lighten($colorRed, 12%);
