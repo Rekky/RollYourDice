@@ -1,5 +1,5 @@
-<div class="card-post card-vertical bg-white" *ngIf="post">
-    <div class="card-post-header bg-dark">
+<div class="card-post card-vertical text-white" *ngIf="post">
+    <div class="card-post-header">
       <a [href]="postLink">
         <app-asset [src]="post.coverImage" [alt]="post.title"></app-asset>
       </a>
@@ -11,9 +11,9 @@
       <div class="card-post-description">
         <a [href]="postLink" [innerHTML]="post.description"></a>
       </div>
-      <div class="card-post-footer bg-white">
+      <div class="card-post-footer">
         <div><a class="especial-link me-1" [href]="'/'+post.type">{{post.type}}</a><span class="text-mediumgrey card-post-date"> / {{post.createdAt | date: 'd MMMM yyyy'}}</span></div>
-        <a class="especial-link" [href]="postLink">ver más</a>
+        <a class="btn btn-roll" [href]="postLink">ver más</a>
       </div>
     </div>
 </div>

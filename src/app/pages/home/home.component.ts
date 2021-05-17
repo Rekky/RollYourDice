@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {Router} from '@angular/router';
 import {ImageService} from '../../services/image.service';
+import {Post} from '../../classes/web/Post';
+import {ApiService} from '../../services/api.service';
 
 class ImageSnippet {
     pending: boolean = false;
@@ -17,13 +19,18 @@ export class HomeComponent implements OnInit {
 
     selectedFile: ImageSnippet;
     imageResponse: any;
+    posts: Post[] = [];
 
     constructor(private userInteractor: UserInteractor,
                 private router: Router,
-                private imageService: ImageService) {
+                private imageService: ImageService,
+                private apiService: ApiService
+    ) {
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        const response = await this.apiService.getAllPosts(0, 3, '', '');
+        this.posts = response.data;
     }
 
     logout(): void {

@@ -1,14 +1,22 @@
 <app-nav-bar></app-nav-bar>
 <div class="home-container">
-    <div class="overlay"></div>
     <div class="play-container">
-        <a class="btn btn-roll fs-3" [routerLink]="'/game/menu'">PLAY</a>
+        <a class="btn btn-roll fs-3 pe-5 px-5" [routerLink]="'/game/menu'">PLAY</a>
     </div>
     <div class="posts-container">
-        <post-card-vertical></post-card-vertical>
-    </div>
-    <div class="how-to-container" style="background: rgba(0,0,0,0.3)">
-
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="text-white fw-bold">NEWS AND UPDATES</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let post of posts">
+                    <post-card-vertical [post]="post"></post-card-vertical>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!--<div class="display-block">-->
