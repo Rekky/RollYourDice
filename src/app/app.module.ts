@@ -44,6 +44,8 @@ import { ImagesCarrouselComponent } from './components/images-carrousel/images-c
 import { EditGameDataComponent } from './components/edit-game-data/edit-game-data.component';
 import { IngameNavbarComponent } from './components/ingame-navbar/ingame-navbar.component';
 import { MenuComponent } from './pages/adventures/menu/menu.component';
+import {PostCardVerticalComponent} from './components/post-card-vertical/post-card-vertical.component';
+import {AssetComponent} from './components/asset/asset.component';
 
 @NgModule({
     declarations: [
@@ -82,6 +84,8 @@ import { MenuComponent } from './pages/adventures/menu/menu.component';
         EditGameDataComponent,
         IngameNavbarComponent,
         MenuComponent,
+        PostCardVerticalComponent,
+        AssetComponent
     ],
     imports: [
         BrowserModule,
