@@ -29,7 +29,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     async ngOnInit(): Promise<void> {
         try {
-            this.adventures = await this.gameInteractor.getMyGames(this.currentUser.id);
+            const response: any = await this.gameInteractor.getMyGames(this.currentUser.id);
+            this.adventures = response.data;
         } catch (e) {
             console.log(e);
         }
@@ -75,7 +76,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             } else {
                 game.id = 'new';
                 this.adventures.unshift(game);
-                // TODO descomentar un cop funcioni el back
+                const createdGame = await this.gameInteractor.createGame(game);
                 // this.adventures[this.displayedGameIndex] = await this.gameInteractor.createGame(game);
             }
             this.closeEditGame();

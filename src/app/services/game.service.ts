@@ -99,17 +99,13 @@ export class GameService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            if (environment.API) {
-                this.httpService.post(`/game/my-games`, {userId}, options).subscribe(
-                    (response) => {
-                        resolve(response);
-                    }, (error: HttpErrorResponse) => {
-                        reject(error);
-                    }
-                );
-            } else {
-                resolve(myGames);
-            }
+            this.httpService.post(`/game/my-games`, {userId}, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
         });
     }
 

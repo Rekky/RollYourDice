@@ -50,7 +50,8 @@
 
     <div *ngIf="gameToEdit" class="row">
         <app-edit-game-data  [game]="gameToEdit"
-                             (saveGame)="saveGame($event)" (closeGame)="closeEditGame()">
+                             (saveGame)="saveGame($event)"
+                             (closeGame)="closeEditGame()">
         </app-edit-game-data>
     </div>
 </div>
