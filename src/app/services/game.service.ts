@@ -48,7 +48,7 @@ export class GameService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game/delete`, {id}, options).subscribe(
+            this.httpService.delete(`/game/${id}`, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -65,7 +65,7 @@ export class GameService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game/edit`, {game}, options).subscribe(
+            this.httpService.patch(`/game/${game.id}`, {game}, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
