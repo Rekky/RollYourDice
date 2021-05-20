@@ -9,8 +9,10 @@
         <div class="col-12 col-md-6 col-lg-4 col-xxl-3 my-3"
              *ngFor="let adventure of adventures; let i = index;"
              (click)="loadGame(adventure)">
-            <div class="each-adventure col-12"
-                 [style.background-image]="'url(' + adventure.image.uri + ')'">
+            <div class="each-adventure col-12" [style.background-image]="'url(' + adventure.image.uri + ')'">
+                <div class="cover-bg">
+                    <asset [src]="adventure.image.uri"></asset>
+                </div>
                 <div *ngIf="displayOptions !== adventure.id" class="inside-data-box container-fluid">
                     <div class="selected-image-header">
                         <div class="master">

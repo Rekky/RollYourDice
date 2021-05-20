@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PageAsset} from '../../classes/web/PageAsset';
 
 @Component({
-  selector: 'app-asset',
+  selector: 'asset',
   templateUrl: './asset.component.html',
   styleUrls: ['./asset.component.scss']
 })
