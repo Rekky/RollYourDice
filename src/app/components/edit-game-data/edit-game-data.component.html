@@ -48,7 +48,7 @@
                 </label>
                 <input type="file" [id]="'cover-image-game-' + newGame.id"
                        [name]="'cover-image-game-' + newGame.id" (change)="imageChanged($event.target.files[0])"
-                       [accept]="'image/jpeg, image/png'" [formControlName]="'imageCover'"/>
+                       [accept]="'image/jpeg, image/png, image/webp, image/jpg'" [formControlName]="'imageCover'"/>
             </div>
             <div class="form-checkbox-input">
                 <div class="fake-input">

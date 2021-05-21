@@ -33,13 +33,15 @@ label{
 .btn-roll {
     font-family: 'Bebas Neue', cursive;
     background: $colorRed;
-    color: rgba($colorWhite, 90%);
+    color: rgba($colorWhite, 88%);
     border-color: $colorRed;
     padding: 6px 80px;
     transition: background-color .3s ease-in-out;
+    letter-spacing: 1px;
 
     &:hover {
         color: $colorWhite;
+        background: darken($colorRed, 10);
     }
 }
 .border-roll {
@@ -56,7 +58,7 @@ label{
         z-index: -1;
         margin: -$border;
         border-radius: inherit;
-        background: linear-gradient(to top, #710610, #d2a315);
+        background: rgb(171 0 0 / 50%);
     }
 }
 // ------------------ CUSTOM BOOSTRAP -----------
