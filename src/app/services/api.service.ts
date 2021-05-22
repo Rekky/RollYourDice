@@ -43,4 +43,21 @@ export class ApiService {
         });
     }
 
+    async uploadFile(data: any): Promise<any> {
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: 'falta'
+            })
+        };
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`api/file/upload`, data, options).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
 }

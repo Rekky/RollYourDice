@@ -46,6 +46,7 @@ import { IngameNavbarComponent } from './components/ingame-navbar/ingame-navbar.
 import { MenuComponent } from './pages/adventures/menu/menu.component';
 import {PostCardVerticalComponent} from './components/post-card-vertical/post-card-vertical.component';
 import {AssetComponent} from './components/asset/asset.component';
+import { UploadInputComponent } from './components/upload-input/upload-input.component';
 
 @NgModule({
     declarations: [
@@ -85,7 +86,8 @@ import {AssetComponent} from './components/asset/asset.component';
         IngameNavbarComponent,
         MenuComponent,
         PostCardVerticalComponent,
-        AssetComponent
+        AssetComponent,
+        UploadInputComponent
     ],
     imports: [
         BrowserModule,
