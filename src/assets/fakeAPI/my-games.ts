@@ -4,7 +4,7 @@ import {Page} from '../../app/classes/Page';
 
 export const myGames: Game[] = [
     {
-        id: '134TGHiaskAID12',
+        id: '17db81a2-897b-444c-9c09-168b30e9997f',
         authorId: '1231sDASD123dASd',
         createdDate: new Date(),
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur enim neque, quis consequat lacus faucibus sit amet. Integer sit amet maximus diam. Aenean dapibus luctus quam.',
@@ -24,7 +24,7 @@ export const myGames: Game[] = [
         status: GameStatus.Stopped
     },
     {
-        id: '134TGH868ID12',
+        id: '17db81a2-897b-444c-9c09-168b30e9997f',
         authorId: '123158SD123dASd',
         createdDate: new Date(),
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet maximus diam. Aenean dapibus luctus quam.',
@@ -44,7 +44,7 @@ export const myGames: Game[] = [
         status: GameStatus.Stopped
     },
     {
-        id: '134TGH855768ID12',
+        id: '17db81a2-897b-444c-9c09-168b30e9997f',
         authorId: '123158SD45123dASd',
         createdDate: new Date(),
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur enim neque, quis consequat lacus faucibus sit amet. Integer sit amet maximus diam. Aenean dapibus luctus quam.',
@@ -64,7 +64,7 @@ export const myGames: Game[] = [
         status: GameStatus.Stopped
     },
     {
-        id: '134TGH85785768ID12',
+        id: '17db81a2-897b-444c-9c09-168b30e9997f',
         authorId: '12315854SD45123dASd',
         createdDate: new Date(),
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur enim neque, quis consequat lacus faucibus sit amet. Integer sit amet maximus diam. Aenean dapibus luctus quam.',
@@ -84,7 +84,7 @@ export const myGames: Game[] = [
         status: GameStatus.Stopped
     },
     {
-        id: '134TGH83335785768ID12',
+        id: '17db81a2-897b-444c-9c09-168b30e9997f',
         authorId: '1123dASd',
         createdDate: new Date(),
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur enim neque, quis consequat lacus faucibus sit amet. Integer sit amet maximus diam. Aenean dapibus luctus quam.',

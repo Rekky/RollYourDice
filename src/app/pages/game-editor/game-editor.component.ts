@@ -12,6 +12,7 @@ import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 import {PageInteractor} from '../../interactors/PageInteractor';
 import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
+import {OneGame} from '../../../assets/fakeAPI/one-game';
 
 @Component({
     selector: 'app-game-editor',
@@ -44,22 +45,33 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         const gameId = this.router.snapshot.paramMap.get('id');
+
         this.socketService.sendGameEditorId(gameId);
 
-        this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
-            this.game = socketGame;
-            this.gameInteractor.setCurrentGame(this.game);
-            if (this.game?.pages) {
-                this.pageInteractor.setCurrentPage(this.game.pages[0]);
-                this.gameStartStatus = this.game.status;
-            }
-        });
+        // this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
+        //     this.game = socketGame;
+        //     this.gameInteractor.setCurrentGame(this.game);
+        //     if (this.game?.pages) {
+        //         this.pageInteractor.setCurrentPage(this.game.pages[0]);
+        //         this.gameStartStatus = this.game.status;
+        //     }
+        // });
+        this.game = OneGame;
+        console.log('game =', this.game);
+        this.gameInteractor.setCurrentGame(this.game);
+        if (this.game?.pages) {
+            this.pageInteractor.setCurrentPage(this.game.pages[0]);
+            this.gameStartStatus = this.game.status;
+        }
+
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
             this.mouse = mouse;
         });
+
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
             this.selectedKonvaObject = konva;
         });
+
         this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Page) => {
             this.selectedPage = page;
             // if (this.selectedPage?.maps) {

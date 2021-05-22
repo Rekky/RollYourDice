@@ -96,8 +96,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     loadGame(adventure: Game): void {
-        // TODO delelte this code
+        // TODO delete this code
         adventure.authorId = this.currentUser.id;
+        //
         this.gameInteractor.goToTheGame(adventure);
     }
 
