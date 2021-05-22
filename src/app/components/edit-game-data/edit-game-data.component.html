@@ -50,6 +50,9 @@
                        [name]="'cover-image-game-' + newGame.id" (change)="imageChanged($event.target.files[0])"
                        [accept]="'image/jpeg, image/png, image/webp, image/jpg'" [formControlName]="'imageCover'"/>
             </div>
+            <div class="d-block">
+                <upload-input></upload-input>
+            </div>
             <div class="form-checkbox-input">
                 <div class="fake-input">
                     <input type="checkbox" [id]="'publish-game-' + newGame.id"[formControlName]="'publish'"/>

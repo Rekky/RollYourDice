@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 
 @Component({
-    selector: 'app-upload-input',
+    selector: 'upload-input',
     templateUrl: './upload-input.component.html',
     styleUrls: ['./upload-input.component.scss']
 })
 export class UploadInputComponent implements OnInit {
 
-    previewUploadImage: any = null;
-    uploadError: any = null;
+    @Input() name: string = 'Upload Image (2MB max)';
+    @Input() previewUploadImage: any = null;
+    uploadError: boolean = false;
 
     constructor(private apiService: ApiService) { }
 

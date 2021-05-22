@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {HttpService} from './http.service';
+import {UserInteractor} from '../interactors/UserInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class ApiService {
     API_URL: string = environment.api_url;
     API_SOCKET: string = environment.api_url;
 
-    constructor(private httpService: HttpService) { }
+    constructor(private httpService: HttpService, private userInteractor: UserInteractor) { }
 
     getGameEditor(id: string): any {
         return null;
@@ -46,11 +47,11 @@ export class ApiService {
     async uploadFile(data: any): Promise<any> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: 'falta'
+                Authorization: this.userInteractor.getToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`api/file/upload`, data, options).subscribe(
+            this.httpService.post(`/file/upload`, data, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
