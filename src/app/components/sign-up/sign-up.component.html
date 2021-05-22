@@ -6,26 +6,26 @@
         <div class="username-box">
             <label class="title" for="username">Username</label>
             <input class="value" id="username" name="username"
-                   placeholder="MyAccountRocks!" type="text" [formControlName]="'username'"/>
+                   placeholder="" type="text" [formControlName]="'username'"/>
         </div>
         <div class="username-box">
             <label class="title" for="email">Email</label>
             <input class="value" id="email" name="email"
-                   placeholder="myaccount@rocks.com" type="email" [formControlName]="'email'"/>
+                   placeholder="" type="email" [formControlName]="'email'"/>
         </div>
         <div class="password-box">
             <label class="title" for="password">Password</label>
             <img class="eye" src="./assets/icons/visibilidad.png"
                  (mousedown)="displayPassword = true" (mouseup)="displayPassword = false"/>
             <input [type]="displayPassword ? 'text' : 'password'" class="value" id="password"
-                   name="password" placeholder="#~#Example123!" [formControlName]="'password'"/>
+                   name="password" placeholder="" [formControlName]="'password'"/>
         </div>
         <div class="password-box">
             <label class="title" for="repeatPassword">Repeat password</label>
             <img class="eye" src="./assets/icons/visibilidad.png"
                  (mousedown)="displayRepeatPassword = true" (mouseup)="displayRepeatPassword = false"/>
             <input [type]="displayRepeatPassword ? 'text' : 'password'" class="value" id="repeatPassword"
-                   name="repeatPassword" placeholder="#~#Example123!" [formControlName]="'repeatPassword'"/>
+                   name="repeatPassword" placeholder="" [formControlName]="'repeatPassword'"/>
         </div>
     </div>
     <div class="sign-button-box">

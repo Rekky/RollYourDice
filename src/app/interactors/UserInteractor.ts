@@ -14,7 +14,7 @@ export class UserInteractor {
     constructor(private userService: UserService, private router: Router ) {
         const token = this.getToken();
         if (token) {
-            const user = localStorage.getItem('user');
+            const user = localStorage.getItem('rollUser');
             this.setUser(JSON.parse(user));
         }
     }
@@ -33,8 +33,8 @@ export class UserInteractor {
     }
 
     logout(): void {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
+        localStorage.removeItem('rollUser');
+        localStorage.removeItem('rollToken');
         this.userSubject.next(null);
         this.router.navigate(['/sign']);
     }
@@ -49,14 +49,14 @@ export class UserInteractor {
 
     setUser(user: User): void {
         this.userSubject.next(user);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('rollUser', JSON.stringify(user));
     }
 
     getToken(): string {
-        return localStorage.getItem('token');
+        return localStorage.getItem('rollToken');
     }
 
     setToken(text: string): void {
-        localStorage.setItem('token', text);
+        localStorage.setItem('rollToken', text);
     }
 }

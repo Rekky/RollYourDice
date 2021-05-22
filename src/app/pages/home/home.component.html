@@ -1,14 +1,24 @@
 <app-nav-bar></app-nav-bar>
 <div class="home-container">
-    <div class="overlay"></div>
+    <!-- particles.js container -->
+    <div id="particles-js" style="position: fixed;top:0;left:0;right: 0;bottom: 0;"></div>
     <div class="play-container">
-        <a class="btn btn-roll fs-3" [routerLink]="'/game/menu'">PLAY</a>
+        <a class="btn btn-roll fs-3" [routerLink]="'/game/menu'">PLAY NOW</a>
     </div>
     <div class="posts-container">
-
-    </div>
-    <div class="how-to-container" style="background: rgba(0,0,0,0.3)">
-
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="text-white fw-bold">NEWS AND UPDATES</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let post of posts">
+                    <post-card-vertical [post]="post"></post-card-vertical>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!--<div class="display-block">-->

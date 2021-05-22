@@ -13,10 +13,6 @@ $oswald: 'oswald', sans-serif;
     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
 }
-body{
-    margin: 0;
-    padding: 0;
-}
 a {
     color: inherit;
     text-decoration: none;
@@ -34,6 +30,50 @@ label{
 .box{
     border: 1px solid #333;
 }
+.btn-roll {
+    font-family: 'Bebas Neue', cursive;
+    background: $colorRed;
+    color: rgba($colorWhite, 88%);
+    border-color: $colorRed;
+    padding: 6px 80px;
+    transition: background-color .3s ease-in-out;
+    letter-spacing: 1px;
+
+    &:hover {
+        color: $colorWhite;
+        background: darken($colorRed, 10);
+    }
+}
+.border-roll {
+    position: relative;
+    $border: 3px;
+    color: #FFF;
+    background-clip: padding-box;
+    border: solid $border transparent;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -1;
+        margin: -$border;
+        border-radius: inherit;
+        background: rgb(171 0 0 / 50%);
+    }
+}
+// ------------------ CUSTOM BOOSTRAP -----------
+.btn {
+    border-radius: 0;
+}
+.btn-danger {
+    background: $colorRed;
+}
+.bg-danger {
+    background: $colorRed !important;
+}
+.bg-dark {
+    background: $colorDarkBlue !important;
+}
 .bg-green {
     background: $colorGreen !important;
 }
@@ -43,73 +83,7 @@ label{
 .bg-dark-gray{
     background: $colorDarkGray !important;
 }
-.bg-dark {
-    background: $colorDarkBlue !important;
-}
 
-.btn-roll {
-    font-family: 'Bebas Neue', cursive;
-    background: rgba($colorRed, 60%);
-    color: rgba($colorWhite, 90%);
-    padding: 8px 50px;
-    border-color: $colorRed;
-    transition: background-color .3s ease-in-out;
-    font-weight: 400;
-
-    &:hover {
-        color: $colorWhite;
-        background: rgba($colorRed, 100%);
-    }
-}
-$color3: lighten($colorRed, 12%);
-//Effect three
-.type3 {
-    position: relative;
-
-    &.type3::after,
-    &.type3::before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 20%;
-        height: 20%;
-        border: 2px solid;
-        transition: all 0.6s ease;
-        border-radius: 2px;
-    }
-
-    &.type3::after {
-        bottom: 0;
-        right: 0;
-        border-top-color: transparent;
-        border-left-color: transparent;
-        border-bottom-color: $color3;
-        border-right-color: $color3;
-    }
-
-    &.type3::before {
-        top: 0;
-        left: 0;
-        border-bottom-color: transparent;
-        border-right-color: transparent;
-        border-top-color: $color3;
-        border-left-color: $color3;
-    }
-
-    &.type3:hover:after,
-    &.type3:hover:before {
-        border-bottom-color: $color3;
-        border-right-color: $color3;
-        border-top-color: $color3;
-        border-left-color: $color3;
-        width: 100%;
-        height: 100%;
-    }
-}
-// ------------------ CUSTOM BOOSTRAP -----------
-.btn {
-    border-radius: 0;
-}
 // ------------------ Auxiliars ------------------
 .cursor-pointer {
     cursor: pointer;
@@ -326,3 +300,77 @@ $color3: lighten($colorRed, 12%);
 }
 
 html, body { height: 100%; }
+
+
+// ----------------------------- POSTS -----------------------------
+.card-post {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    a {text-decoration: none;color: inherit};
+}
+.card-post-header{
+    grid-area: header;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+
+    img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all .7s ease-in-out;
+    }
+}
+.card-post-body {
+    grid-area: body;
+    position: relative;
+    text-decoration: none;
+    padding: 1rem;
+    z-index: 1;
+}
+.card-post-description {
+    color: $colorWhite;
+    overflow: hidden;
+    height: 90px;
+}
+.card-post-footer{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    height: 52px;
+}
+.card-post-date {
+    font-size: .8rem;
+}
+
+// -- positions of cards --
+.card-vertical{
+    background: rgb(21 23 30 / 80%);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 300px 250px;
+    text-decoration: none;
+    color: inherit;
+    grid-template-areas:
+    "header"
+    "body";
+
+    &:hover {
+        img {
+            transform: scale(1.05);
+        }
+    }
+}

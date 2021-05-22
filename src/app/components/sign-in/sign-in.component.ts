@@ -40,7 +40,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
             await this.userInteractor.signIn(email, pass, stayLogged);
             this.display.emit('loaded');
         } catch (e) {
-            console.log(e.error);
+            // error handle
+            this.signInForm.get('password').setValue('');
         }
     }
 

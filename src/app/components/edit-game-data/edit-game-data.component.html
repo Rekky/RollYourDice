@@ -1,5 +1,5 @@
 <div class="edit-game-box">
-    <form class="edit-game-card" [formGroup]="gameForm" (submit)="acceptChanges()">
+    <form class="edit-game-card card-roll" [formGroup]="gameForm" (submit)="acceptChanges()">
         <div class="header" *ngIf="loaded">
             <div class="exit">
                 <svg (click)="closeEdit()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
@@ -48,7 +48,7 @@
                 </label>
                 <input type="file" [id]="'cover-image-game-' + newGame.id"
                        [name]="'cover-image-game-' + newGame.id" (change)="imageChanged($event.target.files[0])"
-                       [accept]="'image/jpeg, image/png'" [formControlName]="'imageCover'"/>
+                       [accept]="'image/jpeg, image/png, image/webp, image/jpg'" [formControlName]="'imageCover'"/>
             </div>
             <div class="form-checkbox-input">
                 <div class="fake-input">

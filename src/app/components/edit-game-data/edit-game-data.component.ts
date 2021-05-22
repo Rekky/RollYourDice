@@ -43,7 +43,7 @@ export class EditGameDataComponent implements OnInit {
     }
 
     acceptChanges(): void {
-        Object.keys(this.gameForm.value).forEach((key) => {
+        Object.keys(this.gameForm.value).forEach((key: string) => {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
         this.saveGame.emit(this.newGame);

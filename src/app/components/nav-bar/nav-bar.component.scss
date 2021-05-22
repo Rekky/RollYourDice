@@ -78,7 +78,7 @@
                 align-items: center;
 
                 height: 34px;
-                background: rgba($colorRed, 50%);
+                background: $colorRed;
                 color: rgba($colorWhite, 90%);
                 padding: 12px 50px;
                 border-color: $colorRed;
@@ -90,7 +90,7 @@
                 text-decoration: none;
 
                 &:hover {
-                    background: lighten($colorRed, 2);
+                    color: $colorWhite;
                 }
             }
         }

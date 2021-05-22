@@ -26,7 +26,7 @@ export class HttpService {
      */
     public get(url: string, options?: any): Observable<any> {
         return new Observable<any>(observable => {
-            this.http.get(environment.api_url + url, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
+            this.http.get(environment.api_url + url, { headers: options ? options.headers : null, params: options ? options.params : null, observe: 'response' }).subscribe(
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
@@ -57,7 +57,6 @@ export class HttpService {
      * This call overwrites specified attributes of a piece of data
      */
     public patch(url: string, body: any, options?: any): Observable<any> {
-        // return this.http.patch(environment.apiUrl + url, body, options);
         return new Observable<any>(observable => {
             this.http.patch(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
                 (response) => {
@@ -74,13 +73,25 @@ export class HttpService {
      * This call removes specified data from the server
      */
     public delete(url: string, options?: any): Observable<any> {
-        // return this.http.delete(environment.apiUrl + url, options);
         return new Observable<any>(observable => {
             this.http.delete(environment.api_url + url, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
                     this.httpErrorService.manageError(error, true);
+                    observable.error(error);
+                }
+            );
+        });
+    }
+
+    public getTest(url: string, options?: any): Observable<any> {
+        return new Observable<any>(observable => {
+            this.http.get(url, { headers: options ? options.headers : null, params: options ? options.params : null, observe: 'response' }).subscribe(
+                (response) => {
+                    observable.next(response.body);
+                }, (error: HttpErrorResponse) => {
+                    this.httpErrorService. manageError(error, true);
                     observable.error(error);
                 }
             );
