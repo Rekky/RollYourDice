@@ -11,7 +11,7 @@ export class UserInteractor {
 
     private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
-    constructor(private userService: UserService, private router: Router ) {
+    constructor(private userService: UserService) {
         const token = this.getToken();
         if (token) {
             const user = localStorage.getItem('rollUser');
@@ -36,7 +36,6 @@ export class UserInteractor {
         localStorage.removeItem('rollUser');
         localStorage.removeItem('rollToken');
         this.userSubject.next(null);
-        this.router.navigate(['/sign']);
     }
 
     getUserObs(): Observable<User> {

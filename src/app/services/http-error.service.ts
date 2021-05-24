@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from './notifications.service';
+import {Router} from '@angular/router';
+import {UserInteractor} from '../interactors/UserInteractor';
 
 /**
  * Service created to manage HttpErrors in a generic way
@@ -17,6 +19,7 @@ export class HttpErrorService {
 
     constructor(
         private notificationsService: NotificationsService,
+        private router: Router,
         private translateService: TranslateService
     ) { }
 
@@ -38,6 +41,13 @@ export class HttpErrorService {
         if (doNotify) {
             console.error('Error ' + httpError.status + ' received');
             this.notificationsService.showErrorNotification(statusCode, httpError.error.message);
+
+            if (httpError.error.message === 'Expired') {
+                localStorage.removeItem('rollUser');
+                localStorage.removeItem('rollToken');
+                this.router.navigateByUrl('/sign');
+            }
+            console.log('->>>>>>>>', httpError.error);
         }
     }
 }
