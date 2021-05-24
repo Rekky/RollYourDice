@@ -47,7 +47,6 @@ export class HttpErrorService {
                 localStorage.removeItem('rollToken');
                 this.router.navigateByUrl('/sign');
             }
-            console.log('->>>>>>>>', httpError.error);
         }
     }
 }
