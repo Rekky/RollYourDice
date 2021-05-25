@@ -45,7 +45,7 @@ export class UploadInputComponent implements OnInit {
     async uploadFile(file: any): Promise<void> {
         // build formData and send to api
         const formData = new FormData();
-        formData.append('image', file);
+        formData.append('asset', file);
         return await this.apiService.uploadFile(formData);
     }
 
