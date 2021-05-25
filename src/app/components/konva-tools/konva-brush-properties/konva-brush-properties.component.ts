@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MouseService} from '../../../services/mouse.service';
 import {OurKonvaBrush} from '../../../classes/ourKonva/OurKonvaBrush';
 import {Subscription} from 'rxjs';
+import {document} from 'ngx-bootstrap/utils';
 
 @Component({
     selector: 'app-konva-brush-properties',

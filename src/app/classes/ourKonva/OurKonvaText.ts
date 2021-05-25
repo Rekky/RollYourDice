@@ -16,7 +16,7 @@ export class OurKonvaText extends OurKonvaMouse {
         this.color = '#000000';
         this.fontSize = 20;
         this.id = 'text-' + Math.floor(Math.random() * 100000);
-        this.text = 'Some text here';
+        this.text = 'Write here...';
         this.name = 'new text';
         this.position = new Coords();
     }
@@ -29,7 +29,7 @@ export class OurKonvaText extends OurKonvaMouse {
             fontSize: object.fontSize,
             draggable: false,
             width: object.size.width,
-            height: object.size.height,
+            // height: object.size.height,
             fill: object.color,
             id: object.id,
             name: object.name
@@ -41,7 +41,7 @@ export class OurKonvaText extends OurKonvaMouse {
         const objectAttrs = object.getAttrs();
         text.position.x = objectAttrs.x;
         text.position.y = objectAttrs.y;
-        text.size.height = objectAttrs.height;
+        // text.size.height = objectAttrs.height;
         text.size.width = objectAttrs.width;
         text.state = 'text';
         text.color = objectAttrs.fill;
@@ -89,9 +89,8 @@ export class OurKonvaText extends OurKonvaMouse {
         return toEmit;
     }
 
-    mouseDown(): CurrentSelectedKonvaObject {
+    mouseUp(): CurrentSelectedKonvaObject {
         super.mouseDown();
-        this.id = 'text-' + Math.floor(Math.random() * 100000);
         const pos = this.stage.getPointerPosition();
         const text = new Konva.Text({
             text: 'Some text here',
@@ -100,10 +99,9 @@ export class OurKonvaText extends OurKonvaMouse {
             fontSize: this.fontSize,
             draggable: false,
             width: this.size.width,
-            height: this.size.height,
             fill: this.color,
             id: this.id,
-            name: this.name
+            name: this.name,
         });
 
         this.position.x = pos.x;
@@ -118,6 +116,7 @@ export class OurKonvaText extends OurKonvaMouse {
             },
         });
         transformer.id('tr-' + this.id);
+        transformer.hide();
 
         text.on('transform', () => {
             text.setAttrs({
@@ -127,79 +126,13 @@ export class OurKonvaText extends OurKonvaMouse {
             });
         });
 
-        text.on('dblclick', () => {
-            let editing = false;
-            text.hide();
-            transformer.hide();
+        this.editMode(text, transformer);
 
-            const textPosition = text.absolutePosition();
-            const stageBox = this.stage.container().getBoundingClientRect();
-            const areaPosition = {
-                x: stageBox.left + textPosition.x,
-                y: stageBox.top + textPosition.y,
-            };
-
-            const textarea = document.createElement('textarea');
-            document.body.appendChild(textarea);
-            textarea.value = text.text();
-            textarea.style.position = 'absolute';
-            textarea.style.top = areaPosition.y + 'px';
-            textarea.style.left = areaPosition.x + 'px';
-            textarea.style.width = text.width() - text.padding() * 2 + 'px';
-            textarea.style.height = text.height() - text.padding() * 2 + 5 + 'px';
-            textarea.style.fontSize = text.fontSize() + 'px';
-            textarea.style.border = 'none';
-            textarea.style.padding = '0px';
-            textarea.style.margin = '0px';
-            textarea.style.overflow = 'hidden';
-            textarea.style.background = 'none';
-            textarea.style.outline = 'none';
-            textarea.style.resize = 'none';
-            textarea.style.fontFamily = text.fontFamily();
-            textarea.style.transformOrigin = 'left top';
-            textarea.style.textAlign = text.align();
-            textarea.style.color = text.fill();
-            textarea.focus();
-            editing = true;
-
-            textarea.addEventListener('keydown', (e: KeyboardEvent) => {
-                // hide on enter
-                if (e.keyCode === 13) {
-                    text.text(textarea.value);
-                    text.show();
-                    transformer.hide();
-                    this.layers.texts.batchDraw();
-                    editing = false;
-                    document.body.removeChild(textarea);
-                }
-                // on esc do not set value back to node
-                if (e.keyCode === 27) {
-                    text.show();
-                    transformer.hide();
-                    this.layers.texts.batchDraw();
-                    editing = false;
-                    document.body.removeChild(textarea);
-                }
-            });
-
-            setTimeout(() => {
-                window.addEventListener('click', (e: MouseEvent) => {
-                    if (editing && e.target !== textarea) {
-                        text.text(textarea.value);
-                        text.show();
-                        transformer.hide();
-                        this.layers.texts.batchDraw();
-                        editing = false;
-                        document.body.removeChild(textarea);
-                    }
-                }, { once: true });
-            }, 500);
+        text.on('dblclick dbltap', () => {
+            this.editMode(text, transformer);
         });
 
-        this.adaptPositionToGrid(text);
-        this.layers.texts.add(text);
-        this.layers.texts.add(transformer);
-        this.layers.texts.batchDraw();
+        this.refresh(text, transformer);
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = text;
@@ -207,5 +140,151 @@ export class OurKonvaText extends OurKonvaMouse {
         toEmit.layer = this.layers.texts;
         toEmit.transformer = transformer;
         return toEmit;
+    }
+
+    refresh(text, transformer): void {
+        this.adaptPositionToGrid(text);
+        this.layers.texts.add(text);
+        this.layers.texts.add(transformer);
+        this.layers.texts.batchDraw();
+    }
+
+    editMode(text, transformer): void {
+        // hide text node and transformer:
+        text.hide();
+        transformer.hide();
+
+        this.refresh(text, transformer);
+
+        // create textarea over canvas with absolute position
+        // first we need to find position for textarea
+        // how to find it?
+
+        // at first lets find position of text node relative to the stage:
+        const textPosition = text.absolutePosition();
+
+        // so position of textarea will be the sum of positions above:
+        const stageBox = this.stage.container().getBoundingClientRect();
+        const areaPosition = {
+            x: stageBox.left + textPosition.x,
+            y: stageBox.top + textPosition.y,
+        };
+        // const areaPosition = {
+        //     x: this.stage.container().offsetLeft + textPosition.x,
+        //     y: this.stage.container().offsetTop + textPosition.y,
+        // };
+
+        // create textarea and style it
+        const textarea = document.createElement('textarea');
+        document.body.appendChild(textarea);
+
+        // apply many styles to match text on canvas as close as possible
+        // remember that text rendering on canvas and on the textarea can be different
+        // and sometimes it is hard to make it 100% the same. But we will try...
+        textarea.value = text.text();
+        textarea.style.position = 'absolute';
+        textarea.style.top = areaPosition.y + 'px';
+        textarea.style.left = areaPosition.x + 'px';
+        textarea.style.width = text.width() - text.padding() * 2 + 'px';
+        textarea.style.height = text.height() - text.padding() * 2 + 5 + 'px';
+        textarea.style.fontSize = text.fontSize() + 'px';
+        textarea.style.border = 'none';
+        textarea.style.padding = '10px';
+        textarea.style.margin = '0px';
+        textarea.style.overflow = 'hidden';
+        textarea.style.outline = 'none';
+        textarea.style.resize = 'none';
+        textarea.style.fontFamily = text.fontFamily();
+        textarea.style.transformOrigin = 'left top';
+        textarea.style.textAlign = text.align();
+        textarea.style.color = text.fill();
+
+        let transform = '';
+        let px = 0;
+        // also we need to slightly move textarea on firefox
+        // because it jumps a bit
+        const isFirefox =
+            navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        if (isFirefox) {
+            px += 2 + Math.round(text.fontSize() / 20);
+        }
+        transform += 'translateY(-' + px + 'px)';
+
+        textarea.style.transform = transform;
+
+        // reset height
+        textarea.style.height = 'auto';
+        // after browsers resized it we can set actual value
+        textarea.style.height = textarea.scrollHeight + 3 + 'px';
+
+        textarea.focus();
+
+        function removeTextarea(): void {
+            textarea.parentNode.removeChild(textarea);
+            window.removeEventListener('click', e => {
+                if (e.target !== textarea) {
+                    text.text(textarea.value);
+                    removeTextarea();
+                }
+            });
+            text.show();
+            transformer.show();
+            transformer.forceUpdate();
+        }
+
+        function setTextareaWidth(newWidth): void {
+            if (!newWidth) {
+                // set width for placeholder
+                // @ts-ignore
+                newWidth = (text as Konva.Text).placeholder.length * text.fontSize();
+            }
+            // some extra fixes on different browsers
+            const isSafari = /^((?!chrome|android).)*safari/i.test(
+                navigator.userAgent
+            );
+            const itIsFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+            if (isSafari || itIsFirefox) {
+                newWidth = Math.ceil(newWidth);
+            }
+
+            // @ts-ignore
+            const isEdge = document.documentMode || /Edge/.test(navigator.userAgent);
+            if (isEdge) {
+                newWidth += 1;
+            }
+            textarea.style.width = newWidth + 'px';
+        }
+
+        textarea.addEventListener('keydown', (e): void => {
+            // hide on enter
+            // but don't hide on shift + enter
+            if (e.keyCode === 13 && !e.shiftKey) {
+                text.text(textarea.value);
+                removeTextarea();
+            }
+            // on esc do not set value back to node
+            if (e.keyCode === 27) {
+                removeTextarea();
+            }
+
+            this.refresh(text, transformer);
+        });
+
+        textarea.addEventListener('keydown', (e): void => {
+            const scale = text.getAbsoluteScale().x;
+            setTextareaWidth(text.width() * scale);
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + text.fontSize() + 'px';
+        });
+
+        setTimeout(() => {
+            window.addEventListener('click', e => {
+                if (e.target !== textarea) {
+                    text.text(textarea.value);
+                    removeTextarea();
+                }
+                this.refresh(text, transformer);
+            });
+        });
     }
 }

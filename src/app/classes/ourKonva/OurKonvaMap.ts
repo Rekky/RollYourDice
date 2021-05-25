@@ -17,6 +17,7 @@ export class  OurKonvaMap {
     rows: number;
     fogOfWar: boolean;
     backgroundColor: string;
+    backgroundImage: string | null;
     mastersDarkness: number;
     dndDiagonalSystem: boolean;
     zoom: number;
@@ -35,6 +36,7 @@ export class  OurKonvaMap {
         this.rows = 10;
         this.fogOfWar = false;
         this.backgroundColor = 'white';
+        this.backgroundImage = null;
         this.mastersDarkness = 50;
         this.dndDiagonalSystem = false;
         this.zoom = 100;

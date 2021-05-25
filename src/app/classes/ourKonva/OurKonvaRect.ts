@@ -26,7 +26,6 @@ export class OurKonvaRect extends OurKonvaMouse {
     }
 
     static paint(object: OurKonvaRect, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
-        console.log('paint object =', object.id);
         const rect = new Konva.Rect({
             x: object.position.x,
             y: object.position.y,

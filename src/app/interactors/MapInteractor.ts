@@ -42,15 +42,15 @@ export class MapInteractor {
     paintObjectOnMap(object: any, layers: OurKonvaLayers, mapId: string): void {
         if (object.state === 'square') {
             const createdObject = OurKonvaRect.paint(object, layers);
-            this.mouseInteractor.newObjectAddSelectedOption(createdObject, mapId);
+            this.mouseInteractor.newObjectAddSelectedOption(createdObject);
         }
         else if (object.state === 'text') {
             const createdObject = OurKonvaText.paint(object, layers);
-            this.mouseInteractor.newObjectAddSelectedOption(createdObject, mapId);
+            this.mouseInteractor.newObjectAddSelectedOption(createdObject);
         }
         else if (object.state === 'image') {
             const createdObject = OurKonvaImage.paint(object, layers);
-            this.mouseInteractor.newObjectAddSelectedOption(createdObject, mapId);
+            this.mouseInteractor.newObjectAddSelectedOption(createdObject);
         }
     }
 }

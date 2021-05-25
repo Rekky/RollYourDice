@@ -1,8 +1,7 @@
 import {Game, GameStatus, GameTypes} from '../../app/classes/Game';
-import {Asset} from '../../app/classes/Asset';
 import {Page} from '../../app/classes/Page';
 
-export const myGames: Game[] = [
+export const MyGames: Game[] = [
     {
         id: '17db81a2-897b-444c-9c09-168b30e9997f',
         authorId: '1231sDASD123dASd',

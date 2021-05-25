@@ -12,10 +12,11 @@ export const OneGame: Game = Game.fromJSON({
                 {
                     "id": "de9c5bc5-450c-4685-87ba-4af3940e1c57",
                     "name": "new Map",
-                    "columns": 10,
-                    "rows": 10,
+                    "columns": 30,
+                    "rows": 30,
                     "fogOfWar": false,
                     "backgroundColor": "white",
+                    "backgroundImage": '/assets/backgrounds/evil-altar.jpg',
                     "mastersDarkness": 50,
                     "dndDiagonalSystem": false,
                     "zoom": 100,
@@ -29,8 +30,8 @@ export const OneGame: Game = Game.fromJSON({
                     "toPlayers": false,
                     "players": [],
                     "position": {
-                        "x": 0,
-                        "y": 0,
+                        "x": 500,
+                        "y": 100,
                         "z": 0
                     },
                     "createdDate": "2021-05-06T23:26:11.018+02:00",
