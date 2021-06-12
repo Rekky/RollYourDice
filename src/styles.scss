@@ -61,6 +61,19 @@ label{
         background: rgb(171 0 0 / 50%);
     }
 }
+app-dropdown {
+    height: 100%;
+    width: 100%;
+
+    .item {
+        cursor: pointer;
+        padding: 12px 32px;
+
+        &:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    }
+}
 // ------------------ CUSTOM BOOSTRAP -----------
 .btn {
     border-radius: 0;

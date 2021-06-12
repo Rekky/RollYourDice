@@ -15,6 +15,17 @@
         </div>
         <div class="right-side">
             <div class="option">
+                <a class="text-light" *ngIf="!user" [routerLink]="'/sign'">Sign-in</a>
+                <app-dropdown *ngIf="user" [title]="user.username">
+                    <li class="item">
+                        <a [routerLink]="'/config'">Configuration</a>
+                    </li>
+                    <li class="item">
+                        <a (click)="logout()">Logout</a>
+                    </li>
+                </app-dropdown>
+            </div>
+            <div class="option">
                 <a class="play-button text-light" [routerLink]="'/game/menu'">Play</a>
             </div>
         </div>

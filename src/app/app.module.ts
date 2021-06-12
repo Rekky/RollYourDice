@@ -47,6 +47,7 @@ import { MenuComponent } from './pages/adventures/menu/menu.component';
 import {PostCardVerticalComponent} from './components/post-card-vertical/post-card-vertical.component';
 import {AssetComponent} from './components/asset/asset.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 @NgModule({
     declarations: [
@@ -87,7 +88,8 @@ import { UploadInputComponent } from './components/upload-input/upload-input.com
         MenuComponent,
         PostCardVerticalComponent,
         AssetComponent,
-        UploadInputComponent
+        UploadInputComponent,
+        DropdownComponent
     ],
     imports: [
         BrowserModule,
