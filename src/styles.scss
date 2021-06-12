@@ -67,7 +67,16 @@ app-dropdown {
 
     .item {
         cursor: pointer;
-        padding: 12px 32px;
+        position: relative;
+        min-height: 40px;
+        display: flex;
+        flex-direction: column;
+
+        &>* {
+            height: 100%;
+            width: 100%;
+            padding: 12px 32px;
+        }
 
         &:hover {
             background: rgba(255,255,255,0.2);
