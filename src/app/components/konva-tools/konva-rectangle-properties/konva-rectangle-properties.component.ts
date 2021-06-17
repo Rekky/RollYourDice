@@ -18,22 +18,29 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
     getSelectedKonvaObjectSubscription: Subscription;
     konvaRectangle: CurrentSelectedKonvaObject;
 
+    tempValue: any;
+
     constructor(private mouseService: MouseService,
                 private mouseInteractor: MouseInteractor,
                 private socketService: SocketService) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
-            this.rectangle = mouse;
+            if (mouse.state === 'square') {
+                this.rectangle = mouse;
+            }
         });
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva) => {
             if (konva && konva.type === 'square') {
                 this.konvaRectangle = konva;
                 const konvaAttrs = konva.konvaObject.getAttrs();
-                this.rectangle.fillColor = konvaAttrs.fill;
-                this.rectangle.strokeSize = konvaAttrs.strokeWidth;
-                this.rectangle.strokeColor = konvaAttrs.stroke;
+                this.rectangle = new OurKonvaRect();
+                this.rectangle.fill = konvaAttrs.fill;
+                this.rectangle.strokeWidth = konvaAttrs.strokeWidth;
+                this.rectangle.stroke = konvaAttrs.stroke;
                 this.rectangle.opacity = konvaAttrs.opacity * 100;
+                this.rectangle.position.x = konvaAttrs.x;
+                this.rectangle.position.y = konvaAttrs.y;
             }
         });
     }
@@ -48,7 +55,7 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
     }
 
     fillColorModified(ev: string): void {
-        this.rectangle.fillColor = ev;
+        this.rectangle.fill = ev;
         this.mouseService.setMouse(this.rectangle);
         if (this.konvaRectangle) {
             this.konvaRectangle.konvaObject.setAttr('fill', ev);
@@ -58,19 +65,8 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
         }
     }
 
-    strokeSizeModified(ev: number): void {
-        this.rectangle.strokeSize = ev;
-        this.mouseService.setMouse(this.rectangle);
-        if (this.konvaRectangle) {
-            this.konvaRectangle.konvaObject.setAttr('strokeWidth', ev);
-            this.konvaRectangle.layer.batchDraw();
-            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
-            this.socketService.sendGameEditMapObject(ourKonvaRect);
-        }
-    }
-
     strokeColorModified(ev: string): void {
-        this.rectangle.strokeColor = ev;
+        this.rectangle.stroke = ev;
         this.mouseService.setMouse(this.rectangle);
         if (this.konvaRectangle) {
             this.konvaRectangle.konvaObject.setAttr('stroke', ev);
@@ -80,11 +76,19 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
         }
     }
 
-    opacityModified(ev: number): void {
-        this.rectangle.opacity = ev;
+    modifyTempValue(ev: any): void {
+        this.tempValue = ev;
+    }
+
+    modifySquare(attr: string): void {
+        this.rectangle.position[attr] = this.tempValue;
         this.mouseService.setMouse(this.rectangle);
         if (this.konvaRectangle) {
-            this.konvaRectangle.konvaObject.setAttr('opacity', ev / 100);
+            if (attr === 'opacity') {
+                this.konvaRectangle.konvaObject.setAttr(attr, this.tempValue / 100);
+            } else {
+                this.konvaRectangle.konvaObject.setAttr(attr, this.tempValue);
+            }
             this.konvaRectangle.layer.batchDraw();
             const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
             this.socketService.sendGameEditMapObject(ourKonvaRect);

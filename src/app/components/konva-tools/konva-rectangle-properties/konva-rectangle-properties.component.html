@@ -3,21 +3,31 @@
 </div>
 <div class="properties-box">
     <div class="properties-row">
-        <input type="color" name="favcolor" [ngModel]="rectangle.fillColor" (ngModelChange)="fillColorModified($event)">
+        <div class="title">X</div>
+        <input type="number" [ngModel]="rectangle.position.x" (ngModelChange)="modifyTempValue($event)"
+               (blur)="modifySquare('x')"/>
+        <div class="measure">px</div>
+        <div class="title">Y</div>
+        <input type="number" [ngModel]="rectangle.position.y" (ngModelChange)="modifyTempValue($event)"
+               (blur)="modifySquare('y')"/>
+        <div class="measure">px</div>
+    </div>
+    <div class="properties-row">
+        <input type="color" name="favcolor" [ngModel]="rectangle.fill" (ngModelChange)="fillColorModified($event)">
         <div class="title">Fill color</div>
     </div>
     <div class="properties-row">
         <div class="title">Square opacity</div>
-        <input type="number" [ngModel]="rectangle.opacity" (ngModelChange)="opacityModified($event)" min="1" max="100"/>
+        <input type="number" [ngModel]="rectangle.opacity" (ngModelChange)="modifyTempValue($event)" (blur)="modifySquare('opacity')" min="1" max="100"/>
         <div class="measure">%</div>
     </div>
     <div class="properties-row">
         <div class="title">Stroke size</div>
-        <input type="number" [ngModel]="rectangle.strokeSize" (ngModelChange)="strokeSizeModified($event)" min="1" max="100"/>
+        <input type="number" [ngModel]="rectangle.strokeWidth" (ngModelChange)="modifyTempValue($event)" (blur)="modifySquare('strokeWidth')" min="1" max="100"/>
         <div class="measure">px</div>
     </div>
     <div class="properties-row">
-        <input type="color" name="favcolor" [ngModel]="rectangle.strokeColor" (ngModelChange)="strokeColorModified($event)">
+        <input type="color" name="favcolor" [ngModel]="rectangle.stroke" (ngModelChange)="strokeColorModified($event)">
         <div class="title">Stroke color</div>
     </div>
 </div>

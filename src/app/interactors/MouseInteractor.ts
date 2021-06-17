@@ -1,4 +1,4 @@
-import {ElementRef, Injectable, OnDestroy} from '@angular/core';
+import {ElementRef, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
 import Konva from 'konva';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
@@ -25,6 +25,7 @@ export class MouseInteractor implements OnDestroy {
     mouse: OurKonvaMouse | OurKonvaRect | OurKonvaText | OurKonvaImage = new OurKonvaMouse();
     getMouseObservableSubscription: Subscription;
     getCurrentGameSubscription: Subscription;
+    selectedKonvaObjectSubscription: Subscription;
     stage: Konva.Stage;
     layers: OurKonvaLayers;
     game: Game | null;
@@ -40,6 +41,18 @@ export class MouseInteractor implements OnDestroy {
         this.getCurrentGameSubscription = this.gameInteractor.getCurrentGame().subscribe((game: Game) => {
             this.game = game;
         });
+        this.selectedKonvaObjectSubscription = this.selectedKonvaObject.subscribe((object: CurrentSelectedKonvaObject) => {
+            if (object !== null) {
+                document.onkeyup = (ev) => {
+                    if (ev.key === 'Delete') {
+                        object.transformer.destroy();
+                        object.konvaObject.destroy();
+                        object.layer.batchDraw();
+                        this.selectedKonvaObject.next(null);
+                    }
+                };
+            }
+        });
     }
 
     ngOnDestroy(): void {
@@ -48,6 +61,9 @@ export class MouseInteractor implements OnDestroy {
         }
         if (this.getCurrentGameSubscription) {
             this.getCurrentGameSubscription.unsubscribe();
+        }
+        if (this.selectedKonvaObjectSubscription) {
+            this.selectedKonvaObjectSubscription.unsubscribe();
         }
     }
 
@@ -116,6 +132,7 @@ export class MouseInteractor implements OnDestroy {
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaRect);
         }
         if (this.mouse.state === 'text') {
+            console.log('1');
             map.objects.push(this.mouse as OurKonvaText);
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaText);
         }
@@ -139,10 +156,12 @@ export class MouseInteractor implements OnDestroy {
                 object.transformer.show();
                 object.layer.batchDraw();
             }
+            console.log('here =', object);
             this.selectedKonvaObject.next(object);
         });
         object?.konvaObject.on('dragend', () => {
-            if (object.type === 'rect') {
+            console.log('¡asdasd =', object.konvaObject.attrs);
+            if (object.type === 'square') {
                 const ourKonvaRect = OurKonvaRect.getOurKonvaRect(object.konvaObject as Konva.Rect);
                 this.socketService.sendGameEditMapObject(ourKonvaRect);
             }
