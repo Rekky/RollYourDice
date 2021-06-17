@@ -8,7 +8,7 @@ import {UserService} from './user.service';
 import {UserInteractor} from '../interactors/UserInteractor';
 import {Page} from '../classes/Page';
 import {environment} from '../../environments/environment';
-import {myGames} from '../../assets/fakeAPI/my-games';
+import {MyGames} from '../../assets/fakeAPI/my-games';
 
 @Injectable({
     providedIn: 'root'

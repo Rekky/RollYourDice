@@ -1,4 +1,4 @@
-<div class="page-container">
+<div class="page-container" id="lets-test">
     <ng-container *ngIf="page.maps">
         <app-map *ngFor="let map of page.maps" [map]="map" (mapMoveEvent)="onMapMove($event)"></app-map>
     </ng-container>

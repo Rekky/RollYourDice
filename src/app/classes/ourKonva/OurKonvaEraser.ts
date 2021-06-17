@@ -9,7 +9,7 @@ export class OurKonvaEraser extends OurKonvaMouse {
     constructor() {
         super();
         this.line = new Konva.Line();
-        this.brushSize = 5;
+        this.brushSize = 20;
     }
 
     mouseDown(): void {

@@ -57,7 +57,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         //     }
         // });
         this.game = OneGame;
-        console.log('game =', this.game);
         this.gameInteractor.setCurrentGame(this.game);
         if (this.game?.pages) {
             this.pageInteractor.setCurrentPage(this.game.pages[0]);

@@ -12,6 +12,7 @@ import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
 import {SocketService} from '../../services/socket.service';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {MouseService} from '../../services/mouse.service';
+import {document} from 'ngx-bootstrap/utils';
 
 @Component({
     selector: 'app-map',
@@ -48,6 +49,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     rectangleTest: Konva.Rect = null;
     socketObjectSubscription: Subscription;
     displayCursor: string;
+
+    mouseIsABrush: boolean = false;
 
     constructor(private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
@@ -99,7 +102,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             setTimeout(() => {
                 this.drawGridBackgroundImage();
                 this.drawGrid();
-                console.log('gridStage =', this.gridStage.getLayers());
                 this.gridStage.add(this.layers.objects);
                 this.gridStage.add(this.layers.grid);
                 this.gridStage.add(this.layers.shadows);
@@ -321,7 +323,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         //     image.cache();
         //     this.layers.grid.draw();
         // });
-        this.gridStage.container().style.backgroundImage = 'url(../../../assets/backgrounds/CROSSING_THE_RIVER.jpg)';
+        this.gridStage.container().style.backgroundImage = 'url(' + this.map.backgroundImage + ')';
         this.gridStage.container().style.backgroundRepeat = 'no-repeat';
         this.gridStage.container().style.backgroundSize = 'cover';
         this.gridStage.container().style.backgroundPosition = 'center';

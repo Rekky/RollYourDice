@@ -141,7 +141,6 @@ export class SocketService {
     }
 
     sendGameEditMapObject(object: any): void {
-        console.log('triggered');
         this.socket.emit('game-editor-edit-map-object', {object});
     }
 

@@ -9,9 +9,9 @@ export class OurKonvaRect extends OurKonvaMouse {
     position: Coords;
     state: string = 'square';
     tempRect: Konva.Rect;
-    fillColor: string;
-    strokeColor: string;
-    strokeSize: number;
+    fill: string;
+    stroke: string;
+    strokeWidth: number;
     opacity: number;
 
     constructor(id?: string, name?: string, position?: Coords) {
@@ -19,22 +19,21 @@ export class OurKonvaRect extends OurKonvaMouse {
         this.id = 'rect-' + Math.floor(Math.random() * 100000);
         this.name = 'new rect';
         this.position = new Coords();
-        this.fillColor = '#ffff00';
-        this.strokeColor = '#000000';
-        this.strokeSize = 1;
+        this.fill = '#ffff00';
+        this.stroke = '#000000';
+        this.strokeWidth = 1;
         this.opacity = 30;
     }
 
     static paint(object: OurKonvaRect, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
-        console.log('paint object =', object.id);
         const rect = new Konva.Rect({
             x: object.position.x,
             y: object.position.y,
             width: object.size.width,
             height: object.size.height,
-            fill: object.fillColor,
-            stroke: object.strokeColor,
-            strokeWidth: object.strokeSize,
+            fill: object.fill,
+            stroke: object.stroke,
+            strokeWidth: object.strokeWidth,
             draggable: false,
             opacity: object.opacity / 100,
             id: object.id,
@@ -64,9 +63,9 @@ export class OurKonvaRect extends OurKonvaMouse {
             y: object.position.y,
             width: object.size.width,
             height: object.size.height,
-            fill: object.fillColor,
-            stroke: object.strokeColor,
-            strokeWidth: object.strokeSize,
+            fill: object.fill,
+            stroke: object.stroke,
+            strokeWidth: object.strokeWidth,
             draggable: false,
             opacity: object.opacity / 100,
             id: object.id,
@@ -82,9 +81,9 @@ export class OurKonvaRect extends OurKonvaMouse {
         rectangle.size.height = objectAttrs.height;
         rectangle.size.width = objectAttrs.width;
         rectangle.state = 'square';
-        rectangle.fillColor = objectAttrs.fill;
-        rectangle.strokeColor = objectAttrs.stroke;
-        rectangle.strokeSize = objectAttrs.strokeWidth;
+        rectangle.fill = objectAttrs.fill;
+        rectangle.stroke = objectAttrs.stroke;
+        rectangle.strokeWidth = objectAttrs.strokeWidth;
         rectangle.opacity = objectAttrs.opacity;
         rectangle.id = objectAttrs.id;
         rectangle.name = objectAttrs.name;
@@ -108,9 +107,9 @@ export class OurKonvaRect extends OurKonvaMouse {
                     y: this.position.y > pos.y ? pos.y : this.position.y,
                     width: Math.abs(this.position.x - pos.x),
                     height: Math.abs(this.position.y - pos.y),
-                    fill: this.fillColor,
-                    stroke: this.strokeColor,
-                    strokeWidth: this.strokeSize,
+                    fill: this.fill,
+                    stroke: this.stroke,
+                    strokeWidth: this.strokeWidth,
                     draggable: false,
                     opacity: this.opacity / 100,
                     name: this.name
@@ -137,9 +136,9 @@ export class OurKonvaRect extends OurKonvaMouse {
             y: this.position.y > pos.y ? pos.y : this.position.y,
             width: Math.abs(this.position.x - pos.x),
             height: Math.abs(this.position.y - pos.y),
-            fill: this.fillColor,
-            stroke: this.strokeColor,
-            strokeWidth: this.strokeSize,
+            fill: this.fill,
+            stroke: this.stroke,
+            strokeWidth: this.strokeWidth,
             draggable: false,
             opacity: this.opacity / 100,
             id: this.id,

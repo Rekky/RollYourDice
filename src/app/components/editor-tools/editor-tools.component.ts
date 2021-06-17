@@ -60,14 +60,14 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         }
     }
 
-    onToolSelected(name: string): void {
-        this.currentToolSelected = name;
+    onToolSelected(tool: string): void {
+        // this.currentToolSelected = tool;
         this.displayExtraToolsIndex = 99;
-        this.changeDisplayedTool(name);
-        if (name !== 'pointer') {
-            this.mouseInteractor.setSelectedKonvaObject(null);
+        this.changeDisplayedTool(tool);
+        if (tool !== 'pointer') {
+            this.mouseInteractor.unsetSelectedKonvaObject();
         }
-        switch (name) {
+        switch (tool) {
             case 'pointer':
                 this.mouseService.setMouse(new OurKonvaPointer());
                 break;
@@ -95,17 +95,17 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         }
     }
 
-    changeDisplayedTool(name: string): void {
+    changeDisplayedTool(tool: string): void {
         let toolPackIndex = 0;
         for (let i = 0; i < this.blocksOfTools.length; i++) {
             for (let j = 0; j < this.blocksOfTools[i].length; j++) {
-                if (name === this.blocksOfTools[i][j].name) {
+                if (tool === this.blocksOfTools[i][j].name) {
                     toolPackIndex = i;
                 }
             }
         }
-        this.blocksOfTools[toolPackIndex].map(tool => {
-            tool.displayed = tool.name === name;
+        this.blocksOfTools[toolPackIndex].map(mapTool => {
+            mapTool.displayed = mapTool.name === tool;
         });
     }
 }
