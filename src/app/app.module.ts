@@ -48,6 +48,7 @@ import {PostCardVerticalComponent} from './components/post-card-vertical/post-ca
 import {AssetComponent} from './components/asset/asset.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { AccountComponent } from './pages/account/account.component';
 
 @NgModule({
     declarations: [
@@ -89,7 +90,8 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
         PostCardVerticalComponent,
         AssetComponent,
         UploadInputComponent,
-        DropdownComponent
+        DropdownComponent,
+        AccountComponent
     ],
     imports: [
         BrowserModule,

@@ -12,8 +12,13 @@ import {MyAdventuresComponent} from './pages/adventures/my-adventures/my-adventu
 import {AdventuresComponent} from './pages/adventures/adventures/adventures.component';
 import {GamePlayComponent} from './pages/game-play/game-play.component';
 import { MenuComponent } from './pages/adventures/menu/menu.component';
+import {AccountComponent} from './pages/account/account.component';
 
 const routes: Routes = [
+    {
+        path: '',
+        component: HomeComponent
+    },
     {
         path: 'game-editor/:id',
         component: GameEditorComponent,
@@ -34,8 +39,8 @@ const routes: Routes = [
         component: SignComponent,
     },
     {
-        path: '',
-        component: HomeComponent
+        path: 'account',
+        component: AccountComponent
     },
     {
         path: 'game',
