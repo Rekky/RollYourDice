@@ -7,6 +7,15 @@
     background-image: url('../../../../src/assets/bg.svg');
     background-size: cover;
     background-repeat: no-repeat;
+    &:before {
+        content: '';
+        position: absolute;
+        top:0;
+        left:0;
+        right: 0;
+        bottom: 0;
+        background: rgba(27,32,37,0.7);
+    }
 }
 .container{
     min-height: 100vh;
