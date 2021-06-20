@@ -1,8 +1,8 @@
-<ng-container *ngIf="maps && maps.length > 0">
+<ng-container>
     <div class="list-title">
         <i class="fas fa-chevron-down cursor-pointer"></i>
         <div class="title">Maps</div>
-        <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true;this.currentMap = null;"></i>
+        <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true; this.currentMap = null;"></i>
     </div>
     <div class="content-list">
 <!--            <div class="content-list page-list recursive-list" dragula="MAPS" [(dragulaModel)]="maps">-->
@@ -25,7 +25,7 @@
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </div>-->
-        <div dragula="MAPS" [(dragulaModel)]="maps">
+        <div *ngIf="maps && maps.length > 0" dragula="MAPS" [(dragulaModel)]="maps">
             <div class="item" [class.open]="currentMap === map" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)">
                 <div class="map-objects">
                     <div class="item-name">
@@ -45,7 +45,9 @@
             </div>
         </div>
         <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
-            <div class="item active"><input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'"></div>
+            <div class="item active">
+                <input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'">
+            </div>
         </form>
     </div>
 

@@ -50,7 +50,7 @@ export class MapsListComponent implements OnInit, OnDestroy {
         });
         this.newMapForm = new FormGroup({
             name: new FormControl('Map' + (this.maps.length + 1)),
-        });
+        }, {updateOn: 'blur'});
     }
 
     ngOnDestroy(): void {
@@ -84,9 +84,8 @@ export class MapsListComponent implements OnInit, OnDestroy {
     }
 
     onAddNewMap(): void {
+        alert('io bithc');
         const newMap: OurKonvaMap = new OurKonvaMap();
-        newMap.id = 'map' + Math.floor(Math.random() * -1000000);
-        newMap.position = new Coords(300, 10, 0);
         newMap.name = this.newMapForm.get('name').value;
 
         this.maps.push(newMap);
@@ -101,7 +100,6 @@ export class MapsListComponent implements OnInit, OnDestroy {
     }
 
     removeMap(map: OurKonvaMap): void {
-        console.log('removed');
         this.maps.splice(this.maps.indexOf(map), 1);
         this.removeMapEvent.emit(map);
     }

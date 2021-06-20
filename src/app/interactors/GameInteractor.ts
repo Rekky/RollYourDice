@@ -29,7 +29,11 @@ export class GameInteractor {
         // return this.gameService.getGameEditor(id);
     }
 
-    async createGame(game: any): Promise<any> {
+    async getGame(gameId: string): Promise<Game> {
+        return await this.gameService.getGame(gameId);
+    }
+
+    async createGame(game: Game): Promise<any> {
         return await this.gameService.createGame(game);
     }
 

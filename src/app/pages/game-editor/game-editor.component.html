@@ -1,6 +1,6 @@
 <div class="game-editor">
-    <div *ngIf="game?.maps[0]" class="map-container">
-        <app-map [map]="game.maps[0]"></app-map>
+    <div *ngIf="map" class="map-container">
+        <app-map [map]="map"></app-map>
     </div>
     <div class="top-column">
         <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
@@ -20,7 +20,7 @@
         </div>
         <div class="left-column-content">
             <ng-container *ngIf="tabs == 0">
-                <app-maps-list *ngIf="game?.maps" [maps]="game.maps"
+                <app-maps-list *ngIf="mapsList" [maps]="mapsList"
                                (mapsChanges)="onMapsChange($event)"
                                (newMapEvent)="onNewMap($event)"
                                (removeMapEvent)="onRemoveMap($event)"
@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div class="right-column">
+    <div class="right-column" *ngIf="mouse">
         <!--        <app-map-properties [map]="currentObjectSelected" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected"></app-map-properties>-->
         <app-konva-brush-properties *ngIf="mouse.state === 'brush' || selectedKonvaObject?.type === 'brush'"></app-konva-brush-properties>
         <app-konva-eraser-properties *ngIf="mouse.state === 'eraser' || selectedKonvaObject?.type === 'eraser'"></app-konva-eraser-properties>

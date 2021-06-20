@@ -2,7 +2,7 @@
 <div *ngIf="adventures">
     <div *ngFor="let adventure of adventures">
         <span>{{adventure.name}}</span> -
-        <span>{{adventure.createdDate}}</span>
+        <span>{{adventure.createAt}}</span>
         <button (click)="joinAsPlayer(adventure.id)">Join as Player</button>
     </div>
 </div>

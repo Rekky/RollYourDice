@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
+import {MapInteractor} from '../../interactors/MapInteractor';
 
 @Component({
     selector: 'app-game-editor',
@@ -18,6 +19,7 @@ import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 export class GameEditorComponent implements OnInit, OnDestroy {
     map: OurKonvaMap;
     game: Game;
+    mapsList: OurKonvaMap[] = [];
     gameStartStatus: GameStatus = GameStatus.Stopped;
 
     tabs: number = 0;
@@ -30,21 +32,25 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     getSelectedKonvaObjectSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
+                private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService,
-                private apiService: ApiService,
                 private socketService: SocketService,
                 private router: ActivatedRoute) { }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         const gameId = this.router.snapshot.paramMap.get('id');
 
-        this.socketService.sendGameEditorId(gameId);
+        // 1. Call to get game info
+        this.game = await this.gameInteractor.getGame(gameId);
 
-        // this.gameSocketSubscription = this.socketService.gameSocketSubscription.subscribe((socketGame: Game) => {
-        //     this.game = socketGame;
-        //     this.gameInteractor.setCurrentGame(this.game);
-        // });
+        // 2. Call to get map's list
+        this.mapsList = await this.mapInteractor.getAllMaps(gameId);
+        this.map = this.mapsList[0];
+
+        // 3. Socket connection with map selected
+
+
         this.gameInteractor.setCurrentGame(this.game);
         if (this.game?.mapsId) {
             this.gameStartStatus = this.game.status;
@@ -53,7 +59,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
             this.mouse = mouse;
         });
-
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
             this.selectedKonvaObject = konva;
         });

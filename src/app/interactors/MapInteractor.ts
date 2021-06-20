@@ -21,6 +21,10 @@ export class MapInteractor {
                 private socketService: SocketService) {
     }
 
+    async getAllMaps(gameId: string): Promise<OurKonvaMap[]> {
+        return await this.mapService.getAllMaps(gameId);
+    }
+
     setMapPosition(id: string | number, pos: Coords): void {
         this.mapService.setMapPosition(id, pos);
     }

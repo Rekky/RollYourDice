@@ -4,7 +4,8 @@ import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 export class Game {
     id: string | null;
     authorId: string;
-    createdDate: Date;
+    createAt: Date;
+    updatedAt: Date;
     description: string;
     gameType: GameTypes;
     image: Asset;
@@ -21,7 +22,8 @@ export class Game {
         this.published = false;
         this.gameType = GameTypes.DungeonsAndDragons5e;
         this.authorId = authorId;
-        this.createdDate = new Date();
+        this.createAt = new Date();
+        this.updatedAt = new Date();
         this.nPlayers = 6;
         this.image = new Asset();
         this.description = '';
