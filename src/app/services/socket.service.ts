@@ -33,8 +33,8 @@ export class SocketService {
         // ========================= START MAPS ================================
         this.socket.on('game-editor-create-map', (data: OurKonvaMap) => {
             const game: Game = this.gameSocketSubscription.getValue();
-            const gameMap: OurKonvaMap = game.maps.find((map: OurKonvaMap) => parseInt(map.id, 0) <= 0);
-            gameMap.id = data.id;
+            // const gameMap: OurKonvaMap = game.mapsId.find((map: OurKonvaMap) => parseInt(map.id, 0) <= 0);
+            // gameMap.id = data.id;
         });
         this.socket.on('game-editor-rename-map', (data: OurKonvaMap) => {
             // Nothing else
