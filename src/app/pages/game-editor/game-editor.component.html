@@ -1,5 +1,8 @@
 <div class="game-editor">
-    <app-page *ngIf="selectedPage" [page]="selectedPage" (mapMoveEvent)="onMapMove($event)"></app-page>
+<!--    <app-page *ngIf="selectedPage" [page]="selectedPage" (mapMoveEvent)="onMapMove($event)"></app-page>-->
+    <div class="map-container">
+        <app-map [map]="selectedPage.maps[0]"></app-map>
+    </div>
     <div class="top-column">
         <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
             <i class="far fa-play-circle"></i>
@@ -19,7 +22,7 @@
         <div class="left-column-content">
             <ng-container *ngIf="tabs == 0">
                 <app-pages-list *ngIf="game"
-                                [pages]="game.pages"
+                                [pages]="game.folders"
                                 [currentPage]="selectedPage"
                                 (pagesChangesEvent)="onPagesChange($event)"
                                 (newPageEvent)="onNewPage($event)"

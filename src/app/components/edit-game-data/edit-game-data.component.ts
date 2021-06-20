@@ -2,7 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@an
 import { Game, GameTypes } from 'src/app/classes/Game';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Asset} from '../../classes/Asset';
-import {Page} from '../../classes/Page';
+import {Folder} from '../../classes/Folder';
 
 @Component({
     selector: 'app-edit-game-data',

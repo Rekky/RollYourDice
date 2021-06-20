@@ -1,4 +1,4 @@
-import {Page} from './Page';
+import {Folder} from './Folder';
 import {Asset} from './Asset';
 
 export class Game {
@@ -10,7 +10,7 @@ export class Game {
     image: Asset;
     name: string;
     nPlayers: number;
-    pages: Page[];
+    folders: Folder[];
     published: boolean;
     selectedPageId: string | null;
     status: GameStatus;
@@ -18,7 +18,7 @@ export class Game {
     constructor(authorId: string) {
         this.id = null;
         this.name = 'My adventure rocks!';
-        this.pages = [new Page()];
+        this.folders = [new Folder()];
         this.selectedPageId = null;
         this.published = false;
         this.gameType = GameTypes.DungeonsAndDragons5e;

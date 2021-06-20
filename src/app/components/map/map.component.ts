@@ -207,109 +207,109 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         }
     }
 
-    addImageToKonva(url: string): void {
-        Konva.Image.fromURL(url, (img: Konva.Image) => {
-            img.setAttrs({
-                width: 300,
-                height: 100,
-                x: 200,
-                y: 200,
-                name: 'id',
-                draggable: true,
-            });
-            img.on('dragstart', (e) => {
-                const imgAttrs = e.currentTarget.attrs;
-                imgAttrs.mapId = this.map.id;
-                // this.mouseService.setDragImage(imgAttrs);
-                // img.hide();
-                img.setAttrs({opacity: 0.5});
-            });
-            img.on('dragend', () => {
-                // this.mouseService.setDragImage(null);
-                // img.show();
-                img.setAttrs({opacity: 1});
-                this.gridStage.batchDraw();
-            });
-            img.on('click', () => {
-                this.selectedObjectAttrs = img.getAttrs();
-                this.activeTr = tr;
-                tr.show();
-                this.gridStage.batchDraw();
-            });
+    // addImageToKonva(url: string): void {
+    //     Konva.Image.fromURL(url, (img: Konva.Image) => {
+    //         img.setAttrs({
+    //             width: 300,
+    //             height: 100,
+    //             x: 200,
+    //             y: 200,
+    //             name: 'id',
+    //             draggable: true,
+    //         });
+    //         img.on('dragstart', (e) => {
+    //             const imgAttrs = e.currentTarget.attrs;
+    //             imgAttrs.mapId = this.map.id;
+    //             // this.mouseService.setDragImage(imgAttrs);
+    //             // img.hide();
+    //             img.setAttrs({opacity: 0.5});
+    //         });
+    //         img.on('dragend', () => {
+    //             // this.mouseService.setDragImage(null);
+    //             // img.show();
+    //             img.setAttrs({opacity: 1});
+    //             this.gridStage.batchDraw();
+    //         });
+    //         img.on('click', () => {
+    //             this.selectedObjectAttrs = img.getAttrs();
+    //             this.activeTr = tr;
+    //             tr.show();
+    //             this.gridStage.batchDraw();
+    //         });
+    //
+    //         const tr = new Konva.Transformer({
+    //             nodes: [img],
+    //             padding: 5,
+    //             // limit transformer size
+    //             boundBoxFunc: (oldBox, newBox) => {
+    //                 if (newBox.width < 20) {
+    //                     return oldBox;
+    //                 }
+    //                 return newBox;
+    //             },
+    //         });
+    //         tr.hide();
+    //         this.layers.texts.add(tr);
+    //         this.layers.texts.add(img);
+    //         this.gridStage.batchDraw();
+    //     });
+    // }
 
-            const tr = new Konva.Transformer({
-                nodes: [img],
-                padding: 5,
-                // limit transformer size
-                boundBoxFunc: (oldBox, newBox) => {
-                    if (newBox.width < 20) {
-                        return oldBox;
-                    }
-                    return newBox;
-                },
-            });
-            tr.hide();
-            this.layers.texts.add(tr);
-            this.layers.texts.add(img);
-            this.gridStage.batchDraw();
-        });
-    }
-
-    addRectangleToKonva(position: Coords): void {
-        const shadowRectangle = new Konva.Rect({
-            x: position.x,
-            y: position.y,
-            width: this.map.grid.cellSize * 2,
-            height: this.map.grid.cellSize * 2,
-            fill: '#FF7B17',
-            opacity: 0.6,
-            stroke: '#CF6412',
-            strokeWidth: 3,
-            dash: [20, 2]
-        });
-        this.rectangleTest = new Konva.Rect({
-            x: position.x,
-            y: position.y,
-            width: this.map.grid.cellSize * 2,
-            height: this.map.grid.cellSize * 2,
-            fill: '#fff',
-            stroke: '#ddd',
-            strokeWidth: 1,
-            shadowColor: 'black',
-            shadowBlur: 2,
-            shadowOffset: {x : 1, y : 1},
-            shadowOpacity: 0.4,
-            draggable: true
-        });
-        shadowRectangle.hide();
-        // this.gridLayer.add(shadowRectangle);
-        this.layers.draws.add(shadowRectangle);
-
-        this.rectangleTest.on('dragstart', () => {
-            shadowRectangle.show();
-            shadowRectangle.moveToTop();
-            this.rectangleTest.moveToTop();
-        });
-        this.rectangleTest.on('dragend', () => {
-            const newPosition = OurKonvaGrid.correctPosition(new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
-            this.rectangleTest.position({
-                x: newPosition.x,
-                y: newPosition.y
-            });
-            this.gridStage.batchDraw();
-            shadowRectangle.hide();
-            this.mapInteractor.sendSocketObjectPosition(this.rectangleTest);
-        });
-        this.rectangleTest.on('dragmove', () => {
-            const newPosition = OurKonvaGrid.correctPosition(new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
-            shadowRectangle.position({
-                x: newPosition.x,
-                y: newPosition.y
-            });
-            this.gridStage.batchDraw();
-        });
-        this.layers.draws.add(this.rectangleTest);
-    }
+    // addRectangleToKonva(position: Coords): void {
+    //     const shadowRectangle = new Konva.Rect({
+    //         x: position.x,
+    //         y: position.y,
+    //         width: this.map.grid.cellSize * 2,
+    //         height: this.map.grid.cellSize * 2,
+    //         fill: '#FF7B17',
+    //         opacity: 0.6,
+    //         stroke: '#CF6412',
+    //         strokeWidth: 3,
+    //         dash: [20, 2]
+    //     });
+    //     this.rectangleTest = new Konva.Rect({
+    //         x: position.x,
+    //         y: position.y,
+    //         width: this.map.grid.cellSize * 2,
+    //         height: this.map.grid.cellSize * 2,
+    //         fill: '#fff',
+    //         stroke: '#ddd',
+    //         strokeWidth: 1,
+    //         shadowColor: 'black',
+    //         shadowBlur: 2,
+    //         shadowOffset: {x : 1, y : 1},
+    //         shadowOpacity: 0.4,
+    //         draggable: true
+    //     });
+    //     shadowRectangle.hide();
+    //     // this.gridLayer.add(shadowRectangle);
+    //     this.layers.draws.add(shadowRectangle);
+    //
+    //     this.rectangleTest.on('dragstart', () => {
+    //         shadowRectangle.show();
+    //         shadowRectangle.moveToTop();
+    //         this.rectangleTest.moveToTop();
+    //     });
+    //     this.rectangleTest.on('dragend', () => {
+    //         const newPosition = OurKonvaGrid.correctPosition(new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
+    //         this.rectangleTest.position({
+    //             x: newPosition.x,
+    //             y: newPosition.y
+    //         });
+    //         this.gridStage.batchDraw();
+    //         shadowRectangle.hide();
+    //         this.mapInteractor.sendSocketObjectPosition(this.rectangleTest);
+    //     });
+    //     this.rectangleTest.on('dragmove', () => {
+    //         const newPosition = OurKonvaGrid.correctPosition(new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
+    //         shadowRectangle.position({
+    //             x: newPosition.x,
+    //             y: newPosition.y
+    //         });
+    //         this.gridStage.batchDraw();
+    //     });
+    //     this.layers.draws.add(this.rectangleTest);
+    // }
 
     drawGridBackgroundImage(): void {
         // Konva.Image.fromURL('./../assets/backgrounds/CROSSING_THE_RIVER.jpg', (image) => {

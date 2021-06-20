@@ -5,7 +5,7 @@ import Konva from 'konva';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import { OurKonvaRect } from './OurKonvaRect';
 import { OurKonvaText } from './OurKonvaText';
-import {Page} from '../Page';
+import {Folder} from '../Folder';
 import {Asset} from '../Asset';
 import {OurKonvaImage} from './OurKonvaImage';
 

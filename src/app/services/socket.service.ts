@@ -4,7 +4,7 @@ import {ApiService} from './api.service';
 import {BehaviorSubject} from 'rxjs';
 import {Game, GameStatus} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
-import {Page} from '../classes/Page';
+import {Folder} from '../classes/Folder';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
 import {UserInteractor} from '../interactors/UserInteractor';
 
@@ -31,15 +31,15 @@ export class SocketService {
         });
 
         // ====================== START PAGES ==================================
-        this.socket.on('game-editor-create-page', (data: Page) => {
+        this.socket.on('game-editor-create-page', (data: Folder) => {
             const game: Game = this.gameSocketSubscription.getValue();
-            const gamePage: Page = game.pages.find((page: Page) => page.id === null);
+            const gamePage: Folder = game.folders.find((page: Folder) => page.id === null);
             gamePage.id = data.id;
         });
-        this.socket.on('game-editor-rename-page', (data: Page) => {
+        this.socket.on('game-editor-rename-page', (data: Folder) => {
             // Nothing else
         });
-        this.socket.on('game-editor-remove-page', (data: Page) => {
+        this.socket.on('game-editor-remove-page', (data: Folder) => {
             // Nothing else
         });
         this.socket.on('game-editor-update-pages', (data) => {
@@ -50,7 +50,7 @@ export class SocketService {
         // ========================= START MAPS ================================
         this.socket.on('game-editor-create-map', (data: OurKonvaMap) => {
             const game: Game = this.gameSocketSubscription.getValue();
-            const gamePage: Page = game.pages.find((page: Page) => page.id === game.selectedPageId);
+            const gamePage: Folder = game.folders.find((page: Folder) => page.id === game.selectedPageId);
             const gameMap: OurKonvaMap = gamePage.maps.find((map: OurKonvaMap) => parseInt(map.id, 0) <= 0);
             gameMap.id = data.id;
         });
@@ -100,19 +100,19 @@ export class SocketService {
         this.socket.emit('game-play-load', {gameId, userId});
     }
 
-    sendGameCreatePage(gameId: string, page: Page): void {
+    sendGameCreatePage(gameId: string, page: Folder): void {
         this.socket.emit('game-editor-create-page', {gameId, page});
     }
 
-    sendGameRenamePage(gameId: string, page: Page): void {
+    sendGameRenamePage(gameId: string, page: Folder): void {
         this.socket.emit('game-editor-rename-page', {gameId, page});
     }
 
-    sendGameRemovePage(gameId: string, page: Page): void {
+    sendGameRemovePage(gameId: string, page: Folder): void {
         this.socket.emit('game-editor-remove-page', {gameId, page});
     }
 
-    sendGamePagesUpdate(gameId: string, pages: Page[]): void {
+    sendGamePagesUpdate(gameId: string, pages: Folder[]): void {
         this.socket.emit('game-editor-pages-update', {gameId, pages});
     }
 

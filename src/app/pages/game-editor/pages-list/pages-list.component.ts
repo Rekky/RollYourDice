@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Page} from '../../../classes/Page';
+import {Folder} from '../../../classes/Folder';
 
 @Component({
     selector: 'app-pages-list',
@@ -9,21 +9,21 @@ import {Page} from '../../../classes/Page';
 })
 export class PagesListComponent implements OnInit {
 
-    @Input() pages: Page[] = [];
-    @Input() currentPage: Page = null;
+    @Input() pages: Folder[] = [];
+    @Input() currentPage: Folder = null;
 
-    @Output() pagesChangesEvent: EventEmitter<Page[]> = new EventEmitter<Page[]>();
-    @Output() selectedPageEvent: EventEmitter<Page> = new EventEmitter<Page>();
-    @Output() newPageEvent: EventEmitter<Page> = new EventEmitter<Page>();
-    @Output() removePageEvent: EventEmitter<Page> = new EventEmitter<Page>();
-    @Output() renamePageEvent: EventEmitter<Page> = new EventEmitter<Page>();
+    @Output() pagesChangesEvent: EventEmitter<Folder[]> = new EventEmitter<Folder[]>();
+    @Output() selectedPageEvent: EventEmitter<Folder> = new EventEmitter<Folder>();
+    @Output() newPageEvent: EventEmitter<Folder> = new EventEmitter<Folder>();
+    @Output() removePageEvent: EventEmitter<Folder> = new EventEmitter<Folder>();
+    @Output() renamePageEvent: EventEmitter<Folder> = new EventEmitter<Folder>();
 
     showNewPageForm: boolean = false;
     showRenamePageForm: boolean = false;
 
     newPageForm: FormGroup;
     renamePageForm: FormGroup;
-    pageToRename: Page;
+    pageToRename: Folder;
 
     constructor(private ref: ChangeDetectorRef) { }
 
@@ -33,13 +33,13 @@ export class PagesListComponent implements OnInit {
         });
     }
 
-    onSelectPage(page: Page): void {
+    onSelectPage(page: Folder): void {
         this.currentPage = page;
         this.selectedPageEvent.emit(this.currentPage);
     }
 
     onAddNewPage(): void {
-        const newPage: Page = new Page();
+        const newPage: Folder = new Folder();
         newPage.name = this.newPageForm.get('name').value;
 
         this.pages.push(newPage);
@@ -52,7 +52,7 @@ export class PagesListComponent implements OnInit {
         this.pagesChangesEvent.emit(this.pages);
     }
 
-    onSubmitRenamePage(page: Page): void {
+    onSubmitRenamePage(page: Folder): void {
         const newName = this.renamePageForm.get('name').value;
         const pageIndex = this.pages.indexOf(page);
         this.pages[pageIndex].name = newName;
@@ -61,7 +61,7 @@ export class PagesListComponent implements OnInit {
         this.renamePageEvent.emit(this.pages[pageIndex]);
     }
 
-    renamePage(page: Page): void {
+    renamePage(page: Folder): void {
         this.showRenamePageForm = true;
         this.pageToRename = page;
         this.renamePageForm = new FormGroup({
@@ -69,7 +69,7 @@ export class PagesListComponent implements OnInit {
         });
     }
 
-    removePage(page: Page): void {
+    removePage(page: Folder): void {
         this.pages.splice(this.pages.indexOf(page), 1);
         this.removePageEvent.emit(page);
         page.maps = [];

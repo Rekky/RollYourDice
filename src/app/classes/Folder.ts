@@ -1,6 +1,6 @@
 import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
-export class Page {
+export class Folder {
     id: string | null;
     name: string;
     maps: OurKonvaMap[];
@@ -11,11 +11,11 @@ export class Page {
         this.maps = maps ? maps : [];
     }
 
-    static fromJSON(json: any): Page {
-        const page = new Page();
-        page.id = json.id;
-        page.name = json.name;
-        page.maps = (json.maps && json.maps.length > 0) ? json.maps.map(el => OurKonvaMap.fromJSON(el)) : [];
-        return page;
+    static fromJSON(json: any): Folder {
+        const folder = new Folder();
+        folder.id = json.id;
+        folder.name = json.name;
+        folder.maps = (json.maps && json.maps.length > 0) ? json.maps.map(el => OurKonvaMap.fromJSON(el)) : [];
+        return folder;
     }
 }

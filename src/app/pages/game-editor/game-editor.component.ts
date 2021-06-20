@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game, GameStatus} from '../../classes/Game';
-import {Page} from '../../classes/Page';
+import {Folder} from '../../classes/Folder';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
 import {ApiService} from '../../services/api.service';
@@ -23,7 +23,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     map: OurKonvaMap;
     game: Game;
     gameStartStatus: GameStatus;
-    selectedPage: Page = null;
+    selectedPage: Folder = null;
 
     tabs: number = 0;
     currentObjectSelected: any;
@@ -58,8 +58,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         // });
         this.game = OneGame;
         this.gameInteractor.setCurrentGame(this.game);
-        if (this.game?.pages) {
-            this.pageInteractor.setCurrentPage(this.game.pages[0]);
+        if (this.game?.folders) {
+            this.pageInteractor.setCurrentPage(this.game.folders[0]);
             this.gameStartStatus = this.game.status;
         }
 
@@ -71,7 +71,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.selectedKonvaObject = konva;
         });
 
-        this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Page) => {
+        this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Folder) => {
             this.selectedPage = page;
             // if (this.selectedPage?.maps) {
             //     this.map = this.selectedPage.maps[0];
@@ -101,7 +101,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.map = {...ev};
     }
 
-    onSelectedPage(ev: Page): void {
+    onSelectedPage(ev: Folder): void {
         this.pageInteractor.setCurrentPage(ev);
     }
 
@@ -110,19 +110,19 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.onSetCurrentObjectSelected(ev);
     }
 
-    onNewPage(page: Page): void {
+    onNewPage(page: Folder): void {
         this.socketService.sendGameCreatePage(this.game.id, page);
     }
 
-    onRenamePage(page: Page): void {
+    onRenamePage(page: Folder): void {
         this.socketService.sendGameRenamePage(this.game.id, page);
     }
 
-    onRemovePage(page: Page): void {
+    onRemovePage(page: Folder): void {
         this.socketService.sendGameRemovePage(this.game.id, page);
     }
 
-    onPagesChange(pages: Page[]): void {
+    onPagesChange(pages: Folder[]): void {
         this.socketService.sendGamePagesUpdate(this.game.id, pages);
     }
 

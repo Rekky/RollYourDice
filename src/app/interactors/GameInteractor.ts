@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GameService} from '../services/game.service';
 import {Game} from '../classes/Game';
-import {Page} from '../classes/Page';
+import {Folder} from '../classes/Folder';
 import {UserInteractor} from './UserInteractor';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -50,7 +50,7 @@ export class GameInteractor {
         return await this.gameService.getMyGames();
     }
 
-    async createPage(page: Page): Promise<any> {
+    async createPage(page: Folder): Promise<any> {
         return await this.gameService.createPage(page);
     }
 

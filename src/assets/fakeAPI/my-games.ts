@@ -1,5 +1,5 @@
 import {Game, GameStatus, GameTypes} from '../../app/classes/Game';
-import {Page} from '../../app/classes/Page';
+import {Folder} from '../../app/classes/Folder';
 
 export const MyGames: Game[] = [
     {
@@ -17,7 +17,7 @@ export const MyGames: Game[] = [
         },
         name: 'This is my game',
         nPlayers: 6,
-        pages: [new Page()],
+        folders: [new Folder()],
         published: false,
         selectedPageId: '12nasdADe1AXd12d',
         status: GameStatus.Stopped
@@ -37,7 +37,7 @@ export const MyGames: Game[] = [
         },
         name: 'Troll island',
         nPlayers: 4,
-        pages: [new Page()],
+        folders: [new Folder()],
         published: false,
         selectedPageId: '12nasdADe1542AXd12d',
         status: GameStatus.Stopped
@@ -57,7 +57,7 @@ export const MyGames: Game[] = [
         },
         name: 'Goblinator',
         nPlayers: 5,
-        pages: [new Page()],
+        folders: [new Folder()],
         published: false,
         selectedPageId: '12nasdA45UDe1542AXd12d',
         status: GameStatus.Stopped
@@ -77,7 +77,7 @@ export const MyGames: Game[] = [
         },
         name: 'Bang Bang town',
         nPlayers: 7,
-        pages: [new Page()],
+        folders: [new Folder()],
         published: false,
         selectedPageId: '12nasdAUY45UDe1542AXd12d',
         status: GameStatus.Stopped
@@ -97,7 +97,7 @@ export const MyGames: Game[] = [
         },
         name: 'Never stop us',
         nPlayers: 6,
-        pages: [new Page()],
+        folders: [new Folder()],
         published: false,
         selectedPageId: '12nas35UDe1542AXd12d',
         status: GameStatus.Stopped

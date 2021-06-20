@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Page} from '../classes/Page';
+import {Folder} from '../classes/Folder';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
@@ -7,15 +7,15 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class PageInteractor {
 
-    private selectedPage: BehaviorSubject<Page | null> = new BehaviorSubject<Page | null>(null);
+    private selectedPage: BehaviorSubject<Folder | null> = new BehaviorSubject<Folder | null>(null);
 
     constructor() {}
 
-    setCurrentPage(page: Page): void {
+    setCurrentPage(page: Folder): void {
         this.selectedPage.next(page);
     }
 
-    getCurrentPageObs(): Observable<Page> {
+    getCurrentPageObs(): Observable<Folder> {
         return this.selectedPage.asObservable();
     }
 }

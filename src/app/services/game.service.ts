@@ -6,7 +6,7 @@ import {User} from '../classes/User';
 import {HttpService} from './http.service';
 import {UserService} from './user.service';
 import {UserInteractor} from '../interactors/UserInteractor';
-import {Page} from '../classes/Page';
+import {Folder} from '../classes/Folder';
 import {environment} from '../../environments/environment';
 import {MyGames} from '../../assets/fakeAPI/my-games';
 
@@ -109,7 +109,7 @@ export class GameService {
         });
     }
 
-    createPage(page: Page): Promise<any> {
+    createPage(page: Folder): Promise<any> {
         const options = {
             headers: new HttpHeaders({
                 Authorization: this.userInteractor.getToken()

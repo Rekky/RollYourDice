@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Page} from '../../../classes/Page';
+import {Folder} from '../../../classes/Folder';
 import {Coords} from '../../../classes/Coords';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
@@ -52,7 +52,7 @@ export class MapsListComponent implements OnInit, OnDestroy {
                 });
             });
         });
-        this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Page) => {
+        this.getCurrentPageSubscription = this.pageInteractor.getCurrentPageObs().subscribe((page: Folder) => {
             this.maps = page.maps;
         });
         this.newMapForm = new FormGroup({
