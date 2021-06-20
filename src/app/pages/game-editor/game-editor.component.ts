@@ -80,6 +80,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             //     console.log('test =', test);
             // }
         });
+
+        console.log('folder =', this.selectedPage);
     }
 
     ngOnDestroy(): void {

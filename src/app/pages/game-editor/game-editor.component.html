@@ -1,6 +1,6 @@
 <div class="game-editor">
 <!--    <app-page *ngIf="selectedPage" [page]="selectedPage" (mapMoveEvent)="onMapMove($event)"></app-page>-->
-    <div class="map-container">
+    <div *ngIf="selectedPage" class="map-container">
         <app-map [map]="selectedPage.maps[0]"></app-map>
     </div>
     <div class="top-column">
@@ -21,15 +21,14 @@
         </div>
         <div class="left-column-content">
             <ng-container *ngIf="tabs == 0">
-                <app-pages-list *ngIf="game"
-                                [pages]="game.folders"
-                                [currentPage]="selectedPage"
-                                (pagesChangesEvent)="onPagesChange($event)"
-                                (newPageEvent)="onNewPage($event)"
-                                (renamePageEvent)="onRenamePage($event)"
-                                (removePageEvent)="onRemovePage($event)"
-                                (selectedPageEvent)="onSelectedPage($event)"></app-pages-list>
-
+<!--                <app-pages-list *ngIf="game"-->
+<!--                                [pages]="game.folders"-->
+<!--                                [currentPage]="selectedPage"-->
+<!--                                (pagesChangesEvent)="onPagesChange($event)"-->
+<!--                                (newPageEvent)="onNewPage($event)"-->
+<!--                                (renamePageEvent)="onRenamePage($event)"-->
+<!--                                (removePageEvent)="onRemovePage($event)"-->
+<!--                                (selectedPageEvent)="onSelectedPage($event)"></app-pages-list>-->
                 <app-maps-list  *ngIf="selectedPage"
                                 [maps]="selectedPage.maps"
                                 (mapsChanges)="onMapsChange($event)"

@@ -1,5 +1,6 @@
 import {Folder} from './Folder';
 import {Asset} from './Asset';
+import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
 export class Game {
     id: string | null;
@@ -10,7 +11,8 @@ export class Game {
     image: Asset;
     name: string;
     nPlayers: number;
-    folders: Folder[];
+    // folders: Folder[];
+    maps: OurKonvaMap[];
     published: boolean;
     selectedPageId: string | null;
     status: GameStatus;
@@ -18,7 +20,8 @@ export class Game {
     constructor(authorId: string) {
         this.id = null;
         this.name = 'My adventure rocks!';
-        this.folders = [new Folder()];
+        // this.folders = [new Folder()];
+        this.maps = [new OurKonvaMap()];
         this.selectedPageId = null;
         this.published = false;
         this.gameType = GameTypes.DungeonsAndDragons5e;
