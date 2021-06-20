@@ -10,9 +10,7 @@ import { GameEditorComponent } from './pages/game-editor/game-editor.component';
 import { EditorToolsComponent } from './components/editor-tools/editor-tools.component';
 import { EditorLibrariesComponent } from './pages/game-editor/editor-libraries/editor-libraries.component';
 import { MapComponent } from './components/map/map.component';
-import { PagesListComponent } from './pages/game-editor/pages-list/pages-list.component';
 import {DragulaModule} from 'ng2-dragula';
-import { PageComponent } from './pages/game-editor/page/page.component';
 import { MapsListComponent } from './pages/game-editor/maps-list/maps-list.component';
 import { RecursiveListComponent } from './components/recursive-list/recursive-list.component';
 import { CharacterSheetComponent } from './components/character-sheet/character-sheet.component';
@@ -59,8 +57,6 @@ import { AccountComponent } from './pages/account/account.component';
         EditorToolsComponent,
         EditorLibrariesComponent,
         MapComponent,
-        PagesListComponent,
-        PageComponent,
         MapsListComponent,
         RecursiveListComponent,
         CharacterSheetComponent,

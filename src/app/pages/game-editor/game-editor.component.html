@@ -1,7 +1,6 @@
 <div class="game-editor">
-<!--    <app-page *ngIf="selectedPage" [page]="selectedPage" (mapMoveEvent)="onMapMove($event)"></app-page>-->
-    <div *ngIf="selectedPage" class="map-container">
-        <app-map [map]="selectedPage.maps[0]"></app-map>
+    <div *ngIf="game?.maps[0]" class="map-container">
+        <app-map [map]="game.maps[0]"></app-map>
     </div>
     <div class="top-column">
         <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
@@ -21,22 +20,13 @@
         </div>
         <div class="left-column-content">
             <ng-container *ngIf="tabs == 0">
-<!--                <app-pages-list *ngIf="game"-->
-<!--                                [pages]="game.folders"-->
-<!--                                [currentPage]="selectedPage"-->
-<!--                                (pagesChangesEvent)="onPagesChange($event)"-->
-<!--                                (newPageEvent)="onNewPage($event)"-->
-<!--                                (renamePageEvent)="onRenamePage($event)"-->
-<!--                                (removePageEvent)="onRemovePage($event)"-->
-<!--                                (selectedPageEvent)="onSelectedPage($event)"></app-pages-list>-->
-                <app-maps-list  *ngIf="selectedPage"
-                                [maps]="selectedPage.maps"
-                                (mapsChanges)="onMapsChange($event)"
-                                (newMapEvent)="onNewMap($event)"
-                                (removeMapEvent)="onRemoveMap($event)"
-                                (renameMapEvent)="onRenameMap($event)"
-                                (toPlayersMapEvent)="onToPlayersMap($event)"
-                                (selectedMap)="onSelectedMap($event)"></app-maps-list>
+                <app-maps-list *ngIf="game?.maps" [maps]="game.maps"
+                               (mapsChanges)="onMapsChange($event)"
+                               (newMapEvent)="onNewMap($event)"
+                               (removeMapEvent)="onRemoveMap($event)"
+                               (renameMapEvent)="onRenameMap($event)"
+                               (toPlayersMapEvent)="onToPlayersMap($event)"
+                               (selectedMap)="onSelectedMap($event)"></app-maps-list>
             </ng-container>
             <ng-container *ngIf="tabs == 1">
                 <app-editor-libraries></app-editor-libraries>
@@ -48,7 +38,7 @@
     </div>
 
     <div class="right-column">
-<!--        <app-map-properties [map]="currentObjectSelected" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected"></app-map-properties>-->
+        <!--        <app-map-properties [map]="currentObjectSelected" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected"></app-map-properties>-->
         <app-konva-brush-properties *ngIf="mouse.state === 'brush' || selectedKonvaObject?.type === 'brush'"></app-konva-brush-properties>
         <app-konva-eraser-properties *ngIf="mouse.state === 'eraser' || selectedKonvaObject?.type === 'eraser'"></app-konva-eraser-properties>
         <app-konva-text-properties *ngIf="mouse.state === 'text' && !selectedKonvaObject"></app-konva-text-properties>

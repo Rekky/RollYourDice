@@ -1,4 +1,3 @@
-import {Folder} from './Folder';
 import {Asset} from './Asset';
 import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
@@ -11,18 +10,14 @@ export class Game {
     image: Asset;
     name: string;
     nPlayers: number;
-    // folders: Folder[];
-    maps: OurKonvaMap[];
+    mapsId: string[];
     published: boolean;
-    selectedPageId: string | null;
     status: GameStatus;
 
     constructor(authorId: string) {
         this.id = null;
         this.name = 'My adventure rocks!';
-        // this.folders = [new Folder()];
-        this.maps = [new OurKonvaMap()];
-        this.selectedPageId = null;
+        this.mapsId = [];
         this.published = false;
         this.gameType = GameTypes.DungeonsAndDragons5e;
         this.authorId = authorId;
@@ -34,12 +29,6 @@ export class Game {
     }
 
     static fromJSON(json: any): Game {
-        // const game = new Game(json.authorId);
-        // Object.keys(game).forEach((key) => {
-        //     game[key] = json[key] ? json[key] : game[key];
-        // });
-        // game.pages = (json.pages && json.pages.length > 0) ? json.pages.map(el => Page.fromJSON(el)) : [];
-        // game.image = json.image ? Asset.fromJSON(json.image) : new Asset();
         const game = {...new Game(json.authorId), ...json};
         return game;
     }

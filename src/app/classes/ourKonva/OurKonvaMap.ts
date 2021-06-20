@@ -5,12 +5,11 @@ import Konva from 'konva';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import { OurKonvaRect } from './OurKonvaRect';
 import { OurKonvaText } from './OurKonvaText';
-import {Folder} from '../Folder';
 import {Asset} from '../Asset';
 import {OurKonvaImage} from './OurKonvaImage';
 
 export class  OurKonvaMap {
-    id: string;
+    id: string | null;
     name: string | null;
     position: Coords;
     columns: number;

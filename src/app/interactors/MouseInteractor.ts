@@ -10,7 +10,6 @@ import {OurKonvaRect} from '../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../classes/ourKonva/OurKonvaImage';
 import {GameInteractor} from './GameInteractor';
 import { Game } from '../classes/Game';
-import {Folder} from '../classes/Folder';
 import {OurKonvaText} from '../classes/ourKonva/OurKonvaText';
 import {SocketService} from '../services/socket.service';
 import {toArray} from 'rxjs/operators';

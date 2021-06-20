@@ -7,7 +7,7 @@ export class Folder {
 
     constructor(id?: string, name?: any, maps?: OurKonvaMap[]) {
         this.id = id ? id : null;
-        this.name = name ? name : 'new page';
+        this.name = name ? name : 'new folder';
         this.maps = maps ? maps : [];
     }
 
