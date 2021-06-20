@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Coords} from '../../../classes/Coords';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
@@ -50,7 +50,7 @@ export class MapsListComponent implements OnInit, OnDestroy {
         });
         this.newMapForm = new FormGroup({
             name: new FormControl('Map' + (this.maps.length + 1)),
-        }, {updateOn: 'blur'});
+        });
     }
 
     ngOnDestroy(): void {

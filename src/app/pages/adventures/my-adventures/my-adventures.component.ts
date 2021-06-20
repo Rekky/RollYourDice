@@ -4,6 +4,8 @@ import {GameInteractor} from '../../../interactors/GameInteractor';
 import {User} from '../../../classes/User';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
+import {MapInteractor} from '../../../interactors/MapInteractor';
+import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
 
 @Component({
     selector: 'app-my-adventures',
@@ -22,6 +24,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     userSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
+                private mapInteractor: MapInteractor,
                 private userInteractor: UserInteractor) {
         this.currentUser = this.userInteractor.getUser();
 
@@ -77,10 +80,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 });
                 this.adventures[adventureIndex] = game;
             } else {
-                game.id = 'new';
                 this.adventures.unshift(game);
                 await this.gameInteractor.createGame(game);
-                await this.getMyGames();
+                // await this.getMyGames();
             }
             this.closeEditGame();
             this.displayOptions = null;

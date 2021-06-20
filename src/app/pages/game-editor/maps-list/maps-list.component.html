@@ -37,16 +37,13 @@
                             <i class="fas fa-trash" (click)="removeMap(map)"></i>
                         </span>
                     </div>
-                    <form [formGroup]="renameMapForm" (submit)="onSubmitRenameMap(map)" *ngIf="map == mapToRename && showRenameMapForm">
-                        <input type="text" placeholder="Map ..." autofocus [formControlName]="'name'">
-                    </form>
                 </div>
                 <app-recursive-list [list]="map.objects"></app-recursive-list>
             </div>
         </div>
         <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
             <div class="item active">
-                <input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'">
+                <input type="text" placeholder="OurKonvaMap ..." autofocus (blur)="onAddNewMap()" [formControlName]="'name'">
             </div>
         </form>
     </div>

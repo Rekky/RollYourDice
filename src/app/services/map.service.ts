@@ -23,9 +23,31 @@ export class MapService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/maps${gameId}`, options).subscribe(
+            this.httpService.get(`/game/${gameId}/maps`, options).subscribe(
                 (response) => {
                     resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    createNewMap(gameId: string, map: OurKonvaMap): Promise<OurKonvaMap> {
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: this.userInteractor.getToken()
+            })
+        };
+        const body = {
+            gameId: gameId,
+            map: map
+        };
+
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/map`, body, options).subscribe(
+                (response) => {
+                    resolve(response.data);
                 }, (error: HttpErrorResponse) => {
                     reject(error);
                 }

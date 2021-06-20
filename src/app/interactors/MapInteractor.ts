@@ -21,6 +21,10 @@ export class MapInteractor {
                 private socketService: SocketService) {
     }
 
+    async createMap(gameId: string, map: OurKonvaMap): Promise<OurKonvaMap> {
+        return await this.mapService.createNewMap(gameId, map);
+    }
+
     async getAllMaps(gameId: string): Promise<OurKonvaMap[]> {
         return await this.mapService.getAllMaps(gameId);
     }
