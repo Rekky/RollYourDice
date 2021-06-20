@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {UserInteractor} from './interactors/UserInteractor';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'RollYourDice';
+
+    constructor(private userInteractor: UserInteractor, private router: Router) {
+        // routing events
+        this.router.events.subscribe((ev: any) => {
+            if (ev instanceof NavigationEnd) {
+                // nothing
+            }
+        });
+    }
 }
