@@ -74,8 +74,8 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
 
         logo.style.transform = 'rotate(360deg)';
         logo.style.animation = 'rotateImage 500ms';
-        leftBox.style.width = '100%';
-        leftBox.style.animation = 'widthComplete 500ms';
+        // leftBox.style.width = '100%';
+        // leftBox.style.animation = 'widthComplete 500ms';
         rightBox.style.right = '-2000px';
         rightBox.style.animation = 'hideRightBox 500ms';
     }
