@@ -13,7 +13,8 @@ import {UserInteractor} from '../interactors/UserInteractor';
 })
 export class SocketService {
 
-    socket = io(this.apiService.API_SOCKET);
+    // socket = io(this.apiService.API_SOCKET);
+    socket = io();
     gameSocketSubscription: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
     gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
