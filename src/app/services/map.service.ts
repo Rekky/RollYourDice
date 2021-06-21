@@ -25,7 +25,7 @@ export class MapService {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.get(`/game/${gameId}/maps`, options).subscribe(
                 (response) => {
-                    resolve(response);
+                    resolve(response.data);
                 }, (error: HttpErrorResponse) => {
                     reject(error);
                 }
