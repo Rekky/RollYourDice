@@ -1,16 +1,17 @@
 export class Asset {
     id: string;
     name: string;
-    uri: string;
     extension: string;
-    data?: any;
+    uri: string;
+    createdAt: Date;
+    updatedAt: Date;
 
-    constructor() {
-        this.name = '';
-        this.uri = '';
-        this.extension = '';
-        this.id = '';
-        this.data = null;
+    constructor(id?: string, name?: string, extension?: string, createdAt?: Date, updatedAt?: Date) {
+        this.id = id ? id : null;
+        this.name = name ? name : null;
+        this.extension = extension ? extension : null;
+        this.createdAt = createdAt ? createdAt : new Date();
+        this.updatedAt = updatedAt ? updatedAt : new Date();
     }
 
     static fromJSON(json: any): Asset {

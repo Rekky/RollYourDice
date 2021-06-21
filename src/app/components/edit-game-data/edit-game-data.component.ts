@@ -49,10 +49,9 @@ export class EditGameDataComponent implements OnInit {
     }
 
     imageChanged(file: File): void {
-        const image = new Asset();
-        image.name = file.name;
-        this.transformFileToBase64(file).then(res => image.data = res);
-        this.newGame.image = image;
+        // const image = new Asset();
+        // image.name = file.name;
+        // this.newGame.image = image;
     }
 
     transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {
