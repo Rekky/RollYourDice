@@ -80,8 +80,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 });
                 this.adventures[adventureIndex] = game;
             } else {
+                const newGame = await this.gameInteractor.createGame(game);
+                game.id = newGame.id;
                 this.adventures.unshift(game);
-                await this.gameInteractor.createGame(game);
                 // await this.getMyGames();
             }
             this.closeEditGame();
