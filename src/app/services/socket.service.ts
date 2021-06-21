@@ -6,14 +6,14 @@ import {Game, GameStatus} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
 import {UserInteractor} from '../interactors/UserInteractor';
+import {environment} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SocketService {
 
-    // socket = io(this.apiService.API_SOCKET);
-    socket = io();
+    socket = io(environment.socket_url);
     gameSocketSubscription: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
     gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
