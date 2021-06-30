@@ -12,7 +12,7 @@ export class ApiService {
     API_URL: string = environment.api_url;
     API_SOCKET: string = environment.api_url;
 
-    constructor(private httpService: HttpService, private userInteractor: UserInteractor) { }
+    constructor(private httpService: HttpService) { }
 
     getGameEditor(id: string): any {
         return null;
@@ -43,22 +43,4 @@ export class ApiService {
             );
         });
     }
-
-    async uploadFile(data: any): Promise<any> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
-            })
-        };
-        return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/file/upload`, data, options).subscribe(
-                (response) => {
-                    resolve(response);
-                }, (error: HttpErrorResponse) => {
-                    reject(error);
-                }
-            );
-        });
-    }
-
 }

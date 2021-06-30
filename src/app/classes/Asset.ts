@@ -5,6 +5,7 @@ export class Asset {
     uri: string;
     createdAt: Date;
     updatedAt: Date;
+    type: AssetType;
 
     constructor(id?: string, name?: string, extension?: string, createdAt?: Date, updatedAt?: Date) {
         this.id = id ? id : null;
@@ -21,4 +22,10 @@ export class Asset {
         });
         return asset;
     }
+}
+
+export enum AssetType {
+    Image = 'image',
+    Video = 'video',
+    Audio = 'audio'
 }

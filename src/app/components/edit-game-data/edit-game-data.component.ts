@@ -47,6 +47,7 @@ export class EditGameDataComponent implements OnInit {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
 
+        // TODO Fix this new FormData in the future
         const formData = new FormData();
         // formData.append('file', this.gameForm.get('imageCoverSource').value);
 

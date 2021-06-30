@@ -7,6 +7,9 @@
                  [class.active]="currentToolSelected === tool.name" (click)="onToolSelected(tool.name)">
                 <i [ngClass]="tool.icon"></i>
                 <div *ngIf="blockOfTools.length > 1" class="triangle"></div>
+                <input type="file" *ngIf="tool.name == 'image'"
+                       (change)="updateImage($event.target.files[0])"
+                       style="position:absolute;opacity: 0;top:0;left:0;width: 100%;height: 100%; cursor: pointer;">
             </div>
         </ng-container>
         <ng-container *ngIf="displayExtraToolsIndex === i">

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ApiService} from '../../services/api.service';
+import { Asset } from 'src/app/classes/Asset';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
     selector: 'upload-input',
@@ -8,12 +9,12 @@ import {ApiService} from '../../services/api.service';
 })
 export class UploadInputComponent implements OnInit {
 
-    @Input() name: string = 'Upload Image (2MB max)';
+    @Input() name: string = 'Upload Image (3MB max)';
     @Input() previewUploadImage: any = null;
     @Output() file: EventEmitter<any> = new EventEmitter<any>();
     uploadError: boolean = false;
 
-    constructor(private apiService: ApiService) { }
+    constructor(private imageService: ImageService) { }
 
     ngOnInit(): void {
     }
@@ -44,11 +45,11 @@ export class UploadInputComponent implements OnInit {
         }
     }
 
-    async uploadFile(file: any): Promise<void> {
+    async uploadFile(file: any): Promise<Asset> {
         // build formData and send to api
         const formData = new FormData();
         formData.append('asset', file);
-        return await this.apiService.uploadFile(formData);
+        return await this.imageService.uploadFile(formData);
     }
 
 }

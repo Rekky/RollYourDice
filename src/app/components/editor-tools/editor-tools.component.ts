@@ -9,6 +9,8 @@ import {OurKonvaEraser} from '../../classes/ourKonva/OurKonvaEraser';
 import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
+import {ImageService} from '../../services/image.service';
+import {Asset} from '../../classes/Asset';
 
 @Component({
     selector: 'app-editor-tools',
@@ -43,7 +45,8 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     ];
 
     constructor(private mouseService: MouseService,
-                private mouseInteractor: MouseInteractor) { }
+                private mouseInteractor: MouseInteractor,
+                private imageService: ImageService) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
@@ -87,12 +90,19 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
                 this.mouseService.setMouse(new OurKonvaRect());
                 break;
             case 'image':
-                this.mouseService.setMouse(new OurKonvaImage('../../assets/backgrounds/volcano-island.jpg'));
                 break;
             default:
                 this.mouseService.setMouse(new OurKonvaPointer());
                 break;
         }
+    }
+
+    async updateImage(file: File): Promise<void> {
+        const formData = new FormData();
+        formData.append('asset', file);
+        const newAsset: Asset = await this.imageService.uploadFile(formData);
+        this.mouseService.setMouse(new OurKonvaImage(newAsset.uri));
+
     }
 
     changeDisplayedTool(tool: string): void {

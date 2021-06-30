@@ -167,25 +167,4 @@ export class HomeComponent implements OnInit {
         this.selectedFile.status = 'fail';
         this.selectedFile.src = '';
     }
-
-    processFile(imageInput: any): void {
-        const file: File = imageInput.files[0];
-        const reader = new FileReader();
-
-        reader.addEventListener('load', (event: any) => {
-
-            this.selectedFile = new ImageSnippet(event.target.result, file);
-
-            this.imageService.uploadImage(this.selectedFile.file).subscribe(
-                (res: any) => {
-                    this.imageResponse = res.image;
-                    this.onSuccess();
-                },
-                (err) => {
-                    this.onError();
-                });
-        });
-
-        reader.readAsDataURL(file);
-    }
 }

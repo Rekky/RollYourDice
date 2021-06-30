@@ -113,6 +113,7 @@ export class MouseInteractor implements OnDestroy {
             }
             if (this.mouse.state === 'image') {
                 const ourKonvaElement = OurKonvaImage.getOurKonvaImage(konvaElement.konvaObject as Konva.Image);
+                console.log('ourKonvaElement =', ourKonvaElement);
                 this.addKonvaObjectToMap(ourKonvaElement, map);
             }
             this.newObjectAddSelectedOption(konvaElement);
@@ -131,7 +132,6 @@ export class MouseInteractor implements OnDestroy {
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaRect);
         }
         if (this.mouse.state === 'text') {
-            console.log('1');
             map.objects.push(this.mouse as OurKonvaText);
             this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaText);
         }

@@ -116,8 +116,8 @@ app-dropdown {
 .cursor-hand {
     cursor: grab;
 }
-.cursor-text, .cursor-square {
-    cursor: alias;
+.cursor-text, .cursor-square, .cursor-image {
+    cursor: crosshair;
 }
 
 // ------------- GAME EDITOR STYLES -------------
