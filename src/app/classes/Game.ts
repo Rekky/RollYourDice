@@ -8,7 +8,7 @@ export class Game {
     updatedAt: Date;
     description: string;
     gameType: GameTypes;
-    image: Asset;
+    coverImage: Asset;
     name: string;
     nPlayers: number;
     mapsId: string[];
@@ -25,7 +25,7 @@ export class Game {
         this.createAt = new Date();
         this.updatedAt = new Date();
         this.nPlayers = 6;
-        this.image = new Asset();
+        this.coverImage = new Asset();
         this.description = '';
         this.status = GameStatus.Stopped;
     }

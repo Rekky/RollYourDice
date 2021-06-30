@@ -11,7 +11,7 @@ import {Asset} from '../../classes/Asset';
 export class EditGameDataComponent implements OnInit {
 
     @Input() game: Game;
-    @Output() saveGame: EventEmitter<Game> = new EventEmitter<Game>();
+    @Output() saveGame: EventEmitter<any> = new EventEmitter<any>();
     @Output() closeGame: EventEmitter<void> = new EventEmitter<void>();
 
     gameForm: FormGroup;
@@ -43,19 +43,24 @@ export class EditGameDataComponent implements OnInit {
     }
 
     acceptChanges(): void {
-        console.log('acceptChanges', this.gameForm);
         Object.keys(this.gameForm.value).forEach((key: string) => {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
-        this.saveGame.emit(this.newGame);
+
+        const formData = new FormData();
+        // formData.append('file', this.gameForm.get('imageCoverSource').value);
+
+        Object.keys(this.gameForm.value).forEach((key: string) => {
+            const value = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
+            formData.append(key.toString(), value);
+        });
+
+        this.saveGame.emit({game: this.newGame, formData: formData});
     }
 
     imageChanged(file: File): void {
         console.log('imageChanged', file);
         this.gameForm.patchValue({imageCoverSource: file});
-
-        const formData = new FormData();
-        formData.append('file', this.gameForm.get('imageCoverSource').value);
         // const image = new Asset();
         // image.name = file.name;
         // this.newGame.image = image;

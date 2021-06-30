@@ -41,8 +41,8 @@ export class GameInteractor {
         return await this.gameService.removeGame(id);
     }
 
-    async editGame(game: Game): Promise<any> {
-        return await this.gameService.editGame(game);
+    async editGame(game: Game, formData: any): Promise<any> {
+        return await this.gameService.editGame(game, formData);
     }
 
     async getAllGames(): Promise<Game[]> {

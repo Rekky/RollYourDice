@@ -66,14 +66,16 @@ export class GameService {
         });
     }
 
-    editGame(game: Game): Promise<any> {
+    editGame(game: Game, formData: any): Promise<any> {
+        console.log('editGame', game);
+        console.log('formData', formData);
         const options = {
             headers: new HttpHeaders({
                 Authorization: this.userInteractor.getToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.patch(`/game/${game.id}`, {game}, options).subscribe(
+            this.httpService.patch(`/game/${game.id}`, formData, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

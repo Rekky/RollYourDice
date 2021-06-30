@@ -71,10 +71,13 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
-    async saveGame(game: Game): Promise<void> {
+    async saveGame(data: any): Promise<void> {
+        const game = data.game;
+        const formData = data.formData;
+
         try {
             if (this.gameToEdit.id) {
-                await this.gameInteractor.editGame(game);
+                await this.gameInteractor.editGame(game, formData);
                 const adventureIndex = this.adventures.findIndex((adventure: Game) => {
                     return adventure.id === game.id;
                 });
