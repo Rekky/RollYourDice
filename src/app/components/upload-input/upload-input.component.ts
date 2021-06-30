@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 
 @Component({
@@ -10,6 +10,7 @@ export class UploadInputComponent implements OnInit {
 
     @Input() name: string = 'Upload Image (2MB max)';
     @Input() previewUploadImage: any = null;
+    @Output() file: EventEmitter<any> = new EventEmitter<any>();
     uploadError: boolean = false;
 
     constructor(private apiService: ApiService) { }
@@ -31,8 +32,9 @@ export class UploadInputComponent implements OnInit {
         try {
             this.uploadError = false;
             const file = ev.target.files[0];
-            const response: any = await this.uploadFile(file);
-            console.log('coverImageChanged', response);
+            this.file.emit(file);
+            // const response: any = await this.uploadFile(file);
+            // console.log('coverImageChanged', response);
             // this.post.coverImage = response.image;
             // this.formPost.get('coverImage').setValue(response.image);
         } catch (e) {

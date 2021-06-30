@@ -29,6 +29,7 @@ export class EditGameDataComponent implements OnInit {
             nPlayers: new FormControl(this.newGame.nPlayers, Validators.required),
             gameType: new FormControl(this.newGame.gameType, Validators.required),
             imageCover: new FormControl(null),
+            imageCoverSource: new FormControl(null),
             publish: new FormControl(this.newGame.published, Validators.required),
         });
         this.gameTypes = Object.values(GameTypes);
@@ -42,6 +43,7 @@ export class EditGameDataComponent implements OnInit {
     }
 
     acceptChanges(): void {
+        console.log('acceptChanges', this.gameForm);
         Object.keys(this.gameForm.value).forEach((key: string) => {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
@@ -49,6 +51,11 @@ export class EditGameDataComponent implements OnInit {
     }
 
     imageChanged(file: File): void {
+        console.log('imageChanged', file);
+        this.gameForm.patchValue({imageCoverSource: file});
+
+        const formData = new FormData();
+        formData.append('file', this.gameForm.get('imageCoverSource').value);
         // const image = new Asset();
         // image.name = file.name;
         // this.newGame.image = image;
