@@ -43,7 +43,7 @@ export class MouseInteractor implements OnDestroy {
         this.selectedKonvaObjectSubscription = this.selectedKonvaObject.subscribe((object: CurrentSelectedKonvaObject) => {
             if (object !== null) {
                 document.onkeyup = (ev) => {
-                    if (ev.key === 'Delete') {
+                    if (ev.key === 'Delete' && document.activeElement.tagName !== 'INPUT') {
                         object.transformer.destroy();
                         object.konvaObject.destroy();
                         object.layer.batchDraw();

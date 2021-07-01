@@ -6,6 +6,8 @@ export class Asset {
     createdAt: Date;
     updatedAt: Date;
     type: AssetType;
+    authorId: string;
+    currentUserId: string;
 
     constructor(id?: string, name?: string, extension?: string, createdAt?: Date, updatedAt?: Date) {
         this.id = id ? id : null;
@@ -13,6 +15,8 @@ export class Asset {
         this.extension = extension ? extension : null;
         this.createdAt = createdAt ? createdAt : new Date();
         this.updatedAt = updatedAt ? updatedAt : new Date();
+        this.authorId = null;
+        this.currentUserId = null;
     }
 
     static fromJSON(json: any): Asset {
