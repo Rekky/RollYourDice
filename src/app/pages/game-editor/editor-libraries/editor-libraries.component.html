@@ -1,6 +1,11 @@
-<label class="mb-1">Libraries</label>
 <div class="list-items">
-  <div class="item font-normal cursor-pointer bg-green">Maps</div>
-  <div class="item font-normal cursor-pointer bg-red">Monsters</div>
-  <div class="item font-normal cursor-pointer bg-dark-gray">Objects & Tokens</div>
+    <div class="add-map">
+        <img src="assets/svg/add.svg" alt="add-new-map"/>
+    </div>
+    <div class="item" [ngClass]="{'selected-item': selectedLibrarySection === section}"
+         *ngFor="let section of librarySections | enumToArray"
+         (click)="selectSection(section)">
+        {{section}}
+    </div>
 </div>
+

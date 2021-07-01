@@ -22,7 +22,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mapsList: OurKonvaMap[] = [];
     gameStartStatus: GameStatus = GameStatus.Stopped;
 
-    tabs: number = 0;
+    leftColumnTabs = LeftColumnTabs;
+    tabs: LeftColumnTabs = LeftColumnTabs.Library;
     currentObjectSelected: any;
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
@@ -123,4 +124,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
     }
 
+}
+
+export enum LeftColumnTabs {
+    Maps = 'maps',
+    Library = 'library'
 }

@@ -47,6 +47,7 @@ import {AssetComponent} from './components/asset/asset.component';
 import { UploadInputComponent } from './components/upload-input/upload-input.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { AccountComponent } from './pages/account/account.component';
+import {EnumToArrayPipe} from './pipes/enum-to-array-pipe';
 
 @NgModule({
     declarations: [
@@ -87,7 +88,8 @@ import { AccountComponent } from './pages/account/account.component';
         AssetComponent,
         UploadInputComponent,
         DropdownComponent,
-        AccountComponent
+        AccountComponent,
+        EnumToArrayPipe
     ],
     imports: [
         BrowserModule,
@@ -106,6 +108,7 @@ import { AccountComponent } from './pages/account/account.component';
         }),
         MatDialogModule,
     ],
+    exports: [EnumToArrayPipe],
     providers: [],
     bootstrap: [AppComponent],
     entryComponents: [ErrorMessageComponent]

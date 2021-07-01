@@ -1,21 +1,45 @@
+@import "../../../../colors";
+
 .list-items{
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  .item{
-    position: relative;
-    padding: .5rem;
-    margin: .2rem 0;
-    height: 40px;
-    border-radius: .25rem;
     display: flex;
-    align-items: center;
-    color: #fff;
+    flex-direction: column;
 
-    &:hover{
-      opacity: 0.8;
+    position: relative;
+    width: 100%;
+
+    .add-map {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-end;
+        align-items: center;
+
+        width: 100%;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 0.5rem 0 2rem;
+
+        img {
+            cursor: pointer;
+        }
     }
-  }
+
+    .item{
+        display: flex;
+        align-items: center;
+
+        position: relative;
+        height: 40px;
+        padding: 0.5rem 0.5rem 0.5rem 2rem;
+
+        color: $notSoWhite;
+        text-transform: capitalize;
+        cursor: pointer;
+
+        &:hover{
+            background-color: rgba($littleGrey, 0.5);
+        }
+    }
+
+    .selected-item {
+        background-color: $littleGrey;
+    }
 }
