@@ -83,13 +83,13 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 });
                 this.adventures[adventureIndex] = game;
             } else {
-                const newGame = await this.gameInteractor.createGame(game);
+                const newGame = await this.gameInteractor.createGame(game, formData);
                 game.id = newGame.id;
                 this.adventures.unshift(game);
-                // await this.getMyGames();
             }
             this.closeEditGame();
             this.displayOptions = null;
+            await this.getMyGames();
         } catch (e) {
             console.log(e);
         }

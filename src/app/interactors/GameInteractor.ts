@@ -33,8 +33,8 @@ export class GameInteractor {
         return await this.gameService.getGame(gameId);
     }
 
-    async createGame(game: Game): Promise<Game> {
-        return await this.gameService.createGame(game);
+    async createGame(game: Game, formData: any): Promise<Game> {
+        return await this.gameService.createGame(game, formData);
     }
 
     async removeGame(id: string): Promise<any> {

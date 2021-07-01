@@ -32,16 +32,16 @@ export class GameService {
         });
     }
 
-    createGame(game: Game): Promise<Game> {
+    createGame(game: Game, formData: any): Promise<Game> {
         const options = {
             headers: new HttpHeaders({
                 Authorization: this.userInteractor.getToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game`, game, options).subscribe(
+            this.httpService.post(`/game`, formData, options).subscribe(
                 (response) => {
-                    resolve(response.data);
+                    resolve(response);
                 }, (error: HttpErrorResponse) => {
                     reject(error);
                 }
@@ -67,8 +67,6 @@ export class GameService {
     }
 
     editGame(game: Game, formData: any): Promise<any> {
-        console.log('editGame', game);
-        console.log('formData', formData);
         const options = {
             headers: new HttpHeaders({
                 Authorization: this.userInteractor.getToken()
