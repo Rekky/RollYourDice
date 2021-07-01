@@ -1,7 +1,6 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Game, GameTypes } from 'src/app/classes/Game';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Asset} from '../../classes/Asset';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-edit-game-data',
@@ -62,9 +61,6 @@ export class EditGameDataComponent implements OnInit {
     imageChanged(file: File): void {
         console.log('imageChanged', file);
         this.gameForm.patchValue({imageCoverSource: file});
-        // const image = new Asset();
-        // image.name = file.name;
-        // this.newGame.image = image;
     }
 
     transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {

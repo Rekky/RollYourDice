@@ -7,8 +7,8 @@ export const environment = {
     production: false,
     // api_url: 'http://91.205.174.52:8001/api',
     // socket_url: 'http://91.205.174.52:8001/',
-    api_url: 'http://192.168.1.61:8001/api',
-    socket_url: 'http://192.168.1.61:8001/',
+    api_url: 'http://127.0.0.1:8001/api',
+    socket_url: 'http://127.0.0.1:8001/',
 };
 
 /*
