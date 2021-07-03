@@ -20,7 +20,7 @@ export class EditorLibrariesComponent implements OnInit {
 
     async selectSection(section: LibrarySections): Promise<void> {
         this.selectedLibrarySection = section;
-        // this.displayedData = await this.libraryService.getLibrarySection(section);
+        this.displayedData = await this.libraryService.getLibrarySection(section);
     }
 
 }

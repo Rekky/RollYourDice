@@ -21,7 +21,7 @@ export class ImageService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/file/upload`, data, options).subscribe(
+            this.httpService.post(`/assets/upload`, data, options).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
