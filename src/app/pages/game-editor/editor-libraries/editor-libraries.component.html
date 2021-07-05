@@ -1,11 +1,18 @@
 <div class="list-items">
-    <div class="add-map">
-        <img src="assets/svg/add.svg" alt="add-new-map"/>
-    </div>
     <div class="item" [ngClass]="{'selected-item': selectedLibrarySection === section}"
          *ngFor="let section of librarySections | enumToArray"
          (click)="selectSection(section)">
         {{section}}
+    </div>
+</div>
+<div class="add-map">
+    <img src="assets/svg/add.svg" alt="add-new-map"/>
+</div>
+<div *ngIf="displayedData" class="data-image-box">
+    <div class="data-as-image" *ngFor="let data of displayedData; let i = index"
+         (click)="deleteData(data.id, i)">
+        <img [src]="data?.uri" [alt]="'image-of-' + data?.name">
+        <span>{{data?.name}}</span>
     </div>
 </div>
 

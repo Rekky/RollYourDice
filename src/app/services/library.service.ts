@@ -31,4 +31,22 @@ export class LibraryService {
             );
         });
     }
+
+
+    async deleteLibraryAsset(id: string): Promise<any[]> {
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: this.userInteractor.getToken()
+            })
+        };
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.delete(`/library/assets/${id}`, options).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
 }

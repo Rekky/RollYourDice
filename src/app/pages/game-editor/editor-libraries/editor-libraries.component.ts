@@ -15,12 +15,17 @@ export class EditorLibrariesComponent implements OnInit {
     constructor(private libraryService: LibraryService) { }
 
     ngOnInit(): void {
-        this.selectSection(LibrarySections.Monsters);
+        this.selectSection(LibrarySections.Assets);
     }
 
     async selectSection(section: LibrarySections): Promise<void> {
         this.selectedLibrarySection = section;
         this.displayedData = await this.libraryService.getLibrarySection(section);
+    }
+
+    async deleteData(id: string, i: number): Promise<void> {
+        await this.libraryService.deleteLibraryAsset(id);
+        this.displayedData.splice(i, 1);
     }
 
 }
