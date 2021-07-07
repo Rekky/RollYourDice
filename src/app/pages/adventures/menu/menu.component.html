@@ -1,8 +1,20 @@
 <div class="menu-box">
-    <div class="menu-first-block">
-        <div class="menu-option" (click)="goToMyAdventures()">Play</div>
-        <div class="menu-option">Library</div>
-        <div class="menu-option">Settings</div>
+    <div class="bg-menu"></div>
+    <div class="bg-blur"></div>
+    <div id="particles-js" style="position: fixed;top:0;left:0;right: 0;bottom: 0;"></div>
+
+    <div class="menu-container">
+        <div class="menu-logo">
+            ROLLINN
+        </div>
+        <div class="menu-block">
+            <div class="menu-option mb-2" (click)="goToMyAdventures()">Play</div>
+            <div class="menu-option mb-2">Library</div>
+            <div class="menu-option mb-2">Settings</div>
+            <a class="menu-option mt-5" [routerLink]="''">Exit</a>
+        </div>
     </div>
-    <a class="menu-option" [routerLink]="''">Exit</a>
+    <div class="img-char">
+        <img src="../../../../assets/backgrounds/knight-chibi.png" alt="knight rollinn">
+    </div>
 </div>
