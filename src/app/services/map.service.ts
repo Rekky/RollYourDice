@@ -19,7 +19,7 @@ export class MapService {
     getAllMaps(gameId: string): Promise<OurKonvaMap[]> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
@@ -36,7 +36,7 @@ export class MapService {
     createNewMap(gameId: string, map: OurKonvaMap): Promise<OurKonvaMap> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         const body = {

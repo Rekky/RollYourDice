@@ -18,7 +18,7 @@ export class GameService {
     getGame(gameId: string): Promise<Game> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
@@ -35,7 +35,7 @@ export class GameService {
     createGame(game: Game, formData: any): Promise<Game> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
@@ -52,7 +52,7 @@ export class GameService {
     removeGame(id: string): Promise<any> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
@@ -69,7 +69,7 @@ export class GameService {
     editGame(game: Game, formData: any): Promise<any> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
@@ -86,7 +86,7 @@ export class GameService {
     getAllGames(): Promise<any> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
@@ -103,7 +103,7 @@ export class GameService {
     getMyGames(): Promise<any> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {

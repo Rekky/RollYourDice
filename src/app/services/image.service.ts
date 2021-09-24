@@ -17,7 +17,7 @@ export class ImageService {
     async uploadFile(data: any): Promise<Asset> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {

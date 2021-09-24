@@ -47,6 +47,4 @@ export class UserService {
             );
         });
     }
-
-
 }

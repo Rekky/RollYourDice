@@ -11,13 +11,26 @@ import {AdventureNewComponent} from './pages/adventures/adventure-new/adventure-
 import {MyAdventuresComponent} from './pages/adventures/my-adventures/my-adventures.component';
 import {AdventuresComponent} from './pages/adventures/adventures/adventures.component';
 import {GamePlayComponent} from './pages/game-play/game-play.component';
-import { MenuComponent } from './pages/adventures/menu/menu.component';
+import { MainMenuComponent } from './pages/adventures/menu/main-menu.component';
 import {AccountComponent} from './pages/account/account.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        redirectTo: '/game/menu',
+        pathMatch: 'full'
+    },
+    {
+        path: 'game',
+        component: AdventuresComponent,
+        canActivate: [AuthGuardService],
+        children: [
+            { path: 'menu', component: MainMenuComponent },
+            { path: 'my-adventures', component: MyAdventuresComponent },
+            { path: 'new', component: AdventureNewComponent },
+            { path: 'search', component: AdventuresSearchComponent },
+            { path: ':id', component: AdventureComponent }
+        ]
     },
     {
         path: 'game-editor/:id',
@@ -43,20 +56,9 @@ const routes: Routes = [
         component: AccountComponent
     },
     {
-        path: 'game',
-        component: AdventuresComponent,
-        canActivate: [AuthGuardService],
-        children: [
-            { path: 'menu', component: MenuComponent },
-            { path: 'my-adventures', component: MyAdventuresComponent },
-            { path: 'new', component: AdventureNewComponent },
-            { path: 'search', component: AdventuresSearchComponent },
-            { path: ':id', component: AdventureComponent }
-        ]
-    },
-    {
         path: '**',
-        component: HomeComponent
+        redirectTo: '/game/menu',
+        pathMatch: 'full'
     }
 ];
 

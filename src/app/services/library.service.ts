@@ -18,7 +18,7 @@ export class LibraryService {
     async getLibrarySection(section: LibrarySections): Promise<any[]> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {
@@ -36,7 +36,7 @@ export class LibraryService {
     async deleteLibraryAsset(id: string): Promise<any[]> {
         const options = {
             headers: new HttpHeaders({
-                Authorization: this.userInteractor.getToken()
+                Authorization: this.userInteractor.getCurrentToken()
             })
         };
         return new Promise<any>( (resolve, reject) => {

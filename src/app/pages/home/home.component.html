@@ -1,7 +1,5 @@
 <app-nav-bar></app-nav-bar>
 <div class="home-container">
-    <!-- particles.js container -->
-    <div id="particles-js" style="position: fixed;top:0;left:0;right: 0;bottom: 0;"></div>
     <div class="play-container">
         <a class="btn btn-roll fs-3" [routerLink]="'/game/menu'">PLAY NOW</a>
     </div>
@@ -21,62 +19,3 @@
         </div>
     </div>
 </div>
-<!--<div class="display-block">-->
-<!--    <div class="background-blurred-box">-->
-<!--        <div class="background-blurred"></div>-->
-<!--    </div>-->
-<!--    <div class="display"></div>-->
-<!--    <div class="display-border"></div>-->
-<!--    <div class="play-button-box">-->
-<!--        <a class="play-button" [routerLink]="'/adventures/my-adventures'">Play</a>-->
-<!--        <div class="play-button-border"></div>-->
-<!--    </div>-->
-<!--    <div class="display-bottom"></div>-->
-<!--</div>-->
-
-<!--<div class="box" style="position:relative;top:0;left:0;">-->
-<!--    <h2>ROLL YOUR DICE</h2>-->
-<!--    <ul>-->
-<!--        <li>-->
-<!--            <a [routerLink]="'/character-sheet'">GO to character-sheet</a>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <a [routerLink]="'/game-editor'">Game editor</a>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <a (click)="logout()" href="javascript:void(0)">Logout</a>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--</div>-->
-
-<!--<div class="box">-->
-<!--    <h2>LAST GAMES</h2>-->
-<!--    <div>-->
-<!--        <button><a [routerLink]="'/adventures/my-adventures'">My Games</a></button>-->
-<!--        <button><a [routerLink]="'/adventures/new'">Create new Game</a></button>-->
-<!--        <button><a [routerLink]="'/adventures/search'">Join a game</a></button>-->
-<!--    </div>-->
-
-<!--    <div>TESTING IMAGE UPLOAD</div>-->
-<!--    <div>-->
-<!--        <form (submit)="uploadImageForm()">-->
-<!--            <input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">-->
-<!--            <button type="submit">Upload</button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--    <div *ngIf="selectedFile" class="img-preview-container">-->
-<!--        <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"-->
-<!--             [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">-->
-<!--        </div>-->
-<!--        <div *ngIf="selectedFile.pending" class="img-loading-overlay">-->
-<!--            <div class="img-spinning-circle">Uploading...</div>-->
-<!--        </div>-->
-<!--        <div *ngIf="selectedFile.status === 'ok'" style="color: green">-->
-<!--            <div>Image Uploaded Succesfuly!</div>-->
-<!--            <div>-->
-<!--                <img [src]="imageResponse" *ngIf="imageResponse" style="height: 200px;">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div *ngIf="selectedFile.status === 'fail'" style="color: darkred"> Image Upload Failed!</div>-->
-<!--    </div>-->
-<!--</div>-->

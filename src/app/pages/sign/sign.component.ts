@@ -27,7 +27,7 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
     ngAfterViewInit(): void {
         this.getCurrentUserSub = this.userInteractor.getUserObs().subscribe((user: User) => {
             console.log('user', user);
-            if (user && localStorage.getItem('user')) {
+            if (user) {
                 this.preloadState();
                 setTimeout(() => {
                     this.display = 'loading';
@@ -94,7 +94,7 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
         leftBox.style.animation = 'leftBoxLeaves 1000ms 500ms';
 
         setTimeout(() => {
-            this.router.navigate(['./game-editor']);
+            this.router.navigate(['./game/menu']);
         }, 4000);
     }
 }
