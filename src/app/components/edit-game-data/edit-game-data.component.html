@@ -1,5 +1,5 @@
 <div class="edit-game-box">
-    <form class="edit-game-card card-roll" [formGroup]="gameForm" (submit)="acceptChanges()">
+    <form class="roll-card edit-game-card card-roll" [formGroup]="gameForm" (submit)="acceptChanges()">
         <div class="header" *ngIf="loaded">
             <div class="exit">
                 <svg (click)="closeEdit()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
