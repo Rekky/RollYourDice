@@ -10,7 +10,7 @@
         left:0;
         width: 100%;
         height: 100%;
-        border: 3px solid #D2C084;
+        border: 3px solid $colorCreme;
         z-index: -1;
     }
     &::after {
@@ -21,7 +21,7 @@
         width: calc(100% - 11px);
         height: calc(100% + 11px);
         margin: 5px;
-        border: 1px solid #D2C084;
+        border: 1px solid $colorCreme;
         z-index: -1;
     }
 }
