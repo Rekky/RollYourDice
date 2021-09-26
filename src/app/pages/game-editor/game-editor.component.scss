@@ -24,7 +24,6 @@
     width: auto;
     z-index: 999;
 }
-
 // LEFT COLUMN
 .left-column{
     position: absolute;
@@ -34,17 +33,6 @@
     color: #d3d3d3;
     background: $editorMainForeground;
     z-index: 90;
-
-    .left-column-tools {
-        position: absolute;
-        width: 40px;
-        top:0;
-        right: -40px;
-        height: 100%;
-        border-top: 1px solid $editorColumnsBorderColor;
-        border-right: 1px solid $editorColumnsBorderColor;
-        background: $editorMainForeground;
-    }
 
     .left-column-content{
         position: relative;
@@ -66,8 +54,23 @@
     overflow: hidden;
     z-index: 90;
 }
-
-// -------------- TABS
+// TOOLS CONTAINER
+.left-column-tools {
+    position: absolute;
+    width: 40px;
+    top:0;
+    right: -40px;
+    height: 100%;
+    border-top: 1px solid $editorColumnsBorderColor;
+    border-right: 1px solid $editorColumnsBorderColor;
+    background: $editorMainForeground;
+}
+.game-editor-tools {
+    position: absolute;
+    left: 8px;
+    top:30%;
+}
+// -------------- TABS ---------------
 .tabs {
     display: flex;
     flex-direction: row;
