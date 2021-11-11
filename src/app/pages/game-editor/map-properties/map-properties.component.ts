@@ -21,8 +21,8 @@ export class MapPropertiesComponent implements OnInit {
 
     ngOnInit(): void {
         this.mapForm = new FormGroup({
-            width: new FormControl(this.map.columns),
-            height: new FormControl(this.map.rows),
+            width: new FormControl(this.map.nColumns),
+            height: new FormControl(this.map.nRows),
             cellWidth: new FormControl(this.map.grid.cellSize)
         });
     }

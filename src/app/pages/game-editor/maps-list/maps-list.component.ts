@@ -84,7 +84,6 @@ export class MapsListComponent implements OnInit, OnDestroy {
     }
 
     onAddNewMap(): void {
-        alert('io bithc');
         const newMap: OurKonvaMap = new OurKonvaMap();
         newMap.name = this.newMapForm.get('name').value;
 

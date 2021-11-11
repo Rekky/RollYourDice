@@ -18,7 +18,6 @@ import {toArray} from 'rxjs/operators';
     providedIn: 'root'
 })
 export class MouseInteractor implements OnDestroy {
-    private selectedObject: BehaviorSubject<CurrentSelectedKonvaObject> = new BehaviorSubject<CurrentSelectedKonvaObject>(null);
     private selectedKonvaObject: BehaviorSubject<CurrentSelectedKonvaObject | null> = new BehaviorSubject<CurrentSelectedKonvaObject | null>(null);
 
     mouse: OurKonvaMouse | OurKonvaRect | OurKonvaText | OurKonvaImage = new OurKonvaMouse();
@@ -78,8 +77,9 @@ export class MouseInteractor implements OnDestroy {
 
             // Si el ratolí no és un punter es deselecciona l'objecte que estigui seleccionat en aquell moment
             if (this.mouse.state !== 'pointer') {
-                this.selectedObject.next(null);
+                this.selectedKonvaObject.next(null);
             }
+
 
             this.mouse.mouseDown(); // Executa la funció mouseDown() que correspongui a l'estat en el que està el ratolí
 
@@ -113,7 +113,6 @@ export class MouseInteractor implements OnDestroy {
             }
             if (this.mouse.state === 'image') {
                 const ourKonvaElement = OurKonvaImage.getOurKonvaImage(konvaElement.konvaObject as Konva.Image);
-                console.log('ourKonvaElement =', ourKonvaElement);
                 this.addKonvaObjectToMap(ourKonvaElement, map);
             }
             this.newObjectAddSelectedOption(konvaElement);
@@ -155,11 +154,9 @@ export class MouseInteractor implements OnDestroy {
                 object.transformer.show();
                 object.layer.batchDraw();
             }
-            console.log('here =', object);
             this.selectedKonvaObject.next(object);
         });
         object?.konvaObject.on('dragend', () => {
-            console.log('¡asdasd =', object.konvaObject.attrs);
             if (object.type === 'square') {
                 const ourKonvaRect = OurKonvaRect.getOurKonvaRect(object.konvaObject as Konva.Rect);
                 this.socketService.sendGameEditMapObject(ourKonvaRect);
@@ -281,10 +278,5 @@ export class MouseInteractor implements OnDestroy {
 
     getSelectedKonvaObjectObservable(): Observable<CurrentSelectedKonvaObject | null> {
         return this.selectedKonvaObject.asObservable();
-    }
-
-    // TODO mirar com eliminar aquesta funció
-    getCurrentSelectedObjectObservable(): Observable<CurrentSelectedKonvaObject> {
-        return this.selectedObject.asObservable();
     }
 }

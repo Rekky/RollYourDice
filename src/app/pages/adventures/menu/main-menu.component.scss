@@ -1,28 +1,15 @@
 @import "src/styles.scss";
-.bg-menu {
+
+#particles-js {
     position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    z-index: 0;
-    background-image: url('../../../../assets/backgrounds/menu-bg.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    filter: blur(10px);
 }
-.bg-blur {
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100vh;
-    z-index: 1;
-    background: rgb(134,3,3);
-    background: linear-gradient(43deg, rgba(134,3,3,0.49950419620973385) 0%, rgba(159,1,1,0.49950419620973385) 0%, rgba(0,0,0,0.8972632998511905) 50%);
-}
+
 .menu-box {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100vw;
@@ -34,19 +21,50 @@
     align-items: flex-start;
 }
 
-.menu-container {
-    position: relative;
+.bg-menu {
+    position: absolute;
     top:0;
     left:0;
-    width: 400px;
+    width: 100%;
     height: 100vh;
+    z-index: 0;
+    background-image: url('../../../../assets/backgrounds/background-enter.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-    margin-left: 10rem;
+.bg-blur {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    background: linear-gradient(43deg,
+        rgba(134, 3, 3, 0.4995041962) 0%,
+        rgba(120, 50, 1, 0.4995041962) 50%,
+        rgba(0, 0, 0, 0.8972632999) 95%);
+}
+
+.menu-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     z-index: 2;
+    padding-left: 15rem;
 
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+
+.menu-left, .menu-right {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    pointer-events: none;
 }
 
 .menu-logo {
@@ -66,27 +84,53 @@
 
 .menu-block {
     position: relative;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+
+    height: 70vh;
 }
 
 .menu-option {
     display: block;
-    min-width: 483px;
-    min-height: 77px;
-    text-align: left;
-    cursor: pointer;
+    width: fit-content;
+    margin-bottom: 4rem;
+    position: relative;
 
     color: #dbdbdb;
     font-family: $oswald;
-    font-size: 45px;
+    font-size: 5rem;
     font-weight: 700;
     line-height: 71px;
-    letter-spacing: 3px;
+    letter-spacing: 1rem;
     text-transform: uppercase;
+    text-align: left;
+    cursor: pointer;
+    pointer-events: all;
+
+    .fake-shadow-text {
+        position: absolute;
+        top: 0.4rem;
+        left: 0.4rem;
+        z-index: -1;
+
+        color: #111316;
+        font-family: $oswald;
+        font-size: 5rem;
+        font-weight: 700;
+        line-height: 71px;
+        letter-spacing: 1rem;
+        text-transform: uppercase;
+        text-align: left;
+    }
 
     &:hover {
-        color: #f2f2f2;
-        font-size: 55px;
+        color: #fff;
+        font-size: 6rem;
         transition: all .2s ease-out;
     }
 }
 
+.exit {
+    height: 30%;
+}

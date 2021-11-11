@@ -1,8 +1,8 @@
 <div id="mapbox{{map.id}}" class="map cursor-{{displayCursor}}" *ngIf="map"
-     [style.width.px]="mapWidth"
-     [style.height.px]="mapHeight"
-     [style.left.px]="map.position.x"
-     [style.top.px]="map.position.y">
+     [style.width]="mapWidth + 'vw'"
+     [style.height]="mapHeight + 'vh'"
+     [style.left.px]="0"
+     [style.top.px]="0">
 <!--    <div class="mapbox-details">{{map.name}} <span class="mapbox-details-columns">{{map.columns}}x{{map.rows}}</span></div>-->
     <div #mapEl id="map{{map.id}}" (click)="setCurrentObjectSelected($event, map, 'map')"></div>
 </div>

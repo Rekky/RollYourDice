@@ -19,7 +19,7 @@ export class OurKonvaMouse {
         this.stage = null;
         this.layers = null;
         this.ev = null;
-        this.cellSize = 40;
+        this.cellSize = 100;
         this.size = new OurKonvaSize();
     }
 

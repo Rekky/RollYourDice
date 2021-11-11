@@ -13,6 +13,7 @@ import {SocketService} from '../../services/socket.service';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {MouseService} from '../../services/mouse.service';
 import {document} from 'ngx-bootstrap/utils';
+import {CurrentSelectedKonvaObject} from "../../classes/ourKonva/OurKonvaMouse";
 
 @Component({
     selector: 'app-map',
@@ -29,8 +30,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     currentMapObjectSelected: any = null;
 
     // MAP VARS
-    mapWidth: number = 400;
-    mapHeight: number = 400;
+    mapWidth: number = 100;
+    mapHeight: number = 100;
     isMovingMap: boolean = false;
     startCoords: Coords = new Coords();
     offsetCoords: Coords = new Coords();
@@ -58,7 +59,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 private socketService: SocketService) { }
 
     ngOnInit(): void {
-        this.getCurrentSelectedObjectSub = this.mouseInteractor.getCurrentSelectedObjectObservable().subscribe(res => {
+        this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
             if (res) {
                 this.activeTr = res.transformer;
                 this.selectedObjectAttrs = res.konvaObject.getAttrs();
@@ -125,17 +126,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
+        const box = document.getElementById('mapbox' + this.map.id);
         this.gridStage = new Konva.Stage({
             container: 'map' + this.map.id,
-            width: this.map.columns * this.map.grid.cellSize,
-            height: this.map.rows * this.map.grid.cellSize
+            width: box.offsetWidth,
+            height: box.offsetHeight,
+            draggable: false
         });
-        // this.gridStage.on('click', (e) => {
-        //     if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
-        //         this.activeTr.hide();
-        //         this.gridStage.draw();
-        //     }
-        // });
+        this.map.nColumns = box.offsetWidth / this.map.grid.cellSize;
+        this.map.nRows = box.offsetHeight / this.map.grid.cellSize;
+        this.gridStage.on('click tap', (e) => {
+            if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
+                this.mouseInteractor.unsetSelectedKonvaObject();
+            }
+        });
     }
 
     setCurrentObjectSelected(ev, object, type): void {
@@ -154,23 +158,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     drawGrid(): void {
-        this.mapWidth = this.map.columns * this.map.grid.cellSize;
-        this.mapHeight = this.map.rows * this.map.grid.cellSize;
+        this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
+        this.mapHeight = this.map.nRows * this.map.grid.cellSize;
 
-        for (let i = 0; i < this.map.columns; i++) {
+        for (let i = 0; i < this.map.nColumns; i++) {
             this.layers.grid.add(new Konva.Line({
                 points: [Math.round(i * this.map.grid.cellSize) + 0.5, 0,
-                    Math.round(i * this.map.grid.cellSize) + 0.5, this.map.rows * this.map.grid.cellSize],
+                    Math.round(i * this.map.grid.cellSize) + 0.5, this.map.nRows * this.map.grid.cellSize],
                 stroke: '#ddd',
                 strokeWidth: 1,
             }));
         }
 
         this.layers.grid.add(new Konva.Line({points: [0, 0, 10, 10]}));
-        for (let j = 0; j < this.map.rows; j++) {
+        for (let j = 0; j < this.map.nRows; j++) {
             this.layers.grid.add(new Konva.Line({
                 points: [0, Math.round(j * this.map.grid.cellSize),
-                    this.map.columns * this.map.grid.cellSize, Math.round(j * this.map.grid.cellSize)],
+                    this.map.nColumns * this.map.grid.cellSize, Math.round(j * this.map.grid.cellSize)],
                 stroke: '#ddd',
                 strokeWidth: 0.5,
             }));

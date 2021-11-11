@@ -1,19 +1,25 @@
 <div class="menu-box">
     <div class="bg-menu"></div>
     <div class="bg-blur"></div>
-
     <div class="menu-container">
-        <div class="rollCard" style="width: 500px;height: 400px;">
-            nannanana
+<!--        <div class="menu-logo">ROLLINN</div>-->
+        <div id="particles-js"></div>
+        <div class="menu-left">
+            <div class="menu-block">
+                <div class="menu-option" (click)="goToMyAdventures()">
+                    Play <div class="fake-shadow-text">Play</div>
+                </div>
+                <div class="menu-option">
+                    Library <div class="fake-shadow-text">Library</div>
+                </div>
+                <div class="menu-option">
+                    Settings <div class="fake-shadow-text">Settings</div>
+                </div>
+            </div>
+            <div class="menu-option exit" (click)="logout()">
+                Exit <span class="fake-shadow-text">Exit</span>
+            </div>
         </div>
-        <div class="menu-logo">
-            ROLLINN
-        </div>
-        <div class="menu-block">
-            <div class="menu-option mb-2" (click)="goToMyAdventures()">Play</div>
-            <div class="menu-option mb-2">Library</div>
-            <div class="menu-option mb-2">Settings</div>
-            <a class="menu-option mt-5" (click)="logout()">Exit</a>
-        </div>
+        <div class="menu-right"></div>
     </div>
 </div>

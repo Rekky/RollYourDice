@@ -12,8 +12,8 @@ export class  OurKonvaMap {
     id: string | null;
     name: string | null;
     position: Coords;
-    columns: number;
-    rows: number;
+    nColumns: number;
+    nRows: number;
     fogOfWar: boolean;
     backgroundColor: string;
     backgroundImage: string | null;
@@ -31,8 +31,8 @@ export class  OurKonvaMap {
         this.id = null;
         this.name = 'new ourKonva';
         this.position = new Coords();
-        this.columns = 10;
-        this.rows = 10;
+        this.nColumns = 10;
+        this.nRows = 10;
         this.fogOfWar = false;
         this.backgroundColor = 'white';
         this.backgroundImage = null;
@@ -45,8 +45,8 @@ export class  OurKonvaMap {
         this.players = [];
         this.stage = new Konva.Stage({
             container: 'map' + this.id,
-            width: this.columns * this.grid.cellSize,
-            height: this.rows * this.grid.cellSize
+            width: this.nColumns * this.grid.cellSize,
+            height: this.nRows * this.grid.cellSize
         });
         this.layers = new OurKonvaLayers();
     }
