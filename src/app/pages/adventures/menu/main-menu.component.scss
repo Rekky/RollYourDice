@@ -1,11 +1,20 @@
 @import "src/styles.scss";
 
-#particles-js {
+#particles-js, #particles-js-2, #particles-js-3 {
     position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+}
+
+#particles-js-2 {
+    z-index: 3;
+}
+
+#particles-js-2 {
+    z-index: 4;
+    pointer-events: none;
 }
 
 .menu-box {
@@ -25,10 +34,22 @@
     position: absolute;
     top:0;
     left:0;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     z-index: 0;
-    background-image: url('../../../../assets/backgrounds/background-enter.jpg');
+    background-image: url('../../../../assets/backgrounds/background-menu.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.floating-char-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background-image: url('../../../../assets/backgrounds/floating-char-menu.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -52,8 +73,8 @@
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 2;
-    padding-left: 15rem;
+    z-index: 3;
+    padding-left: 15vw;
 
     display: flex;
     flex-direction: column;
@@ -133,9 +154,37 @@
             font-size: 6rem;
             transition: all .2s ease-out;
         }
+
+        .light {
+            animation: light-strike 5s 0s infinite;
+        }
     }
 }
 
 .exit {
     height: 30%;
+}
+
+.light {
+    position: absolute;
+    top: 2vh;
+    left: -50vw;
+    width: 30vw;
+    transform: rotate(180deg);
+    z-index: -1;
+}
+
+@keyframes light-strike {
+    0% {
+        left: -50vw;
+    }
+    1% {
+        left: -15vw;
+    }
+    2% {
+        left: -15vw;
+    }
+    3% {
+        left: -50vw;
+    }
 }

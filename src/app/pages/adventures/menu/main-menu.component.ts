@@ -11,14 +11,19 @@ declare let particlesJS: any;
 })
 export class MainMenuComponent implements OnInit {
 
+    repeatZap: boolean = true;
+
     constructor(private router: Router, private userInteractor: UserInteractor) { }
 
     ngOnInit(): void {
         this.invokeParticles();
+        this.playMusic();
     }
 
     public invokeParticles(): void {
         particlesJS('particles-js', ParticlesConfig, () => {});
+        particlesJS('particles-js-2', ParticlesConfig, () => {});
+        particlesJS('particles-js-3', ParticlesConfig, () => {});
     }
 
     goToMyAdventures(): void {
@@ -27,6 +32,33 @@ export class MainMenuComponent implements OnInit {
 
     logout(): void  {
         this.userInteractor.logout();
+    }
+
+    mouseHover(): void {
+        this.repeatZap = true;
+        this.playZap();
+    }
+
+    playZap(): void {
+        if (this.repeatZap) {
+            const audio = new Audio();
+            audio.src = '../../../assets/sounds/electric-zap.mp3';
+            audio.volume = 0.05;
+            audio.load();
+            audio.play();
+            setTimeout(() => {
+                this.playZap();
+            }, 5000);
+        }
+    }
+
+    playMusic(): void {
+        const audio = new Audio();
+        audio.src = '../../../assets/music/battle-of-the-dragons-8037.mp3';
+        audio.volume = 0.3;
+        audio.loop = true;
+        audio.load();
+        audio.play();
     }
 
 }

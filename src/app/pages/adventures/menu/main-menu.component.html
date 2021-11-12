@@ -1,22 +1,35 @@
 <div class="menu-box">
     <div class="bg-menu"></div>
+    <div id="particles-js"></div>
+    <div class="floating-char-menu"></div>
     <div class="bg-blur"></div>
+    <div id="particles-js-2"></div>
+    <div id="particles-js-3"></div>
     <div class="menu-container">
 <!--        <div class="menu-logo">ROLLINN</div>-->
-        <div id="particles-js"></div>
         <div class="menu-left">
             <div class="menu-block">
-                <div class="menu-option" (click)="goToMyAdventures()">
+                <div class="menu-option"
+                     (mouseenter)="mouseHover();" (mouseleave)="repeatZap = false"
+                     (click)="goToMyAdventures()">
+                    <img class="light" src="assets/animations/light.svg" />
                     Play <div class="fake-shadow-text">Play</div>
                 </div>
-                <div class="menu-option">
+                <div class="menu-option"
+                     (mouseenter)="mouseHover();" (mouseleave)="repeatZap = false">
+                    <img class="light" src="assets/animations/light.svg" />
                     Library <div class="fake-shadow-text">Library</div>
                 </div>
-                <div class="menu-option">
+                <div class="menu-option"
+                     (mouseenter)="mouseHover();" (mouseleave)="repeatZap = false">
+                    <img class="light" src="assets/animations/light.svg" />
                     Settings <div class="fake-shadow-text">Settings</div>
                 </div>
             </div>
-            <div class="menu-option exit" (click)="logout()">
+            <div class="menu-option exit"
+                 (mouseenter)="mouseHover();" (mouseleave)="repeatZap = false"
+                 (click)="logout()">
+                <img class="light" src="assets/animations/light.svg" />
                 Exit <span class="fake-shadow-text">Exit</span>
             </div>
         </div>

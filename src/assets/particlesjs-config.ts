@@ -26,12 +26,12 @@ export const ParticlesConfig = {
       }
     },
     "opacity": {
-      "value": 0.5,
-      "random": false,
+      "value": 0.7,
+      "random": true,
       "anim": {
-        "enable": false,
+        "enable": true,
         "speed": 1,
-        "opacity_min": 0.1,
+        "opacity_min": 0.4,
         "sync": false
       }
     },
