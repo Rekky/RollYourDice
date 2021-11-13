@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { ParticlesConfig } from 'src/assets/particlesjs-config';
 import {UserInteractor} from '../../../interactors/UserInteractor';
@@ -10,18 +10,30 @@ declare let particlesJS: any;
     templateUrl: './main-menu.component.html',
     styleUrls: ['./main-menu.component.scss']
 })
-export class MainMenuComponent implements OnInit {
+export class MainMenuComponent implements OnInit, OnDestroy {
 
     repeatZap: boolean = true;
     mouseCoords: Coords = new Coords();
     bgX: number = 25;
+    music: any;
 
-    constructor(private router: Router, private userInteractor: UserInteractor) { }
+    constructor(
+        private router: Router,
+        private userInteractor: UserInteractor
+    ) {
+        this.playMusic();
+    }
 
     ngOnInit(): void {
         this.invokeParticles();
-        this.playMusic();
         this.followMouse();
+    }
+
+    ngOnDestroy(): void {
+        if (this.music) {
+            this.music.pause();
+            this.music = null;
+        }
     }
 
     public invokeParticles(): void {
@@ -67,12 +79,12 @@ export class MainMenuComponent implements OnInit {
     }
 
     playMusic(): void {
-        const audio = new Audio();
-        audio.src = '../../../assets/music/battle-of-the-dragons-8037.mp3';
-        audio.volume = 0.3;
-        audio.loop = true;
-        audio.load();
-        audio.play();
+        this.music = new Audio();
+        this.music.src = '../../../assets/music/battle-of-the-dragons-8037.mp3';
+        this.music.volume = 0.3;
+        this.music.loop = true;
+        this.music.load();
+        this.music.play();
     }
 
 }
