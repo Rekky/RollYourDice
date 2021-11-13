@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ParticlesConfig } from 'src/assets/particlesjs-config';
 import {UserInteractor} from '../../../interactors/UserInteractor';
+import {Coords} from "../../../classes/Coords";
 declare let particlesJS: any;
 
 @Component({
@@ -12,12 +13,15 @@ declare let particlesJS: any;
 export class MainMenuComponent implements OnInit {
 
     repeatZap: boolean = true;
+    mouseCoords: Coords = new Coords();
+    bgX: number = 25;
 
     constructor(private router: Router, private userInteractor: UserInteractor) { }
 
     ngOnInit(): void {
         this.invokeParticles();
         this.playMusic();
+        this.followMouse();
     }
 
     public invokeParticles(): void {
@@ -39,6 +43,19 @@ export class MainMenuComponent implements OnInit {
         this.playZap();
     }
 
+    followMouse(): void {
+        document.addEventListener('mousemove', ev => {
+            const bg = document.getElementById('whaty');
+            if (this.mouseCoords.x > ev.offsetX) {
+                this.bgX = this.bgX - 0.02;
+            } else if (this.mouseCoords.x < ev.offsetX) {
+                this.bgX = this.bgX + 0.02;
+            }
+            bg.style.backgroundPositionX = this.bgX + '%';
+            this.mouseCoords.x = ev.offsetX;
+        });
+    }
+
     playZap(): void {
         if (this.repeatZap) {
             const audio = new Audio();
@@ -46,9 +63,6 @@ export class MainMenuComponent implements OnInit {
             audio.volume = 0.05;
             audio.load();
             audio.play();
-            setTimeout(() => {
-                this.playZap();
-            }, 5000);
         }
     }
 

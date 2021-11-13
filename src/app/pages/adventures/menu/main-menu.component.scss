@@ -38,6 +38,7 @@
     height: 100vh;
     z-index: 0;
     background-image: url('../../../../assets/backgrounds/background-menu.png');
+    background-position-x: 25%;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -156,7 +157,7 @@
         }
 
         .light {
-            animation: light-strike 5s 0s infinite;
+            animation: light-strike 5s 0s;
         }
     }
 }
