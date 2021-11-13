@@ -12,7 +12,6 @@ declare let particlesJS: any;
 })
 export class MainMenuComponent implements OnInit, OnDestroy {
 
-    repeatZap: boolean = true;
     mouseCoords: Coords = new Coords();
     bgX: number = 25;
     music: any;
@@ -50,11 +49,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         this.userInteractor.logout();
     }
 
-    mouseHover(): void {
-        this.repeatZap = true;
-        this.playZap();
-    }
-
     followMouse(): void {
         document.addEventListener('mousemove', ev => {
             const bg = document.getElementById('whaty');
@@ -69,13 +63,19 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     }
 
     playZap(): void {
-        if (this.repeatZap) {
-            const audio = new Audio();
-            audio.src = '../../../assets/sounds/electric-zap.mp3';
-            audio.volume = 0.05;
-            audio.load();
-            audio.play();
-        }
+        const audio = new Audio();
+        audio.src = '../../../assets/sounds/electric-zap.mp3';
+        audio.volume = 0.05;
+        audio.load();
+        audio.play();
+    }
+
+    playButtonSound(): void {
+        const audio = new Audio();
+        audio.src = '../../../assets/sounds/mixkit-hard-typewriter-click-1119.wav';
+        audio.volume = 0.05;
+        audio.load();
+        audio.play();
     }
 
     playMusic(): void {
