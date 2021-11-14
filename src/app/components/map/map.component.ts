@@ -50,7 +50,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     rectangleTest: Konva.Rect = null;
     socketObjectSubscription: Subscription;
     displayCursor: string;
-
     mouseIsABrush: boolean = false;
 
     constructor(private mapInteractor: MapInteractor,
@@ -59,25 +58,25 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 private socketService: SocketService) { }
 
     ngOnInit(): void {
-        this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
-            if (res) {
-                this.activeTr = res.transformer;
-                this.selectedObjectAttrs = res.konvaObject.getAttrs();
-            }
-        });
-        this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
-            if (res != null) {
-                this.displayCursor = res.state ? res.state : 'pointer';
-            }
-        });
-        this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
-        this.socketService.socket.on('game-editor-object', (data) => {
-            const jsonData = JSON.parse(data);
-            if (this.rectangleTest.attrs) {
-                this.rectangleTest.position({x: jsonData.attrs.x, y: jsonData.attrs.y});
-                this.gridStage.batchDraw();
-            }
-        });
+        // this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
+        //     if (res) {
+        //         this.activeTr = res.transformer;
+        //         this.selectedObjectAttrs = res.konvaObject.getAttrs();
+        //     }
+        // });
+        // this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
+        //     if (res != null) {
+        //         this.displayCursor = res.state ? res.state : 'pointer';
+        //     }
+        // });
+        // this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
+        // this.socketService.socket.on('game-editor-object', (data) => {
+        //     const jsonData = JSON.parse(data);
+        //     if (this.rectangleTest.attrs) {
+        //         this.rectangleTest.position({x: jsonData.attrs.x, y: jsonData.attrs.y});
+        //         this.gridStage.batchDraw();
+        //     }
+        // });
     }
 
     ngAfterViewInit(): void {
@@ -101,10 +100,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     ngOnChanges(changes: SimpleChanges): void {
         if (this.map) {
             setTimeout(() => {
-                this.drawGridBackgroundImage();
+                // this.drawGridBackgroundImage();
                 this.drawGrid();
-                this.gridStage.add(this.layers.objects);
                 this.gridStage.add(this.layers.grid);
+                this.gridStage.add(this.layers.objects);
                 this.gridStage.add(this.layers.shadows);
                 this.gridStage.add(this.layers.draws);
                 this.gridStage.add(this.layers.texts);
@@ -131,10 +130,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             container: 'map' + this.map.id,
             width: box.offsetWidth,
             height: box.offsetHeight,
-            draggable: false
+            draggable: true,
         });
+
         this.map.nColumns = box.offsetWidth / this.map.grid.cellSize;
         this.map.nRows = box.offsetHeight / this.map.grid.cellSize;
+
         this.gridStage.on('click tap', (e) => {
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
                 this.mouseInteractor.unsetSelectedKonvaObject();
@@ -161,22 +162,22 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
         this.mapHeight = this.map.nRows * this.map.grid.cellSize;
 
-        for (let i = 0; i < this.map.nColumns; i++) {
+        for (let i = 0; i <= this.map.nColumns; i++) {
             this.layers.grid.add(new Konva.Line({
-                points: [Math.round(i * this.map.grid.cellSize) + 0.5, 0,
-                    Math.round(i * this.map.grid.cellSize) + 0.5, this.map.nRows * this.map.grid.cellSize],
+                points: [Math.round(i * this.map.grid.cellSize) + 0.5, 0, Math.round(i * this.map.grid.cellSize) + 0.5, this.map.nRows * this.map.grid.cellSize],
                 stroke: '#ddd',
                 strokeWidth: 1,
             }));
         }
 
-        this.layers.grid.add(new Konva.Line({points: [0, 0, 10, 10]}));
-        for (let j = 0; j < this.map.nRows; j++) {
+        this.layers.grid.add(new Konva.Line({
+            points: [0, 0, 10, 10]
+        }));
+        for (let j = 0; j <= this.map.nRows; j++) {
             this.layers.grid.add(new Konva.Line({
-                points: [0, Math.round(j * this.map.grid.cellSize),
-                    this.map.nColumns * this.map.grid.cellSize, Math.round(j * this.map.grid.cellSize)],
+                points: [0, Math.round(j * this.map.grid.cellSize), this.map.nColumns * this.map.grid.cellSize, Math.round(j * this.map.grid.cellSize)],
                 stroke: '#ddd',
-                strokeWidth: 0.5,
+                strokeWidth: 1,
             }));
         }
 
