@@ -6,6 +6,7 @@ import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
 import {MapInteractor} from '../../../interactors/MapInteractor';
 import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
+import {Coords} from "../../../classes/Coords";
 
 @Component({
     selector: 'app-my-adventures',
@@ -13,6 +14,9 @@ import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
     styleUrls: ['./my-adventures.component.scss']
 })
 export class MyAdventuresComponent implements OnInit, OnDestroy {
+    mouseCoords: Coords = new Coords();
+    bgX: number = 50;
+    adventureFollowingId: string;
 
     adventures: Game[] = [];
     displayOptions: string = null;
@@ -32,6 +36,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     async ngOnInit(): Promise<void> {
         await this.getMyGames();
+        this.followMouse();
     }
 
     ngOnDestroy(): void {
@@ -114,6 +119,37 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     closeEditGame(): void {
         this.gameToEdit = null;
+    }
+
+    followMouse(): void {
+        document.addEventListener('mousemove', ev => {
+            const bg = document.getElementById(this.adventureFollowingId);
+            bg.style.transition = 'none';
+            if (this.adventureFollowingId) {
+                if (this.mouseCoords.x > ev.offsetX) {
+                    this.bgX = this.bgX + 0.02;
+                } else if (this.mouseCoords.x < ev.offsetX) {
+                    this.bgX = this.bgX - 0.02;
+                }
+                bg.style.backgroundPositionX = this.bgX + '%';
+                this.mouseCoords.x = ev.offsetX;
+            }
+        });
+    }
+
+    startFollowingMouse(advId: string): void {
+        this.adventureFollowingId = advId;
+    }
+
+    stopFollowingMouse(): void {
+        this.bgX = 50;
+        const bg = document.getElementById(this.adventureFollowingId);
+        bg.style.transition = 'background-position 300ms';
+        bg.style.backgroundPosition = '50%';
+        this.adventureFollowingId = null;
+        setTimeout(() => {
+            bg.style.transition = 'none';
+        }, 300)
     }
 
     // TODO delete this!!!!

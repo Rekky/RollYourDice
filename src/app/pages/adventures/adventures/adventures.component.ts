@@ -1,17 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Coords} from "../../../classes/Coords";
+import {ParticlesConfig} from "../../../../assets/particlesjs-config";
+declare let particlesJS: any;
 
 @Component({
     selector: 'app-adventures',
     templateUrl: './adventures.component.html',
     styleUrls: ['./adventures.component.scss']
 })
-export class AdventuresComponent implements OnInit {
+export class AdventuresComponent implements OnInit, OnDestroy {
 
-    cellXRow: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    mouseCoords: Coords = new Coords();
+    bgX: number = 25;
+    music: any;
 
     constructor() { }
 
     ngOnInit(): void {
+        this.playMusic();
+        this.invokeParticles();
+        this.followMouse();
+    }
+
+    ngOnDestroy(): void {
+        if (this.music) {
+            this.music.pause();
+            this.music = null;
+        }
+    }
+
+    public invokeParticles(): void {
+        particlesJS('particles-js', ParticlesConfig, () => {});
+        particlesJS('particles-js-2', ParticlesConfig, () => {});
+        particlesJS('particles-js-3', ParticlesConfig, () => {});
+    }
+
+    followMouse(): void {
+        // document.addEventListener('mousemove', ev => {
+        //     const bg = document.getElementById('whaty');
+        //     if (this.mouseCoords.x > ev.offsetX) {
+        //         this.bgX = this.bgX - 0.02;
+        //     } else if (this.mouseCoords.x < ev.offsetX) {
+        //         this.bgX = this.bgX + 0.02;
+        //     }
+        //     bg.style.backgroundPositionX = this.bgX + '%';
+        //     this.mouseCoords.x = ev.offsetX;
+        // });
+    }
+
+    playMusic(): void {
+        this.music = new Audio();
+        this.music.src = '../../../assets/music/battle-of-the-dragons-8037.mp3';
+        this.music.volume = 0.3;
+        this.music.loop = true;
+        this.music.load();
+        this.music.play();
     }
 
 }
