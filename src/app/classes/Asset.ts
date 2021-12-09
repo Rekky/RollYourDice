@@ -1,3 +1,6 @@
+
+import { ulid } from 'ulid';
+
 export class Asset {
     id: string;
     name: string;
@@ -10,7 +13,7 @@ export class Asset {
     currentUserId: string;
 
     constructor(id?: string, name?: string, extension?: string, createdAt?: Date, updatedAt?: Date) {
-        this.id = id ? id : null;
+        this.id = ulid();
         this.name = name ? name : null;
         this.extension = extension ? extension : null;
         this.createdAt = createdAt ? createdAt : new Date();

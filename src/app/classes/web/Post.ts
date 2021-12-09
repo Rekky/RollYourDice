@@ -1,8 +1,9 @@
 import {ProductBlock} from './ProductBlock';
+import { ulid } from 'ulid';
 
 
 export class Post {
-  id: string | null;
+  id: string;
   type: string;
   title: string | null;
   author: string | null;
@@ -32,7 +33,7 @@ export class Post {
     createdAt?: string | Date,
     publishedAt?: string | Date
   ) {
-    this.id = id ? id : null;
+    this.id = ulid();
     this.type = type ? type : 'review';
     this.title = title ? title : null;
     this.author = author ? author : null;

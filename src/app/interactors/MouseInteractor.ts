@@ -130,18 +130,14 @@ export class MouseInteractor implements OnDestroy {
 
     addKonvaObjectToMap(object: any, map: OurKonvaMap): void {
         this.mapObjectService.createMapObject(map.id, object).then(res => {
-            console.log('new object =', res);
             if (this.mouse.state === 'square') {
                 map.objects.push(this.mouse as OurKonvaRect);
-                // this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaRect);
             }
             if (this.mouse.state === 'text') {
                 map.objects.push(this.mouse as OurKonvaText);
-                // this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaText);
             }
             if (this.mouse.state === 'image') {
                 map.objects.push(this.mouse as OurKonvaImage);
-                // this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaImage);
             }
         }).catch((err: ErrorEvent) => {
             console.error(err.message);

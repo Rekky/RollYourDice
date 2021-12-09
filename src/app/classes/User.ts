@@ -1,11 +1,13 @@
+import { ulid } from 'ulid';
+
 export class User {
-    id: string | null;
+    id: string;
     username: string;
     email: string;
     password: string;
 
     constructor(id?: string, username?: string, email?: string, password?: string) {
-        this.id = id ? id : null;
+        this.id = id ? id : ulid();
         this.username = username ? username : null;
         this.email = email ? email : null;
         this.password = password ? password : null;

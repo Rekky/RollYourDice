@@ -2,6 +2,7 @@ import Konva from 'konva';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import {Coords} from '../Coords';
+import { ulid } from 'ulid';
 
 export class OurKonvaText extends OurKonvaMouse {
     id: string;
@@ -15,7 +16,7 @@ export class OurKonvaText extends OurKonvaMouse {
         super();
         this.color = '#000000';
         this.fontSize = 20;
-        this.id = 'text-' + Math.floor(Math.random() * 100000);
+        this.id = ulid();
         this.text = 'Write here...';
         this.name = 'new text';
         this.position = new Coords();
