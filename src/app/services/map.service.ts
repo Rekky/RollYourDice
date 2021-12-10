@@ -34,18 +34,13 @@ export class MapService {
     }
 
     createNewMap(gameId: string, map: OurKonvaMap): Promise<OurKonvaMap> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         const body = {
             gameId: gameId,
             map: map
         };
 
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/map`, body, options).subscribe(
+            this.httpService.post(`/map`, body).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {

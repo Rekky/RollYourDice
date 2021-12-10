@@ -15,19 +15,13 @@ export class MapObjectService {
     }
 
     createMapObject(mapId: string, object: any): Promise<any> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
-
         const body = {
             mapId: mapId,
             object: object
         };
 
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/map/object`, body, options).subscribe(
+            this.httpService.post(`/map/object`, body).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

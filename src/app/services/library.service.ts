@@ -34,13 +34,8 @@ export class LibraryService {
 
 
     async deleteLibraryAsset(id: string): Promise<any[]> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.delete(`/library/assets/${id}`, options).subscribe(
+            this.httpService.delete(`/library/assets/${id}`).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {

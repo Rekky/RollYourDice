@@ -16,7 +16,7 @@ import { RecursiveListComponent } from './components/recursive-list/recursive-li
 import { CharacterSheetComponent } from './components/character-sheet/character-sheet.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { AdventureComponent } from './pages/adventures/adventure/adventure.component';
 import { AdventuresSearchComponent } from './pages/adventures/adventures-search/adventures-search.component';
 import { AdventureNewComponent } from './pages/adventures/adventure-new/adventure-new.component';
@@ -48,6 +48,7 @@ import { UploadInputComponent } from './components/upload-input/upload-input.com
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { AccountComponent } from './pages/account/account.component';
 import {EnumToArrayPipe} from './pipes/enum-to-array-pipe';
+import {AuthInterceptor} from './interceptors/auth.interceptor';
 
 @NgModule({
     declarations: [
@@ -109,7 +110,9 @@ import {EnumToArrayPipe} from './pipes/enum-to-array-pipe';
         MatDialogModule,
     ],
     exports: [EnumToArrayPipe],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ],
     bootstrap: [AppComponent],
     entryComponents: [ErrorMessageComponent]
 })

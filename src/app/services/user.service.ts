@@ -12,14 +12,8 @@ export class UserService {
 
     signIn(email: string, password: string): Promise<any> {
         const data = {email, password};
-
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: ''
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/user/login`, data, options).subscribe(
+            this.httpService.post(`/user/login`, data).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -31,14 +25,8 @@ export class UserService {
 
     signUp(user: User): Promise<any> {
         const data = {user};
-
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: ''
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/user/register`, data, options).subscribe(
+            this.httpService.post(`/user/register`, data).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

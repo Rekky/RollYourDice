@@ -16,13 +16,8 @@ export class GameService {
                 private userInteractor: UserInteractor) { }
 
     getGame(gameId: string): Promise<Game> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/${gameId}`, options).subscribe(
+            this.httpService.get(`/game/${gameId}`).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -33,13 +28,8 @@ export class GameService {
     }
 
     createGame(game: Game, formData: any): Promise<Game> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game`, formData, options).subscribe(
+            this.httpService.post(`/game`, formData).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -50,13 +40,8 @@ export class GameService {
     }
 
     removeGame(id: string): Promise<any> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.delete(`/game/${id}`, options).subscribe(
+            this.httpService.delete(`/game/${id}`).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -67,13 +52,8 @@ export class GameService {
     }
 
     editGame(game: Game, formData: any): Promise<any> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.patch(`/game/${game.id}`, formData, options).subscribe(
+            this.httpService.patch(`/game/${game.id}`, formData).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -84,13 +64,8 @@ export class GameService {
     }
 
     getAllGames(): Promise<any> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/search`, options).subscribe(
+            this.httpService.get(`/game/search`).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -101,13 +76,8 @@ export class GameService {
     }
 
     getMyGames(): Promise<any> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game/my-games`, {}, options).subscribe(
+            this.httpService.post(`/game/my-games`, {}).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

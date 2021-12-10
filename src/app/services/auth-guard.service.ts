@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {UserInteractor} from '../interactors/UserInteractor';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {User} from '../classes/User';
 
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +13,6 @@ export class AuthGuardService implements CanActivate {
 
     checkLogin(): boolean {
         const user = this.userInteractor.getCurrentUser();
-        console.log('user_auth_guard', user);
         if (user) {
             return true;
         } else {
