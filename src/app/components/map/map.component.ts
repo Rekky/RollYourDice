@@ -69,11 +69,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         //         this.selectedObjectAttrs = res.konvaObject.getAttrs();
         //     }
         // });
-        // this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
-        //     if (res != null) {
-        //         this.displayCursor = res.state ? res.state : 'pointer';
-        //     }
-        // });
+        this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
+            if (res != null) {
+                this.displayCursor = res.state ? res.state : 'pointer';
+            }
+        });
         // this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
         // this.socketService.socket.on('game-editor-object', (data) => {
         //     const jsonData = JSON.parse(data);
@@ -144,7 +144,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             container: 'map' + this.map.id,
             width: box.offsetWidth,
             height: box.offsetHeight,
-            draggable: true,
+            draggable: false,
             scale: {x: this.mapScale, y: this.mapScale}
         });
 
@@ -213,7 +213,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     moveMap(res: string, ev: MouseEvent): void {
         if (this.displayCursor === 'hand') {
-
+            this.gridStage.setDraggable(true);
             if (res === 'mousedown') {
                 this.isMovingMap = true;
                 this.startCoords.x = ev.clientX - this.offsetCoords.x;
@@ -234,6 +234,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             if (res === 'mouseout') {
                 this.isMovingMap = false;
             }
+        } else {
+            this.gridStage.setDraggable(false);
         }
     }
 
