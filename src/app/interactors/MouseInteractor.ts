@@ -13,6 +13,8 @@ import { Game } from '../classes/Game';
 import {OurKonvaText} from '../classes/ourKonva/OurKonvaText';
 import {SocketService} from '../services/socket.service';
 import {toArray} from 'rxjs/operators';
+import {MapObjectService} from "../services/map-object.service";
+import {error} from "protractor";
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +32,7 @@ export class MouseInteractor implements OnDestroy {
 
     constructor(private mouseService: MouseService,
                 private gameInteractor: GameInteractor,
+                private mapObjectService: MapObjectService,
                 private socketService: SocketService) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             if (res) {
@@ -126,18 +129,19 @@ export class MouseInteractor implements OnDestroy {
     }
 
     addKonvaObjectToMap(object: any, map: OurKonvaMap): void {
-        if (this.mouse.state === 'square') {
-            map.objects.push(this.mouse as OurKonvaRect);
-            this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaRect);
-        }
-        if (this.mouse.state === 'text') {
-            map.objects.push(this.mouse as OurKonvaText);
-            this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaText);
-        }
-        if (this.mouse.state === 'image') {
-            map.objects.push(this.mouse as OurKonvaImage);
-            this.socketService.sendGameCreateMapObject(map.id, this.mouse as OurKonvaImage);
-        }
+        this.mapObjectService.createMapObject(map.id, object).then(res => {
+            if (this.mouse.state === 'square') {
+                map.objects.push(this.mouse as OurKonvaRect);
+            }
+            if (this.mouse.state === 'text') {
+                map.objects.push(this.mouse as OurKonvaText);
+            }
+            if (this.mouse.state === 'image') {
+                map.objects.push(this.mouse as OurKonvaImage);
+            }
+        }).catch((err: ErrorEvent) => {
+            console.error(err.message);
+        });
         this.mouseService.setMouse(new OurKonvaPointer());
     }
 

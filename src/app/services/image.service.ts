@@ -15,13 +15,8 @@ export class ImageService {
 
 
     async uploadFile(data: any): Promise<Asset> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/assets/upload`, data, options).subscribe(
+            this.httpService.post(`/assets/upload`, data).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {

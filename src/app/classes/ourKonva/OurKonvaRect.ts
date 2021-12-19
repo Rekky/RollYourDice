@@ -3,6 +3,7 @@ import Konva from 'konva';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import {OurKonvaGrid} from './OurKonvaGrid';
+import { ulid } from 'ulid';
 
 export class OurKonvaRect extends OurKonvaMouse {
     id: string;
@@ -16,7 +17,7 @@ export class OurKonvaRect extends OurKonvaMouse {
 
     constructor(id?: string, name?: string, position?: Coords) {
         super();
-        this.id = 'rect-' + Math.floor(Math.random() * 100000);
+        this.id = ulid();
         this.name = 'new rect';
         this.position = new Coords();
         this.fill = '#ffff00';
@@ -92,7 +93,6 @@ export class OurKonvaRect extends OurKonvaMouse {
 
     mouseDown(): void {
         super.mouseDown();
-        this.id = '-' + Math.floor(Math.random() * 100000);
         this.position = new Coords(this.ev.offsetX, this.ev.offsetY);
     }
 

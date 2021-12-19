@@ -7,9 +7,10 @@ import { OurKonvaRect } from './OurKonvaRect';
 import { OurKonvaText } from './OurKonvaText';
 import {Asset} from '../Asset';
 import {OurKonvaImage} from './OurKonvaImage';
+import { ulid } from 'ulid';
 
 export class  OurKonvaMap {
-    id: string | null;
+    id: string;
     name: string | null;
     position: Coords;
     nColumns: number;
@@ -28,7 +29,7 @@ export class  OurKonvaMap {
     layers: OurKonvaLayers;
 
     constructor() {
-        this.id = null;
+        this.id = ulid();
         this.name = 'new ourKonva';
         this.position = new Coords();
         this.nColumns = 10;

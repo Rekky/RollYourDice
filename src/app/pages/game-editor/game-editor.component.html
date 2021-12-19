@@ -14,26 +14,26 @@
         </button>
     </div>
 
-    <div class="left-column" *ngIf="false">
-        <div class="tabs adjust">
-            <div class="tab" [class.active]="tabs === leftColumnTabs.Maps" (click)="tabs = leftColumnTabs.Maps">Maps</div>
-            <div class="tab" [class.active]="tabs === leftColumnTabs.Library" (click)="tabs = leftColumnTabs.Library">Library</div>
-        </div>
-        <div class="left-column-content">
-            <ng-container *ngIf="tabs === leftColumnTabs.Maps">
-                <app-maps-list *ngIf="mapsList" [maps]="mapsList"
-                               (mapsChanges)="onMapsChange($event)"
-                               (newMapEvent)="onNewMap($event)"
-                               (removeMapEvent)="onRemoveMap($event)"
-                               (renameMapEvent)="onRenameMap($event)"
-                               (toPlayersMapEvent)="onToPlayersMap($event)"
-                               (selectedMap)="onSelectedMap($event)"></app-maps-list>
-            </ng-container>
-            <ng-container *ngIf="tabs === leftColumnTabs.Library">
-                <app-editor-libraries></app-editor-libraries>
-            </ng-container>
-        </div>
-    </div>
+<!--    <div class="left-column" *ngIf="true">-->
+<!--        <div class="tabs adjust">-->
+<!--            <div class="tab" [class.active]="tabs === leftColumnTabs.Maps" (click)="tabs = leftColumnTabs.Maps">Maps</div>-->
+<!--            <div class="tab" [class.active]="tabs === leftColumnTabs.Library" (click)="tabs = leftColumnTabs.Library">Library</div>-->
+<!--        </div>-->
+<!--        <div class="left-column-content">-->
+<!--            <ng-container *ngIf="tabs === leftColumnTabs.Maps">-->
+<!--                <app-maps-list *ngIf="mapsList" [maps]="mapsList"-->
+<!--                               (mapsChanges)="onMapsChange($event)"-->
+<!--                               (newMapEvent)="onNewMap($event)"-->
+<!--                               (removeMapEvent)="onRemoveMap($event)"-->
+<!--                               (renameMapEvent)="onRenameMap($event)"-->
+<!--                               (toPlayersMapEvent)="onToPlayersMap($event)"-->
+<!--                               (selectedMap)="onSelectedMap($event)"></app-maps-list>-->
+<!--            </ng-container>-->
+<!--            <ng-container *ngIf="tabs === leftColumnTabs.Library">-->
+<!--                <app-editor-libraries></app-editor-libraries>-->
+<!--            </ng-container>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="game-editor-tools">
         <app-editor-tools></app-editor-tools>

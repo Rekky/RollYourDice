@@ -26,7 +26,7 @@ export class HttpService {
      */
     public get(url: string, options?: any): Observable<any> {
         return new Observable<any>(observable => {
-            this.http.get(environment.api_url + url, { headers: options ? options.headers : null, params: options ? options.params : null, observe: 'response' }).subscribe(
+            this.http.get(environment.api_url + url, { params: options ? options.params : null, observe: 'response' }).subscribe(
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
@@ -40,9 +40,9 @@ export class HttpService {
     /**
      * This call sends data to the server
      */
-    public post(url: string, body: any, options?: any): Observable<any> {
+    public post(url: string, body: any): Observable<any> {
         return new Observable<any>(observable => {
-            this.http.post(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
+            this.http.post(environment.api_url + url, body, { observe: 'response' }).subscribe(
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
@@ -56,9 +56,9 @@ export class HttpService {
     /**
      * This call overwrites specified attributes of a piece of data
      */
-    public patch(url: string, body: any, options?: any): Observable<any> {
+    public patch(url: string, body: any): Observable<any> {
         return new Observable<any>(observable => {
-            this.http.patch(environment.api_url + url, body, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
+            this.http.patch(environment.api_url + url, body, { observe: 'response' }).subscribe(
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
@@ -72,26 +72,13 @@ export class HttpService {
     /**
      * This call removes specified data from the server
      */
-    public delete(url: string, options?: any): Observable<any> {
+    public delete(url: string): Observable<any> {
         return new Observable<any>(observable => {
-            this.http.delete(environment.api_url + url, { headers: options ? options.headers : null, observe: 'response' }).subscribe(
+            this.http.delete(environment.api_url + url, { observe: 'response' }).subscribe(
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
                     this.httpErrorService.manageError(error, true);
-                    observable.error(error);
-                }
-            );
-        });
-    }
-
-    public getTest(url: string, options?: any): Observable<any> {
-        return new Observable<any>(observable => {
-            this.http.get(url, { headers: options ? options.headers : null, params: options ? options.params : null, observe: 'response' }).subscribe(
-                (response) => {
-                    observable.next(response.body);
-                }, (error: HttpErrorResponse) => {
-                    this.httpErrorService. manageError(error, true);
                     observable.error(error);
                 }
             );

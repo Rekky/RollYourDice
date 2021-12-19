@@ -1,8 +1,9 @@
 import {Asset} from './Asset';
 import {OurKonvaMap} from './ourKonva/OurKonvaMap';
+import { ulid } from 'ulid';
 
 export class Game {
-    id: string | null;
+    id: string;
     authorId: string;
     createAt: Date;
     updatedAt: Date;
@@ -16,7 +17,7 @@ export class Game {
     status: GameStatus;
 
     constructor(authorId: string) {
-        this.id = null;
+        this.id = ulid();
         this.name = 'My adventure rocks!';
         this.mapsId = [];
         this.published = false;

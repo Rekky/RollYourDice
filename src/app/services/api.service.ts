@@ -24,9 +24,6 @@ export class ApiService {
 
     async getAllPosts(startPage: number = 0, endPage: number = 30, searchText: string = '', type: string = ''): Promise<any> {
         const options = {
-            headers: new HttpHeaders({
-                Authorization: ''
-            }),
             params: new HttpParams()
                 .set('startPage', startPage.toString())
                 .set('endPage', endPage.toString())
@@ -34,7 +31,7 @@ export class ApiService {
                 .set('type', type.toString())
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.getTest(`https://nuestro-hogar.es:8001/api/public/post`, options).subscribe(
+            this.httpService.get(`https://nuestro-hogar.es:8001/api/public/post`, options).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

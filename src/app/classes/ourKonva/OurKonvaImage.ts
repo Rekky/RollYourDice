@@ -2,6 +2,7 @@ import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 import Konva from 'konva';
 import {Coords} from '../Coords';
 import {OurKonvaLayers} from './OurKonvaLayers';
+import { ulid } from 'ulid';
 
 
 export class OurKonvaImage extends OurKonvaMouse {
@@ -14,7 +15,7 @@ export class OurKonvaImage extends OurKonvaMouse {
 
     constructor(src: string) {
         super();
-        this.id = 'img-' + Math.floor(Math.random() * 100000);
+        this.id = ulid();
         this.position = new Coords();
         this.src = src;
         this.opacity = 100;
@@ -86,7 +87,6 @@ export class OurKonvaImage extends OurKonvaMouse {
 
     mouseDown(): void {
         super.mouseDown();
-        this.id = '-' + Math.floor(Math.random() * 100000);
         this.position = new Coords(this.ev.offsetX, this.ev.offsetY);
     }
 
