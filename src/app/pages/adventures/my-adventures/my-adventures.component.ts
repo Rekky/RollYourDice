@@ -76,14 +76,12 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         const formData = data.formData;
         try {
             if (this.gameToEdit.id) {
-                console.log('------->edit');
                 await this.gameInteractor.editGame(game, formData);
                 const adventureIndex = this.adventures.findIndex((adventure: Game) => {
                     return adventure.id === game.id;
                 });
                 this.adventures[adventureIndex] = game;
             } else {
-                console.log('------->create');
                 const newGame = await this.gameInteractor.createGame(game, formData);
                 game.id = newGame.id;
                 this.adventures.unshift(game);
