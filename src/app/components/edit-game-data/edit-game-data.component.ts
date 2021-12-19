@@ -54,7 +54,6 @@ export class EditGameDataComponent implements OnInit {
             const value = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
             formData.append(key.toString(), value);
         });
-
         this.saveGame.emit({game: this.newGame, formData: formData});
     }
 

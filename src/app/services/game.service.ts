@@ -29,6 +29,7 @@ export class GameService {
 
     createGame(game: Game, formData: any): Promise<Game> {
         return new Promise<any>( (resolve, reject) => {
+            console.log('post entras');
             this.httpService.post(`/game`, formData).subscribe(
                 (response) => {
                     resolve(response);
