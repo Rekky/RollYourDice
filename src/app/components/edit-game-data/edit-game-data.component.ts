@@ -25,7 +25,7 @@ export class EditGameDataComponent implements OnInit {
         this.gameForm = new FormGroup({
             name: new FormControl(this.newGame.name, Validators.required),
             description: new FormControl(this.newGame.description),
-            nPlayers: new FormControl(this.newGame.nPlayers, Validators.required),
+            nPlayers: new FormControl(this.newGame.maxNPlayers, Validators.required),
             gameType: new FormControl(this.newGame.gameType, Validators.required),
             imageCover: new FormControl(null),
             imageCoverSource: new FormControl(null),

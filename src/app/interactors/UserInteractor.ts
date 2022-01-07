@@ -12,7 +12,8 @@ export class UserInteractor {
 
     private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
-    constructor(private userService: UserService, private storageService: StorageService) {
+    constructor(private userService: UserService,
+                private storageService: StorageService) {
         const session = storageService.getCurrentSession();
         if (session) {
             console.log('EXISTS_SESSION', session);

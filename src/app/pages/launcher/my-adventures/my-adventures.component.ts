@@ -45,11 +45,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
-    createNewGame(): void {
-        this.gameToEdit = new Game(this.currentUser.id);
-        this.displayOptions = null;
-    }
-
     async getMyGames(): Promise<void>  {
         try {
             const response: any = await this.gameInteractor.getMyGames();
@@ -57,6 +52,11 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         } catch (e) {
             console.log(e);
         }
+    }
+
+    createNewGame(): void {
+        this.gameToEdit = new Game(this.currentUser.id);
+        this.displayOptions = null;
     }
 
     async editGame(adventure: Game, e: Event): Promise<void> {
@@ -92,7 +92,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 game.id = newGame.id;
                 this.adventures.unshift(game);
             }
-            this.closeEditGame();
             this.displayOptions = null;
             await this.getMyGames();
         } catch (e) {
@@ -100,25 +99,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
-    selectDisplayOptions(e: Event, id: string): void {
-        this.displayOptions = id;
-        e.stopPropagation();
-    }
-
-    unselectDisplayOptions(e: Event): void {
-        this.displayOptions = null;
-        e.stopPropagation();
-    }
-
     loadGame(adventure: Game): void {
-        // TODO delete this code
-        adventure.authorId = this.currentUser.id;
-        //
         this.gameInteractor.goToTheGame(adventure);
-    }
-
-    closeEditGame(): void {
-        this.gameToEdit = null;
     }
 
     followMouse(): void {
@@ -149,12 +131,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         this.adventureFollowingId = null;
         setTimeout(() => {
             bg.style.transition = 'none';
-        }, 300)
-    }
-
-    // TODO delete this!!!!
-    logout(): void {
-        this.userInteractor.logout();
+        }, 300);
     }
 
 }

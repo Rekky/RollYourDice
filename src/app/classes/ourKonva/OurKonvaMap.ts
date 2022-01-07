@@ -15,16 +15,15 @@ export class  OurKonvaMap {
     position: Coords;
     nColumns: number;
     nRows: number;
-    fogOfWar: boolean;
+    isFogOfWar: boolean;
     backgroundColor: string;
-    backgroundImage: string | null;
-    mastersDarkness: number;
-    dndDiagonalSystem: boolean;
-    zoom: number;
+    backgroundImage: Asset | null;
+    mFogOfWarPercent: number;
+    isDndDiagonalSystem: boolean;
+    nZoom: number;
     grid: OurKonvaGrid;
     objects: (OurKonvaRect | OurKonvaText | OurKonvaImage)[];
-    toPlayers: boolean;
-    players: string[];
+    characters: string[];
     stage: Konva.Stage;
     layers: OurKonvaLayers;
 
@@ -34,16 +33,15 @@ export class  OurKonvaMap {
         this.position = new Coords();
         this.nColumns = 10;
         this.nRows = 10;
-        this.fogOfWar = false;
+        this.isFogOfWar = false;
         this.backgroundColor = 'white';
         this.backgroundImage = null;
-        this.mastersDarkness = 50;
-        this.dndDiagonalSystem = false;
-        this.zoom = 100;
+        this.mFogOfWarPercent = 50;
+        this.isDndDiagonalSystem = false;
+        this.nZoom = 100;
         this.grid = new OurKonvaGrid();
         this.objects = [];
-        this.toPlayers = false;
-        this.players = [];
+        this.characters = [];
         this.stage = new Konva.Stage({
             container: 'map' + this.id,
             width: this.nColumns * this.grid.cellSize,

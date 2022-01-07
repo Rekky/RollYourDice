@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Coords} from "../../../classes/Coords";
-import {ParticlesConfig} from "../../../../assets/particlesjs-config";
+import {Coords} from "../../classes/Coords";
+import {ParticlesConfig} from "../../../assets/particlesjs-config";
 declare let particlesJS: any;
 
 @Component({
     selector: 'app-adventures',
-    templateUrl: './adventures.component.html',
-    styleUrls: ['./adventures.component.scss']
+    templateUrl: './launcher.component.html',
+    styleUrls: ['./launcher.component.scss']
 })
-export class AdventuresComponent implements OnInit, OnDestroy {
+export class LauncherComponent implements OnInit, OnDestroy {
 
     mouseCoords: Coords = new Coords();
     bgX: number = 25;
@@ -36,16 +36,16 @@ export class AdventuresComponent implements OnInit, OnDestroy {
     }
 
     followMouse(): void {
-        // document.addEventListener('mousemove', ev => {
-        //     const bg = document.getElementById('whaty');
-        //     if (this.mouseCoords.x > ev.offsetX) {
-        //         this.bgX = this.bgX - 0.02;
-        //     } else if (this.mouseCoords.x < ev.offsetX) {
-        //         this.bgX = this.bgX + 0.02;
-        //     }
-        //     bg.style.backgroundPositionX = this.bgX + '%';
-        //     this.mouseCoords.x = ev.offsetX;
-        // });
+        document.addEventListener('mousemove', ev => {
+            const bg = document.getElementById('whaty');
+            if (this.mouseCoords.x > ev.offsetX) {
+                this.bgX = this.bgX - 0.01;
+            } else if (this.mouseCoords.x < ev.offsetX) {
+                this.bgX = this.bgX + 0.01;
+            }
+            bg.style.backgroundPositionX = this.bgX + '%';
+            this.mouseCoords.x = ev.offsetX;
+        });
     }
 
     playMusic(): void {

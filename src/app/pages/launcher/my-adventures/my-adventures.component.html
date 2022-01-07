@@ -1,0 +1,25 @@
+<div class="my-adventures-container">
+    <div class="my-adventures-title"></div>
+    <div class="my-adventures-box">
+        <div *ngFor="let adventure of adventures" class="adventure-box" (click)="loadGame(adventure)">
+            <div class="top-cover"
+                 (mouseleave)="stopFollowingMouse()"
+                 (mouseenter)="startFollowingMouse(adventure.id)"></div>
+            <div class="cover-image"
+                 [id]="adventure.id"
+                 [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
+        </div>
+        <div *ngIf="adventures.length < 4" class="adventure-box">
+            <app-adventure-new></app-adventure-new>
+        </div>
+        <div *ngIf="adventures.length < 3" class="adventure-box">
+            <app-adventure-new></app-adventure-new>
+        </div>
+        <div *ngIf="adventures.length < 2" class="adventure-box">
+            <app-adventure-new></app-adventure-new>
+        </div>
+        <div *ngIf="adventures.length < 1" class="adventure-box">
+            <app-adventure-new></app-adventure-new>
+        </div>
+    </div>
+</div>

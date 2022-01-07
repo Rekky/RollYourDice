@@ -112,7 +112,7 @@ export class MapsListComponent implements OnInit, OnDestroy {
     }
 
     toPlayersMap(map: OurKonvaMap): void {
-        map.toPlayers = !map.toPlayers;
+        // map.toPlayers = !map.toPlayers;
         this.toPlayersMapEvent.emit(map);
     }
 

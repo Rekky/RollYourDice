@@ -18,7 +18,7 @@ export class MainMenuComponent implements OnInit {
     ngOnInit(): void {}
 
     goToMyAdventures(): void {
-        this.router.navigate(['/game/my-adventures']);
+        this.router.navigate(['/launcher/adventures']);
     }
 
     logout(): void  {
