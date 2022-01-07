@@ -25,6 +25,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     currentUser: User;
     gameToEdit: Game | null = null;
 
+    adventureSettingsDisplayedId: string = null;
+
     userSubscription: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
@@ -111,15 +113,17 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     followMouse(): void {
         document.addEventListener('mousemove', ev => {
             const bg = document.getElementById(this.adventureFollowingId);
-            bg.style.transition = 'none';
-            if (this.adventureFollowingId) {
-                if (this.mouseCoords.x > ev.offsetX) {
-                    this.bgX = this.bgX + 0.02;
-                } else if (this.mouseCoords.x < ev.offsetX) {
-                    this.bgX = this.bgX - 0.02;
+            if (bg) {
+                bg.style.transition = 'none';
+                if (this.adventureFollowingId) {
+                    if (this.mouseCoords.x > ev.offsetX) {
+                        this.bgX = this.bgX + 0.02;
+                    } else if (this.mouseCoords.x < ev.offsetX) {
+                        this.bgX = this.bgX - 0.02;
+                    }
+                    bg.style.backgroundPositionX = this.bgX + '%';
+                    this.mouseCoords.x = ev.offsetX;
                 }
-                bg.style.backgroundPositionX = this.bgX + '%';
-                this.mouseCoords.x = ev.offsetX;
             }
         });
     }
@@ -131,12 +135,20 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     stopFollowingMouse(): void {
         this.bgX = 50;
         const bg = document.getElementById(this.adventureFollowingId);
-        bg.style.transition = 'background-position 300ms';
-        bg.style.backgroundPosition = '50%';
-        this.adventureFollowingId = null;
-        setTimeout(() => {
-            bg.style.transition = 'none';
-        }, 300);
+        if (bg) {
+            bg.style.transition = 'background-position 300ms';
+            bg.style.backgroundPosition = '50%';
+            this.adventureFollowingId = null;
+            setTimeout(() => {
+                bg.style.transition = 'none';
+            }, 300);
+        }
+    }
+
+    displayAdventureSettings(id: string, e: Event): void {
+        this.adventureSettingsDisplayedId = this.adventureSettingsDisplayedId ? null : id;
+        e.stopPropagation();
+        e.preventDefault();
     }
 
 }

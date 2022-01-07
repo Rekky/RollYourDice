@@ -1,10 +1,18 @@
 <div class="my-adventures-container">
     <div class="my-adventures-title" (click)="createNewGame()">AAAAAAAAAAAAAAAAA</div>
     <div class="my-adventures-box">
-        <div *ngFor="let adventure of adventures" class="adventure-box" (click)="loadGame(adventure)">
-            <div class="top-cover"
+        <div *ngFor="let adventure of adventures" class="adventure-box">
+            <div class="top-cover" (click)="loadGame(adventure)"
                  (mouseleave)="stopFollowingMouse()"
-                 (mouseenter)="startFollowingMouse(adventure.id)"></div>
+                 (mouseenter)="startFollowingMouse(adventure.id)">
+                <img class="settings-icon" src="assets/svg/settings%20_icon.svg"
+                     alt="settings icon" (click)="displayAdventureSettings(adventure.id, $event)" />
+            </div>
+            <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">
+                <div class="settings-option">Edit game</div>
+                <div class="settings-option">Duplicate game</div>
+                <div class="settings-option">Delete game</div>
+            </div>
             <div *ngIf="adventure?.coverImage?.uri" class="cover-image"
                  [id]="adventure.id"
                  [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>

@@ -36,16 +36,16 @@ export class LauncherComponent implements OnInit, OnDestroy {
     }
 
     followMouse(): void {
-        document.addEventListener('mousemove', ev => {
-            const bg = document.getElementById('whaty');
-            if (this.mouseCoords.x > ev.offsetX) {
-                this.bgX = this.bgX - 0.01;
-            } else if (this.mouseCoords.x < ev.offsetX) {
-                this.bgX = this.bgX + 0.01;
-            }
-            bg.style.backgroundPositionX = this.bgX + '%';
-            this.mouseCoords.x = ev.offsetX;
-        });
+        // document.addEventListener('mousemove', ev => {
+        //     const bg = document.getElementById('whaty');
+        //     if (this.mouseCoords.x > ev.offsetX) {
+        //         this.bgX = this.bgX - 0.01;
+        //     } else if (this.mouseCoords.x < ev.offsetX) {
+        //         this.bgX = this.bgX + 0.01;
+        //     }
+        //     bg.style.backgroundPositionX = this.bgX + '%';
+        //     this.mouseCoords.x = ev.offsetX;
+        // });
     }
 
     playMusic(): void {
