@@ -1,16 +1,16 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {MouseService} from '../../services/mouse.service';
+import {MouseService} from '../../../services/mouse.service';
 import {Subscription, Observable, fromEvent} from 'rxjs';
-import {OurKonvaPointer} from '../../classes/ourKonva/OurKonvaPointer';
-import {OurKonvaHand} from '../../classes/ourKonva/OurKonvaHand';
-import {OurKonvaBrush} from '../../classes/ourKonva/OurKonvaBrush';
-import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
-import {OurKonvaEraser} from '../../classes/ourKonva/OurKonvaEraser';
-import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
-import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {MouseInteractor} from '../../interactors/MouseInteractor';
-import {ImageService} from '../../services/image.service';
-import {Asset} from '../../classes/Asset';
+import {OurKonvaPointer} from '../../../classes/ourKonva/OurKonvaPointer';
+import {OurKonvaHand} from '../../../classes/ourKonva/OurKonvaHand';
+import {OurKonvaBrush} from '../../../classes/ourKonva/OurKonvaBrush';
+import {OurKonvaText} from '../../../classes/ourKonva/OurKonvaText';
+import {OurKonvaEraser} from '../../../classes/ourKonva/OurKonvaEraser';
+import {OurKonvaRect} from '../../../classes/ourKonva/OurKonvaRect';
+import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
+import {MouseInteractor} from '../../../interactors/MouseInteractor';
+import {ImageService} from '../../../services/image.service';
+import {Asset} from '../../../classes/Asset';
 
 @Component({
     selector: 'app-editor-tools',

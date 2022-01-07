@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserInteractor} from '../../interactors/UserInteractor';
-import {User} from '../../classes/User';
+import {UserInteractor} from '../../../interactors/UserInteractor';
+import {User} from '../../../classes/User';
 import {Router} from '@angular/router';
 
 @Component({

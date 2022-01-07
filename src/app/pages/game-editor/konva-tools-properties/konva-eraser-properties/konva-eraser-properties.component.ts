@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {MouseService} from '../../../services/mouse.service';
-import {OurKonvaEraser} from '../../../classes/ourKonva/OurKonvaEraser';
+import {MouseService} from '../../../../services/mouse.service';
+import {OurKonvaEraser} from '../../../../classes/ourKonva/OurKonvaEraser';
 
 @Component({
     selector: 'app-konva-eraser-properties',

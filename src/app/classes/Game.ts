@@ -18,7 +18,7 @@ export class Game {
     status: GameStatus;
 
     constructor(authorId?: string) {
-        this.id = ulid();
+        this.id = null;
         this.name = 'My adventure rocks!';
         this.mapsId = [];
         this.published = false;

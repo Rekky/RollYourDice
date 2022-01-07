@@ -20,7 +20,7 @@ const routes: Routes = [
     },
     {
         path: 'sign',
-        component: SignComponent,
+        loadChildren: () => import('./pages/sign/sign.module').then((m) => m.SignModule),
     },
 ];
 

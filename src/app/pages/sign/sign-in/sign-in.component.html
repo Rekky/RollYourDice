@@ -10,7 +10,7 @@
         </div>
         <div class="password-box">
             <label class="title" for="password">Password</label>
-            <img class="eye" src="./assets/icons/visibilidad.png"
+            <img class="eye" src="../../../../assets/icons/visibilidad.png"
                  (mousedown)="displayPassword = true" (mouseup)="displayPassword = false"/>
             <input [type]="displayPassword ? 'text' : 'password'" class="value" id="password"
                    name="password" placeholder="" [formControlName]="'password'"/>

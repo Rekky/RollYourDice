@@ -1,6 +1,6 @@
-@import "../../../colors";
-@import "src/assets/scss/form-inputs.scss";
-@import "src/assets/scss/buttons.scss";
+@import "../../../../colors";
+@import "../../../../assets/scss/form-inputs";
+@import "../../../../assets/scss/buttons";
 
 .title-box {
     display: flex;
@@ -189,14 +189,14 @@
     position: relative;
     width: 30px;
     height: 30px;
-    border: 1px solid #EAEAEA;
 }
 
 .stay-signed-input label {
     position: absolute;
 
-    height: 26px;
-    width: 26px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #EAEAEA;
     background-color: #EAEAEA;
 
     cursor: pointer;
@@ -205,8 +205,9 @@
 .stay-signed-input label:after {
     position: absolute;
 
-    height: 26px;
-    width: 26px;
+    height: 30px;
+    width: 30px;
+    border: 2px solid #EAEAEA;
     border-top: none;
     border-right: none;
 
@@ -219,11 +220,12 @@
     visibility: hidden;
 }
 
-.stay-signed-input input[type="checkbox"]:not(:checked) + label {
+.stay-signed-input input[type="checkbox"]:checked + label {
     background-color: #16191D;
+    border: 3px solid #EAEAEA;
 }
 
-.stay-signed-input input[type="checkbox"]:not(:checked) + label:after {
+.stay-signed-input input[type="checkbox"]:checked + label:after {
     opacity: 0;
 }
 
@@ -305,13 +307,12 @@
     }
 
     .stay-signed-input label {
-        height: 16px;
-        width: 16px;
+        height: 20px;
+        width: 20px;
     }
 
     .stay-signed-input label:after {
-        height: 16px;
-        width: 16px;
+        height: 20px;
+        width: 20px;
     }
 }
-

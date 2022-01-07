@@ -31,7 +31,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 private mapInteractor: MapInteractor,
                 private userInteractor: UserInteractor) {
         this.currentUser = this.userInteractor.getCurrentUser();
-
     }
 
     async ngOnInit(): Promise<void> {
@@ -54,9 +53,15 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
-    createNewGame(): void {
-        this.gameToEdit = new Game(this.currentUser.id);
-        this.displayOptions = null;
+    async createNewGame(): Promise<void> {
+        try {
+            const game = new Game();
+            this.displayOptions = null;
+            await this.gameInteractor.createGame(game, null);
+        }
+        catch (e) {
+
+        }
     }
 
     async editGame(adventure: Game, e: Event): Promise<void> {

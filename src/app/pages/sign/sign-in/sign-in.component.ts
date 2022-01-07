@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserInteractor} from '../../interactors/UserInteractor';
+import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Router} from '@angular/router';
-import {User} from '../../classes/User';
-import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
+import {User} from '../../../classes/User';
+import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 
 @Component({
     selector: 'app-sign-in',

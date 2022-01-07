@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {MouseService} from '../../../services/mouse.service';
-import {OurKonvaRect} from '../../../classes/ourKonva/OurKonvaRect';
-import {MouseInteractor} from '../../../interactors/MouseInteractor';
+import {MouseService} from '../../../../services/mouse.service';
+import {OurKonvaRect} from '../../../../classes/ourKonva/OurKonvaRect';
+import {MouseInteractor} from '../../../../interactors/MouseInteractor';
 import Konva from 'konva';
-import {CurrentSelectedKonvaObject} from '../../../classes/ourKonva/OurKonvaMouse';
-import {SocketService} from '../../../services/socket.service';
+import {CurrentSelectedKonvaObject} from '../../../../classes/ourKonva/OurKonvaMouse';
+import {SocketService} from '../../../../services/socket.service';
 
 @Component({
   selector: 'app-konva-rectangle-properties',

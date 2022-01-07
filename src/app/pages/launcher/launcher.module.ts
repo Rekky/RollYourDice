@@ -7,13 +7,14 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {LauncherRoutingModule} from './launcher-routing.module';
 import {CommonModule} from '@angular/common';
+import {SharedModule} from '../../shared.module';
 
 
 @NgModule({
     declarations: [
         LauncherComponent,
         MyAdventuresComponent,
-        MainMenuComponent,
+        MainMenuComponent
     ],
     imports: [
         CommonModule,
@@ -22,6 +23,7 @@ import {CommonModule} from '@angular/common';
         LauncherRoutingModule,
         ReactiveFormsModule,
         MatDialogModule,
+        SharedModule
     ],
 })
 
