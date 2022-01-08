@@ -19,8 +19,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     adventureFollowingId: string;
 
     adventures: Game[] = [];
-    displayOptions: string = null;
-    displayedGameIndex: number = 999999;
     adventuresImages: string[] = [];
     currentUser: User;
     gameToEdit: Game | null = null;
@@ -51,25 +49,44 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             const response: any = await this.gameInteractor.getMyGames();
             this.adventures = response.data;
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 
     async createNewGame(): Promise<void> {
         try {
             const game = new Game();
-            this.displayOptions = null;
-            await this.gameInteractor.createGame(game, null);
+            const newGame = await this.gameInteractor.createGame(game, null);
+            this.adventures.push(newGame);
+            this.displayAdventureSettings(null);
         }
         catch (e) {
+            console.error(e);
+        }
+    }
 
+    async duplicateGame(adventure: Game, $event): Promise<void> {
+        try {
+            const duplicatedAdventure = Game.fromJSON(adventure);
+            duplicatedAdventure.id = null;
+            const newGame = await this.gameInteractor.createGame(duplicatedAdventure, null);
+            this.adventures.push(newGame);
+            this.displayAdventureSettings(null);
+        }
+        catch (e) {
+            console.error(e);
         }
     }
 
     async editGame(adventure: Game, e: Event): Promise<void> {
-        this.gameToEdit = adventure;
-        this.displayOptions = null;
-        e.stopPropagation();
+        try {
+            adventure.maxNPlayers = 19;
+            await this.gameInteractor.editGame(adventure, null);
+            e.stopPropagation();
+        }
+        catch (e) {
+
+        }
     }
 
     async deleteGame(adventure: Game, i: number, e: Event): Promise<void> {
@@ -77,7 +94,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         try {
             await this.gameInteractor.removeGame(adventure.id);
             this.adventures.splice(i, 1);
-            this.displayOptions = null;
+            this.displayAdventureSettings(null);
         } catch (e) {
             console.log(e);
         }
@@ -86,7 +103,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     async saveGame(data: any): Promise<void> {
         const game = data.game;
         const formData = data.formData;
-
         try {
             if (this.gameToEdit.id) {
                 await this.gameInteractor.editGame(game, formData);
@@ -99,7 +115,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 game.id = newGame.id;
                 this.adventures.unshift(game);
             }
-            this.displayOptions = null;
             await this.getMyGames();
         } catch (e) {
             console.log(e);
@@ -145,10 +160,14 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
-    displayAdventureSettings(id: string, e: Event): void {
-        this.adventureSettingsDisplayedId = this.adventureSettingsDisplayedId ? null : id;
-        e.stopPropagation();
-        e.preventDefault();
+    displayAdventureSettings(id: string, e?: Event): void {
+        e?.stopPropagation();
+        e?.preventDefault();
+        if (this.adventureSettingsDisplayedId && id) {
+            this.adventureSettingsDisplayedId = this.adventureSettingsDisplayedId === id ? null : id;
+        } else {
+            this.adventureSettingsDisplayedId = id;
+        }
     }
 
 }

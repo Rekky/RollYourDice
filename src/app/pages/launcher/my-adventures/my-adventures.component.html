@@ -1,17 +1,34 @@
 <div class="my-adventures-container">
     <div class="my-adventures-title" (click)="createNewGame()">AAAAAAAAAAAAAAAAA</div>
     <div class="my-adventures-box">
-        <div *ngFor="let adventure of adventures" class="adventure-box">
+        <div *ngFor="let adventure of adventures; let i = index;" class="adventure-box">
             <div class="top-cover" (click)="loadGame(adventure)"
                  (mouseleave)="stopFollowingMouse()"
                  (mouseenter)="startFollowingMouse(adventure.id)">
-                <img class="settings-icon" src="assets/svg/settings%20_icon.svg"
-                     alt="settings icon" (click)="displayAdventureSettings(adventure.id, $event)" />
+                <div class="settings-icon" (click)="displayAdventureSettings(adventure.id, $event)">
+                    <svg width="30px" height="30px" viewBox="0 0 22 22" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="filter_1">
+                                <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.9490196 0 0 0 0 0.9490196 0 0 0 0 0.9490196 0 0 0 1 0" />
+                            </filter>
+                            <path d="M0 0L22 0L22 22L0 22L0 0Z" id="path_1" />
+                            <clipPath id="mask_1">
+                                <use xlink:href="#path_1" />
+                            </clipPath>
+                        </defs>
+                        <g class="settings-icon-svg" opacity="0.8" filter="url(#filter_1)">
+                            <path d="M0 0L22 0L22 22L0 22L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+                            <g clip-path="url(#mask_1)">
+                                <path d="M20.7504 9.33712L18.15 8.91208C17.9977 8.39024 17.7896 7.88864 17.5291 7.41388L19.0471 5.2504C19.1699 5.07572 19.1488 4.83768 18.9979 4.68632L17.2867 2.97604C17.134 2.8238 16.8938 2.804 16.7187 2.93028L14.5877 4.46192C14.1086 4.19704 13.6026 3.98672 13.0777 3.83404L12.624 1.2442C12.5871 1.03388 12.4045 0.879883 12.1906 0.879883L9.77062 0.879883C9.55502 0.879883 9.3711 1.03608 9.33634 1.24904L8.9157 3.8248C8.3877 3.9766 7.88082 4.18472 7.40342 4.44608L5.27822 2.92808C5.10266 2.80268 4.86374 2.82292 4.71106 2.97472L3.00078 4.685C2.84986 4.83592 2.82874 5.07352 2.9515 5.2482L4.44706 7.38792C4.18086 7.86972 3.96878 8.37968 3.81434 8.91032L1.2487 9.33756C1.03662 9.37276 0.880859 9.55668 0.880859 9.7714L0.880859 12.1914C0.880859 12.4048 1.03398 12.5874 1.24386 12.6248L3.8095 13.0798C3.96306 13.6091 4.17514 14.119 4.44222 14.6022L2.92818 16.7199C2.80322 16.8946 2.82302 17.1344 2.97482 17.287L4.68554 18.9991C4.83646 19.15 5.0745 19.1711 5.24918 19.0484L7.39198 17.5475C7.8729 17.812 8.3811 18.0218 8.90778 18.1741L9.33722 20.7529C9.37198 20.9646 9.55546 21.1199 9.77062 21.1199L12.1906 21.1199C12.404 21.1199 12.5866 20.9668 12.6236 20.7569L13.0834 18.1653C13.6109 18.01 14.1165 17.7988 14.5926 17.5339L16.7508 19.0479C16.9259 19.1716 17.1635 19.15 17.3149 18.9991L19.0256 17.287C19.1778 17.1344 19.1976 16.8937 19.0713 16.7186L17.5322 14.5815C17.7931 14.1063 18.0004 13.6038 18.1513 13.082L20.7552 12.6248C20.966 12.5878 21.1191 12.4048 21.1191 12.1914L21.1191 9.7714C21.1195 9.5558 20.9633 9.37188 20.7504 9.33712L20.7504 9.33712ZM10.9999 14.0799C9.29888 14.0799 7.91992 12.701 7.91992 10.9999C7.91992 9.29888 9.29888 7.91992 10.9999 7.91992C12.701 7.91992 14.0799 9.29888 14.0799 10.9999C14.0799 12.701 12.701 14.0799 10.9999 14.0799L10.9999 14.0799Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+                            </g>
+                        </g>
+                    </svg>
+                </div>
             </div>
             <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">
-                <div class="settings-option">Edit game</div>
-                <div class="settings-option">Duplicate game</div>
-                <div class="settings-option">Delete game</div>
+                <div class="settings-option" (click)="editGame(adventure, $event)">Edit game</div>
+                <div class="settings-option" (click)="duplicateGame(adventure, $event)">Duplicate game</div>
+                <div class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
             </div>
             <div *ngIf="adventure?.coverImage?.uri" class="cover-image"
                  [id]="adventure.id"
