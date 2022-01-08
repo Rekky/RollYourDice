@@ -67,18 +67,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 private socketService: SocketService) { }
 
     ngOnInit(): void {
-        this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
-            if (res) {
-                this.activeTr = res.transformer;
-                this.selectedObjectAttrs = res.konvaObject.getAttrs();
-            }
-        });
-        this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
-            if (res != null) {
-                this.displayCursor = res.state ? res.state : 'pointer';
-            }
-        });
-        this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
+        // this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
+        //     if (res) {
+        //         this.activeTr = res.transformer;
+        //         this.selectedObjectAttrs = res.konvaObject.getAttrs();
+        //     }
+        // });
+        // this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
+        //     if (res != null) {
+        //         this.displayCursor = res.state ? res.state : 'pointer';
+        //     }
+        // });
+        // this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
         // this.socketService.socket.on('game-editor-object', (data) => {
         //     const jsonData = JSON.parse(data);
         //     if (this.rectangleTest.attrs) {
