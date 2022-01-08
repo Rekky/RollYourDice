@@ -1,0 +1,29 @@
+<div class="menu-box">
+    <div class="menu-container">
+<!--        <div class="menu-logo">ROLLINN</div>-->
+        <div class="menu-left">
+            <div class="menu-block">
+                <div class="menu-option"
+                     (mouseenter)="playButtonSound();"
+                     (click)="goToMyAdventures()">
+                    Play <div class="fake-shadow-text">Play</div>
+                </div>
+                <div class="menu-option"
+                     (mouseenter)="playButtonSound();">
+                    Library <div class="fake-shadow-text">Library</div>
+                </div>
+                <div class="menu-option"
+                     (mouseenter)="playButtonSound();">
+                    Settings <div class="fake-shadow-text">Settings</div>
+                </div>
+            </div>
+            <div class="menu-option exit"
+                 (mouseenter)="playZap();"
+                 (click)="logout()">
+                <img class="light" src="assets/animations/light.svg" />
+                Exit <span class="fake-shadow-text">Exit</span>
+            </div>
+        </div>
+        <div class="menu-right"></div>
+    </div>
+</div>

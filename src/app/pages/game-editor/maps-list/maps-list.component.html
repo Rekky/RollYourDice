@@ -30,15 +30,15 @@
                 <div class="map-objects">
                     <div class="item-name">
                         <span>{{map.name}}</span>
-                        <i class="fas fa-street-view" style="color: lightgreen;" *ngIf="map.toPlayers"></i>
+<!--                        <i class="fas fa-street-view" style="color: lightgreen;" *ngIf="map.toPlayers"></i>-->
                         <span class="item-tools">
-                            <i class="fas fa-male" (click)="toPlayersMap(map)"></i>
+<!--                            <i class="fas fa-male" (click)="toPlayersMap(map)"></i>-->
                             <i class="fas fa-pen" (click)="renameMap(map)"></i>
                             <i class="fas fa-trash" (click)="removeMap(map)"></i>
                         </span>
                     </div>
                 </div>
-                <app-recursive-list [list]="map.objects"></app-recursive-list>
+<!--                <app-recursive-list [list]="map.objects"></app-recursive-list>-->
             </div>
         </div>
         <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">

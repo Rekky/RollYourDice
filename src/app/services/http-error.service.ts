@@ -24,22 +24,8 @@ export class HttpErrorService {
     ) { }
 
     public manageError(httpError: HttpErrorResponse, doNotify: boolean = true): void {
-        console.error('HTTP ERROR =', httpError);
         const statusCode: number = httpError.status;
-
-        // if (doNotify) {
-        //     console.error('Error ' + httpError.status + ' received');
-        //     const errorStrKey: string = 'HTTPCODES.' + statusCode + '.MESSAGE';
-        //     let errorMessage: string = this.translateService.instant(errorStrKey);
-        //     if (errorMessage === errorStrKey) {
-        //         // no existe el mensaje específico
-        //         errorMessage = this.translateService.instant('HTTPCODES.DEFAULT');
-        //     }
-        //
-        //     this.notificationsService.showErrorNotification(statusCode, errorMessage);
-        // }
         if (doNotify) {
-            console.error('Error ' + httpError.status + ' received');
             this.notificationsService.showErrorNotification(statusCode, httpError.error.message);
 
             if (httpError.error.message === 'Expired') {

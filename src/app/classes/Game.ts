@@ -11,21 +11,22 @@ export class Game {
     gameType: GameTypes;
     coverImage: Asset;
     name: string;
-    nPlayers: number;
+    maxNPlayers: number;
+    playersId: string[];
     mapsId: string[];
     published: boolean;
     status: GameStatus;
 
-    constructor(authorId: string) {
+    constructor(authorId?: string) {
         this.id = null;
         this.name = 'My adventure rocks!';
         this.mapsId = [];
         this.published = false;
         this.gameType = GameTypes.DungeonsAndDragons5e;
-        this.authorId = authorId;
+        this.authorId = authorId ? authorId : null;
         this.createAt = new Date();
         this.updatedAt = new Date();
-        this.nPlayers = 6;
+        this.maxNPlayers = 6;
         this.coverImage = new Asset();
         this.description = '';
         this.status = GameStatus.Stopped;

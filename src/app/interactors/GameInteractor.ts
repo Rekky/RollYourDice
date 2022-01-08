@@ -59,7 +59,7 @@ export class GameInteractor {
         if (game.authorId === currentUser.id) {
             this.router.navigate(['/game-editor', game.id]);
         } else {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/launcher']);
         }
     }
 }

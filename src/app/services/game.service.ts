@@ -29,9 +29,9 @@ export class GameService {
 
     createGame(game: Game, formData: any): Promise<Game> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game`, formData).subscribe(
+            this.httpService.post(`/game`, game).subscribe(
                 (response) => {
-                    resolve(response);
+                    resolve(response.data);
                 }, (error: HttpErrorResponse) => {
                     reject(error);
                 }
@@ -53,7 +53,7 @@ export class GameService {
 
     editGame(game: Game, formData: any): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.patch(`/game/${game.id}`, formData).subscribe(
+            this.httpService.patch(`/game/${game.id}`, game).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

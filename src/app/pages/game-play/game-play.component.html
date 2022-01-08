@@ -1,7 +1,0 @@
-<div class="game-play-container">
-    <div class="loading" *ngIf="loading">Loading ...</div>
-    <div class="game-status-overlay" *ngIf="gamePlay && gamePlay.status === 2">
-        <h1><i class="far fa-pause-circle"></i> THE GAME IS PAUSED</h1>
-    </div>
-    <app-map *ngIf="(gamePlay && gamePlay.status === 0) && gamePlay.map" [map]="gamePlay.map"></app-map>
-</div>
