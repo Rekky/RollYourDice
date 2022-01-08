@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game, GameStatus} from '../../classes/Game';
 import {MouseService} from '../../services/mouse.service';
@@ -37,32 +37,38 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService,
                 private socketService: SocketService,
-                private router: ActivatedRoute) { }
+                private router: ActivatedRoute,
+                private cdr: ChangeDetectorRef) { }
 
     async ngOnInit(): Promise<void> {
-        const gameId = this.router.snapshot.paramMap.get('id');
+        try {
+            const gameId = this.router.snapshot.paramMap.get('id');
 
-        // 1. Call to get game info
-        this.game = await this.gameInteractor.getGame(gameId);
+            // 1. Call to get game info
+            this.game = await this.gameInteractor.getGame(gameId);
 
-        // 2. Call to get map's list
-        this.mapsList = await this.mapInteractor.getAllMaps(gameId);
-        this.map = this.mapsList[0];
+            // 2. Call to get map's list
+            this.mapsList = await this.mapInteractor.getAllMaps(gameId);
+            this.map = this.mapsList[0];
 
-        // 3. Socket connection with map selected
+            // 3. Socket connection with map selected
+            this.gameInteractor.setCurrentGame(this.game);
+            if (this.game?.mapsId) {
+                this.gameStartStatus = this.game.status;
+            }
 
+            this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
+                this.mouse = mouse;
+            });
+            this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
+                this.selectedKonvaObject = konva;
+            });
 
-        this.gameInteractor.setCurrentGame(this.game);
-        if (this.game?.mapsId) {
-            this.gameStartStatus = this.game.status;
+            this.cdr.detectChanges();
         }
-
-        this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
-            this.mouse = mouse;
-        });
-        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
-            this.selectedKonvaObject = konva;
-        });
+        catch (e) {
+            console.error(e);
+        }
     }
 
     ngOnDestroy(): void {

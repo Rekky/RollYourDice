@@ -19,7 +19,7 @@ export class GameService {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.get(`/game/${gameId}`).subscribe(
                 (response) => {
-                    resolve(response);
+                    resolve(response.data);
                 }, (error: HttpErrorResponse) => {
                     reject(error);
                 }
