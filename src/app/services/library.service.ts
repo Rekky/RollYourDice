@@ -4,7 +4,6 @@ import {HttpService} from './http.service';
 import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {UserInteractor} from '../interactors/UserInteractor';
 import {Asset} from '../classes/Asset';
-import {LibrarySections} from '../pages/game-editor/editor-libraries/editor-libraries.component';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +14,7 @@ export class LibraryService {
                 private userInteractor: UserInteractor) {}
 
 
-    async getLibrarySection(section: LibrarySections): Promise<any[]> {
+    async getLibrarySection(section): Promise<any[]> {
         const options = {
             headers: new HttpHeaders({
                 Authorization: this.userInteractor.getCurrentToken()

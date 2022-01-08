@@ -28,7 +28,20 @@ import {UploadInputComponent} from './components/upload-input/upload-input.compo
         UploadInputComponent,
     ],
     imports: [],
-    exports: [EnumToArrayPipe],
+    exports: [
+        EnumToArrayPipe,
+        RecursiveListComponent,
+        MapComponent,
+        ErrorMessageComponent,
+        DropdownComponent,
+        CharacterSheetComponent,
+        CsHeaderComponent,
+        CsAttributesComponent,
+        CsSavingThrowsComponent,
+        CsSkillsComponent,
+        AssetComponent,
+        UploadInputComponent
+    ],
 })
 
 export class SharedModule { }

@@ -60,7 +60,7 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
         this.display = display;
         if (display === 'loaded') {
             setTimeout(() => {
-                this.router.navigate(['/game/menu']);
+                this.router.navigate(['/launcher/menu']);
             }, 2500);
         }
     }
@@ -93,7 +93,7 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
         leftBox.style.animation = 'leftBoxLeaves 1000ms 500ms';
 
         setTimeout(() => {
-            this.router.navigate(['./game/menu']);
+            this.router.navigate(['./launcher/menu']);
         }, 4000);
     }
 }
