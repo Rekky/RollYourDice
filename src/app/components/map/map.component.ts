@@ -13,6 +13,10 @@ import {SocketService} from '../../services/socket.service';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {MouseService} from '../../services/mouse.service';
 import {document} from 'ngx-bootstrap/utils';
+import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
+import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
+import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
+import {OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 
 @Component({
     selector: 'app-map',
@@ -88,6 +92,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
+        this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
+
         this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
             this.moveMap('mousedown', ev);
         });

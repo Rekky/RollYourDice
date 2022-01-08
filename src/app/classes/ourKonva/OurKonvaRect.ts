@@ -36,7 +36,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             stroke: object.stroke,
             strokeWidth: object.strokeWidth,
             draggable: false,
-            opacity: object.opacity / 100,
+            opacity: object.opacity,
             id: object.id,
             name: object.name
         });

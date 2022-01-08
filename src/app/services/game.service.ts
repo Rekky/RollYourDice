@@ -12,8 +12,7 @@ import {UserInteractor} from '../interactors/UserInteractor';
 export class GameService {
 
     constructor(private apiService: ApiService,
-                private httpService: HttpService,
-                private userInteractor: UserInteractor) { }
+                private httpService: HttpService) { }
 
     getGame(gameId: string): Promise<Game> {
         return new Promise<any>( (resolve, reject) => {
