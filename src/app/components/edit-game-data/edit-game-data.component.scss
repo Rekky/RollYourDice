@@ -2,6 +2,16 @@
 @import "src/assets/scss/form-inputs.scss";
 @import "src/assets/scss/buttons.scss";
 
+.box-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(#000000, 0.2);
+}
+
 .edit-game-box {
     display: flex;
     flex-flow: row nowrap;
@@ -11,18 +21,19 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 999;
 
     width: 100%;
     height: 100%;
-    z-index: 11;
+
     letter-spacing: 1px;
 }
 
 .edit-game-card {
     position: relative;
     width: 30vw;
-    height: 81vh;
-    background-color: #16191D;
+    border-radius: 8px;
+    background-color: #f2f2f2;
     animation: expand-card 1s;
     letter-spacing: 1px;
 }
@@ -40,9 +51,9 @@
 
 .header {
     width: 100%;
-    height: 15%;
+    height: 100px;
     padding: 3% 3% 3% 5%;
-    border-bottom: 2px solid #EAEAEA;
+    border-bottom: 2px solid #16191D;
     letter-spacing: 1px;
 
     .exit {
@@ -52,15 +63,15 @@
         align-items: center;
 
         width: 100%;
-        height: 30%;
+        height: 30px;
         cursor: pointer;
 
         svg {
-            stroke: #EAEAEA;
+            stroke: #16191D;
             height: 100%;
 
             &:hover {
-                stroke: #F2F2F2;
+                stroke: #16191D;
             }
         }
     }
@@ -72,8 +83,10 @@
         align-items: center;
 
         width: 100%;
-        height: 70%;
-        color: #EAEAEA;
+        height: 70px;
+        padding-bottom: 5px;
+
+        color: #16191D;
         font-size: 2.5vh;
         font-weight: 500;
     }
@@ -81,9 +94,8 @@
 
 
 .body {
-    height: auto;
     width: 100%;
-    padding: 5vh 4vw;
+    padding: 5vh 4vw 0 4vw;
     letter-spacing: 1px;
 
     & > div {
@@ -92,7 +104,7 @@
 }
 
 .footer {
-    height: 15%;
+    height: 100px;
     width: 100%;
     letter-spacing: 1px;
 

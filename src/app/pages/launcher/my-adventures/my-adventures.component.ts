@@ -144,6 +144,10 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
+    joinGame(): void {
+
+    }
+
     loadGame(adventure: Game): void {
         this.gameInteractor.goToTheGame(adventure);
     }

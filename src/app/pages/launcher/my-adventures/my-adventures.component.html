@@ -40,9 +40,13 @@
                  [id]="adventure.id"
                  [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
         </div>
-        <div *ngIf="adventures.length < 4" class="adventure-box" (click)="startNewGame()">
+        <div *ngIf="adventures.length < 4" class="new-adv">
             <div class="adventure-name">
-                Create adventure
+                New adventure
+            </div>
+            <div class="settings-overlay">
+                <div class="settings-option" (click)="startNewGame()">Create game</div>
+                <div class="settings-option" (click)="joinGame()">Join game</div>
             </div>
         </div>
     </div>
