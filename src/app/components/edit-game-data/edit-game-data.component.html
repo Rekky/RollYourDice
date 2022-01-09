@@ -21,7 +21,8 @@
             </div>
             <div class="form-textarea">
                 <label [for]="'description-game-' + newGame.id">Description</label>
-                <textarea [id]="'description-game-' + newGame.id" maxlength="255" [formControlName]="'description'"></textarea>
+                <textarea [id]="'description-game-' + newGame.id" maxlength="255"
+                          [formControlName]="'description'"></textarea>
             </div>
             <div class="form-input-dropdown">
                 <label [for]="'gameType-game-' + newGame.id">Type</label>

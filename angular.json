@@ -32,7 +32,14 @@
                             "src/styles.scss"
                         ],
                         "scripts": ["node_modules/particles.js/particles.js"],
-                        "allowedCommonJsDependencies": ["loadash"]
+                        "allowedCommonJsDependencies": [
+                            "loadash",
+                            "rxjs-compat",
+                            "ulid",
+                            "konva",
+                            "dragula",
+                            "socket-io-client"
+                        ]
                     },
                     "configurations": {
                         "production": {

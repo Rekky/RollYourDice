@@ -25,14 +25,14 @@
                     </svg>
                 </div>
                 <div class="enter-adventure">
-                    enter
+                    start
                 </div>
             </div>
             <div class="adventure-name">
                 {{adventure.name}}
             </div>
             <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">
-                <div class="settings-option" (click)="editGame(adventure, $event)">Edit game</div>
+                <div class="settings-option" (click)="editGame(adventure, i, $event)">Edit game</div>
                 <div class="settings-option" (click)="duplicateGame(adventure, $event)">Duplicate game</div>
                 <div class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
             </div>

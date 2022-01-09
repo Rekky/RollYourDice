@@ -61,43 +61,55 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             data: new Game()
         }).afterClosed().subscribe(res => {
             console.log('CLOSED =', res);
+            if (res) {
+                this.createNewGame(res.game);
+            }
         });
     }
 
-    async createNewGame(): Promise<void> {
+    async createNewGame(game): Promise<void> {
+        this.displayAdventureSettings(null);
         try {
-            const game = new Game();
             const newGame = await this.gameInteractor.createGame(game, null);
-            this.adventures.push(newGame);
-            this.displayAdventureSettings(null);
+            this.adventures.unshift(newGame);
         }
         catch (e) {
             console.error(e);
         }
     }
 
-    async duplicateGame(adventure: Game, $event): Promise<void> {
+    async duplicateGame(adventure: Game, e: Event): Promise<void> {
+        e.stopPropagation();
+        this.displayAdventureSettings(null);
         try {
             const duplicatedAdventure = Game.fromJSON(adventure);
             duplicatedAdventure.id = null;
+            duplicatedAdventure.name = duplicatedAdventure.name + ' (duplicated)';
             const newGame = await this.gameInteractor.createGame(duplicatedAdventure, null);
-            this.adventures.push(newGame);
-            this.displayAdventureSettings(null);
+            this.adventures.unshift(newGame);
         }
         catch (e) {
             console.error(e);
         }
     }
 
-    async editGame(adventure: Game, e: Event): Promise<void> {
-        try {
-            adventure.maxNPlayers = 19;
-            await this.gameInteractor.editGame(adventure, null);
-            e.stopPropagation();
-        }
-        catch (e) {
-
-        }
+    async editGame(adventure: Game, i: number, e: Event): Promise<void> {
+        e.stopPropagation();
+        this.displayAdventureSettings(null);
+        this.dialog.open(EditGameDataComponent, {
+            data: adventure
+        }).afterClosed().subscribe(async res => {
+            console.log('CLOSED =', res);
+            if (res) {
+                try {
+                    await this.gameInteractor.editGame(res.game, null);
+                    this.adventures[i] = Game.fromJSON(res.game);
+                }
+                catch (e) {
+                    console.error(e);
+                }
+            }
+        });
     }
 
     async deleteGame(adventure: Game, i: number, e: Event): Promise<void> {
