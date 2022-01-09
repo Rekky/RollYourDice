@@ -129,8 +129,8 @@ export class SocketService {
         this.socket.emit('game-editor-set-players-map', {gameId, map});
     }
 
-    sendPlayerEnterGame(token: string, gameId: string): void {    
-        this.socket.emit('game-editor-player-enter', {token, gameId});
+    sendPlayerEnterGame(gameId: string): void {    
+        this.socket.emit('game-editor-player-enter', {gameId});
     }
 
     sendGameStartStatus(token: string, gameId: string, status: GameStatus): void {    
