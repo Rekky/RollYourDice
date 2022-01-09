@@ -127,7 +127,7 @@ export class SocketService {
 
     sendGameStartStatus(gameId: string, status: GameStatus): void {
         const userId = this.userInteractor.getCurrentUser().id;
-        this.socket.emit('game-play-start-status', {gameId, userId, status});
+        this.socket.emit('game-start-status', {gameId, userId, status});
     }
 
     //////////////////////////////////////////////////////////////////////

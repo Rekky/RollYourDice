@@ -37,6 +37,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService,
                 private router: ActivatedRoute,
+                private socketService: SocketService,
                 private cdr: ChangeDetectorRef) {
     }
 
@@ -132,7 +133,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onToggleGameStatus(status: GameStatus): void {
         this.gameStartStatus = status;
-        // this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
+        this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
     }
 
 }
