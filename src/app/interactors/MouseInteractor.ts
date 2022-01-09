@@ -4,17 +4,13 @@ import Konva from 'konva';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../classes/ourKonva/OurKonvaMouse';
 import {OurKonvaPointer} from '../classes/ourKonva/OurKonvaPointer';
-import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
+import {OurKonvaMap, OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {OurKonvaLayers} from '../classes/ourKonva/OurKonvaLayers';
 import {OurKonvaRect} from '../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../classes/ourKonva/OurKonvaImage';
-import {GameInteractor} from './GameInteractor';
-import { Game } from '../classes/Game';
 import {OurKonvaText} from '../classes/ourKonva/OurKonvaText';
 import {SocketService} from '../services/socket.service';
-import {toArray} from 'rxjs/operators';
-import {MapObjectService} from "../services/map-object.service";
-import {error} from "protractor";
+import {MapObjectService} from '../services/map-object.service';
 
 @Injectable({
     providedIn: 'root'
@@ -23,15 +19,15 @@ export class MouseInteractor implements OnDestroy {
     private selectedKonvaObject: BehaviorSubject<CurrentSelectedKonvaObject | null> = new BehaviorSubject<CurrentSelectedKonvaObject | null>(null);
 
     mouse: OurKonvaMouse | OurKonvaRect | OurKonvaText | OurKonvaImage = new OurKonvaMouse();
+
     getMouseObservableSubscription: Subscription;
-    getCurrentGameSubscription: Subscription;
     selectedKonvaObjectSubscription: Subscription;
+
     stage: Konva.Stage;
     layers: OurKonvaLayers;
-    game: Game | null;
+    currentMap: OurKonvaMap = null;
 
     constructor(private mouseService: MouseService,
-                private gameInteractor: GameInteractor,
                 private mapObjectService: MapObjectService,
                 private socketService: SocketService) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
@@ -39,16 +35,14 @@ export class MouseInteractor implements OnDestroy {
                 this.mouse = res;
             }
         });
-        this.getCurrentGameSubscription = this.gameInteractor.getCurrentGame().subscribe((game: Game) => {
-            this.game = game;
-        });
         this.selectedKonvaObjectSubscription = this.selectedKonvaObject.subscribe((object: CurrentSelectedKonvaObject) => {
             if (object !== null) {
                 document.onkeyup = (ev) => {
                     if (ev.key === 'Delete' && document.activeElement.tagName !== 'INPUT') {
-                        object.transformer.destroy();
-                        object.konvaObject.destroy();
-                        object.layer.batchDraw();
+                        this.socketService.deleteGameObject(this.currentMap.id, object.konvaObject.getAttr('id'));
+                        // object.transformer.destroy();
+                        // object.konvaObject.destroy();
+                        // object.layer.batchDraw();
                         this.selectedKonvaObject.next(null);
                     }
                 };
@@ -60,9 +54,6 @@ export class MouseInteractor implements OnDestroy {
         if (this.getMouseObservableSubscription) {
             this.getMouseObservableSubscription.unsubscribe();
         }
-        if (this.getCurrentGameSubscription) {
-            this.getCurrentGameSubscription.unsubscribe();
-        }
         if (this.selectedKonvaObjectSubscription) {
             this.selectedKonvaObjectSubscription.unsubscribe();
         }
@@ -71,6 +62,7 @@ export class MouseInteractor implements OnDestroy {
     // Serveix per passar tota l'informació que es necessita per saber en quin mapa es troba treballant l'usuari i la referència a aquest
     setMouseEvents(mapEl: ElementRef, map: OurKonvaMap, stage: Konva.Stage, layers: OurKonvaLayers): void {
         // Estableix un listener per saber quan es fa MouseDown en el mapa sobre el que es treballa
+        this.currentMap = map;
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
             // Seteja les propietats del this.mouse amb les del mapa en el que s'està treballant
             this.mouse.stage = stage;
@@ -282,5 +274,47 @@ export class MouseInteractor implements OnDestroy {
 
     getSelectedKonvaObjectObservable(): Observable<CurrentSelectedKonvaObject | null> {
         return this.selectedKonvaObject.asObservable();
+    }
+
+    paintObjectsOnMap(objects: any, layers: OurKonvaLayers, mapId: string): void {
+        objects.forEach((object: any) => {
+            this.paintObjectOnMap(object, layers, mapId);
+        });
+    }
+
+    paintObjectOnMap(object: any, layers: OurKonvaLayers, mapId: string): void {
+        if (object.state === 'square') {
+            const createdObject = OurKonvaRect.paint(object, layers);
+            this.newObjectAddSelectedOption(createdObject);
+        }
+        else if (object.state === 'text') {
+            const createdObject = OurKonvaText.paint(object, layers);
+            this.newObjectAddSelectedOption(createdObject);
+        }
+        else if (object.state === 'image') {
+            const createdObject = OurKonvaImage.paint(object, layers);
+            this.newObjectAddSelectedOption(createdObject);
+        }
+    }
+
+    deleteObjectOnMap(mod: OurKonvaMapModification): void {
+        const obj = this.stage.find('#' + mod.objectId)[0];
+        const childrens = obj.getLayer().getChildren().toArray();
+        childrens.forEach(child => {
+            const id = child.getAttr('id');
+            if (id.startsWith('tr-')) {
+                if (id === ('tr-' + mod.objectId)) {
+                    const layer = child.getLayer();
+                    child.destroy();
+                    layer.batchDraw();
+                }
+            } else {
+                if (id === mod.objectId) {
+                    const layer = child.getLayer();
+                    child.destroy();
+                    layer.batchDraw();
+                }
+            }
+        });
     }
 }

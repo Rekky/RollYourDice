@@ -7,7 +7,7 @@ import {MapInteractor} from '../../interactors/MapInteractor';
 import {Coords} from '../../classes/Coords';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {Subscription} from 'rxjs';
-import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
+import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
 import {SocketService} from '../../services/socket.service';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
@@ -27,6 +27,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     @ViewChild('mapEl') mapEl: ElementRef;
     @Input() map: OurKonvaMap;
+    @Input() modification: OurKonvaMapModification;
     @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapMoveEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
@@ -61,10 +62,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     protected minScaleSize: number = 0.5;
     protected scalingSize: number = 0.1;
 
-    constructor(private mapInteractor: MapInteractor,
-                private mouseInteractor: MouseInteractor,
-                private mouseService: MouseService,
-                private socketService: SocketService) { }
+    constructor(private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
         // this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
@@ -92,7 +90,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
-        this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
+        this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
 
         this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
             this.moveMap('mousedown', ev);
@@ -118,17 +116,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (this.map) {
-            setTimeout(() => {
-                // this.drawGridBackgroundImage();
-                this.drawGrid();
-                this.gridStage.add(this.layers.grid);
-                this.gridStage.add(this.layers.objects);
-                this.gridStage.add(this.layers.shadows);
-                this.gridStage.add(this.layers.draws);
-                this.gridStage.add(this.layers.texts);
-                this.mouseInteractor.setStage(this.gridStage);
-            }, 500);
+        if (this.modification) {
+            console.log('modification =', this.modification);
+            if (this.modification.type === 'delete') {
+                this.mouseInteractor.deleteObjectOnMap(this.modification);
+            }
         }
     }
 
@@ -162,6 +154,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.mouseInteractor.unsetSelectedKonvaObject();
             }
         });
+        this.drawGrid();
+        this.gridStage.add(this.layers.grid);
+        this.gridStage.add(this.layers.objects);
+        this.gridStage.add(this.layers.shadows);
+        this.gridStage.add(this.layers.draws);
+        this.gridStage.add(this.layers.texts);
+        this.mouseInteractor.setStage(this.gridStage);
     }
 
     setCurrentObjectSelected(ev, object, type): void {

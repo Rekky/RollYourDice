@@ -4,9 +4,10 @@ import {ApiService} from './api.service';
 import {BehaviorSubject} from 'rxjs';
 import {Game, GameStatus} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
-import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
+import {OurKonvaMap, OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {UserInteractor} from '../interactors/UserInteractor';
 import {environment} from '../../environments/environment';
+import {MapInteractor} from '../interactors/MapInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,9 @@ export class SocketService {
     gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
 
-    constructor(private apiService: ApiService, private userInteractor: UserInteractor) {
+    constructor(private apiService: ApiService,
+                private userInteractor: UserInteractor,
+                private mapInteractor: MapInteractor) {
         this.socket.on('connect', () => {
             console.log('socket conectado');
         });
@@ -70,7 +73,14 @@ export class SocketService {
         this.socket.on('game-editor-create-map-object', (data: any) => {
             console.log('RECIBOD OBJECT', data);
         });
+
+        this.socket.on('game-editor-delete-map-object', (data: any) => {
+            console.log('borrar objeto', data);
+            const mod = OurKonvaMapModification.generateModification('delete', data);
+            this.mapInteractor.deleteObjectFromMap(mod);
+        });
         // ======================== END OBJECTS ================================
+
     }
 
     sendGameEditorId(gameId: string): void {
@@ -118,5 +128,11 @@ export class SocketService {
     sendGameStartStatus(gameId: string, status: GameStatus): void {
         const userId = this.userInteractor.getCurrentUser().id;
         this.socket.emit('game-play-start-status', {gameId, userId, status});
+    }
+
+    //////////////////////////////////////////////////////////////////////
+
+    deleteGameObject(mapId: string, objectId: string): void {
+        this.socket.emit('game-editor-delete-map-object', {mapId, objectId});
     }
 }

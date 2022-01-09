@@ -14,14 +14,13 @@ export class GameInteractor {
     constructor(private gameService: GameService,
                 private userInteractor: UserInteractor,
                 private router: Router) {
-
     }
 
     setCurrentGame(game: Game): void {
         this.currentGame.next(game);
     }
 
-    getCurrentGame(): Observable<Game> {
+    getCurrentGameObs(): Observable<Game> {
         return this.currentGame.asObservable();
     }
 

@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game, GameStatus} from '../../classes/Game';
 import {MouseService} from '../../services/mouse.service';
-import {OurKonvaMap} from '../../classes/ourKonva/OurKonvaMap';
+import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
 import {ApiService} from '../../services/api.service';
 import {SocketService} from '../../services/socket.service';
 import {Subscription} from 'rxjs';
@@ -18,6 +18,7 @@ import {MapInteractor} from '../../interactors/MapInteractor';
 })
 export class GameEditorComponent implements OnInit, OnDestroy {
     map: OurKonvaMap;
+    mapModification: OurKonvaMapModification;
     game: Game;
     mapsList: OurKonvaMap[] = [];
     gameStartStatus: GameStatus = GameStatus.Stopped;
@@ -28,7 +29,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
 
-    gameSocketSubscription: Subscription;
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
 
@@ -36,9 +36,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService,
-                private socketService: SocketService,
                 private router: ActivatedRoute,
-                private cdr: ChangeDetectorRef) { }
+                private cdr: ChangeDetectorRef) {
+    }
 
     async ngOnInit(): Promise<void> {
         try {
@@ -47,9 +47,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 1. Call to get game info
             this.game = await this.gameInteractor.getGame(gameId);
 
-            // 2. Call to get map's list
+            // 2. Call to get map's list and set first map as selected
             this.mapsList = await this.mapInteractor.getAllMaps(gameId);
             this.map = this.mapsList[0];
+            this.mapInteractor.setCurrentMap(this.map);
 
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);
@@ -64,6 +65,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.selectedKonvaObject = konva;
             });
 
+            this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
+                if (res) {
+                    this.mapModification = res;
+                }
+                this.cdr.detectChanges();
+            });
+
             this.cdr.detectChanges();
         }
         catch (e) {
@@ -72,9 +80,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.gameSocketSubscription) {
-            this.socketService.gameSocketSubscription.unsubscribe();
-        }
         if (this.getMouseObservableSubscription) {
             this.getMouseObservableSubscription.unsubscribe();
         }
@@ -105,7 +110,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onMapMove(map: OurKonvaMap): void {
-        this.socketService.sendGameMoveMap(map);
+        // this.socketService.sendGameMoveMap(map);
     }
 
     // USADA EN MOUSEINTERACTOR
@@ -127,7 +132,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onToggleGameStatus(status: GameStatus): void {
         this.gameStartStatus = status;
-        this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
+        // this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
     }
 
 }
