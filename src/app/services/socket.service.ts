@@ -22,8 +22,12 @@ export class SocketService {
     constructor(private apiService: ApiService,
                 private userInteractor: UserInteractor,
                 private mapInteractor: MapInteractor) {
-        this.socket.on('connect', () => {
+
+        this.socket.on('connect', () => {        
             console.log('socket conectado');
+
+            const token = this.userInteractor.getCurrentToken();
+            this.socket.emit('add-player-online', {token});
         });
         this.socket.on('disconnect', () => {
             console.log('socket desconectado!');
@@ -63,8 +67,8 @@ export class SocketService {
         // this.socket.on('game-play-load', (data) => {
         //     console.log('RECIBO_GAME_PLAY', data);
         // });
-        this.socket.on('game-start-status', (data) => {
-            console.log('RECIBO_GAME_PLAY', data);
+        this.socket.on('game-status', (data) => {
+            console.log('GAME_STATUS_A_ACTUALIZAR', data);
         });
 
         // ======================== END GAME PLAY ==============================
@@ -125,9 +129,12 @@ export class SocketService {
         this.socket.emit('game-editor-set-players-map', {gameId, map});
     }
 
-    sendGameStartStatus(gameId: string, status: GameStatus): void {
-        const userId = this.userInteractor.getCurrentUser().id;
-        this.socket.emit('game-start-status', {gameId, userId, status});
+    sendPlayerEnterGame(token: string, gameId: string): void {    
+        this.socket.emit('game-editor-player-enter', {token, gameId});
+    }
+
+    sendGameStartStatus(token: string, gameId: string, status: GameStatus): void {    
+        this.socket.emit('game-status', {token, gameId, status});
     }
 
     //////////////////////////////////////////////////////////////////////

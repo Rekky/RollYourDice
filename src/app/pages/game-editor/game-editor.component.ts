@@ -8,6 +8,7 @@ import {SocketService} from '../../services/socket.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
+import {UserInteractor} from '../../interactors/UserInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 import {MapInteractor} from '../../interactors/MapInteractor';
 
@@ -38,6 +39,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private mouseService: MouseService,
                 private router: ActivatedRoute,
                 private socketService: SocketService,
+                private userInteractor: UserInteractor,
                 private cdr: ChangeDetectorRef) {
     }
 
@@ -133,7 +135,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onToggleGameStatus(status: GameStatus): void {
         this.gameStartStatus = status;
-        this.socketService.sendGameStartStatus(this.game.id, this.gameStartStatus);
+        const token = this.userInteractor.getCurrentToken();
+        this.socketService.sendGameStartStatus(token, this.game.id, this.gameStartStatus);
     }
 
 }
