@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component,  Inject, NgZone, OnInit} from '@angular/core';
 import { Game, GameTypes } from 'src/app/classes/Game';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-edit-game-data',
@@ -8,17 +9,20 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
     styleUrls: ['./edit-game-data.component.scss']
 })
 export class EditGameDataComponent implements OnInit {
-
-    @Input() game: Game;
-    @Output() saveGame: EventEmitter<any> = new EventEmitter<any>();
-    @Output() closeGame: EventEmitter<void> = new EventEmitter<void>();
+    game: Game;
 
     gameForm: FormGroup;
     newGame: Game;
     gameTypes: string[] = [];
     loaded: boolean = false;
 
-    constructor() { }
+    constructor(
+        private dialogRef: MatDialogRef<Game>,
+        private ngZone: NgZone,
+        @Inject(MAT_DIALOG_DATA) public data: Game
+    ) {
+        this.game = data;
+    }
 
     ngOnInit(): void {
         this.newGame = Game.fromJSON(this.game);
@@ -37,8 +41,10 @@ export class EditGameDataComponent implements OnInit {
         }, 1000);
     }
 
-    closeEdit(): void {
-        this.closeGame.emit();
+    closeDialog(): void {
+        this.ngZone.run(() => {
+            this.dialogRef.close();
+        });
     }
 
     acceptChanges(): void {
@@ -46,7 +52,6 @@ export class EditGameDataComponent implements OnInit {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
 
-        // TODO Fix this new FormData in the future
         const formData = new FormData();
         // formData.append('file', this.gameForm.get('imageCoverSource').value);
 
@@ -54,7 +59,7 @@ export class EditGameDataComponent implements OnInit {
             const value = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
             formData.append(key.toString(), value);
         });
-        this.saveGame.emit({game: this.newGame, formData: formData});
+        this.dialogRef.close({game: this.newGame, formData: formData});
     }
 
     imageChanged(file: File): void {

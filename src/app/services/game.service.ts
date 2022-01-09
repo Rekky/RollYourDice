@@ -38,9 +38,9 @@ export class GameService {
         });
     }
 
-    removeGame(id: string): Promise<any> {
+    editGame(game: Game, formData: any): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.delete(`/game/${id}`).subscribe(
+            this.httpService.patch(`/game/${game.id}`, game).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -50,9 +50,9 @@ export class GameService {
         });
     }
 
-    editGame(game: Game, formData: any): Promise<any> {
+    removeGame(id: string): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.patch(`/game/${game.id}`, game).subscribe(
+            this.httpService.delete(`/game/${id}`).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
