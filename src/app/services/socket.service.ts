@@ -23,7 +23,7 @@ export class SocketService {
                 private userInteractor: UserInteractor,
                 private mapInteractor: MapInteractor) {
 
-        this.socket.on('connect', () => {        
+        this.socket.on('connect', () => {
             console.log('socket conectado');
 
             const token = this.userInteractor.getCurrentToken();
@@ -129,11 +129,11 @@ export class SocketService {
         this.socket.emit('game-editor-set-players-map', {gameId, map});
     }
 
-    sendPlayerEnterGame(gameId: string): void {    
+    sendPlayerEnterGame(gameId: string): void {
         this.socket.emit('game-editor-player-enter', {gameId});
     }
 
-    sendGameStartStatus(token: string, gameId: string, status: GameStatus): void {    
+    sendGameStartStatus(token: string, gameId: string, status: GameStatus): void {
         this.socket.emit('game-status', {token, gameId, status});
     }
 
