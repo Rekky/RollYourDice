@@ -1,8 +1,9 @@
-<div class="edit-game-box">
-    <form class="roll-card edit-game-card card-roll" [formGroup]="gameForm" (submit)="acceptChanges()">
+<div class="box-shadow"></div>
+<div *ngIf="game && gameForm" class="edit-game-box">
+    <form class="edit-game-card card-roll" [formGroup]="gameForm" (submit)="acceptChanges()">
         <div class="header" *ngIf="loaded">
             <div class="exit">
-                <svg (click)="closeEdit()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
+                <svg (click)="closeDialog()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
                     <defs><style>.cls-1{fill:none;stroke-miterlimit:10;stroke-width:3px;}</style></defs>
                     <title>close</title>
                     <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1">
@@ -21,7 +22,8 @@
             </div>
             <div class="form-textarea">
                 <label [for]="'description-game-' + newGame.id">Description</label>
-                <textarea [id]="'description-game-' + newGame.id" maxlength="255" [formControlName]="'description'"></textarea>
+                <textarea [id]="'description-game-' + newGame.id" maxlength="255"
+                          [formControlName]="'description'"></textarea>
             </div>
             <div class="form-input-dropdown">
                 <label [for]="'gameType-game-' + newGame.id">Type</label>
@@ -33,7 +35,7 @@
                 <label [for]="'nPlayers-game-' + newGame.id">Number of players</label>
                 <input type="number" [id]="'nPlayers-game-' + newGame.id" [formControlName]="'nPlayers'"/>
             </div>
-            <div class="form-file-input cover-image">
+            <div *ngIf="newGame?.coverImage?.uri" class="form-file-input cover-image">
 <!--                <label [for]="'cover-image-game-' + newGame.id">Cover</label>-->
 <!--                <label class="fake-input" [for]="'cover-image-game-' + newGame.id">-->
 <!--                    <span>{{newGame.image.name ? newGame.image.name : 'Select an image'}}</span>-->

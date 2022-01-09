@@ -17,7 +17,7 @@ export class LauncherComponent implements OnInit, OnDestroy {
     constructor() { }
 
     ngOnInit(): void {
-        this.playMusic();
+        // this.playMusic();
         this.invokeParticles();
         this.followMouse();
     }
