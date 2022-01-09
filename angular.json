@@ -38,7 +38,7 @@
                             "ulid",
                             "konva",
                             "dragula",
-                            "socket-io-client"
+                            "socket.io-client"
                         ]
                     },
                     "configurations": {
