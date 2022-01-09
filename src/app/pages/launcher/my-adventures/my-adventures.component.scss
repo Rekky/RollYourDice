@@ -115,6 +115,15 @@
         }
     }
 
+    .master-indicator {
+        position: absolute;
+        top: 100px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: goldenrod;
+    }
+
     .adventure-name {
         position: absolute;
         left: 0;
