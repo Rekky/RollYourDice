@@ -7,6 +7,8 @@ import {Subscription} from 'rxjs';
 import {MapInteractor} from '../../../interactors/MapInteractor';
 import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
 import {Coords} from "../../../classes/Coords";
+import {MatDialog} from '@angular/material/dialog';
+import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
 
 @Component({
     selector: 'app-my-adventures',
@@ -29,7 +31,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
 
     constructor(private gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
-                private userInteractor: UserInteractor) {
+                private userInteractor: UserInteractor,
+                private dialog: MatDialog) {
         this.currentUser = this.userInteractor.getCurrentUser();
     }
 
@@ -51,6 +54,14 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         } catch (e) {
             console.error(e);
         }
+    }
+
+    startNewGame(): void {
+        this.dialog.open(EditGameDataComponent, {
+            data: new Game()
+        }).afterClosed().subscribe(res => {
+            console.log('CLOSED =', res);
+        });
     }
 
     async createNewGame(): Promise<void> {

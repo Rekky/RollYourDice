@@ -1,5 +1,5 @@
 <div class="my-adventures-container">
-    <div class="my-adventures-title" (click)="createNewGame()">AAAAAAAAAAAAAAAAA</div>
+    <div class="my-adventures-title"></div>
     <div class="my-adventures-box">
         <div *ngFor="let adventure of adventures; let i = index;" class="adventure-box">
             <div class="top-cover" (click)="loadGame(adventure)"
@@ -24,6 +24,12 @@
                         </g>
                     </svg>
                 </div>
+                <div class="enter-adventure">
+                    enter
+                </div>
+            </div>
+            <div class="adventure-name">
+                {{adventure.name}}
             </div>
             <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">
                 <div class="settings-option" (click)="editGame(adventure, $event)">Edit game</div>
@@ -34,17 +40,10 @@
                  [id]="adventure.id"
                  [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
         </div>
-        <div *ngIf="adventures.length < 4" class="adventure-box">
-            <app-adventure-new></app-adventure-new>
-        </div>
-        <div *ngIf="adventures.length < 3" class="adventure-box">
-            <app-adventure-new></app-adventure-new>
-        </div>
-        <div *ngIf="adventures.length < 2" class="adventure-box">
-            <app-adventure-new></app-adventure-new>
-        </div>
-        <div *ngIf="adventures.length < 1" class="adventure-box">
-            <app-adventure-new></app-adventure-new>
+        <div *ngIf="adventures.length < 4" class="adventure-box" (click)="startNewGame()">
+            <div class="adventure-name">
+                Create adventure
+            </div>
         </div>
     </div>
 </div>

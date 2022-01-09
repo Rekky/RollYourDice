@@ -11,6 +11,12 @@ import {CsSavingThrowsComponent} from './components/character-sheet/cs-saving-th
 import {CsSkillsComponent} from './components/character-sheet/cs-skills/cs-skills.component';
 import {AssetComponent} from './components/asset/asset.component';
 import {UploadInputComponent} from './components/upload-input/upload-input.component';
+import {EditGameDataComponent} from './components/edit-game-data/edit-game-data.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {LauncherRoutingModule} from './pages/launcher/launcher-routing.module';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -26,8 +32,16 @@ import {UploadInputComponent} from './components/upload-input/upload-input.compo
         CsSkillsComponent,
         AssetComponent,
         UploadInputComponent,
+        EditGameDataComponent
     ],
-    imports: [],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        FormsModule,
+        LauncherRoutingModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+    ],
     exports: [
         EnumToArrayPipe,
         RecursiveListComponent,
@@ -40,7 +54,8 @@ import {UploadInputComponent} from './components/upload-input/upload-input.compo
         CsSavingThrowsComponent,
         CsSkillsComponent,
         AssetComponent,
-        UploadInputComponent
+        UploadInputComponent,
+        EditGameDataComponent
     ],
 })
 

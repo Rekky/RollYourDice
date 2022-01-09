@@ -21,9 +21,9 @@ import {AuthInterceptor} from './interceptors/auth.interceptor';
         BrowserModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
         DragulaModule.forRoot(),
         AppRoutingModule,
-        ReactiveFormsModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot({
             loader: {
