@@ -28,6 +28,7 @@
                     start
                 </div>
             </div>
+            <div *ngIf="currentUser.id === adventure.authorId" class="master-indicator"></div>
             <div class="adventure-name">
                 {{adventure.name}}
             </div>

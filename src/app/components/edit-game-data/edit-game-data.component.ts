@@ -2,6 +2,7 @@ import {Component,  Inject, NgZone, OnInit} from '@angular/core';
 import { Game, GameTypes } from 'src/app/classes/Game';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {User} from '../../classes/User';
 
 @Component({
     selector: 'app-edit-game-data',
