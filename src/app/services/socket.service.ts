@@ -8,6 +8,7 @@ import {OurKonvaMap, OurKonvaMapModification} from '../classes/ourKonva/OurKonva
 import {UserInteractor} from '../interactors/UserInteractor';
 import {environment} from '../../environments/environment';
 import {MapInteractor} from '../interactors/MapInteractor';
+import {GameInteractor} from '../interactors/GameInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,8 @@ export class SocketService {
 
     constructor(private apiService: ApiService,
                 private userInteractor: UserInteractor,
-                private mapInteractor: MapInteractor) {
+                private mapInteractor: MapInteractor,
+                private gameInteractor: GameInteractor) {
 
         this.socket.on('connect', () => {
             console.log('socket conectado');
@@ -69,6 +71,7 @@ export class SocketService {
         // });
         this.socket.on('game-status', (data) => {
             console.log('GAME_STATUS_A_ACTUALIZAR', data);
+            this.gameInteractor.updateGameStatus(data);
         });
 
         // ======================== END GAME PLAY ==============================
