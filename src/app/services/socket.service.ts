@@ -79,7 +79,6 @@ export class SocketService {
         });
 
         this.socket.on('game-editor-delete-map-object', (data: any) => {
-            console.log('borrar objeto', data);
             const mod = OurKonvaMapModification.generateModification('delete', data);
             this.mapInteractor.deleteObjectFromMap(mod);
         });

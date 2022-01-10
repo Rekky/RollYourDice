@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {GameService} from '../services/game.service';
-import {Game} from '../classes/Game';
+import {Game, GameStatus} from '../classes/Game';
 import {UserInteractor} from './UserInteractor';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameInteractor {
     private currentGame: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
+    private gameStatusModification: BehaviorSubject<{gameId: string, status: GameStatus}> = new BehaviorSubject<{gameId: string, status: GameStatus}>(null);
 
-    constructor(private gameService: GameService,
-                private userInteractor: UserInteractor,
-                private router: Router) {
+    constructor(private gameService: GameService) {
     }
 
     setCurrentGame(game: Game): void {
@@ -22,6 +22,14 @@ export class GameInteractor {
 
     getCurrentGameObs(): Observable<Game> {
         return this.currentGame.asObservable();
+    }
+
+    setGameStatus(data: {gameId: string, status: GameStatus}): void {
+        this.gameStatusModification.next(data);
+    }
+
+    getGameStatusObs(): Observable<{gameId: string, status: GameStatus}> {
+        return this.gameStatusModification.asObservable();
     }
 
     getGameEditor(id: string): void {
@@ -52,12 +60,7 @@ export class GameInteractor {
         return await this.gameService.getMyGames();
     }
 
-    goToTheGame(game): void {
-        const currentUser = this.userInteractor.getCurrentUser();
-        if (currentUser) {
-            this.router.navigate(['/game-editor/', game.id]);
-        } else {
-            this.router.navigate(['/launcher']);
-        }
+    updateGameStatus(data: {gameId: string, status: GameStatus}): void {
+        this.setGameStatus(data);
     }
 }

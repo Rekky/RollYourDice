@@ -29,6 +29,9 @@
                 </div>
             </div>
             <div *ngIf="currentUser.id === adventure.authorId" class="master-indicator"></div>
+            <div *ngIf="adventure.status === 0" class="game-activated"></div>
+            <div *ngIf="adventure.status === 1" class="game-paused"></div>
+            <div *ngIf="adventure.status === 2" class="game-stopped"></div>
             <div class="adventure-name">
                 {{adventure.name}}
             </div>
@@ -47,7 +50,7 @@
             </div>
             <div class="settings-overlay">
                 <div class="settings-option" (click)="startNewGame()">Create game</div>
-                <div class="settings-option" (click)="joinGame()">Join game</div>
+                <div class="settings-option" (click)="searchGame()">Search game</div>
             </div>
         </div>
     </div>

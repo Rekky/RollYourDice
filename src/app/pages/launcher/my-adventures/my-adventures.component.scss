@@ -115,6 +115,33 @@
         }
     }
 
+    .game-activated {
+        position: absolute;
+        top: 90px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: greenyellow;
+    }
+
+    .game-paused {
+        position: absolute;
+        top: 90px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: orange;
+    }
+
+    .game-stopped {
+        position: absolute;
+        top: 90px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: red;
+    }
+
     .master-indicator {
         position: absolute;
         top: 100px;

@@ -9,6 +9,8 @@ import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
 import {Coords} from "../../../classes/Coords";
 import {MatDialog} from '@angular/material/dialog';
 import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
+import {SocketService} from '../../../services/socket.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-my-adventures',
@@ -28,12 +30,19 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     adventureSettingsDisplayedId: string = null;
 
     userSubscription: Subscription;
+    gameStatusUpdatesSub: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
                 private userInteractor: UserInteractor,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                private socketService: SocketService,
+                private router: Router) {
         this.currentUser = this.userInteractor.getCurrentUser();
+        this.gameStatusUpdatesSub = this.gameInteractor.getGameStatusObs().subscribe(update => {
+            const updateGameIndex = this.adventures.findIndex(adv => adv.id === update.gameId);
+            this.adventures[updateGameIndex].status = update.status;
+        });
     }
 
     async ngOnInit(): Promise<void> {
@@ -144,12 +153,13 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
-    joinGame(): void {
+    searchGame(): void {
 
     }
 
     loadGame(adventure: Game): void {
-        this.gameInteractor.goToTheGame(adventure);
+        this.socketService.sendPlayerEnterGame(adventure.id);
+        this.router.navigate(['/game-editor/', adventure.id]);
     }
 
     followMouse(): void {
