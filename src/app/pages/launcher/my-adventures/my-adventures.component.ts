@@ -40,8 +40,10 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 private router: Router) {
         this.currentUser = this.userInteractor.getCurrentUser();
         this.gameStatusUpdatesSub = this.gameInteractor.getGameStatusObs().subscribe(update => {
-            const updateGameIndex = this.adventures.findIndex(adv => adv.id === update.gameId);
-            this.adventures[updateGameIndex].status = update.status;
+            if (update) {
+                const updateGameIndex = this.adventures.findIndex(adv => adv.id === update.gameId);
+                this.adventures[updateGameIndex].status = update.status;
+            }
         });
     }
 
