@@ -2,6 +2,11 @@
     <div class="my-adventures-title"></div>
     <div class="my-adventures-box">
         <div *ngFor="let adventure of adventures; let i = index;" class="adventure-box">
+            <div class="game-status">
+                <div *ngIf="adventure.status === 0" class="game-activated"></div>
+                <div *ngIf="adventure.status === 1" class="game-paused"></div>
+                <div *ngIf="adventure.status === 2" class="game-stopped"></div>
+            </div>
             <div class="top-cover" (click)="loadGame(adventure)"
                  (mouseleave)="stopFollowingMouse()"
                  (mouseenter)="startFollowingMouse(adventure.id)">
@@ -24,14 +29,12 @@
                         </g>
                     </svg>
                 </div>
-                <div class="enter-adventure">
-                    start
+                <div *ngIf="adventure.status === 0" class="enter-adventure">
+                    ENTER
                 </div>
             </div>
-            <div *ngIf="currentUser.id === adventure.authorId" class="master-indicator"></div>
-            <div *ngIf="adventure.status === 0" class="game-activated"></div>
-            <div *ngIf="adventure.status === 1" class="game-paused"></div>
-            <div *ngIf="adventure.status === 2" class="game-stopped"></div>
+            <img *ngIf="currentUser.id === adventure.authorId" src="assets/icons/master-crown.png"
+                 alt="master crown" class="master-indicator" />
             <div class="adventure-name">
                 {{adventure.name}}
             </div>
