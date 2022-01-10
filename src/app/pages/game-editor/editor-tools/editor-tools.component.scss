@@ -1,4 +1,4 @@
-@import "../../../../colors";
+@import "src/styles.scss";
 
 .tools-container{
     display: flex;
@@ -6,8 +6,8 @@
     width: 100%;
     height: 100%;
     border-radius: 4px;
-    background: $colorWhite;
-    box-shadow: 0 4px 16px rgb(5 0 56 / 12%);
+    background: $c-whitest;
+    box-shadow: 0 4px 16px rgb($c-black, 12%);
     transition: height 0.2s linear, top 0.2s linear;
     padding: 12px 0;
     z-index: 1;
@@ -34,12 +34,12 @@
         cursor: pointer;
 
         &:hover {
-            //background: darken($colorWhite, 10%);
-            color: $colorRed;
+            //background: darken($c-whitest, 10%);
+            color: $c-reddest;
         }
         &.active {
-            //background: darken($colorWhite, 10%);
-            color: $colorRed;
+            //background: darken($c-whitest, 10%);
+            color: $c-reddest;
         }
 
         .triangle {
@@ -49,7 +49,7 @@
 
             width: 0;
             height: 0;
-            border-bottom: 10px solid #d3d3d3;
+            border-bottom: 10px solid $c-white-grey;
             border-left: 10px solid transparent;
         }
         .file {
@@ -68,9 +68,9 @@
         left: 100%;
         top:0;
         width: 52px;
-        border: 1px solid $editorColumnsBorderColor;
+        border: 1px solid $c-blackest;
         border-bottom-right-radius: 4px;
         border-top-right-radius: 4px;
-        background: $colorWhite;
+        background: $c-whitest;
     }
 }

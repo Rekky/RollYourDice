@@ -15,14 +15,14 @@
         </div>
         <div class="password-box">
             <label class="title" for="password">Password</label>
-            <img class="eye" src="../../../../assets/icons/visibilidad.png"
+            <img class="eye" src="src/assets/icons/visibilidad.png"
                  (mousedown)="displayPassword = true" (mouseup)="displayPassword = false"/>
             <input [type]="displayPassword ? 'text' : 'password'" class="value" id="password"
                    name="password" placeholder="" [formControlName]="'password'"/>
         </div>
         <div class="password-box">
             <label class="title" for="repeatPassword">Repeat password</label>
-            <img class="eye" src="../../../../assets/icons/visibilidad.png"
+            <img class="eye" src="src/assets/icons/visibilidad.png"
                  (mousedown)="displayRepeatPassword = true" (mouseup)="displayRepeatPassword = false"/>
             <input [type]="displayRepeatPassword ? 'text' : 'password'" class="value" id="repeatPassword"
                    name="repeatPassword" placeholder="" [formControlName]="'repeatPassword'"/>

@@ -1,4 +1,4 @@
-@import "../../../../colors";
+@import "src/styles.scss";
 
 .skills {
     display: flex;
@@ -100,7 +100,7 @@
 
                 span {
                     margin-left: 5px;
-                    color: lightgrey;
+                    color: $c-white;
                     font-style: italic;
                 }
             }

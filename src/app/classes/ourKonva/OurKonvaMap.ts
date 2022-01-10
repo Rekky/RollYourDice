@@ -34,7 +34,7 @@ export class  OurKonvaMap {
         this.nColumns = 10;
         this.nRows = 10;
         this.isFogOfWar = false;
-        this.backgroundColor = 'white';
+        this.backgroundColor = '#F2F2F2';
         this.backgroundImage = null;
         this.mFogOfWarPercent = 50;
         this.isDndDiagonalSystem = false;

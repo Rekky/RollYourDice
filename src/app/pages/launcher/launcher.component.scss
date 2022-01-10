@@ -1,4 +1,4 @@
-@import "../../../styles";
+@import "src/styles";
 
 #particles-js, #particles-js-2, #particles-js-3 {
     position: absolute;
@@ -26,7 +26,7 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-color: #262A31;
+    background-color: $c-black-grey;
 }
 
 .bg-menu {

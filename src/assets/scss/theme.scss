@@ -1,6 +1,6 @@
 // ROLLINN THEMES
 .roll-card {
-    background: $colorDarkBlue;
+    background: $c-black;
     z-index: 1;
 
     &:before {
@@ -10,7 +10,7 @@
         left:0;
         width: 100%;
         height: 100%;
-        border: 3px solid $colorCreme;
+        border: 3px solid $c-white-grey;
         z-index: -1;
     }
     &::after {
@@ -21,7 +21,7 @@
         width: calc(100% - 11px);
         height: calc(100% + 11px);
         margin: 5px;
-        border: 1px solid $colorCreme;
+        border: 1px solid $c-white-grey;
         z-index: -1;
     }
 }

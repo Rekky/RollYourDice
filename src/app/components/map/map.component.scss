@@ -1,3 +1,5 @@
+@import "src/styles.scss";
+
 .map-container{
     position: absolute;
     top: 0;
@@ -9,7 +11,7 @@
 // MAP
 .map{
     position: absolute;
-    background: #f2f2f2;
+    background: $c-whitest;
 }
 
 .mapbox-details{

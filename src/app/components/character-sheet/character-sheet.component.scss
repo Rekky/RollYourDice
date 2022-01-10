@@ -1,4 +1,4 @@
-@import "../../../colors";
+@import "src/styles.scss";
 
 app-cs-saving-throws, app-cs-skills {
     width: 100%;
@@ -17,12 +17,12 @@ app-cs-saving-throws, app-cs-skills {
     width: 1020px;
     height: 90vh;
     overflow-y: scroll;
-    border: 1px solid #EAEAEA;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.12),
-    0 2px 4px rgba(0,0,0,0.12),
-    0 4px 8px rgba(0,0,0,0.12),
-    0 8px 16px rgba(0,0,0,0.12),
-    0 16px 32px rgba(0,0,0,0.12);
+    border: 1px solid $c-white;
+    box-shadow: 0 1px 2px rgba($c-black,0.12),
+    0 2px 4px rgba($c-black,0.12),
+    0 4px 8px rgba($c-black,0.12),
+    0 8px 16px rgba($c-black,0.12),
+    0 16px 32px rgba($c-black,0.12);
 }
 
 .body {
@@ -191,7 +191,7 @@ app-cs-saving-throws, app-cs-skills {
                 padding: 7px;
                 margin: 0 0 5px 0;
                 border-radius: 5px 0 0 5px;
-                background-color: rgba(lightgrey, 0.6);
+                background-color: rgba($c-white, 0.6);
                 overflow: hidden;
 
                 text-overflow: ellipsis;
@@ -203,7 +203,7 @@ app-cs-saving-throws, app-cs-skills {
                 padding: 7px;
                 margin: 0 0 5px 0;
                 border-radius: 0 5px 5px 0;
-                background-color: rgba(lightgrey, 0.6);
+                background-color: rgba($c-white, 0.6);
                 overflow: hidden;
 
                 text-overflow: ellipsis;
@@ -378,7 +378,7 @@ app-cs-saving-throws, app-cs-skills {
 
                 height: 20px;
                 width: 40%;
-                border-bottom: 1px solid lightgrey;
+                border-bottom: 1px solid $c-white;
                 font-size: 13px;
                 text-align: center;
             }
@@ -489,13 +489,13 @@ app-cs-saving-throws, app-cs-skills {
 
             .title {
                 width: 40px;
-                color: lightgrey;
+                color: $c-white;
                 font-size: 13px;
             }
 
             .value {
                 width: 80px;
-                border-bottom: 1px solid lightgrey;
+                border-bottom: 1px solid $c-white;
                 text-align: center;
             }
         }
@@ -539,7 +539,7 @@ app-cs-saving-throws, app-cs-skills {
 
                 .title-hit-dice {
                     width: 40px;
-                    color: lightgrey;
+                    color: $c-white;
                     font-size: 13px;
                 }
             }
@@ -753,7 +753,7 @@ app-cs-saving-throws, app-cs-skills {
                 padding: 7px;
                 margin: 0 0 5px 0;
                 border-radius: 5px 0 0 5px;
-                background-color: rgba(lightgrey, 0.6);
+                background-color: rgba($c-white, 0.6);
                 overflow: hidden;
 
                 text-overflow: ellipsis;
@@ -769,7 +769,7 @@ app-cs-saving-throws, app-cs-skills {
                 width: 20%;
                 padding: 7px;
                 margin: 0 2% 5px 2%;
-                background-color: rgba(lightgrey, 0.6);
+                background-color: rgba($c-white, 0.6);
                 overflow: hidden;
 
                 text-align: center;
@@ -787,7 +787,7 @@ app-cs-saving-throws, app-cs-skills {
                 padding: 7px;
                 margin: 0 0 5px 0;
                 border-radius: 0 5px 5px 0;
-                background-color: rgba(lightgrey, 0.6);
+                background-color: rgba($c-white, 0.6);
                 overflow: hidden;
 
                 text-overflow: ellipsis;
@@ -881,7 +881,7 @@ app-cs-saving-throws, app-cs-skills {
                     width: 30px;
                     padding: 5px 0;
                     border-radius: 5px 0 0 5px;
-                    background-color: rgba(lightgrey, 0.6);
+                    background-color: rgba($c-white, 0.6);
                     text-align: center;
                 }
 
@@ -889,7 +889,7 @@ app-cs-saving-throws, app-cs-skills {
                     height: 15px;
                     width: 130px;
                     padding: 5px 10px;
-                    background-color: rgba(lightgrey, 0.6);
+                    background-color: rgba($c-white, 0.6);
                 }
 
                 .weight {
@@ -897,7 +897,7 @@ app-cs-saving-throws, app-cs-skills {
                     width: 30px;
                     padding: 5px 0;
                     border-radius: 0 5px 5px 0;
-                    background-color: rgba(lightgrey, 0.6);
+                    background-color: rgba($c-white, 0.6);
                     text-align: center;
                 }
             }

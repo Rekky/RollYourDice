@@ -68,13 +68,13 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     startNewGame(): void {
-        this.dialog.open(EditGameDataComponent, {
+        const dialogSub = this.dialog.open(EditGameDataComponent, {
             data: new Game()
         }).afterClosed().subscribe(res => {
-            console.log('CLOSED =', res);
             if (res) {
                 this.createNewGame(res.game);
             }
+            dialogSub.unsubscribe();
         });
     }
 
@@ -107,10 +107,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     async editGame(adventure: Game, i: number, e: Event): Promise<void> {
         e.stopPropagation();
         this.displayAdventureSettings(null);
-        this.dialog.open(EditGameDataComponent, {
+        const dialogSub = this.dialog.open(EditGameDataComponent, {
             data: adventure
         }).afterClosed().subscribe(async res => {
-            console.log('CLOSED =', res);
             if (res) {
                 try {
                     await this.gameInteractor.editGame(res.game, null);
@@ -120,6 +119,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                     console.error(e);
                 }
             }
+            dialogSub.unsubscribe();
         });
     }
 
@@ -160,7 +160,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     loadGame(adventure: Game): void {
-        this.socketService.sendPlayerEnterGame(adventure.id);
         this.router.navigate(['/game-editor/', adventure.id]);
     }
 

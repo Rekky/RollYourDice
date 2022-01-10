@@ -1,4 +1,4 @@
-@import "../../../colors";
+@import "src/styles.scss";
 
 .dropdown {
     position: relative;
@@ -30,13 +30,13 @@
     margin: 0;
     padding: 0;
     display: none;
-    background: $colorDarkBlue;
+    background: $c-black;
 
     .item {
         padding: 1rem 0;
 
         &:hover {
-            background: lightgrey;
+            background: $c-white;
         }
     }
 }

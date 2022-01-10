@@ -29,8 +29,8 @@
                         </g>
                     </svg>
                 </div>
-                <div *ngIf="adventure.status === 0" class="enter-adventure">
-                    ENTER
+                <div class="enter-adventure">
+                    <span *ngIf="adventure.status === 0">ENTER</span>
                 </div>
             </div>
             <img *ngIf="currentUser.id === adventure.authorId" src="assets/icons/master-crown.png"
@@ -43,9 +43,12 @@
                 <div class="settings-option" (click)="duplicateGame(adventure, $event)">Duplicate game</div>
                 <div class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
             </div>
-            <div *ngIf="adventure?.coverImage?.uri" class="cover-image"
+<!--            <div *ngIf="adventure?.coverImage?.uri" class="cover-image"-->
+<!--                 [id]="adventure.id"-->
+<!--                 [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>-->
+            <div class="cover-image"
                  [id]="adventure.id"
-                 [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
+                 [style.backgroundImage]="'url(' + './assets/backgrounds/menu-bg.jpg' + ')'"></div>
         </div>
         <div *ngIf="adventures.length < 4" class="new-adv">
             <div class="adventure-name">
