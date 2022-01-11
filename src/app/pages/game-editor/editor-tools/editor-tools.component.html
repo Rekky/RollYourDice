@@ -2,21 +2,17 @@
     <div class="multiple-tools" *ngFor="let blockOfTools of blocksOfTools; let i = index"
          (mouseenter)="displayExtraToolsIndex = i"
          (mouseleave)="displayExtraToolsIndex = 99">
-        <ng-container *ngFor="let tool of blockOfTools">
-            <div *ngIf="tool.displayed" class="tool" [class.active]="currentToolSelected === tool.name" (click)="onToolSelected(tool.name)">
-                <i [ngClass]="tool.icon"></i>
-                <div *ngIf="blockOfTools.length > 1" class="triangle"></div>
-                <input type="file" class="file" *ngIf="tool.name == 'image'" (change)="updateImage($event.target.files[0])">
-            </div>
-        </ng-container>
-        <ng-container *ngIf="displayExtraToolsIndex === i">
-            <ng-container *ngFor="let tool of blockOfTools">
-                <div *ngIf="!tool.displayed" class="extra-tools">
-                    <div class="tool" [class.active]="currentToolSelected === tool.name" (click)="onToolSelected(tool.name)">
-                        <i [ngClass]="tool.icon"></i>
-                    </div>
-                </div>
-            </ng-container>
-        </ng-container>
+        <app-tools-ux [blockOfTools]="blockOfTools"
+                      [currentToolSelected]="currentToolSelected"
+                      [toolDisplayed]="true"
+                      (toolSelected)="onToolSelected($event)"
+                      (updateImage)="updateImage($event)"></app-tools-ux>
+        <div *ngIf="displayExtraToolsIndex === i">
+            <app-tools-ux  class="extra-tools" [blockOfTools]="blockOfTools"
+                          [currentToolSelected]="currentToolSelected"
+                          [toolDisplayed]="false"
+                           (toolSelected)="onToolSelected($event)"
+                           (updateImage)="updateImage($event)"></app-tools-ux>
+        </div>
     </div>
 </div>

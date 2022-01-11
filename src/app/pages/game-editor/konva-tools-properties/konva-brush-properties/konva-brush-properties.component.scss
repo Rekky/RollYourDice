@@ -1,9 +1,9 @@
-@import "../../../../../colors";
+@import "src/styles.scss";
 
 .properties-title-box {
     height: 47px;
     padding-left: 30px;
-    border-bottom: 1px solid #DBDBDB;
+    border-bottom: 1px solid $c-white-grey;
 }
 
 .properties-title {
@@ -15,7 +15,7 @@
     height: 47px;
     font-size: 14px;
     font-weight: 400;
-    color: #EAEAEA;
+    color: $c-white;
 }
 
 .properties-box {
@@ -63,11 +63,11 @@
 
         width: 50px;
         height: 29px;
-        border: 1px solid #EAEAEA;
+        border: 1px solid $c-white;
         margin-left: 12px;
         background: none;
 
-        color: #EAEAEA;
+        color: $c-white;
         font-size: 14px;
         font-weight: 400;
         text-align: center;
@@ -81,7 +81,7 @@
     .title {
         font-weight: 400;
         font-size: 14px;
-        color: #EAEAEA;
+        color: $c-white;
     }
 
     .measure {
@@ -92,7 +92,7 @@
 
         height: 30px;
         padding-left: 3px;
-        color: #EAEAEA;
+        color: $c-white;
         font-size: 13px;
         font-weight: 400;
     }

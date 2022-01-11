@@ -32,6 +32,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
+    getCurrentMapModificationSubs: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -46,6 +47,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     async ngOnInit(): Promise<void> {
         try {
             const gameId = this.router.snapshot.paramMap.get('id');
+            this.socketService.sendPlayerEnterGame(gameId);
 
             // 1. Call to get game info
             this.game = await this.gameInteractor.getGame(gameId);
@@ -68,7 +70,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.selectedKonvaObject = konva;
             });
 
-            this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
+            this.getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
                 if (res) {
                     this.mapModification = res;
                 }
@@ -88,6 +90,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         }
         if (this.getSelectedKonvaObjectSubscription) {
             this.getSelectedKonvaObjectSubscription.unsubscribe();
+        }
+        if (this.getCurrentMapModificationSubs) {
+            this.getCurrentMapModificationSubs.unsubscribe();
         }
     }
 

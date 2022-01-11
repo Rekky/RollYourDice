@@ -43,7 +43,7 @@
 
     font-size: 60px;
     font-weight: 600;
-    color: #dbdbdb;
+    color: $c-white-grey;
 
     display: flex;
     align-items: center;
@@ -64,7 +64,7 @@
     margin-bottom: 4rem;
     position: relative;
 
-    color: #dbdbdb;
+    color: $c-white-grey;
     font-family: $oswald;
     font-size: 5rem;
     font-weight: 700;
@@ -81,7 +81,7 @@
         left: 0.4rem;
         z-index: -1;
 
-        color: #111316;
+        color: $c-blackest;
         font-family: $oswald;
         font-size: 5rem;
         font-weight: 700;

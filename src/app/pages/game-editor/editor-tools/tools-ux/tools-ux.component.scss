@@ -1,0 +1,51 @@
+@import "src/styles.scss";
+.tool {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+
+    width: 52px;
+    height: 40px;
+    cursor: pointer;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        fill: $c-black;
+    }
+
+    &:hover {
+        svg {
+            fill: $c-reddest;
+        }
+    }
+
+    &.active {
+        svg {
+            fill: $c-reddest;
+        }
+    }
+
+    .triangle {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        width: 0;
+        height: 0;
+        border-bottom: 10px solid $c-white-grey;
+        border-left: 10px solid transparent;
+    }
+
+    .file {
+        position:absolute;
+        opacity: 0;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+}

@@ -7,10 +7,10 @@
     height: 45px;
     padding: 0 30px;
     border: none;
-    background-color: #16191D;
+    background-color: $c-black;
     cursor: pointer;
 
-    color: #f2f2f2;
+    color: $c-whitest;
     font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
@@ -22,8 +22,8 @@
 
     &:disabled {
         background-color: transparent;
-        color: #DBDBDB;
-        border: 1px solid #DBDBDB;
+        color: $c-white-grey;
+        border: 1px solid $c-white-grey;
         cursor: default;
     }
 }

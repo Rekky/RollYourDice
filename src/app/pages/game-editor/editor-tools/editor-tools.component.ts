@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MouseService} from '../../../services/mouse.service';
 import {Subscription, Observable, fromEvent} from 'rxjs';
 import {OurKonvaPointer} from '../../../classes/ourKonva/OurKonvaPointer';
@@ -22,31 +22,32 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     currentToolSelected: string = 'pointer';
     getMouseObservableSubscription: Subscription;
 
-    blocksOfTools: any[][] = [
+    blocksOfTools: {name: string, displayed: boolean}[][] = [
         [
-            {name: 'pointer', displayed: true, icon: 'fas fa-mouse-pointer'}
+            {name: 'pointer', displayed: true}
         ],
         [
-            {name: 'hand', displayed: true, icon: 'far fa-hand-paper'}
+            {name: 'hand', displayed: true}
         ],
         [
-            {name: 'text', displayed: true, icon: 'fas fa-text-width'}
+            {name: 'text', displayed: true}
         ],
         [
-            {name: 'brush', displayed: true, icon: 'fas fa-paint-brush'},
-            {name: 'eraser', displayed: false, icon: 'fas fa-eraser'}
+            {name: 'brush', displayed: true},
+            {name: 'eraser', displayed: false},
         ],
         [
-            {name: 'square', displayed: true, icon: 'far fa-square'}
+            {name: 'square', displayed: true},
         ],
         [
-            {name: 'image', displayed: true, icon: 'far fa-image'}
+            {name: 'image', displayed: true}
         ]
     ];
 
     constructor(private mouseService: MouseService,
                 private mouseInteractor: MouseInteractor,
-                private imageService: ImageService) { }
+                private imageService: ImageService,
+                private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
@@ -64,7 +65,6 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     }
 
     onToolSelected(tool: string): void {
-        // this.currentToolSelected = tool;
         this.displayExtraToolsIndex = 99;
         this.changeDisplayedTool(tool);
         if (tool !== 'pointer') {
@@ -114,8 +114,9 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        this.blocksOfTools[toolPackIndex].map(mapTool => {
+        this.blocksOfTools[toolPackIndex].forEach(mapTool => {
             mapTool.displayed = mapTool.name === tool;
         });
+        this.cdr.detectChanges();
     }
 }

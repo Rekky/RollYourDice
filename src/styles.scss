@@ -1,5 +1,5 @@
-@import "colors";
-@import "theme";
+@import "assets/scss/colors";
+@import "assets/scss/theme";
 
 $oswald: 'oswald', sans-serif;
 @font-face {
@@ -45,16 +45,16 @@ label{
 }
 .btn-roll {
     font-family: 'Bebas Neue', cursive;
-    background: $colorRed;
-    color: rgba($colorWhite, 88%);
-    border-color: $colorRed;
+    background: $c-reddest;
+    color: rgba($c-whitest, 88%);
+    border-color: $c-reddest;
     padding: 6px 80px;
     transition: background-color .3s ease-in-out;
     letter-spacing: 1px;
 
     &:hover {
-        color: $colorWhite;
-        background: darken($colorRed, 10);
+        color: $c-whitest;
+        background: darken($c-reddest, 10);
     }
 }
 .border-roll {
@@ -71,7 +71,7 @@ label{
         z-index: -1;
         margin: -$border;
         border-radius: inherit;
-        background: rgb(171 0 0 / 50%);
+        background: rgba($c-black, 50%);
     }
 }
 app-dropdown {
@@ -92,7 +92,7 @@ app-dropdown {
         }
 
         &:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba($c-whitest,0.2);
         }
     }
 }
@@ -104,22 +104,22 @@ app-dropdown {
     border-radius: 0;
 }
 .btn-danger {
-    background: $colorRed;
+    background: $c-reddest;
 }
 .bg-danger {
-    background: $colorRed !important;
+    background: $c-reddest !important;
 }
 .bg-dark {
-    background: $colorDarkBlue !important;
+    background: $c-black !important;
 }
 .bg-green {
-    background: $colorGreen !important;
+    background: $c-pale-green !important;
 }
 .bg-red {
-    background: $colorRed !important;
+    background: $c-reddest !important;
 }
 .bg-dark-gray{
-    background: $colorDarkGray !important;
+    background: $c-black-grey !important;
 }
 
 // ------------------ Auxiliars ------------------
@@ -136,9 +136,9 @@ app-dropdown {
 // ------------- GAME EDITOR STYLES -------------
 .game-editor {
     input[type="text"] {
-        background: $editorMainForeground;
-        border: 1px solid $editorColumnsBorderColor;
-        color: $colorWhite;
+        background: $c-black;
+        border: 1px solid $c-blackest;
+        color: $c-whitest;
     }
 }
 
@@ -154,7 +154,7 @@ app-dropdown {
     overflow: hidden;
 
     &:hover{
-        background: darken($editorMainForeground, 5%);
+        background: darken($c-black, 5%);
     }
     .title{
         text-overflow: ellipsis;
@@ -208,7 +208,7 @@ app-dropdown {
         }
 
         &:hover{
-            background: darken($editorMainForeground, 5%);
+            background: darken($c-black, 5%);
             .item-tools {
                 display: flex;
             }
@@ -259,7 +259,7 @@ app-dropdown {
         // padding: 0 5px;
 
         &:hover{
-            background: darken($editorMainForeground, 5%);
+            background: darken($c-black, 5%);
         }
     }
 
@@ -279,7 +279,7 @@ app-dropdown {
     margin: 0 !important;
     z-index: 9999 !important;
     opacity: 0.6;
-    background: rgba(255,255,255,0.2);
+    background: rgba($c-whitest,0.2);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     filter: alpha(opacity=80);
     pointer-events: none;
@@ -299,7 +299,7 @@ app-dropdown {
 .gu-transit {
     cursor: pointer;
     opacity: 0.3;
-    background: rgba(255,255,255,0.1);
+    background: rgba($c-whitest,0.1);
     border-bottom: 2px solid $editorSelectedColor;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     filter: alpha(opacity=20);
@@ -370,7 +370,7 @@ html, body { height: 100%; }
     z-index: 1;
 }
 .card-post-description {
-    color: $colorWhite;
+    color: $c-whitest;
     overflow: hidden;
     height: 90px;
 }
@@ -392,7 +392,7 @@ html, body { height: 100%; }
 
 // -- positions of cards --
 .card-vertical{
-    background: rgb(21 23 30 / 80%);
+    background: rgba($c-black, 80%);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 300px 250px;

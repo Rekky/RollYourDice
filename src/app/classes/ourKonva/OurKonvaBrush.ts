@@ -10,7 +10,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
     constructor() {
         super();
         this.line = new Konva.Line();
-        this.color = '#ffff00';
+        this.color = '#E2F24B';
         this.brushSize = 5;
     }
 

@@ -1,4 +1,4 @@
-@import "../../../colors";
+@import 'src/styles.scss';
 
 .game-editor{
     position: absolute;
@@ -6,7 +6,7 @@
     right:0;
     left:0;
     bottom: 0;
-    background: $editorMainBackground;
+    background: $c-blackest;
     overflow: hidden;
 }
 
@@ -30,15 +30,15 @@
     top:0;
     left:0;
     bottom: 0;
-    color: #d3d3d3;
-    background: $editorMainForeground;
+    color: $c-white-grey;
+    background: $c-black;
     z-index: 90;
 
     .left-column-content{
         position: relative;
         width: 250px;
         height: 100%;
-        border-right: 1px solid $editorColumnsBorderColor;
+        border-right: 1px solid $c-blackest;
     }
 }
 // RIGHT COLUMN
@@ -48,9 +48,9 @@
     right:0;
     bottom: 0;
     width: 280px;
-    border-top: 1px solid $editorColumnsBorderColor;
-    border-left: 1px solid $editorColumnsBorderColor;
-    background: $editorMainForeground;
+    border-top: 1px solid $c-blackest;
+    border-left: 1px solid $c-blackest;
+    background: $c-black;
     overflow: hidden;
     z-index: 90;
 }
@@ -61,9 +61,9 @@
     top:0;
     right: -40px;
     height: 100%;
-    border-top: 1px solid $editorColumnsBorderColor;
-    border-right: 1px solid $editorColumnsBorderColor;
-    background: $editorMainForeground;
+    border-top: 1px solid $c-blackest;
+    border-right: 1px solid $c-blackest;
+    background: $c-black;
 }
 .game-editor-tools {
     position: absolute;
@@ -83,19 +83,19 @@
     }
 
     .tab{
-        border-top: 1px solid $editorColumnsBorderColor;
+        border-top: 1px solid $c-blackest;
         padding: .7rem 1rem;
         cursor: pointer;
         display: flex;
         justify-content: center;
-        background: lighten($editorMainForeground, 5%);
+        background: lighten($c-black, 5%);
 
         &.active{
             background: transparent;
         }
 
         &:last-child {
-            border-right: 1px solid $editorColumnsBorderColor;
+            border-right: 1px solid $c-blackest;
         }
     }
 }

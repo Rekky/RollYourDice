@@ -2,7 +2,7 @@
 
 .dialog-wrapper {
     max-width: 500px;
-    background-color: white;
+    background-color: $c-whitest;
     padding: 0 30px 30px 30px;
 }
 
@@ -27,7 +27,7 @@
     border-radius: 50%;
     cursor: pointer;
 
-    color: lightgrey;
+    color: $c-white;
     font-size: 18px;
 
     &:hover {

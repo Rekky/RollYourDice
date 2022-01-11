@@ -1,6 +1,6 @@
-@import "../../../../colors";
-@import "../../../../assets/scss/form-inputs";
-@import "../../../../assets/scss/buttons";
+@import "src/styles.scss";
+@import "src/assets/scss/form-inputs";
+@import "src/assets/scss/buttons";
 
 .title-box {
     display: flex;
@@ -10,7 +10,7 @@
 
     height: calc((100% - 50vh) / 2);
     width: 50%;
-    color: #EAEAEA;
+    color: $c-white;
     font-size: 48px;
     font-weight: 900;
 
@@ -59,7 +59,7 @@
             align-items: center;
 
             height: 48px;
-            color: #EAEAEA;
+            color: $c-white;
             font-size: 24px;
             font-weight: 600;
         }
@@ -69,7 +69,7 @@
         input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
             transition: background-color 5000s ease-in-out 0s;
-            -webkit-text-fill-color: #262A31 !important;
+            -webkit-text-fill-color: $c-black-grey !important;
             font-size: 24px !important;
             font-weight: 500 !important;
         }
@@ -80,13 +80,13 @@
             border: none;
             margin-bottom: 40px;
             padding: 0 20px;
-            background-color: #EAEAEA !important;
+            background-color: $c-white !important;
 
             font-size: 24px;
             font-weight: 500;
 
             &:hover {
-                background-color: #F2F2F2 !important;
+                background-color: $c-whitest !important;
             }
         }
 
@@ -112,7 +112,7 @@
 
         .stay-signed-text {
             margin-left: 20px;
-            color: #EAEAEA;
+            color: $c-white;
             font-size: 24px;
             font-weight: 300;
             cursor: pointer;
@@ -137,15 +137,15 @@
             height: 50px;
             width: 200px;
             border: none;
-            background-color: #EAEAEA;
+            background-color: $c-white;
 
-            color: #262A31;
+            color: $c-black-grey;
             font-size: 30px;
             font-weight: bold;
             cursor: pointer;
 
             &:hover {
-                background-color: #F2F2F2;
+                background-color: $c-whitest;
             }
         }
     }
@@ -167,13 +167,13 @@
         align-items: flex-end;
 
         height: 50px;
-        color: #EAEAEA;
+        color: $c-white;
         font-size: 18px;
         font-weight: 300;
         cursor: pointer;
 
         &:hover {
-            color: #F2F2F2;
+            color: $c-whitest;
             text-decoration: underline;
         }
     }
@@ -196,8 +196,8 @@
 
     height: 30px;
     width: 30px;
-    border: 1px solid #EAEAEA;
-    background-color: #EAEAEA;
+    border: 1px solid $c-white;
+    background-color: $c-white;
 
     cursor: pointer;
 }
@@ -207,7 +207,7 @@
 
     height: 30px;
     width: 30px;
-    border: 2px solid #EAEAEA;
+    border: 2px solid $c-white;
     border-top: none;
     border-right: none;
 
@@ -221,8 +221,8 @@
 }
 
 .stay-signed-input input[type="checkbox"]:checked + label {
-    background-color: #16191D;
-    border: 3px solid #EAEAEA;
+    background-color: $c-black;
+    border: 3px solid $c-white;
 }
 
 .stay-signed-input input[type="checkbox"]:checked + label:after {

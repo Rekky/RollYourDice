@@ -1,6 +1,5 @@
-upload-input{
-    width: 100%;
-}
+@import "src/styles.scss";
+
 .preview-container {
     img {
         height: 60px;
@@ -16,7 +15,7 @@ upload-input{
 }
 
 .file-input-container {
-    color: #16191D;
+    color: $c-black;
     cursor: pointer;
 
     .file-input {
@@ -28,11 +27,11 @@ upload-input{
 
         width: 100%;
         height: 75px;
-        border: 2px dashed #16191D;
-        background: #f2f2f2;
+        border: 2px dashed $c-black;
+        background: $c-whitest;
 
         &:hover {
-            background: #ffffff;
+            background: $c-whitest;
         }
 
         .file-input-opacity {
@@ -47,6 +46,6 @@ upload-input{
 
 
 .upload-error-container {
-    color: #16191D;
+    color: $c-black;
     padding: .2rem .5rem;
 }
