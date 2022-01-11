@@ -13,6 +13,7 @@ import {KonvaBrushPropertiesComponent} from './konva-tools-properties/konva-brus
 import {KonvaEraserPropertiesComponent} from './konva-tools-properties/konva-eraser-properties/konva-eraser-properties.component';
 import {KonvaTextPropertiesComponent} from './konva-tools-properties/konva-text-properties/konva-text-properties.component';
 import {KonvaRectanglePropertiesComponent} from './konva-tools-properties/konva-rectangle-properties/konva-rectangle-properties.component';
+import { ToolsUxComponent } from './editor-tools/tools-ux/tools-ux.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {KonvaRectanglePropertiesComponent} from './konva-tools-properties/konva-
         KonvaEraserPropertiesComponent,
         KonvaTextPropertiesComponent,
         KonvaRectanglePropertiesComponent,
+        ToolsUxComponent,
     ],
     imports: [
         CommonModule,
