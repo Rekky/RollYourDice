@@ -15,7 +15,7 @@ import {GameInteractor} from '../interactors/GameInteractor';
 })
 export class SocketService {
 
-    socket = io(environment.socket_url);
+    socket = io.connect(environment.socket_url, {query: {token: this.userInteractor.getCurrentToken()}});
     gameSocketSubscription: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
     gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
