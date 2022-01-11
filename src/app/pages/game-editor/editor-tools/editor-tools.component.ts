@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MouseService} from '../../../services/mouse.service';
 import {Subscription, Observable, fromEvent} from 'rxjs';
 import {OurKonvaPointer} from '../../../classes/ourKonva/OurKonvaPointer';
@@ -35,7 +35,6 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         [
             {name: 'brush', displayed: true},
             {name: 'eraser', displayed: false},
-            {name: 'patata', displayed: false},
         ],
         [
             {name: 'square', displayed: true},
@@ -47,7 +46,8 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
 
     constructor(private mouseService: MouseService,
                 private mouseInteractor: MouseInteractor,
-                private imageService: ImageService) { }
+                private imageService: ImageService,
+                private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
@@ -117,5 +117,6 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         this.blocksOfTools[toolPackIndex].forEach(mapTool => {
             mapTool.displayed = mapTool.name === tool;
         });
+        this.cdr.detectChanges();
     }
 }

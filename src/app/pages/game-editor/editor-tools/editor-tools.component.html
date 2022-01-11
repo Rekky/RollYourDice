@@ -4,11 +4,15 @@
          (mouseleave)="displayExtraToolsIndex = 99">
         <app-tools-ux [blockOfTools]="blockOfTools"
                       [currentToolSelected]="currentToolSelected"
-                      [toolDisplayed]="true"></app-tools-ux>
+                      [toolDisplayed]="true"
+                      (toolSelected)="onToolSelected($event)"
+                      (updateImage)="updateImage($event)"></app-tools-ux>
         <div *ngIf="displayExtraToolsIndex === i">
             <app-tools-ux  class="extra-tools" [blockOfTools]="blockOfTools"
                           [currentToolSelected]="currentToolSelected"
-                          [toolDisplayed]="false"></app-tools-ux>
+                          [toolDisplayed]="false"
+                           (toolSelected)="onToolSelected($event)"
+                           (updateImage)="updateImage($event)"></app-tools-ux>
         </div>
     </div>
 </div>

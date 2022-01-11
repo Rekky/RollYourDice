@@ -17,16 +17,15 @@
     }
 
     &:hover {
-        //background: darken($c-whitest, 10%);
-        color: $c-reddest;
-
         svg {
             fill: $c-reddest;
         }
     }
 
     &.active {
-        color: $c-reddest;
+        svg {
+            fill: $c-reddest;
+        }
     }
 
     .triangle {
