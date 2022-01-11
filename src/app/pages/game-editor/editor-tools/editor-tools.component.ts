@@ -22,25 +22,26 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     currentToolSelected: string = 'pointer';
     getMouseObservableSubscription: Subscription;
 
-    blocksOfTools: any[][] = [
+    blocksOfTools: {name: string, displayed: boolean}[][] = [
         [
-            {name: 'pointer', displayed: true, icon: 'fas fa-mouse-pointer'}
+            {name: 'pointer', displayed: true}
         ],
         [
-            {name: 'hand', displayed: true, icon: 'far fa-hand-paper'}
+            {name: 'hand', displayed: true}
         ],
         [
-            {name: 'text', displayed: true, icon: 'fas fa-text-width'}
+            {name: 'text', displayed: true}
         ],
         [
-            {name: 'brush', displayed: true, icon: 'fas fa-paint-brush'},
-            {name: 'eraser', displayed: false, icon: 'fas fa-eraser'}
+            {name: 'brush', displayed: true},
+            {name: 'eraser', displayed: false},
+            {name: 'patata', displayed: false},
         ],
         [
-            {name: 'square', displayed: true, icon: 'far fa-square'}
+            {name: 'square', displayed: true},
         ],
         [
-            {name: 'image', displayed: true, icon: 'far fa-image'}
+            {name: 'image', displayed: true}
         ]
     ];
 
@@ -64,7 +65,6 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     }
 
     onToolSelected(tool: string): void {
-        // this.currentToolSelected = tool;
         this.displayExtraToolsIndex = 99;
         this.changeDisplayedTool(tool);
         if (tool !== 'pointer') {
@@ -114,7 +114,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        this.blocksOfTools[toolPackIndex].map(mapTool => {
+        this.blocksOfTools[toolPackIndex].forEach(mapTool => {
             mapTool.displayed = mapTool.name === tool;
         });
     }

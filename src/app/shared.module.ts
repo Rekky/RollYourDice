@@ -17,10 +17,12 @@ import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {LauncherRoutingModule} from './pages/launcher/launcher-routing.module';
 import {MatDialogModule} from '@angular/material/dialog';
+import {SafePipe} from './pipes/safe-pipe';
 
 @NgModule({
     declarations: [
         EnumToArrayPipe,
+        SafePipe,
         RecursiveListComponent,
         MapComponent,
         ErrorMessageComponent,
@@ -41,9 +43,11 @@ import {MatDialogModule} from '@angular/material/dialog';
         LauncherRoutingModule,
         ReactiveFormsModule,
         MatDialogModule,
+
     ],
     exports: [
         EnumToArrayPipe,
+        SafePipe,
         RecursiveListComponent,
         MapComponent,
         ErrorMessageComponent,
