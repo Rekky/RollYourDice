@@ -22,7 +22,10 @@
     <div class="file-input-container">
         <label>{{name}}</label>
         <div class="file-input">
-            <div>Upload File</div>
+            <div class="file-input-pre-data">
+                <img src="assets/svg/upload.svg" alt="upload-svg" />
+                Upload File
+            </div>
             <input type="file" (change)="coverImageChanged($event)" class="file-input-opacity">
         </div>
     </div>
