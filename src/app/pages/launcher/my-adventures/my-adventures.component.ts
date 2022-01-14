@@ -11,6 +11,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
 import {SocketService} from '../../../services/socket.service';
 import {Router} from '@angular/router';
+import {
+    NotificationComponent,
+    NotificationMessageDialogOptions
+} from '../../../components/notification/notification.component';
 
 @Component({
     selector: 'app-my-adventures',

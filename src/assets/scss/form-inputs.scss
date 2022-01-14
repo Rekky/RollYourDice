@@ -34,7 +34,7 @@
 
 .form-textarea {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: flex-start;
 
@@ -118,7 +118,7 @@
 
     input[type=number] {
         height: 100%;
-        width: 50px;
+        width: 55px;
         padding: 7px 15px;
         border: 1px solid $c-black;
         background-color: transparent;

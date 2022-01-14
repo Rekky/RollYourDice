@@ -30,7 +30,7 @@ export class HttpService {
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {
-                    this.httpErrorService. manageError(error, true);
+                    this.httpErrorService.manageError(error, true);
                     observable.error(error);
                 }
             );

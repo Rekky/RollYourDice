@@ -9,7 +9,7 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { NotificationComponent } from './components/notification/notification.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 
@@ -39,7 +39,7 @@ import {AuthInterceptor} from './interceptors/auth.interceptor';
     ],
     bootstrap: [AppComponent],
     exports: [],
-    entryComponents: [ErrorMessageComponent]
+    entryComponents: [NotificationComponent]
 })
 export class AppModule { }
 

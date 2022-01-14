@@ -34,6 +34,19 @@
             background: $c-whitest;
         }
 
+        .file-input-pre-data {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 20px;
+                height: 20px;
+                padding-right: 7px;
+            }
+        }
+
         .file-input-opacity {
             position: absolute;
             width: 100%;

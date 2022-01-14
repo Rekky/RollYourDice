@@ -1,0 +1,27 @@
+@import "src/styles.scss";
+
+.notification-container-error, .notification-container-success {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 58px;
+    background-color: $c-pale-green;
+
+    font-family: $rubik;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: center;
+}
+
+.notification-container-error {
+    background-color: $c-pale-red;
+}
