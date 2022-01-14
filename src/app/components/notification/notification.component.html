@@ -1,0 +1,7 @@
+<div *ngIf="data.type === 'error'" class="notification-container-error">
+    <div [innerHTML]="data.message | safe: 'html'"></div>
+</div>
+
+<div *ngIf="data.type === 'success'" class="notification-container-success">
+    <div [innerHTML]="data.message | safe: 'html'"></div>
+</div>

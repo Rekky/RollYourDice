@@ -20,7 +20,6 @@ $rubik-italic: 'rubik-italic', sans-serif;
 }
 
 
-
 // ------------------- GENERAL --------------------
 * {
     font-family: $rubik;
@@ -407,4 +406,10 @@ html, body { height: 100%; }
             transform: scale(1.05);
         }
     }
+}
+
+// -------------------------- NOTIFICATIONS STYLES
+.relevant {
+    font-family: $rubik-italic;
+    font-weight: bold;
 }

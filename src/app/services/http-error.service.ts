@@ -24,9 +24,8 @@ export class HttpErrorService {
     ) { }
 
     public manageError(httpError: HttpErrorResponse, doNotify: boolean = true): void {
-        const statusCode: number = httpError.status;
         if (doNotify) {
-            this.notificationsService.showErrorNotification(statusCode, httpError.error.message);
+            this.notificationsService.showErrorNotification(httpError.error.message);
 
             if (httpError.error.message === 'Expired') {
                 localStorage.removeItem('rollUser');
