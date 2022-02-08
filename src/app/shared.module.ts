@@ -18,6 +18,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LauncherRoutingModule} from './pages/launcher/launcher-routing.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import {SafePipe} from './pipes/safe-pipe';
+import { SearchGameComponent } from './components/search-game/search-game.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import {SafePipe} from './pipes/safe-pipe';
         CsSkillsComponent,
         AssetComponent,
         UploadInputComponent,
-        EditGameDataComponent
+        EditGameDataComponent,
+        SearchGameComponent
     ],
     imports: [
         CommonModule,

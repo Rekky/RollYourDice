@@ -15,6 +15,7 @@ import {
     NotificationComponent,
     NotificationMessageDialogOptions
 } from '../../../components/notification/notification.component';
+import {SearchGameComponent} from '../../../components/search-game/search-game.component';
 
 @Component({
     selector: 'app-my-adventures',
@@ -160,7 +161,13 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     searchGame(): void {
-
+        const dialogSub = this.dialog.open(SearchGameComponent, {
+        }).afterClosed().subscribe(res => {
+            if (res) {
+                this.createNewGame(res.game);
+            }
+            dialogSub.unsubscribe();
+        });
     }
 
     loadGame(adventure: Game): void {

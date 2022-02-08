@@ -26,6 +26,18 @@ export class GameService {
         });
     }
 
+    getGamesByString(gameId: string): Promise<Game[]> {
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/game/games`, {searchText: gameId}).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
     createGame(game: Game, formData: any): Promise<Game> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/game`, game).subscribe(
