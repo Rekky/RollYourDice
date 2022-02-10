@@ -13,21 +13,53 @@
 
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 
 .my-adventures-title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+
     height: 20%;
     width: 100%;
+    padding-right: 50px;
+
+    .settings-option {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        width: 170px;
+        height: 45px;
+        margin-right: 20px;
+        background-color: $c-white;
+        border: 1px solid $c-white-grey;
+
+        font-family: $rubik;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21px;
+        text-align: center;
+
+        &:hover {
+            background-color: $c-whitest;
+            cursor: pointer;
+        }
+    }
 }
 
 .my-adventures-box {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 
-    width: 100vw;
+    min-width: 100vw;
     height: 60%;
+    overflow: hidden;
 }
 
 .adventure-box {
@@ -41,8 +73,8 @@
 
     width: 400px;
     height: 100%;
+    margin: 25px;
     border: 3px solid #181818;
-    overflow: hidden;
 
     box-shadow: 0 1px 2px rgba($c-black,0.12),
     0 2px 4px rgba($c-black,0.12),
@@ -160,6 +192,26 @@
         height: 37px;
     }
 
+    .access-requested {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        position: absolute;
+        bottom: 40px;
+        z-index: 2;
+
+        width: 100%;
+        height: 38px;
+        color: #f2f2f2;
+
+        font-family: $rubik;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21px;
+        text-align: center;
+    }
+
     .adventure-name {
         position: absolute;
         left: 0;
@@ -205,7 +257,7 @@
 
             width: 100%;
             height: 55px;
-            background-color: $c-whitest;
+            background-color: $c-white;
             border: 1px solid $c-white-grey;
 
             font-family: $rubik;

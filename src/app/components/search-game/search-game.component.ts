@@ -20,7 +20,8 @@ export class SearchGameComponent implements OnInit {
         private gameService: GameService
     ) { }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        await this.searchGame();
         setTimeout(() => {
             this.loaded = true;
         }, 1000);
@@ -33,6 +34,10 @@ export class SearchGameComponent implements OnInit {
         catch (e) {
 
         }
+    }
+
+    requestGameAccess(): void {
+
     }
 
     closeDialog(): void {

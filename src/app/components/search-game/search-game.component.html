@@ -23,9 +23,15 @@
                 <button type="button" (click)="searchGame()">Search</button>
             </div>
             <div class="games-list">
-                <div class="game" *ngFor="let game of gamesList">
-                    <div class="game-name">{{game.name}}</div>
-<!--                    <div class="game-author">{{game.author}}</div>-->
+                <div class="game" *ngFor="let game of gamesList"
+                     [style.backgroundImage]="game.coverImage.uri"
+                     (click)="requestGameAccess()">
+                    <div class="game-name">
+                        {{game.name}}
+                    </div>
+                    <div class="game-author">
+                        {{game.authorId}}
+                    </div>
                 </div>
             </div>
         </div>

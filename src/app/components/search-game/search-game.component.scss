@@ -103,32 +103,57 @@
 
     .games-list {
         display: flex;
-        flex-flow: column nowrap;
-        justify-content: flex-start;
+        flex-flow: row wrap;
+        justify-content: space-between;
         align-items: flex-start;
 
-        height: 100%;
         width: 100%;
 
         .game {
             display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-start;
+            flex-flow: row wrap;
+            justify-content: center;
             align-items: center;
 
-            width: 100%;
-            height: 40px;
+            position: relative;
+            width: 49%;
+            height: 150px;
+            margin-bottom: 5px;
+
+            background-color: $c-red-bluish;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: 2px solid $c-black-grey;
             cursor: pointer;
 
             &:hover {
-
-                .game-name {
-                    color: $c-blackest;
-                }
+                border: 2px solid $c-pale-red;
             }
 
             .game-name {
-                color: $c-black;
+                width: 100%;
+                height: 30px;
+                text-align: center;
+
+                color: $c-blackest;
+                font-size: 25px;
+                font-weight: bold;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            .game-author {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                z-index: 2;
+
+                width: 100px;
+                color: $c-blackest;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
             }
         }
     }
