@@ -62,8 +62,7 @@ export class SocketService {
         });
         this.socket.on('game-editor-set-players-map', (data) => {
             // Nothing
-        });
-        // ======================== END MAPS ===================================
+        });                
 
         // ======================== START GAME PLAY ============================
         // this.socket.on('game-play-load', (data) => {
@@ -73,10 +72,8 @@ export class SocketService {
             console.log('GAME_STATUS_A_ACTUALIZAR', data);
             this.gameInteractor.updateGameStatus(data);
         });
-
-        // ======================== END GAME PLAY ==============================
+        
         // ======================== MAP OBJECTS ================================
-
         this.socket.on('game-editor-create-map-object', (data: any) => {
             console.log('RECIBOD OBJECT', data);
         });
@@ -85,8 +82,12 @@ export class SocketService {
             const mod = OurKonvaMapModification.generateModification('delete', data);
             this.mapInteractor.deleteObjectFromMap(mod);
         });
-        // ======================== END OBJECTS ================================
-
+        
+        // ======================== SOCIAL =====================================
+        this.socket.on('social-join-game-request', (data) => {
+            // Nothing
+            console.log('social-join-game-request', data);            
+        });
     }
 
     sendGameEditorId(gameId: string): void {
