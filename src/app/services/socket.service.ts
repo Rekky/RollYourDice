@@ -144,4 +144,10 @@ export class SocketService {
     deleteGameObject(mapId: string, objectId: string): void {
         this.socket.emit('game-editor-delete-map-object', {mapId, objectId});
     }
+
+    //////////////////////////////////////////////////////////////////////
+
+    requestJoinGame(gameId: string, authorId: string): void {
+        this.socket.emit('social-join-game-request', {gameId, authorId});
+    }
 }

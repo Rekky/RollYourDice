@@ -36,7 +36,7 @@
                     <span *ngIf="adventure.status === 0">ENTER</span>
                 </div>
             </div>
-            <img *ngIf="currentUser.id === adventure.authorId" src="assets/icons/master-crown.png"
+            <img *ngIf="currentUser.id === adventure.author.id" src="assets/icons/master-crown.png"
                  alt="master crown" class="master-indicator" />
             <div class="adventure-name">
                 {{adventure.name}}
@@ -45,8 +45,10 @@
                 Access requested
             </div>
             <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">
-                <div *ngIf="currentUser.id === adventure.authorId" class="settings-option" (click)="editGame(adventure, i, $event)">Edit game</div>
-                <div *ngIf="currentUser.id === adventure.authorId" class="settings-option" (click)="duplicateGame(adventure, $event)">Duplicate game</div>
+                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option"
+                     (click)="editGame(adventure, i, $event)">Edit game</div>
+                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option"
+                     (click)="duplicateGame(adventure, $event)">Duplicate game</div>
                 <div class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
             </div>
 <!--            <div *ngIf="adventure?.coverImage?.uri" class="cover-image"-->

@@ -64,7 +64,6 @@ export class EditGameDataComponent implements OnInit {
     }
 
     imageChanged(file: File): void {
-        console.log('imageChanged', file);
         this.gameForm.patchValue({imageCoverSource: file});
     }
 

@@ -6,7 +6,6 @@ import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
 import {MapInteractor} from '../../../interactors/MapInteractor';
 import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
-import {Coords} from "../../../classes/Coords";
 import {MatDialog} from '@angular/material/dialog';
 import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
 import {SocketService} from '../../../services/socket.service';
@@ -16,6 +15,7 @@ import {
     NotificationMessageDialogOptions
 } from '../../../components/notification/notification.component';
 import {SearchGameComponent} from '../../../components/search-game/search-game.component';
+import {Coords} from '../../../classes/Coords';
 
 @Component({
     selector: 'app-my-adventures',
@@ -86,7 +86,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     async createNewGame(game): Promise<void> {
         this.displayAdventureSettings(null);
         try {
-            const newGame = await this.gameInteractor.createGame(game, null);
+            const newGame = await this.gameInteractor.createGame(game);
             this.adventures.unshift(newGame);
         }
         catch (e) {
@@ -101,7 +101,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             const duplicatedAdventure = Game.fromJSON(adventure);
             duplicatedAdventure.id = null;
             duplicatedAdventure.name = duplicatedAdventure.name + ' (duplicated)';
-            const newGame = await this.gameInteractor.createGame(duplicatedAdventure, null);
+            const newGame = await this.gameInteractor.createGame(duplicatedAdventure);
             this.adventures.unshift(newGame);
         }
         catch (e) {
@@ -117,7 +117,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(async res => {
             if (res) {
                 try {
-                    await this.gameInteractor.editGame(res.game, null);
+                    await this.gameInteractor.editGame(res.game);
                     this.adventures[i] = Game.fromJSON(res.game);
                 }
                 catch (e) {
@@ -144,13 +144,13 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         const formData = data.formData;
         try {
             if (this.gameToEdit.id) {
-                await this.gameInteractor.editGame(game, formData);
+                await this.gameInteractor.editGame(game);
                 const adventureIndex = this.adventures.findIndex((adventure: Game) => {
                     return adventure.id === game.id;
                 });
                 this.adventures[adventureIndex] = game;
             } else {
-                const newGame = await this.gameInteractor.createGame(game, formData);
+                const newGame = await this.gameInteractor.createGame(game);
                 game.id = newGame.id;
                 this.adventures.unshift(game);
             }

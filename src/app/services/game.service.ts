@@ -38,7 +38,7 @@ export class GameService {
         });
     }
 
-    createGame(game: Game, formData: any): Promise<Game> {
+    createGame(game: Game): Promise<Game> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/game`, game).subscribe(
                 (response) => {
@@ -50,7 +50,7 @@ export class GameService {
         });
     }
 
-    editGame(game: Game, formData: any): Promise<any> {
+    editGame(game: Game): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.patch(`/game/${game.id}`, game).subscribe(
                 (response) => {

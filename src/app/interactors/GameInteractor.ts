@@ -40,16 +40,16 @@ export class GameInteractor {
         return await this.gameService.getGame(gameId);
     }
 
-    async createGame(game: Game, formData: any): Promise<Game> {
-        return await this.gameService.createGame(game, formData);
+    async createGame(game: Game): Promise<Game> {
+        return await this.gameService.createGame(game);
     }
 
     async removeGame(id: string): Promise<any> {
         return await this.gameService.removeGame(id);
     }
 
-    async editGame(game: Game, formData: any): Promise<any> {
-        return await this.gameService.editGame(game, formData);
+    async editGame(game: Game): Promise<any> {
+        return await this.gameService.editGame(game);
     }
 
     async getAllGames(): Promise<Game[]> {

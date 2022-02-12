@@ -2,6 +2,7 @@ import {Component, Inject, NgZone, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Game} from '../../classes/Game';
 import {GameService} from '../../services/game.service';
+import {SocketService} from '../../services/socket.service';
 
 @Component({
     selector: 'app-search-game',
@@ -17,7 +18,8 @@ export class SearchGameComponent implements OnInit {
     constructor(
         private dialogRef: MatDialogRef<Game>,
         private ngZone: NgZone,
-        private gameService: GameService
+        private gameService: GameService,
+        private socketService: SocketService
     ) { }
 
     async ngOnInit(): Promise<void> {
@@ -36,8 +38,8 @@ export class SearchGameComponent implements OnInit {
         }
     }
 
-    requestGameAccess(): void {
-
+    requestGameAccess(gameId: string, authorId: string): void {
+        this.socketService.requestJoinGame(gameId, authorId);
     }
 
     closeDialog(): void {

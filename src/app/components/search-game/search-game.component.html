@@ -25,12 +25,13 @@
             <div class="games-list">
                 <div class="game" *ngFor="let game of gamesList"
                      [style.backgroundImage]="game.coverImage.uri"
-                     (click)="requestGameAccess()">
+                     (click)="requestGameAccess(game.id, game.author.id)">
                     <div class="game-name">
                         {{game.name}}
                     </div>
                     <div class="game-author">
-                        {{game.authorId}}
+                        {{game.author.name}}
+                        {{game.author.hash}}
                     </div>
                 </div>
             </div>
