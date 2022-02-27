@@ -54,17 +54,16 @@ export class EditGameDataComponent implements OnInit {
         });
 
         const formData = new FormData();
-        // formData.append('file', this.gameForm.get('imageCoverSource').value);
+        formData.append('asset', this.gameForm.get('imageCoverSource').value);
 
-        Object.keys(this.gameForm.value).forEach((key: string) => {
-            const value = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
-            formData.append(key.toString(), value);
-        });
+        // Object.keys(this.gameForm.value).forEach((key: string) => {
+        //     const value = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
+        //     formData.append(key.toString(), value);
+        // });
         this.dialogRef.close({game: this.newGame, formData: formData});
     }
 
     imageChanged(file: File): void {
-        console.log('imageChanged', file);
         this.gameForm.patchValue({imageCoverSource: file});
     }
 

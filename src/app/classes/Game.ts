@@ -4,7 +4,8 @@ import { ulid } from 'ulid';
 
 export class Game {
     id: string;
-    authorId: string;
+    author: Author;
+    hash: string;
     createAt: Date;
     updatedAt: Date;
     description: string;
@@ -13,6 +14,7 @@ export class Game {
     name: string;
     maxNPlayers: number;
     playersId: string[];
+    playersRequestedId: string[];
     mapsId: string[];
     published: boolean;
     status: GameStatus;
@@ -23,7 +25,7 @@ export class Game {
         this.mapsId = [];
         this.published = false;
         this.gameType = GameTypes.DungeonsAndDragons5e;
-        this.authorId = authorId ? authorId : null;
+        this.author = {id: authorId ? authorId : null, name: '', hash: ''};
         this.createAt = new Date();
         this.updatedAt = new Date();
         this.maxNPlayers = 6;
@@ -46,4 +48,10 @@ export enum GameStatus {
     Running,
     Paused,
     Stopped
+}
+
+export interface Author {
+    id: string | null;
+    name: string;
+    hash: string;
 }

@@ -152,10 +152,10 @@ app-dropdown {
     align-items: center;
     overflow: hidden;
 
-    &:hover{
+    &:hover {
         background: darken($c-black, 5%);
     }
-    .title{
+    .title {
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;

@@ -63,7 +63,6 @@ export class SocketService {
         this.socket.on('game-editor-set-players-map', (data) => {
             // Nothing
         });
-        // ======================== END MAPS ===================================
 
         // ======================== START GAME PLAY ============================
         // this.socket.on('game-play-load', (data) => {
@@ -74,9 +73,7 @@ export class SocketService {
             this.gameInteractor.updateGameStatus(data);
         });
 
-        // ======================== END GAME PLAY ==============================
         // ======================== MAP OBJECTS ================================
-
         this.socket.on('game-editor-create-map-object', (data: any) => {
             console.log('RECIBOD OBJECT', data);
         });
@@ -85,8 +82,12 @@ export class SocketService {
             const mod = OurKonvaMapModification.generateModification('delete', data);
             this.mapInteractor.deleteObjectFromMap(mod);
         });
-        // ======================== END OBJECTS ================================
 
+        // ======================== SOCIAL =====================================
+        this.socket.on('social-join-game-request', (data) => {
+            // id del game i del usuari
+            console.log('social-join-game-request', data);
+        });
     }
 
     sendGameEditorId(gameId: string): void {
@@ -143,5 +144,11 @@ export class SocketService {
 
     deleteGameObject(mapId: string, objectId: string): void {
         this.socket.emit('game-editor-delete-map-object', {mapId, objectId});
+    }
+
+    //////////////////////////////////////////////////////////////////////
+
+    requestJoinGame(gameId: string, authorId: string): void {
+        this.socket.emit('social-join-game-request', {gameId, authorId});
     }
 }

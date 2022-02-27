@@ -1,0 +1,40 @@
+<div class="box-shadow"></div>
+<div class="search-game-box">
+    <div class="search-game-card card-roll">
+        <div class="header" *ngIf="loaded">
+            <div class="exit">
+                <svg (click)="closeDialog()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
+                    <defs><style>.cls-1{fill:none;stroke-miterlimit:10;stroke-width:3px;}</style></defs>
+                    <title>close</title>
+                    <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1">
+                        <circle class="cls-1" cx="25.15" cy="25.15" r="23.65"/>
+                        <line class="cls-1" x1="16.79" y1="16.79" x2="33.51" y2="33.51"/>
+                        <line class="cls-1" x1="16.79" y1="33.51" x2="33.51" y2="16.79"/>
+                    </g></g>
+                </svg>
+            </div>
+            <div class="title">Search game</div>
+        </div>
+        <div class="body" *ngIf="loaded">
+            <div class="form-text-search">
+<!--                <label [for]="'game-id'">Game Id</label>-->
+                <input type="text" [id]="'game-id'" maxlength="40"
+                       [(ngModel)]="searchGameId" placeholder="Game Id"/>
+                <button type="button" (click)="searchGame()">Search</button>
+            </div>
+            <div class="games-list">
+                <div class="game" *ngFor="let game of gamesList"
+                     [style.backgroundImage]="game.coverImage.uri"
+                     (click)="requestGameAccess(game.id, game.author.id)">
+                    <div class="game-name">
+                        {{game.name}}
+                    </div>
+                    <div class="game-author">
+                        {{game.author.name}}
+                        {{game.author.hash}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
