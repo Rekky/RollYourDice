@@ -5,6 +5,7 @@ import {UserInteractor} from './UserInteractor';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
+import {ImageService} from '../services/image.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,8 @@ export class GameInteractor {
     private currentGame: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
     private gameStatusModification: BehaviorSubject<{gameId: string, status: GameStatus}> = new BehaviorSubject<{gameId: string, status: GameStatus}>(null);
 
-    constructor(private gameService: GameService) {
+    constructor(private gameService: GameService,
+                private imageService: ImageService) {
     }
 
     setCurrentGame(game: Game): void {
@@ -40,8 +42,14 @@ export class GameInteractor {
         return await this.gameService.getGame(gameId);
     }
 
-    async createGame(game: Game): Promise<Game> {
-        return await this.gameService.createGame(game);
+    async createGame(game: Game, asset: any): Promise<Game> {
+        try {
+            game.coverImage = await this.imageService.uploadFile(asset);
+            return await this.gameService.createGame(game);
+        }
+        catch (e) {
+            return e;
+        }
     }
 
     async removeGame(id: string): Promise<any> {

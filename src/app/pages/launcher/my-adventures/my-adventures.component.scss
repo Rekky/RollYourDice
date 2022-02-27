@@ -169,7 +169,7 @@
         .game-activated, .game-paused, .game-stopped {
             width: 50px;
             height: 10px;
-            border: 1px solid rgba($c-black, 0.7);
+            //border: 1px solid rgba($c-black, 0.7);
             border-radius: 5%;
             background-color: $c-pale-green;
             box-shadow: 0 0 8px $c-pale-green;
@@ -192,6 +192,16 @@
         left: 5px;
         width: 45px;
         height: 37px;
+    }
+
+    .users-indicator {
+        position: absolute;
+        top: 10px;
+        left: 54px;
+        width: 35px;
+        height: 26px;
+        cursor: pointer;
+        z-index: 7;
     }
 
     .access-requested {

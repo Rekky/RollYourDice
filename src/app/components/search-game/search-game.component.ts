@@ -40,6 +40,7 @@ export class SearchGameComponent implements OnInit {
 
     requestGameAccess(gameId: string, authorId: string): void {
         this.socketService.requestJoinGame(gameId, authorId);
+        this.closeDialog();
     }
 
     closeDialog(): void {

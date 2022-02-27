@@ -38,10 +38,12 @@
             </div>
             <img *ngIf="currentUser.id === adventure.author.id" src="assets/icons/master-crown.png"
                  alt="master crown" class="master-indicator" />
+            <img *ngIf="currentUser.id === adventure.author.id" src="assets/svg/users.svg"
+                 alt="number of users" class="users-indicator" (click)="displayUsersList(adventure, $event)" />
             <div class="adventure-name">
                 {{adventure.name}}
             </div>
-            <div class="access-requested">
+            <div class="access-requested" *ngIf="adventure">
                 Access requested
             </div>
             <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">
@@ -51,12 +53,12 @@
                      (click)="duplicateGame(adventure, $event)">Duplicate game</div>
                 <div class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
             </div>
-<!--            <div *ngIf="adventure?.coverImage?.uri" class="cover-image"-->
-<!--                 [id]="adventure.id"-->
-<!--                 [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>-->
-            <div class="cover-image"
+            <div *ngIf="adventure?.coverImage?.uri" class="cover-image"
                  [id]="adventure.id"
-                 [style.backgroundImage]="'url(' + './assets/backgrounds/menu-bg.jpg' + ')'"></div>
+                 [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
+<!--            <div *ngIf="!adventure?.coverImage?.uri" class="cover-image"-->
+<!--                 [id]="adventure.id"-->
+<!--                 [style.backgroundImage]="'url(' + './assets/backgrounds/menu-bg.jpg' + ')'"></div>-->
         </div>
     </div>
 </div>

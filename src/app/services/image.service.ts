@@ -10,8 +10,7 @@ import {Asset} from '../classes/Asset';
 })
 export class ImageService {
 
-    constructor(private httpService: HttpService,
-                private userInteractor: UserInteractor) {}
+    constructor(private httpService: HttpService) {}
 
 
     async uploadFile(data: any): Promise<Asset> {

@@ -19,6 +19,7 @@ import {LauncherRoutingModule} from './pages/launcher/launcher-routing.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import {SafePipe} from './pipes/safe-pipe';
 import { SearchGameComponent } from './components/search-game/search-game.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { SearchGameComponent } from './components/search-game/search-game.compon
         AssetComponent,
         UploadInputComponent,
         EditGameDataComponent,
-        SearchGameComponent
+        SearchGameComponent,
+        UserListComponent
     ],
     imports: [
         CommonModule,

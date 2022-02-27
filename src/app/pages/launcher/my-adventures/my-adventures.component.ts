@@ -16,6 +16,7 @@ import {
 } from '../../../components/notification/notification.component';
 import {SearchGameComponent} from '../../../components/search-game/search-game.component';
 import {Coords} from '../../../classes/Coords';
+import { UserListComponent } from 'src/app/components/user-list/user-list.component';
 
 @Component({
     selector: 'app-my-adventures',
@@ -77,16 +78,16 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             data: new Game()
         }).afterClosed().subscribe(res => {
             if (res) {
-                this.createNewGame(res.game);
+                this.createNewGame(res.game, res.formData);
             }
             dialogSub.unsubscribe();
         });
     }
 
-    async createNewGame(game): Promise<void> {
+    async createNewGame(game, asset): Promise<void> {
         this.displayAdventureSettings(null);
         try {
-            const newGame = await this.gameInteractor.createGame(game);
+            const newGame = await this.gameInteractor.createGame(game, asset);
             this.adventures.unshift(newGame);
         }
         catch (e) {
@@ -101,8 +102,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             const duplicatedAdventure = Game.fromJSON(adventure);
             duplicatedAdventure.id = null;
             duplicatedAdventure.name = duplicatedAdventure.name + ' (duplicated)';
-            const newGame = await this.gameInteractor.createGame(duplicatedAdventure);
-            this.adventures.unshift(newGame);
+            // const newGame = await this.gameInteractor.createGame(duplicatedAdventure);
+            // this.adventures.unshift(newGame);
         }
         catch (e) {
             console.error(e);
@@ -139,6 +140,17 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
+    displayUsersList(game: Game, e: Event): void {
+        e.stopPropagation();
+        const dialogSub = this.dialog.open(UserListComponent, {
+            data: {playersId: game.playersId, playersRequestId: game.playersRequestedId}
+        }).afterClosed().subscribe(res => {
+            if (res) {
+            }
+            dialogSub.unsubscribe();
+        });
+    }
+
     async saveGame(data: any): Promise<void> {
         const game = data.game;
         const formData = data.formData;
@@ -150,9 +162,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 });
                 this.adventures[adventureIndex] = game;
             } else {
-                const newGame = await this.gameInteractor.createGame(game);
-                game.id = newGame.id;
-                this.adventures.unshift(game);
+                // const newGame = await this.gameInteractor.createGame(game);
+                // game.id = newGame.id;
+                // this.adventures.unshift(game);
             }
             await this.getMyGames();
         } catch (e) {
@@ -164,7 +176,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         const dialogSub = this.dialog.open(SearchGameComponent, {
         }).afterClosed().subscribe(res => {
             if (res) {
-                this.createNewGame(res.game);
+                // this.createNewGame(res.game);
             }
             dialogSub.unsubscribe();
         });

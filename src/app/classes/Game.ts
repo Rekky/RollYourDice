@@ -14,6 +14,7 @@ export class Game {
     name: string;
     maxNPlayers: number;
     playersId: string[];
+    playersRequestedId: string[];
     mapsId: string[];
     published: boolean;
     status: GameStatus;
