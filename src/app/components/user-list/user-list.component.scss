@@ -1,0 +1,190 @@
+@import "src/styles.scss";
+@import "src/assets/scss/form-inputs.scss";
+@import "src/assets/scss/buttons.scss";
+
+.box-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($c-blackest, 0.2);
+}
+
+.user-list-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+
+    width: 100%;
+    height: 100%;
+
+    letter-spacing: 1px;
+}
+
+.user-list-card {
+    position: relative;
+    width: 600px;
+    height: 70vh;
+    border-radius: 8px;
+    background-color: $c-whitest;
+    animation: expand-card 1s;
+    letter-spacing: 1px;
+}
+
+@keyframes expand-card {
+    from {
+        width: 200px;
+        height: 60vh;
+    }
+    to {
+        width: 600px;
+        height: 70vh;
+    }
+}
+
+.header {
+    width: 100%;
+    height: 100px;
+    padding: 20px 20px 20px 50px;
+    border-bottom: 2px solid $c-black;
+    letter-spacing: 1px;
+
+    .exit {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-end;
+        align-items: center;
+
+        width: 100%;
+        height: 30px;
+        cursor: pointer;
+
+        svg {
+            stroke: $c-black;
+            height: 100%;
+
+            &:hover {
+                stroke: $c-black;
+            }
+        }
+    }
+
+    .title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        width: 100%;
+        color: $c-black;
+        font-size: 30px;
+        font-weight: 500;
+    }
+}
+
+
+.body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    height: calc(70vh - 100px);
+    width: 100%;
+    padding: 75px 75px 20px 75px;
+    letter-spacing: 1px;
+    overflow: auto;
+
+    .players-list {
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        width: 100%;
+        margin-bottom: 3vh;
+
+        .player {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: center;
+
+            width: 100%;
+            padding: 15px 0;
+
+            color: $c-black;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-size: 18px;
+        }
+
+        .request-join-buttons {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-evenly;
+            align-items: center;
+
+            button {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+
+                width: 30px;
+                border: none;
+                background: none;
+            }
+
+            .accept-player {
+
+                svg {
+                    fill: $c-pale-green;
+
+                    &:hover {
+                        fill: $c-greenest;
+                    }
+                }
+            }
+
+            .reject-player {
+
+                svg {
+                    fill: $c-pale-red;
+
+                    &:hover {
+                        fill: $c-reddest;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    height: 100px;
+    width: 100%;
+    letter-spacing: 1px;
+
+    .button-box {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+    }
+}

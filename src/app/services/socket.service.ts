@@ -151,4 +151,17 @@ export class SocketService {
     requestJoinGame(gameId: string, authorId: string): void {
         this.socket.emit('social-join-game-request', {gameId, authorId});
     }
+
+    acceptRequestJoinGame(gameId: string, userId: string): void {
+        this.socket.emit('social-accept-game-request', {gameId, userId});
+    }
+
+    declineJoinGame(gameId: string, userId: string): void {
+        this.socket.emit('social-decline-game-request', {gameId, userId});
+    }
+
+    kickJoinGame(gameId: string, userId: string): void {
+        this.socket.emit('social-kick-game-request', {gameId, userId});
+    }
+
 }

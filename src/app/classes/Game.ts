@@ -1,10 +1,11 @@
 import {Asset} from './Asset';
 import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 import { ulid } from 'ulid';
+import {Player} from './User';
 
 export class Game {
     id: string;
-    author: Author;
+    author: Player;
     hash: string;
     createAt: Date;
     updatedAt: Date;
@@ -13,8 +14,8 @@ export class Game {
     coverImage: Asset;
     name: string;
     maxNPlayers: number;
-    playersId: string[];
-    playersRequestedId: string[];
+    players: Player[];
+    playersRequested: Player[];
     mapsId: string[];
     published: boolean;
     status: GameStatus;
@@ -25,7 +26,7 @@ export class Game {
         this.mapsId = [];
         this.published = false;
         this.gameType = GameTypes.DungeonsAndDragons5e;
-        this.author = {id: authorId ? authorId : null, name: '', hash: ''};
+        this.author = new Player(authorId ? authorId : null, '', '');
         this.createAt = new Date();
         this.updatedAt = new Date();
         this.maxNPlayers = 6;
@@ -48,10 +49,4 @@ export enum GameStatus {
     Running,
     Paused,
     Stopped
-}
-
-export interface Author {
-    id: string | null;
-    name: string;
-    hash: string;
 }

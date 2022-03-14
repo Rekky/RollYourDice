@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Game} from '../../../classes/Game';
 import {GameInteractor} from '../../../interactors/GameInteractor';
-import {User} from '../../../classes/User';
+import {Player, User} from '../../../classes/User';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
 import {MapInteractor} from '../../../interactors/MapInteractor';
@@ -143,10 +143,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     displayUsersList(game: Game, e: Event): void {
         e.stopPropagation();
         const dialogSub = this.dialog.open(UserListComponent, {
-            data: {playersId: game.playersId, playersRequestId: game.playersRequestedId}
+            data: {players: game.players, playersRequest: game.playersRequested, gameId: game.id}
         }).afterClosed().subscribe(res => {
-            if (res) {
-            }
             dialogSub.unsubscribe();
         });
     }
