@@ -14,7 +14,7 @@
                     <img class="sign-logo" src="./assets/svg/logo-red-white.svg" alt="logo"/>
                 </div>
             </div>
-            <div class="right-box col-6">
+            <div class="right-box col-6">                    
                 <app-sign-in *ngIf="display === 'signIn'" (display)="changeDisplay($event)"></app-sign-in>
                 <app-sign-up *ngIf="display === 'signUp'" (display)="changeDisplay($event)"></app-sign-up>
             </div>
