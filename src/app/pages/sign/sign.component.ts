@@ -27,23 +27,25 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
     ngAfterViewInit(): void {
         this.getCurrentUserSub = this.userInteractor.getUserObs().subscribe((user: User) => {
             if (user) {
-                this.preloadState();
-                setTimeout(() => {
-                    this.display = 'loading';
-                }, 600);
-                const circle = document.getElementById('circle');
-                setTimeout(() => {
-                    const interval = setInterval(() => {
-                        circle.setAttribute('stroke-dasharray', this.totalLoad + ', 20000');
-                        if (this.angle >= 360) {
-                            clearInterval(interval);
-                            // this.loadedState();
-                        }
-                        this.percentage = Math.round(this.angle / 360 * 100);
-                        this.angle += 3;
-                        this.totalLoad += 13;
-                    }, 10);
-                }, 600);
+                console.log('useeeeeeeeer', user);
+                
+                // this.preloadState();
+                // setTimeout(() => {
+                //     this.display = 'loading';
+                // }, 600);
+                // const circle = document.getElementById('circle');
+                // setTimeout(() => {
+                //     const interval = setInterval(() => {
+                //         circle.setAttribute('stroke-dasharray', this.totalLoad + ', 20000');
+                //         if (this.angle >= 360) {
+                //             clearInterval(interval);
+                //             this.loadedState();
+                //         }
+                //         this.percentage = Math.round(this.angle / 360 * 100);
+                //         this.angle += 3;
+                //         this.totalLoad += 13;
+                //     }, 10);
+                // }, 600);
             } else {
                 this.display = 'signIn';
             }
@@ -91,9 +93,5 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
         }, 500);
         logo.style.animation = 'rotateImageLeft 1000ms 500ms';
         leftBox.style.animation = 'leftBoxLeaves 1000ms 500ms';
-
-        setTimeout(() => {
-            this.router.navigate(['./launcher/menu']);
-        }, 4000);
     }
 }
