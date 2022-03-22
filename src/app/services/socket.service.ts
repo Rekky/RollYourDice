@@ -9,6 +9,9 @@ import {UserInteractor} from '../interactors/UserInteractor';
 import {environment} from '../../environments/environment';
 import {MapInteractor} from '../interactors/MapInteractor';
 import {GameInteractor} from '../interactors/GameInteractor';
+import {NotificationsService} from './notifications.service';
+import {MyAdventuresInteractor} from '../pages/launcher/my-adventures/my-adventures-interactor';
+import { Player } from '../classes/User';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +26,9 @@ export class SocketService {
     constructor(private apiService: ApiService,
                 private userInteractor: UserInteractor,
                 private mapInteractor: MapInteractor,
-                private gameInteractor: GameInteractor) {
+                private notificationService: NotificationsService,
+                private gameInteractor: GameInteractor,
+                private myAdventuresInteractor: MyAdventuresInteractor) {
 
         this.socket.on('connect', () => {
             console.log('socket conectado');
@@ -69,8 +74,7 @@ export class SocketService {
         //     console.log('RECIBO_GAME_PLAY', data);
         // });
         this.socket.on('game-status', (data) => {
-            console.log('GAME_STATUS_A_ACTUALIZAR', data);
-            this.gameInteractor.updateGameStatus(data);
+            this.myAdventuresInteractor.updateGameStatus(data);
         });
 
         // ======================== MAP OBJECTS ================================
@@ -85,8 +89,20 @@ export class SocketService {
 
         // ======================== SOCIAL =====================================
         this.socket.on('social-join-game-request', (data) => {
-            // id del game i del usuari
-            console.log('social-join-game-request', data);
+            this.myAdventuresInteractor.updateGamePlayersRequested(data);
+        });
+
+        this.socket.on('social-accept-game-request', (data) => {
+            this.myAdventuresInteractor.acceptGamePlayersRequested(data);
+        });
+
+        this.socket.on('social-decline-game-request', (data) => {
+            this.myAdventuresInteractor.declineGamePlayersRequested(data);
+        });
+
+        this.socket.on('social-kick-game-request', (data) => {
+            console.log('kick =', data);
+            this.myAdventuresInteractor.kickGamePlayers(data);
         });
     }
 
@@ -152,16 +168,22 @@ export class SocketService {
         this.socket.emit('social-join-game-request', {gameId, authorId});
     }
 
-    acceptRequestJoinGame(gameId: string, userId: string): void {
+    acceptRequestJoinGame(gameId: string, player: Player): void {
+        const userId = player.id;
         this.socket.emit('social-accept-game-request', {gameId, userId});
+        this.myAdventuresInteractor.masterAcceptGamePlayersRequested(gameId, player);
     }
 
-    declineJoinGame(gameId: string, userId: string): void {
+    declineJoinGame(gameId: string, player: Player): void {
+        const userId = player.id;
         this.socket.emit('social-decline-game-request', {gameId, userId});
+        this.myAdventuresInteractor.masterDeclineGamePlayers(gameId, player);
     }
 
-    kickJoinGame(gameId: string, userId: string): void {
+    kickJoinGame(gameId: string, player: Player): void {
+        const userId = player.id;
         this.socket.emit('social-kick-game-request', {gameId, userId});
+        this.myAdventuresInteractor.masterKickGamePlayers(gameId, player);
     }
 
 }

@@ -40,12 +40,12 @@ export class SearchGameComponent implements OnInit {
 
     requestGameAccess(gameId: string, authorId: string): void {
         this.socketService.requestJoinGame(gameId, authorId);
-        this.closeDialog();
+        this.closeDialog({gameId: gameId});
     }
 
-    closeDialog(): void {
+    closeDialog(send?: any): void {
         this.ngZone.run(() => {
-            this.dialogRef.close();
+            this.dialogRef.close(send);
         });
     }
 

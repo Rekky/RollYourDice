@@ -6,13 +6,13 @@ import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {ImageService} from '../services/image.service';
+import {Player} from '../classes/User';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameInteractor {
     private currentGame: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
-    private gameStatusModification: BehaviorSubject<{gameId: string, status: GameStatus}> = new BehaviorSubject<{gameId: string, status: GameStatus}>(null);
 
     constructor(private gameService: GameService,
                 private imageService: ImageService) {
@@ -24,14 +24,6 @@ export class GameInteractor {
 
     getCurrentGameObs(): Observable<Game> {
         return this.currentGame.asObservable();
-    }
-
-    setGameStatus(data: {gameId: string, status: GameStatus}): void {
-        this.gameStatusModification.next(data);
-    }
-
-    getGameStatusObs(): Observable<{gameId: string, status: GameStatus}> {
-        return this.gameStatusModification.asObservable();
     }
 
     getGameEditor(id: string): void {
@@ -66,9 +58,5 @@ export class GameInteractor {
 
     async getMyGames(): Promise<Game[]> {
         return await this.gameService.getMyGames();
-    }
-
-    updateGameStatus(data: {gameId: string, status: GameStatus}): void {
-        this.setGameStatus(data);
     }
 }

@@ -3,7 +3,7 @@
         <div class="settings-option" (click)="startNewGame()">Create game</div>
         <div class="settings-option" (click)="searchGame()">Search game</div>
     </div>
-    <div class="my-adventures-box">
+    <div class="my-adventures-box" *ngIf="adventures">
         <div *ngFor="let adventure of adventures; let i = index;" class="adventure-box">
             <div class="game-status">
                 <div *ngIf="adventure.status === 0" class="game-activated"></div>
@@ -43,7 +43,7 @@
             <div class="adventure-name">
                 {{adventure.name}}
             </div>
-            <div class="access-requested" *ngIf="adventure">
+            <div class="access-requested" *ngIf="isAccessRequested(adventure)">
                 Access requested
             </div>
             <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">

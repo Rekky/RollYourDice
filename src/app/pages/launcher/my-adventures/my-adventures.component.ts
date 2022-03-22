@@ -17,6 +17,7 @@ import {
 import {SearchGameComponent} from '../../../components/search-game/search-game.component';
 import {Coords} from '../../../classes/Coords';
 import { UserListComponent } from 'src/app/components/user-list/user-list.component';
+import {MyAdventuresInteractor} from './my-adventures-interactor';
 
 @Component({
     selector: 'app-my-adventures',
@@ -36,25 +37,22 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     adventureSettingsDisplayedId: string = null;
 
     userSubscription: Subscription;
-    gameStatusUpdatesSub: Subscription;
+    myAdventuresSub: Subscription;
 
     constructor(private gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
                 private userInteractor: UserInteractor,
+                private myAdventuresInteractor: MyAdventuresInteractor,
                 private dialog: MatDialog,
                 private socketService: SocketService,
                 private router: Router) {
         this.currentUser = this.userInteractor.getCurrentUser();
-        this.gameStatusUpdatesSub = this.gameInteractor.getGameStatusObs().subscribe(update => {
-            if (update) {
-                const updateGameIndex = this.adventures.findIndex(adv => adv.id === update.gameId);
-                this.adventures[updateGameIndex].status = update.status;
-            }
+        this.myAdventuresSub = this.myAdventuresInteractor.getMyAdventures().subscribe(adv => {
+            this.adventures = adv;
         });
     }
 
     async ngOnInit(): Promise<void> {
-        await this.getMyGames();
         this.followMouse();
     }
 
@@ -62,15 +60,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         if (this.userSubscription) {
             this.userSubscription.unsubscribe();
         }
-    }
-
-    async getMyGames(): Promise<void>  {
-        try {
-            const response: any = await this.gameInteractor.getMyGames();
-            this.adventures = response.data;
-        } catch (e) {
-            console.error(e);
-        }
+        this.myAdventuresSub?.unsubscribe();
     }
 
     startNewGame(): void {
@@ -159,12 +149,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                     return adventure.id === game.id;
                 });
                 this.adventures[adventureIndex] = game;
-            } else {
-                // const newGame = await this.gameInteractor.createGame(game);
-                // game.id = newGame.id;
-                // this.adventures.unshift(game);
             }
-            await this.getMyGames();
         } catch (e) {
             console.log(e);
         }
@@ -173,8 +158,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     searchGame(): void {
         const dialogSub = this.dialog.open(SearchGameComponent, {
         }).afterClosed().subscribe(res => {
-            if (res) {
-                // this.createNewGame(res.game);
+            if (res?.gameId) {
+                this.myAdventuresInteractor.addAdventure(res.gameId);
             }
             dialogSub.unsubscribe();
         });
@@ -227,6 +212,10 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         } else {
             this.adventureSettingsDisplayedId = id;
         }
+    }
+
+    isAccessRequested(adventure: Game): boolean {
+        return !!adventure.playersRequested?.find(player => player.id === this.currentUser.id);
     }
 
 }

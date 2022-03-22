@@ -20,7 +20,7 @@
                 <div class="player" *ngFor="let player of players">
                     {{player.name}}
                     <div class="request-join-buttons">
-                        <button type="button" class="reject-player" (click)="kickPlayer(player.id)">
+                        <button type="button" class="reject-player" (click)="kickPlayer(player)">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 415.188 415.188" style="enable-background:new 0 0 415.188 415.188;" xml:space="preserve">
                                 <path d="M412.861,78.976c3.404-6.636,2.831-14.159-0.15-20.404c0.84-7.106-1.02-14.321-7.746-19.855
@@ -41,13 +41,13 @@
                 <div class="player" *ngFor="let player of playersRequest">
                     {{player.name}}
                     <div class="request-join-buttons">
-                        <button type="button" class="accept-player" (click)="acceptPlayer(player.id)">
+                        <button type="button" class="accept-player" (click)="acceptPlayer(player)">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 342.357 342.357" style="enable-background:new 0 0 342.357 342.357;" xml:space="preserve">
                                 <polygon points="290.04,33.286 118.861,204.427 52.32,137.907 0,190.226 118.862,309.071 342.357,85.606 "/>
                             </svg>
                         </button>
-                        <button type="button" class="reject-player" (click)="rejectPlayer(player.id)">
+                        <button type="button" class="reject-player" (click)="rejectPlayer(player)">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 415.188 415.188" style="enable-background:new 0 0 415.188 415.188;" xml:space="preserve">
                                 <path d="M412.861,78.976c3.404-6.636,2.831-14.159-0.15-20.404c0.84-7.106-1.02-14.321-7.746-19.855

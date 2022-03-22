@@ -90,7 +90,7 @@ export class GameService {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/game/my-games`, {}).subscribe(
                 (response) => {
-                    resolve(response);
+                    resolve(response.data);
                 }, (error: HttpErrorResponse) => {
                     reject(error);
                 }

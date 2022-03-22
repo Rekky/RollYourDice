@@ -35,16 +35,16 @@ export class UserListComponent implements OnInit {
         });
     }
 
-    acceptPlayer(playerId: string): void {
-        this.socketService.acceptRequestJoinGame(playerId, this.data.gameId);
+    acceptPlayer(player: Player): void {
+        this.socketService.acceptRequestJoinGame(this.data.gameId, player);
     }
 
-    rejectPlayer(playerId: string): void {
-        this.socketService.acceptRequestJoinGame(playerId, this.data.gameId);
+    rejectPlayer(player: Player): void {
+        this.socketService.declineJoinGame(this.data.gameId, player);
     }
 
-    kickPlayer(playerId: string): void {
-        this.socketService.acceptRequestJoinGame(playerId, this.data.gameId);
+    kickPlayer(player: Player): void {
+        this.socketService.kickJoinGame(this.data.gameId, player);
     }
 
 }
