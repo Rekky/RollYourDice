@@ -130,6 +130,12 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }
     }
 
+    cancelGameRequest(adventure: Game, i: number, e: Event): void {
+        e.stopPropagation();
+        this.socketService.cancelJoinGameRequest(adventure.id, this.currentUser.id);
+        this.displayAdventureSettings(null);
+    }
+
     displayUsersList(game: Game, e: Event): void {
         e.stopPropagation();
         const dialogSub = this.dialog.open(UserListComponent, {

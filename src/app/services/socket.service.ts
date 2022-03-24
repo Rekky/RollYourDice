@@ -82,6 +82,10 @@ export class SocketService {
             console.log('RECIBOD OBJECT', data);
         });
 
+        this.socket.on('game-editor-update-map-object', (data: any) => {
+            console.log('UPDATE OBJECT OBJECT', data);
+        });
+
         this.socket.on('game-editor-delete-map-object', (data: any) => {
             const mod = OurKonvaMapModification.generateModification('delete', data);
             this.mapInteractor.deleteObjectFromMap(mod);
@@ -101,8 +105,11 @@ export class SocketService {
         });
 
         this.socket.on('social-kick-game-request', (data) => {
-            console.log('kick =', data);
             this.myAdventuresInteractor.kickGamePlayers(data);
+        });
+
+        this.socket.on('social-cancel-game-request', (data) => {
+            this.myAdventuresInteractor.cancelGamePlayers(data);
         });
     }
 
@@ -114,7 +121,6 @@ export class SocketService {
         const userId = this.userInteractor.getCurrentUser().id;
         this.socket.emit('game-play-load', {gameId, userId});
     }
-
 
     sendGameCreateMap(gameId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-create-map', {gameId, map});
@@ -184,6 +190,11 @@ export class SocketService {
         const userId = player.id;
         this.socket.emit('social-kick-game-request', {gameId, userId});
         this.myAdventuresInteractor.masterKickGamePlayers(gameId, player);
+    }
+
+    cancelJoinGameRequest(gameId: string, userId: string): void {
+        this.socket.emit('social-cancel-game-request', {gameId, userId});
+        this.myAdventuresInteractor.playerCancelGameRequest(gameId);
     }
 
 }

@@ -6,6 +6,7 @@ import {GameService} from '../../../services/game.service';
 import {ImageService} from '../../../services/image.service';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {UserInteractor} from '../../../interactors/UserInteractor';
+import {SocketService} from '../../../services/socket.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +16,7 @@ export class MyAdventuresInteractor {
 
     constructor(private gameService: GameService,
                 private gameInteractor: GameInteractor,
-                private userInteractor: UserInteractor,
-                private imageService: ImageService) {
+                private userInteractor: UserInteractor) {
     }
 
     getMyAdventures(): Observable<Game[]> {
@@ -76,6 +76,15 @@ export class MyAdventuresInteractor {
         this.myAdventures.next(adventures);
     }
 
+    cancelGamePlayers(data: {gameId: string, player: Player}): void {
+        const adventures = this.myAdventures.getValue();
+        const advIndex = adventures.findIndex(adv => adv.id === data.gameId);
+        const playerReqIndex = adventures[advIndex].playersRequested.findIndex(playerReq =>
+            playerReq.id === data.player.id);
+        adventures[advIndex].playersRequested.splice(playerReqIndex, 1);
+        this.myAdventures.next(adventures);
+    }
+
     masterAcceptGamePlayersRequested(gameId: string, player: Player): void {
         const adventures = this.myAdventures.getValue();
         const advIndex = adventures.findIndex(adv => adv.id === gameId);
@@ -101,6 +110,13 @@ export class MyAdventuresInteractor {
         const playerIndex = adventures[advIndex].players.findIndex(playerReq =>
             playerReq.id === player.id);
         adventures[advIndex].players.splice(playerIndex, 1);
+        this.myAdventures.next(adventures);
+    }
+
+    playerCancelGameRequest(gameId: string): void {
+        const adventures = this.myAdventures.getValue();
+        const advIndex = adventures.findIndex(adv => adv.id === gameId);
+        adventures.splice(advIndex, 1);
         this.myAdventures.next(adventures);
     }
 }

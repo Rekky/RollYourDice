@@ -38,8 +38,16 @@
             </div>
             <img *ngIf="currentUser.id === adventure.author.id" src="assets/icons/master-crown.png"
                  alt="master crown" class="master-indicator" />
-            <img *ngIf="currentUser.id === adventure.author.id" src="assets/svg/users.svg"
-                 alt="number of users" class="users-indicator" (click)="displayUsersList(adventure, $event)" />
+            <div *ngIf="currentUser.id === adventure.author.id" class="users-indicator">
+                <span *ngIf="adventure.playersRequested.length > 0" class="n-players-requested">
+                    <svg width="18px" height="18px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet">
+                        <path d="M36.989 42.439H27.01L23 2h18z"></path>
+                        <ellipse cx="31.999" cy="54.354" rx="7.663" ry="7.646"></ellipse>
+                    </svg>
+                </span>
+                <img *ngIf="currentUser.id === adventure.author.id" src="assets/svg/users.svg"
+                     alt="number of users" (click)="displayUsersList(adventure, $event)" />
+            </div>
             <div class="adventure-name">
                 {{adventure.name}}
             </div>
@@ -51,7 +59,8 @@
                      (click)="editGame(adventure, i, $event)">Edit game</div>
                 <div *ngIf="currentUser.id === adventure.author.id" class="settings-option"
                      (click)="duplicateGame(adventure, $event)">Duplicate game</div>
-                <div class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
+                <div *ngIf="!isAccessRequested(adventure)" class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
+                <div *ngIf="isAccessRequested(adventure)" class="settings-option" (click)="cancelGameRequest(adventure, i , $event)">Cancel request</div>
             </div>
             <div *ngIf="adventure?.coverImage?.uri" class="cover-image"
                  [id]="adventure.id"

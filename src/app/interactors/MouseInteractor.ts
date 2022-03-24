@@ -40,9 +40,6 @@ export class MouseInteractor implements OnDestroy {
                 document.onkeyup = (ev) => {
                     if (ev.key === 'Delete' && document.activeElement.tagName !== 'INPUT') {
                         this.socketService.deleteGameObject(this.currentMap.id, object.konvaObject.getAttr('id'));
-                        // object.transformer.destroy();
-                        // object.konvaObject.destroy();
-                        // object.layer.batchDraw();
                         this.selectedKonvaObject.next(null);
                     }
                 };

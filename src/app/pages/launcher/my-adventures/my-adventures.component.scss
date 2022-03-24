@@ -198,10 +198,24 @@
         position: absolute;
         top: 10px;
         left: 54px;
-        width: 35px;
-        height: 26px;
         cursor: pointer;
         z-index: 7;
+
+        .n-players-requested {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            z-index: 8;
+
+            svg {
+                fill: $c-reddest;
+            }
+        }
+
+        img {
+            width: 35px;
+            height: 26px;
+        }
     }
 
     .access-requested {
