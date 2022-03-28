@@ -6,7 +6,7 @@ import Konva from 'konva';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import {Coords} from '../../classes/Coords';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
-import {Subscription} from 'rxjs';
+import {interval, Subscription} from 'rxjs';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
 import {SocketService} from '../../services/socket.service';
@@ -84,6 +84,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         //         this.gridStage.batchDraw();
         //     }
         // });
+
+        window.addEventListener('resize', () => {
+            console.log('resize');
+            this.gridStage.width(window.innerWidth);
+            this.gridStage.height(window.innerHeight);                   
+            this.initializeMap();
+        });
     }
 
     ngAfterViewInit(): void {
@@ -137,17 +144,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
-        const box = document.getElementById('mapbox' + this.map.id);
+        console.log('initializeMap');
+        
+        // const box = document.getElementById('mapbox' + this.map.id);
+        const box = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
         this.gridStage = new Konva.Stage({
             container: 'map' + this.map.id,
-            width: box.offsetWidth,
-            height: box.offsetHeight,
+            width: box.width,
+            height: box.height,
             draggable: false,
             scale: {x: this.mapScale, y: this.mapScale}
         });
 
-        this.map.nColumns = box.offsetWidth / this.map.grid.cellSize;
-        this.map.nRows = box.offsetHeight / this.map.grid.cellSize;
+        this.map.nColumns = box.width / this.map.grid.cellSize;
+        this.map.nRows = box.height / this.map.grid.cellSize;
 
         this.gridStage.on('click tap', (e) => {
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
@@ -160,7 +173,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridStage.add(this.layers.shadows);
         this.gridStage.add(this.layers.draws);
         this.gridStage.add(this.layers.texts);
-        this.mouseInteractor.setStage(this.gridStage);
+        this.mouseInteractor.setStage(this.gridStage);           
     }
 
     setCurrentObjectSelected(ev, object, type): void {
@@ -178,10 +191,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // this.currentObjectSelected.emit(this.currentMapObjectSelected);
     }
 
-    drawGrid(): void {
+    drawGrid(): void {             
         this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
         this.mapHeight = this.map.nRows * this.map.grid.cellSize;
-
+                
         for (let i = 0; i <= this.map.nColumns; i++) {
             this.layers.grid.add(new Konva.Line({
                 points: [
@@ -209,8 +222,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 stroke: '#ddd',
                 strokeWidth: 1,
             }));
-        }
-
+        }                
         // this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
         // const position = new Coords(10, 10, 0);
         // this.addRectangleToKonva(position);
@@ -367,5 +379,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridStage.container().style.backgroundSize = 'cover';
         this.gridStage.container().style.backgroundPosition = 'center';
         this.gridStage.batchDraw();
+    }
+
+    reportWindowSize(): void {
+        console.log('entras', this.mapWidth);
+        this.initializeMap();
+        
+        // heightOutput.textContent = window.innerHeight;
+        // widthOutput.textContent = window.innerWidth;
     }
 }
