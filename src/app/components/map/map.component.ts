@@ -32,10 +32,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Output() mapMoveEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
     protected currentMapObjectSelected: any = null;
+    Konvadraggable = true;
 
     // MAP VARS
     public mapWidth: number = 100;
-    public mapHeight: number = 100;
+    public mapHeight: number = 100;    
     protected mapScale: number = 1;
     protected isMovingMap: boolean = false;
     protected startCoords: Coords = new Coords();
@@ -83,13 +84,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         //         this.rectangleTest.position({x: jsonData.attrs.x, y: jsonData.attrs.y});
         //         this.gridStage.batchDraw();
         //     }
-        // });
-
+        // });        
+        
         window.addEventListener('resize', () => {
             console.log('resize');
             this.gridStage.width(window.innerWidth);
             this.gridStage.height(window.innerHeight);                   
             this.initializeMap();
+            this.gridStage.batchDraw();
         });
     }
 
@@ -99,26 +101,38 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
 
-        this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
-            this.moveMap('mousedown', ev);
+        this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {            
+            if(ev.button === 2) {                    
+                console.log('mousedown', ev.button);   
+                this.gridStage.setDraggable(true);
+                this.moveMap('mousedown', ev);
+            }
         });
         this.mapEl.nativeElement.addEventListener('mousemove', (ev: MouseEvent) => {
-            this.moveMap('mousemove', ev);
+            this.moveMap('mousemove', ev);                        
         });
-        this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
-            this.moveMap('mouseup', ev);
+        this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {            
+            if(ev.button === 2) {                    
+                console.log('mouseup', ev.button);     
+                this.gridStage.setDraggable(false);       
+                this.moveMap('mouseup', ev);             
+            }
         });
         this.mapEl.nativeElement.addEventListener('mouseout', (ev: MouseEvent) => {
-            this.moveMap('mouseout', ev);
-        });
+            // this.moveMap('mouseout', ev);
+        });        
+        this.mapEl.nativeElement.addEventListener('contextmenu', (ev: MouseEvent) => {
+            ev.preventDefault();                                  
+        }, false);
         this.mapEl.nativeElement.addEventListener('wheel', (ev: MouseEvent | any) => {
             if (ev.wheelDelta > 0) {
                 this.mapScale = this.mapScale < this.maxScaleSize ? this.mapScale = this.mapScale + this.scalingSize : this.mapScale;
             } else {
-                this.mapScale = this.mapScale > this.minScaleSize ? this.mapScale = this.mapScale - this.scalingSize : this.mapScale;
-            }
+                this.mapScale = this.mapScale > this.minScaleSize ? this.mapScale = this.mapScale - this.scalingSize : this.mapScale;                
+            }            
+                        
             this.gridStage.scale({x: this.mapScale, y: this.mapScale});
-            this.gridStage.batchDraw();
+            this.gridStage.batchDraw();                  
         });
     }
 
@@ -143,9 +157,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         }
     }
 
-    initializeMap(): void {
-        console.log('initializeMap');
-        
+    initializeMap(): void {                
         // const box = document.getElementById('mapbox' + this.map.id);
         const box = {
             width: window.innerWidth,
@@ -155,25 +167,31 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             container: 'map' + this.map.id,
             width: box.width,
             height: box.height,
-            draggable: false,
+            draggable: false,            
             scale: {x: this.mapScale, y: this.mapScale}
         });
 
-        this.map.nColumns = box.width / this.map.grid.cellSize;
-        this.map.nRows = box.height / this.map.grid.cellSize;
+        this.map.nColumns = parseInt((box.width / this.map.grid.cellSize + 1).toFixed());
+        this.map.nRows = parseInt((box.height / this.map.grid.cellSize + 1).toFixed());
+
+        this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
+        this.mapHeight = this.map.nRows * this.map.grid.cellSize;
 
         this.gridStage.on('click tap', (e) => {
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
                 this.mouseInteractor.unsetSelectedKonvaObject();
             }
-        });
+        });                                
+
         this.drawGrid();
         this.gridStage.add(this.layers.grid);
         this.gridStage.add(this.layers.objects);
         this.gridStage.add(this.layers.shadows);
         this.gridStage.add(this.layers.draws);
         this.gridStage.add(this.layers.texts);
-        this.mouseInteractor.setStage(this.gridStage);           
+        this.mouseInteractor.setStage(this.gridStage);  
+        
+        console.log(this.map);
     }
 
     setCurrentObjectSelected(ev, object, type): void {
@@ -191,10 +209,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // this.currentObjectSelected.emit(this.currentMapObjectSelected);
     }
 
-    drawGrid(): void {             
-        this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
-        this.mapHeight = this.map.nRows * this.map.grid.cellSize;
-                
+    drawGrid(): void {                     
         for (let i = 0; i <= this.map.nColumns; i++) {
             this.layers.grid.add(new Konva.Line({
                 points: [
@@ -203,7 +218,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     Math.round(i * this.map.grid.cellSize) + 0.5,
                     this.map.nRows * this.map.grid.cellSize
                 ],
-                stroke: '#ddd',
+                stroke: '#e6e6e6',
                 strokeWidth: 1,
             }));
         }
@@ -219,7 +234,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     this.map.nColumns * this.map.grid.cellSize,
                     Math.round(j * this.map.grid.cellSize)
                 ],
-                stroke: '#ddd',
+                stroke: '#e6e6e6',
                 strokeWidth: 1,
             }));
         }                
@@ -229,31 +244,34 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     moveMap(res: string, ev: MouseEvent): void {
-        if (this.displayCursor === 'hand') {
-            this.gridStage.setDraggable(true);
+        console.log('moveMap');
+        
+        // if (this.displayCursor === 'hand') {
+            // this.gridStage.setDraggable(true);
             if (res === 'mousedown') {
-                this.isMovingMap = true;
-                this.startCoords.x = ev.clientX - this.offsetCoords.x;
-                this.startCoords.y = ev.clientY - this.offsetCoords.y;
+                // this.isMovingMap = true;
+                // this.gridStage.setDraggable(true);
+                // this.startCoords.x = ev.clientX - this.offsetCoords.x;
+                // this.startCoords.y = ev.clientY - this.offsetCoords.y;
             }
-            if (res === 'mousemove') {
-                if (this.isMovingMap) {
-                    this.map.position.x = ev.clientX - this.startCoords.x;
-                    this.map.position.y = ev.clientY - this.startCoords.y;
-                }
-                this.offsetCoords.x = this.map.position.x;
-                this.offsetCoords.y = this.map.position.y;
+            if (res === 'mousemove') {                                
+                // if (this.isMovingMap) {                    
+                    // this.map.position.x = ev.clientX - this.startCoords.x;
+                    // this.map.position.y = ev.clientY - this.startCoords.y;
+                // }
+                // this.offsetCoords.x = this.map.position.x;
+                // this.offsetCoords.y = this.map.position.y;
             }
             if (res === 'mouseup') {
-                this.isMovingMap = false;
-                this.mapMoveEvent.emit(this.map);
+                // this.isMovingMap = false;
+                // this.mapMoveEvent.emit(this.map);
             }
             if (res === 'mouseout') {
-                this.isMovingMap = false;
+                // this.isMovingMap = false;
             }
-        } else {
-            this.gridStage.setDraggable(false);
-        }
+        // } else {
+        //     this.gridStage.setDraggable(false);
+        // }
     }
 
     // addImageToKonva(url: string): void {
