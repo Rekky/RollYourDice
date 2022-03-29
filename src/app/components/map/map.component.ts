@@ -101,21 +101,32 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
 
-        this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {            
+        this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {   
+
+            console.log(this.mouseInteractor.mouse);
             if(ev.button === 2) {                    
                 console.log('mousedown', ev.button);   
+                // this.gridStage.setDraggable(true);              
+            } 
+            if(this.mouseInteractor.mouse.state !== "pointer") {
+                this.gridStage.setDraggable(false);
+            } else {
                 this.gridStage.setDraggable(true);
-                this.moveMap('mousedown', ev);
+                this.gridStage.setDraggable(true);
             }
+       
         });
         this.mapEl.nativeElement.addEventListener('mousemove', (ev: MouseEvent) => {
-            this.moveMap('mousemove', ev);                        
+            // this.moveMap('mousemove', ev);     
+            console.log('mousemove', ev.button);
+                               
         });
         this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {            
             if(ev.button === 2) {                    
                 console.log('mouseup', ev.button);     
-                this.gridStage.setDraggable(false);       
-                this.moveMap('mouseup', ev);             
+                // se tiene que poner doble por un bug de la libreria
+                // this.gridStage.setDraggable(false); 
+                // this.gridStage.setDraggable(true);                                                               
             }
         });
         this.mapEl.nativeElement.addEventListener('mouseout', (ev: MouseEvent) => {
@@ -123,7 +134,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         });        
         this.mapEl.nativeElement.addEventListener('contextmenu', (ev: MouseEvent) => {
             ev.preventDefault();                                  
-        }, false);
+        });
         this.mapEl.nativeElement.addEventListener('wheel', (ev: MouseEvent | any) => {
             if (ev.wheelDelta > 0) {
                 this.mapScale = this.mapScale < this.maxScaleSize ? this.mapScale = this.mapScale + this.scalingSize : this.mapScale;
@@ -158,40 +169,41 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {                
-        // const box = document.getElementById('mapbox' + this.map.id);
-        const box = {
-            width: window.innerWidth,
-            height: window.innerHeight
-        }
+        // const box = document.getElementById('mapbox' + this.map.id); 
+        // Konva.dragButtons = [2];      
+
         this.gridStage = new Konva.Stage({
             container: 'map' + this.map.id,
-            width: box.width,
-            height: box.height,
-            draggable: false,            
+            width: window.innerWidth,
+            height: window.innerWidth,
+            draggable: true,            
             scale: {x: this.mapScale, y: this.mapScale}
-        });
+        });        
 
-        this.map.nColumns = parseInt((box.width / this.map.grid.cellSize + 1).toFixed());
-        this.map.nRows = parseInt((box.height / this.map.grid.cellSize + 1).toFixed());
+        this.gridStage.container().style.backgroundColor = '#f2f2f2';
 
-        this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
-        this.mapHeight = this.map.nRows * this.map.grid.cellSize;
+        // this.map.nColumns = parseInt((box.width / this.map.grid.cellSize + 1).toFixed());
+        // this.map.nRows = parseInt((box.height / this.map.grid.cellSize + 1).toFixed());
+        // this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
+        // this.mapHeight = this.map.nRows * this.map.grid.cellSize;     
+        
+        this.mapWidth = window.innerWidth;
+        this.mapHeight = window.innerWidth;        
 
         this.gridStage.on('click tap', (e) => {
             if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
                 this.mouseInteractor.unsetSelectedKonvaObject();
             }
-        });                                
-
-        this.drawGrid();
+        });
+                
+                        
+        this.drawGrid();                         
         this.gridStage.add(this.layers.grid);
         this.gridStage.add(this.layers.objects);
         this.gridStage.add(this.layers.shadows);
         this.gridStage.add(this.layers.draws);
         this.gridStage.add(this.layers.texts);
-        this.mouseInteractor.setStage(this.gridStage);  
-        
-        console.log(this.map);
+        this.mouseInteractor.setStage(this.gridStage);                          
     }
 
     setCurrentObjectSelected(ev, object, type): void {
@@ -209,7 +221,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // this.currentObjectSelected.emit(this.currentMapObjectSelected);
     }
 
-    drawGrid(): void {                     
+    drawGrid(): void {
+        // var bgGrid = new Konva.Rect({
+        //     x: 0,
+        //     y: 0,
+        //     width: this.map.nColumns * this.map.grid.cellSize,
+        //     height: this.map.nRows * this.map.grid.cellSize,
+        //     fill: '#f2f2f2'
+        // });
+        // this.layers.grid.add(bgGrid);
+        
         for (let i = 0; i <= this.map.nColumns; i++) {
             this.layers.grid.add(new Konva.Line({
                 points: [
@@ -238,13 +259,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 strokeWidth: 1,
             }));
         }                
-        // this.addImageToKonva('https://konvajs.org/assets/darth-vader.jpg');
-        // const position = new Coords(10, 10, 0);
-        // this.addRectangleToKonva(position);
     }
 
     moveMap(res: string, ev: MouseEvent): void {
-        console.log('moveMap');
         
         // if (this.displayCursor === 'hand') {
             // this.gridStage.setDraggable(true);
@@ -397,13 +414,5 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridStage.container().style.backgroundSize = 'cover';
         this.gridStage.container().style.backgroundPosition = 'center';
         this.gridStage.batchDraw();
-    }
-
-    reportWindowSize(): void {
-        console.log('entras', this.mapWidth);
-        this.initializeMap();
-        
-        // heightOutput.textContent = window.innerHeight;
-        // widthOutput.textContent = window.innerWidth;
     }
 }
