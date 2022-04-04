@@ -1,6 +1,7 @@
-<div [id]="'mapbox' + map.id" class="map cursor-{{displayCursor}}"
-     [style.width]="mapWidth + 'vw'"
-     [style.height]="mapHeight + 'vh'"
+<div [id]="'mapbox' + map.id" class="cursor-{{displayCursor}}"
+     [style.position]="'absolute'"
+     [style.width]="mapWidth + 'px'"
+     [style.height]="mapHeight + 'px'"
      [style.left.px]="0"
      [style.top.px]="0">
 <!--    <div class="mapbox-details">{{map.name}} <span class="mapbox-details-columns">{{map.columns}}x{{map.rows}}</span></div>-->
