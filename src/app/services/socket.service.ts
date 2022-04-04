@@ -79,15 +79,18 @@ export class SocketService {
 
         // ======================== MAP OBJECTS ================================
         this.socket.on('game-editor-create-map-object', (data: any) => {
-            console.log('RECIBOD OBJECT', data);
+            console.log('CREATE OBJECT', data);
+            this.mapInteractor.createObjectFromMap(data);
         });
 
         this.socket.on('game-editor-update-map-object', (data: any) => {
             console.log('UPDATE OBJECT OBJECT', data);
+            this.mapInteractor.updateObjectFromMap(data);
         });
 
         this.socket.on('game-editor-delete-map-object', (data: any) => {
             const mod = OurKonvaMapModification.generateModification('delete', data);
+            console.log('delete object =', data);
             this.mapInteractor.deleteObjectFromMap(mod);
         });
 

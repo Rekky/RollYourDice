@@ -55,6 +55,26 @@ export class MapInteractor {
         this.mapService.setMapPosition(id, pos);
     }
 
+    createObjectFromMap(object: any): void {
+        const map = this.getCurrentMap();
+        if (object.state === 'square') {
+            const rect = new OurKonvaRect(object);
+            map.objects.push(rect);
+        }
+        this.setCurrentMap(map);
+    }
+
+    updateObjectFromMap(object: any): void {
+        const map = this.getCurrentMap();
+        const objectIndex = map.objects.findIndex((obj: (OurKonvaRect | OurKonvaText | OurKonvaImage)) => obj.id === object.objectId);
+        if (objectIndex !== -1) {
+            if (object.state === 'square') {
+                map.objects[objectIndex] = new OurKonvaRect(object);
+            }
+        }
+        this.setCurrentMap(map);
+    }
+
     deleteObjectFromMap(mod: OurKonvaMapModification): void {
         const map = this.getCurrentMap();
         if (map.id === mod.mapId) {
