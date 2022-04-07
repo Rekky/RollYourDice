@@ -40,7 +40,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private mouseService: MouseService,
                 private router: ActivatedRoute,
                 private socketService: SocketService,
-                private userInteractor: UserInteractor,
+                public userInteractor: UserInteractor,
                 private cdr: ChangeDetectorRef) {
     }
 
@@ -50,7 +50,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.socketService.sendPlayerEnterGame(gameId);
 
             // 1. Call to get game info
-            this.game = await this.gameInteractor.getGame(gameId);
+            this.game = await this.gameInteractor.getGame(gameId);                        
+            
 
             // 2. Call to get map's list and set first map as selected
             this.mapsList = await this.mapInteractor.getAllMaps(gameId);
