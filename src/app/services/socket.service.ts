@@ -79,19 +79,18 @@ export class SocketService {
 
         // ======================== MAP OBJECTS ================================
         this.socket.on('game-editor-create-map-object', (data: any) => {
-            console.log('CREATE OBJECT', data);
-            this.mapInteractor.createObjectFromMap(data);
+            const mod = OurKonvaMapModification.generateModification('create', data);
+            this.mapInteractor.setCurrentMapMod(mod);
         });
 
         this.socket.on('game-editor-update-map-object', (data: any) => {
-            console.log('UPDATE OBJECT OBJECT', data);
-            this.mapInteractor.updateObjectFromMap(data);
+            const mod = OurKonvaMapModification.generateModification('update', data);
+            this.mapInteractor.setCurrentMapMod(mod);
         });
 
         this.socket.on('game-editor-delete-map-object', (data: any) => {
             const mod = OurKonvaMapModification.generateModification('delete', data);
-            console.log('delete object =', data);
-            this.mapInteractor.deleteObjectFromMap(mod);
+            this.mapInteractor.setCurrentMapMod(mod);
         });
 
         // ======================== SOCIAL =====================================
@@ -145,14 +144,6 @@ export class SocketService {
         this.socket.emit('game-editor-maps-update', {gameId, maps});
     }
 
-    sendGameCreateMapObject(mapId: string, object: any): void {
-        this.socket.emit('game-editor-create-map-object', {mapId, object});
-    }
-
-    sendGameEditMapObject(object: any): void {
-        this.socket.emit('game-editor-edit-map-object', {object});
-    }
-
     sendGameSetToPlayersMap(gameId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-set-players-map', {gameId, map});
     }
@@ -167,8 +158,20 @@ export class SocketService {
 
     //////////////////////////////////////////////////////////////////////
 
-    deleteGameObject(mapId: string, objectId: string): void {
-        this.socket.emit('game-editor-delete-map-object', {mapId, objectId});
+    createGameObject(mapId: string, object: any): void {
+        console.log('Called create game object');
+        this.socket.emit('game-editor-create-map-object', {mapId, object});
+    }
+
+    updateGameObject(mapId: string, object: any): void {
+        console.log('Called update game object');
+        this.socket.emit('game-editor-update-map-object', {mapId, object});
+    }
+
+    deleteGameObject(mapId: string, object: any): void {
+        this.socket.emit('game-editor-delete-map-object', {mapId, objectId: object.id});
+        const mod = OurKonvaMapModification.generateModification('delete', {mapId, object});
+        this.mapInteractor.setCurrentMapMod(mod);
     }
 
     //////////////////////////////////////////////////////////////////////

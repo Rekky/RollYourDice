@@ -50,8 +50,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.socketService.sendPlayerEnterGame(gameId);
 
             // 1. Call to get game info
-            this.game = await this.gameInteractor.getGame(gameId);                        
-            
+            this.game = await this.gameInteractor.getGame(gameId);
+
 
             // 2. Call to get map's list and set first map as selected
             this.mapsList = await this.mapInteractor.getAllMaps(gameId);
@@ -74,8 +74,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
                 if (res) {
                     this.mapModification = res;
+                    this.cdr.detectChanges();
                 }
-                this.cdr.detectChanges();
             });
 
             this.cdr.detectChanges();

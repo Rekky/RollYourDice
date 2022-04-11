@@ -61,7 +61,7 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
             this.konvaRectangle.konvaObject.setAttr('fill', ev);
             this.konvaRectangle.layer.batchDraw();
             const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
-            this.socketService.sendGameEditMapObject(ourKonvaRect);
+            // this.socketService.updateGameObject(ourKonvaRect);
         }
     }
 
@@ -72,7 +72,7 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
             this.konvaRectangle.konvaObject.setAttr('stroke', ev);
             this.konvaRectangle.layer.batchDraw();
             const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
-            this.socketService.sendGameEditMapObject(ourKonvaRect);
+            // this.socketService.updateGameObject(ourKonvaRect);
         }
     }
 
@@ -91,7 +91,7 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
             }
             this.konvaRectangle.layer.batchDraw();
             const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaRectangle.konvaObject as Konva.Rect);
-            this.socketService.sendGameEditMapObject(ourKonvaRect);
+            // this.socketService.updateGameObject(ourKonvaRect);
         }
     }
 }
