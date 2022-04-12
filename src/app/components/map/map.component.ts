@@ -61,7 +61,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     // SCALE MAP PARAMS
     protected maxScaleSize: number = 10;
     protected minScaleSize: number = 0.5;
-    protected scalingSize: number = 0.1;
+    protected scaleSize: number = 0.1;
 
     constructor(private mouseInteractor: MouseInteractor) { }
 
@@ -136,11 +136,35 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             ev.preventDefault();                                  
         });
         this.mapEl.nativeElement.addEventListener('wheel', (ev: MouseEvent | any) => {
-            if (ev.wheelDelta > 0) {
-                this.mapScale = this.mapScale < this.maxScaleSize ? this.mapScale = this.mapScale + this.scalingSize : this.mapScale;
-            } else {
-                this.mapScale = this.mapScale > this.minScaleSize ? this.mapScale = this.mapScale - this.scalingSize : this.mapScale;                
-            }            
+            // if (ev.wheelDelta > 0) {
+                const oldScale = this.gridStage.scaleX();
+                const pointer = this.gridStage.getPointerPosition();
+
+                const mousePointTo = {
+                    x: (pointer.x - this.gridStage.x()) / oldScale,
+                    y: (pointer.y - this.gridStage.y()) / oldScale,
+                };                
+                
+                let direction = ev.deltaY > 0 ? 1 : -1;                
+
+                if (ev.ctrlKey) {
+                    direction = -direction;
+                }                
+
+                const newScale = direction > 0 ? oldScale * 2.01 : oldScale / 2.01;
+                this.gridStage.scale({ x: newScale, y: newScale });
+                console.log(newScale);
+
+                const newPos = {
+                    x: pointer.x - mousePointTo.x * newScale,
+                    y: pointer.y - mousePointTo.y * newScale,
+                  };
+                this.gridStage.position(newPos);
+
+                // this.mapScale = this.mapScale < this.maxScaleSize ? this.mapScale = this.mapScale + this.scaleSize : this.mapScale;
+            // } else {
+            //     this.mapScale = this.mapScale > this.minScaleSize ? this.mapScale = this.mapScale - this.scaleSize : this.mapScale;                
+            // }            
                         
             this.gridStage.scale({x: this.mapScale, y: this.mapScale});
             this.gridStage.batchDraw();                  
