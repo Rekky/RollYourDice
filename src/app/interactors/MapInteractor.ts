@@ -55,35 +55,34 @@ export class MapInteractor {
         this.mapService.setMapPosition(id, pos);
     }
 
-    createObjectFromMap(object: any): void {
-        const map = this.getCurrentMap();
-        if (object.state === 'square') {
-            const rect = new OurKonvaRect(object);
-            map.objects.push(rect);
-        }
-        this.setCurrentMap(map);
+    createObjectFromMap(mod: OurKonvaMapModification): void {
+        // const map = this.getCurrentMap();
+        // if (mod.object.state === 'square') {
+        //     const rect = new OurKonvaRect(mod.object);
+        //     map.objects.push(rect as OurKonvaRect);
+        //     this.setCurrentMapMod(mod);
+        // }
     }
 
-    updateObjectFromMap(object: any): void {
-        const map = this.getCurrentMap();
-        const objectIndex = map.objects.findIndex((obj: (OurKonvaRect | OurKonvaText | OurKonvaImage)) => obj.id === object.objectId);
-        if (objectIndex !== -1) {
-            if (object.state === 'square') {
-                map.objects[objectIndex] = new OurKonvaRect(object);
-            }
-        }
-        this.setCurrentMap(map);
+    updateObjectFromMap(mod: OurKonvaMapModification): void {
+        // const map = this.getCurrentMap();
+        // const objectIndex = map.objects.findIndex((obj: (OurKonvaRect | OurKonvaText | OurKonvaImage)) => obj.id === mod.object.id);
+        // if (objectIndex !== -1) {
+        //     if (mod.object.state === 'square') {
+        //         map.objects[objectIndex] = new OurKonvaRect(mod.object);
+        //     }
+        //     this.setCurrentMapMod(mod);
+        // }
     }
 
     deleteObjectFromMap(mod: OurKonvaMapModification): void {
-        const map = this.getCurrentMap();
-        if (map.id === mod.mapId) {
-            const objectIndex = map.objects.findIndex((obj: (OurKonvaRect | OurKonvaText | OurKonvaImage)) => obj.id === mod.objectId);
-            if (objectIndex !== -1) {
-                map.objects.splice(objectIndex, 1);
-                this.setCurrentMap(map);
-                this.setCurrentMapMod(mod);
-            }
-        }
+        // const map = this.getCurrentMap();
+        // if (map.id === mod.mapId) {
+        //     const objectIndex = map.objects.findIndex((obj: (OurKonvaRect | OurKonvaText | OurKonvaImage)) => obj.id === mod.object.id);
+        //     if (objectIndex !== -1) {
+        //         map.objects.splice(objectIndex, 1);
+        //
+        //     }
+        // }
     }
 }

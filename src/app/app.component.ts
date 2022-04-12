@@ -10,16 +10,15 @@ import {SocketService} from './services/socket.service';
 })
 export class AppComponent {
 
-    constructor(private userInteractor: UserInteractor, private socketService: SocketService, private router: Router) {
+    constructor(private userInteractor: UserInteractor,
+                private socketService: SocketService,
+                private router: Router) {
         // routing events
         this.router.events.subscribe((ev: any) => {
             if (ev instanceof NavigationEnd) {
                 // nothing
             }
         });
-    }
-
-    public ngOnInit(): void {
     }
 
 }
