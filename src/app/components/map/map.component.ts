@@ -59,9 +59,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     protected mouseIsABrush: boolean = false;
 
     // SCALE MAP PARAMS
-    protected maxScaleSize: number = 10;
+    protected maxScaleSize: number = 5;
     protected minScaleSize: number = 0.5;
-    protected scaleSize: number = 0.1;
+    protected scaleStep: number = 0.1;
 
     constructor(private mouseInteractor: MouseInteractor) { }
 
@@ -93,6 +93,43 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             this.initializeMap();
             this.gridStage.batchDraw();
         });
+    }
+
+    /**Zoom the stage at the given position
+    Parameters:
+    stage: the stage to be zoomed.
+    zoomPoint: the (x, y) for centre of zoom.
+    zoomBefore: the zoom factor at the start of the process.
+    inc : the amount of zoom to apply.
+    returns: zoom factor after zoom completed.
+    */
+    zoomStage2(stage, zoomPoint, zoomBefore, inc) {
+        // remember the scale before new zoom is applied - we are scaling
+        // same in x & y so either will work
+        let oldScale = stage.scaleX();
+
+        // compute the distance to the zoom point before applying zoom
+        var mousePointTo = {
+        x: (zoomPoint.x - stage.x()) / oldScale,
+        y: (zoomPoint.y - stage.y()) / oldScale
+        };
+
+        // compute new scale
+        let zoomAfter = zoomBefore + inc;
+
+        // apply new zoom to stage
+        stage.scale({ x: zoomAfter, y: zoomAfter });
+
+        // Important - move the stage so that the zoomed point remains
+        // visually in place
+        var newPos = {
+        x: zoomPoint.x - mousePointTo.x * zoomAfter,
+        y: zoomPoint.y - mousePointTo.y * zoomAfter
+        };
+        // Apply position to stage
+        stage.position(newPos);
+        // return the new zoom factor.
+        return zoomAfter;
     }
 
     ngAfterViewInit(): void {
@@ -129,37 +166,19 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             ev.preventDefault();
         });
         this.mapEl.nativeElement.addEventListener('wheel', (ev: MouseEvent | any) => {
-            // if (ev.wheelDelta > 0) {
-                const oldScale = this.gridStage.scaleX();
-                const pointer = this.gridStage.getPointerPosition();
 
-                const mousePointTo = {
-                    x: (pointer.x - this.gridStage.x()) / oldScale,
-                    y: (pointer.y - this.gridStage.y()) / oldScale,
-                };                
-                
-                let direction = ev.deltaY > 0 ? 1 : -1;                
+            const pointer = this.gridStage.getPointerPosition();
 
-                if (ev.ctrlKey) {
-                    direction = -direction;
-                }                
+            if(this.mapScale < this.minScaleSize) {
+                this.mapScale = this.minScaleSize;
+                return;
+            } else if(this.mapScale > this.maxScaleSize) {
+                this.mapScale = this.maxScaleSize;
+                return;
+            }
 
-                const newScale = direction > 0 ? oldScale * 2.01 : oldScale / 2.01;
-                this.gridStage.scale({ x: newScale, y: newScale });
-                console.log(newScale);
-
-                const newPos = {
-                    x: pointer.x - mousePointTo.x * newScale,
-                    y: pointer.y - mousePointTo.y * newScale,
-                  };
-                this.gridStage.position(newPos);
-
-                // this.mapScale = this.mapScale < this.maxScaleSize ? this.mapScale = this.mapScale + this.scaleSize : this.mapScale;
-            // } else {
-            //     this.mapScale = this.mapScale > this.minScaleSize ? this.mapScale = this.mapScale - this.scaleSize : this.mapScale;                
-            // }            
-                        
-            this.gridStage.scale({x: this.mapScale, y: this.mapScale});
+            const zoomInc = ev.deltaY > 0 ? -this.scaleStep : this.scaleStep;
+            this.mapScale = this.zoomStage2(this.gridStage, pointer, this.mapScale, zoomInc);
             this.gridStage.batchDraw();
         });
     }
