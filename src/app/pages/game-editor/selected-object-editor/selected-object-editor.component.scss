@@ -1,0 +1,18 @@
+@import 'src/styles.scss';
+
+.floating-bar-box {
+    position: absolute;
+    z-index: 9999;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 50px;
+    width: 200px;
+    background-color: $c-whitest;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgb($c-black, 12%);
+    padding: 12px 0;
+}

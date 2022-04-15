@@ -7,3 +7,7 @@
 <!--    <div class="mapbox-details">{{map.name}} <span class="mapbox-details-columns">{{map.columns}}x{{map.rows}}</span></div>-->
     <div #mapEl id="map{{map.id}}" (click)="setCurrentObjectSelected($event, map, 'map')"></div>
 </div>
+<app-selected-object-editor *ngIf="displaySelectedObjectEditor"
+                            [selectedObject]="currentMapObjectSelected"
+                            [position]="selectedObjectEditorPosition">
+</app-selected-object-editor>

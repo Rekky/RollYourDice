@@ -5,6 +5,15 @@ import {OurKonvaLayers} from './OurKonvaLayers';
 import {OurKonvaSize} from './OurKonvaSize';
 
 export class OurKonvaMouse {
+
+    constructor() {
+        this.isActive = false;
+        this.stage = null;
+        this.layers = null;
+        this.ev = null;
+        this.cellSize = 100;
+        this.size = new OurKonvaSize();
+    }
     isActive: boolean;
     stage: Konva.Stage;
     layers: OurKonvaLayers;
@@ -14,13 +23,14 @@ export class OurKonvaMouse {
     size: OurKonvaSize;
     name: string;
 
-    constructor() {
-        this.isActive = false;
-        this.stage = null;
-        this.layers = null;
-        this.ev = null;
-        this.cellSize = 100;
-        this.size = new OurKonvaSize();
+    static calculateObjectPositionOnGrid(object: CurrentSelectedKonvaObject, gridStage: Konva.Stage): Coords {
+        const objectAttrs = object.konvaObject.getAttrs();
+        const gridStageX = gridStage?.getAttrs()?.x ? gridStage?.getAttrs()?.x : 0;
+        const gridStageY = gridStage?.getAttrs()?.y ? gridStage?.getAttrs()?.y : 0;
+        const coord = new Coords();
+        coord.x = Math.round( gridStageX + objectAttrs.x);
+        coord.y = Math.round( gridStageY + objectAttrs.y);
+        return coord;
     }
 
     mouseDown(): any {}

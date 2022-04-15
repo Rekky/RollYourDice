@@ -14,6 +14,7 @@ import {KonvaEraserPropertiesComponent} from './konva-tools-properties/konva-era
 import {KonvaTextPropertiesComponent} from './konva-tools-properties/konva-text-properties/konva-text-properties.component';
 import {KonvaRectanglePropertiesComponent} from './konva-tools-properties/konva-rectangle-properties/konva-rectangle-properties.component';
 import { ToolsUxComponent } from './editor-tools/tools-ux/tools-ux.component';
+import { SelectedObjectEditorComponent } from './selected-object-editor/selected-object-editor.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { ToolsUxComponent } from './editor-tools/tools-ux/tools-ux.component';
         MatDialogModule,
         SharedModule
     ],
+    exports: []
 })
 
 export class GameEditorModule { }

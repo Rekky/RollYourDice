@@ -20,6 +20,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {SafePipe} from './pipes/safe-pipe';
 import { SearchGameComponent } from './components/search-game/search-game.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import {SelectedObjectEditorComponent} from './pages/game-editor/selected-object-editor/selected-object-editor.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { UserListComponent } from './components/user-list/user-list.component';
         UploadInputComponent,
         EditGameDataComponent,
         SearchGameComponent,
-        UserListComponent
+        UserListComponent,
+        SelectedObjectEditorComponent
     ],
     imports: [
         CommonModule,
@@ -63,7 +65,8 @@ import { UserListComponent } from './components/user-list/user-list.component';
         CsSkillsComponent,
         AssetComponent,
         UploadInputComponent,
-        EditGameDataComponent
+        EditGameDataComponent,
+        SelectedObjectEditorComponent
     ],
 })
 

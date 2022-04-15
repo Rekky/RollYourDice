@@ -17,6 +17,7 @@ import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 import {OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
+import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
 
 @Component({
     selector: 'app-map',
@@ -31,7 +32,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapMoveEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
-    protected currentMapObjectSelected: any = null;
+    public currentMapObjectSelected: CurrentSelectedKonvaObject;
+    public selectedObjectEditorPosition: Coords;
+    public displaySelectedObjectEditor: boolean = false;
     Konvadraggable = true;
 
     // MAP VARS
@@ -51,6 +54,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     protected getCurrentSelectedObjectSub: Subscription;
     protected getMouseSubscription: Subscription;
+    protected getSelectedKonvaObjectSubscription;
 
     // subscriptions for socketObject
     protected rectangleTest: Konva.Rect = null;
@@ -63,7 +67,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     protected minScaleSize: number = 0.5;
     protected scaleStep: number = 0.1;
 
-    constructor(private mouseInteractor: MouseInteractor) { }
+    constructor(private mouseInteractor: MouseInteractor) {
+        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
+            .subscribe((object: CurrentSelectedKonvaObject) => {
+                this.currentMapObjectSelected = object;
+                if (object) {
+                    this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(object, this.gridStage);
+                    this.displaySelectedObjectEditor = true;
+                } else {
+                    this.displaySelectedObjectEditor = false;
+                }
+            });
+    }
 
     ngOnInit(): void {
         // this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
@@ -96,13 +111,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     /**Zoom the stage at the given position
-    Parameters:
-    stage: the stage to be zoomed.
-    zoomPoint: the (x, y) for centre of zoom.
-    zoomBefore: the zoom factor at the start of the process.
-    inc : the amount of zoom to apply.
-    returns: zoom factor after zoom completed.
-    */
+     Parameters:
+     stage: the stage to be zoomed.
+     zoomPoint: the (x, y) for centre of zoom.
+     zoomBefore: the zoom factor at the start of the process.
+     inc : the amount of zoom to apply.
+     returns: zoom factor after zoom completed.
+     */
     zoomStage2(stage, zoomPoint, zoomBefore, inc) {
         // remember the scale before new zoom is applied - we are scaling
         // same in x & y so either will work
@@ -110,8 +125,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         // compute the distance to the zoom point before applying zoom
         var mousePointTo = {
-        x: (zoomPoint.x - stage.x()) / oldScale,
-        y: (zoomPoint.y - stage.y()) / oldScale
+            x: (zoomPoint.x - stage.x()) / oldScale,
+            y: (zoomPoint.y - stage.y()) / oldScale
         };
 
         // compute new scale
@@ -123,8 +138,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // Important - move the stage so that the zoomed point remains
         // visually in place
         var newPos = {
-        x: zoomPoint.x - mousePointTo.x * zoomAfter,
-        y: zoomPoint.y - mousePointTo.y * zoomAfter
+            x: zoomPoint.x - mousePointTo.x * zoomAfter,
+            y: zoomPoint.y - mousePointTo.y * zoomAfter
         };
         // Apply position to stage
         stage.position(newPos);
@@ -139,24 +154,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
 
         this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
-            if (ev.button === 2) {
-                // this.gridStage.setDraggable(true);
-            }
-            if (this.mouseInteractor.mouse.state !== 'pointer') {
-                this.gridStage.setDraggable(false);
-            } else {
-                this.gridStage.setDraggable(true);
-                this.gridStage.setDraggable(true);
-            }
+            this.displaySelectedObjectEditor = false;
         });
-        this.mapEl.nativeElement.addEventListener('mousemove', (ev: MouseEvent) => {
-            // this.moveMap('mousemove', ev);
-        });
+        // this.mapEl.nativeElement.addEventListener('mousemove', (ev: MouseEvent) => {
+        //     // this.moveMap('mousemove', ev);
+        // });
         this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
-            if (ev.button === 2) {
-            // se tiene que poner doble por un bug de la libreria
-            // this.gridStage.setDraggable(false);
-            // this.gridStage.setDraggable(true);
+            if (this.currentMapObjectSelected) {
+                this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(
+                    this.currentMapObjectSelected, this.gridStage);
+                this.displaySelectedObjectEditor = true;
             }
         });
         this.mapEl.nativeElement.addEventListener('mouseout', (ev: MouseEvent) => {
@@ -169,10 +176,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
             const pointer = this.gridStage.getPointerPosition();
 
-            if(this.mapScale < this.minScaleSize) {
+            if (this.mapScale < this.minScaleSize) {
                 this.mapScale = this.minScaleSize;
                 return;
-            } else if(this.mapScale > this.maxScaleSize) {
+            } else if (this.mapScale > this.maxScaleSize) {
                 this.mapScale = this.maxScaleSize;
                 return;
             }
@@ -217,7 +224,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridStage = new Konva.Stage({
             container: 'map' + this.map.id,
             width: window.innerWidth,
-            height: window.innerWidth,
+            height: window.innerHeight,
             draggable: true,
             scale: {x: this.mapScale, y: this.mapScale}
         });
@@ -230,14 +237,29 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // this.mapHeight = this.map.nRows * this.map.grid.cellSize;
 
         this.mapWidth = window.innerWidth;
-        this.mapHeight = window.innerWidth;
+        this.mapHeight = window.innerHeight;
 
         this.gridStage.on('click tap', (e) => {
-            if (this.activeTr && e.target.attrs !== this.selectedObjectAttrs) {
+            if (this.currentMapObjectSelected?.transformer &&
+                e.target.attrs !== this.currentMapObjectSelected?.konvaObject?.getAttrs()) {
                 this.mouseInteractor.unsetSelectedKonvaObject();
             }
         });
 
+        this.gridStage.on('mousedown', (e) => {
+            if (this.mouseInteractor.mouse.state !== 'pointer') {
+                this.gridStage.setDraggable(false);
+            } else {
+                if (e.evt.button === 2) {
+                    Konva.dragButtons = [2];
+                    this.gridStage.setDraggable(true);
+                }
+                else {
+                    Konva.dragButtons = [0];
+                    this.gridStage.setDraggable(false);
+                }
+            }
+        });
 
         this.drawGrid();
         this.gridStage.add(this.layers.grid);

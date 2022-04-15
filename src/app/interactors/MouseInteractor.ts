@@ -34,7 +34,7 @@ export class MouseInteractor implements OnDestroy {
                 this.mouse = res;
             }
         });
-        this.selectedKonvaObjectSubscription = this.selectedKonvaObject.subscribe((object: CurrentSelectedKonvaObject) => {
+        this.selectedKonvaObjectSubscription = this.getSelectedKonvaObjectObservable().subscribe((object: CurrentSelectedKonvaObject) => {
             if (object !== null) {
                 document.onkeyup = (ev) => {
                     if (ev.key === 'Delete' && document.activeElement.tagName !== 'INPUT') {
