@@ -10,8 +10,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { NotificationComponent } from './components/notification/notification.component';
-import {MatDialogModule} from '@angular/material/dialog';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -25,6 +25,7 @@ import {AuthInterceptor} from './interceptors/auth.interceptor';
         DragulaModule.forRoot(),
         AppRoutingModule,
         BrowserAnimationsModule,
+        MatDialogModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -32,7 +33,6 @@ import {AuthInterceptor} from './interceptors/auth.interceptor';
                 deps: [HttpClient]
             }
         }),
-        MatDialogModule,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

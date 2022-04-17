@@ -155,12 +155,12 @@ export class MouseInteractor implements OnDestroy {
                 this.socketService.updateGameObject(this.currentMap.id, ourKonvaRect);
             }
             if (this.mouse.state === 'text') {
-                const ourKonvaElement = OurKonvaText.getOurKonvaText(object.konvaObject as Konva.Text);
-                this.socketService.updateGameObject(this.currentMap.id, ourKonvaElement);
+                const ourKonvaText = OurKonvaText.getOurKonvaText(object.konvaObject as Konva.Text);
+                this.socketService.updateGameObject(this.currentMap.id, ourKonvaText);
             }
             if (this.mouse.state === 'image') {
-                const ourKonvaElement = OurKonvaImage.getOurKonvaImage(object.konvaObject as Konva.Image);
-                this.socketService.updateGameObject(this.currentMap.id, ourKonvaElement);
+                const ourKonvaImage = OurKonvaImage.getOurKonvaImage(object.konvaObject as Konva.Image);
+                this.socketService.updateGameObject(this.currentMap.id, ourKonvaImage);
             }
         });
     }
@@ -292,6 +292,14 @@ export class MouseInteractor implements OnDestroy {
             const createdObject = OurKonvaImage.paint(object, layers);
             this.newObjectAddSelectedOption(createdObject);
         }
+    }
+
+    updateSelectedObject(object: CurrentSelectedKonvaObject): void {
+        this.selectedKonvaObject.next(object);
+    }
+
+    updateObject(object: OurKonvaMouse): void {
+        this.socketService.updateGameObject(this.currentMap.id, object);
     }
 
     deleteObjectOnMap(mod: OurKonvaMapModification): void {

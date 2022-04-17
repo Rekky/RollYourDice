@@ -9,16 +9,22 @@ import {MapPropertiesComponent} from './map-properties/map-properties.component'
 import {EditorToolsComponent} from './editor-tools/editor-tools.component';
 import {SharedModule} from '../../shared.module';
 import { GameEditorRoutingModule } from './game-editor-routing.module';
-import {KonvaBrushPropertiesComponent} from './konva-tools-properties/konva-brush-properties/konva-brush-properties.component';
-import {KonvaEraserPropertiesComponent} from './konva-tools-properties/konva-eraser-properties/konva-eraser-properties.component';
-import {KonvaTextPropertiesComponent} from './konva-tools-properties/konva-text-properties/konva-text-properties.component';
-import {KonvaRectanglePropertiesComponent} from './konva-tools-properties/konva-rectangle-properties/konva-rectangle-properties.component';
+import {KonvaBrushPropertiesComponent} from './context-menu/konva-tools-properties/konva-brush-properties/konva-brush-properties.component';
+import {KonvaEraserPropertiesComponent} from './context-menu/konva-tools-properties/konva-eraser-properties/konva-eraser-properties.component';
+import {KonvaTextPropertiesComponent} from './context-menu/konva-tools-properties/konva-text-properties/konva-text-properties.component';
+import {KonvaRectanglePropertiesComponent} from './context-menu/konva-tools-properties/konva-rectangle-properties/konva-rectangle-properties.component';
 import { ToolsUxComponent } from './editor-tools/tools-ux/tools-ux.component';
-import { SelectedObjectEditorComponent } from './selected-object-editor/selected-object-editor.component';
+import {MapComponent} from '../../components/map/map.component';
+import {SelectedObjectEditorComponent} from './context-menu/selected-object-editor/selected-object-editor.component';
+import { CoordsInputComponent } from './context-menu/custom-inputs/coords-input/coords-input.component';
+import { FillColorComponent } from './context-menu/custom-inputs/fill-color/fill-color.component';
+import { StrokeColorComponent } from './context-menu/custom-inputs/stroke-color/stroke-color.component';
+import { ColorChromeModule } from 'ngx-color/chrome';
 
 @NgModule({
     declarations: [
         GameEditorComponent,
+        MapComponent,
         MapsListComponent,
         MapPropertiesComponent,
         EditorToolsComponent,
@@ -27,6 +33,10 @@ import { SelectedObjectEditorComponent } from './selected-object-editor/selected
         KonvaTextPropertiesComponent,
         KonvaRectanglePropertiesComponent,
         ToolsUxComponent,
+        SelectedObjectEditorComponent,
+        CoordsInputComponent,
+        FillColorComponent,
+        StrokeColorComponent,
     ],
     imports: [
         CommonModule,
@@ -34,8 +44,9 @@ import { SelectedObjectEditorComponent } from './selected-object-editor/selected
         FormsModule,
         GameEditorRoutingModule,
         ReactiveFormsModule,
+        SharedModule,
         MatDialogModule,
-        SharedModule
+        ColorChromeModule
     ],
     exports: []
 })

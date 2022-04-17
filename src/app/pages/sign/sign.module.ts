@@ -22,8 +22,8 @@ import { SignRoutingModule } from './sign-routing.module';
         FormsModule,
         SignRoutingModule,
         ReactiveFormsModule,
-        MatDialogModule,
-        SharedModule
+        SharedModule,
+        MatDialogModule
     ],
 })
 

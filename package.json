@@ -29,6 +29,8 @@
     "konva": "^7.0.6",
     "ng2-dragula": "^2.1.1",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-color": "^6.2.0",
+    "ngx-colors": "^3.1.0",
     "particles.js": "^2.0.0",
     "rxjs": "~6.5.5",
     "socket.io-client": "^2.3.0",

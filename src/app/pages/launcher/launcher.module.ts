@@ -22,8 +22,8 @@ import {SharedModule} from '../../shared.module';
         FormsModule,
         LauncherRoutingModule,
         ReactiveFormsModule,
-        MatDialogModule,
-        SharedModule
+        SharedModule,
+        MatDialogModule
     ],
 })
 

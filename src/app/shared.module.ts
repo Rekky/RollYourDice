@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {EnumToArrayPipe} from './pipes/enum-to-array-pipe';
 import {RecursiveListComponent} from './components/recursive-list/recursive-list.component';
-import {MapComponent} from './components/map/map.component';
 import {NotificationComponent} from './components/notification/notification.component';
 import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {CharacterSheetComponent} from './components/character-sheet/character-sheet.component';
@@ -20,14 +19,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {SafePipe} from './pipes/safe-pipe';
 import { SearchGameComponent } from './components/search-game/search-game.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import {SelectedObjectEditorComponent} from './pages/game-editor/selected-object-editor/selected-object-editor.component';
 
 @NgModule({
     declarations: [
         EnumToArrayPipe,
         SafePipe,
         RecursiveListComponent,
-        MapComponent,
         NotificationComponent,
         DropdownComponent,
         CharacterSheetComponent,
@@ -39,8 +36,7 @@ import {SelectedObjectEditorComponent} from './pages/game-editor/selected-object
         UploadInputComponent,
         EditGameDataComponent,
         SearchGameComponent,
-        UserListComponent,
-        SelectedObjectEditorComponent
+        UserListComponent
     ],
     imports: [
         CommonModule,
@@ -49,13 +45,11 @@ import {SelectedObjectEditorComponent} from './pages/game-editor/selected-object
         LauncherRoutingModule,
         ReactiveFormsModule,
         MatDialogModule,
-
     ],
     exports: [
         EnumToArrayPipe,
         SafePipe,
         RecursiveListComponent,
-        MapComponent,
         NotificationComponent,
         DropdownComponent,
         CharacterSheetComponent,
@@ -66,7 +60,6 @@ import {SelectedObjectEditorComponent} from './pages/game-editor/selected-object
         AssetComponent,
         UploadInputComponent,
         EditGameDataComponent,
-        SelectedObjectEditorComponent
     ],
 })
 

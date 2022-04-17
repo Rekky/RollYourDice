@@ -20,10 +20,10 @@ export class OurKonvaRect extends OurKonvaMouse {
         this.id = ulid();
         this.name = 'new rect';
         this.position = new Coords();
-        this.fill = '#ffff00';
-        this.stroke = '#000000';
+        this.fill = 'rgba(255, 255, 0, 0.3)';
+        this.stroke = 'rgba(0, 0, 0, 1)';
         this.strokeWidth = 1;
-        this.opacity = 30;
+        this.opacity = 100;
     }
 
     static paint(object: OurKonvaRect, layers: OurKonvaLayers): CurrentSelectedKonvaObject {

@@ -1,0 +1,8 @@
+<div class="filled-circle-box">
+    <div class="filled-circle" (click)="isColorPickerDisplayed = true">
+        <div class="filled-circle-color" [style.backgroundColor]="color">
+            <color-chrome *ngIf="isColorPickerDisplayed" [color]="color"
+                          (onChangeComplete)="changeComplete($event.color.rgb)"></color-chrome>
+        </div>
+    </div>
+</div>

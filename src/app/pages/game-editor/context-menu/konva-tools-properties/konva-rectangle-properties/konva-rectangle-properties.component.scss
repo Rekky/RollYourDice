@@ -1,31 +1,12 @@
-@import "src/styles.scss";
-
-.properties-title-box {
-    height: 47px;
-    padding-left: 30px;
-    border-bottom: 1px solid $c-white-grey;
-}
-
-.properties-title {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-
-    height: 47px;
-    font-size: 14px;
-    font-weight: 400;
-    color: $c-white;
-}
+@import "../../../../../../styles";
 
 .properties-box {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
 
     width: 100%;
-    padding: 30px 20px 30px 30px;
 
     .properties-row {
         display: flex;
@@ -76,12 +57,6 @@
         &:focus {
             font-weight: 500;
         }
-    }
-
-    .title {
-        font-weight: 400;
-        font-size: 14px;
-        color: $c-white;
     }
 
     .measure {
