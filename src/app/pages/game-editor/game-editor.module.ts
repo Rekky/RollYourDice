@@ -18,8 +18,9 @@ import {MapComponent} from '../../components/map/map.component';
 import {SelectedObjectEditorComponent} from './context-menu/selected-object-editor/selected-object-editor.component';
 import { CoordsInputComponent } from './context-menu/custom-inputs/coords-input/coords-input.component';
 import { FillColorComponent } from './context-menu/custom-inputs/fill-color/fill-color.component';
-import { StrokeColorComponent } from './context-menu/custom-inputs/stroke-color/stroke-color.component';
+import { StrokeInputComponent } from './context-menu/custom-inputs/stroke-input/stroke-input.component';
 import { ColorChromeModule } from 'ngx-color/chrome';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,7 @@ import { ColorChromeModule } from 'ngx-color/chrome';
         SelectedObjectEditorComponent,
         CoordsInputComponent,
         FillColorComponent,
-        StrokeColorComponent,
+        StrokeInputComponent,
     ],
     imports: [
         CommonModule,
@@ -46,7 +47,8 @@ import { ColorChromeModule } from 'ngx-color/chrome';
         ReactiveFormsModule,
         SharedModule,
         MatDialogModule,
-        ColorChromeModule
+        MatSliderModule,
+        ColorChromeModule,
     ],
     exports: []
 })

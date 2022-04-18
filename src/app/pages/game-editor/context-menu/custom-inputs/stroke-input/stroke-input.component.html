@@ -1,0 +1,12 @@
+<div class="border-circle-box">
+    <div class="border-circle" (click)="isColorPickerDisplayed = true"
+         [style.border]="'4px solid ' + options.color">
+    </div>
+    <div *ngIf="isColorPickerDisplayed" class="floating-options">
+        <mat-slider [min]="0" [max]="10" [tickInterval]="1" [value]="options.width"
+                    (valueChange)="strokeWidthHasChanged($event)"></mat-slider>
+        <color-chrome [color]="options.color"
+                      (onChangeComplete)="colorHasChanged($event.color.rgb)"></color-chrome>
+    </div>
+</div>
+

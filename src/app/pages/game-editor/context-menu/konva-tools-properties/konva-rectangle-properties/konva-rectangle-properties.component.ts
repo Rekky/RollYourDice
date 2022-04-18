@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from 'rxjs';
+import { Coords } from 'src/app/classes/Coords';
 import {OurKonvaRect} from '../../../../../classes/ourKonva/OurKonvaRect';
+import {StrokeOptions} from '../../custom-inputs/stroke-input/stroke-input.component';
 
 @Component({
   selector: 'app-konva-rectangle-properties',
@@ -31,8 +33,9 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
         this.rectangleChange.emit(this.rectangle);
     }
 
-    strokeColorModified(ev: string): void {
-        this.rectangle.stroke = ev;
+    strokeModified(ev: StrokeOptions): void {
+        this.rectangle.stroke = ev.color;
+        this.rectangle.strokeWidth = ev.width;
         this.rectangleChange.emit(this.rectangle);
     }
 }

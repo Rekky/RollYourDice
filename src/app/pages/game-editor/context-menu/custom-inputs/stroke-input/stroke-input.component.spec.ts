@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StrokeColorComponent } from './stroke-color.component';
+import { StrokeInputComponent } from './stroke-input.component';
 
-describe('StrokeColorComponent', () => {
-  let component: StrokeColorComponent;
-  let fixture: ComponentFixture<StrokeColorComponent>;
+describe('StrokeInputComponent', () => {
+  let component: StrokeInputComponent;
+  let fixture: ComponentFixture<StrokeInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StrokeColorComponent ]
+      declarations: [ StrokeInputComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StrokeColorComponent);
+    fixture = TestBed.createComponent(StrokeInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
