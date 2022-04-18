@@ -2,7 +2,6 @@ import {Coords} from '../Coords';
 import Konva from 'konva';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 import {OurKonvaLayers} from './OurKonvaLayers';
-import {OurKonvaGrid} from './OurKonvaGrid';
 import { ulid } from 'ulid';
 
 export class OurKonvaRect extends OurKonvaMouse {
@@ -51,6 +50,7 @@ export class OurKonvaRect extends OurKonvaMouse {
         layers.draws.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
+        toEmit.ourKonvaObject = object;
         toEmit.konvaObject = rect;
         toEmit.type = object.state;
         toEmit.layer = layers.draws;
@@ -70,7 +70,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             draggable: false,
             opacity: object.opacity / 100,
             id: object.id,
-            name: object.name
+            name: object.name,
         });
     }
 
@@ -97,7 +97,6 @@ export class OurKonvaRect extends OurKonvaMouse {
     }
 
     mouseMove(): void {
-        // TODO ADAPT ALL MOUSE MOVE as in RECT
         super.mouseMove();
         if (this.isActive) {
             const pos = new Coords(this.ev.offsetX, this.ev.offsetY);
@@ -160,6 +159,7 @@ export class OurKonvaRect extends OurKonvaMouse {
         this.layers.draws.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
+        toEmit.ourKonvaObject = this;
         toEmit.konvaObject = rect;
         toEmit.type = this.state;
         toEmit.layer = this.layers.draws;

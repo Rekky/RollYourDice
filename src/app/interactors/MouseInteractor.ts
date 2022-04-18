@@ -11,6 +11,8 @@ import {OurKonvaImage} from '../classes/ourKonva/OurKonvaImage';
 import {OurKonvaText} from '../classes/ourKonva/OurKonvaText';
 import {SocketService} from '../services/socket.service';
 import {MapObjectService} from '../services/map-object.service';
+import {OurKonvaGrid} from '../classes/ourKonva/OurKonvaGrid';
+import {Coords} from '../classes/Coords';
 
 @Injectable({
     providedIn: 'root'
@@ -99,8 +101,11 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.ev = e;
             const konvaElement = this.mouse.mouseUp();
             if (this.mouse.state === 'square') {
-                const ourKonvaElement = OurKonvaRect.getOurKonvaRect(konvaElement.konvaObject as Konva.Rect);
-                this.addMouseKonvaObjectToMap(ourKonvaElement);
+                if (konvaElement.ourKonvaObject.isAdaptedToGrid) {
+                    this.adaptObjectToMap(konvaElement); // Adapt object to a grid
+                }
+                konvaElement.ourKonvaObject.stage = this.stage;
+                this.addMouseKonvaObjectToMap(konvaElement.ourKonvaObject as OurKonvaRect);
             }
             if (this.mouse.state === 'text') {
                 const ourKonvaElement = OurKonvaText.getOurKonvaText(konvaElement.konvaObject as Konva.Text);
@@ -151,6 +156,7 @@ export class MouseInteractor implements OnDestroy {
         });
         object?.konvaObject.on('dragend', () => {
             if (object.type === 'square') {
+                console.log(object.konvaObject);
                 const ourKonvaRect = OurKonvaRect.getOurKonvaRect(object.konvaObject as Konva.Rect);
                 this.socketService.updateGameObject(this.currentMap.id, ourKonvaRect);
             }
@@ -321,5 +327,27 @@ export class MouseInteractor implements OnDestroy {
                 }
             }
         });
+    }
+
+    adaptObjectToMap(obj: CurrentSelectedKonvaObject): void {
+        const position = new Coords();
+        position.x = Math.round(obj.konvaObject.getAttr('x') / obj.ourKonvaObject.cellSize) * obj.ourKonvaObject.cellSize;
+        position.y = Math.round(obj.konvaObject.getAttr('y') / obj.ourKonvaObject.cellSize) * obj.ourKonvaObject.cellSize;
+        const width = Math.round(obj.konvaObject.getAttr('width') / obj.ourKonvaObject.cellSize) * obj.ourKonvaObject.cellSize;
+        const height = Math.round(obj.konvaObject.getAttr('height') / obj.ourKonvaObject.cellSize) * obj.ourKonvaObject.cellSize;
+        obj.konvaObject.setAttr('x', position.x);
+        obj.konvaObject.setAttr('y', position.y);
+        obj.konvaObject.setAttr('width', width);
+        obj.konvaObject.setAttr('height', height);
+
+        this.stage.batchDraw();
+
+        obj.ourKonvaObject.position.x = position.x;
+        obj.ourKonvaObject.position.y = position.y;
+        obj.ourKonvaObject.size.width = width;
+        obj.ourKonvaObject.size.height = height;
+
+        this.updateSelectedObject(obj);
+        this.updateObject(obj.ourKonvaObject);
     }
 }

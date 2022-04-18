@@ -1,3 +1,4 @@
+@import 'src/styles.scss';
 
 .filled-circle-box {
     display: flex;
@@ -5,6 +6,7 @@
     justify-content: center;
     align-items: center;
 
+    position: relative;
     width: 50px;
     height: 50px;
 }
@@ -38,4 +40,21 @@
             cursor: auto;
         }
     }
+}
+
+.floating-options {
+    position: absolute;
+    top: 55px;
+    left: 0;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 15px;
+    background-color: $c-whitest;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgb($c-black, 12%);
+    cursor: auto;
 }

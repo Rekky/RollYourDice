@@ -1,8 +1,8 @@
 <div class="filled-circle-box">
-    <div class="filled-circle" (click)="isColorPickerDisplayed = true">
-        <div class="filled-circle-color" [style.backgroundColor]="color">
-            <color-chrome *ngIf="isColorPickerDisplayed" [color]="color"
-                          (onChangeComplete)="changeComplete($event.color.rgb)"></color-chrome>
-        </div>
+    <div class="filled-circle" (click)="isColorPickerFillDisplayed = !isColorPickerFillDisplayed">
+        <div class="filled-circle-color" [style.backgroundColor]="color"></div>
+    </div>
+    <div *ngIf="isColorPickerFillDisplayed" class="floating-options">
+        <app-color-circles-picker (colorChange)="colorHasChanged($event)"></app-color-circles-picker>
     </div>
 </div>

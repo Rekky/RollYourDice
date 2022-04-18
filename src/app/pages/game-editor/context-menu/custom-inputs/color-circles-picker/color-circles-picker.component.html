@@ -1,0 +1,12 @@
+<div class="color-circles-box">
+    <div class="no-color" (click)="colorHasChanged('transparent')" draggable="false"></div>
+    <div class="color-circle" *ngFor="let defaultColor of defaultColorValues" (click)="colorHasChanged(defaultColor)">
+        <div class="color-circle-filled" [style.backgroundColor]="defaultColor"></div>
+    </div>
+    <div *ngIf="!isNewColorPickerDisplayed" class="add-new-color" (click)="isNewColorPickerDisplayed = true"></div>
+    <div class="color-circle" *ngIf="isNewColorPickerDisplayed">
+        <div class="color-circle-filled" [style.backgroundColor]="color"></div>
+    </div>
+    <color-chrome *ngIf="isNewColorPickerDisplayed" [color]="color"
+                  (onChangeComplete)="addColor($event.color.rgb)"></color-chrome>
+</div>
