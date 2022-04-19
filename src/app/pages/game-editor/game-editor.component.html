@@ -1,9 +1,11 @@
-<div class="game-editor">
+<div class="game-editor" *ngIf="game">
     <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStartStatus === 0))" class="map-container">
         <app-map [map]="map" [modification]="mapModification"></app-map>
     </div>
 
-    <div class="top-column" *ngIf="game && (game.author.id === userInteractor.getCurrentUser().id)">
+    <app-kicked-message *ngIf="gameInteractor.kickedGameId.value === game.id"></app-kicked-message>
+
+    <div class="top-column" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
         <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
             <i class="far fa-play-circle"></i>
             START GAME

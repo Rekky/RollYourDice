@@ -21,6 +21,7 @@ import { FillColorComponent } from './context-menu/custom-inputs/fill-color/fill
 import { StrokeInputComponent } from './context-menu/custom-inputs/stroke-input/stroke-input.component';
 import { ColorChromeModule } from 'ngx-color/chrome';
 import {MatSliderModule} from '@angular/material/slider';
+import { KickedMessageComponent } from './kicked-message/kicked-message.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import {MatSliderModule} from '@angular/material/slider';
         CoordsInputComponent,
         FillColorComponent,
         StrokeInputComponent,
+        KickedMessageComponent,
     ],
     imports: [
         CommonModule,

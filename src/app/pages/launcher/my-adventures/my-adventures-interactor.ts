@@ -13,10 +13,12 @@ import {SocketService} from '../../../services/socket.service';
 })
 export class MyAdventuresInteractor {
     private myAdventures: BehaviorSubject<Game[] | null> = new BehaviorSubject<Game[]>(null);
+    public kickedAdventure: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
 
     constructor(private gameService: GameService,
                 private gameInteractor: GameInteractor,
                 private userInteractor: UserInteractor) {
+                    this.getMyAdventures();
     }
 
     getMyAdventures(): Observable<Game[]> {
@@ -71,7 +73,7 @@ export class MyAdventuresInteractor {
 
     kickGamePlayers(data: {gameId: string, player: Player}): void {
         const adventures = this.myAdventures.getValue();
-        const advIndex = adventures.findIndex(adv => adv.id === data.gameId);
+        const advIndex = adventures.findIndex(adv => adv.id === data.gameId);        
         adventures.splice(advIndex, 1);
         this.myAdventures.next(adventures);
     }
