@@ -32,9 +32,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
-    getCurrentMapModificationSubs: Subscription;
+    getCurrentMapModificationSubs: Subscription;    
 
-    constructor(private gameInteractor: GameInteractor,
+    constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
                 private mouseService: MouseService,

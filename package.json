@@ -26,7 +26,7 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "bootstrap": "^5.0.0",
-    "konva": "^7.0.6",
+    "konva": "^8.1.3",
     "ng2-dragula": "^2.1.1",
     "ngx-bootstrap": "^6.2.0",
     "ngx-color": "^6.2.0",

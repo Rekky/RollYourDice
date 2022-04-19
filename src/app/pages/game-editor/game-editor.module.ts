@@ -23,6 +23,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import { ColorCirclesPickerComponent } from './context-menu/custom-inputs/color-circles-picker/color-circles-picker.component';
 import {DragulaModule} from 'ng2-dragula';
 import { FitGridInputComponent } from './context-menu/custom-inputs/fit-grid-input/fit-grid-input.component';
+import { KickedMessageComponent } from './kicked-message/kicked-message.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import { FitGridInputComponent } from './context-menu/custom-inputs/fit-grid-inp
         StrokeInputComponent,
         ColorCirclesPickerComponent,
         FitGridInputComponent,
+        KickedMessageComponent
     ],
     imports: [
         CommonModule,

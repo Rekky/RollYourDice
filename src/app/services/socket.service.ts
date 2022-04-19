@@ -108,6 +108,12 @@ export class SocketService {
 
         this.socket.on('social-kick-game-request', (data) => {
             this.myAdventuresInteractor.kickGamePlayers(data);
+            this.gameInteractor.kickedGameId.next(data.gameId);
+            setTimeout(() => {
+                // this.myAdventuresInteractor.
+                console.log('entrassssss--->', data);
+                // if current game is equal to gameId sended
+            }, 2000);
         });
 
         this.socket.on('social-cancel-game-request', (data) => {

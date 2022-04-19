@@ -13,6 +13,7 @@ import {Player} from '../classes/User';
 })
 export class GameInteractor {
     private currentGame: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
+    public kickedGameId: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
     constructor(private gameService: GameService,
                 private imageService: ImageService) {
