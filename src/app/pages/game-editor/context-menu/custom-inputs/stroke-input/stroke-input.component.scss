@@ -13,8 +13,8 @@
 
 .border-circle {
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
 
     background-image: url("../../../../../../assets/transparent-background.png");
@@ -34,14 +34,14 @@
         justify-content: center;
         align-items: center;
 
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
 
         .fake-center {
             position: relative;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background-color: $c-whitest;
         }

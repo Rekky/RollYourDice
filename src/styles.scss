@@ -314,8 +314,6 @@ app-dropdown {
 }
 
 .blurry {
-    -webkit-filter: blur(3px);
-    -moz-filter: blur(3px);
     filter: blur(3px);
 }
 
@@ -333,6 +331,14 @@ app-dropdown {
 }
 
 html, body { height: 100%; }
+
+
+// ----------------------------- MAT TOOLTIP -----------------------------
+.mat-tooltip {
+    background-color: $c-black;
+    color: $c-whitest !important;
+    font-size: 16px;
+}
 
 
 // ----------------------------- MAT SLIDER -----------------------------

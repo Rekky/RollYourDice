@@ -1,7 +1,10 @@
 <div class="properties-box">
-    <app-fill-color [color]="rectangle.fill" (colorChange)="fillColorModified($event)"></app-fill-color>
-    <app-stroke-color [options]="{color: rectangle.stroke, width: rectangle.strokeWidth}"
+    <app-fill-color [matTooltip]="'Fill color'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                    [color]="rectangle.fill" (colorChange)="fillColorModified($event)"></app-fill-color>
+    <app-stroke-color [matTooltip]="'Stroke'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                      [options]="{color: rectangle.stroke, width: rectangle.strokeWidth}"
                       (optionsChange)="strokeModified($event)"></app-stroke-color>
-    <app-fit-grid-input [isAdaptedToGrid]="rectangle.isAdaptedToGrid" (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
+    <app-fit-grid-input [matTooltip]="'Fit grid'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                        [isAdaptedToGrid]="rectangle.isAdaptedToGrid" (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
 </div>
 

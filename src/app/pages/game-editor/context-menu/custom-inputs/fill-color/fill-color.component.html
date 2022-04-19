@@ -1,5 +1,6 @@
 <div class="filled-circle-box">
-    <div class="filled-circle" (click)="isColorPickerFillDisplayed = !isColorPickerFillDisplayed">
+    <div class="filled-circle"
+         (click)="isColorPickerFillDisplayed = !isColorPickerFillDisplayed">
         <div class="filled-circle-color" [style.backgroundColor]="color"></div>
     </div>
     <div *ngIf="isColorPickerFillDisplayed" class="floating-options">

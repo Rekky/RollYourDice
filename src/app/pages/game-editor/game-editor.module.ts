@@ -24,6 +24,7 @@ import { ColorCirclesPickerComponent } from './context-menu/custom-inputs/color-
 import {DragulaModule} from 'ng2-dragula';
 import { FitGridInputComponent } from './context-menu/custom-inputs/fit-grid-input/fit-grid-input.component';
 import { KickedMessageComponent } from './kicked-message/kicked-message.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -55,6 +56,7 @@ import { KickedMessageComponent } from './kicked-message/kicked-message.componen
         MatSliderModule,
         ColorChromeModule,
         DragulaModule,
+        MatTooltipModule,
     ],
     exports: []
 })
