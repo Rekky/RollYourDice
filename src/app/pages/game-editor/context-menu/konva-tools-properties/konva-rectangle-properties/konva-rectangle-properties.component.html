@@ -4,7 +4,10 @@
     <app-stroke-color [matTooltip]="'Stroke'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
                       [options]="{color: rectangle.stroke, width: rectangle.strokeWidth}"
                       (optionsChange)="strokeModified($event)"></app-stroke-color>
+    <div class="divider"></div>
     <app-fit-grid-input [matTooltip]="'Fit grid'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
-                        [isAdaptedToGrid]="rectangle.isAdaptedToGrid" (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
+                        [isAdaptedToGrid]="rectangle.isAdaptedToGrid"
+                        (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
+<!--    BLOCK OBJECT-->
 </div>
 
