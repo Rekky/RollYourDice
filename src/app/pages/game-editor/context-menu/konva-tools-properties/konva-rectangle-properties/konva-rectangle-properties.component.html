@@ -2,6 +2,6 @@
     <app-fill-color [color]="rectangle.fill" (colorChange)="fillColorModified($event)"></app-fill-color>
     <app-stroke-color [options]="{color: rectangle.stroke, width: rectangle.strokeWidth}"
                       (optionsChange)="strokeModified($event)"></app-stroke-color>
-    <app-fit-grid-input [isAdaptedToGrid]="false" (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
+    <app-fit-grid-input [isAdaptedToGrid]="rectangle.isAdaptedToGrid" (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
 </div>
 

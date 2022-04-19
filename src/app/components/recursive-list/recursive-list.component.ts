@@ -18,7 +18,6 @@ export class RecursiveListComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        console.log('list =', this.list);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

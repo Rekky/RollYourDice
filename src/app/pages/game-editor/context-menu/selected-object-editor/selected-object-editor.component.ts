@@ -1,11 +1,11 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+} from '@angular/core';
 import {MouseInteractor} from '../../../../interactors/MouseInteractor';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../../../classes/ourKonva/OurKonvaMouse';
-import {OurKonvaRect} from '../../../../classes/ourKonva/OurKonvaRect';
 import { Coords } from 'src/app/classes/Coords';
-import {OurKonvaText} from '../../../../classes/ourKonva/OurKonvaText';
-import Konva from 'konva';
-import {OurKonvaImage} from '../../../../classes/ourKonva/OurKonvaImage';
 
 @Component({
     selector: 'app-selected-object-editor',
@@ -31,10 +31,11 @@ export class SelectedObjectEditorComponent implements OnInit {
 
     isObjectAdaptedToGridToggle(ev: any): void {
         this.selectedObject.ourKonvaObject.isAdaptedToGrid = ev;
-        console.log(ev);
         if (ev) {
-            this.mouseInteractor.adaptObjectToMap(this.selectedObject);
+            this.selectedObject = this.mouseInteractor.adaptObjectToMap(this.selectedObject);
         }
+        this.mouseInteractor.updateSelectedObject(this.selectedObject);
+        this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
     }
 
 }

@@ -41,6 +41,24 @@ export class OurKonvaMouse {
     mouseMove(): void {}
     mouseUp(): any {}
     mouseOut(): void {}
+
+    public adaptPositionToGrid(object: any): void {
+        object.on('dragstart', () => {
+            object.moveToTop();
+        });
+        object.on('dragend', () => {
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(object.x(), object.y()), this.cellSize);
+            object.position({
+                x: newPosition.x,
+                y: newPosition.y
+            });
+            this.stage.batchDraw();
+        });
+        object.on('dragmove', () => {
+            const newPosition = OurKonvaGrid.correctPosition(new Coords(object.x(), object.y()), this.cellSize);
+            this.stage.batchDraw();
+        });
+    }
 }
 
 export class CurrentSelectedKonvaObject {

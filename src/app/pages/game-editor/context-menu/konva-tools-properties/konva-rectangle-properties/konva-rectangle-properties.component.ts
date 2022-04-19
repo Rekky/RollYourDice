@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
 import { Coords } from 'src/app/classes/Coords';
 import {OurKonvaRect} from '../../../../../classes/ourKonva/OurKonvaRect';
@@ -10,24 +10,14 @@ import {OurKonvaMouse} from '../../../../../classes/ourKonva/OurKonvaMouse';
   templateUrl: './konva-rectangle-properties.component.html',
   styleUrls: ['./konva-rectangle-properties.component.scss']
 })
-export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
+export class KonvaRectanglePropertiesComponent implements OnInit {
     @Input() rectangle: OurKonvaRect;
     @Output() rectangleChange: EventEmitter<OurKonvaRect> = new EventEmitter<OurKonvaRect>();
     @Output() isAdaptedToGridChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    getSelectedKonvaObjectSubscription: Subscription;
-
-    tempValue: any;
-
     constructor() { }
 
     ngOnInit(): void {
-    }
-
-    ngOnDestroy(): void {
-        if (this.getSelectedKonvaObjectSubscription) {
-            this.getSelectedKonvaObjectSubscription.unsubscribe();
-        }
     }
 
     fillColorModified(ev: string): void {
@@ -42,6 +32,7 @@ export class KonvaRectanglePropertiesComponent implements OnInit, OnDestroy {
     }
 
     isAdaptedToGrid(ev: boolean): void {
+        this.rectangle.isAdaptedToGrid = ev;
         this.isAdaptedToGridChange.emit(ev);
     }
 

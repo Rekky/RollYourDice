@@ -102,7 +102,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // });
 
         window.addEventListener('resize', () => {
-            console.log('resize');
             this.gridStage.width(window.innerWidth);
             this.gridStage.height(window.innerHeight);
             this.initializeMap();

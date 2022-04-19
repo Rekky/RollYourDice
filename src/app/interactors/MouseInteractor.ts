@@ -99,12 +99,11 @@ export class MouseInteractor implements OnDestroy {
         mapEl.nativeElement.addEventListener('mouseup', (e) => {
             this.mouse.isActive = false;
             this.mouse.ev = e;
-            const konvaElement = this.mouse.mouseUp();
+            let konvaElement = this.mouse.mouseUp();
             if (this.mouse.state === 'square') {
                 if (konvaElement.ourKonvaObject.isAdaptedToGrid) {
-                    this.adaptObjectToMap(konvaElement); // Adapt object to a grid
+                    konvaElement = this.adaptObjectToMap(konvaElement); // Adapt object to a grid
                 }
-                konvaElement.ourKonvaObject.stage = this.stage;
                 this.addMouseKonvaObjectToMap(konvaElement.ourKonvaObject as OurKonvaRect);
             }
             if (this.mouse.state === 'text') {
@@ -141,22 +140,25 @@ export class MouseInteractor implements OnDestroy {
 
     newObjectAddSelectedOption(object: any): void {
         object?.konvaObject.on('click', () => {
-            // const target = object.layer.getIntersection(this.stage.getPointerPosition());
-            if (this.selectedKonvaObject?.getValue()?.konvaObject.getAttr('id') !== object.konvaObject.getAttr('id')) {
-                if (this.selectedKonvaObject && this.selectedKonvaObject.getValue()) {
-                    this.selectedKonvaObject.getValue().konvaObject.draggable(false);
-                    this.selectedKonvaObject.getValue().transformer.hide();
-                    this.selectedKonvaObject.getValue().layer.batchDraw();
+            const selectedObject = this.selectedKonvaObject?.getValue();
+            if (selectedObject?.konvaObject.getAttr('id') !== object.konvaObject.getAttr('id')) {
+                if (selectedObject) {
+                    selectedObject.konvaObject.draggable(false);
+                    selectedObject.transformer.hide();
+                    selectedObject.layer.batchDraw();
                 }
-                object.konvaObject.draggable(true);
-                object.transformer.show();
-                object.layer.batchDraw();
             }
+
+            object.konvaObject.draggable(true);
+            object.transformer.show();
+            object.layer.batchDraw();
             this.selectedKonvaObject.next(object);
         });
         object?.konvaObject.on('dragend', () => {
             if (object.type === 'square') {
-                console.log(object.konvaObject);
+                if (object.ourKonvaObject.isAdaptedToGrid) {
+                    object = this.adaptObjectToMap(object); // Adapt object to a grid
+                }
                 const ourKonvaRect = OurKonvaRect.getOurKonvaRect(object.konvaObject as Konva.Rect);
                 this.socketService.updateGameObject(this.currentMap.id, ourKonvaRect);
             }
@@ -171,64 +173,80 @@ export class MouseInteractor implements OnDestroy {
         });
     }
 
-    clickMapObject(object: any): void {
-        this.mouseService.setMouse(new OurKonvaPointer());
-        const obj = this.stage.find('#' + object.id)[0];
-        const childrens = obj.getLayer().getChildren().toArray();
-        childrens.forEach(child => {
-            const id = child.getAttr('id');
-            if (id.startsWith('tr-')) {
-                if (id === ('tr-' + obj.getAttr('id'))) {
-                    child.show();
-                    child.getLayer().batchDraw();
-                    const currentSelectedKonvaObject = new CurrentSelectedKonvaObject();
-                    if (object.state === 'square') {
-                        (obj as Konva.Rect).draggable(true);
-                        currentSelectedKonvaObject.konvaObject = obj as Konva.Rect;
-                    } else if (object.state === 'image') {
-                        (obj as Konva.Image).draggable(true);
-                        currentSelectedKonvaObject.konvaObject = obj as Konva.Image;
-                    } else if (object.state === 'text') {
-                        (obj as Konva.Text).draggable(true);
-                        currentSelectedKonvaObject.konvaObject = obj as Konva.Text;
-                    }
-                    currentSelectedKonvaObject.type = object.state;
-                    currentSelectedKonvaObject.layer = child.getLayer();
-                    currentSelectedKonvaObject.transformer = child as Konva.Transformer;
-                    this.selectedKonvaObject.next(currentSelectedKonvaObject);
-                } else {
-                    child.hide();
-                    child.getLayer().batchDraw();
-                }
-            } else {
-                if (id !== ('tr-' + obj.getAttr('id'))) {
-                    if (id !== obj.getAttr('id')) {
-                        child.setAttr('draggable', false);
-                    }
-                }
+    applyTransformEndToNewObject(object: any): void {
+        object.transformer.on('transformend', (ev) => {
+            const selectedObject = this.selectedKonvaObject?.getValue();
+            const newWidth = Math.round(object.konvaObject.getAttr('width') * ev.target.attrs.scaleX);
+            const newHeight = Math.round(object.konvaObject.getAttr('height') * ev.target.attrs.scaleY);
+            object.konvaObject.setAttr('scaleX', 1);
+            object.konvaObject.setAttr('scaleY', 1);
+            object.konvaObject.setAttr('width', newWidth);
+            object.konvaObject.setAttr('height', newHeight);
+            if (selectedObject.ourKonvaObject.isAdaptedToGrid) {
+                object = this.adaptObjectToMap(object); // Adapt object to a grid
             }
+            this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
         });
-        this.modifyOtherLayers(obj);
+    }
+
+    clickMapObject(object: any): void {
+        // this.mouseService.setMouse(new OurKonvaPointer());
+        // const obj = this.stage.find('#' + object.id)[0];
+        // const childrens = obj.getLayer().getChildren().toArray();
+        // childrens.forEach(child => {
+        //     const id = child.getAttr('id');
+        //     if (id.startsWith('tr-')) {
+        //         if (id === ('tr-' + obj.getAttr('id'))) {
+        //             child.show();
+        //             child.getLayer().batchDraw();
+        //             const currentSelectedKonvaObject = new CurrentSelectedKonvaObject();
+        //             if (object.state === 'square') {
+        //                 (obj as Konva.Rect).draggable(true);
+        //                 currentSelectedKonvaObject.konvaObject = obj as Konva.Rect;
+        //             } else if (object.state === 'image') {
+        //                 (obj as Konva.Image).draggable(true);
+        //                 currentSelectedKonvaObject.konvaObject = obj as Konva.Image;
+        //             } else if (object.state === 'text') {
+        //                 (obj as Konva.Text).draggable(true);
+        //                 currentSelectedKonvaObject.konvaObject = obj as Konva.Text;
+        //             }
+        //             currentSelectedKonvaObject.type = object.state;
+        //             currentSelectedKonvaObject.layer = child.getLayer();
+        //             currentSelectedKonvaObject.transformer = child as Konva.Transformer;
+        //             this.selectedKonvaObject.next(currentSelectedKonvaObject);
+        //         } else {
+        //             child.hide();
+        //             child.getLayer().batchDraw();
+        //         }
+        //     } else {
+        //         if (id !== ('tr-' + obj.getAttr('id'))) {
+        //             if (id !== obj.getAttr('id')) {
+        //                 child.setAttr('draggable', false);
+        //             }
+        //         }
+        //     }
+        // });
+        // this.modifyOtherLayers(obj);
     }
 
     modifyOtherLayers(obj: any): void {
         const layers = this.stage.getLayers().toArray();
-        const getMyLayerIndex = layers.findIndex(layer => {
-            return layer.getChildren().toArray().find(child => child.getAttr('id') === obj.getAttr('id'));
-        });
-        layers.splice(getMyLayerIndex, 1);
-        layers.forEach(layer => {
-            layer.getChildren().toArray().forEach(child => {
-                if (child.getAttr('id').startsWith('tr-')) {
-                    child.hide();
-                    child.getLayer().batchDraw();
-                } else {
-                    if (child.getAttr('draggable')) {
-                        child.setAttr('draggable', false);
-                    }
-                }
-            });
-        });
+        // const getMyLayerIndex = layers.findIndex(layer => {
+        //     return layer.getChildren().toArray().find(child => child.getAttr('id') === obj.getAttr('id'));
+        // });
+        // layers.splice(getMyLayerIndex, 1);
+        // layers.forEach(layer => {
+        //     layer.getChildren().toArray().forEach(child => {
+        //         if (child.getAttr('id').startsWith('tr-')) {
+        //             child.hide();
+        //             child.getLayer().batchDraw();
+        //         } else {
+        //             if (child.getAttr('draggable')) {
+        //                 child.setAttr('draggable', false);
+        //             }
+        //         }
+        //     });
+        // });
     }
 
     setStage(stage: Konva.Stage): void {
@@ -236,7 +254,6 @@ export class MouseInteractor implements OnDestroy {
     }
 
     // setSelectedKonvaObject(object: any): void {
-    //     console.log('object =', object);
     //     if (object.state === 'square') {
     //         console.log('ourKonvaRect =', object);
     //         console.log('selectedKonvaObject =', this.selectedKonvaObject.getValue());
@@ -288,6 +305,7 @@ export class MouseInteractor implements OnDestroy {
     paintObjectOnMap(object: any, layers: OurKonvaLayers): void {
         if (object.state === 'square') {
             const createdObject = OurKonvaRect.paint(object, layers);
+            this.applyTransformEndToNewObject(createdObject);
             this.newObjectAddSelectedOption(createdObject);
         }
         else if (object.state === 'text') {
@@ -329,7 +347,7 @@ export class MouseInteractor implements OnDestroy {
         });
     }
 
-    adaptObjectToMap(obj: CurrentSelectedKonvaObject): void {
+    adaptObjectToMap(obj: CurrentSelectedKonvaObject): CurrentSelectedKonvaObject {
         const position = new Coords();
         position.x = Math.round(obj.konvaObject.getAttr('x') / obj.ourKonvaObject.cellSize) * obj.ourKonvaObject.cellSize;
         position.y = Math.round(obj.konvaObject.getAttr('y') / obj.ourKonvaObject.cellSize) * obj.ourKonvaObject.cellSize;
@@ -339,15 +357,12 @@ export class MouseInteractor implements OnDestroy {
         obj.konvaObject.setAttr('y', position.y);
         obj.konvaObject.setAttr('width', width);
         obj.konvaObject.setAttr('height', height);
-
         this.stage.batchDraw();
 
         obj.ourKonvaObject.position.x = position.x;
         obj.ourKonvaObject.position.y = position.y;
         obj.ourKonvaObject.size.width = width;
         obj.ourKonvaObject.size.height = height;
-
-        this.updateSelectedObject(obj);
-        this.updateObject(obj.ourKonvaObject);
+        return obj;
     }
 }

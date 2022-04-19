@@ -27,8 +27,7 @@ export class SignComponent implements OnInit, OnDestroy, AfterViewInit {
     ngAfterViewInit(): void {
         this.getCurrentUserSub = this.userInteractor.getUserObs().subscribe((user: User) => {
             if (user) {
-                console.log('useeeeeeeeer', user);
-                
+
                 // this.preloadState();
                 // setTimeout(() => {
                 //     this.display = 'loading';

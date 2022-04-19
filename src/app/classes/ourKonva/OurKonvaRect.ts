@@ -13,6 +13,7 @@ export class OurKonvaRect extends OurKonvaMouse {
     stroke: string;
     strokeWidth: number;
     opacity: number;
+    strokeScaleEnabled: boolean;
 
     constructor(id?: string, name?: string, position?: Coords) {
         super();
@@ -23,6 +24,7 @@ export class OurKonvaRect extends OurKonvaMouse {
         this.stroke = 'rgba(0, 0, 0, 1)';
         this.strokeWidth = 1;
         this.opacity = 100;
+        this.strokeScaleEnabled = false;
     }
 
     static paint(object: OurKonvaRect, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
@@ -37,7 +39,8 @@ export class OurKonvaRect extends OurKonvaMouse {
             draggable: false,
             opacity: object.opacity,
             id: object.id,
-            name: object.name
+            name: object.name,
+            strokeScaleEnabled: false
         });
 
         const transformer = new Konva.Transformer();
@@ -71,6 +74,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             opacity: object.opacity / 100,
             id: object.id,
             name: object.name,
+            strokeScaleEnabled: false
         });
     }
 
@@ -88,6 +92,7 @@ export class OurKonvaRect extends OurKonvaMouse {
         rectangle.opacity = objectAttrs.opacity;
         rectangle.id = objectAttrs.id;
         rectangle.name = objectAttrs.name;
+        rectangle.strokeScaleEnabled = objectAttrs.false;
         return rectangle;
     }
 
@@ -111,7 +116,8 @@ export class OurKonvaRect extends OurKonvaMouse {
                     strokeWidth: this.strokeWidth,
                     draggable: false,
                     opacity: this.opacity / 100,
-                    name: this.name
+                    name: this.name,
+                    strokeScaleEnabled: false
                 });
                 this.layers.draws.add(this.tempRect);
             } else {
@@ -141,7 +147,8 @@ export class OurKonvaRect extends OurKonvaMouse {
             draggable: false,
             opacity: this.opacity / 100,
             id: this.id,
-            name: this.name
+            name: this.name,
+            strokeScaleEnabled: false
         });
 
         this.size.width = Math.abs(this.position.x - pos.x);
