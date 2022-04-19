@@ -3,7 +3,7 @@
         <app-map [map]="map" [modification]="mapModification"></app-map>
     </div>
 
-    <app-kicked-message *ngIf="gameInteractor.kickedGameId.value === game.id"></app-kicked-message>
+    <app-kicked-message *ngIf="gameInteractor.kickedGameId.value === game.id"></app-kicked-message>    
 
     <div class="top-column" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
         <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
