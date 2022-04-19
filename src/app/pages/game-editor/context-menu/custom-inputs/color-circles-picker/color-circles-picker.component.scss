@@ -1,0 +1,77 @@
+@import 'src/styles.scss';
+
+.color-circles-box {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    position: relative;
+    width: 160px;
+
+    .no-color {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        border-radius: 50%;
+
+        background-image: url("../../../../../../assets/svg/deny.svg");
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: 100%;
+        cursor: pointer;
+    }
+
+    .color-circle {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        border-radius: 50%;
+
+        background-image: url("../../../../../../assets/transparent-background.png");
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: 200%;
+        cursor: pointer;
+
+        .color-circle-filled {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    }
+
+    .add-new-color {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        border-radius: 50%;
+
+        background-image: url("../../../../../../assets/svg/add.svg");
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: 60%;
+        cursor: pointer;
+    }
+
+    color-chrome {
+        position: absolute;
+        bottom: -249px;
+        right: -180px;
+        z-index: 2;
+        cursor: auto;
+    }
+}

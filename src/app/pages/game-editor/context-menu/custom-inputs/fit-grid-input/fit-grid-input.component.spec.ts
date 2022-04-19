@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoordsInputComponent } from './coords-input.component';
+import { FitGridInputComponent } from './fit-grid-input.component';
 
-describe('CoordsInputComponent', () => {
-  let component: CoordsInputComponent;
-  let fixture: ComponentFixture<CoordsInputComponent>;
+describe('FitGridInputComponent', () => {
+  let component: FitGridInputComponent;
+  let fixture: ComponentFixture<FitGridInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CoordsInputComponent ]
+      declarations: [ FitGridInputComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CoordsInputComponent);
+    fixture = TestBed.createComponent(FitGridInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

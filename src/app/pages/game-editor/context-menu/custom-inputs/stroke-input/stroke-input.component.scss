@@ -16,9 +16,36 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: $c-whitest;
 
+    background-image: url("../../../../../../assets/transparent-background.png");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: 200%;
     cursor: pointer;
+
+    .border-circle-color {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+
+        .fake-center {
+            position: relative;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: $c-whitest;
+        }
+    }
 }
 
 .floating-options {
@@ -40,4 +67,12 @@
     mat-slider {
         width: 100%;
     }
+}
+
+.no-border {
+    background-image: url("../../../../../../assets/svg/deny.svg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: 100%;
+    cursor: pointer;
 }

@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {RgbaColor} from '../fill-color/fill-color.component';
 
 @Component({
     selector: 'app-stroke-color',
@@ -9,15 +8,15 @@ import {RgbaColor} from '../fill-color/fill-color.component';
 export class StrokeInputComponent implements OnInit {
     @Input() options: StrokeOptions;
     @Output() optionsChange: EventEmitter<StrokeOptions> = new EventEmitter<StrokeOptions>();
-    isColorPickerDisplayed: boolean = false;
+    isColorPickerStrokeDisplayed: boolean = false;
 
     constructor() { }
 
     ngOnInit(): void {
     }
 
-    colorHasChanged(color: RgbaColor): void {
-        this.options.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+    colorHasChanged(color: string): void {
+        this.options.color = color;
         this.optionsChange.emit(this.options);
     }
 

@@ -11,7 +11,7 @@ export class OurKonvaGrid {
         opacity?: number,
         color?: string,
         squareFeet?: number) {
-        this.cellSize = cellSize ? cellSize : 100;
+        this.cellSize = cellSize ? cellSize : 40;
         this.opacity = opacity ? opacity : 100;
         this.color = color ? color : 'black';
         this.squareFeet = squareFeet ? squareFeet : 5;

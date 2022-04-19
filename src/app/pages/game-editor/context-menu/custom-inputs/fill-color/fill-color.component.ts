@@ -8,15 +8,15 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class FillColorComponent implements OnInit {
     @Input() color: string;
     @Output() colorChange: EventEmitter<string> = new EventEmitter<string>();
-    isColorPickerDisplayed: boolean = false;
+    isColorPickerFillDisplayed: boolean = false;
 
     constructor() { }
 
     ngOnInit(): void {
     }
 
-    changeComplete(color: RgbaColor): void {
-        this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+    colorHasChanged(color: string): void {
+        this.color = color;
         this.colorChange.emit(this.color);
     }
 

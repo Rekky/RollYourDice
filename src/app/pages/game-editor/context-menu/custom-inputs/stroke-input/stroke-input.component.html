@@ -1,12 +1,16 @@
 <div class="border-circle-box">
-    <div class="border-circle" (click)="isColorPickerDisplayed = true"
-         [style.border]="'4px solid ' + options.color">
+    <div *ngIf="options.color !== 'transparent'" class="border-circle"
+         (click)="isColorPickerStrokeDisplayed = !isColorPickerStrokeDisplayed">
+        <div class="border-circle-color" [style.backgroundColor]="options.color">
+            <div class="fake-center"></div>
+        </div>
     </div>
-    <div *ngIf="isColorPickerDisplayed" class="floating-options">
+    <div *ngIf="options.color === 'transparent'" class="no-border border-circle"
+         (click)="isColorPickerStrokeDisplayed = !isColorPickerStrokeDisplayed">
+    </div>
+    <div *ngIf="isColorPickerStrokeDisplayed" class="floating-options">
         <mat-slider [min]="0" [max]="10" [tickInterval]="1" [value]="options.width"
                     (valueChange)="strokeWidthHasChanged($event)"></mat-slider>
-        <color-chrome [color]="options.color"
-                      (onChangeComplete)="colorHasChanged($event.color.rgb)"></color-chrome>
+        <app-color-circles-picker (colorChange)="colorHasChanged($event)"></app-color-circles-picker>
     </div>
 </div>
-

@@ -144,7 +144,7 @@ export class OurKonvaText extends OurKonvaMouse {
     }
 
     refresh(text, transformer): void {
-        this.adaptPositionToGrid(text);
+        // this.adaptPositionToGrid(text);
         this.layers.texts.add(text);
         this.layers.texts.add(transformer);
         this.layers.texts.batchDraw();

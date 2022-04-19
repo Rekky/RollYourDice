@@ -1,13 +1,7 @@
 <div class="properties-box">
-
-<!--    <app-coords-input [coords]="rectangle.position" (coordsChange)="coordsModified($event)"></app-coords-input>-->
-
     <app-fill-color [color]="rectangle.fill" (colorChange)="fillColorModified($event)"></app-fill-color>
     <app-stroke-color [options]="{color: rectangle.stroke, width: rectangle.strokeWidth}"
                       (optionsChange)="strokeModified($event)"></app-stroke-color>
-    <!--    stroke width-->
-<!--    <div class="properties-row">-->
-<!--        <input type="number" [ngModel]="rectangle.strokeWidth" (ngModelChange)="modifyTempValue($event)" (blur)="modifySquare('strokeWidth')" min="1" max="100"/>-->
-<!--    </div>-->
+    <app-fit-grid-input [isAdaptedToGrid]="false" (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
 </div>
 

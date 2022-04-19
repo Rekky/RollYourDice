@@ -16,15 +16,9 @@ export class SelectedObjectEditorComponent implements OnInit {
     @Input() selectedObject: CurrentSelectedKonvaObject;
     @Input() position: Coords;
 
-    ourSelectedObject: OurKonvaRect | OurKonvaText | OurKonvaImage;
-
     constructor(private mouseInteractor: MouseInteractor) {}
 
-    ngOnInit(): void {
-        if (this.selectedObject.type === 'square') {
-            this.ourSelectedObject = OurKonvaRect.getOurKonvaRect(this.selectedObject.konvaObject as Konva.Rect);
-        }
-    }
+    ngOnInit(): void {}
 
     updateObject(ev: any): void {
         if (this.selectedObject.type === 'square') {
@@ -33,6 +27,14 @@ export class SelectedObjectEditorComponent implements OnInit {
         }
         this.mouseInteractor.updateSelectedObject(this.selectedObject);
         this.mouseInteractor.updateObject(ev);
+    }
+
+    isObjectAdaptedToGridToggle(ev: any): void {
+        this.selectedObject.ourKonvaObject.isAdaptedToGrid = ev;
+        console.log(ev);
+        if (ev) {
+            this.mouseInteractor.adaptObjectToMap(this.selectedObject);
+        }
     }
 
 }

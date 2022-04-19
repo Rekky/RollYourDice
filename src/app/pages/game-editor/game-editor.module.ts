@@ -16,12 +16,13 @@ import {KonvaRectanglePropertiesComponent} from './context-menu/konva-tools-prop
 import { ToolsUxComponent } from './editor-tools/tools-ux/tools-ux.component';
 import {MapComponent} from '../../components/map/map.component';
 import {SelectedObjectEditorComponent} from './context-menu/selected-object-editor/selected-object-editor.component';
-import { CoordsInputComponent } from './context-menu/custom-inputs/coords-input/coords-input.component';
 import { FillColorComponent } from './context-menu/custom-inputs/fill-color/fill-color.component';
 import { StrokeInputComponent } from './context-menu/custom-inputs/stroke-input/stroke-input.component';
 import { ColorChromeModule } from 'ngx-color/chrome';
 import {MatSliderModule} from '@angular/material/slider';
-import { KickedMessageComponent } from './kicked-message/kicked-message.component';
+import { ColorCirclesPickerComponent } from './context-menu/custom-inputs/color-circles-picker/color-circles-picker.component';
+import {DragulaModule} from 'ng2-dragula';
+import { FitGridInputComponent } from './context-menu/custom-inputs/fit-grid-input/fit-grid-input.component';
 
 @NgModule({
     declarations: [
@@ -36,10 +37,10 @@ import { KickedMessageComponent } from './kicked-message/kicked-message.componen
         KonvaRectanglePropertiesComponent,
         ToolsUxComponent,
         SelectedObjectEditorComponent,
-        CoordsInputComponent,
         FillColorComponent,
         StrokeInputComponent,
-        KickedMessageComponent,
+        ColorCirclesPickerComponent,
+        FitGridInputComponent,
     ],
     imports: [
         CommonModule,
@@ -51,6 +52,7 @@ import { KickedMessageComponent } from './kicked-message/kicked-message.componen
         MatDialogModule,
         MatSliderModule,
         ColorChromeModule,
+        DragulaModule,
     ],
     exports: []
 })
