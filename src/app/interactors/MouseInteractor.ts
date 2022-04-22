@@ -149,8 +149,10 @@ export class MouseInteractor implements OnDestroy {
                 }
             }
 
-            object.konvaObject.draggable(true);
-            object.transformer.show();
+            object.konvaObject.draggable(!object.ourKonvaObject.isEditionBlocked);
+            if (!object.ourKonvaObject.isEditionBlocked) {
+                object.transformer.show();
+            }
             object.layer.batchDraw();
             this.selectedKonvaObject.next(object);
         });

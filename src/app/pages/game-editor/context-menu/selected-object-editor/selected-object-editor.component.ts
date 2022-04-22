@@ -38,4 +38,18 @@ export class SelectedObjectEditorComponent implements OnInit {
         this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
     }
 
+    editionBlockedToggle(ev: any): void {
+        this.selectedObject.ourKonvaObject.isEditionBlocked = ev;
+        if (ev) {
+            this.selectedObject.konvaObject.draggable(false);
+            this.selectedObject.transformer.hide();
+        } else {
+            this.selectedObject.konvaObject.draggable(true);
+            this.selectedObject.transformer.show();
+        }
+        this.selectedObject.layer.batchDraw();
+        this.mouseInteractor.updateSelectedObject(this.selectedObject);
+        this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
+    }
+
 }

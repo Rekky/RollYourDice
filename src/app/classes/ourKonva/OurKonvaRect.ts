@@ -36,7 +36,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             fill: object.fill,
             stroke: object.stroke,
             strokeWidth: object.strokeWidth,
-            draggable: false,
+            draggable: !object.isEditionBlocked,
             opacity: object.opacity,
             id: object.id,
             name: object.name,
@@ -47,6 +47,7 @@ export class OurKonvaRect extends OurKonvaMouse {
         layers.draws.add(transformer);
         transformer.nodes([rect]);
         transformer.id('tr-' + object.id);
+        transformer.enabledAnchors();
         transformer.hide();
 
         layers.draws.add(rect);
@@ -70,7 +71,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             fill: object.fill,
             stroke: object.stroke,
             strokeWidth: object.strokeWidth,
-            draggable: false,
+            draggable: !object.isEditionBlocked,
             opacity: object.opacity / 100,
             id: object.id,
             name: object.name,
@@ -114,7 +115,7 @@ export class OurKonvaRect extends OurKonvaMouse {
                     fill: this.fill,
                     stroke: this.stroke,
                     strokeWidth: this.strokeWidth,
-                    draggable: false,
+                    draggable: !this.isEditionBlocked,
                     opacity: this.opacity / 100,
                     name: this.name,
                     strokeScaleEnabled: false
@@ -144,7 +145,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             fill: this.fill,
             stroke: this.stroke,
             strokeWidth: this.strokeWidth,
-            draggable: false,
+            draggable: !this.isEditionBlocked,
             opacity: this.opacity / 100,
             id: this.id,
             name: this.name,

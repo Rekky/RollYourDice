@@ -1,13 +1,24 @@
 <div class="properties-box">
-    <app-fill-color [matTooltip]="'Fill color'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
-                    [color]="rectangle.fill" (colorChange)="fillColorModified($event)"></app-fill-color>
-    <app-stroke-color [matTooltip]="'Stroke'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
-                      [options]="{color: rectangle.stroke, width: rectangle.strokeWidth}"
-                      (optionsChange)="strokeModified($event)"></app-stroke-color>
-    <div class="divider"></div>
-    <app-fit-grid-input [matTooltip]="'Fit grid'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
-                        [isAdaptedToGrid]="rectangle.isAdaptedToGrid"
-                        (isAdaptedToGridChange)="isAdaptedToGrid($event)"></app-fit-grid-input>
-<!--    BLOCK OBJECT-->
+    <ng-container *ngIf="!rectangle.isEditionBlocked">
+        <app-fill-color [matTooltip]="'Fill color'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                        [color]="rectangle.fill" (colorChange)="fillColorModified($event)">
+        </app-fill-color>
+        <app-stroke-color [matTooltip]="'Stroke'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                          [options]="{color: rectangle.stroke, width: rectangle.strokeWidth}"
+                          (optionsChange)="strokeModified($event)">
+        </app-stroke-color>
+
+        <div class="divider"></div>
+        <app-fit-grid-input [matTooltip]="'Fit grid'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                            [isAdaptedToGrid]="rectangle.isAdaptedToGrid"
+                            (isAdaptedToGridChange)="isAdaptedToGrid($event)">
+        </app-fit-grid-input>
+        <div class="divider"></div>
+    </ng-container>
+
+    <app-block-object-edition [matTooltip]="'Block edition'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                              [isBlocked]="rectangle.isEditionBlocked"
+                              (isBlockedChange)="isObjectEditionBlocked($event)">
+    </app-block-object-edition>
 </div>
 

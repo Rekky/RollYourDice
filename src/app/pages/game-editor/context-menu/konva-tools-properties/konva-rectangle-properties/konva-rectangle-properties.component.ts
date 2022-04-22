@@ -14,6 +14,7 @@ export class KonvaRectanglePropertiesComponent implements OnInit {
     @Input() rectangle: OurKonvaRect;
     @Output() rectangleChange: EventEmitter<OurKonvaRect> = new EventEmitter<OurKonvaRect>();
     @Output() isAdaptedToGridChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() isEditionBlockedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() { }
 
@@ -34,6 +35,11 @@ export class KonvaRectanglePropertiesComponent implements OnInit {
     isAdaptedToGrid(ev: boolean): void {
         this.rectangle.isAdaptedToGrid = ev;
         this.isAdaptedToGridChange.emit(ev);
+    }
+
+    isObjectEditionBlocked(ev: boolean): void {
+        this.rectangle.isEditionBlocked = ev;
+        this.isEditionBlockedChange.emit(ev);
     }
 
 }

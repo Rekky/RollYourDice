@@ -4,6 +4,8 @@
     <app-konva-rectangle-properties *ngIf="selectedObject.type === 'square'"
                                     [rectangle]="selectedObject.ourKonvaObject"
                                     (rectangleChange)="updateObject($event)"
-                                    (isAdaptedToGridChange)="isObjectAdaptedToGridToggle($event)"></app-konva-rectangle-properties>
+                                    (isAdaptedToGridChange)="isObjectAdaptedToGridToggle($event)"
+                                    (isEditionBlockedChange)="editionBlockedToggle($event)">
+    </app-konva-rectangle-properties>
 </div>
 

@@ -25,6 +25,7 @@ import {DragulaModule} from 'ng2-dragula';
 import { FitGridInputComponent } from './context-menu/custom-inputs/fit-grid-input/fit-grid-input.component';
 import { KickedMessageComponent } from './kicked-message/kicked-message.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { BlockObjectEditionComponent } from './context-menu/custom-inputs/block-object-edition/block-object-edition.component';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         StrokeInputComponent,
         ColorCirclesPickerComponent,
         FitGridInputComponent,
-        KickedMessageComponent
+        KickedMessageComponent,
+        BlockObjectEditionComponent
     ],
     imports: [
         CommonModule,

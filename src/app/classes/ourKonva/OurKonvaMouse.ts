@@ -17,6 +17,7 @@ export class OurKonvaMouse {
     size: OurKonvaSize;
     name: string;
     isAdaptedToGrid: boolean;
+    isEditionBlocked: boolean;
 
     constructor() {
         this.isActive = false;
@@ -26,6 +27,7 @@ export class OurKonvaMouse {
         this.cellSize = 40;
         this.size = new OurKonvaSize();
         this.isAdaptedToGrid = true;
+        this.isEditionBlocked = false;
     }
     static calculateObjectPositionOnGrid(object: CurrentSelectedKonvaObject, gridStage: Konva.Stage): Coords {
         const objectAttrs = object.konvaObject.getAttrs();
