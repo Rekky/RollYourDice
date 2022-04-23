@@ -20,7 +20,7 @@ import {Coords} from '../classes/Coords';
 export class MouseInteractor implements OnDestroy {
     private selectedKonvaObject: BehaviorSubject<CurrentSelectedKonvaObject | null> = new BehaviorSubject<CurrentSelectedKonvaObject | null>(null);
 
-    mouse: OurKonvaMouse | OurKonvaRect | OurKonvaText | OurKonvaImage = new OurKonvaMouse();
+    mouse: OurKonvaMouse | OurKonvaRect | OurKonvaText | OurKonvaImage;
 
     getMouseObservableSubscription: Subscription;
     selectedKonvaObjectSubscription: Subscription;
@@ -40,10 +40,7 @@ export class MouseInteractor implements OnDestroy {
             if (object !== null) {
                 document.onkeyup = (ev) => {
                     if (ev.key === 'Delete' && document.activeElement.tagName !== 'INPUT') {
-                        let objectToEmit;
-                        if (object.type === 'square') {
-                            objectToEmit = OurKonvaRect.getOurKonvaRect(object.konvaObject as Konva.Rect);
-                        }
+                        const objectToEmit = object.ourKonvaObject;
                         this.socketService.deleteGameObject(this.currentMap.id, objectToEmit);
                         this.selectedKonvaObject.next(null);
                     }
@@ -97,24 +94,16 @@ export class MouseInteractor implements OnDestroy {
         }, false);
 
         mapEl.nativeElement.addEventListener('mouseup', (e) => {
-            this.mouse.isActive = false;
-            this.mouse.ev = e;
-            let konvaElement = this.mouse.mouseUp();
-            if (this.mouse.state === 'square') {
+            if (this.mouse.state !== 'pointer') {
+                this.mouse.isActive = false;
+                this.mouse.ev = e;
+                let konvaElement = this.mouse.mouseUp();
                 if (konvaElement.ourKonvaObject.isAdaptedToGrid) {
                     konvaElement = this.adaptObjectToMap(konvaElement); // Adapt object to a grid
                 }
-                this.addMouseKonvaObjectToMap(konvaElement.ourKonvaObject as OurKonvaRect);
+                this.addMouseKonvaObjectToMap(konvaElement.ourKonvaObject);
+                this.newObjectAddSelectedOption(konvaElement);
             }
-            if (this.mouse.state === 'text') {
-                const ourKonvaElement = OurKonvaText.getOurKonvaText(konvaElement.konvaObject as Konva.Text);
-                this.addMouseKonvaObjectToMap(ourKonvaElement);
-            }
-            if (this.mouse.state === 'image') {
-                const ourKonvaElement = OurKonvaImage.getOurKonvaImage(konvaElement.konvaObject as Konva.Image);
-                this.addMouseKonvaObjectToMap(ourKonvaElement);
-            }
-            this.newObjectAddSelectedOption(konvaElement);
         }, false);
 
         mapEl.nativeElement.addEventListener('mouseout', (e) => {
@@ -126,15 +115,7 @@ export class MouseInteractor implements OnDestroy {
 
     addMouseKonvaObjectToMap(object: any): void {
         this.socketService.createGameObject(this.currentMap.id, object);
-        if (this.mouse.state === 'square') {
-            this.currentMap.objects.push(this.mouse as OurKonvaRect);
-        }
-        if (this.mouse.state === 'text') {
-            this.currentMap.objects.push(this.mouse as OurKonvaText);
-        }
-        if (this.mouse.state === 'image') {
-            this.currentMap.objects.push(this.mouse as OurKonvaImage);
-        }
+        this.currentMap.objects.push(object.ourKonvaObject);
         this.mouseService.setMouse(new OurKonvaPointer());
     }
 
@@ -157,21 +138,11 @@ export class MouseInteractor implements OnDestroy {
             this.selectedKonvaObject.next(object);
         });
         object?.konvaObject.on('dragend', () => {
-            if (object.type === 'square') {
-                if (object.ourKonvaObject.isAdaptedToGrid) {
-                    object = this.adaptObjectToMap(object); // Adapt object to a grid
-                }
-                const ourKonvaRect = OurKonvaRect.getOurKonvaRect(object.konvaObject as Konva.Rect);
-                this.socketService.updateGameObject(this.currentMap.id, ourKonvaRect);
+            if (object.ourKonvaObject.isAdaptedToGrid) {
+                object = this.adaptObjectToMap(object); // Adapt object to a grid
             }
-            if (this.mouse.state === 'text') {
-                const ourKonvaText = OurKonvaText.getOurKonvaText(object.konvaObject as Konva.Text);
-                this.socketService.updateGameObject(this.currentMap.id, ourKonvaText);
-            }
-            if (this.mouse.state === 'image') {
-                const ourKonvaImage = OurKonvaImage.getOurKonvaImage(object.konvaObject as Konva.Image);
-                this.socketService.updateGameObject(this.currentMap.id, ourKonvaImage);
-            }
+            // const ourKonvaRect = new OurKonvaRect(this.user).getOurKonvaRect(object.konvaObject as Konva.Rect);
+            this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
         });
     }
 

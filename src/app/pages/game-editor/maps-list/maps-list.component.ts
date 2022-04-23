@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angula
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Coords} from '../../../classes/Coords';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
-import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
 import Konva from 'konva';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {Game} from '../../../classes/Game';
@@ -27,7 +26,6 @@ export class MapsListComponent implements OnInit, OnDestroy {
 
     // maps: OurKonvaMap[];
     currentMap: OurKonvaMap = null;
-    currentMapObject: OurKonvaObject = null;
 
     showNewMapForm: boolean = false;
     showRenameMapForm: boolean = false;
@@ -93,9 +91,9 @@ export class MapsListComponent implements OnInit, OnDestroy {
         this.showNewMapForm = false;
     }
 
-    onSelectMapObject(ev, mapObject: OurKonvaObject): void {
-        ev.stopPropagation();
-        this.currentMap = null;
+    onSelectMapObject(ev, mapObject: any): void {
+        // ev.stopPropagation();
+        // this.currentMap = null;
     }
 
     removeMap(map: OurKonvaMap): void {

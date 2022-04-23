@@ -6,9 +6,11 @@ import {OurKonvaSize} from './OurKonvaSize';
 import {OurKonvaRect} from './OurKonvaRect';
 import {OurKonvaText} from './OurKonvaText';
 import {OurKonvaImage} from './OurKonvaImage';
+import { Player } from '../User';
 
 export class OurKonvaMouse {
     isActive: boolean;
+    author: Player;
     stage: Konva.Stage;
     layers: OurKonvaLayers;
     state: string;
@@ -19,7 +21,7 @@ export class OurKonvaMouse {
     isAdaptedToGrid: boolean;
     isEditionBlocked: boolean;
 
-    constructor() {
+    constructor(author: Player) {
         this.isActive = false;
         this.stage = null;
         this.layers = null;
@@ -28,6 +30,7 @@ export class OurKonvaMouse {
         this.size = new OurKonvaSize();
         this.isAdaptedToGrid = true;
         this.isEditionBlocked = false;
+        this.author = author;
     }
     static calculateObjectPositionOnGrid(object: CurrentSelectedKonvaObject, gridStage: Konva.Stage): Coords {
         const objectAttrs = object.konvaObject.getAttrs();

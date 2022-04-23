@@ -26,6 +26,8 @@ import { FitGridInputComponent } from './context-menu/custom-inputs/fit-grid-inp
 import { KickedMessageComponent } from './kicked-message/kicked-message.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { BlockObjectEditionComponent } from './context-menu/custom-inputs/block-object-edition/block-object-edition.component';
+import { DisplayJustForMasterComponent } from './context-menu/custom-inputs/display-just-for-master/display-just-for-master.component';
+import { MoreOptionsComponent } from './context-menu/custom-inputs/more-options/more-options.component';
 
 @NgModule({
     declarations: [
@@ -45,7 +47,9 @@ import { BlockObjectEditionComponent } from './context-menu/custom-inputs/block-
         ColorCirclesPickerComponent,
         FitGridInputComponent,
         KickedMessageComponent,
-        BlockObjectEditionComponent
+        BlockObjectEditionComponent,
+        DisplayJustForMasterComponent,
+        MoreOptionsComponent
     ],
     imports: [
         CommonModule,

@@ -52,4 +52,7 @@ export class SelectedObjectEditorComponent implements OnInit {
         this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
     }
 
+    displayedJustForMaster(ev: any): void {
+    }
+
 }

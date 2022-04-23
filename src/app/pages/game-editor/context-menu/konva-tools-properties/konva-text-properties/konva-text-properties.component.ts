@@ -52,7 +52,7 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
         if (this.konvaText) {
             this.konvaText.konvaObject.setAttr('fill', ev);
             this.konvaText.layer.batchDraw();
-            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
+            // const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
             // this.socketService.updateGameObject(ourKonvaRect);
         }
     }
@@ -63,7 +63,7 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
         if (this.konvaText) {
             this.konvaText.konvaObject.setAttr('fontSize', ev);
             this.konvaText.layer.batchDraw();
-            const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
+            // const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
             // this.socketService.updateGameObject(ourKonvaRect);
         }
     }

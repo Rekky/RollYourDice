@@ -3,6 +3,7 @@ import Konva from 'konva';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import { ulid } from 'ulid';
+import { Player } from '../User';
 
 export class OurKonvaRect extends OurKonvaMouse {
     id: string;
@@ -15,8 +16,8 @@ export class OurKonvaRect extends OurKonvaMouse {
     opacity: number;
     strokeScaleEnabled: boolean;
 
-    constructor(id?: string, name?: string, position?: Coords) {
-        super();
+    constructor(author: Player) {
+        super(author);
         this.id = ulid();
         this.name = 'new rect';
         this.position = new Coords();
@@ -79,22 +80,20 @@ export class OurKonvaRect extends OurKonvaMouse {
         });
     }
 
-    static getOurKonvaRect(object: Konva.Rect): OurKonvaRect {
-        const rectangle = new OurKonvaRect();
+     public getOurKonvaRect(object: Konva.Rect): void {
         const objectAttrs = object.getAttrs();
-        rectangle.position.x = objectAttrs.x;
-        rectangle.position.y = objectAttrs.y;
-        rectangle.size.height = objectAttrs.height;
-        rectangle.size.width = objectAttrs.width;
-        rectangle.state = 'square';
-        rectangle.fill = objectAttrs.fill;
-        rectangle.stroke = objectAttrs.stroke;
-        rectangle.strokeWidth = objectAttrs.strokeWidth;
-        rectangle.opacity = objectAttrs.opacity;
-        rectangle.id = objectAttrs.id;
-        rectangle.name = objectAttrs.name;
-        rectangle.strokeScaleEnabled = objectAttrs.false;
-        return rectangle;
+        this.position.x = objectAttrs.x;
+        this.position.y = objectAttrs.y;
+        this.size.height = objectAttrs.height;
+        this.size.width = objectAttrs.width;
+        this.state = 'square';
+        this.fill = objectAttrs.fill;
+        this.stroke = objectAttrs.stroke;
+        this.strokeWidth = objectAttrs.strokeWidth;
+        this.opacity = objectAttrs.opacity;
+        this.id = objectAttrs.id;
+        this.name = objectAttrs.name;
+        this.strokeScaleEnabled = objectAttrs.false;
     }
 
     mouseDown(): void {

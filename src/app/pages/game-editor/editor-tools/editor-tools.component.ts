@@ -11,6 +11,8 @@ import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import {ImageService} from '../../../services/image.service';
 import {Asset} from '../../../classes/Asset';
+import {UserInteractor} from '../../../interactors/UserInteractor';
+import { Player } from 'src/app/classes/User';
 
 @Component({
     selector: 'app-editor-tools',
@@ -44,9 +46,12 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         ]
     ];
 
+    author: Player = new Player();
+
     constructor(private mouseService: MouseService,
                 private mouseInteractor: MouseInteractor,
                 private imageService: ImageService,
+                private userInteractor: UserInteractor,
                 private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
@@ -56,6 +61,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
             }
         });
         this.onToolSelected('pointer');
+        this.author.fromUserToPlayer(this.userInteractor.getCurrentUser());
     }
 
     ngOnDestroy(): void {
@@ -72,27 +78,27 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         }
         switch (tool) {
             case 'pointer':
-                this.mouseService.setMouse(new OurKonvaPointer());
+                this.mouseService.setMouse(new OurKonvaPointer(this.author));
                 break;
             case 'hand':
-                this.mouseService.setMouse(new OurKonvaHand());
+                this.mouseService.setMouse(new OurKonvaHand(this.author));
                 break;
             case 'text':
-                this.mouseService.setMouse(new OurKonvaText());
+                this.mouseService.setMouse(new OurKonvaText(this.author));
                 break;
             case 'brush':
-                this.mouseService.setMouse(new OurKonvaBrush());
+                this.mouseService.setMouse(new OurKonvaBrush(this.author));
                 break;
             case 'eraser':
-                this.mouseService.setMouse(new OurKonvaEraser());
+                this.mouseService.setMouse(new OurKonvaEraser(this.author));
                 break;
             case 'square':
-                this.mouseService.setMouse(new OurKonvaRect());
+                this.mouseService.setMouse(new OurKonvaRect(this.author));
                 break;
             case 'image':
                 break;
             default:
-                this.mouseService.setMouse(new OurKonvaPointer());
+                this.mouseService.setMouse(new OurKonvaPointer(this.author));
                 break;
         }
     }
@@ -101,7 +107,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         const formData = new FormData();
         formData.append('asset', file);
         const newAsset: Asset = await this.imageService.uploadFile(formData);
-        this.mouseService.setMouse(new OurKonvaImage(newAsset.uri));
+        this.mouseService.setMouse(new OurKonvaImage(this.author, newAsset.uri));
 
     }
 

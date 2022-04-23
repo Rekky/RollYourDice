@@ -3,6 +3,7 @@ import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import {Coords} from '../Coords';
 import { ulid } from 'ulid';
+import {Player} from '../User';
 
 export class OurKonvaText extends OurKonvaMouse {
     id: string;
@@ -12,8 +13,8 @@ export class OurKonvaText extends OurKonvaMouse {
     text: string;
     position: Coords;
 
-    constructor() {
-        super();
+    constructor(author: Player) {
+        super(author);
         this.color = '#000000';
         this.fontSize = 20;
         this.id = ulid();
@@ -37,20 +38,18 @@ export class OurKonvaText extends OurKonvaMouse {
         });
     }
 
-    static getOurKonvaText(object: Konva.Text): OurKonvaText {
-        const text = new OurKonvaText();
+    getOurKonvaText(object: Konva.Text): void {
         const objectAttrs = object.getAttrs();
-        text.position.x = objectAttrs.x;
-        text.position.y = objectAttrs.y;
-        // text.size.height = objectAttrs.height;
-        text.size.width = objectAttrs.width;
-        text.state = 'text';
-        text.color = objectAttrs.fill;
-        text.fontSize = objectAttrs.fontSize;
-        text.text = objectAttrs.text;
-        text.id = objectAttrs.id;
-        text.name = objectAttrs.name;
-        return text;
+        this.position.x = objectAttrs.x;
+        this.position.y = objectAttrs.y;
+        // this.size.height = objectAttrs.height;
+        this.size.width = objectAttrs.width;
+        this.state = 'text';
+        this.color = objectAttrs.fill;
+        this.fontSize = objectAttrs.fontSize;
+        this.text = objectAttrs.text;
+        this.id = objectAttrs.id;
+        this.name = objectAttrs.name;
     }
 
     static paint(object: OurKonvaText, layers: OurKonvaLayers): CurrentSelectedKonvaObject {

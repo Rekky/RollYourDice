@@ -13,6 +13,11 @@
                             [isAdaptedToGrid]="rectangle.isAdaptedToGrid"
                             (isAdaptedToGridChange)="isAdaptedToGrid($event)">
         </app-fit-grid-input>
+        <app-display-just-for-master [matTooltip]="'Display just for master'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                                     [isDisplayed]=""
+                                     (isDisplayedChange)="isDisplayedJustForMaster($event)">
+        </app-display-just-for-master>
+
         <div class="divider"></div>
     </ng-container>
 
@@ -20,5 +25,11 @@
                               [isBlocked]="rectangle.isEditionBlocked"
                               (isBlockedChange)="isObjectEditionBlocked($event)">
     </app-block-object-edition>
+
+    <ng-container *ngIf="!rectangle.isEditionBlocked">
+        <div class="divider"></div>
+        <app-more-options [matTooltip]="'More options'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'">
+        </app-more-options>
+    </ng-container>
 </div>
 

@@ -3,6 +3,7 @@ import Konva from 'konva';
 import {Coords} from '../Coords';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import { ulid } from 'ulid';
+import {Player} from '../User';
 
 
 export class OurKonvaImage extends OurKonvaMouse {
@@ -13,8 +14,8 @@ export class OurKonvaImage extends OurKonvaMouse {
     opacity: number;
     state: 'image';
 
-    constructor(src: string) {
-        super();
+    constructor(author: Player, src: string) {
+        super(author);
         this.id = ulid();
         this.position = new Coords();
         this.src = src;
@@ -70,19 +71,17 @@ export class OurKonvaImage extends OurKonvaMouse {
         });
     }
 
-    static getOurKonvaImage(object: Konva.Image): OurKonvaImage {
-        const image = new OurKonvaImage(object.getAttr('src'));
+    public getOurKonvaImage(object: Konva.Image): void {
         const objectAttrs = object.getAttrs();
-        image.position.x = objectAttrs.x;
-        image.position.y = objectAttrs.y;
-        image.size.height = objectAttrs.height;
-        image.size.width = objectAttrs.width;
-        image.state = 'image';
-        image.opacity = objectAttrs.opacity;
-        image.src = objectAttrs.src;
-        image.id = objectAttrs.id;
-        image.name = objectAttrs.name;
-        return image;
+        this.position.x = objectAttrs.x;
+        this.position.y = objectAttrs.y;
+        this.size.height = objectAttrs.height;
+        this.size.width = objectAttrs.width;
+        this.state = 'image';
+        this.opacity = objectAttrs.opacity;
+        this.src = objectAttrs.src;
+        this.id = objectAttrs.id;
+        this.name = objectAttrs.name;
     }
 
     mouseDown(): void {

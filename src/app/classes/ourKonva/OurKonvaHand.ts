@@ -1,13 +1,14 @@
 import {Coords} from '../Coords';
 import {OurKonvaMouse} from './OurKonvaMouse';
+import {Player} from '../User';
 
 export class OurKonvaHand extends OurKonvaMouse {
     state: string = 'hand';
     startCoords: Coords;
     offsetCoords: Coords;
 
-    constructor() {
-        super();
+    constructor(author: Player) {
+        super(author);
         this.startCoords = new Coords();
         this.offsetCoords = new Coords();
     }

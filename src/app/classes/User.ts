@@ -47,12 +47,10 @@ export class Player {
         this.hash = hash ? hash : null;
     }
 
-    static fromJSON(json: any): User {
-        const user = new User();
-        user.id = json.id;
-        user.username = json.username;
-        user.hash = json.hash;
-        return user;
+    public fromJSON(json: any): void {
+        this.id = json.id;
+        this.name = json.username;
+        this.hash = json.hash;
     }
 
     toJSON(): any {
@@ -61,5 +59,11 @@ export class Player {
         json.username = this.name;
         json.hash = this.hash;
         return json;
+    }
+
+    public fromUserToPlayer(user: User): void {
+        this.id = user.id;
+        this.name = user.username;
+        this.hash = user.hash;
     }
 }

@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import { Player } from '../User';
 import {OurKonvaMouse} from './OurKonvaMouse';
 
 export class OurKonvaEraser extends OurKonvaMouse {
@@ -6,8 +7,8 @@ export class OurKonvaEraser extends OurKonvaMouse {
     line: Konva.Line;
     brushSize: number;
 
-    constructor() {
-        super();
+    constructor(author: Player) {
+        super(author);
         this.line = new Konva.Line();
         this.brushSize = 20;
     }

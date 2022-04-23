@@ -1,6 +1,5 @@
 import {Coords} from '../Coords';
 import {OurKonvaGrid} from './OurKonvaGrid';
-import {OurKonvaObject} from './OurKonvaObject';
 import Konva from 'konva';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import { OurKonvaRect } from './OurKonvaRect';

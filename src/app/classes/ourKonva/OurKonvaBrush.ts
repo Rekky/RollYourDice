@@ -1,5 +1,6 @@
 import Konva from 'konva';
 import {OurKonvaMouse} from './OurKonvaMouse';
+import {Player} from '../User';
 
 export class OurKonvaBrush extends OurKonvaMouse {
     state: string = 'brush';
@@ -7,8 +8,8 @@ export class OurKonvaBrush extends OurKonvaMouse {
     color: string;
     brushSize: number;
 
-    constructor() {
-        super();
+    constructor(author: Player) {
+        super(author);
         this.line = new Konva.Line();
         this.color = '#E2F24B';
         this.brushSize = 5;

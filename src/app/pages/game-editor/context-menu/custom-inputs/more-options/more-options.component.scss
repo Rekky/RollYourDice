@@ -1,0 +1,30 @@
+@import 'src/styles.scss';
+
+.more-options-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    width: 40px;
+    height: 50px;
+
+    .more-options {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        position: relative;
+        width: 24px;
+        height: 24px;
+
+        cursor: pointer;
+
+        svg {
+            transform: rotate(90deg);
+            fill: $c-black-grey;
+        }
+    }
+}

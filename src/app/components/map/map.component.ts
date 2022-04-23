@@ -16,7 +16,6 @@ import {document} from 'ngx-bootstrap/utils';
 import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
 
 @Component({
