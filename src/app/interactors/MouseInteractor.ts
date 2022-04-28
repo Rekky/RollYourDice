@@ -203,7 +203,7 @@ export class MouseInteractor implements OnDestroy {
     }
 
     modifyOtherLayers(obj: any): void {
-        const layers = this.stage.getLayers().toArray();
+        // const layers = this.stage.getLayers().toArray();
         // const getMyLayerIndex = layers.findIndex(layer => {
         //     return layer.getChildren().toArray().find(child => child.getAttr('id') === obj.getAttr('id'));
         // });
@@ -301,7 +301,7 @@ export class MouseInteractor implements OnDestroy {
 
     deleteObjectOnMap(mod: OurKonvaMapModification): void {
         const obj = this.stage.find('#' + mod.object.id)[0];
-        const childrens = obj.getLayer().getChildren().toArray();
+        const childrens = obj.getLayer().getChildren().slice();
         childrens.forEach(child => {
             const id = child.getAttr('id');
             if (id.startsWith('tr-')) {
