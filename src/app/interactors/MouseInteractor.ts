@@ -140,6 +140,7 @@ export class MouseInteractor implements OnDestroy {
         object?.konvaObject.on('dragend', () => {
             if (object.ourKonvaObject.isAdaptedToGrid) {
                 object = this.adaptObjectToMap(object); // Adapt object to a grid
+                this.selectedKonvaObject.next(object);
             }
             // const ourKonvaRect = new OurKonvaRect(this.user).getOurKonvaRect(object.konvaObject as Konva.Rect);
             this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
