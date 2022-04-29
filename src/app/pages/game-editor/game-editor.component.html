@@ -1,11 +1,16 @@
 <div class="game-editor" *ngIf="game">
+    <!-- MAP -->
     <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStartStatus === 0))" class="map-container">
         <app-map [map]="map" [modification]="mapModification"></app-map>
     </div>
 
-    <app-kicked-message *ngIf="gameInteractor.kickedGameId.value === game.id"></app-kicked-message>    
+    <!-- MAP LIST -->
+    <div class="left-panel">
+        qweweweqweqweqweqwe asdasdsd
+    </div>
 
-    <div class="top-column" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
+    <!-- TOP COLUMN -->
+    <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
         <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
             <i class="far fa-play-circle"></i>
             START GAME
@@ -23,7 +28,7 @@
 <!--        </div>-->
 <!--        <div class="left-column-content">-->
 <!--            <ng-container *ngIf="tabs === leftColumnTabs.Maps">-->
-<!--                <app-maps-list *ngIf="mapsList" [maps]="mapsList"-->
+<!--                <app-maps-list *ngIf="mapsList" [maps]="maps"-->
 <!--                               (mapsChanges)="onMapsChange($event)"-->
 <!--                               (newMapEvent)="onNewMap($event)"-->
 <!--                               (removeMapEvent)="onRemoveMap($event)"-->
@@ -40,6 +45,9 @@
     <div class="game-editor-tools">
         <app-editor-tools></app-editor-tools>
     </div>
+
+    <!-- KICKED MESSAGE -->
+    <app-kicked-message *ngIf="gameInteractor.kickedGameId.value === game.id"></app-kicked-message>
 
 <!--    <div class="right-column" *ngIf="mouse">-->
 <!--        &lt;!&ndash;        <app-map-properties [map]="currentObjectSelected" (mapChange)="updateProperties($event)" *ngIf="currentObjectSelected"></app-map-properties>&ndash;&gt;-->

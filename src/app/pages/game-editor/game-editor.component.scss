@@ -16,33 +16,34 @@
     transform: scale(1);
 }
 
-// TOP COLUMN
-.top-column{
+// TOP TOOLBAR
+.top-panel{
     position: absolute;
     top:0;
     left:50%;
     width: auto;
-    z-index: 999;
+    z-index: 90;
 }
-// LEFT COLUMN
-.left-column{
+// LEFT TOOLBAR
+.left-panel{
     position: absolute;
     top:0;
     left:0;
     bottom: 0;
-    color: $c-white-grey;
-    background: $c-black;
+    width: 50px;
+    color: $c-whitest;
     z-index: 90;
+    padding-left: 8px;    
 
-    .left-column-content{
-        position: relative;
-        width: 250px;
-        height: 100%;
-        border-right: 1px solid $c-blackest;
-    }
+    // .left-column-content{
+    //     position: relative;
+    //     width: 250px;
+    //     height: 100%;
+    //     border-right: 1px solid $c-blackest;
+    // }
 }
-// RIGHT COLUMN
-.right-column{
+// RIGHT TOOLBAR
+.right-panel{
     position: absolute;
     top:0;
     right:0;

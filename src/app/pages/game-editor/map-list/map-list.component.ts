@@ -10,11 +10,11 @@ import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import { MapInteractor } from 'src/app/interactors/MapInteractor';
 
 @Component({
-    selector: 'app-maps-list',
-    templateUrl: './maps-list.component.html',
-    styleUrls: ['./maps-list.component.scss']
+    selector: 'app-map-list',
+    templateUrl: './map-list.component.html',
+    styleUrls: ['./map-list.component.scss']
 })
-export class MapsListComponent implements OnInit, OnDestroy {
+export class MapListComponent implements OnInit, OnDestroy {
 
     @Input() maps: OurKonvaMap[] = [];
     @Output() newMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();

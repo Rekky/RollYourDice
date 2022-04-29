@@ -21,7 +21,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     map: OurKonvaMap;
     mapModification: OurKonvaMapModification;
     game: Game;
-    mapsList: OurKonvaMap[] = [];
+    maps: OurKonvaMap[] = [];
     gameStartStatus: GameStatus = GameStatus.Stopped;
 
     leftColumnTabs = LeftColumnTabs;
@@ -32,7 +32,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
-    getCurrentMapModificationSubs: Subscription;    
+    getCurrentMapModificationSubs: Subscription;
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -51,12 +51,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
             // 1. Call to get game info
             this.game = await this.gameInteractor.getGame(gameId);
-
+            console.log('game->', this.game);
 
             // 2. Call to get map's list and set first map as selected
-            this.mapsList = await this.mapInteractor.getAllMaps(gameId);
-            this.map = this.mapsList[0];
+            this.maps = await this.mapInteractor.getAllMaps(gameId);
+            this.map = this.maps[0];
             this.mapInteractor.setCurrentMap(this.map);
+            console.log('maps->', this.maps);
 
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);
