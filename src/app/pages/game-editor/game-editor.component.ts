@@ -51,13 +51,11 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
             // 1. Call to get game info
             this.game = await this.gameInteractor.getGame(gameId);
-            console.log('game->', this.game);
 
             // 2. Call to get map's list and set first map as selected
             this.maps = await this.mapInteractor.getAllMaps(gameId);
             this.map = this.maps[0];
             this.mapInteractor.setCurrentMap(this.map);
-            console.log('maps->', this.maps);
 
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);
