@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { MapListComponent } from './map-list.component';
+import { MapListToolsComponent } from './map-list-tools.component';
 
 describe('MapListComponent', () => {
-  let component: MapListComponent;
-  let fixture: ComponentFixture<MapListComponent>;
+  let component: MapListToolsComponent;
+  let fixture: ComponentFixture<MapListToolsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapListComponent ]
+      declarations: [ MapListToolsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MapListComponent);
+    fixture = TestBed.createComponent(MapListToolsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

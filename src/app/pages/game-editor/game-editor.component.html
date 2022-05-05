@@ -5,9 +5,20 @@
     </div>
 
     <!-- MAP LIST -->
-    <!-- <div class="left-panel">
-        qweweweqweqweqweqwe asdasdsd
-    </div> -->
+    <div class="left-panel">
+        <app-map-list-tools [open]="openMapList"></app-map-list-tools>
+        <div class="tools-bar">
+            <div class="tools-top">
+                <!-- NOTHING -->
+            </div>
+            <div class="tools-middle">
+                <app-editor-tools></app-editor-tools>
+            </div>
+            <div class="tools-bottom">
+                <div class="btn btn-white" (click)="openMapList = !openMapList">Maps</div>
+            </div>
+        </div>
+    </div>
 
     <!-- TOP COLUMN -->
     <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
@@ -41,10 +52,6 @@
 <!--            </ng-container>-->
 <!--        </div>-->
 <!--    </div>-->
-
-    <div class="game-editor-tools">
-        <app-editor-tools></app-editor-tools>
-    </div>
 
     <!-- KICKED MESSAGE -->
     <app-kicked-message *ngIf="gameInteractor.kickedGameId.value === game.id"></app-kicked-message>
