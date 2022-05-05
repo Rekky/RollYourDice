@@ -32,13 +32,14 @@ export class OurKonvaMouse {
         this.isEditionBlocked = false;
         this.author = author;
     }
+
     static calculateObjectPositionOnGrid(object: CurrentSelectedKonvaObject, gridStage: Konva.Stage): Coords {
         const objectAttrs = object.konvaObject.getAttrs();
-        const gridStageX = gridStage?.getAttrs()?.x ? gridStage?.getAttrs()?.x : 0;
-        const gridStageY = gridStage?.getAttrs()?.y ? gridStage?.getAttrs()?.y : 0;
+        const gridStageX = gridStage.getPosition().x ? gridStage.getPosition().x : 0;
+        const gridStageY = gridStage.getPosition().y ? gridStage.getPosition().y : 0;
         const coord = new Coords();
-        coord.x = Math.round( gridStageX + objectAttrs.x);
-        coord.y = Math.round( gridStageY + objectAttrs.y);
+        coord.x = Math.round( objectAttrs.x * gridStage.scaleX() + gridStageX);
+        coord.y = Math.round( objectAttrs.y * gridStage.scaleY() + gridStageY);
         return coord;
     }
 

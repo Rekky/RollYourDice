@@ -98,13 +98,13 @@ export class OurKonvaRect extends OurKonvaMouse {
 
     mouseDown(): void {
         super.mouseDown();
-        this.position = new Coords(this.ev.offsetX, this.ev.offsetY);
+        this.position = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
     }
 
     mouseMove(): void {
         super.mouseMove();
         if (this.isActive) {
-            const pos = new Coords(this.ev.offsetX, this.ev.offsetY);
+            const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
             if (!this.tempRect) {
                 this.tempRect = new Konva.Rect({
                     x: this.position.x > pos.x ? pos.x : this.position.x,
@@ -135,7 +135,7 @@ export class OurKonvaRect extends OurKonvaMouse {
         if (this.tempRect) {
             this.tempRect.destroy();
         }
-        const pos = new Coords(this.ev.offsetX, this.ev.offsetY);
+        const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
         const rect = new Konva.Rect({
             x: this.position.x > pos.x ? pos.x : this.position.x,
             y: this.position.y > pos.y ? pos.y : this.position.y,

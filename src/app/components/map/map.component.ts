@@ -142,6 +142,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // Apply position to stage
         stage.position(newPos);
         // return the new zoom factor.
+        this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectSelected, this.gridStage);
         return zoomAfter;
     }
 
