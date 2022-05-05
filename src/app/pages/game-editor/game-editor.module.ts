@@ -4,7 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {GameEditorComponent} from './game-editor.component';
-import {MapListComponent} from './map-list/map-list.component';
+import {MapListToolsComponent} from './map-list-tools/map-list-tools.component';
 import {MapPropertiesComponent} from './map-properties/map-properties.component';
 import {EditorToolsComponent} from './editor-tools/editor-tools.component';
 import {SharedModule} from '../../shared.module';
@@ -33,7 +33,7 @@ import { MoreOptionsComponent } from './context-menu/custom-inputs/more-options/
     declarations: [
         GameEditorComponent,
         MapComponent,
-        MapListComponent,
+        MapListToolsComponent,
         MapPropertiesComponent,
         EditorToolsComponent,
         KonvaBrushPropertiesComponent,

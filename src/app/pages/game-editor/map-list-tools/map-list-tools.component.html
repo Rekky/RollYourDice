@@ -1,10 +1,10 @@
-<ng-container>
+<!-- <ng-container>
     <div class="list-title">
         <i class="fas fa-chevron-down cursor-pointer"></i>
         <div class="title">Maps</div>
         <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true; this.currentMap = null;"></i>
     </div>
-    <div class="content-list">
+    <div class="content-list"> -->
 <!--            <div class="content-list page-list recursive-list" dragula="MAPS" [(dragulaModel)]="maps">-->
 <!--                <div class="item" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)" [class.open]="currentMap === map">-->
 <!--                    <div class="item-name">-->
@@ -25,21 +25,21 @@
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </div>-->
-        <div *ngIf="maps && maps.length > 0" dragula="MAPS" [(dragulaModel)]="maps">
+        <!-- <div *ngIf="maps && maps.length > 0" dragula="MAPS" [(dragulaModel)]="maps">
             <div class="item" [class.open]="currentMap === map" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)">
                 <div class="map-objects">
                     <div class="item-name">
-                        <span>{{map.name}}</span>
+                        <span>{{map.name}}</span> -->
 <!--                        <i class="fas fa-street-view" style="color: lightgreen;" *ngIf="map.toPlayers"></i>-->
-                        <span class="item-tools">
+                        <!-- <span class="item-tools"> -->
 <!--                            <i class="fas fa-male" (click)="toPlayersMap(map)"></i>-->
-                            <i class="fas fa-pen" (click)="renameMap(map)"></i>
+                            <!-- <i class="fas fa-pen" (click)="renameMap(map)"></i>
                             <i class="fas fa-trash" (click)="removeMap(map)"></i>
                         </span>
                     </div>
-                </div>
+                </div> -->
 <!--                <app-recursive-list [list]="map.objects"></app-recursive-list>-->
-            </div>
+            <!-- </div>
         </div>
         <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
             <div class="item active">
@@ -48,4 +48,7 @@
         </form>
     </div>
 
-</ng-container>
+</ng-container> -->
+<div class="maps-list" [class.open]="open" [ngStyle]="{width: open ? '340px' : '0'}">
+    cxosas
+</div>

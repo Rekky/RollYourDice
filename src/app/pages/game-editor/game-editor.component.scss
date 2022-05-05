@@ -16,7 +16,7 @@
     transform: scale(1);
 }
 
-// TOP TOOLBAR
+// ================= PANELS =================== //
 .top-panel{
     position: absolute;
     top:0;
@@ -24,25 +24,24 @@
     width: auto;
     z-index: 90;
 }
-// LEFT TOOLBAR
 .left-panel{
     position: absolute;
     top:0;
     left:0;
     bottom: 0;
-    width: 50px;
     color: $c-whitest;
     z-index: 90;
-    padding-left: 8px;    
+    transition: 300ms;
+    padding: 8px;
+    
+    // display: grid;
+    // grid-template-columns: 1fr 50px;
+    // grid-template-rows: 1fr;
+    // gap: 8px;
 
-    // .left-column-content{
-    //     position: relative;
-    //     width: 250px;
-    //     height: 100%;
-    //     border-right: 1px solid $c-blackest;
-    // }
+    display: flex;
+    flex-direction: row;
 }
-// RIGHT TOOLBAR
 .right-panel{
     position: absolute;
     top:0;
@@ -55,21 +54,32 @@
     overflow: hidden;
     z-index: 90;
 }
-// TOOLS CONTAINER
-.left-column-tools {
-    position: absolute;
-    width: 40px;
-    top:0;
-    right: -40px;
-    height: 100%;
-    border-top: 1px solid $c-blackest;
-    border-right: 1px solid $c-blackest;
-    background: $c-black;
+
+
+// ================= TOOLS CONTAINER ====================
+.tools-top{
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
-.game-editor-tools {
-    position: absolute;
-    left: 8px;
-    top:30%;
+.tools-middle{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.tools-bottom{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+.tools-bar {
+    position:relative;
+    width: 48px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
 }
 // -------------- TABS ---------------
 .tabs {

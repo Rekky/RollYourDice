@@ -100,7 +100,8 @@ app-dropdown {
 }
 // ------------------ CUSTOM BOOSTRAP -----------
 .btn {
-    border-radius: 0;
+    border-radius: 4px;
+    padding: 8px;
 }
 .btn-danger {
     background: $c-reddest;
@@ -119,6 +120,9 @@ app-dropdown {
 }
 .bg-dark-gray{
     background: $c-black-grey !important;
+}
+.btn-white {
+    background: $c-white !important;
 }
 
 // ------------------ Auxiliars ------------------
