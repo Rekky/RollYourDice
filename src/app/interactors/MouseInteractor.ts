@@ -13,6 +13,7 @@ import {SocketService} from '../services/socket.service';
 import {MapObjectService} from '../services/map-object.service';
 import {OurKonvaGrid} from '../classes/ourKonva/OurKonvaGrid';
 import {Coords} from '../classes/Coords';
+import {OurKonvaBrush} from '../classes/ourKonva/OurKonvaBrush';
 
 @Injectable({
     providedIn: 'root'
@@ -282,12 +283,16 @@ export class MouseInteractor implements OnDestroy {
             this.applyTransformEndToNewObject(createdObject);
             this.newObjectAddSelectedOption(createdObject);
         }
-        else if (object.state === 'text') {
+        if (object.state === 'text') {
             const createdObject = OurKonvaText.paint(object, layers);
             this.newObjectAddSelectedOption(createdObject);
         }
-        else if (object.state === 'image') {
+        if (object.state === 'image') {
             const createdObject = OurKonvaImage.paint(object, layers);
+            this.newObjectAddSelectedOption(createdObject);
+        }
+        if (object.state === 'brush') {
+            const createdObject = OurKonvaBrush.paint(object, layers);
             this.newObjectAddSelectedOption(createdObject);
         }
     }

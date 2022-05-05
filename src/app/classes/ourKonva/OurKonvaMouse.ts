@@ -7,6 +7,7 @@ import {OurKonvaRect} from './OurKonvaRect';
 import {OurKonvaText} from './OurKonvaText';
 import {OurKonvaImage} from './OurKonvaImage';
 import { Player } from '../User';
+import {OurKonvaBrush} from './OurKonvaBrush';
 
 export class OurKonvaMouse {
     isActive: boolean;
@@ -68,8 +69,8 @@ export class OurKonvaMouse {
 }
 
 export class CurrentSelectedKonvaObject {
-    konvaObject: Konva.Rect | Konva.Text | Konva.Image;
-    ourKonvaObject: OurKonvaRect | OurKonvaText | OurKonvaImage;
+    konvaObject: Konva.Rect | Konva.Text | Konva.Image | Konva.Line;
+    ourKonvaObject: OurKonvaRect | OurKonvaText | OurKonvaImage | OurKonvaBrush;
     type: string;
     layer: Konva.Layer;
     transformer: Konva.Transformer;

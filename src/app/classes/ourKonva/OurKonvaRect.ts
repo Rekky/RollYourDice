@@ -30,6 +30,7 @@ export class OurKonvaRect extends OurKonvaMouse {
 
     static paint(object: OurKonvaRect, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
         const rect = new Konva.Rect({
+            id: object.id,
             x: object.position.x,
             y: object.position.y,
             width: object.size.width,
@@ -39,7 +40,6 @@ export class OurKonvaRect extends OurKonvaMouse {
             strokeWidth: object.strokeWidth,
             draggable: !object.isEditionBlocked,
             opacity: object.opacity,
-            id: object.id,
             name: object.name,
             strokeScaleEnabled: false
         });
