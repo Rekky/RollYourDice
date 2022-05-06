@@ -28,8 +28,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     @Output() selectedMap: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
-    // maps: OurKonvaMap[];
-    currentMap: OurKonvaMap = null;
+    @Input() currentMap: OurKonvaMap = null;
 
     showNewMapForm: boolean = false;
     showRenameMapForm: boolean = false;

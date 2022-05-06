@@ -53,7 +53,7 @@
     <ng-container *ngIf="open">
         <div class="sidebar-header">
             <h2>MAPS</h2>
-            <img style="width:25px;height:25px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open); this.currentMap = null;" src="/assets/svg/close.svg" alt="">
+            <img style="width:25px;height:25px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open);" src="/assets/svg/close.svg" alt="">
         </div>
         <div class="sidebar-body">
             <div class="list-container">
@@ -74,7 +74,8 @@
     <form [formGroup]="newMapForm" (submit)="onAddNewMap()">
         <div class="item active">
             <input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'">
-            <button type="submit" class="btn btn-primary">OK</button>
+            <button type="submit" class="btn btn-primary">Ok</button>
+            <button type="submit" class="btn btn-danger" (click)="openModal = false">Cancel</button>
         </div>
     </form>
 </div>
