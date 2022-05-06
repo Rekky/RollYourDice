@@ -33,11 +33,6 @@
     z-index: 90;
     transition: 300ms;
     padding: 8px;
-    
-    // display: grid;
-    // grid-template-columns: 1fr 50px;
-    // grid-template-rows: 1fr;
-    // gap: 8px;
 
     display: flex;
     flex-direction: row;
@@ -80,33 +75,4 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-}
-// -------------- TABS ---------------
-.tabs {
-    display: flex;
-    flex-direction: row;
-    font-size: 14px;
-
-    &.adjust {
-        .tab{
-            flex: 1;
-        }
-    }
-
-    .tab{
-        border-top: 1px solid $c-blackest;
-        padding: .7rem 1rem;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        background: lighten($c-black, 5%);
-
-        &.active{
-            background: transparent;
-        }
-
-        &:last-child {
-            border-right: 1px solid $c-blackest;
-        }
-    }
 }

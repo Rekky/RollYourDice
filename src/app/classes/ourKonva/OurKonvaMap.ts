@@ -41,11 +41,11 @@ export class  OurKonvaMap {
         this.grid = new OurKonvaGrid();
         this.objects = [];
         this.characters = [];
-        this.stage = new Konva.Stage({
-            container: 'map' + this.id,
-            width: this.nColumns * this.grid.cellSize,
-            height: this.nRows * this.grid.cellSize
-        });
+        // this.stage = new Konva.Stage({
+        //     container: 'map' + this.id,
+        //     width: this.nColumns * this.grid.cellSize,
+        //     height: this.nRows * this.grid.cellSize
+        // });
         this.layers = new OurKonvaLayers();
     }
 

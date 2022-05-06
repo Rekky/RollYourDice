@@ -1,12 +1,37 @@
 @import "src/styles.scss";
 
-.maps-list {
+.sidebar {
     position: relative;
     width: 340px;
     height: 100%;
-    background: white;
+    color: $c-indigo;
+    background: $c-white;
     border-radius: 4px;
     transition: 300ms;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px 1fr 50px;
+}
+.sidebar-header {
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    grid-template-rows: auto;
+    align-items: center;
+}
+.sidebar-body {
+    overflow: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-footer{
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
 }
 .open {
     margin-right: 8px;

@@ -5,7 +5,7 @@
         <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true; this.currentMap = null;"></i>
     </div>
     <div class="content-list"> -->
-<!--            <div class="content-list page-list recursive-list" dragula="MAPS" [(dragulaModel)]="maps">-->
+           <!-- <div class="content-list page-list recursive-list" dragula="MAPS" [(dragulaModel)]="maps">-->
 <!--                <div class="item" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)" [class.open]="currentMap === map">-->
 <!--                    <div class="item-name">-->
 <!--                        <div (click)="openListItem($event, map);">-->
@@ -24,7 +24,7 @@
 <!--                        <app-recursive-list [list]="map.objects"></app-recursive-list>-->
 <!--                    </div>-->
 <!--                </div>-->
-<!--            </div>-->
+<!--            </div> -->
         <!-- <div *ngIf="maps && maps.length > 0" dragula="MAPS" [(dragulaModel)]="maps">
             <div class="item" [class.open]="currentMap === map" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)">
                 <div class="map-objects">
@@ -49,6 +49,32 @@
     </div>
 
 </ng-container> -->
-<div class="maps-list" [class.open]="open" [ngStyle]="{width: open ? '340px' : '0'}">
-    cxosas
+<div class="sidebar box-shadow" [class.open]="open" [ngStyle]="{width: open ? '340px' : '0'}">
+    <ng-container *ngIf="open">
+        <div class="sidebar-header">
+            <h2>MAPS</h2>
+            <img style="width:25px;height:25px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open); this.currentMap = null;" src="/assets/svg/close.svg" alt="">
+        </div>
+        <div class="sidebar-body">
+            <div class="list-container">
+                <div class="item" *ngFor="let map of maps;let i = index;" [class.active]="currentMap === map" (click)="onSelectMap($event, map)">
+                    <div class="item-name">
+                        {{map.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <img style="width:25px;height:25px;" class="cursor-pointer" src="/assets/svg/add.svg" alt="" (click)="openModal = true">
+        </div>
+    </ng-container>
+</div>
+
+<div *ngIf="openModal" style="position:fixed;width:200px;height:150px;top:50%;left:50%;background:#fff;">
+    <form [formGroup]="newMapForm" (submit)="onAddNewMap()">
+        <div class="item active">
+            <input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'">
+            <button type="submit" class="btn btn-primary">OK</button>
+        </div>
+    </form>
 </div>

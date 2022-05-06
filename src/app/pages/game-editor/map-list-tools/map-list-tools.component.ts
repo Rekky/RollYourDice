@@ -17,6 +17,9 @@ import { MapInteractor } from 'src/app/interactors/MapInteractor';
 export class MapListToolsComponent implements OnInit, OnDestroy {
 
     @Input() open = false;
+    @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() openModal = false;
+
     @Input() maps: OurKonvaMap[] = [];
     @Output() newMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() removeMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
@@ -87,9 +90,11 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         newMap.name = this.newMapForm.get('name').value;
 
         this.maps.push(newMap);
-        this.newMapForm.reset({name: 'Map' + (this.maps.length + 1)});
         this.newMapEvent.emit(newMap);
-        this.showNewMapForm = false;
+
+        this.newMapForm.reset();
+        this.openModal = false;
+        console.log('onAddNewMap', this.maps);
     }
 
     onSelectMapObject(ev, mapObject: any): void {
