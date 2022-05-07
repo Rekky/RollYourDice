@@ -41,11 +41,6 @@
 <!--                <app-recursive-list [list]="map.objects"></app-recursive-list>-->
             <!-- </div>
         </div>
-        <form [formGroup]="newMapForm" (submit)="onAddNewMap()" *ngIf="showNewMapForm">
-            <div class="item active">
-                <input type="text" placeholder="OurKonvaMap ..." autofocus (blur)="onAddNewMap()" [formControlName]="'name'">
-            </div>
-        </form>
     </div>
 
 </ng-container> -->
@@ -53,7 +48,7 @@
     <ng-container *ngIf="open">
         <div class="sidebar-header">
             <h2>MAPS</h2>
-            <img style="width:25px;height:25px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open);" src="/assets/svg/close.svg" alt="">
+            <img style="width:20px;height:20px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open);" src="/assets/svg/close.svg" alt="">
         </div>
         <div class="sidebar-body">
             <div class="list-container">
@@ -65,17 +60,21 @@
             </div>
         </div>
         <div class="sidebar-footer">
-            <img style="width:25px;height:25px;" class="cursor-pointer" src="/assets/svg/add.svg" alt="" (click)="openModal = true">
+            <img style="width:20px;height:20px;" class="cursor-pointer" src="/assets/svg/add.svg" alt="" (click)="openModal = true">
         </div>
     </ng-container>
 </div>
 
-<div *ngIf="openModal" style="position:fixed;width:200px;height:150px;top:50%;left:50%;background:#fff;">
+<app-modal-custom [(open)]="openModal">
     <form [formGroup]="newMapForm" (submit)="onAddNewMap()">
         <div class="item active">
-            <input type="text" placeholder="OurKonvaMap ..." autofocus [formControlName]="'name'">
+            <label for="">Map Name</label>
+            <input type="text" placeholder="Map Name" autofocus [formControlName]="'name'">
+            <label for="">Grid size</label>
+            <span>ROWS</span><input type="number" [formControlName]="'rows'" placeholder="50">
+            <span>COLS</span><input type="number" [formControlName]="'cols'" placeholder="50">
             <button type="submit" class="btn btn-primary">Ok</button>
             <button type="submit" class="btn btn-danger" (click)="openModal = false">Cancel</button>
         </div>
     </form>
-</div>
+</app-modal-custom>

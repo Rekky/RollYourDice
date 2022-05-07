@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Coords} from '../../../classes/Coords';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import Konva from 'konva';
@@ -50,7 +50,9 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
             });
         });
         this.newMapForm = new FormGroup({
-            name: new FormControl('Map' + (this.maps.length + 1)),
+            name: new FormControl('New Map', Validators.required),
+            rows: new FormControl('50', Validators.required),
+            cols: new FormControl('50', Validators.required)
         });
     }
 
@@ -87,13 +89,18 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     onAddNewMap(): void {
         const newMap: OurKonvaMap = new OurKonvaMap();
         newMap.name = this.newMapForm.get('name').value;
+        newMap.nRows = this.newMapForm.get('rows').value;
+        newMap.nColumns = this.newMapForm.get('cols').value;
+        
+        if(!this.newMapForm.valid) {
+            return
+        }
 
         this.maps.push(newMap);
         this.newMapEvent.emit(newMap);
 
         this.newMapForm.reset();
         this.openModal = false;
-        console.log('onAddNewMap', this.maps);
     }
 
     onSelectMapObject(ev, mapObject: any): void {

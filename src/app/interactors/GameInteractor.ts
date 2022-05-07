@@ -27,6 +27,10 @@ export class GameInteractor {
         return this.currentGame.asObservable();
     }
 
+    getCurrentGame(): Game {
+        return this.currentGame.value;
+    }
+
     getGameEditor(id: string): void {
         // return this.gameService.getGameEditor(id);
     }
