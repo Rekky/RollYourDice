@@ -52,6 +52,14 @@
 
 
 // ================= TOOLS CONTAINER ====================
+.tools-bar {
+    position:relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 48px;
+    grid-template-rows: 1fr 1fr 1fr;
+}
 .tools-top{
     position: relative;
     display: flex;
@@ -67,12 +75,4 @@
     display: flex;
     flex-direction: column;
     justify-content: end;
-}
-.tools-bar {
-    position:relative;
-    width: 48px;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
 }
