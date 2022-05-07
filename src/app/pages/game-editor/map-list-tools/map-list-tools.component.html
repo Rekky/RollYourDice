@@ -5,7 +5,7 @@
         <i class="fas fa-plus cursor-pointer" (click)="showNewMapForm = true; this.currentMap = null;"></i>
     </div>
     <div class="content-list"> -->
-           <!-- <div class="content-list page-list recursive-list" dragula="MAPS" [(dragulaModel)]="maps">-->
+<!-- <div class="content-list page-list recursive-list" dragula="MAPS" [(dragulaModel)]="maps">-->
 <!--                <div class="item" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)" [class.open]="currentMap === map">-->
 <!--                    <div class="item-name">-->
 <!--                        <div (click)="openListItem($event, map);">-->
@@ -25,21 +25,21 @@
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </div> -->
-        <!-- <div *ngIf="maps && maps.length > 0" dragula="MAPS" [(dragulaModel)]="maps">
+<!-- <div *ngIf="maps && maps.length > 0" dragula="MAPS" [(dragulaModel)]="maps">
             <div class="item" [class.open]="currentMap === map" *ngFor="let map of maps;let i = index;" (click)="onSelectMap($event, map)">
                 <div class="map-objects">
                     <div class="item-name">
                         <span>{{map.name}}</span> -->
 <!--                        <i class="fas fa-street-view" style="color: lightgreen;" *ngIf="map.toPlayers"></i>-->
-                        <!-- <span class="item-tools"> -->
+<!-- <span class="item-tools"> -->
 <!--                            <i class="fas fa-male" (click)="toPlayersMap(map)"></i>-->
-                            <!-- <i class="fas fa-pen" (click)="renameMap(map)"></i>
+<!-- <i class="fas fa-pen" (click)="renameMap(map)"></i>
                             <i class="fas fa-trash" (click)="removeMap(map)"></i>
                         </span>
                     </div>
                 </div> -->
 <!--                <app-recursive-list [list]="map.objects"></app-recursive-list>-->
-            <!-- </div>
+<!-- </div>
         </div>
     </div>
 
@@ -48,19 +48,18 @@
     <ng-container *ngIf="open">
         <div class="sidebar-header">
             <h2>MAPS</h2>
-            <img style="width:20px;height:20px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open);" src="/assets/svg/close.svg" alt="">
+            <img style="width:20px;height:20px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open);" src="/assets/svg/close.svg">
         </div>
         <div class="sidebar-body">
             <div class="list-container">
                 <div class="item" *ngFor="let map of maps;let i = index;" [class.active]="currentMap === map" (click)="onSelectMap($event, map)">
-                    <div class="item-name">
-                        {{map.name}}
-                    </div>
+                    <span>{{map.name}}</span>
+                    <span class="item-icon"><img style="width: 16px;" src="assets/icons/points.png" alt="options"></span>
                 </div>
             </div>
         </div>
         <div class="sidebar-footer">
-            <img style="width:20px;height:20px;" class="cursor-pointer" src="/assets/svg/add.svg" alt="" (click)="openModal = true">
+            <img style="width:20px;height:20px;" class="cursor-pointer" src="/assets/svg/add.svg" (click)="openModal = true">
         </div>
     </ng-container>
 </div>
@@ -68,11 +67,18 @@
 <app-modal-custom [(open)]="openModal">
     <form [formGroup]="newMapForm" (submit)="onAddNewMap()">
         <div class="item active">
-            <label for="">Map Name</label>
-            <input type="text" placeholder="Map Name" autofocus [formControlName]="'name'">
-            <label for="">Grid size</label>
-            <span>ROWS</span><input type="number" [formControlName]="'rows'" placeholder="50">
-            <span>COLS</span><input type="number" [formControlName]="'cols'" placeholder="50">
+            <div>
+                <label for="">Map Name</label>
+                <input type="text" placeholder="Map Name" autofocus [formControlName]="'name'">
+            </div>
+            <div>
+                <label for="">ROWS</label>
+                <input type="number" [formControlName]="'rows'" placeholder="50">
+            </div>
+            <div>
+                <label for="">COLS</label>
+                <input type="number" [formControlName]="'cols'" placeholder="50">
+            </div>
             <button type="submit" class="btn btn-primary">Ok</button>
             <button type="submit" class="btn btn-danger" (click)="openModal = false">Cancel</button>
         </div>

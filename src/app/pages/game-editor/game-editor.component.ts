@@ -103,7 +103,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onSelectedMap(ev: OurKonvaMap): void {
         // TODO donarli una altre volta
-        this.onSetCurrentObjectSelected(ev);
+        console.log('onSelectedMap', ev);
+        this.map = ev;
+        // this.onSetCurrentObjectSelected(ev);
     }
 
     onNewMap(map: OurKonvaMap): void {

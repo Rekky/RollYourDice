@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 export class ModalCustomComponent implements OnInit {
 
   @Input() open = false;
-  @Input() openChange: EventEmitter<boolean> =  new EventEmitter();
+  @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 

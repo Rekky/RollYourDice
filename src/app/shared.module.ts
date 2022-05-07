@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {EnumToArrayPipe} from './pipes/enum-to-array-pipe';
 import {RecursiveListComponent} from './components/recursive-list/recursive-list.component';
 import {NotificationComponent} from './components/notification/notification.component';
-import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {CharacterSheetComponent} from './components/character-sheet/character-sheet.component';
 import {CsHeaderComponent} from './components/character-sheet/cs-header/cs-header.component';
 import {CsAttributesComponent} from './components/character-sheet/cs-attributes/cs-attributes.component';
@@ -19,6 +18,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {SafePipe} from './pipes/safe-pipe';
 import { SearchGameComponent } from './components/search-game/search-game.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { ModalCustomComponent } from './components/modal-custom/modal-custom.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +26,6 @@ import { UserListComponent } from './components/user-list/user-list.component';
         SafePipe,
         RecursiveListComponent,
         NotificationComponent,
-        DropdownComponent,
         CharacterSheetComponent,
         CsHeaderComponent,
         CsAttributesComponent,
@@ -36,7 +35,8 @@ import { UserListComponent } from './components/user-list/user-list.component';
         UploadInputComponent,
         EditGameDataComponent,
         SearchGameComponent,
-        UserListComponent
+        UserListComponent,
+        ModalCustomComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +51,6 @@ import { UserListComponent } from './components/user-list/user-list.component';
         SafePipe,
         RecursiveListComponent,
         NotificationComponent,
-        DropdownComponent,
         CharacterSheetComponent,
         CsHeaderComponent,
         CsAttributesComponent,
@@ -60,6 +59,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
         AssetComponent,
         UploadInputComponent,
         EditGameDataComponent,
+        ModalCustomComponent
     ],
 })
 

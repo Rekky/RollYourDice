@@ -25,7 +25,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     @Output() removeMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() renameMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
-    @Output() selectedMap: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() selectedMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
     @Input() currentMap: OurKonvaMap = null;
@@ -63,7 +63,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     onSelectMap(ev, map: OurKonvaMap): void {
         ev.stopPropagation();
         this.currentMap = map;
-        this.selectedMap.emit(this.currentMap);
+        this.selectedMapEvent.emit(this.currentMap);
     }
 
     openListItem(ev: any, item: any): void {

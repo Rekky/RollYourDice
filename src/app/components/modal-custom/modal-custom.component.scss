@@ -1,11 +1,19 @@
 .modal-custom {
     position:fixed;
-    width:200px;
+    width: auto;
     height: auto;
-    top:50%;
+    top:30%;
     left:50%;
     background:#fff;
     border-radius:4px;
-    padding: 8px;
+    padding: 20px;
     color: rgba(5, 0, 56, 1);
+}
+.control {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    justify-items: end;
+    margin-bottom: 6px;
 }

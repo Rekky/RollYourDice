@@ -6,7 +6,13 @@
 
     <!-- MAP LIST -->
     <div class="left-panel">
-        <app-map-list-tools [(open)]="openMapList" [maps]="maps" [currentMap]="maps[0]" (newMapEvent)="onNewMap($event)"></app-map-list-tools>
+        <app-map-list-tools
+        [(open)]="openMapList"
+        [maps]="maps"
+        [currentMap]="maps[0]"
+        (newMapEvent)="onNewMap($event)"
+        (selectedMapEvent)="onSelectedMap($event)"
+        ></app-map-list-tools>
         <div class="tools-bar">
             <div class="tools-top">
                 <!-- NOTHING -->
