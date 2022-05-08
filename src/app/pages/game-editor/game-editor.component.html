@@ -1,7 +1,10 @@
 <div class="game-editor" *ngIf="game">
     <!-- MAP -->
-    <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStartStatus === 0))" class="map-container">
-        <app-map [map]="map" [modification]="mapModification"></app-map>
+    <div *ngIf="(
+    (map && game.author.id === userInteractor.getCurrentUser().id) ||
+    (map && gameStartStatus === 0))"
+         class="map-container">
+        <app-map *ngIf="!destroying" [map]="map" [modification]="mapModification"></app-map>
     </div>
 
     <!-- MAP LIST -->

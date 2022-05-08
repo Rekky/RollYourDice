@@ -35,13 +35,15 @@ export class OurKonvaMouse {
     }
 
     static calculateObjectPositionOnGrid(object: CurrentSelectedKonvaObject, gridStage: Konva.Stage): Coords {
-        const objectAttrs = object.konvaObject.getAttrs();
-        const gridStageX = gridStage.getPosition().x ? gridStage.getPosition().x : 0;
-        const gridStageY = gridStage.getPosition().y ? gridStage.getPosition().y : 0;
-        const coord = new Coords();
-        coord.x = Math.round( objectAttrs.x * gridStage.scaleX() + gridStageX);
-        coord.y = Math.round( objectAttrs.y * gridStage.scaleY() + gridStageY);
-        return coord;
+        if (object) {
+            const objectAttrs = object.konvaObject.getAttrs();
+            const gridStageX = gridStage.getPosition().x ? gridStage.getPosition().x : 0;
+            const gridStageY = gridStage.getPosition().y ? gridStage.getPosition().y : 0;
+            const coord = new Coords();
+            coord.x = Math.round( objectAttrs.x * gridStage.scaleX() + gridStageX);
+            coord.y = Math.round( objectAttrs.y * gridStage.scaleY() + gridStageY);
+            return coord;
+        }
     }
 
     mouseDown(): any {}

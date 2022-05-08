@@ -1,4 +1,4 @@
-<div [id]="'mapbox' + map.id" class="cursor-{{displayCursor}}"
+<div *ngIf="map?.id" [id]="'mapbox' + map.id" class="cursor-{{displayCursor}}"
      [style.position]="'absolute'"
      [style.width]="mapWidth + 'px'"
      [style.height]="mapHeight + 'px'"

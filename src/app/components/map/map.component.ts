@@ -1,5 +1,5 @@
 import {
-    AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit,
+    AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit,
     Output, SimpleChanges, ViewChild
 } from '@angular/core';
 import Konva from 'konva';
@@ -66,7 +66,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     protected minScaleSize: number = 0.5;
     protected scaleStep: number = 0.1;
 
-    constructor(private mouseInteractor: MouseInteractor) {
+    constructor(private mouseInteractor: MouseInteractor,
+                private cdr: ChangeDetectorRef) {
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
             .subscribe((object: CurrentSelectedKonvaObject) => {
                 this.currentMapObjectSelected = object;
@@ -93,43 +94,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.initializeMap();
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
-
-        this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
-            this.displaySelectedObjectEditor = false;
-        });
-        this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
-            if (this.currentMapObjectSelected) {
-                this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(
-                    this.currentMapObjectSelected, this.gridStage);
-                this.displaySelectedObjectEditor = true;
-            }
-        });
-        this.mapEl.nativeElement.addEventListener('mouseout', (ev: MouseEvent) => {
-            // this.moveMap('mouseout', ev);
-        });
-        this.mapEl.nativeElement.addEventListener('contextmenu', (ev: MouseEvent) => {
-            ev.preventDefault();
-        });
-        this.mapEl.nativeElement.addEventListener('wheel', (ev: MouseEvent | any) => {
-
-            const pointer = this.gridStage.getPointerPosition();
-
-            if (this.mapScale < this.minScaleSize) {
-                this.mapScale = this.minScaleSize;
-                return;
-            } else if (this.mapScale > this.maxScaleSize) {
-                this.mapScale = this.maxScaleSize;
-                return;
-            }
-
-            const zoomInc = ev.deltaY > 0 ? -this.scaleStep : this.scaleStep;
-            this.mapScale = this.zoomStage2(this.gridStage, pointer, this.mapScale, zoomInc);
-            this.gridStage.batchDraw();
-        });
+        this.setMapElEvents();
+        this.cdr.detectChanges();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
         if (this.modification) {
             if (this.modification.type === 'create') {
                 this.mouseInteractor.paintObjectOnMap(this.modification.object, this.layers);
@@ -430,5 +399,40 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.gridStage.container().style.backgroundSize = 'cover';
         this.gridStage.container().style.backgroundPosition = 'center';
         this.gridStage.batchDraw();
+    }
+
+    setMapElEvents(): void {
+        this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
+            this.displaySelectedObjectEditor = false;
+        });
+        this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
+            if (this.currentMapObjectSelected) {
+                this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(
+                    this.currentMapObjectSelected, this.gridStage);
+                this.displaySelectedObjectEditor = true;
+            }
+        });
+        this.mapEl.nativeElement.addEventListener('mouseout', (ev: MouseEvent) => {
+            // this.moveMap('mouseout', ev);
+        });
+        this.mapEl.nativeElement.addEventListener('contextmenu', (ev: MouseEvent) => {
+            ev.preventDefault();
+        });
+        this.mapEl.nativeElement.addEventListener('wheel', (ev: MouseEvent | any) => {
+
+            const pointer = this.gridStage.getPointerPosition();
+
+            if (this.mapScale < this.minScaleSize) {
+                this.mapScale = this.minScaleSize;
+                return;
+            } else if (this.mapScale > this.maxScaleSize) {
+                this.mapScale = this.maxScaleSize;
+                return;
+            }
+
+            const zoomInc = ev.deltaY > 0 ? -this.scaleStep : this.scaleStep;
+            this.mapScale = this.zoomStage2(this.gridStage, pointer, this.mapScale, zoomInc);
+            this.gridStage.batchDraw();
+        });
     }
 }

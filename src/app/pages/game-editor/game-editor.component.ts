@@ -35,6 +35,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     getSelectedKonvaObjectSubscription: Subscription;
     getCurrentMapModificationSubs: Subscription;
 
+    destroying: boolean = false;
+
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
@@ -43,6 +45,17 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private socketService: SocketService,
                 public userInteractor: UserInteractor,
                 private cdr: ChangeDetectorRef) {
+        this.mapInteractor.getCurrentMapObs().subscribe(map => {
+            if (map) {
+                this.destroying = true;
+                this.mouseInteractor.unsetSelectedKonvaObject();
+                this.map = map;
+
+                setTimeout(() => {
+                    this.destroying = false;
+                });
+            }
+        });
     }
 
     async ngOnInit(): Promise<void> {
@@ -55,8 +68,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
             // 2. Call to get map's list and set first map as selected
             this.maps = await this.mapInteractor.getAllMaps(gameId);
-            this.map = this.maps[0];
-            this.mapInteractor.setCurrentMap(this.map);
+            this.mapInteractor.setCurrentMap(this.maps[0]);
 
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);
@@ -102,7 +114,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedMap(ev: OurKonvaMap): void {
-        this.map = ev;
+        this.mapInteractor.setCurrentMap(ev);
     }
 
     onCreateMap(map: OurKonvaMap): void {

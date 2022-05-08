@@ -29,9 +29,11 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
     @Input() currentMap: OurKonvaMap = null;
+
     newMapForm: FormGroup;
     updateMapForm: FormGroup;
     isUpdateMap = false;
+    openOption: number;
 
     getSelectedKonvaObjectSubscription: Subscription;
 
@@ -65,8 +67,8 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     submitMapForm(): void {
         // update map
-        if(this.isUpdateMap) {
-            if(!this.updateMapForm.valid) {
+        if (this.isUpdateMap) {
+            if (!this.updateMapForm.valid) {
                 return;
             }
             this.currentMap.name = this.newMapForm.get('name').value;
@@ -83,7 +85,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         newMap.nRows = this.newMapForm.get('nRows').value;
         newMap.nColumns = this.newMapForm.get('nColumns').value;
 
-        if(!this.newMapForm.valid) {
+        if (!this.newMapForm.valid) {
             return;
         }
 
@@ -108,6 +110,10 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     toPlayersMap(map: OurKonvaMap): void {
         // map.toPlayers = !map.toPlayers;
         this.toPlayersMapEvent.emit(map);
+    }
+
+    toggleOpenOption(n: number): void {
+        this.openOption === n ? this.openOption = null : this.openOption = n;
     }
 
 }
