@@ -21,21 +21,17 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     @Input() openModal = false;
 
     @Input() maps: OurKonvaMap[] = [];
-    @Output() newMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
-    @Output() removeMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
-    @Output() renameMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() createMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() deleteMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
+    @Output() updateMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() selectedMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
     @Input() currentMap: OurKonvaMap = null;
-
-    showNewMapForm: boolean = false;
-    showRenameMapForm: boolean = false;
     newMapForm: FormGroup;
-    selectedItemsArray: any[] = [];
-    renameMapForm: FormGroup;
-    mapToRename: OurKonvaMap;
+    updateMapForm: FormGroup;
+    isUpdateMap = false;
 
     getSelectedKonvaObjectSubscription: Subscription;
 
@@ -51,9 +47,10 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         });
         this.newMapForm = new FormGroup({
             name: new FormControl('New Map', Validators.required),
-            rows: new FormControl('50', Validators.required),
-            cols: new FormControl('50', Validators.required)
+            nRows: new FormControl('50', Validators.required),
+            nColumns: new FormControl('50', Validators.required)
         });
+        this.updateMapForm = this.newMapForm;
     }
 
     ngOnDestroy(): void {
@@ -66,59 +63,46 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.selectedMapEvent.emit(this.currentMap);
     }
 
-    openListItem(ev: any, item: any): void {
-        ev.stopPropagation();
-        // this.currentMap = this.currentMap !== item ? item : null;
-        const foundItem = this.selectedItemsArray.find((res) => res === item);
-        if (foundItem) {
-            this.selectedItemsArray.splice(item, 1);
+    submitMapForm(): void {
+        // update map
+        if(this.isUpdateMap) {
+            if(!this.updateMapForm.valid) {
+                return;
+            }
+            this.currentMap.name = this.newMapForm.get('name').value;
+            this.currentMap.nRows = this.newMapForm.get('nRows').value;
+            this.currentMap.nColumns = this.newMapForm.get('nColumns').value;
+            this.updateMapEvent.emit(this.currentMap);
+            this.openModal = false;
             return;
         }
-        this.selectedItemsArray.push(item);
-    }
 
-    onSubmitRenameMap(map: OurKonvaMap): void {
-        const newName = this.renameMapForm.get('name').value;
-        const mapIndex = this.maps.indexOf(map);
-        this.maps[mapIndex].name = newName;
-        this.showRenameMapForm = false;
-
-        this.renameMapEvent.emit(this.maps[mapIndex]);
-    }
-
-    onAddNewMap(): void {
+        // create new map
         const newMap: OurKonvaMap = new OurKonvaMap();
         newMap.name = this.newMapForm.get('name').value;
-        newMap.nRows = this.newMapForm.get('rows').value;
-        newMap.nColumns = this.newMapForm.get('cols').value;
-        
+        newMap.nRows = this.newMapForm.get('nRows').value;
+        newMap.nColumns = this.newMapForm.get('nColumns').value;
+
         if(!this.newMapForm.valid) {
-            return
+            return;
         }
 
         this.maps.push(newMap);
-        this.newMapEvent.emit(newMap);
+        this.createMapEvent.emit(newMap);
 
         this.newMapForm.reset();
         this.openModal = false;
     }
 
-    onSelectMapObject(ev, mapObject: any): void {
-        // ev.stopPropagation();
-        // this.currentMap = null;
-    }
-
-    removeMap(map: OurKonvaMap): void {
+    deleteMap(map: OurKonvaMap): void {
         this.maps.splice(this.maps.indexOf(map), 1);
-        this.removeMapEvent.emit(map);
+        this.deleteMapEvent.emit(map);
     }
 
-    renameMap(map: OurKonvaMap): void {
-        this.showRenameMapForm = true;
-        this.mapToRename = map;
-        this.renameMapForm = new FormGroup({
-            name: new FormControl(map.name),
-        });
+    openUpdateMapModal(map: OurKonvaMap): void {
+        this.openModal = true;
+        this.isUpdateMap = true;
+        this.updateMapForm.patchValue(map);
     }
 
     toPlayersMap(map: OurKonvaMap): void {

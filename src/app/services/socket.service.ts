@@ -134,12 +134,12 @@ export class SocketService {
         this.socket.emit('game-editor-create-map', {gameId, map});
     }
 
-    sendGameRemoveMap(gameId: string, map: OurKonvaMap): void {
-        this.socket.emit('game-editor-remove-map', {gameId, map});
+    sendGameDeleteMap(gameId: string, map: OurKonvaMap): void {
+        this.socket.emit('game-editor-delete-map', {gameId, map});
     }
 
-    sendGameRenameMap(gameId: string, map: OurKonvaMap): void {
-        this.socket.emit('game-editor-rename-map', {gameId, map});
+    sendGameUpdateMap(gameId: string, map: OurKonvaMap): void {
+        this.socket.emit('game-editor-update-map', {gameId, map});
     }
 
     sendGameMoveMap(map: OurKonvaMap): void {

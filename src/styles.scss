@@ -141,6 +141,19 @@ label{
             background: rgba(0,0,0,0.04);
         }
     }
+    .item-options{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+
+        position:fixed;
+        transform:translate(30px, -30px);
+        width:auto;
+        height:auto;
+        background:white;
+        border-radius: 4px;
+        z-index:90
+    }
 }
 
 

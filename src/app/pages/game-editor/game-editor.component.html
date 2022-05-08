@@ -10,8 +10,10 @@
         [(open)]="openMapList"
         [maps]="maps"
         [currentMap]="maps[0]"
-        (newMapEvent)="onNewMap($event)"
+        (createMapEvent)="onCreateMap($event)"
         (selectedMapEvent)="onSelectedMap($event)"
+        (deleteMapEvent)="onDeleteMap($event)"
+        (updateMapEvent)="onUpdateMap($event)"
         ></app-map-list-tools>
         <div class="tools-bar">
             <div class="tools-top">

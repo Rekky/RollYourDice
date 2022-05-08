@@ -48,13 +48,19 @@
     <ng-container *ngIf="open">
         <div class="sidebar-header">
             <h2>MAPS</h2>
-            <img style="width:20px;height:20px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open);" src="/assets/svg/close.svg">
+            <img style="width:20px;height:20px;" class="cursor-pointer" (click)="open = !open;openChange.emit(open);openOption = null" src="/assets/svg/close.svg">
         </div>
         <div class="sidebar-body">
             <div class="list-container">
                 <div class="item" *ngFor="let map of maps;let i = index;" [class.active]="currentMap === map" (click)="onSelectMap($event, map)">
                     <span>{{map.name}}</span>
-                    <span class="item-icon"><img style="width: 16px;" src="assets/icons/points.png" alt="options"></span>
+                    <span class="item-icon">
+                        <img style="width: 16px;" src="assets/icons/points.png" alt="options" (click)="openOption = i">
+                        <div class="item-options box-shadow" *ngIf="openOption === i">
+                            <div class="item" (click)="openUpdateMapModal(map)">Rename</div>
+                            <div class="item" (click)="deleteMap(map)">Delete</div>
+                        </div>
+                    </span>
                 </div>
             </div>
         </div>
@@ -65,7 +71,7 @@
 </div>
 
 <app-modal-custom [(open)]="openModal">
-    <form [formGroup]="newMapForm" (submit)="onAddNewMap()">
+    <form [formGroup]="isUpdateMap ? updateMapForm : newMapForm" (submit)="submitMapForm()">
         <div class="item active">
             <div>
                 <label for="">Map Name</label>
@@ -73,11 +79,11 @@
             </div>
             <div>
                 <label for="">ROWS</label>
-                <input type="number" [formControlName]="'rows'" placeholder="50">
+                <input type="number" [formControlName]="'nRows'" placeholder="50">
             </div>
             <div>
                 <label for="">COLS</label>
-                <input type="number" [formControlName]="'cols'" placeholder="50">
+                <input type="number" [formControlName]="'nColumns'" placeholder="50">
             </div>
             <button type="submit" class="btn btn-primary">Ok</button>
             <button type="submit" class="btn btn-danger" (click)="openModal = false">Cancel</button>

@@ -102,22 +102,19 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedMap(ev: OurKonvaMap): void {
-        // TODO donarli una altre volta
-        console.log('onSelectedMap', ev);
         this.map = ev;
-        // this.onSetCurrentObjectSelected(ev);
     }
 
-    onNewMap(map: OurKonvaMap): void {
+    onCreateMap(map: OurKonvaMap): void {
         this.socketService.sendGameCreateMap(this.gameInteractor.getCurrentGame().id, map);
     }
 
-    onRemoveMap(map: OurKonvaMap): void {
-        // this.socketService.sendGameRemoveMap(this.selectedPage.id, map);
+    onDeleteMap(map: OurKonvaMap): void {
+        this.socketService.sendGameDeleteMap(this.gameInteractor.getCurrentGame().id, map);
     }
 
-    onRenameMap(map: OurKonvaMap): void {
-        // this.socketService.sendGameRenameMap(this.selectedPage.id, map);
+    onUpdateMap(map: OurKonvaMap): void {
+        this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, map);
     }
 
     onMapMove(map: OurKonvaMap): void {

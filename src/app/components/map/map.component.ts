@@ -80,70 +80,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     ngOnInit(): void {
-        // this.getCurrentSelectedObjectSub = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(res => {
-        //     if (res) {
-        //         this.activeTr = res.transformer;
-        //         this.selectedObjectAttrs = res.konvaObject.getAttrs();
-        //     }
-        // });
-        // this.getMouseSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
-        //     if (res != null) {
-        //         this.displayCursor = res.state ? res.state : 'pointer';
-        //     }
-        // });
-        // this.mapInteractor.paintObjectsOnMap(this.map.objects, this.layers, this.map.id);
-        // this.socketService.socket.on('game-editor-object', (data) => {
-        //     const jsonData = JSON.parse(data);
-        //     if (this.rectangleTest.attrs) {
-        //         this.rectangleTest.position({x: jsonData.attrs.x, y: jsonData.attrs.y});
-        //         this.gridStage.batchDraw();
-        //     }
-        // });
-
         window.addEventListener('resize', () => {
             this.gridStage.width(window.innerWidth);
             this.gridStage.height(window.innerHeight);
             this.initializeMap();
             this.gridStage.batchDraw();
         });
-    }
-
-    /**Zoom the stage at the given position
-     Parameters:
-     stage: the stage to be zoomed.
-     zoomPoint: the (x, y) for centre of zoom.
-     zoomBefore: the zoom factor at the start of the process.
-     inc : the amount of zoom to apply.
-     returns: zoom factor after zoom completed.
-     */
-    zoomStage2(stage, zoomPoint, zoomBefore, inc) {
-        // remember the scale before new zoom is applied - we are scaling
-        // same in x & y so either will work
-        let oldScale = stage.scaleX();
-
-        // compute the distance to the zoom point before applying zoom
-        var mousePointTo = {
-            x: (zoomPoint.x - stage.x()) / oldScale,
-            y: (zoomPoint.y - stage.y()) / oldScale
-        };
-
-        // compute new scale
-        let zoomAfter = zoomBefore + inc;
-
-        // apply new zoom to stage
-        stage.scale({ x: zoomAfter, y: zoomAfter });
-
-        // Important - move the stage so that the zoomed point remains
-        // visually in place
-        var newPos = {
-            x: zoomPoint.x - mousePointTo.x * zoomAfter,
-            y: zoomPoint.y - mousePointTo.y * zoomAfter
-        };
-        // Apply position to stage
-        stage.position(newPos);
-        // return the new zoom factor.
-        this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectSelected, this.gridStage);
-        return zoomAfter;
     }
 
     ngAfterViewInit(): void {
@@ -155,9 +97,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mapEl.nativeElement.addEventListener('mousedown', (ev: MouseEvent) => {
             this.displaySelectedObjectEditor = false;
         });
-        // this.mapEl.nativeElement.addEventListener('mousemove', (ev: MouseEvent) => {
-        //     // this.moveMap('mousemove', ev);
-        // });
         this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
             if (this.currentMapObjectSelected) {
                 this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(
@@ -190,6 +129,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+
         if (this.modification) {
             if (this.modification.type === 'create') {
                 this.mouseInteractor.paintObjectOnMap(this.modification.object, this.layers);
@@ -230,11 +170,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         this.gridStage.container().style.backgroundColor = '#f2f2f2';
 
-        // this.map.nColumns = parseInt((box.width / this.map.grid.cellSize + 1).toFixed());
-        // this.map.nRows = parseInt((box.height / this.map.grid.cellSize + 1).toFixed());
-        // this.mapWidth = this.map.nColumns * this.map.grid.cellSize;
-        // this.mapHeight = this.map.nRows * this.map.grid.cellSize;
-
         this.mapWidth = window.innerWidth;
         this.mapHeight = window.innerHeight;
 
@@ -269,6 +204,44 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mouseInteractor.setStage(this.gridStage);
     }
 
+    /**Zoom the stage at the given position
+     Parameters:
+     stage: the stage to be zoomed.
+     zoomPoint: the (x, y) for centre of zoom.
+     zoomBefore: the zoom factor at the start of the process.
+     inc : the amount of zoom to apply.
+     returns: zoom factor after zoom completed.
+     */
+     zoomStage2(stage, zoomPoint, zoomBefore, inc) {
+        // remember the scale before new zoom is applied - we are scaling
+        // same in x & y so either will work
+        let oldScale = stage.scaleX();
+
+        // compute the distance to the zoom point before applying zoom
+        var mousePointTo = {
+            x: (zoomPoint.x - stage.x()) / oldScale,
+            y: (zoomPoint.y - stage.y()) / oldScale
+        };
+
+        // compute new scale
+        let zoomAfter = zoomBefore + inc;
+
+        // apply new zoom to stage
+        stage.scale({ x: zoomAfter, y: zoomAfter });
+
+        // Important - move the stage so that the zoomed point remains
+        // visually in place
+        var newPos = {
+            x: zoomPoint.x - mousePointTo.x * zoomAfter,
+            y: zoomPoint.y - mousePointTo.y * zoomAfter
+        };
+        // Apply position to stage
+        stage.position(newPos);
+        // return the new zoom factor.
+        this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectSelected, this.gridStage);
+        return zoomAfter;
+    }
+
     setCurrentObjectSelected(ev, object, type): void {
         // ev.stopPropagation();
         //
@@ -285,15 +258,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     drawGrid(): void {
-        // var bgGrid = new Konva.Rect({
-        //     x: 0,
-        //     y: 0,
-        //     width: this.map.nColumns * this.map.grid.cellSize,
-        //     height: this.map.nRows * this.map.grid.cellSize,
-        //     fill: '#f2f2f2'
-        // });
-        // this.layers.grid.add(bgGrid);
-
         for (let i = 0; i <= this.map.nColumns; i++) {
             this.layers.grid.add(new Konva.Line({
                 points: [
@@ -461,17 +425,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     // }
 
     drawGridBackgroundImage(): void {
-        // Konva.Image.fromURL('./../assets/backgrounds/CROSSING_THE_RIVER.jpg', (image) => {
-        //     this.layers.grid.add(image);
-        //     image.setAttrs({
-        //         x: 0,
-        //         y: 0,
-        //         width: this.map.columns * this.map.grid.cellSize,
-        //         height: this.map.rows * this.map.grid.cellSize,
-        //     });
-        //     image.cache();
-        //     this.layers.grid.draw();
-        // });
         this.gridStage.container().style.backgroundImage = 'url(' + this.map.backgroundImage + ')';
         this.gridStage.container().style.backgroundRepeat = 'no-repeat';
         this.gridStage.container().style.backgroundSize = 'cover';
