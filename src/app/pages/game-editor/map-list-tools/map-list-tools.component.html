@@ -53,21 +53,28 @@
                  src="/assets/svg/close.svg">
         </div>
         <div class="sidebar-body">
-            <div class="list-container">
-                <div class="item"
+            <div class="maps-container">
+                <div class="map-box"
+                     (mouseleave)="openOption = null"
                      *ngFor="let map of maps; let i = index;"
-                     [class.active]="currentMap === map"
+                     [ngClass]="{'selected-map-box' : currentMap === map}"
                      (click)="onSelectMap(map, $event)">
-                    <span>{{map.name}}</span>
-                    <span class="item-icon">
-                        <img style="width: 16px;"
-                             src="assets/icons/points.png" alt="options"
-                             (click)="toggleOpenOption(i, $event)">
-                        <div class="item-options box-shadow" *ngIf="openOption === i">
-                            <div class="item" (click)="editMap(map)">Edit</div>
-                            <div class="item" (click)="deleteMap(map)">Delete</div>
+                    <div class="map"
+                         [style.backgroundColor]="map?.backgroundColor"
+                         [style.backgroundImage]="'url(' + map?.backgroundImage?.uri + ')'">
+                        <div class="map-options">
+                            <img style="width: 16px;"
+                                 src="assets/icons/points.png" alt="options"
+                                 (click)="toggleOpenOption(i, $event)">
+                            <div class="item-options box-shadow" *ngIf="openOption === i">
+                                <div class="item" (click)="editMap(map, $event)">Edit</div>
+                                <div class="item" (click)="deleteMap(map)">Delete</div>
+                            </div>
                         </div>
-                    </span>
+                        <div class="map-name">
+                            <div class="tag">{{map.name}}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

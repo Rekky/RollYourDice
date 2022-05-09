@@ -103,7 +103,7 @@ label{
     background: $c-black-grey !important;
 }
 .btn-white {
-    background: $c-white !important;
+    background: $c-whitest !important;
 }
 .box-shadow {
     box-shadow: 0px 2px 10px rgb(5 0 56 / 8%);
@@ -141,18 +141,19 @@ label{
             background: rgba(0,0,0,0.04);
         }
     }
-    .item-options{
+
+    .item-options {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto;
 
-        position:fixed;
-        transform:translate(30px, -30px);
-        width:auto;
-        height:auto;
-        background:white;
+        position: fixed;
+        transform: translate(30px, -30px);
+        width: auto;
+        height: auto;
+        background: white;
         border-radius: 4px;
-        z-index:90
+        z-index: 90;
     }
 }
 

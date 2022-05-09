@@ -66,7 +66,9 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         }
     }
 
-    editMap(map?: OurKonvaMap): void {
+    editMap(map?: OurKonvaMap, e?): void {
+        e?.stopPropagation();
+        this.openOption = null;
         const dialogSub = this.dialog.open(MapEditComponent, {
             data: {
                 map: this.isUpdateMap ? map : new OurKonvaMap(),
@@ -88,6 +90,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     }
 
     deleteMap(map: OurKonvaMap): void {
+        this.openOption = null;
         this.maps.splice(this.maps.indexOf(map), 1);
         this.deleteMapEvent.emit(map);
     }
