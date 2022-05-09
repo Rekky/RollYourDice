@@ -150,7 +150,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         });
 
         stage.on('mousedown', (e) => {
-            console.log('i');
             if (this.mouseInteractor.mouse.state !== 'pointer') {
                 stage.setDraggable(false);
                 return;

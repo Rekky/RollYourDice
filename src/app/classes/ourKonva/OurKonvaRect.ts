@@ -46,7 +46,6 @@ export class OurKonvaRect extends OurKonvaMouse {
 
         const transformer = new Konva.Transformer({
             rotateAnchorOffset: 120,
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
             padding: 10,
             anchorCornerRadius: 20
         });
@@ -164,7 +163,6 @@ export class OurKonvaRect extends OurKonvaMouse {
 
         const transformer = new Konva.Transformer({
             rotateAnchorOffset: 120,
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
             padding: 10,
             anchorCornerRadius: 20
         });
