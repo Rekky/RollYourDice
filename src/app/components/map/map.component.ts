@@ -255,6 +255,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 strokeWidth: 1,
             }));
         }
+        this.layers.grid.cache();
     }
 
     moveMap(res: string, ev: MouseEvent): void {
