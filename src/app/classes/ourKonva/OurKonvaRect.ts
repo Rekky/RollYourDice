@@ -44,7 +44,13 @@ export class OurKonvaRect extends OurKonvaMouse {
             strokeScaleEnabled: false
         });
 
-        const transformer = new Konva.Transformer();
+        const transformer = new Konva.Transformer({
+            rotateAnchorOffset: 120,
+            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+            padding: 10,
+            anchorCornerRadius: 20
+        });
+
         layers.draws.add(transformer);
         transformer.nodes([rect]);
         transformer.id('tr-' + object.id);
@@ -156,7 +162,13 @@ export class OurKonvaRect extends OurKonvaMouse {
         this.position.x = this.position.x > pos.x ? this.position.x - this.size.width : this.position.x;
         this.position.y = this.position.y > pos.y ? this.position.y - this.size.height : this.position.y;
 
-        const transformer = new Konva.Transformer();
+        const transformer = new Konva.Transformer({
+            rotateAnchorOffset: 120,
+            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+            padding: 10,
+            anchorCornerRadius: 20
+        });
+
         this.layers.draws.add(transformer);
         transformer.nodes([rect]);
         transformer.id('tr-' + this.id);

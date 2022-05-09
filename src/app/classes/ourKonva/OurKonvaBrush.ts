@@ -35,7 +35,12 @@ export class OurKonvaBrush extends OurKonvaMouse {
             points: object.points,
         });
 
-        const transformer = new Konva.Transformer();
+        const transformer = new Konva.Transformer({
+            rotateAnchorOffset: 120,
+            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+            padding: 10,
+            anchorCornerRadius: 20
+        });
         layers.draws.add(transformer);
         transformer.nodes([line]);
         transformer.id('tr-' + object.id);
@@ -87,7 +92,12 @@ export class OurKonvaBrush extends OurKonvaMouse {
         this.line.points(newPoints);
         this.points = newPoints;
 
-        const transformer = new Konva.Transformer();
+        const transformer = new Konva.Transformer({
+            rotateAnchorOffset: 120,
+            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+            padding: 10,
+            anchorCornerRadius: 20
+        });
         this.layers.draws.add(transformer);
         transformer.nodes([this.line]);
         transformer.id('tr-' + this.id);

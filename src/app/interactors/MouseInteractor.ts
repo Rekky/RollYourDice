@@ -124,11 +124,9 @@ export class MouseInteractor implements OnDestroy {
         object?.konvaObject.on('click', () => {
             const selectedObject = this.selectedKonvaObject?.getValue();
             if (selectedObject?.konvaObject.getAttr('id') !== object.konvaObject.getAttr('id')) {
-                if (selectedObject) {
-                    selectedObject.konvaObject.draggable(false);
-                    selectedObject.transformer.hide();
-                    selectedObject.layer.batchDraw();
-                }
+                selectedObject?.konvaObject.draggable(false);
+                selectedObject?.transformer.hide();
+                selectedObject?.layer.batchDraw();
             }
 
             object.konvaObject.draggable(!object.ourKonvaObject.isEditionBlocked);
@@ -139,11 +137,14 @@ export class MouseInteractor implements OnDestroy {
             this.selectedKonvaObject.next(object);
         });
         object?.konvaObject.on('dragend', () => {
+            // const selectedObject = this.selectedKonvaObject?.getValue();
             if (object.ourKonvaObject.isAdaptedToGrid) {
                 object = this.adaptObjectToMap(object); // Adapt object to a grid
                 this.selectedKonvaObject.next(object);
             }
-            // const ourKonvaRect = new OurKonvaRect(this.user).getOurKonvaRect(object.konvaObject as Konva.Rect);
+            // const t = selectedObject?.transformer.getNodes()[0].getAttrs();
+            // selectedObject?.transformer.x(t.x);
+            // selectedObject?.transformer.y(t.y);
             this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
         });
     }

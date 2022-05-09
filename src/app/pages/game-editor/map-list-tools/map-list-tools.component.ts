@@ -47,7 +47,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva: any) => {
             this.maps?.find(map => {
                 const objectToSelect = map.objects.find(object => {
-                    return object.id === konva?.konvaObject.getAttr('id');
+                    return object?.id === konva?.konvaObject.getAttr('id');
                 });
             });
         });

@@ -129,48 +129,57 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // const box = document.getElementById('mapbox' + this.map.id);
         // Konva.dragButtons = [2];
 
-        this.gridStage = new Konva.Stage({
+        const stage = new Konva.Stage({
             container: 'map' + this.map.id,
             width: window.innerWidth,
             height: window.innerHeight,
-            draggable: true,
+            draggable: false,
             scale: {x: this.mapScale, y: this.mapScale}
         });
 
-        this.gridStage.container().style.backgroundColor = '#f2f2f2';
+        stage.container().style.backgroundColor = '#f2f2f2';
 
         this.mapWidth = window.innerWidth;
         this.mapHeight = window.innerHeight;
 
-        this.gridStage.on('click tap', (e) => {
+        stage.on('click tap', (e) => {
             if (this.currentMapObjectSelected?.transformer &&
                 e.target.attrs !== this.currentMapObjectSelected?.konvaObject?.getAttrs()) {
                 this.mouseInteractor.unsetSelectedKonvaObject();
             }
         });
 
-        this.gridStage.on('mousedown', (e) => {
+        stage.on('mousedown', (e) => {
+            console.log('i');
             if (this.mouseInteractor.mouse.state !== 'pointer') {
-                this.gridStage.setDraggable(false);
-            } else {
-                if (e.evt.button === 2) {
-                    Konva.dragButtons = [2];
-                    this.gridStage.setDraggable(true);
-                }
-                else {
-                    Konva.dragButtons = [0];
-                    this.gridStage.setDraggable(false);
-                }
+                stage.setDraggable(false);
+                return;
+            }
+            if (e.evt.button === 2) {
+                this.currentMapObjectSelected?.transformer.hide();
+                this.layers.draws.cache();
+                Konva.dragButtons = [2];
+                stage.setDraggable(true);
+            }
+        });
+
+        stage.on('mouseup', (e) => {
+            if (e.evt.button === 2) {
+                this.currentMapObjectSelected?.transformer.show();
+                this.layers.draws.clearCache();
+                Konva.dragButtons = [0];
+                stage.setDraggable(false);
             }
         });
 
         this.drawGrid();
-        this.gridStage.add(this.layers.grid);
-        this.gridStage.add(this.layers.objects);
-        this.gridStage.add(this.layers.shadows);
-        this.gridStage.add(this.layers.draws);
-        this.gridStage.add(this.layers.texts);
-        this.mouseInteractor.setStage(this.gridStage);
+        stage.add(this.layers.grid);
+        stage.add(this.layers.objects);
+        stage.add(this.layers.shadows);
+        stage.add(this.layers.draws);
+        stage.add(this.layers.texts);
+        this.gridStage = stage;
+        this.mouseInteractor.setStage(stage);
     }
 
     /**Zoom the stage at the given position
