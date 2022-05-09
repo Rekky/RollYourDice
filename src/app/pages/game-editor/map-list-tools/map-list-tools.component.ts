@@ -8,6 +8,9 @@ import {Game} from '../../../classes/Game';
 import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import { MapInteractor } from 'src/app/interactors/MapInteractor';
+import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
+import { MapEditComponent } from './map-edit/map-edit.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-map-list-tools',
@@ -37,7 +40,8 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     getSelectedKonvaObjectSubscription: Subscription;
 
-    constructor(private mouseInteractor: MouseInteractor) { }
+    constructor(private mouseInteractor: MouseInteractor,
+                private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva: any) => {
@@ -47,11 +51,6 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
                 });
             });
         });
-        this.newMapForm = new FormGroup({
-            name: new FormControl('New Map', Validators.required),
-            nRows: new FormControl('50', Validators.required),
-            nColumns: new FormControl('50', Validators.required)
-        });
         this.updateMapForm = this.newMapForm;
     }
 
@@ -59,41 +58,33 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.getSelectedKonvaObjectSubscription?.unsubscribe();
     }
 
-    onSelectMap(ev, map: OurKonvaMap): void {
-        ev.stopPropagation();
-        this.currentMap = map;
-        this.selectedMapEvent.emit(this.currentMap);
+    onSelectMap(map: OurKonvaMap, ev?): void {
+        ev?.stopPropagation();
+        if (this.currentMap.id !== map.id) {
+            this.currentMap = map;
+            this.selectedMapEvent.emit(this.currentMap);
+        }
     }
 
-    submitMapForm(): void {
-        // update map
-        if (this.isUpdateMap) {
-            if (!this.updateMapForm.valid) {
-                return;
+    editMap(map?: OurKonvaMap): void {
+        const dialogSub = this.dialog.open(MapEditComponent, {
+            data: {
+                map: this.isUpdateMap ? map : new OurKonvaMap(),
+                title: this.isUpdateMap ? 'Edit map' : 'Create map'
             }
-            this.currentMap.name = this.newMapForm.get('name').value;
-            this.currentMap.nRows = this.newMapForm.get('nRows').value;
-            this.currentMap.nColumns = this.newMapForm.get('nColumns').value;
-            this.updateMapEvent.emit(this.currentMap);
-            this.openModal = false;
-            return;
-        }
-
-        // create new map
-        const newMap: OurKonvaMap = new OurKonvaMap();
-        newMap.name = this.newMapForm.get('name').value;
-        newMap.nRows = this.newMapForm.get('nRows').value;
-        newMap.nColumns = this.newMapForm.get('nColumns').value;
-
-        if (!this.newMapForm.valid) {
-            return;
-        }
-
-        this.maps.push(newMap);
-        this.createMapEvent.emit(newMap);
-
-        this.newMapForm.reset();
-        this.openModal = false;
+        }).afterClosed().subscribe(res => {
+            if (res) {
+                if (this.isUpdateMap) {
+                    this.updateMapEvent.emit(res.map);
+                    this.onSelectMap(res.map);
+                }
+                else {
+                    this.maps.push(res.map);
+                    this.createMapEvent.emit(res.map);
+                }
+            }
+            dialogSub.unsubscribe();
+        });
     }
 
     deleteMap(map: OurKonvaMap): void {

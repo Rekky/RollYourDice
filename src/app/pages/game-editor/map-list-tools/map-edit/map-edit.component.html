@@ -1,0 +1,40 @@
+<div class="box-shadow"></div>
+<div *ngIf="data.map && mapForm" class="map-edit-box">
+    <form class="map-edit-card" [formGroup]="mapForm" (submit)="submitMapForm()">
+        <div class="header" *ngIf="loaded">
+            <div class="exit">
+                <svg (click)="closeDialog()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
+                    <defs><style>.cls-1{fill:none;stroke-miterlimit:10;stroke-width:3px;}</style></defs>
+                    <title>close</title>
+                    <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1">
+                        <circle class="cls-1" cx="25.15" cy="25.15" r="23.65"/>
+                        <line class="cls-1" x1="16.79" y1="16.79" x2="33.51" y2="33.51"/>
+                        <line class="cls-1" x1="16.79" y1="33.51" x2="33.51" y2="16.79"/>
+                    </g></g>
+                </svg>
+            </div>
+            <div class="title">{{data.title}}</div>
+        </div>
+        <div class="body" *ngIf="loaded">
+            <div class="form-text-input">
+                <label for="map-name">Name</label>
+                <input type="text" id="map-name" placeholder="Map Name" autofocus [formControlName]="'name'">
+            </div>
+            <div class="form-row">
+                <div class="form-short-number-input">
+                    <label for="n-rows">Rows</label>
+                    <input type="number" id="n-rows" [formControlName]="'nRows'" placeholder="number of rows">
+                </div>
+                <div class="form-short-number-input">
+                    <label for="n-columns">Cols</label>
+                    <input type="number" id="n-columns" [formControlName]="'nColumns'" placeholder="number of columns">
+                </div>
+            </div>
+        </div>
+        <div class="footer" *ngIf="loaded">
+            <div class="button-box">
+                <button type="submit" class="big-button" [disabled]="!mapForm.valid">Accept</button>
+            </div>
+        </div>
+    </form>
+</div>

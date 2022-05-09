@@ -28,6 +28,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { BlockObjectEditionComponent } from './context-menu/custom-inputs/block-object-edition/block-object-edition.component';
 import { DisplayJustForMasterComponent } from './context-menu/custom-inputs/display-just-for-master/display-just-for-master.component';
 import { MoreOptionsComponent } from './context-menu/custom-inputs/more-options/more-options.component';
+import { MapEditComponent } from './map-list-tools/map-edit/map-edit.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { MoreOptionsComponent } from './context-menu/custom-inputs/more-options/
         BlockObjectEditionComponent,
         DisplayJustForMasterComponent,
         MoreOptionsComponent,
+        MapEditComponent,
     ],
     imports: [
         CommonModule,

@@ -49,16 +49,20 @@
         <div class="sidebar-header">
             <h2>MAPS</h2>
             <img style="width:20px;height:20px;" class="cursor-pointer"
-                 (click)="open = !open; openChange.emit(open); openOption = null" src="/assets/svg/close.svg">
+                 (click)="open = !open; openChange.emit(open); openOption = null"
+                 src="/assets/svg/close.svg">
         </div>
         <div class="sidebar-body">
             <div class="list-container">
-                <div class="item" *ngFor="let map of maps; let i = index;" [class.active]="currentMap === map" (click)="onSelectMap($event, map)">
+                <div class="item"
+                     *ngFor="let map of maps; let i = index;"
+                     [class.active]="currentMap === map"
+                     (click)="onSelectMap(map, $event)">
                     <span>{{map.name}}</span>
                     <span class="item-icon">
                         <img style="width: 16px;" src="assets/icons/points.png" alt="options" (click)="toggleOpenOption(i)">
                         <div class="item-options box-shadow" *ngIf="openOption === i">
-                            <div class="item" (click)="openUpdateMapModal(map)">Rename</div>
+                            <div class="item" (click)="editMap(map)">Edit</div>
                             <div class="item" (click)="deleteMap(map)">Delete</div>
                         </div>
                     </span>
@@ -66,28 +70,7 @@
             </div>
         </div>
         <div class="sidebar-footer">
-            <img style="width:20px;height:20px;" class="cursor-pointer" src="/assets/svg/add.svg" (click)="openModal = true">
+            <img style="width:20px;height:20px;" class="cursor-pointer" src="/assets/svg/add.svg" (click)="editMap()">
         </div>
     </ng-container>
 </div>
-
-<app-modal-custom [(open)]="openModal">
-    <form [formGroup]="isUpdateMap ? updateMapForm : newMapForm" (submit)="submitMapForm()">
-        <div class="item active">
-            <div class="form-text-input">
-                <label for="map-name">Map Name</label>
-                <input type="text" id="map-name" placeholder="Map Name" autofocus [formControlName]="'name'">
-            </div>
-            <div class="form-number-input">
-                <label for="n-rows">ROWS</label>
-                <input type="number" id="n-rows" [formControlName]="'nRows'" placeholder="50">
-            </div>
-            <div class="form-number-input">
-                <label for="n-columns">COLS</label>
-                <input type="number" id="n-columns" [formControlName]="'nColumns'" placeholder="50">
-            </div>
-            <button type="submit" class="big-button">Ok</button>
-            <button type="submit" class="big-button" (click)="openModal = false">Cancel</button>
-        </div>
-    </form>
-</app-modal-custom>

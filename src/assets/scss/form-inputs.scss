@@ -1,4 +1,14 @@
 
+.form-row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    height: 40px;
+    width: 100%;
+}
+
 .form-text-input {
     display: flex;
     flex-flow: row nowrap;

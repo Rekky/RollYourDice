@@ -28,10 +28,10 @@ export class  OurKonvaMap {
 
     constructor() {
         this.id = ulid();
-        this.name = 'new ourKonva';
+        this.name = 'New map';
         this.position = new Coords();
-        this.nColumns = 10;
-        this.nRows = 10;
+        this.nColumns = 50;
+        this.nRows = 50;
         this.isFogOfWar = false;
         this.backgroundColor = '#F2F2F2';
         this.backgroundImage = null;
