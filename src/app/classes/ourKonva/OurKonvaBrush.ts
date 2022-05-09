@@ -44,7 +44,6 @@ export class OurKonvaBrush extends OurKonvaMouse {
 
         layers.draws.add(line);
         layers.draws.batchDraw();
-        layers.draws.cache();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
@@ -96,7 +95,6 @@ export class OurKonvaBrush extends OurKonvaMouse {
 
         this.layers.draws.add(this.line);
         this.layers.draws.batchDraw();
-        this.layers.draws.cache();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = this;

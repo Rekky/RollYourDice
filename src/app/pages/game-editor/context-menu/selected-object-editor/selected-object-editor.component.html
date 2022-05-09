@@ -8,5 +8,8 @@
                                     (isEditionBlockedChange)="editionBlockedToggle($event)"
                                     (isDisplayedJustForMasterChange)="displayedJustForMaster($event)">
     </app-konva-rectangle-properties>
+    <app-konva-brush-properties *ngIf="selectedObject.type === 'brush'">
+
+    </app-konva-brush-properties>
 </div>
 
