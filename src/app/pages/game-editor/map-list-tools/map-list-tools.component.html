@@ -47,8 +47,8 @@
 <div class="sidebar box-shadow" [class.open]="open" [ngStyle]="{width: open ? '340px' : '0'}">
     <ng-container *ngIf="open">
         <div class="sidebar-header">
-            <h2>MAPS</h2>
-            <img style="width:20px;height:20px;" class="cursor-pointer"
+            <h2>Maps</h2>
+            <img style="width:20px; height:20px;" class="cursor-pointer"
                  (click)="open = !open; openChange.emit(open); openOption = null"
                  src="/assets/svg/close.svg">
         </div>
