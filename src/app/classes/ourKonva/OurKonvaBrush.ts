@@ -62,14 +62,13 @@ export class OurKonvaBrush extends OurKonvaMouse {
     mouseDown(): void {
         super.mouseDown();
         this.position = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
-        const pos = this.stage.getPointerPosition();
         this.line = new Konva.Line({
             stroke: this.color,
             strokeWidth: this.brushSize,
             lineCap: 'round',
             lineJoin: 'round',
             globalCompositeOperation: 'source-over',
-            points: [pos.x, pos.y],
+            points: [this.position.x, this.position.y],
             id: this.id
         });
         this.layers.draws.add(this.line);
@@ -78,7 +77,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
     mouseMove(): void {
         super.mouseMove();
         if (this.isActive) {
-            const pos = this.stage.getPointerPosition();
+            const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
             const newPoints = this.line.points().concat([pos.x, pos.y]);
             this.line.points(newPoints);
             this.layers.draws.batchDraw();
@@ -87,7 +86,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
 
     mouseUp(): CurrentSelectedKonvaObject {
         super.mouseUp();
-        const pos = this.stage.getPointerPosition();
+        const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
         const newPoints = this.line.points().concat([pos.x, pos.y]);
         this.line.points(newPoints);
         this.points = newPoints;

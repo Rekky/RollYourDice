@@ -71,12 +71,12 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.openOption = null;
         const dialogSub = this.dialog.open(MapEditComponent, {
             data: {
-                map: this.isUpdateMap ? map : new OurKonvaMap(),
-                title: this.isUpdateMap ? 'Edit map' : 'Create map'
+                map: map ? map : new OurKonvaMap(),
+                title: map ? 'Edit map' : 'Create map'
             }
         }).afterClosed().subscribe(res => {
             if (res) {
-                if (this.isUpdateMap) {
+                if (map) {
                     this.updateMapEvent.emit(res.map);
                     this.onSelectMap(res.map);
                 }
@@ -93,12 +93,6 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.openOption = null;
         this.maps.splice(this.maps.indexOf(map), 1);
         this.deleteMapEvent.emit(map);
-    }
-
-    openUpdateMapModal(map: OurKonvaMap): void {
-        this.openModal = true;
-        this.isUpdateMap = true;
-        this.updateMapForm.patchValue(map);
     }
 
     toPlayersMap(map: OurKonvaMap): void {

@@ -61,7 +61,7 @@
                      (click)="onSelectMap(map, $event)">
                     <div class="map"
                          [style.backgroundColor]="map?.backgroundColor"
-                         [style.backgroundImage]="'url(' + map?.backgroundImage?.uri + ')'">
+                         [style.backgroundImage]="map?.backgroundImage?.uri ? 'url(' + map.backgroundImage.uri + ')' : 'none'">
                         <div class="map-options">
                             <img style="width: 16px;"
                                  src="assets/icons/points.png" alt="options"
