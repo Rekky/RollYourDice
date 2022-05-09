@@ -103,7 +103,8 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.toPlayersMapEvent.emit(map);
     }
 
-    toggleOpenOption(n: number): void {
+    toggleOpenOption(n: number, e): void {
+        e.stopPropagation();
         this.openOption === n ? this.openOption = null : this.openOption = n;
     }
 

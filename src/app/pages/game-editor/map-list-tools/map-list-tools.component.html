@@ -60,7 +60,9 @@
                      (click)="onSelectMap(map, $event)">
                     <span>{{map.name}}</span>
                     <span class="item-icon">
-                        <img style="width: 16px;" src="assets/icons/points.png" alt="options" (click)="toggleOpenOption(i)">
+                        <img style="width: 16px;"
+                             src="assets/icons/points.png" alt="options"
+                             (click)="toggleOpenOption(i, $event)">
                         <div class="item-options box-shadow" *ngIf="openOption === i">
                             <div class="item" (click)="editMap(map)">Edit</div>
                             <div class="item" (click)="deleteMap(map)">Delete</div>
