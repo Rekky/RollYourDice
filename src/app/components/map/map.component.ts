@@ -156,7 +156,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }
             if (e.evt.button === 2) {
                 this.currentMapObjectSelected?.transformer.hide();
-                this.layers.draws.cache();
+                if (this.layers?.draws?.children?.length > 0) {
+                    this.layers?.draws?.cache();
+                }
                 Konva.dragButtons = [2];
                 stage.setDraggable(true);
             }
@@ -165,7 +167,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.on('mouseup', (e) => {
             if (e.evt.button === 2) {
                 this.currentMapObjectSelected?.transformer.show();
-                this.layers.draws.clearCache();
+                if (this.layers?.draws?.children?.length > 0) {
+                    this.layers?.draws?.clearCache();
+                }
                 Konva.dragButtons = [0];
                 stage.setDraggable(false);
             }
@@ -263,7 +267,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 strokeWidth: 1,
             }));
         }
-        this.layers.grid.cache();
+        this.layers?.grid?.cache();
     }
 
     moveMap(res: string, ev: MouseEvent): void {

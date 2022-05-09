@@ -78,7 +78,8 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
             if (res) {
                 if (map) {
                     this.updateMapEvent.emit(res.map);
-                    this.onSelectMap(res.map);
+                    this.currentMap = res.map;
+                    this.selectedMapEvent.emit(this.currentMap);
                 }
                 else {
                     this.maps.push(res.map);
