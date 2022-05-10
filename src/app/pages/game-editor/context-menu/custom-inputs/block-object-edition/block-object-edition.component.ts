@@ -11,8 +11,7 @@ export class BlockObjectEditionComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-    }
+    ngOnInit(): void {}
 
     toggleIsBlocked(): void {
         this.isBlocked = !this.isBlocked;

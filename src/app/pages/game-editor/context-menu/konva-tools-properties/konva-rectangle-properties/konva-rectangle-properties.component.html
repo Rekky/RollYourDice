@@ -13,7 +13,8 @@
                             [isAdaptedToGrid]="rectangle.isAdaptedToGrid"
                             (isAdaptedToGridChange)="isAdaptedToGrid($event)">
         </app-fit-grid-input>
-        <app-display-just-for-master [matTooltip]="'Display just for master'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+        <app-display-just-for-master [matTooltip]="'Display just for master'" [matTooltipShowDelay]="1000"
+                                     [matTooltipPosition]="'above'"
                                      [isDisplayed]=""
                                      (isDisplayedChange)="isDisplayedJustForMaster($event)">
         </app-display-just-for-master>
@@ -21,7 +22,9 @@
         <div class="divider"></div>
     </ng-container>
 
-    <app-block-object-edition [matTooltip]="'Block edition'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+    <app-block-object-edition [matTooltip]="'Block edition'"
+                              [matTooltipShowDelay]="1000"
+                              [matTooltipPosition]="'above'"
                               [isBlocked]="rectangle.isEditionBlocked"
                               (isBlockedChange)="isObjectEditionBlocked($event)">
     </app-block-object-edition>

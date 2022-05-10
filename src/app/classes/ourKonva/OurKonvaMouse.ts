@@ -42,6 +42,8 @@ export class OurKonvaMouse {
             const coord = new Coords();
             coord.x = Math.round( objectAttrs.x * gridStage.scaleX() + gridStageX);
             coord.y = Math.round( objectAttrs.y * gridStage.scaleY() + gridStageY);
+            console.log(objectAttrs);
+            console.log(coord);
             return coord;
         }
     }

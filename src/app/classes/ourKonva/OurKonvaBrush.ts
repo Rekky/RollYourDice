@@ -33,6 +33,8 @@ export class OurKonvaBrush extends OurKonvaMouse {
             lineJoin: 'round',
             globalCompositeOperation: 'source-over',
             points: object.points,
+            x: object.position.x,
+            y: object.position.y,
         });
 
         const transformer = new Konva.Transformer({
@@ -69,7 +71,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
             lineJoin: 'round',
             globalCompositeOperation: 'source-over',
             points: [this.position.x, this.position.y],
-            id: this.id
+            id: this.id,
         });
         this.layers.draws.add(this.line);
     }
@@ -90,6 +92,14 @@ export class OurKonvaBrush extends OurKonvaMouse {
         const newPoints = this.line.points().concat([pos.x, pos.y]);
         this.line.points(newPoints);
         this.points = newPoints;
+
+        let sm = this.points[0];
+        this.points.forEach(point => {
+            sm = sm > point ? point : sm;
+        });
+        this.line.x(sm);
+        this.line.y(sm);
+        this.position = new Coords(sm, sm);
 
         const transformer = new Konva.Transformer({
             rotateAnchorOffset: 120,

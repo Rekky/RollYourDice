@@ -1,21 +1,28 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MouseService} from '../../../../../services/mouse.service';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {OurKonvaBrush} from '../../../../../classes/ourKonva/OurKonvaBrush';
-import {Subscription} from 'rxjs';
-import {document} from 'ngx-bootstrap/utils';
 
 @Component({
     selector: 'app-konva-brush-properties',
     templateUrl: './konva-brush-properties.component.html',
     styleUrls: ['./konva-brush-properties.component.scss']
 })
-export class KonvaBrushPropertiesComponent implements OnInit, OnDestroy {
+export class KonvaBrushPropertiesComponent implements OnInit {
+    @Input() brush: OurKonvaBrush;
+    @Output() brushChange: EventEmitter<OurKonvaBrush> = new EventEmitter<OurKonvaBrush>();
+    @Output() isEditionBlockedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor(private mouseService: MouseService) { }
+    constructor() { }
 
     ngOnInit(): void {
     }
 
-    ngOnDestroy(): void {
+    fillColorModified(ev: string): void {
+        this.brush.color = ev;
+        this.brushChange.emit(this.brush);
+    }
+
+    isObjectEditionBlocked(ev: boolean): void {
+        this.brush.isEditionBlocked = ev;
+        this.isEditionBlockedChange.emit(ev);
     }
 }
