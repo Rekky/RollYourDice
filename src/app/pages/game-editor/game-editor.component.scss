@@ -65,13 +65,15 @@
 //    height: 100%;
 //}
 //
-//.tools-top{
-//    position: relative;
-//    display: flex;
-//    flex-direction: column;
-//    height: 0;
-//    width: 0;
-//}
+.tools-top{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 48px;
+    top: 10px;
+    right: -50px;
+}
 
 .tools-middle{
     position: absolute;

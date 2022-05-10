@@ -7,6 +7,11 @@
         <app-map *ngIf="!destroying" [map]="map" [modification]="mapModification"></app-map>
     </div>
 
+    <!-- GAME STATUS TOOLS -->
+    <div class="top-panel">
+        
+    </div>
+
     <!-- MAP LIST -->
     <div class="left-panel">
         <app-map-list-tools
@@ -18,10 +23,10 @@
         (deleteMapEvent)="onDeleteMap($event)"
         (updateMapEvent)="onUpdateMap($event)"
         ></app-map-list-tools>
-<!--        <div class="tools-bar">-->
-<!--            <div class="tools-top">-->
-<!--                &lt;!&ndash; NOTHING &ndash;&gt;-->
-<!--            </div>-->
+
+        <div class="tools-top">
+            <!-- NOTHING -->
+        </div>
         <div class="tools-middle">
             <app-editor-tools></app-editor-tools>
         </div>
@@ -34,7 +39,7 @@
                 </svg>
             </div>
         </div>
-<!--        </div>-->
+
     </div>
 
     <!-- TOP COLUMN -->
