@@ -279,20 +279,20 @@ export class MouseInteractor implements OnDestroy {
     }
 
     paintObjectOnMap(object: any, layers: OurKonvaLayers): void {
-        if (object.state === 'square') {
+        if (object?.state === 'square') {
             const createdObject = OurKonvaRect.paint(object, layers);
             this.applyTransformEndToNewObject(createdObject);
             this.newObjectAddSelectedOption(createdObject);
         }
-        if (object.state === 'text') {
+        if (object?.state === 'text') {
             const createdObject = OurKonvaText.paint(object, layers);
             this.newObjectAddSelectedOption(createdObject);
         }
-        if (object.state === 'image') {
+        if (object?.state === 'image') {
             const createdObject = OurKonvaImage.paint(object, layers);
             this.newObjectAddSelectedOption(createdObject);
         }
-        if (object.state === 'brush') {
+        if (object?.state === 'brush') {
             const createdObject = OurKonvaBrush.paint(object, layers);
             this.newObjectAddSelectedOption(createdObject);
         }

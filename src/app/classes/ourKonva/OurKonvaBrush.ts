@@ -72,15 +72,19 @@ export class OurKonvaBrush extends OurKonvaMouse {
             globalCompositeOperation: 'source-over',
             points: [this.position.x, this.position.y],
             id: this.id,
+            x: this.position.x,
+            y: this.position.y
         });
         this.layers.draws.add(this.line);
+        console.log(this.position.x, this.position.y);
     }
 
     mouseMove(): void {
         super.mouseMove();
         if (this.isActive) {
             const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
-            const newPoints = this.line.points().concat([pos.x, pos.y]);
+            console.log(pos.x, pos.y);
+            const newPoints = this.line.points().concat([this.position.x - pos.x, this.position.y - pos.y]);
             this.line.points(newPoints);
             this.layers.draws.batchDraw();
         }
@@ -89,17 +93,9 @@ export class OurKonvaBrush extends OurKonvaMouse {
     mouseUp(): CurrentSelectedKonvaObject {
         super.mouseUp();
         const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
-        const newPoints = this.line.points().concat([pos.x, pos.y]);
+        const newPoints = this.line.points().concat([this.position.x - pos.x, this.position.y - pos.y]);
         this.line.points(newPoints);
         this.points = newPoints;
-
-        let sm = this.points[0];
-        this.points.forEach(point => {
-            sm = sm > point ? point : sm;
-        });
-        this.line.x(sm);
-        this.line.y(sm);
-        this.position = new Coords(sm, sm);
 
         const transformer = new Konva.Transformer({
             rotateAnchorOffset: 120,
