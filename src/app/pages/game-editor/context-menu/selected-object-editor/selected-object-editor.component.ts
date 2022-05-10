@@ -21,10 +21,8 @@ export class SelectedObjectEditorComponent implements OnInit {
     ngOnInit(): void {}
 
     updateObject(ev: any): void {
-        if (this.selectedObject.type === 'square') {
-            this.selectedObject.konvaObject.setAttrs(ev);
-            this.selectedObject.layer.batchDraw();
-        }
+        this.selectedObject.konvaObject.setAttrs(ev);
+        this.selectedObject.layer.batchDraw();
         this.mouseInteractor.updateSelectedObject(this.selectedObject);
         this.mouseInteractor.updateObject(ev);
     }

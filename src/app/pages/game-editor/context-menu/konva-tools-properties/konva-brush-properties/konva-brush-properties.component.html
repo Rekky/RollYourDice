@@ -1,8 +1,9 @@
 <div class="properties-box">
     <ng-container *ngIf="!brush.isEditionBlocked">
-        <app-fill-color [matTooltip]="'Fill color'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
-                        [color]="brush.color" (colorChange)="fillColorModified($event)">
-        </app-fill-color>
+        <app-stroke-color [matTooltip]="'Stroke'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                          [options]="{color: brush.stroke, width: brush.strokeWidth}"
+                          (optionsChange)="strokeModified($event)">
+        </app-stroke-color>
         <div class="divider"></div>
     </ng-container>
 

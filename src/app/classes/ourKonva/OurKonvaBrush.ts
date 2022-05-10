@@ -11,8 +11,8 @@ export class OurKonvaBrush extends OurKonvaMouse {
     state: string = 'brush';
     line: Konva.Line;
     points: number[];
-    color: string;
-    brushSize: number;
+    stroke: string;
+    strokeWidth: number;
     minPos: Coords;
 
     constructor(author: Player) {
@@ -20,8 +20,8 @@ export class OurKonvaBrush extends OurKonvaMouse {
         this.id = ulid();
         this.position = new Coords();
         this.line = new Konva.Line();
-        this.color = '#E2F24B';
-        this.brushSize = 5;
+        this.stroke = '#E2F24B';
+        this.strokeWidth = 5;
         this.points = [];
         this.minPos = new Coords();
     }
@@ -29,14 +29,14 @@ export class OurKonvaBrush extends OurKonvaMouse {
     static paint(object: OurKonvaBrush, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
         const line = new Konva.Line({
             id: object.id,
-            stroke: object.color,
-            strokeWidth: object.brushSize,
+            stroke: object.stroke,
+            strokeWidth: object.strokeWidth,
             lineCap: 'round',
             lineJoin: 'round',
             globalCompositeOperation: 'source-over',
             points: object.points,
             x: object.position.x,
-            y: object.position.y,
+            y: object.position.y
         });
 
         const transformer = new Konva.Transformer({
@@ -67,8 +67,8 @@ export class OurKonvaBrush extends OurKonvaMouse {
         super.mouseDown();
         this.position = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
         this.line = new Konva.Line({
-            stroke: this.color,
-            strokeWidth: this.brushSize,
+            stroke: this.stroke,
+            strokeWidth: this.strokeWidth,
             lineCap: 'round',
             lineJoin: 'round',
             globalCompositeOperation: 'source-over',

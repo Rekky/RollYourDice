@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {OurKonvaBrush} from '../../../../../classes/ourKonva/OurKonvaBrush';
+import {StrokeOptions} from '../../custom-inputs/stroke-input/stroke-input.component';
 
 @Component({
     selector: 'app-konva-brush-properties',
@@ -16,8 +17,9 @@ export class KonvaBrushPropertiesComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    fillColorModified(ev: string): void {
-        this.brush.color = ev;
+    strokeModified(ev: StrokeOptions): void {
+        this.brush.stroke = ev.color;
+        this.brush.strokeWidth = ev.width;
         this.brushChange.emit(this.brush);
     }
 
