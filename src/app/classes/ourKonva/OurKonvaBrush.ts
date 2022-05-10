@@ -13,6 +13,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
     points: number[];
     color: string;
     brushSize: number;
+    minPos: Coords;
 
     constructor(author: Player) {
         super(author);
@@ -22,6 +23,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
         this.color = '#E2F24B';
         this.brushSize = 5;
         this.points = [];
+        this.minPos = new Coords();
     }
 
     static paint(object: OurKonvaBrush, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
@@ -70,22 +72,26 @@ export class OurKonvaBrush extends OurKonvaMouse {
             lineCap: 'round',
             lineJoin: 'round',
             globalCompositeOperation: 'source-over',
-            points: [this.position.x, this.position.y],
+            points: [0, 0],
             id: this.id,
             x: this.position.x,
             y: this.position.y
         });
         this.layers.draws.add(this.line);
+        this.isAdaptedToGrid = false;
+        this.minPos = new Coords(this.position.x, this.position.y);
     }
 
     mouseMove(): void {
         super.mouseMove();
         if (this.isActive) {
             const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
-            console.log(this.position.x, this.position.y);
-            console.log(pos.x, pos.y);
-            console.log('-------------');
-            const newPoints = this.line.points().concat([this.position.x - pos.x, this.position.y - pos.y]);
+            const newPos = new Coords(pos.x - this.position.x, pos.y - this.position.y);
+            const newPoints = this.line.points().concat([newPos.x, newPos.y]);
+
+            this.minPos.x = pos.x < this.minPos.x ? pos.x : this.minPos.x;
+            this.minPos.y = pos.y < this.minPos.y ? pos.y : this.minPos.y;
+
             this.line.points(newPoints);
             this.layers.draws.batchDraw();
         }
@@ -94,9 +100,15 @@ export class OurKonvaBrush extends OurKonvaMouse {
     mouseUp(): CurrentSelectedKonvaObject {
         super.mouseUp();
         const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
-        const newPoints = this.line.points().concat([this.position.x - pos.x, this.position.y - pos.y]);
-        this.line.points(newPoints);
-        this.points = newPoints;
+        const newPos = new Coords(pos.x - this.position.x, pos.y - this.position.y);
+        const points = this.line.points().concat([newPos.x, newPos.y]);
+        this.minPos.x = pos.x < this.minPos.x ? pos.x : this.minPos.x;
+        this.minPos.y = pos.y < this.minPos.y ? pos.y : this.minPos.y;
+
+        this.points = points;
+        this.transformBrushObjectPos();
+
+        this.line.points(this.points);
 
         const transformer = new Konva.Transformer({
             rotateAnchorOffset: 120,
@@ -119,5 +131,28 @@ export class OurKonvaBrush extends OurKonvaMouse {
         toEmit.layer = this.layers.draws;
         toEmit.transformer = transformer;
         return toEmit;
+    }
+
+    private transformBrushObjectPos(): void {
+        if (this.minPos.x < this.position.x) {
+            this.points = this.points.map((point, i) => {
+                if (i === 0 || i % 2 === 0) {
+                    return point + (this.position.x - this.minPos.x);
+                }
+                return point;
+            });
+            this.position.x = this.minPos.x;
+            this.line.x(this.position.x);
+        }
+        if (this.minPos.y < this.position.y) {
+            this.points = this.points.map((point, i) => {
+                if ( i % 2 !== 0) {
+                    return point + (this.position.y - this.minPos.y);
+                }
+                return point;
+            });
+            this.position.y = this.minPos.y;
+            this.line.y(this.position.y);
+        }
     }
 }
