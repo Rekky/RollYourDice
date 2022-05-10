@@ -76,14 +76,15 @@ export class OurKonvaBrush extends OurKonvaMouse {
             y: this.position.y
         });
         this.layers.draws.add(this.line);
-        console.log(this.position.x, this.position.y);
     }
 
     mouseMove(): void {
         super.mouseMove();
         if (this.isActive) {
             const pos = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
+            console.log(this.position.x, this.position.y);
             console.log(pos.x, pos.y);
+            console.log('-------------');
             const newPoints = this.line.points().concat([this.position.x - pos.x, this.position.y - pos.y]);
             this.line.points(newPoints);
             this.layers.draws.batchDraw();

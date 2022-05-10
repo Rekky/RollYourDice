@@ -308,7 +308,7 @@ export class MouseInteractor implements OnDestroy {
 
     deleteObjectOnMap(mod: OurKonvaMapModification): void {
         const obj = this.stage.find('#' + mod.object.id)[0];
-        const childrens = obj.getLayer().getChildren().slice();
+        const childrens = obj?.getLayer().getChildren().slice();
         childrens.forEach(child => {
             const id = child.getAttr('id');
             if (id.startsWith('tr-')) {
