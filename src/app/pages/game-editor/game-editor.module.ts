@@ -29,6 +29,7 @@ import { BlockObjectEditionComponent } from './context-menu/custom-inputs/block-
 import { DisplayJustForMasterComponent } from './context-menu/custom-inputs/display-just-for-master/display-just-for-master.component';
 import { MoreOptionsComponent } from './context-menu/custom-inputs/more-options/more-options.component';
 import { MapEditComponent } from './map-list-tools/map-edit/map-edit.component';
+import { GameStatusToolsComponent } from './game-status-tools/game-status-tools.component';
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import { MapEditComponent } from './map-list-tools/map-edit/map-edit.component';
         DisplayJustForMasterComponent,
         MoreOptionsComponent,
         MapEditComponent,
+        GameStatusToolsComponent,
     ],
     imports: [
         CommonModule,

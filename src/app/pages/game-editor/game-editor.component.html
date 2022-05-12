@@ -7,12 +7,20 @@
         <app-map *ngIf="!destroying" [map]="map" [modification]="mapModification"></app-map>
     </div>
 
-    <!-- GAME STATUS TOOLS -->
-    <div class="top-panel">
-        
+    <!-- TOP COLUMN -->
+    <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
+        <app-game-status-tools></app-game-status-tools>
+        <!-- <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
+            <i class="far fa-play-circle"></i>
+            START GAME
+        </button>
+        <button *ngIf="gameStartStatus === 0" (click)="onToggleGameStatus(2)">
+            <i class="far fa-pause-circle"></i>
+            PAUSE GAME
+        </button> -->
     </div>
 
-    <!-- MAP LIST -->
+    <!-- LEFT COLUMN -->
     <div class="left-panel">
         <app-map-list-tools
         [(open)]="openMapList"
@@ -42,17 +50,7 @@
 
     </div>
 
-    <!-- TOP COLUMN -->
-    <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
-        <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
-            <i class="far fa-play-circle"></i>
-            START GAME
-        </button>
-        <button *ngIf="gameStartStatus === 0" (click)="onToggleGameStatus(2)">
-            <i class="far fa-pause-circle"></i>
-            PAUSE GAME
-        </button>
-    </div>
+
 
 <!--    <div class="left-column" *ngIf="true">-->
 <!--        <div class="tabs adjust">-->

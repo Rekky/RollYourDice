@@ -17,15 +17,17 @@
 }
 
 // ================= PANELS =================== //
-.top-panel{
+.top-panel {
     position: absolute;
     top:0;
-    left:50%;
-    width: auto;
+    left:0;
+    color: $c-indigo;
     z-index: 90;
+    transition: 300ms;
+    margin: 8px;
 }
 
-.left-panel{
+.left-panel {
     position: absolute;
     top:0;
     left:0;
@@ -39,7 +41,7 @@
     flex-direction: row;
 }
 
-.right-panel{
+.right-panel {
     position: absolute;
     top:0;
     right:0;
@@ -51,7 +53,6 @@
     overflow: hidden;
     z-index: 90;
 }
-
 
 // ================= TOOLS CONTAINER ====================
 //.tools-bar {

@@ -1,0 +1,20 @@
+.panel-bar {
+    display: grid;
+    grid-template-columns: 1fr repeat(3, auto);
+    grid-template-rows: 1fr;
+
+    flex-direction: row;
+    height: 48px;
+    width: auto;
+    background: #fff;
+    color: inherit;
+    border-radius: 4px;
+    padding: 0 12px;
+
+    justify-items: center;
+    align-items: center;
+    gap: 20px;
+}
+.logo {
+    font-family:'oswald',sans-serif;
+}
