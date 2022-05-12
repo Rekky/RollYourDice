@@ -74,6 +74,7 @@ export class SocketService {
         //     console.log('RECIBO_GAME_PLAY', data);
         // });
         this.socket.on('game-status', (data) => {
+            console.log('game-status', data);
             this.myAdventuresInteractor.updateGameStatus(data);
         });
 
@@ -158,8 +159,8 @@ export class SocketService {
         this.socket.emit('game-editor-player-enter', {gameId});
     }
 
-    sendGameStartStatus(token: string, gameId: string, status: GameStatus): void {
-        this.socket.emit('game-status', {token, gameId, status});
+    sendGameStatus(gameId: string, status: GameStatus): void {
+        this.socket.emit('game-status', {gameId, status});
     }
 
     //////////////////////////////////////////////////////////////////////

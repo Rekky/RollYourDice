@@ -1,23 +1,13 @@
 <div class="game-editor" *ngIf="game">
+
     <!-- MAP -->
-    <div *ngIf="(
-    (map && game.author.id === userInteractor.getCurrentUser().id) ||
-    (map && gameStartStatus === 0))"
-         class="map-container">
+    <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStatus === GameStatus.Running))" class="map-container">
         <app-map *ngIf="!destroying" [map]="map" [modification]="mapModification"></app-map>
     </div>
 
     <!-- TOP COLUMN -->
     <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
-        <app-game-status-tools></app-game-status-tools>
-        <!-- <button *ngIf="gameStartStatus === 2" (click)="onToggleGameStatus(0)">
-            <i class="far fa-play-circle"></i>
-            START GAME
-        </button>
-        <button *ngIf="gameStartStatus === 0" (click)="onToggleGameStatus(2)">
-            <i class="far fa-pause-circle"></i>
-            PAUSE GAME
-        </button> -->
+        <app-game-status-tools [status]="gameStatus" [mapName]="map.name" (statusChange)="onStatusChange($event)"></app-game-status-tools>
     </div>
 
     <!-- LEFT COLUMN -->

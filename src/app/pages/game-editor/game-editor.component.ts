@@ -11,6 +11,7 @@ import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 import {MapInteractor} from '../../interactors/MapInteractor';
+import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
 
 @Component({
     selector: 'app-game-editor',
@@ -22,7 +23,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mapModification: OurKonvaMapModification;
     game: Game;
     maps: OurKonvaMap[] = [];
-    gameStartStatus: GameStatus = GameStatus.Stopped;
+    gameStatus: GameStatus = GameStatus.Stopped;
+    GameStatus = GameStatus;
 
     leftColumnTabs = LeftColumnTabs;
     tabs: LeftColumnTabs = LeftColumnTabs.Library;
@@ -44,6 +46,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private router: ActivatedRoute,
                 private socketService: SocketService,
                 public userInteractor: UserInteractor,
+                public myAdventureInteractor: MyAdventuresInteractor,
                 private cdr: ChangeDetectorRef) {
         this.mapInteractor.getCurrentMapObs().subscribe(map => {
             if (map) {
@@ -73,7 +76,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);
             if (this.game?.mapsId) {
-                this.gameStartStatus = this.game.status;
+                this.gameStatus = this.game.status;
             }
 
             this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
@@ -87,6 +90,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 if (res) {
                     this.mapModification = res;
                     this.cdr.detectChanges();
+                }
+            });
+            this.myAdventureInteractor.getMyAdventures().subscribe((adventures) => {
+                const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
+                if(currentGame) {
+                    this.gameStatus = currentGame.status;
                 }
             });
 
@@ -150,10 +159,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         // this.socketService.sendGameSetToPlayersMap(this.game.id, this.selectedPage.id, map);
     }
 
-    onToggleGameStatus(status: GameStatus): void {
-        this.gameStartStatus = status;
-        const token = this.userInteractor.getCurrentToken();
-        this.socketService.sendGameStartStatus(token, this.game.id, this.gameStartStatus);
+    onStatusChange(status: GameStatus): void {
+        this.gameStatus = status;
+        this.socketService.sendGameStatus(this.game.id, this.gameStatus);
     }
 
 }

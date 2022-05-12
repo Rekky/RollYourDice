@@ -1,6 +1,6 @@
 .panel-bar {
     display: grid;
-    grid-template-columns: 1fr repeat(3, auto);
+    grid-template-columns: auto 1fr 1fr;
     grid-template-rows: 1fr;
 
     flex-direction: row;
@@ -11,10 +11,45 @@
     border-radius: 4px;
     padding: 0 12px;
 
-    justify-items: center;
+    justify-items: start;
     align-items: center;
-    gap: 20px;
+    gap: 5px;
 }
 .logo {
+    position: relative;
     font-family:'oswald',sans-serif;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    padding-right: 12px;
+}
+.map-name {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px;
+    white-space: nowrap;
+    max-width: 220px;
+    min-width: 100px;
+}
+.controls {
+    position: relative;
+    display:grid;
+    grid-template-columns: repeat(3, 30px);
+    grid-template-rows: 1fr;
+    align-items:center;
+    justify-items: center;
+}
+.separator-right {
+    position: absolute;
+    top:20%;
+    right:0;
+    bottom: 20%;
+    width: 1px;
+    background: rgba(5, 0, 56, 0.12);
 }
