@@ -30,6 +30,7 @@ import { DisplayJustForMasterComponent } from './context-menu/custom-inputs/disp
 import { MoreOptionsComponent } from './context-menu/custom-inputs/more-options/more-options.component';
 import { MapEditComponent } from './map-list-tools/map-edit/map-edit.component';
 import { GameStatusToolsComponent } from './game-status-tools/game-status-tools.component';
+import { MapZoomToolsComponent } from './map-zoom-tools/map-zoom-tools.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +55,7 @@ import { GameStatusToolsComponent } from './game-status-tools/game-status-tools.
         MoreOptionsComponent,
         MapEditComponent,
         GameStatusToolsComponent,
+        MapZoomToolsComponent,
     ],
     imports: [
         CommonModule,
