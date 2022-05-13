@@ -32,12 +32,14 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
     openMapList = false;
+    openObjectsList = false;
 
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
     getCurrentMapModificationSubs: Subscription;
 
     destroying: boolean = false;
+    currentZoom: number = 1;
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -162,6 +164,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     onStatusChange(status: GameStatus): void {
         this.gameStatus = status;
         this.socketService.sendGameStatus(this.game.id, this.gameStatus);
+    }
+
+    onZoomChange(zoom: number): void {
+        this.currentZoom = zoom;
     }
 
 }

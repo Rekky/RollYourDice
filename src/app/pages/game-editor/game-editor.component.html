@@ -7,7 +7,7 @@
 
     <!-- TOP COLUMN -->
     <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
-        <app-game-status-tools [status]="gameStatus" [mapName]="map.name" (statusChange)="onStatusChange($event)"></app-game-status-tools>
+        <app-game-status-tools [status]="gameStatus" [mapName]="map?.name" (statusChange)="onStatusChange($event)"></app-game-status-tools>
     </div>
 
     <!-- LEFT COLUMN -->
@@ -38,6 +38,17 @@
             </div>
         </div>
 
+    </div>
+    <button style="position:fixed;top:0;left:50%" (click)="openObjectsList = !openObjectsList">OPEN OBJECTS</button>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-panel">
+        <div style="position:relative;background:red;width:0px;" [style.width]="openObjectsList ? '340px' : '0px'">qweqweqweqwe</div>
+        <div class="tools-top"></div>
+        <div class="tools-middle"></div>
+        <div class="tools-bottom">
+            <app-map-zoom-tools [zoom]="currentZoom" (zoomChange)="onZoomChange($event)"></app-map-zoom-tools>
+        </div>
     </div>
 
 

@@ -1,4 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-  <path d="M5.625 0L5.625 5.625L0 5.625L0 6.875L5.625 6.875L5.625 12.5L6.875 12.5L6.875 6.875L12.5 6.875L12.5 5.625L6.875 5.625L6.875 0L5.625 0Z" id="Shape" fill="$c-whitest" fill-rule="evenodd" stroke="none" />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
