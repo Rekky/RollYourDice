@@ -39,7 +39,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     getCurrentMapModificationSubs: Subscription;
 
     destroying: boolean = false;
+
+    // ZOOM
     currentZoom: number = 1;
+    maxZoom: number = 3;
+    minZoom: number = 0.3;
+    zoomStep: number = 0.1;
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -167,6 +172,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onZoomChange(zoom: number): void {
+        console.log('onZoomChange', zoom);
         this.currentZoom = zoom;
     }
 

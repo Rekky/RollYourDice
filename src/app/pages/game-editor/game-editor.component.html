@@ -2,7 +2,13 @@
 
     <!-- MAP -->
     <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStatus === GameStatus.Running))" class="map-container">
-        <app-map *ngIf="!destroying" [map]="map" [modification]="mapModification"></app-map>
+        <app-map *ngIf="!destroying"
+            [map]="map"
+            [modification]="mapModification"
+            [(scale)]="currentZoom"
+            [maxScale]="maxZoom"
+            [minScale]="minZoom"
+            ></app-map>
     </div>
 
     <!-- TOP COLUMN -->
@@ -39,7 +45,7 @@
         </div>
 
     </div>
-    <button style="position:fixed;top:0;left:50%" (click)="openObjectsList = !openObjectsList">OPEN OBJECTS</button>
+<!--    <button style="position:fixed;top:0;left:50%" (click)="openObjectsList = !openObjectsList">OPEN OBJECTS</button>-->
 
     <!-- RIGHT COLUMN -->
     <div class="right-panel">
@@ -47,7 +53,11 @@
         <div class="tools-top"></div>
         <div class="tools-middle"></div>
         <div class="tools-bottom">
-            <app-map-zoom-tools [zoom]="currentZoom" (zoomChange)="onZoomChange($event)"></app-map-zoom-tools>
+            <app-map-zoom-tools
+                [(zoom)]="currentZoom"
+                [maxZoom]="maxZoom"
+                [minZoom]="minZoom"
+                ></app-map-zoom-tools>
         </div>
     </div>
 
