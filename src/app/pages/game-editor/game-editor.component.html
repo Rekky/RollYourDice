@@ -7,7 +7,7 @@
 
     <!-- TOP COLUMN -->
     <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
-        <app-game-status-tools [status]="gameStatus" [mapName]="map.name" (statusChange)="onStatusChange($event)"></app-game-status-tools>
+        <app-game-status-tools [status]="gameStatus" [mapName]="map?.name" (statusChange)="onStatusChange($event)"></app-game-status-tools>
     </div>
 
     <!-- LEFT COLUMN -->

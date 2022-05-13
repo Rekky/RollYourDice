@@ -1,5 +1,5 @@
-<div class="zoom-tools btn box-shadow">
-    <div>menos</div>
-    <div>zoom</div>
-    <div>mas</div>
+<div class="zoom-tools box-shadow">
+    <div><img class="cursor-pointer" style="width: 20px;" src="assets/svg/minus.svg" (click)="setZoom(zoom -10)"></div>
+    <div>{{zoom}}%</div>
+    <div><img class="cursor-pointer" style="width: 20px;" src="assets/svg/add.svg" (click)="setZoom(zoom +10)"></div>
 </div>
