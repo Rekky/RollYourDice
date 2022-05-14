@@ -1,0 +1,64 @@
+@import "src/styles.scss";
+
+.sidebar {
+    position: relative;
+    width: 0;
+    height: 100%;
+    color: $c-indigo;
+    background: $c-whitest;
+    border-radius: 4px;
+    transition: 300ms;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px 1fr 50px;
+
+    &.open {margin-right: 8px;}
+}
+
+.sidebar-header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 20px;
+
+    h2 {
+        font-size: 26px;
+        font-family: $oswald;
+    }
+}
+
+.sidebar-body {
+    overflow: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-footer{
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+}
+
+.item {
+    position: relative;
+    height: 48px;
+    cursor: pointer;
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+
+    .item-content {
+        height: 100%;
+        width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+        display: flex;
+        align-items: center;
+    }
+}

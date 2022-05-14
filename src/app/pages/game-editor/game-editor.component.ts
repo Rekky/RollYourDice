@@ -3,7 +3,6 @@ import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game, GameStatus} from '../../classes/Game';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
-import {ApiService} from '../../services/api.service';
 import {SocketService} from '../../services/socket.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';

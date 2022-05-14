@@ -21,10 +21,27 @@
     position: absolute;
     top:0;
     left:0;
+    right: 0;
     color: $c-indigo;
     z-index: 90;
     transition: 300ms;
     margin: 8px;
+
+    display: flex;
+    flex-direction: row;
+
+    .tools-start {
+        position: absolute;
+        top:0;
+        left: 0;
+        height: 48px;
+    }
+    .tools-end {
+        position: absolute;
+        top:0;
+        right: 0;
+        height: 48px;
+    }
 }
 
 .left-panel {
@@ -85,17 +102,31 @@
         bottom: 0;
         right: -48px;
         width: 48px;
+        gap: 8px;
 
         path {
             stroke: $c-blackest;
         }
     }
+
 }
 .right-panel{
-    .tools-container{
-        position: relative;
-        width: 1px;
-        background: green;
+    .tools-top{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: 48px;
+        top: 10px;
+        left: -48px;
+    }
+    .tools-middle{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+
+        top: calc(50% - (264px / 2));
+        left: -48px;
     }
     .tools-bottom{
         position: absolute;

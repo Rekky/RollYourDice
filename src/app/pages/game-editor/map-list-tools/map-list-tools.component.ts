@@ -1,14 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Coords} from '../../../classes/Coords';
+import {FormGroup} from '@angular/forms';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
-import Konva from 'konva';
-import {GameInteractor} from '../../../interactors/GameInteractor';
-import {Game} from '../../../classes/Game';
 import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
-import { MapInteractor } from 'src/app/interactors/MapInteractor';
-import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
 import { MapEditComponent } from './map-edit/map-edit.component';
 import {MatDialog} from '@angular/material/dialog';
 

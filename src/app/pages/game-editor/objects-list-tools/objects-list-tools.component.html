@@ -1,0 +1,17 @@
+<div class="sidebar box-shadow" [class.open]="open" [ngStyle]="{width: open ? '340px' : '0'}">
+    <ng-container *ngIf="open">
+        <div class="sidebar-header">
+            <h2>Objects</h2>
+            <img width="20px" class="cursor-pointer"
+                 (click)="open = !open; openChange.emit(open); openOption = null"
+                 src="/assets/svg/close.svg">
+        </div>
+        <div class="sidebar-body">
+            <div class="item" *ngFor="let obj of objects">
+                <div class="item-content">
+                    {{obj.state}}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
