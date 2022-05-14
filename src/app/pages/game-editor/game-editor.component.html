@@ -23,21 +23,14 @@
     <!-- LEFT COLUMN -->
     <div class="left-panel">
         <app-map-list-tools
-        [(open)]="openMapList"
-        [maps]="maps"
-        [currentMap]="maps[0]"
-        (createMapEvent)="onCreateMap($event)"
-        (selectedMapEvent)="onSelectedMap($event)"
-        (deleteMapEvent)="onDeleteMap($event)"
-        (updateMapEvent)="onUpdateMap($event)"
+            [(open)]="openMapList"
+            [maps]="maps"
+            [currentMap]="maps[0]"
+            (createMapEvent)="onCreateMap($event)"
+            (selectedMapEvent)="onSelectedMap($event)"
+            (deleteMapEvent)="onDeleteMap($event)"
+            (updateMapEvent)="onUpdateMap($event)"
         ></app-map-list-tools>
-
-
-        <app-objects-list-tools
-            [(open)]="openObjectsList"
-            [objects]="map?.objects"
-        ></app-objects-list-tools>
-
 
         <div class="tools-top">
             <!-- NOTHING -->
@@ -46,9 +39,6 @@
             <app-editor-tools></app-editor-tools>
         </div>
         <div class="tools-bottom">
-            <div class="btn btn-white box-shadow" (click)="openObjectsList = !openObjectsList">
-                <img width="30px" src="assets/icons/object.png" alt="objects">
-            </div>
             <div class="btn btn-white box-shadow" (click)="openMapList = !openMapList">
                 <svg fill="none" height="24" stroke-width="1.5" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 21L5 21C3.89543 21 3 20.1046 3 19L3 5C3 3.89543 3.89543 3 5 3L19 3C20.1046 3 21 3.89543 21 5L21 19C21 20.1046 20.1046 21 19 21Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
@@ -62,6 +52,10 @@
 
     <!-- RIGHT COLUMN -->
     <div class="right-panel">
+        <app-objects-list-tools
+            [(open)]="openPropertiesList"
+        ></app-objects-list-tools>
+
         <div class="tools-top"></div>
         <div class="tools-middle"></div>
         <div class="tools-bottom">

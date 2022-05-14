@@ -1,5 +1,10 @@
 @import "src/styles.scss";
-
+.sidebar-left {
+    &.open {margin-right: 8px;}
+}
+.sidebar-right {
+    &.open {margin-left: 8px;}
+}
 .sidebar {
     position: relative;
     width: 0;
@@ -12,10 +17,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 64px 1fr 50px;
-
-    &.open {margin-right: 8px;}
 }
-
 .sidebar-header {
     display: flex;
     flex-flow: row nowrap;
@@ -23,11 +25,6 @@
     align-items: center;
 
     padding: 0 20px;
-
-    h2 {
-        font-size: 26px;
-        font-family: $oswald;
-    }
 }
 
 .sidebar-body {
@@ -38,9 +35,27 @@
 }
 
 .sidebar-footer{
-    padding: 0 20px;
+    position: relative;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     align-items: center;
+}
+
+.item {
+    position: relative;
+    height: 48px;
+    cursor: pointer;
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+
+    .item-content {
+        height: 100%;
+        width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+        display: flex;
+        align-items: center;
+    }
 }

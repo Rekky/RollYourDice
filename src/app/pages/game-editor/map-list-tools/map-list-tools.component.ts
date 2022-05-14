@@ -33,6 +33,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     openOption: number;
 
     getSelectedKonvaObjectSubscription: Subscription;
+    tabs: number = 0;
 
     constructor(private mouseInteractor: MouseInteractor,
                 private dialog: MatDialog) { }

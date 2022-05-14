@@ -10,9 +10,6 @@ export class ObjectsListToolsComponent implements OnInit {
     @Input() open = false;
     @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @Input() objects: any[] = [];
-    openOption: number;
-
     constructor() {
     }
 
