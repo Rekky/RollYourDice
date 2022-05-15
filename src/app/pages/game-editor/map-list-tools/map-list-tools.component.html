@@ -46,9 +46,10 @@
 <app-sidebar-custom [(open)]="open" [sidebarType]="'left'">
     <div header><h2 class="sidebar-title">MAPS</h2></div>
     <div body>
+        <!--   MAPS  -->
         <div class="maps-container" *ngIf="tabs === 0">
             <div class="map-box"
-                 (mouseleave)="openOption = null"
+                 (mouseleave)="openMapOption = null"
                  *ngFor="let map of maps; let i = index;"
                  [ngClass]="{'selected-map-box' : currentMap === map}"
                  (click)="onSelectMap(map, $event)">
@@ -56,16 +57,29 @@
                      [style.backgroundColor]="map?.backgroundColor"
                      [style.backgroundImage]="map?.backgroundImage?.uri ? 'url(' + map.backgroundImage.uri + ')' : 'none'">
                     <div class="map-options">
-                        <img style="width: 16px;"
-                             src="assets/icons/points.png" alt="options"
-                             (click)="toggleOpenOption(i, $event)">
-                        <div class="item-options box-shadow" *ngIf="openOption === i">
+                        <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
+                        <div class="item-options box-shadow" *ngIf="openMapOption === i">
                             <div class="item" (click)="editMap(map, $event)">Edit</div>
-                            <div class="item" (click)="deleteMap(map)">Delete</div>
+                            <div class="item" (click)="deleteMap(map, $event)">Delete</div>
                         </div>
                     </div>
                     <div class="map-name">
                         <div class="tag">{{map.name}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--   OBJECTS   -->
+        <div *ngIf="tabs === 1">
+            <div class="item" *ngFor="let obj of currentMap.objects;let i = index">
+                <div class="item-content">
+                    <div>{{obj.state}}</div>
+                    <div>
+                        <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleObjectOption(obj, i)">
+                        <div class="item-options box-shadow" *ngIf="openObjectOption === i">
+                            <div class="item" (click)="editObject(obj, $event)">Edit</div>
+                            <div class="item" (click)="deleteObject(obj, $event)">Delete</div>
+                        </div>
                     </div>
                 </div>
             </div>

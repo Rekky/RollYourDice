@@ -29,8 +29,8 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     newMapForm: FormGroup;
     updateMapForm: FormGroup;
-    isUpdateMap = false;
-    openOption: number;
+    openMapOption: number;
+    openObjectOption: number;
 
     getSelectedKonvaObjectSubscription: Subscription;
     tabs: number = 0;
@@ -63,7 +63,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     editMap(map?: OurKonvaMap, e?): void {
         e?.stopPropagation();
-        this.openOption = null;
+        this.openMapOption = null;
         const dialogSub = this.dialog.open(MapEditComponent, {
             data: {
                 map: map ? map : new OurKonvaMap(),
@@ -85,20 +85,39 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         });
     }
 
-    deleteMap(map: OurKonvaMap): void {
-        this.openOption = null;
+    deleteMap(map: OurKonvaMap, e?): void {
+        e?.stopPropagation();
+        this.openMapOption = null;
         this.maps.splice(this.maps.indexOf(map), 1);
         this.deleteMapEvent.emit(map);
     }
+
+    toggleMapOption(map: OurKonvaMap, option: number, e?): void {
+        e?.stopPropagation();
+        if (this.openMapOption === option) {
+            this.openMapOption = null;
+        }
+        else {
+            this.openMapOption = option;
+        }
+    }
+
+    toggleObjectOption(object: any, option: number, e?): void {
+        e?.stopPropagation();
+        if (this.openObjectOption === option) {
+            this.openObjectOption = null;
+        }
+        else {
+            this.openObjectOption = option;
+        }
+    }
+    editObject(obj?: any, e?): void {}
+    deleteObject(obj: any, e?): void {}
+
+
 
     toPlayersMap(map: OurKonvaMap): void {
         // map.toPlayers = !map.toPlayers;
         this.toPlayersMapEvent.emit(map);
     }
-
-    toggleOpenOption(n: number, e): void {
-        e.stopPropagation();
-        this.openOption === n ? this.openOption = null : this.openOption = n;
-    }
-
 }
