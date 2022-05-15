@@ -3,7 +3,6 @@ import {GameInteractor} from '../../interactors/GameInteractor';
 import {Game, GameStatus} from '../../classes/Game';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
-import {ApiService} from '../../services/api.service';
 import {SocketService} from '../../services/socket.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
@@ -32,14 +31,19 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
     openMapList = false;
-    openObjectsList = false;
+    openPropertiesList = false;
 
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
     getCurrentMapModificationSubs: Subscription;
 
     destroying: boolean = false;
+
+    // ZOOM
     currentZoom: number = 1;
+    maxZoom: number = 3;
+    minZoom: number = 0.3;
+    zoomStep: number = 0.1;
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -125,6 +129,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedMap(ev: OurKonvaMap): void {
+        this.currentZoom = 1;
         this.mapInteractor.setCurrentMap(ev);
     }
 
@@ -167,6 +172,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onZoomChange(zoom: number): void {
+        console.log('onZoomChange', zoom);
         this.currentZoom = zoom;
     }
 

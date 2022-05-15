@@ -1,14 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Coords} from '../../../classes/Coords';
+import {FormGroup} from '@angular/forms';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
-import Konva from 'konva';
-import {GameInteractor} from '../../../interactors/GameInteractor';
-import {Game} from '../../../classes/Game';
 import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
-import { MapInteractor } from 'src/app/interactors/MapInteractor';
-import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
 import { MapEditComponent } from './map-edit/map-edit.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -35,10 +29,11 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     newMapForm: FormGroup;
     updateMapForm: FormGroup;
-    isUpdateMap = false;
-    openOption: number;
+    openMapOption: number;
+    openObjectOption: number;
 
     getSelectedKonvaObjectSubscription: Subscription;
+    tabs: number = 0;
 
     constructor(private mouseInteractor: MouseInteractor,
                 private dialog: MatDialog) { }
@@ -68,7 +63,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     editMap(map?: OurKonvaMap, e?): void {
         e?.stopPropagation();
-        this.openOption = null;
+        this.openMapOption = null;
         const dialogSub = this.dialog.open(MapEditComponent, {
             data: {
                 map: map ? map : new OurKonvaMap(),
@@ -90,20 +85,39 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         });
     }
 
-    deleteMap(map: OurKonvaMap): void {
-        this.openOption = null;
+    deleteMap(map: OurKonvaMap, e?): void {
+        e?.stopPropagation();
+        this.openMapOption = null;
         this.maps.splice(this.maps.indexOf(map), 1);
         this.deleteMapEvent.emit(map);
     }
+
+    toggleMapOption(map: OurKonvaMap, option: number, e?): void {
+        e?.stopPropagation();
+        if (this.openMapOption === option) {
+            this.openMapOption = null;
+        }
+        else {
+            this.openMapOption = option;
+        }
+    }
+
+    toggleObjectOption(object: any, option: number, e?): void {
+        e?.stopPropagation();
+        if (this.openObjectOption === option) {
+            this.openObjectOption = null;
+        }
+        else {
+            this.openObjectOption = option;
+        }
+    }
+    editObject(obj?: any, e?): void {}
+    deleteObject(obj: any, e?): void {}
+
+
 
     toPlayersMap(map: OurKonvaMap): void {
         // map.toPlayers = !map.toPlayers;
         this.toPlayersMapEvent.emit(map);
     }
-
-    toggleOpenOption(n: number, e): void {
-        e.stopPropagation();
-        this.openOption === n ? this.openOption = null : this.openOption = n;
-    }
-
 }

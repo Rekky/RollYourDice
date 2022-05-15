@@ -39,7 +39,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     // MAP VARS
     public mapWidth: number = 100;
     public mapHeight: number = 100;
-    protected mapScale: number = 1;
     protected isMovingMap: boolean = false;
     protected startCoords: Coords = new Coords();
     protected offsetCoords: Coords = new Coords();
@@ -62,9 +61,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     protected mouseIsABrush: boolean = false;
 
     // SCALE MAP PARAMS
-    protected maxScaleSize: number = 5;
-    protected minScaleSize: number = 0.5;
-    protected scaleStep: number = 0.1;
+    @Input() scale: number = 1;
+    @Input() maxScale: number = 3;
+    @Input() minScale: number = 0.3;
+    @Input() scaleStep: number = 0.1;
+    @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(private mouseInteractor: MouseInteractor,
                 private cdr: ChangeDetectorRef) {
@@ -99,6 +100,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        if (changes.scale) {
+            // scale with the new valor on input this.scale
+            setTimeout(() => {
+                this.gridStage.scale({ x: this.scale, y: this.scale });
+            }, 100);
+        }
+
         if (this.modification) {
             if (this.modification.type === 'create') {
                 this.mouseInteractor.paintObjectOnMap(this.modification.object, this.layers);
@@ -126,15 +134,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
-        // const box = document.getElementById('mapbox' + this.map.id);
-        // Konva.dragButtons = [2];
-
         const stage = new Konva.Stage({
             container: 'map' + this.map.id,
             width: window.innerWidth,
             height: window.innerHeight,
             draggable: false,
-            scale: {x: this.mapScale, y: this.mapScale}
+            scale: {x: this.scale, y: this.scale}
         });
 
         stage.container().style.backgroundColor = '#f2f2f2';
@@ -193,26 +198,26 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
      inc : the amount of zoom to apply.
      returns: zoom factor after zoom completed.
      */
-     zoomStage2(stage, zoomPoint, zoomBefore, inc) {
+     zoomStage2(stage, zoomPoint, zoomBefore, inc): any {
         // remember the scale before new zoom is applied - we are scaling
         // same in x & y so either will work
-        let oldScale = stage.scaleX();
+        const oldScale = stage.scaleX();
 
         // compute the distance to the zoom point before applying zoom
-        var mousePointTo = {
+        const mousePointTo = {
             x: (zoomPoint.x - stage.x()) / oldScale,
             y: (zoomPoint.y - stage.y()) / oldScale
         };
 
         // compute new scale
-        let zoomAfter = zoomBefore + inc;
+        const zoomAfter = zoomBefore + inc;
 
         // apply new zoom to stage
         stage.scale({ x: zoomAfter, y: zoomAfter });
 
         // Important - move the stage so that the zoomed point remains
         // visually in place
-        var newPos = {
+        const newPos = {
             x: zoomPoint.x - mousePointTo.x * zoomAfter,
             y: zoomPoint.y - mousePointTo.y * zoomAfter
         };
@@ -220,6 +225,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.position(newPos);
         // return the new zoom factor.
         this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectSelected, this.gridStage);
+        // this.zoomChange.emit(zoomAfter);
         return zoomAfter;
     }
 
@@ -268,36 +274,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }));
         }
         this.layers?.grid?.cache();
-    }
-
-    moveMap(res: string, ev: MouseEvent): void {
-
-        // if (this.displayCursor === 'hand') {
-        // this.gridStage.setDraggable(true);
-        if (res === 'mousedown') {
-            // this.isMovingMap = true;
-            // this.gridStage.setDraggable(true);
-            // this.startCoords.x = ev.clientX - this.offsetCoords.x;
-            // this.startCoords.y = ev.clientY - this.offsetCoords.y;
-        }
-        if (res === 'mousemove') {
-            // if (this.isMovingMap) {
-            // this.map.position.x = ev.clientX - this.startCoords.x;
-            // this.map.position.y = ev.clientY - this.startCoords.y;
-            // }
-            // this.offsetCoords.x = this.map.position.x;
-            // this.offsetCoords.y = this.map.position.y;
-        }
-        if (res === 'mouseup') {
-            // this.isMovingMap = false;
-            // this.mapMoveEvent.emit(this.map);
-        }
-        if (res === 'mouseout') {
-            // this.isMovingMap = false;
-        }
-        // } else {
-        //     this.gridStage.setDraggable(false);
-        // }
     }
 
     // addImageToKonva(url: string): void {
@@ -435,17 +411,19 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
             const pointer = this.gridStage.getPointerPosition();
 
-            if (this.mapScale < this.minScaleSize) {
-                this.mapScale = this.minScaleSize;
+            if (this.scale <= this.minScale) {
+                this.scale = this.minScale + this.scaleStep;
                 return;
-            } else if (this.mapScale > this.maxScaleSize) {
-                this.mapScale = this.maxScaleSize;
+            } else if (this.scale >= this.maxScale) {
+                this.scale = this.maxScale - this.scaleStep;
                 return;
             }
 
             const zoomInc = ev.deltaY > 0 ? -this.scaleStep : this.scaleStep;
-            this.mapScale = this.zoomStage2(this.gridStage, pointer, this.mapScale, zoomInc);
-            this.gridStage.batchDraw();
+            this.scale = this.zoomStage2(this.gridStage, pointer, this.scale, zoomInc);
+            this.scale = Math.round(this.scale * 100) / 100;
+
+            this.scaleChange.emit(this.scale);
         });
     }
 }

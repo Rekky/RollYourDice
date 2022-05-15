@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {EnumToArrayPipe} from './pipes/enum-to-array-pipe';
-import {RecursiveListComponent} from './components/recursive-list/recursive-list.component';
 import {NotificationComponent} from './components/notification/notification.component';
 import {CharacterSheetComponent} from './components/character-sheet/character-sheet.component';
 import {CsHeaderComponent} from './components/character-sheet/cs-header/cs-header.component';
@@ -19,12 +18,12 @@ import {SafePipe} from './pipes/safe-pipe';
 import { SearchGameComponent } from './components/search-game/search-game.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ModalCustomComponent } from './components/modal-custom/modal-custom.component';
+import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom.component';
 
 @NgModule({
     declarations: [
         EnumToArrayPipe,
         SafePipe,
-        RecursiveListComponent,
         NotificationComponent,
         CharacterSheetComponent,
         CsHeaderComponent,
@@ -36,7 +35,8 @@ import { ModalCustomComponent } from './components/modal-custom/modal-custom.com
         EditGameDataComponent,
         SearchGameComponent,
         UserListComponent,
-        ModalCustomComponent
+        ModalCustomComponent,
+        SidebarCustomComponent
     ],
     imports: [
         CommonModule,
@@ -49,7 +49,6 @@ import { ModalCustomComponent } from './components/modal-custom/modal-custom.com
     exports: [
         EnumToArrayPipe,
         SafePipe,
-        RecursiveListComponent,
         NotificationComponent,
         CharacterSheetComponent,
         CsHeaderComponent,
@@ -59,7 +58,8 @@ import { ModalCustomComponent } from './components/modal-custom/modal-custom.com
         AssetComponent,
         UploadInputComponent,
         EditGameDataComponent,
-        ModalCustomComponent
+        ModalCustomComponent,
+        SidebarCustomComponent
     ],
 })
 
