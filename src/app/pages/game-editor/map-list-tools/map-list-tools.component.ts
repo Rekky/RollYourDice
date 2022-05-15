@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import { MapEditComponent } from './map-edit/map-edit.component';
 import {MatDialog} from '@angular/material/dialog';
+import Konva from 'konva';
 
 @Component({
     selector: 'app-map-list-tools',
@@ -34,6 +35,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     getSelectedKonvaObjectSubscription: Subscription;
     tabs: number = 0;
+    sideBarTitle: string = 'MAPS';
 
     constructor(private mouseInteractor: MouseInteractor,
                 private dialog: MatDialog) { }
@@ -53,6 +55,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.getSelectedKonvaObjectSubscription?.unsubscribe();
     }
 
+    // MAPS ===========================================================================================================
     onSelectMap(map: OurKonvaMap, ev?): void {
         ev?.stopPropagation();
         if (this.currentMap.id !== map.id) {
@@ -102,6 +105,12 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         }
     }
 
+    // OBJECTS ==========================================================================================================
+    editObject(obj?: any, e?): void {}
+    deleteObject(obj: any, e?): void {
+        this.currentMap.objects.splice(this.currentMap.objects.indexOf(obj), 1);
+    }
+
     toggleObjectOption(object: any, option: number, e?): void {
         e?.stopPropagation();
         if (this.openObjectOption === option) {
@@ -111,11 +120,8 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
             this.openObjectOption = option;
         }
     }
-    editObject(obj?: any, e?): void {}
-    deleteObject(obj: any, e?): void {}
 
-
-
+    // OTHERS ===========================================================================================================
     toPlayersMap(map: OurKonvaMap): void {
         // map.toPlayers = !map.toPlayers;
         this.toPlayersMapEvent.emit(map);
