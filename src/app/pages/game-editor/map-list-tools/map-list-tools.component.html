@@ -10,6 +10,7 @@
                  [ngClass]="{'selected-map-box' : currentMap === map}"
                  (click)="onSelectMap(map, $event)">
                 <div class="map"
+                     *ngIf="map"
                      [style.backgroundColor]="map?.backgroundColor"
                      [style.backgroundImage]="map?.backgroundImage?.uri ? 'url(' + map.backgroundImage.uri + ')' : 'none'">
                     <div class="map-options">
@@ -20,7 +21,7 @@
                         </div>
                     </div>
                     <div class="map-name">
-                        <div class="tag">{{map.name}}</div>
+                        <div class="tag">{{map?.name}}</div>
                     </div>
                 </div>
             </div>
