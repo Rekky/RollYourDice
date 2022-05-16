@@ -23,7 +23,11 @@ export class MapEditComponent implements OnInit {
         this.mapForm = new FormGroup({
             name: new FormControl(this.data.map.name, Validators.required),
             nRows: new FormControl(this.data.map.nRows, Validators.required),
-            nColumns: new FormControl(this.data.map.nColumns, Validators.required)
+            nColumns: new FormControl(this.data.map.nColumns, Validators.required),
+            isFogOfWar: new FormControl(this.data.map.isFogOfWar, Validators.required),
+            nFogOfPercent: new FormControl(this.data.map.nFogOfWarPercent, Validators.required),
+            backgroundColor: new FormControl(this.data.map.backgroundColor, Validators.required),
+            backgroundImage: new FormControl(this.data.map.backgroundImage, Validators.required)
         });
         setTimeout(() => {
             this.loaded = true;
