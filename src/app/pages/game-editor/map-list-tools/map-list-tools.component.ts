@@ -18,10 +18,10 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     @Input() openModal = false;
 
     @Input() maps: OurKonvaMap[] = [];
+    @Output() mapsChange: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() createMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() deleteMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() updateMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
-    @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() selectedMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
@@ -34,6 +34,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
 
     getSelectedKonvaObjectSubscription: Subscription;
     tabs: number = 0;
+    sideBarTitle: string = 'MAPS';
 
     constructor(private mouseInteractor: MouseInteractor,
                 private dialog: MatDialog) { }
@@ -53,6 +54,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.getSelectedKonvaObjectSubscription?.unsubscribe();
     }
 
+    // MAPS ===========================================================================================================
     onSelectMap(map: OurKonvaMap, ev?): void {
         ev?.stopPropagation();
         if (this.currentMap.id !== map.id) {
@@ -102,6 +104,17 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         }
     }
 
+    onDragulaMapsChange(maps: any): void {
+        this.maps = maps;
+        this.mapsChange.emit(this.maps);
+    }
+
+    // OBJECTS ==========================================================================================================
+    editObject(obj?: any, e?): void {}
+    deleteObject(obj: any, e?): void {
+        this.currentMap.objects.splice(this.currentMap.objects.indexOf(obj), 1);
+    }
+
     toggleObjectOption(object: any, option: number, e?): void {
         e?.stopPropagation();
         if (this.openObjectOption === option) {
@@ -111,11 +124,8 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
             this.openObjectOption = option;
         }
     }
-    editObject(obj?: any, e?): void {}
-    deleteObject(obj: any, e?): void {}
 
-
-
+    // OTHERS ===========================================================================================================
     toPlayersMap(map: OurKonvaMap): void {
         // map.toPlayers = !map.toPlayers;
         this.toPlayersMapEvent.emit(map);

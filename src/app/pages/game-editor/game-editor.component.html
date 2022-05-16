@@ -25,6 +25,7 @@
         <app-map-list-tools
             [(open)]="openMapList"
             [maps]="maps"
+            (mapsChange)="onMapsOrderChange($event)"
             [currentMap]="maps[0]"
             (createMapEvent)="onCreateMap($event)"
             (selectedMapEvent)="onSelectedMap($event)"

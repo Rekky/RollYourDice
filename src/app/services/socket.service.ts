@@ -122,6 +122,7 @@ export class SocketService {
         });
     }
 
+    ////////////////////////////// SENDERSS ////////////////////////////////////
     sendGameEditorId(gameId: string): void {
         this.socket.emit('game-editor-load', gameId);
     }
@@ -143,12 +144,9 @@ export class SocketService {
         this.socket.emit('game-editor-update-map', {gameId, map});
     }
 
-    sendGameMoveMap(map: OurKonvaMap): void {
-        this.socket.emit('game-editor-move-map', {map});
-    }
-
-    sendGameMapsUpdate(gameId: string, maps: OurKonvaMap[]): void {
-        this.socket.emit('game-editor-maps-update', {gameId, maps});
+    sendGameUpdateMapsOrder(gameId: string, maps: OurKonvaMap[]): void {
+        const mapsIds = maps.map(map => map.id);
+        this.socket.emit('game-editor-update-order-maps', {gameId, mapsIds});
     }
 
     sendGameSetToPlayersMap(gameId: string, map: OurKonvaMap): void {
