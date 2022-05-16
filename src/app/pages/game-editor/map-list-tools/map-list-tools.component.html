@@ -3,7 +3,7 @@
     <div body>
 
         <!--   MAPS  -->
-        <div class="maps-container" *ngIf="tabs === 0" dragula="MAPS" [(dragulaModel)]="maps">
+        <div class="maps-container" *ngIf="tabs === 0" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
             <div class="map-box"
                  (mouseleave)="openMapOption = null"
                  *ngFor="let map of maps; let i = index;"

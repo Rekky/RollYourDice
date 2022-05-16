@@ -5,7 +5,6 @@ import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import { MapEditComponent } from './map-edit/map-edit.component';
 import {MatDialog} from '@angular/material/dialog';
-import Konva from 'konva';
 
 @Component({
     selector: 'app-map-list-tools',
@@ -19,10 +18,10 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     @Input() openModal = false;
 
     @Input() maps: OurKonvaMap[] = [];
+    @Output() mapsChange: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() createMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() deleteMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() updateMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
-    @Output() mapsChanges: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() selectedMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
@@ -103,6 +102,11 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         else {
             this.openMapOption = option;
         }
+    }
+
+    onDragulaMapsChange(maps: any): void {
+        this.maps = maps;
+        this.mapsChange.emit(this.maps);
     }
 
     // OBJECTS ==========================================================================================================
