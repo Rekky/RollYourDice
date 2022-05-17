@@ -122,6 +122,7 @@ export class MouseInteractor implements OnDestroy {
 
     newObjectAddSelectedOption(object: any): void {
         object?.konvaObject.on('click', () => {
+            if (this.mouse.state !== 'pointer') { return; }
             const selectedObject = this.selectedKonvaObject?.getValue();
             if (selectedObject?.konvaObject.getAttr('id') !== object.konvaObject.getAttr('id')) {
                 selectedObject?.konvaObject.draggable(false);

@@ -29,14 +29,14 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
             {name: 'pointer', displayed: true}
         ],
         [
-            {name: 'hand', displayed: true}
+            // {name: 'hand', displayed: true}
         ],
         [
             {name: 'text', displayed: true}
         ],
         [
             {name: 'brush', displayed: true},
-            {name: 'eraser', displayed: false},
+            // {name: 'eraser', displayed: false},
         ],
         [
             {name: 'square', displayed: true},

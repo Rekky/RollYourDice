@@ -114,9 +114,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             if (this.modification.type === 'update') {
                 this.mouseInteractor.deleteObjectOnMap(this.modification);
                 this.mouseInteractor.paintObjectOnMap(this.modification.object, this.layers);
+                if (this.currentMapObjectSelected.ourKonvaObject.id === this.modification.object.id) {
+                    this.mouseInteractor.unsetSelectedKonvaObject();
+                }
             }
             if (this.modification.type === 'delete') {
                 this.mouseInteractor.deleteObjectOnMap(this.modification);
+                if (this.currentMapObjectSelected.ourKonvaObject.id === this.modification.object.id) {
+                    this.mouseInteractor.unsetSelectedKonvaObject();
+                }
             }
         }
     }
