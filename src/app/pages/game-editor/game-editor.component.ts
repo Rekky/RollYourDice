@@ -100,7 +100,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             });
             this.myAdventureInteractor.getMyAdventures().subscribe((adventures) => {
                 const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
-                if(currentGame) {
+                if (currentGame) {
                     this.gameStatus = currentGame.status;
                 }
             });
