@@ -1,4 +1,9 @@
 import { ulid } from 'ulid';
+import {Coords} from './Coords';
+
+export interface UserMeta {
+    maps: {id: string, zoom: number, position: Coords;}[];
+}
 
 export class User {
     id: string;
@@ -6,6 +11,7 @@ export class User {
     email: string;
     password: string;
     hash: string;
+    meta: UserMeta;
 
     constructor(id?: string, username?: string, email?: string, password?: string, hash?: string) {
         this.id = id ? id : ulid();
@@ -13,6 +19,7 @@ export class User {
         this.email = email ? email : null;
         this.password = password ? password : null;
         this.hash = hash ? hash : null;
+        this.meta = null;
     }
 
     static fromJSON(json: any): User {
