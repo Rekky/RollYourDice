@@ -40,10 +40,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     destroying: boolean = false;
 
     // ZOOM
-    currentZoom: number = 1;
-    maxZoom: number = 3;
-    minZoom: number = 0.3;
-    zoomStep: number = 0.1;
+    currentZoomOptions = {
+        min: 0.3,
+        max: 3,
+        step: 0.1,
+        value: 1
+    };
+
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -129,7 +132,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedMap(ev: OurKonvaMap): void {
-        this.currentZoom = 1;
+        this.currentZoomOptions.value = 1;
         this.mapInteractor.setCurrentMap(ev);
     }
 
@@ -175,9 +178,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendGameStatus(this.game.id, this.gameStatus);
     }
 
-    onZoomChange(zoom: number): void {
-        console.log('onZoomChange', zoom);
-        this.currentZoom = zoom;
+    onScaleChange(zoom: number): void {
+        this.currentZoomOptions.value = zoom;
     }
 
 }

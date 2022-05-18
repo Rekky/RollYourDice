@@ -1,5 +1,5 @@
-<div class="sidebar box-shadow" [class.sidebar-left]="sidebarType === 'left'" [class.sidebar-right]="sidebarType === 'right'" [class.open]="open" [ngStyle]="{width: open ? '340px' : '0'}">
-    <ng-container *ngIf="open">
+<div class="sidebar box-shadow" [class.sidebar-left]="sidebarType === 'left'" [class.sidebar-right]="sidebarType === 'right'" [class.open]="open" [ngStyle]="{width: open ? '340px' : '0', opacity: open ? '1' : '0'}">
+    <ng-container>
         <div class="sidebar-header">
             <ng-content select="[header]"></ng-content>
             <img style="position:absolute;right:20px;width:20px" class="close-icon cursor-pointer" (click)="open = !open;openChange.emit(open)" src="/assets/svg/close.svg">

@@ -9,19 +9,20 @@
                  *ngFor="let map of maps; let i = index;"
                  [ngClass]="{'selected-map-box' : currentMap === map}"
                  (click)="onSelectMap(map, $event)">
-                <div class="map"
-                     *ngIf="map"
-                     [style.backgroundColor]="map?.backgroundColor"
-                     [style.backgroundImage]="map?.backgroundImage?.uri ? 'url(' + map.backgroundImage.uri + ')' : 'none'">
+
+                <div class="map">
+                    <app-mini-map [map]="map"></app-mini-map>
+                    <div class="map-name">
+                        <div class="tag">{{map?.name}}</div>
+                    </div>
                     <div class="map-options">
-                        <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
+                        <div class="option-icon">
+                            <img style="filter:invert(100%)" height="20px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
+                        </div>
                         <div class="item-options box-shadow" *ngIf="openMapOption === i">
                             <div class="item" (click)="editMap(map, $event)">Edit</div>
                             <div class="item" (click)="deleteMap(map, $event)">Delete</div>
                         </div>
-                    </div>
-                    <div class="map-name">
-                        <div class="tag">{{map?.name}}</div>
                     </div>
                 </div>
             </div>

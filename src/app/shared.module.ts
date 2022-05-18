@@ -19,6 +19,7 @@ import { SearchGameComponent } from './components/search-game/search-game.compon
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ModalCustomComponent } from './components/modal-custom/modal-custom.component';
 import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom.component';
+import { MiniMapComponent } from './components/mini-map/mini-map.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom
         SearchGameComponent,
         UserListComponent,
         ModalCustomComponent,
-        SidebarCustomComponent
+        SidebarCustomComponent,
+        MiniMapComponent
     ],
     imports: [
         CommonModule,
@@ -59,7 +61,8 @@ import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom
         UploadInputComponent,
         EditGameDataComponent,
         ModalCustomComponent,
-        SidebarCustomComponent
+        SidebarCustomComponent,
+        MiniMapComponent
     ],
 })
 

@@ -5,9 +5,10 @@
         <app-map *ngIf="!destroying"
             [map]="map"
             [modification]="mapModification"
-            [(scale)]="currentZoom"
-            [maxScale]="maxZoom"
-            [minScale]="minZoom"
+            [scale]="currentZoomOptions.value"
+            [maxScale]="currentZoomOptions.max"
+            [minScale]="currentZoomOptions.min"
+            (scaleChange)="onScaleChange($event)"
             ></app-map>
     </div>
 
@@ -61,9 +62,9 @@
         <div class="tools-middle"></div>
         <div class="tools-bottom">
             <app-map-zoom-tools
-                [(zoom)]="currentZoom"
-                [maxZoom]="maxZoom"
-                [minZoom]="minZoom"
+                [(zoom)]="currentZoomOptions.value"
+                [maxZoom]="currentZoomOptions.max"
+                [minZoom]="currentZoomOptions.min"
                 ></app-map-zoom-tools>
         </div>
     </div>

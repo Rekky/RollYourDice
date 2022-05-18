@@ -1,6 +1,6 @@
 .panel-bar {
     display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    grid-template-columns: auto 1fr auto;
     grid-template-rows: 1fr;
 
     flex-direction: row;
@@ -34,8 +34,13 @@
     font-weight: 500;
     padding: 12px;
     white-space: nowrap;
-    max-width: 220px;
+    max-width: 230px;
     min-width: 100px;
+    overflow: hidden;
+
+    @media (max-width: 400px) {
+        width: 110px;
+    }
 }
 .controls {
     position: relative;

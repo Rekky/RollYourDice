@@ -2,7 +2,7 @@ import { ulid } from 'ulid';
 import {Coords} from './Coords';
 
 export interface UserMeta {
-    maps: {id: string, zoom: number, position: Coords;}[];
+    maps: {id: string, zoom: number, position: Coords}[];
 }
 
 export class User {
