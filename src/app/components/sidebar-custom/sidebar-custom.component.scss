@@ -1,18 +1,28 @@
 @import "src/styles.scss";
 .sidebar-left {
-    &.open {margin-right: 8px;}
+    left: -350px;
+    margin-right: 8px;
+    &.open {
+        left: 0;
+    }
 }
 .sidebar-right {
-    &.open {margin-left: 8px;}
+    right: -340px;
+    margin-left: 8px;
+    &.open {
+        right: 0;
+    }
 }
 .sidebar {
-    position: relative;
-    width: 0;
-    height: 100%;
+    position: absolute;
+    width: 340px;
+    top:0;
+    bottom: 0;
     color: $c-indigo;
     background: $c-whitest;
     border-radius: 4px;
     transition: 300ms;
+    margin: 9px;
 
     display: grid;
     grid-template-columns: 1fr;
@@ -28,12 +38,25 @@
 }
 
 .sidebar-body {
-    overflow: hidden;
-    overflow-y: auto;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
+.tools-bar {
+    position: absolute;
+    right: -8px;
+    top:0;
+    width: 1px;
+    bottom: 0;
+    background: red;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: space-between;
+    align-items: center;
+}
 .sidebar-footer{
     position: relative;
     display: grid;
@@ -59,3 +82,4 @@
         align-items: center;
     }
 }
+

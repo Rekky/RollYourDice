@@ -1,64 +1,61 @@
-<app-sidebar-custom [(open)]="open" [sidebarType]="'left'">
-    <div header><h2 class="sidebar-title">{{sideBarTitle}}</h2></div>
-    <div body>
+<!--TABS 0-->
+<div class="content-container">
+    <div class="maps-container" *ngIf="tabs === 0" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
+        <div class="map-box"
+             (mouseleave)="openMapOption = null"
+             *ngFor="let map of maps; let i = index;"
+             [ngClass]="{'selected-map-box' : currentMap === map}"
+             (click)="onSelectMap(map, $event)">
 
-        <!--   MAPS  -->
-        <div class="maps-container" *ngIf="tabs === 0" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
-            <div class="map-box"
-                 (mouseleave)="openMapOption = null"
-                 *ngFor="let map of maps; let i = index;"
-                 [ngClass]="{'selected-map-box' : currentMap === map}"
-                 (click)="onSelectMap(map, $event)">
-
-                <div class="map">
-                    <app-mini-map [map]="map"></app-mini-map>
-                    <div class="map-name">
-                        <div class="tag">{{map?.name}}</div>
-                    </div>
-                    <div class="map-options">
-                        <div class="option-icon">
-                            <img style="filter:invert(100%)" height="20px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
-                        </div>
-                        <div class="item-options box-shadow" *ngIf="openMapOption === i">
-                            <div class="item" (click)="editMap(map, $event)">Edit</div>
-                            <div class="item" (click)="deleteMap(map, $event)">Delete</div>
-                        </div>
-                    </div>
+            <div class="map">
+                <app-mini-map [map]="map"></app-mini-map>
+                <div class="map-name">
+                    <div class="tag">{{map?.name}}</div>
                 </div>
-            </div>
-            <div style="position: absolute;bottom:50px;left:0;width: 100%;padding: 8px 0;background: #fff;">
-                <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="editMap()">
-            </div>
-        </div>
-
-        <!--   OBJECTS   -->
-        <div *ngIf="tabs === 1">
-            <div class="item" *ngFor="let obj of currentMap.objects;let i = index">
-                <div class="item-content">
-                    <div>{{obj.state}}</div>
-                    <div>
-                        <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleObjectOption(obj, i)">
-                        <div class="item-options box-shadow" *ngIf="openObjectOption === i">
-                            <div class="item" (click)="editObject(obj, $event)">Edit</div>
-                            <div class="item" (click)="deleteObject(obj, $event)">Delete</div>
-                        </div>
+                <div class="map-options">
+                    <div class="option-icon">
+                        <img style="filter:invert(100%)" height="20px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
+                    </div>
+                    <div class="item-options box-shadow" *ngIf="openMapOption === i">
+                        <div class="item" (click)="editMap(map, $event)">Edit</div>
+                        <div class="item" (click)="deleteMap(map, $event)">Delete</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div footer>
-        <div class="tabs-line"></div>
-        <div class="footer-tabs">
-            <div class="tab" [class.active]="tabs === 0" (click)="tabs = 0;sideBarTitle='MAPS'">
-                <img height="25px" src="assets/icons/layout.png" alt="layout">
-            </div>
-            <div class="tab" [class.active]="tabs === 1" (click)="tabs = 1;sideBarTitle='OBJECTS'">
-                <img height="25px" src="assets/icons/object.png" alt="objects">
-            </div>
-            <div class="tab" [class.active]="tabs === 2" (click)="tabs = 2;sideBarTitle='UNKNOW'">
-                <img height="25px" src="assets/icons/mouse.png" alt="mouse">
+
+    <!--   TABS 1   -->
+    <div *ngIf="tabs === 1">
+        <div class="item" *ngFor="let obj of currentMap.objects;let i = index">
+            <div class="item-content">
+                <div>{{obj.state}}</div>
+                <div>
+                    <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleObjectOption(obj, i)">
+                    <div class="item-options box-shadow" *ngIf="openObjectOption === i">
+                        <div class="item" (click)="editObject(obj, $event)">Edit</div>
+                        <div class="item" (click)="deleteObject(obj, $event)">Delete</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</app-sidebar-custom>
+</div>
+
+<!-- ADD NEW -->
+<div class="add-control">
+    <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="editMap()">
+</div>
+
+<!-- FOOTER -->
+<div class="footer-tabs">
+    <div class="tab" [class.active]="tabs === 0" (click)="tabs = 0;sideBarTitle='MAPS'">
+        <img height="25px" src="assets/icons/layout.png" alt="layout">
+    </div>
+    <div class="tab" [class.active]="tabs === 1" (click)="tabs = 1;sideBarTitle='OBJECTS'">
+        <img height="25px" src="assets/icons/object.png" alt="objects">
+    </div>
+    <div class="tab" [class.active]="tabs === 2" (click)="tabs = 2;sideBarTitle='UNKNOW'">
+        <img height="25px" src="assets/icons/mouse.png" alt="mouse">
+    </div>
+</div>

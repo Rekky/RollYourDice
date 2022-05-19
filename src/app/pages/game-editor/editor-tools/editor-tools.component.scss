@@ -1,6 +1,7 @@
 @import "src/styles.scss";
 
 .tools-container{
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;

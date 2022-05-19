@@ -7,6 +7,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class SidebarCustomComponent implements OnInit {
 
+    @Input() top: string = '0px';
     @Input() sidebarType: string = 'left';
     @Input() title = null;
     @Input() open = false;
@@ -16,6 +17,11 @@ export class SidebarCustomComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    onClose(): void {
+        this.open = false;
+        this.openChange.emit(this.open);
     }
 
 }

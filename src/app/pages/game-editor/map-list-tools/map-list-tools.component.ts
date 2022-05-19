@@ -12,9 +12,6 @@ import {MatDialog} from '@angular/material/dialog';
     styleUrls: ['./map-list-tools.component.scss']
 })
 export class MapListToolsComponent implements OnInit, OnDestroy {
-
-    @Input() open = false;
-    @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() openModal = false;
 
     @Input() maps: OurKonvaMap[] = [];
