@@ -12,7 +12,7 @@
             ></app-map>
     </div>
 
-    <!-- TOP COLUMN -->
+    <!-- TOP PANEL -->
     <div class="top-panel" *ngIf="(game.author.id === userInteractor.getCurrentUser().id)">
         <div class="tools-start">
             <app-game-status-tools [status]="gameStatus" [mapName]="map?.name" (statusChange)="onStatusChange($event)"></app-game-status-tools>
@@ -20,7 +20,7 @@
         <div class="tools-end"></div>
     </div>
 
-    <!-- LEFT COLUMN -->
+    <!-- LEFT PANEL -->
     <app-sidebar-custom class="left-panel" [(open)]="openMapList" [sidebarType]="'left'" [top]="'54px'">
         <div header>MAPS</div>
         <div body>
@@ -54,8 +54,31 @@
     </app-sidebar-custom>
 
 
-    <!-- RIGHT COLUMN -->
-    <div class="right-panel">
+    <!-- RIGHT PANEL -->
+    <app-sidebar-custom class="right-panel" [(open)]="openAssetsList" [sidebarType]="'right'">
+        <div header>ASSETS</div>
+        <div toolsbar>
+            <div class="tools-top">
+                <div class="tools-top-row btn btn-white box-shadow">
+                    <div (click)="openAssetsList = !openAssetsList">
+                        ASSETS
+                    </div>
+                    <div>
+                        USER
+                    </div>
+                </div>
+            </div>
+            <div class="tools-middle"></div>
+            <div class="tools-bottom">
+                <app-map-zoom-tools
+                [(zoom)]="currentZoomOptions.value"
+                [maxZoom]="currentZoomOptions.max"
+                [minZoom]="currentZoomOptions.min"
+                ></app-map-zoom-tools>
+            </div>
+        </div>
+    </app-sidebar-custom>
+    <!-- <div class="right-panel">
         <app-properties-list-tools [(open)]="openPropertiesList"></app-properties-list-tools>
         <app-assets-list-tools [(open)]="openAssetsList"></app-assets-list-tools>
 
@@ -77,7 +100,7 @@
                 [minZoom]="currentZoomOptions.min"
                 ></app-map-zoom-tools>
         </div>
-    </div>
+    </div> -->
 
 
 

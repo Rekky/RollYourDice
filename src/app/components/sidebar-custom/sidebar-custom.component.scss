@@ -5,12 +5,20 @@
     &.open {
         left: 0;
     }
+
+    .tools-bar {
+        right: -8px
+    }
 }
 .sidebar-right {
-    right: -340px;
+    right: -350px;
     margin-left: 8px;
     &.open {
         right: 0;
+    }
+
+    .tools-bar {
+        left: -8px
     }
 }
 .sidebar {
@@ -44,6 +52,14 @@
     flex-direction: column;
 }
 
+.sidebar-footer{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+}
+
 .tools-bar {
     position: absolute;
     right: -8px;
@@ -54,13 +70,6 @@
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);
     justify-content: space-between;
-    align-items: center;
-}
-.sidebar-footer{
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
     align-items: center;
 }
 
