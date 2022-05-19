@@ -56,11 +56,11 @@
                 <upload-input (file)="imageChanged($event)"></upload-input>
             </div>
             <div class="form-checkbox-input">
+                <label class="text" [for]="'publish-game-' + newGame.id">Publish</label>
                 <div class="fake-input">
-                    <input type="checkbox" [id]="'publish-game-' + newGame.id"[formControlName]="'publish'"/>
+                    <input type="checkbox" [id]="'publish-game-' + newGame.id" [formControlName]="'publish'"/>
                     <label [for]="'publish-game-' + newGame.id"></label>
                 </div>
-                <label class="text" [for]="'publish-game-' + newGame.id">Publish</label>
             </div>
         </div>
         <div class="footer" *ngIf="loaded">
