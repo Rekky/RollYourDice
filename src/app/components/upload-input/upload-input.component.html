@@ -16,17 +16,17 @@
 <!--</div>-->
 
 <div class="upload-container">
-    <div class="preview-container">
-        <img *ngIf="previewUploadImage" [src]="previewUploadImage" alt="upload-image">
-    </div>
     <div class="file-input-container">
         <label>{{name}}</label>
         <div class="file-input">
-            <div class="file-input-pre-data">
-                <img src="assets/svg/upload.svg" alt="upload-svg" />
-                Upload File
-            </div>
-            <input type="file" (change)="coverImageChanged($event)" class="file-input-opacity">
+            <ng-container *ngIf="!previewUploadImage">
+                <div class="file-input-pre-data">
+                    <img src="assets/svg/upload.svg" alt="upload-svg" />
+                    Upload File
+                </div>
+                <input type="file" (change)="coverImageChanged($event)" class="file-input-opacity">
+            </ng-container>
+            <img *ngIf="previewUploadImage" [src]="previewUploadImage" alt="upload-image">
         </div>
     </div>
     <div *ngIf="uploadError" class="upload-error-container bg-danger">

@@ -24,10 +24,10 @@ export class MapEditComponent implements OnInit {
             name: new FormControl(this.data.map.name, Validators.required),
             nRows: new FormControl(this.data.map.nRows, Validators.required),
             nColumns: new FormControl(this.data.map.nColumns, Validators.required),
-            isFogOfWar: new FormControl(this.data.map.isFogOfWar, Validators.required),
-            nFogOfPercent: new FormControl(this.data.map.nFogOfWarPercent, Validators.required),
-            backgroundColor: new FormControl(this.data.map.backgroundColor, Validators.required),
-            backgroundImage: new FormControl(this.data.map.backgroundImage, Validators.required)
+            isFogOfWar: new FormControl(this.data.map.isFogOfWar),
+            nFogOfPercent: new FormControl(this.data.map.nFogOfWarPercent),
+            // backgroundColor: new FormControl(this.data.map.backgroundColor, Validators.required),
+            backgroundImage: new FormControl(this.data.map.backgroundImage)
         });
         setTimeout(() => {
             this.loaded = true;
@@ -40,6 +40,10 @@ export class MapEditComponent implements OnInit {
         this.data.map.nColumns = this.mapForm.get('nColumns').value;
 
         this.dialogRef.close({map: this.data.map});
+    }
+
+    imageChanged(file: File): void {
+        this.mapForm.patchValue({imageCoverSource: file});
     }
 
     closeDialog(): void {
