@@ -32,7 +32,7 @@
 .map-edit-card {
     position: relative;
     width: 600px;
-    height: 40vh;
+    height: 60vh;
     border-radius: 8px;
     background-color: $c-whitest;
     animation: expand-card 0.5s;
@@ -92,7 +92,7 @@
 
 
 .body {
-    height: calc(40vh - 200px);
+    height: calc(60vh - 200px);
     width: 100%;
     padding: 75px 75px 20px 75px;
     letter-spacing: 1px;
