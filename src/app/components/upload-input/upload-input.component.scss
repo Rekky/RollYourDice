@@ -1,5 +1,13 @@
 @import "src/styles.scss";
 
+label {
+    margin-bottom: 10px;
+    color: $c-black;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+
 .upload-container {
     display: flex;
     flex-direction: column;

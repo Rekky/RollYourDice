@@ -35,7 +35,7 @@
                 <label [for]="'nPlayers-game-' + newGame.id">Number of players</label>
                 <input type="number" [id]="'nPlayers-game-' + newGame.id" [formControlName]="'nPlayers'"/>
             </div>
-            <div *ngIf="newGame?.coverImage?.uri" class="form-file-input cover-image">
+<!--            <div *ngIf="newGame?.coverImage?.uri" class="form-file-input cover-image">-->
 <!--                <label [for]="'cover-image-game-' + newGame.id">Cover</label>-->
 <!--                <label class="fake-input" [for]="'cover-image-game-' + newGame.id">-->
 <!--                    <span>{{newGame.image.name ? newGame.image.name : 'Select an image'}}</span>-->
@@ -51,15 +51,17 @@
 <!--                <input type="file" [id]="'cover-image-game-' + newGame.id"-->
 <!--                       [name]="'cover-image-game-' + newGame.id" (change)="imageChanged($event.target.files[0])"-->
 <!--                       [accept]="'image/jpeg, image/png, image/webp, image/jpg'" [formControlName]="'imageCover'"/>-->
-            </div>
+<!--            </div>-->
             <div class="d-block">
                 <upload-input (file)="imageChanged($event)"></upload-input>
             </div>
-            <div class="form-checkbox-input">
-                <label class="text" [for]="'publish-game-' + newGame.id">Publish</label>
-                <div class="fake-input">
-                    <input type="checkbox" [id]="'publish-game-' + newGame.id" [formControlName]="'publish'"/>
-                    <label [for]="'publish-game-' + newGame.id"></label>
+            <div class="form-row">
+                <div class="form-checkbox-input">
+                    <label class="text" [for]="'publish-game-' + newGame.id">Publish</label>
+                    <div class="fake-input">
+                        <input type="checkbox" [id]="'publish-game-' + newGame.id" [formControlName]="'publish'"/>
+                        <label [for]="'publish-game-' + newGame.id"></label>
+                    </div>
                 </div>
             </div>
         </div>
