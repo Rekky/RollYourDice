@@ -30,7 +30,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     currentObjectSelected: any;
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
-    openMapList = true;
+    openMapList = false;
     openPropertiesList = false;
     openAssetsList = false;
 
