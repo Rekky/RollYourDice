@@ -1,7 +1,7 @@
 @import "src/styles.scss";
 .sidebar-left {
     left: -350px;
-    margin-right: 8px;
+    margin-right: 8px !important;
     &.open {
         left: 0;
     }
@@ -12,7 +12,9 @@
 }
 .sidebar-right {
     right: -350px;
-    margin-left: 8px;
+    margin: 0;
+    margin-left: 8px !important;
+
     &.open {
         right: 0;
     }
