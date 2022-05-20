@@ -1,7 +1,27 @@
-<app-sidebar-custom [open]="open" (openChange)="onOpenChange($event)" [sidebarType]="'right'">
-    <div header><h2 class="sidebar-title">ASSETS</h2></div>
-    <div body>
-        aseetssss
+<div>
+    <!-- upload images   -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Upload Images</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="upload-images">Upload Images</label>
+                                <input type="file" id="upload-images" name="upload-images" class="form-control" multiple>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div style="width: 50px;height: 50px">
+                <upload-input></upload-input>
+            </div>
+        </div>
     </div>
-    <div footer></div>
-</app-sidebar-custom>
+</div>

@@ -7,18 +7,15 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class AssetsListToolsComponent implements OnInit {
 
-    @Input() open = false;
-    @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() assets: any = [];
+    @Output() assetsChange: EventEmitter<any> = new EventEmitter();
+    @Input() selectedAssets: any = [];
+    @Output() selectedAssetsChange: EventEmitter<any> = new EventEmitter();
 
     constructor() {
     }
 
     ngOnInit(): void {
-    }
-
-    onOpenChange(ev: boolean): void {
-        this.open = ev;
-        this.openChange.emit(this.open);
     }
 
 }

@@ -57,6 +57,9 @@
     <!-- RIGHT PANEL -->
     <app-sidebar-custom class="right-panel" [(open)]="openAssetsList" [sidebarType]="'right'">
         <div header>ASSETS</div>
+        <div body>
+            <app-assets-list-tools></app-assets-list-tools>
+        </div>
         <div toolsbar>
             <div class="tools-top">
                 <div class="tools-top-row btn btn-white box-shadow">
