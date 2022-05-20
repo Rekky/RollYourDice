@@ -11,6 +11,7 @@ import {UserInteractor} from '../../interactors/UserInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
+import {withIdentifier} from 'codelyzer/util/astQuery';
 
 @Component({
     selector: 'app-game-editor',
@@ -31,8 +32,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
     openMapList = false;
-    openPropertiesList = false;
     openAssetsList = false;
+    leftSidebarTitle: string = '';
 
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
@@ -181,6 +182,16 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onScaleChange(zoom: number): void {
         this.currentZoomOptions.value = zoom;
+    }
+
+    onTabsChange(tab: number): void {
+        if (tab === 0) {
+            this.leftSidebarTitle = 'Maps';
+        } else if (tab === 1){
+            this.leftSidebarTitle = 'Objects';
+        } else if (tab === 2){
+            this.leftSidebarTitle = 'Scenes';
+        }
     }
 
 }

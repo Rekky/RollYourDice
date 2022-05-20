@@ -49,13 +49,13 @@
 
 <!-- FOOTER -->
 <div class="footer-tabs">
-    <div class="tab" [class.active]="tabs === 0" (click)="tabs = 0;sideBarTitle='MAPS'">
+    <div class="tab" [class.active]="tabs === 0" (click)="tabs = 0;tabsChange.emit(tabs)">
         <img height="25px" src="assets/icons/layout.png" alt="layout">
     </div>
-    <div class="tab" [class.active]="tabs === 1" (click)="tabs = 1;sideBarTitle='OBJECTS'">
+    <div class="tab" [class.active]="tabs === 1" (click)="tabs = 1;tabsChange.emit(tabs)">
         <img height="25px" src="assets/icons/object.png" alt="objects">
     </div>
-    <div class="tab" [class.active]="tabs === 2" (click)="tabs = 2;sideBarTitle='UNKNOW'">
+    <div class="tab" [class.active]="tabs === 2" (click)="tabs = 2;tabsChange.emit(tabs)">
         <img height="25px" src="assets/icons/mouse.png" alt="mouse">
     </div>
 </div>

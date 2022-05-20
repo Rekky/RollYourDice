@@ -19,13 +19,13 @@
 // ================= PANELS =================== //
 .top-panel {
     position: absolute;
-    top:0;
-    left:0;
-    right: 0;
+    top:8px;
+    left:8px;
+    right: 8px;
+    height: 1px;
     color: $c-indigo;
     z-index: 90;
     transition: 300ms;
-    margin: 8px;
 
     display: flex;
     flex-direction: row;
@@ -100,6 +100,7 @@
             justify-content: flex-end;
             align-items: center;
             gap: 10px;
+            height: 48px;
         }
     }
     .tools-middle{

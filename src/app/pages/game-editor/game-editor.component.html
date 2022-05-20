@@ -22,11 +22,9 @@
 
     <!-- LEFT PANEL -->
     <app-sidebar-custom class="left-panel" [(open)]="openMapList" [sidebarType]="'left'" [top]="'54px'">
-        <div header>MAPS</div>
+        <div header>{{leftSidebarTitle}}</div>
         <div body>
             <app-map-list-tools
-                [open]="true"
-                (openChange)="openMapList = $event"
                 [maps]="maps"
                 (mapsChange)="onMapsOrderChange($event)"
                 [currentMap]="maps[0]"
@@ -34,6 +32,8 @@
                 (selectedMapEvent)="onSelectedMap($event)"
                 (deleteMapEvent)="onDeleteMap($event)"
                 (updateMapEvent)="onUpdateMap($event)"
+                [tabs]="0"
+                (tabsChange)="onTabsChange($event)"
             ></app-map-list-tools>
         </div>
         <div toolsbar>
@@ -61,10 +61,7 @@
             <div class="tools-top">
                 <div class="tools-top-row btn btn-white box-shadow">
                     <div (click)="openAssetsList = !openAssetsList">
-                        ASSETS
-                    </div>
-                    <div>
-                        USER
+                        <img height="22px" src="assets/icons/menu.png" alt="menu">
                     </div>
                 </div>
             </div>

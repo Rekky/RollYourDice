@@ -30,11 +30,11 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     openObjectOption: number;
 
     getSelectedKonvaObjectSubscription: Subscription;
-    tabs: number = 0;
-    sideBarTitle: string = 'MAPS';
 
-    constructor(private mouseInteractor: MouseInteractor,
-                private dialog: MatDialog) { }
+    @Input() tabs: number = 0;
+    @Output() tabsChange: EventEmitter<number> = new EventEmitter<number>();
+
+    constructor(private mouseInteractor: MouseInteractor, private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva: any) => {
