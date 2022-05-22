@@ -1,27 +1,62 @@
 <div>
-    <!-- upload images   -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Upload Images</h4>
+    <div class="assets-grid">
+        <img class="asset" src="https://picsum.photos/200/300" alt="" *ngFor="let asset of assets">
+    </div>
+</div>
+
+<!-- ADD NEW -->
+<div class="add-control">
+    <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="openModal = true">
+</div>
+
+<div *ngIf="openModal">
+    <div class="modal-container" style="position: fixed;top:50%;left:50%">
+        <div class="modal-header">
+            <div class="modal-title">
+                <h3>Add new asset</h3>
+            </div>
+            <div class="modal-close">
+                <img class="cursor-pointer" width="20px" src="assets/svg/close.svg" alt="close" (click)="openModal = false">
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="modal-content">
+                <div class="modal-content-header">
+                    <div class="modal-content-header-title">
+                        <h4>Asset type</h4>
+                    </div>
+                    <div class="modal-content-header-select">
+                        <select>
+                            <option>Image</option>
+                            <option>Video</option>
+                            <option>Audio</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="upload-images">Upload Images</label>
-                                <input type="file" id="upload-images" name="upload-images" class="form-control" multiple>
-                            </div>
-                        </div>
+                <div class="modal-content-body">
+                    <div class="modal-content-body-title">
+                        <h4>Asset name</h4>
+                    </div>
+                    <div class="modal-content-body-input">
+                        <input type="text" placeholder="Enter asset name">
+                    </div>
+                </div>
+                <div class="modal-content-body">
+                    <div class="modal-content-body-title">
+                        <h4>Asset URL</h4>
+                    </div>
+                    <div class="modal-content-body-input">
+                        <input type="file">
+                    </div>
+                </div>
+                <div class="modal-content-body">
+                    <div class="modal-content-body-title">
+                        <h4>Asset description</h4>
+                    </div>
+                    <div class="modal-content-body-input">
+                        <textarea placeholder="Enter asset description"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div style="width: 50px;height: 50px">
-                <upload-input></upload-input>
-            </div>
-        </div>
-    </div>
 </div>
