@@ -1,33 +1,26 @@
 
 import { ulid } from 'ulid';
+import {Player} from './User';
 
 export class Asset {
     id: string;
     name: string;
     extension: string;
     uri: string;
+    type: AssetType;
     createdAt: Date;
     updatedAt: Date;
-    type: AssetType;
-    authorId: string;
-    currentUserId: string;
+    author: Player;
 
-    constructor(id?: string, name?: string, extension?: string, createdAt?: Date, updatedAt?: Date) {
+    constructor(id?: string, name?: string, extension?: string, uri?: string, type?: AssetType, createdAt?: Date, updatedAt?: Date) {
         this.id = ulid();
         this.name = name ? name : null;
+        this.uri = uri ? uri : null;
+        this.type = type ? type : AssetType.Image;
         this.extension = extension ? extension : null;
         this.createdAt = createdAt ? createdAt : new Date();
         this.updatedAt = updatedAt ? updatedAt : new Date();
-        this.authorId = null;
-        this.currentUserId = null;
-    }
-
-    static fromJSON(json: any): Asset {
-        const asset = new Asset();
-        Object.keys(asset).forEach((key) => {
-            asset[key] = json[key] ? json[key] : asset[key];
-        });
-        return asset;
+        this.author = null;
     }
 }
 

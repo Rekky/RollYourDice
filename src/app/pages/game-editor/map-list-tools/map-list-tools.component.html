@@ -8,7 +8,7 @@
              (click)="onSelectMap(map, $event)">
 
             <div class="map">
-                <app-mini-map [map]="map"></app-mini-map>
+                <app-mini-map *ngIf="map" [map]="map"></app-mini-map>
                 <div class="map-name">
                     <div class="tag">{{map?.name}}</div>
                 </div>
