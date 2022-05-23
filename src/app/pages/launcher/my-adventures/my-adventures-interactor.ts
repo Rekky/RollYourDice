@@ -3,10 +3,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Game, GameStatus} from '../../../classes/Game';
 import {Player} from '../../../classes/User';
 import {GameService} from '../../../services/game.service';
-import {ImageService} from '../../../services/image.service';
 import {GameInteractor} from '../../../interactors/GameInteractor';
 import {UserInteractor} from '../../../interactors/UserInteractor';
-import {SocketService} from '../../../services/socket.service';
 
 @Injectable({
     providedIn: 'root'
@@ -73,7 +71,7 @@ export class MyAdventuresInteractor {
 
     kickGamePlayers(data: {gameId: string, player: Player}): void {
         const adventures = this.myAdventures.getValue();
-        const advIndex = adventures.findIndex(adv => adv.id === data.gameId);        
+        const advIndex = adventures.findIndex(adv => adv.id === data.gameId);
         adventures.splice(advIndex, 1);
         this.myAdventures.next(adventures);
     }

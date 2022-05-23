@@ -8,7 +8,7 @@ import {Asset} from '../classes/Asset';
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService {
+export class AssetService {
 
     constructor(private httpService: HttpService) {}
 

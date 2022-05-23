@@ -9,7 +9,7 @@ import {OurKonvaEraser} from '../../../classes/ourKonva/OurKonvaEraser';
 import {OurKonvaRect} from '../../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
-import {ImageService} from '../../../services/image.service';
+import {AssetService} from '../../../services/asset.service';
 import {Asset} from '../../../classes/Asset';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import { Player } from 'src/app/classes/User';
@@ -50,7 +50,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
 
     constructor(private mouseService: MouseService,
                 private mouseInteractor: MouseInteractor,
-                private imageService: ImageService,
+                private imageService: AssetService,
                 private userInteractor: UserInteractor,
                 private cdr: ChangeDetectorRef) { }
 

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Asset } from 'src/app/classes/Asset';
-import { ImageService } from 'src/app/services/image.service';
+import {AssetService} from 'src/app/services/asset.service';
 
 @Component({
     selector: 'upload-input',
@@ -14,7 +14,7 @@ export class UploadInputComponent implements OnInit {
     @Output() file: EventEmitter<any> = new EventEmitter<any>();
     uploadError: boolean = false;
 
-    constructor(private imageService: ImageService) { }
+    constructor(private imageService: AssetService) { }
 
     ngOnInit(): void {
     }

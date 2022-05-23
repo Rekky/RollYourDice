@@ -5,7 +5,7 @@ import {UserInteractor} from './UserInteractor';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
-import {ImageService} from '../services/image.service';
+import {AssetService} from '../services/asset.service';
 import {Player} from '../classes/User';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class GameInteractor {
     public kickedGameId: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
     constructor(private gameService: GameService,
-                private imageService: ImageService) {
+                private imageService: AssetService) {
     }
 
     setCurrentGame(game: Game): void {
