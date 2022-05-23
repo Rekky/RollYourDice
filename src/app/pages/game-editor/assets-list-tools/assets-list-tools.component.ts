@@ -25,14 +25,10 @@ export class AssetsListToolsComponent {
             name: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
             file: new FormControl(null, [Validators.required])
         });
-
-        this.formAsset.valueChanges.subscribe(data => {
-            console.log(this.toFormData(data));
-        });
     }
 
     uploadAsset(): void {
-        console.log('uploadAsset');
+        console.log('uploadAsset', this.toFormData(this.formAsset.value));
     }
 
     toFormData<T>( formValue: T ): FormData {
@@ -52,10 +48,16 @@ export class AssetsListToolsComponent {
             const [file] = ev.target.files;
             reader.readAsDataURL(file);
             reader.onload = () => {
-                console.log('onLoad', file);
                 this.previewUploadFile = reader.result as string;
+
+                // set fileName and type
+                this.formAsset.get('name').patchValue(file.name);
+                this.formAsset.get('type').patchValue(this.getFileType(file));
             };
         }
     }
 
+    getFileType(file: any): any {
+        return file.type.split('/')[0];
+    }
 }

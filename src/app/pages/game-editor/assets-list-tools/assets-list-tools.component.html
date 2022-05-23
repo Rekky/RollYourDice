@@ -9,8 +9,9 @@
     <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="openModal = true">
 </div>
 
+<!-- NEW ASSET MODAL -->
 <div *ngIf="openModal">
-    <div class="modal-container" style="position: fixed;top:50%;left:50%;background: #fff;">
+    <div class="modal-container" style="position: fixed;top:40%;left:40%;background: #fff;">
         <div class="modal-header">
             <div class="modal-title">
                 <h3>Add new asset</h3>
@@ -27,7 +28,8 @@
                     </div>
                     <div class="modal-content-header-select">
                         <select [formControlName]="'type'">
-                            <option *ngFor="let type of AssetType | keyvalue">{{type.key}}</option>
+                            <option [value]="null" [disabled]="true">[None]</option>
+                            <option *ngFor="let type of AssetType | keyvalue" [value]="type.value">{{type.key}}</option>
                         </select>
                     </div>
                 </div>
@@ -53,9 +55,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-content-body">
+                <div class="modal-content-body" style="display: flex;justify-content: center;align-content: center;margin-top: 20px;">
                     <button type="submit" class="btn btn-primary" [disabled]="formAsset.invalid">UPLOAD</button>
                 </div>
             </form>
         </div>
+    </div>
 </div>
