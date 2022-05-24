@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
 import {HttpService} from './http.service';
 import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {UserInteractor} from '../interactors/UserInteractor';
 import {Asset} from '../classes/Asset';
 
 @Injectable({
@@ -13,9 +11,9 @@ export class AssetService {
     constructor(private httpService: HttpService) {}
 
 
-    async uploadFile(data: any): Promise<Asset> {
+    async uploadFile(formData: FormData): Promise<Asset> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/assets/upload`, data).subscribe(
+            this.httpService.post(`/assets/upload`, formData).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
