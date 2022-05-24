@@ -27,6 +27,16 @@ export class AssetsListToolsComponent {
             file: new FormControl(null, [Validators.required]),
             fileSource: new FormControl(null, [Validators.required])
         });
+
+        this.getAllAssets();
+    }
+
+    async getAllAssets(): Promise<void> {
+        try {
+            this.assets = await this.assetService.getAllAssets();
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async uploadAsset(): Promise<void> {
@@ -34,6 +44,7 @@ export class AssetsListToolsComponent {
         try {
             await this.assetService.uploadFile(formData);
             this.openModal = false;
+            this.getAllAssets();
         } catch (e) {
             console.log('error', e);
         }

@@ -22,5 +22,17 @@ export class AssetService {
             );
         });
     }
+
+    async getAllAssets(): Promise<Asset[]> {
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/assets/getAll`, {}).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
 }
 

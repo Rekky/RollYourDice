@@ -1,6 +1,6 @@
 <div>
     <div class="assets-grid">
-        <img class="asset" src="https://picsum.photos/200/300" alt="" *ngFor="let asset of assets">
+        <img class="asset" [src]="asset.uri" alt="" *ngFor="let asset of assets">
     </div>
 </div>
 
