@@ -27,5 +27,6 @@ export class Asset {
 export enum AssetType {
     Image = 'image',
     Video = 'video',
-    Audio = 'audio'
+    Audio = 'audio',
+    Unknown = 'unknown'
 }
