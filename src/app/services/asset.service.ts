@@ -25,7 +25,7 @@ export class AssetService {
 
     async getAllAssets(): Promise<Asset[]> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/assets/getAll`, {}).subscribe(
+            this.httpService.post(`/assets/my-assets`, {}).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {

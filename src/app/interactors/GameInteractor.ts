@@ -41,7 +41,7 @@ export class GameInteractor {
 
     async createGame(game: Game, asset: any): Promise<Game> {
         try {
-            game.coverImage = await this.imageService.uploadFile(asset);
+            // game.coverImage = await this.imageService.uploadFile(asset);
             return await this.gameService.createGame(game);
         }
         catch (e) {
