@@ -103,10 +103,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                     this.cdr.detectChanges();
                 }
             });
-            this.myAdventureInteractor.getMyAdventures().subscribe((adventures) => {
-                const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
-                if (currentGame) {
-                    this.gameStatus = currentGame.status;
+            this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
+                if (adventures) {
+                    const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
+                    if (currentGame) {
+                        this.gameStatus = currentGame.status;
+                    }
                 }
             });
 
