@@ -34,5 +34,17 @@ export class AssetService {
             );
         });
     }
+
+    async removeAsset(asset: Asset): Promise<Asset[]> {
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.delete(`/assets/${asset.id}`).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
 }
 

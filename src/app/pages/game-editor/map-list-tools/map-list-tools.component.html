@@ -1,29 +1,38 @@
 <!--TABS 0-->
 <div class="content-container">
-    <div class="maps-container" *ngIf="tabs === 0" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
-        <div class="map-box"
-             (mouseleave)="openMapOption = null"
-             *ngFor="let map of maps; let i = index;"
-             [ngClass]="{'selected-map-box' : currentMap === map}"
-             (click)="onSelectMap(map, $event)">
 
-            <div class="map">
-                <app-mini-map *ngIf="map" [map]="map"></app-mini-map>
-                <div class="map-name">
-                    <div class="tag">{{map?.name}}</div>
-                </div>
-                <div class="map-options">
-                    <div class="option-icon">
-                        <img style="filter:invert(100%)" height="20px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
+    <!--  TABS 0  -->
+    <div *ngIf="tabs === 0" style="position:relative;">
+        <div class="maps-container" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
+            <div class="map-box"
+                 (mouseleave)="openMapOption = null"
+                 *ngFor="let map of maps; let i = index;"
+                 [ngClass]="{'selected-map-box' : currentMap === map}"
+                 (click)="onSelectMap(map, $event)">
+
+                <div class="map">
+                    <app-mini-map *ngIf="map" [map]="map"></app-mini-map>
+                    <div class="map-name">
+                        <div class="tag">{{map?.name}}</div>
                     </div>
-                    <div class="item-options box-shadow" *ngIf="openMapOption === i">
-                        <div class="item" (click)="editMap(map, $event)">Edit</div>
-                        <div class="item" (click)="deleteMap(map, $event)">Delete</div>
+                    <div class="map-options">
+                        <div class="option-icon">
+                            <img style="filter:invert(100%)" height="20px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
+                        </div>
+                        <div class="item-options box-shadow" *ngIf="openMapOption === i">
+                            <div class="item" (click)="editMap(map, $event)">Edit</div>
+                            <div class="item" (click)="deleteMap(map, $event)">Delete</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- ADD NEW -->
+        <div class="add-control">
+            <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="editMap()">
+        </div>
     </div>
+
 
     <!--   TABS 1   -->
     <div *ngIf="tabs === 1">
@@ -40,11 +49,11 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- ADD NEW -->
-<div class="add-control">
-    <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="editMap()">
+    <!--   TABS 2   -->
+    <div *ngIf="tabs === 2">
+        <app-assets-list-tools></app-assets-list-tools>
+    </div>
 </div>
 
 <!-- FOOTER -->
@@ -56,6 +65,9 @@
         <img height="25px" src="assets/icons/object.png" alt="objects">
     </div>
     <div class="tab" [class.active]="tabs === 2" (click)="tabs = 2;tabsChange.emit(tabs)">
+        <img height="25px" src="assets/icons/gallery.png" alt="assets">
+    </div>
+    <div class="tab" [class.active]="tabs === 3" (click)="tabs = 3;tabsChange.emit(tabs)">
         <img height="25px" src="assets/icons/mouse.png" alt="mouse">
     </div>
 </div>

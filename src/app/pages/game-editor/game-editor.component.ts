@@ -32,7 +32,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
     openMapList = false;
-    openAssetsList = false;
     leftSidebarTitle: string = 'MAPS';
 
     getMouseObservableSubscription: Subscription;
@@ -190,9 +189,11 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         if (tab === 0) {
             this.leftSidebarTitle = 'MAPS';
         } else if (tab === 1){
-            this.leftSidebarTitle = 'OBJECTS';
+            this.leftSidebarTitle = 'MAP OBJECTS';
         } else if (tab === 2){
-            this.leftSidebarTitle = 'SCENES';
+            this.leftSidebarTitle = 'ASSETS';
+        } else {
+            this.leftSidebarTitle = 'UNKNOWN';
         }
     }
 

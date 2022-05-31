@@ -1,13 +1,22 @@
-<div>
+<div style="position: relative">
     <div class="assets-grid">
-        <img class="asset" [src]="asset.uri" alt="" *ngFor="let asset of assets">
+        <div *ngFor="let asset of assets;let i = index;">
+            <img class="asset" [src]="asset.uri" alt="asset">
+            <div>{{asset.name}}</div>
+            <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleItemOption(asset, i)">
+            <div class="item-options box-shadow" *ngIf="openItemOption === i">
+                <div class="item" (click)="removeItem(asset, $event)">Delete</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD NEW -->
+    <div class="add-control">
+        <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="openModal = true">
     </div>
 </div>
 
-<!-- ADD NEW -->
-<div class="add-control">
-    <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="openModal = true">
-</div>
+
 
 <!-- NEW ASSET MODAL -->
 <div *ngIf="openModal">

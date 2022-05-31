@@ -55,15 +55,15 @@
 
 
     <!-- RIGHT PANEL -->
-    <app-sidebar-custom class="right-panel" [(open)]="openAssetsList" [sidebarType]="'right'">
+    <app-sidebar-custom class="right-panel" [sidebarType]="'right'">
         <div header>ASSETS</div>
         <div body>
-            <app-assets-list-tools></app-assets-list-tools>
+
         </div>
         <div toolsbar>
             <div class="tools-top">
                 <div class="tools-top-row btn btn-white box-shadow">
-                    <div (click)="openAssetsList = !openAssetsList">
+                    <div>
                         <img height="22px" src="assets/icons/menu.png" alt="menu">
                     </div>
                 </div>

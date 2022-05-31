@@ -16,6 +16,7 @@ export class AssetsListToolsComponent {
     @Output() selectedAssetsChange: EventEmitter<any> = new EventEmitter();
 
     openModal: boolean = false;
+    openItemOption: number | null = null;
     formAsset: FormGroup;
     AssetType = AssetType;
     previewUploadFile: any;
@@ -43,11 +44,28 @@ export class AssetsListToolsComponent {
         const formData = this.toFormData(this.formAsset.value);
         try {
             await this.assetService.uploadFile(formData);
+            await this.getAllAssets();
             this.openModal = false;
-            this.getAllAssets();
         } catch (e) {
             console.log('error', e);
         }
+    }
+
+    toggleItemOption(object: any, option: number, e?): void {
+        e?.stopPropagation();
+        if (this.openItemOption === option) {
+            this.openItemOption = null;
+        }
+        else {
+            this.openItemOption = option;
+        }
+    }
+
+    async removeItem(obj?: any, e?): Promise<void> {
+        e.stopPropagation();
+        this.assetService.removeAsset(obj).then(() => {
+            this.getAllAssets();
+        });
     }
 
     toFormData<T>( formValue: T ): any {
