@@ -1,71 +1,71 @@
 @import "src/styles.scss";
 
-label {
-    margin-bottom: 10px;
-    color: $c-black;
-    font-weight: 400;
-    letter-spacing: 1px;
-    font-size: 18px;
-}
-
-.upload-container {
-    display: flex;
-    flex-direction: column;
-
+.upload-input-container {
+    position: relative;
     width: 100%;
-    height: auto;
+    height: 100%;
+    padding: 4px;
 }
 
-.file-input-container {
-    color: $c-black;
-    cursor: pointer;
+.files-list{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
 
-    .file-input {
-        position: relative;
-        display: flex;
-        justify-content: center;
+    .item {
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 50px;
+        gap: 10px;
         align-items: center;
+        border: 2px solid #d5d5d5;
+        border-radius: 4px;
+        padding: 0 10px;
+    }
+    .item-info {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        width: 150px;
+
+        .item-info-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 150px;
+        }
+        .item-info-size {
+            font-size: 10px;
+            color: #d5d5d5;
+        }
+    }
+    .item-options {
+        color: #d5d5d5;
+        padding: 2px;
         cursor: pointer;
-
-        width: 100%;
-        border: 2px dashed $c-black;
-        background: $c-whitest;
-
-        &:hover {
-            background: $c-whitest;
-        }
-
-        & > img {
-            max-width: 100%;
-        }
-
-        .file-input-pre-data {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: center;
-            align-items: center;
-
-            height: 75px;
-
-            img {
-                width: 20px;
-                height: 20px;
-                padding-right: 7px;
-            }
-        }
-
-        .file-input-opacity {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
     }
 }
 
+.files-input {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: 2px dashed $c-black-grey;
 
-.upload-error-container {
-    color: $c-black;
-    padding: .2rem .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    input[type=file] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
 }

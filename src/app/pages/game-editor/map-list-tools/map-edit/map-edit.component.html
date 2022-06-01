@@ -51,7 +51,9 @@
 <!--                </div>-->
 <!--            </div>-->
             <div class="form-row">
-                <upload-input (file)="imageChanged($event)"></upload-input>
+                <div style="width: 150px;height: 60px;">
+                    <upload-input (files)="filesChanged($event)"></upload-input>
+                </div>
 <!--                <div class="form-short-number-input">-->
 <!--                    <label for="backgroundImage">Background Image</label>-->
 <!--                    <input type="text" id="backgroundImage" [formControlName]="'backgroundImage'" placeholder="backgroundImage">-->

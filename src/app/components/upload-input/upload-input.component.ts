@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { Asset } from 'src/app/classes/Asset';
+import {Asset, AssetType} from 'src/app/classes/Asset';
 import {AssetService} from 'src/app/services/asset.service';
 
 @Component({
@@ -9,9 +9,11 @@ import {AssetService} from 'src/app/services/asset.service';
 })
 export class UploadInputComponent implements OnInit {
 
-    @Input() name: string = 'Upload Image (3MB max)';
-    @Input() previewUploadImage: any = null;
-    @Output() file: EventEmitter<any> = new EventEmitter<any>();
+    @Input() maxFileSize: string = '3MB';
+    @Output() files: EventEmitter<any> = new EventEmitter<any>();
+
+    previewFiles: {file: File, reader: string}[] = [];
+    AssetType = AssetType;
     uploadError: boolean = false;
 
     constructor(private imageService: AssetService) { }
@@ -19,37 +21,48 @@ export class UploadInputComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    async coverImageChanged(ev: any): Promise<void> {
-        const reader = new FileReader();
-        if (ev.target.files && ev.target.files.length) {
-            const [file] = ev.target.files;
-            reader.readAsDataURL(file);
+    toFormData<T>(): any {
+        const formData = new FormData();
+        this.previewFiles.forEach(file => {
+            formData.append('file', file.file);
+        });
+        return formData;
+    }
 
-            reader.onload = () => {
-                this.previewUploadImage = reader.result as string;
-            };
-        }
-
-        try {
-            this.uploadError = false;
-            const file = ev.target.files[0];
-            this.file.emit(file);
-            // const response: any = await this.uploadFile(file);
-            // console.log('coverImageChanged', response);
-            // this.post.coverImage = response.image;
-            // this.formPost.get('coverImage').setValue(response.image);
-        } catch (e) {
-            if (e.status === 500) {
-                this.uploadError = true;
-            }
+    onFilesChange(ev: any): void {
+        if (ev.target.files && ev.target.files.length > 0) {
+            const files = ev.target.files;
+            Array.from(files).forEach((file: any) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    this.previewFiles.push({file: file, reader: reader.result as string});
+                };
+            });
+            const filesToEmit = this.toFormData();
+            this.files.emit(filesToEmit);
         }
     }
 
-    async uploadFile(file: any): Promise<Asset> {
-        // build formData and send to api
-        const formData = new FormData();
-        formData.append('asset', file);
-        return await this.imageService.uploadFile(formData);
+    removeFile(file: {file: File, reader: string}): void {
+        this.previewFiles = this.previewFiles.filter(f => f.file !== file.file);
+    }
+
+    getFileType(file: any): any {
+        return file.type.split('/')[0];
+    }
+
+    formatBytes(bytes, decimals = 2): string {
+        if (bytes === 0) {
+            return '0 Bytes';
+        }
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
 
 }

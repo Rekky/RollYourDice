@@ -42,8 +42,9 @@ export class MapEditComponent implements OnInit {
         this.dialogRef.close({map: this.data.map});
     }
 
-    imageChanged(file: File): void {
-        this.mapForm.patchValue({imageCoverSource: file});
+    filesChanged(files: File[]): void {
+        console.log('filesChanged', files);
+        // this.mapForm.patchValue({imageCoverSource: file});
     }
 
     closeDialog(): void {

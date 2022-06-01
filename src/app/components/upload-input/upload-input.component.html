@@ -1,35 +1,21 @@
-<!--<div class="col-12 text-white">-->
-<!--    <label class="form-label">Image cover (url) 2MB</label>-->
-<!--    <div class="preview" *ngIf="previewUploadImage">-->
-<!--        <img [src]="previewUploadImage" alt="upload-image">-->
-<!--    </div>-->
-<!--    <div class="input-group">-->
-<!--        <input type="text" class="form-control" placeholder="Image path" [formControlName]="'coverImage'">-->
-<!--        <button class="btn btn-outline-secondary">-->
-<!--            <i class="far fa-folder-open"></i>-->
-<!--            <input type="file" (change)="coverImageChanged($event)" class="file-input-opacity">-->
-<!--        </button>-->
-<!--    </div>-->
-<!--    <div *ngIf="uploadError" class="text-white bg-danger px-2">-->
-<!--        <i class="fas fa-exclamation-circle"></i> Image upload Error, max size 2Mb-->
-<!--    </div>-->
-<!--</div>-->
-
-<div class="upload-container">
-    <div class="file-input-container">
-        <label>{{name}}</label>
-        <div class="file-input">
-            <ng-container *ngIf="!previewUploadImage">
-                <div class="file-input-pre-data">
-                    <img src="assets/svg/upload.svg" alt="upload-svg" />
-                    Upload File
-                </div>
-                <input type="file" (change)="coverImageChanged($event)" class="file-input-opacity">
-            </ng-container>
-            <img *ngIf="previewUploadImage" [src]="previewUploadImage" alt="upload-image">
+<div class="upload-input-container">
+    <div class="files-list">
+        <div class="item" *ngFor="let file of previewFiles">
+            <img style="width: 60px;" [src]="file.reader" *ngIf="getFileType(file.file) === AssetType.Image">
+            <img style="width: 60px;" src="assets/icons/sound.png" *ngIf="getFileType(file.file) === AssetType.Audio">
+            <img style="width: 60px;" src="assets/icons/film.png" *ngIf="getFileType(file.file) === AssetType.Video">
+            <span class="item-info">
+                <span class="item-info-name">{{file.file.name}}</span>
+                <span class="item-info-size">{{formatBytes(file.file.size)}}</span>
+            </span>
+            <div class="item-options" (click)="removeFile(file)">x</div>
         </div>
     </div>
-    <div *ngIf="uploadError" class="upload-error-container bg-danger">
-        <i class="fas fa-exclamation-circle"></i> Image upload Error
+    <div class="files-input">
+        <div style="text-align: center">
+            <img width="20" src="assets/svg/upload.svg" alt="upload-svg"/>
+            <span style="margin-left: 8px;">Upload</span>
+        </div>
+        <input type="file" [multiple]="true" (change)="onFilesChange($event)">
     </div>
 </div>
