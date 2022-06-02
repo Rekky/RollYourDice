@@ -11,17 +11,18 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
+    margin-top: 10px;
 
     .item {
-        margin-bottom: 10px;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 70px 1fr 30px;
         grid-template-rows: 50px;
         gap: 10px;
         align-items: center;
         border: 2px solid #d5d5d5;
         border-radius: 4px;
         padding: 0 10px;
+        margin-bottom: 10px;
     }
     .item-info {
         display: flex;
@@ -44,6 +45,13 @@
         color: #d5d5d5;
         padding: 2px;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        font-size: 20px;
+
+        &:hover {
+            color: darken(#d5d5d5, 30%);
+        }
     }
 }
 
