@@ -11,8 +11,26 @@
     height: calc(100vh - 180px);
     padding-bottom: 50px;
 
-    .asset {
-        height: 100px;width: 100px;object-fit: cover;
+    .item {
+        display: flex;
+        flex-direction: column;
+    }
+    .item-img {
+        height: 80px;
+        width: 100%;
+    }
+    .item-name {
+        height: 20px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background: rgb(158 158 158 / 10%);
+    }
+    .asset-img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
     }
 }
 
