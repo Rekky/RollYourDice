@@ -37,7 +37,9 @@ export class MapEditComponent implements OnInit {
     }
 
     submitMapForm(): void {
-        this.uploadFiles();
+        if (this.assetFormData?.getAll('file')?.length > 0) {
+            this.uploadFiles();
+        }
         this.data.map.name = this.mapForm.get('name').value;
         this.data.map.nRows = this.mapForm.get('nRows').value;
         this.data.map.nColumns = this.mapForm.get('nColumns').value;
