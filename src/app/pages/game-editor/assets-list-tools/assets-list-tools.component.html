@@ -1,12 +1,14 @@
 <div style="position: relative">
     <div class="assets-grid">
-        <div *ngFor="let asset of assets;let i = index;">
-            <img class="asset" [src]="asset.uri" alt="asset">
-            <div>{{asset.name}}</div>
-            <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleItemOption(asset, i)">
-            <div class="item-options box-shadow" *ngIf="openItemOption === i">
-                <div class="item" (click)="removeItem(asset, $event)">Delete</div>
+        <div class="item" *ngFor="let asset of assets;let i = index;">
+            <div class="item-img">
+                <img class="asset-img" [src]="asset.uri" alt="asset">
             </div>
+            <div class="item-name">{{asset.name}}</div>
+<!--            <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleItemOption(asset, i)">-->
+<!--            <div class="item-options box-shadow" *ngIf="openItemOption === i">-->
+<!--                <div class="item" (click)="removeItem(asset, $event)">Delete</div>-->
+<!--            </div>-->
         </div>
     </div>
 

@@ -49,7 +49,7 @@ export class MapEditComponent implements OnInit {
     }
 
     filesChanged(formData: FormData): void {
-        console.log('filesChanged', formData);
+        console.log('filesChanged', formData.getAll('file'));
         // formData.append('mapId', this.data.map.id.toString());
         this.assetFormData = formData;
     }
