@@ -12,7 +12,7 @@ import {OurKonvaBrush} from '../../classes/ourKonva/OurKonvaBrush';
     templateUrl: './mini-map.component.html',
     styleUrls: ['./mini-map.component.scss']
 })
-export class MiniMapComponent implements OnInit, AfterViewInit {
+export class MiniMapComponent implements AfterViewInit {
 
     @ViewChild('mapEl') mapEl: ElementRef;
     @Input() map: OurKonvaMap;
@@ -29,19 +29,14 @@ export class MiniMapComponent implements OnInit, AfterViewInit {
         }, 100);
     }
 
-    ngOnInit(): void {
-
-    }
-
     initializeMap(): void {
         const stage = new Konva.Stage({
             container: 'mini-map-' + this.map?.id,
             width: 290,
             height: 170,
             draggable: false,
-            scale: {x: 0.15, y: 0.15}
+            scale: {x: 1, y: 1}
         });
-        stage.container().style.backgroundColor = '#f2f2f2';
         this.drawGrid();
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
@@ -51,36 +46,58 @@ export class MiniMapComponent implements OnInit, AfterViewInit {
         this.gridStage = stage;
     }
 
-    drawGrid(): void {
-        for (let i = 0; i <= this.map.nColumns; i++) {
-            this.layers.grid.add(new Konva.Line({
-                points: [
-                    Math.round(i * this.map.grid.cellSize) + 0.5,
-                    0,
-                    Math.round(i * this.map.grid.cellSize) + 0.5,
-                    this.map.nRows * this.map.grid.cellSize
-                ],
-                stroke: '#e6e6e6',
-                strokeWidth: 1,
-            }));
-        }
+    async drawGrid(): Promise<void> {
+        const gridGroup = new Konva.Group({
+            id: 'gridGroup',
+        });
 
-        this.layers.grid.add(new Konva.Line({
-            points: [0, 0, 10, 10]
+        gridGroup.add(new Konva.Rect({
+            x: 0,
+            y: 0,
+            draggable: false,
+            width: 290,
+            height: 170,
+            id: 'grid-background',
+            name: 'grid-background',
+            fill: this.map.backgroundColor,
         }));
-        for (let j = 0; j <= this.map.nRows; j++) {
-            this.layers.grid.add(new Konva.Line({
-                points: [
-                    0,
-                    Math.round(j * this.map.grid.cellSize),
-                    this.map.nColumns * this.map.grid.cellSize,
-                    Math.round(j * this.map.grid.cellSize)
-                ],
-                stroke: '#e6e6e6',
-                strokeWidth: 1,
-            }));
+
+        try {
+            if (this.map.backgroundImage) {
+                await this.drawGridBackgroundImage(gridGroup);
+            }
+
+            this.layers.grid.add(gridGroup);
+            this.layers?.grid?.cache();
         }
-        this.layers?.grid?.cache();
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    drawGridBackgroundImage(gridGroup: Konva.Group): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const image = new Image();
+            image.src = this.map.backgroundImage.uri;
+            image.onload = () => {
+                gridGroup.add(new Konva.Rect({
+                    x: 0,
+                    y: 0,
+                    draggable: false,
+                    width: 290,
+                    height: 170,
+                    id: this.map.backgroundImage.id,
+                    name: this.map.backgroundImage.name,
+                    fillPatternImage: image,
+                    fillPatternOffset: { x: 0, y: 0 },
+                    fillPatternRepeat: 'no-repeat',
+                    fillPatternScaleX: 290 / (this.map.nColumns * this.map.grid.cellSize),
+                    fillPatternScaleY: 170 / (this.map.nRows * this.map.grid.cellSize),
+                }));
+                resolve();
+            };
+
+        });
     }
 
     paintObjectsOnMap(objects: any, layers: OurKonvaLayers): void {
