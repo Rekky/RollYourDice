@@ -10,7 +10,7 @@ import {OurKonvaRect} from '../../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import {AssetService} from '../../../services/asset.service';
-import {Asset} from '../../../classes/Asset';
+import {AssetModel} from '../../../classes/AssetModel';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import { Player } from 'src/app/classes/User';
 
@@ -106,8 +106,8 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
     async updateImage(file: File): Promise<void> {
         const formData = new FormData();
         formData.append('asset', file);
-        const newAsset: Asset = await this.imageService.uploadFile(formData);
-        this.mouseService.setMouse(new OurKonvaImage(this.author, newAsset.uri));
+        const newAsset: AssetModel[] = await this.imageService.uploadFile(formData);
+        this.mouseService.setMouse(new OurKonvaImage(this.author, newAsset[0].uri));
 
     }
 

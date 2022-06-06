@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Asset, AssetType} from '../../../classes/Asset';
+import {AssetModel, AssetType} from '../../../classes/AssetModel';
 import {AssetService} from '../../../services/asset.service';
 
 @Component({
@@ -10,9 +10,9 @@ import {AssetService} from '../../../services/asset.service';
 })
 export class AssetsListToolsComponent {
 
-    @Input() assets: Asset[] = [];
+    @Input() assets: AssetModel[] = [];
     @Output() assetsChange: EventEmitter<any> = new EventEmitter();
-    @Input() selectedAssets: Asset[] = [];
+    @Input() selectedAssets: AssetModel[] = [];
     @Output() selectedAssetsChange: EventEmitter<any> = new EventEmitter();
 
     openModal: boolean = false;

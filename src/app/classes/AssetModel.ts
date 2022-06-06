@@ -2,7 +2,7 @@
 import { ulid } from 'ulid';
 import {Player} from './User';
 
-export class Asset {
+export class AssetModel {
     id: string;
     name: string;
     extension: string;

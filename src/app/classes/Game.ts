@@ -1,4 +1,4 @@
-import {Asset} from './Asset';
+import {AssetModel} from './AssetModel';
 import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 import { ulid } from 'ulid';
 import {Player} from './User';
@@ -11,7 +11,7 @@ export class Game {
     updatedAt: Date;
     description: string;
     gameType: GameTypes;
-    coverImage: Asset;
+    coverImage: AssetModel;
     name: string;
     maxNPlayers: number;
     players: Player[];
@@ -30,7 +30,7 @@ export class Game {
         this.createAt = new Date();
         this.updatedAt = new Date();
         this.maxNPlayers = 6;
-        this.coverImage = new Asset();
+        this.coverImage = new AssetModel();
         this.description = '';
         this.status = GameStatus.Stopped;
     }

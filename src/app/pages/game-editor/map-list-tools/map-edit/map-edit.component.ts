@@ -4,6 +4,7 @@ import {OurKonvaMap} from '../../../../classes/ourKonva/OurKonvaMap';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Game} from '../../../../classes/Game';
 import {AssetService} from '../../../../services/asset.service';
+import {AssetModel} from '../../../../classes/AssetModel';
 
 @Component({
     selector: 'app-map-edit',
@@ -36,26 +37,31 @@ export class MapEditComponent implements OnInit {
         }, 500);
     }
 
-    submitMapForm(): void {
-        if (this.assetFormData?.getAll('file')?.length > 0) {
-            this.uploadFiles();
-        }
-        this.data.map.name = this.mapForm.get('name').value;
-        this.data.map.nRows = this.mapForm.get('nRows').value;
-        this.data.map.nColumns = this.mapForm.get('nColumns').value;
-        this.data.map.isFogOfWar = this.mapForm.get('isFogOfWar').value;
-        this.data.map.nFogOfWarPercent = this.mapForm.get('nFogOfPercent').value;
-        this.dialogRef.close({map: this.data.map});
+    async submitMapForm(): Promise<void> {
+        try {
+            if (this.assetFormData?.getAll('file')?.length > 0) {
+                const t = await this.uploadFiles();
+                this.data.map.backgroundImage = t[0];
+            }
+            this.data.map.name = this.mapForm.get('name').value;
+            this.data.map.nRows = this.mapForm.get('nRows').value;
+            this.data.map.nColumns = this.mapForm.get('nColumns').value;
+            this.data.map.isFogOfWar = this.mapForm.get('isFogOfWar').value;
+            this.data.map.nFogOfWarPercent = this.mapForm.get('nFogOfPercent').value;
+            this.dialogRef.close({map: this.data.map});
+        } catch (e) {}
     }
 
     filesChanged(formData: FormData): void {
-        console.log('filesChanged', formData.getAll('file'));
-        // formData.append('mapId', this.data.map.id.toString());
         this.assetFormData = formData;
     }
 
-    async uploadFiles(): Promise<void>  {
-        await this.assetService.uploadFile(this.assetFormData);
+    async uploadFiles(): Promise<AssetModel[]>  {
+        try {
+            return await this.assetService.uploadFile(this.assetFormData);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     closeDialog(): void {

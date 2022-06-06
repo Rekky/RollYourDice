@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Asset, AssetType} from 'src/app/classes/Asset';
+import {AssetModel, AssetType} from 'src/app/classes/AssetModel';
 import {AssetService} from 'src/app/services/asset.service';
 
 @Component({

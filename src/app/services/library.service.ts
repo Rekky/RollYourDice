@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpService} from './http.service';
 import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {UserInteractor} from '../interactors/UserInteractor';
-import {Asset} from '../classes/Asset';
+import {AssetModel} from '../classes/AssetModel';
 
 @Injectable({
     providedIn: 'root'

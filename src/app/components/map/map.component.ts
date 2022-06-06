@@ -96,6 +96,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
         this.setMapElEvents();
+        this.gridStage.batchDraw();
         this.cdr.detectChanges();
     }
 
@@ -204,7 +205,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
      inc : the amount of zoom to apply.
      returns: zoom factor after zoom completed.
      */
-     zoomStage2(stage, zoomPoint, zoomBefore, inc): any {
+    zoomStage2(stage, zoomPoint, zoomBefore, inc): any {
         // remember the scale before new zoom is applied - we are scaling
         // same in x & y so either will work
         const oldScale = stage.scaleX();
@@ -250,150 +251,86 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // this.currentObjectSelected.emit(this.currentMapObjectSelected);
     }
 
-    drawGrid(): void {
+    async drawGrid(): Promise<void> {
+        const gridGroup = new Konva.Group({
+            id: 'gridGroup',
+        });
+
+        gridGroup.add(new Konva.Rect({
+            x: 0,
+            y: 0,
+            draggable: false,
+            width: this.map.grid.cellSize * this.map.nColumns,
+            height: this.map.grid.cellSize * this.map.nRows,
+            id: this.map.backgroundImage.id,
+            name: this.map.backgroundImage.name,
+            fill: this.map.backgroundColor,
+        }));
+
+        try {
+            await this.drawGridBackgroundImage(gridGroup);
+            this.drawGridLines(gridGroup);
+
+            this.layers.grid.add(gridGroup);
+            this.layers?.grid?.cache();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    drawGridBackgroundImage(gridGroup: Konva.Group): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const image = new Image();
+            image.src = this.map.backgroundImage.uri;
+            image.onload = () => {
+                gridGroup.add(new Konva.Rect({
+                    x: 0,
+                    y: 0,
+                    draggable: false,
+                    width: Math.round(this.map.grid.cellSize * this.map.nColumns),
+                    height: Math.round(this.map.grid.cellSize * this.map.nRows),
+                    id: this.map.backgroundImage.id,
+                    name: this.map.backgroundImage.name,
+                    fillPatternImage: image,
+                    fillPatternOffset: { x: 0, y: 0 },
+                    fillPatternRepeat: 'no-repeat',
+                }));
+                resolve();
+            };
+
+        });
+    }
+
+    drawGridLines(gridGroup: Konva.Group): void {
         for (let i = 0; i <= this.map.nColumns; i++) {
-            this.layers.grid.add(new Konva.Line({
+            gridGroup.add(new Konva.Line({
                 points: [
                     Math.round(i * this.map.grid.cellSize) + 0.5,
                     0,
                     Math.round(i * this.map.grid.cellSize) + 0.5,
                     this.map.nRows * this.map.grid.cellSize
                 ],
-                stroke: '#e6e6e6',
+                stroke: this.map.grid.color,
                 strokeWidth: 1,
             }));
         }
 
-        this.layers.grid.add(new Konva.Line({
+        gridGroup.add(new Konva.Line({
             points: [0, 0, 10, 10]
         }));
         for (let j = 0; j <= this.map.nRows; j++) {
-            this.layers.grid.add(new Konva.Line({
+            gridGroup.add(new Konva.Line({
                 points: [
                     0,
                     Math.round(j * this.map.grid.cellSize),
                     this.map.nColumns * this.map.grid.cellSize,
                     Math.round(j * this.map.grid.cellSize)
                 ],
-                stroke: '#e6e6e6',
+                stroke: this.map.grid.color,
                 strokeWidth: 1,
             }));
         }
-        this.layers?.grid?.cache();
-    }
-
-    // addImageToKonva(url: string): void {
-    //     Konva.Image.fromURL(url, (img: Konva.Image) => {
-    //         img.setAttrs({
-    //             width: 300,
-    //             height: 100,
-    //             x: 200,
-    //             y: 200,
-    //             name: 'id',
-    //             draggable: true,
-    //         });
-    //         img.on('dragstart', (e) => {
-    //             const imgAttrs = e.currentTarget.attrs;
-    //             imgAttrs.mapId = this.map.id;
-    //             // this.mouseService.setDragImage(imgAttrs);
-    //             // img.hide();
-    //             img.setAttrs({opacity: 0.5});
-    //         });
-    //         img.on('dragend', () => {
-    //             // this.mouseService.setDragImage(null);
-    //             // img.show();
-    //             img.setAttrs({opacity: 1});
-    //             this.gridStage.batchDraw();
-    //         });
-    //         img.on('click', () => {
-    //             this.selectedObjectAttrs = img.getAttrs();
-    //             this.activeTr = tr;
-    //             tr.show();
-    //             this.gridStage.batchDraw();
-    //         });
-    //
-    //         const tr = new Konva.Transformer({
-    //             nodes: [img],
-    //             padding: 5,
-    //             // limit transformer size
-    //             boundBoxFunc: (oldBox, newBox) => {
-    //                 if (newBox.width < 20) {
-    //                     return oldBox;
-    //                 }
-    //                 return newBox;
-    //             },
-    //         });
-    //         tr.hide();
-    //         this.layers.texts.add(tr);
-    //         this.layers.texts.add(img);
-    //         this.gridStage.batchDraw();
-    //     });
-    // }
-
-    // addRectangleToKonva(position: Coords): void {
-    //     const shadowRectangle = new Konva.Rect({
-    //         x: position.x,
-    //         y: position.y,
-    //         width: this.map.grid.cellSize * 2,
-    //         height: this.map.grid.cellSize * 2,
-    //         fill: '#FF7B17',
-    //         opacity: 0.6,
-    //         stroke: '#CF6412',
-    //         strokeWidth: 3,
-    //         dash: [20, 2]
-    //     });
-    //     this.rectangleTest = new Konva.Rect({
-    //         x: position.x,
-    //         y: position.y,
-    //         width: this.map.grid.cellSize * 2,
-    //         height: this.map.grid.cellSize * 2,
-    //         fill: '#fff',
-    //         stroke: '#ddd',
-    //         strokeWidth: 1,
-    //         shadowColor: 'black',
-    //         shadowBlur: 2,
-    //         shadowOffset: {x : 1, y : 1},
-    //         shadowOpacity: 0.4,
-    //         draggable: true
-    //     });
-    //     shadowRectangle.hide();
-    //     // this.gridLayer.add(shadowRectangle);
-    //     this.layers.draws.add(shadowRectangle);
-    //
-    //     this.rectangleTest.on('dragstart', () => {
-    //         shadowRectangle.show();
-    //         shadowRectangle.moveToTop();
-    //         this.rectangleTest.moveToTop();
-    //     });
-    //     this.rectangleTest.on('dragend', () => {
-    //         const newPosition = OurKonvaGrid.correctPosition(
-    //         new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
-    //         this.rectangleTest.position({
-    //             x: newPosition.x,
-    //             y: newPosition.y
-    //         });
-    //         this.gridStage.batchDraw();
-    //         shadowRectangle.hide();
-    //         this.mapInteractor.sendSocketObjectPosition(this.rectangleTest);
-    //     });
-    //     this.rectangleTest.on('dragmove', () => {
-    //         const newPosition = OurKonvaGrid.correctPosition(
-    //         new Coords(this.rectangleTest.x(), this.rectangleTest.y()), this.map.grid.cellSize);
-    //         shadowRectangle.position({
-    //             x: newPosition.x,
-    //             y: newPosition.y
-    //         });
-    //         this.gridStage.batchDraw();
-    //     });
-    //     this.layers.draws.add(this.rectangleTest);
-    // }
-
-    drawGridBackgroundImage(): void {
-        this.gridStage.container().style.backgroundImage = 'url(' + this.map.backgroundImage + ')';
-        this.gridStage.container().style.backgroundRepeat = 'no-repeat';
-        this.gridStage.container().style.backgroundSize = 'cover';
-        this.gridStage.container().style.backgroundPosition = 'center';
-        this.gridStage.batchDraw();
     }
 
     setMapElEvents(): void {

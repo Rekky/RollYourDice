@@ -4,7 +4,7 @@ import Konva from 'konva';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import { OurKonvaRect } from './OurKonvaRect';
 import { OurKonvaText } from './OurKonvaText';
-import {Asset} from '../Asset';
+import {AssetModel} from '../AssetModel';
 import {OurKonvaImage} from './OurKonvaImage';
 import { ulid } from 'ulid';
 
@@ -16,7 +16,7 @@ export class  OurKonvaMap {
     nRows: number;
     isFogOfWar: boolean;
     backgroundColor: string;
-    backgroundImage: Asset | null;
+    backgroundImage: AssetModel | null;
     nFogOfWarPercent: number;
     isDndDiagonalSystem: boolean;
     nZoom: number;
@@ -33,7 +33,7 @@ export class  OurKonvaMap {
         this.nColumns = 50;
         this.nRows = 50;
         this.isFogOfWar = false;
-        this.backgroundColor = '#FFF';
+        this.backgroundColor = 'white';
         this.backgroundImage = null;
         this.nFogOfWarPercent = 50;
         this.isDndDiagonalSystem = false;

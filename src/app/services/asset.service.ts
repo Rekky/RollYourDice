@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from './http.service';
 import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Asset} from '../classes/Asset';
+import {AssetModel} from '../classes/AssetModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class AssetService {
     constructor(private httpService: HttpService) {}
 
 
-    async uploadFile(formData: FormData): Promise<Asset> {
+    async uploadFile(formData: FormData): Promise<AssetModel[]> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/assets/upload`, formData).subscribe(
                 (response) => {
@@ -23,7 +23,7 @@ export class AssetService {
         });
     }
 
-    async getAllAssets(): Promise<Asset[]> {
+    async getAllAssets(): Promise<AssetModel[]> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/assets/my-assets`, {}).subscribe(
                 (response) => {
@@ -35,7 +35,7 @@ export class AssetService {
         });
     }
 
-    async removeAsset(asset: Asset): Promise<Asset[]> {
+    async removeAsset(asset: AssetModel): Promise<AssetModel[]> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.delete(`/assets/${asset.id}`).subscribe(
                 (response) => {
