@@ -262,13 +262,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             draggable: false,
             width: this.map.grid.cellSize * this.map.nColumns,
             height: this.map.grid.cellSize * this.map.nRows,
-            id: this.map.backgroundImage.id,
-            name: this.map.backgroundImage.name,
+            id: 'grid-background',
+            name: 'grid-background',
             fill: this.map.backgroundColor,
         }));
 
         try {
-            await this.drawGridBackgroundImage(gridGroup);
+            if (this.map.backgroundImage) {
+                await this.drawGridBackgroundImage(gridGroup);
+            }
             this.drawGridLines(gridGroup);
 
             this.layers.grid.add(gridGroup);
