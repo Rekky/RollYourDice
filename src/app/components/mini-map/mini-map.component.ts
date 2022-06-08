@@ -35,7 +35,7 @@ export class MiniMapComponent implements AfterViewInit {
             width: 290,
             height: 170,
             draggable: false,
-            scale: {x: 1, y: 1}
+            scale: {x: 0.3, y: 0.3}
         });
         this.drawGrid();
         stage.add(this.layers.grid);
