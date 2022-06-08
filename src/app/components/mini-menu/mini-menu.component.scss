@@ -1,0 +1,32 @@
+.mini-menu {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    background: #fff;
+    border-radius: 4px;
+    z-index: 9999;
+}
+//.item {
+//    cursor: pointer;
+//    padding: 10px 20px;
+//
+//    &:hover {
+//        background: rgba(0,0,0,0.04);
+//    }
+//}
+:host ::ng-deep .menu-item {
+    cursor: pointer;
+    padding: 10px 20px;
+
+    &:hover {
+        background: rgba(0,0,0,0.04);
+    }
+}
+.mini-menu-out {
+    position: fixed;
+    z-index: 9990;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+}

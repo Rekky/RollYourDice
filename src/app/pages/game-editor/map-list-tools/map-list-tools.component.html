@@ -15,15 +15,10 @@
                     <div class="map-name">
                         <div class="tag">{{map?.name}}</div>
                     </div>
-                    <div class="map-options">
-                        <div class="option-icon">
-                            <img style="filter:invert(100%)" height="20px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
-                        </div>
-                        <div class="item-options box-shadow" *ngIf="openMapOption === i">
-                            <div class="item" (click)="editMap(map, $event)">Edit</div>
-                            <div class="item" (click)="deleteMap(map, $event)">Delete</div>
-                        </div>
-                    </div>
+                    <app-mini-menu>
+                        <div class="menu-item" (click)="editMap(map, $event)">Edit</div>
+                        <div class="menu-item" (click)="deleteMap(map, $event)">Delete</div>
+                    </app-mini-menu>
                 </div>
             </div>
         </div>

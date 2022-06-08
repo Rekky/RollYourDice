@@ -144,57 +144,6 @@
         }
     }
 
-    .map-options {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-end;
-        align-items: flex-start;
-        padding: 5px;
-
-        position: absolute;
-        top:0;
-        left:0;
-        width: 100%;
-        height: 50px;
-        opacity: 0;
-
-        .option-icon {
-            background: rgba($c-black, 0.4);
-            padding: 5px 8px;
-            border-radius: 2px;
-        }
-
-        .item-options {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto;
-
-            position: fixed;
-            transform: translate(100px, 0px);
-            width: auto;
-            height: auto;
-            background: white;
-            border-radius: 4px;
-            z-index: 90;
-
-            .item {
-                position: relative;
-                display: grid;
-                grid-template-columns: 1fr 20px;
-                grid-template-rows: 1fr;
-
-                height: 48px;
-                align-items: center;
-                padding: 0 20px;
-                cursor: pointer;
-
-                &.active, &:hover{
-                    background: rgba(0,0,0,0.04);
-                }
-            }
-        }
-    }
-
     .map-name {
         display: flex;
         flex-flow: row nowrap;
