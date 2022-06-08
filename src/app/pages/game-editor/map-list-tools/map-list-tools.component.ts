@@ -28,7 +28,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     updateMapForm: FormGroup;
     openMapOption: number;
     openObjectOption: number;
-    isEditNameDisplayed: boolean = false;
+    isEditNameDisplayed: string = null;
 
     getSelectedKonvaObjectSubscription: Subscription;
 
@@ -75,6 +75,11 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.openMapOption = null;
         this.maps.splice(this.maps.indexOf(map), 1);
         this.deleteMapEvent.emit(map);
+    }
+
+    saveNewMapName(map: OurKonvaMap): void {
+        this.editMap(map);
+        this.isEditNameDisplayed = null;
     }
 
     toggleMapOption(map: OurKonvaMap, option: number, e?): void {
