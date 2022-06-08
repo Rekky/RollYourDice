@@ -16,7 +16,6 @@ export class AssetsListToolsComponent {
     @Output() selectedAssetsChange: EventEmitter<any> = new EventEmitter();
 
     openModal: boolean = false;
-    openItemOption: number | null = null;
     formAsset: FormGroup;
     AssetType = AssetType;
     previewUploadFile: any;
@@ -49,16 +48,6 @@ export class AssetsListToolsComponent {
             this.openModal = false;
         } catch (e) {
             console.log('error', e);
-        }
-    }
-
-    toggleItemOption(object: any, option: number, e?): void {
-        e?.stopPropagation();
-        if (this.openItemOption === option) {
-            this.openItemOption = null;
-        }
-        else {
-            this.openItemOption = option;
         }
     }
 

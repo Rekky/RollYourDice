@@ -15,11 +15,11 @@
 }
 
 .maps-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    //justify-content: flex-start;
+    //align-items: center;
     overflow: hidden;
     overflow-y: scroll;
     height: calc(100vh - 180px);
