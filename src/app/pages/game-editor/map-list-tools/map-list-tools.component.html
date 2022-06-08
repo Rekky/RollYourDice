@@ -1,5 +1,10 @@
 <!--TABS 0-->
 <div class="content-container">
+
+    <app-map-edit *ngIf="currentMap && tabs === 0 && displayed"
+                  [map]="currentMap"
+                  (mapModification)="editMap($event)"></app-map-edit>
+
     <!--  TABS 0  -->
     <div *ngIf="tabs === 0" style="position:relative;">
         <div class="maps-container" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
@@ -8,10 +13,6 @@
                  *ngFor="let map of maps; let i = index;"
                  [ngClass]="{'selected-map-box' : currentMap === map}"
                  (click)="onSelectMap(map, $event)">
-
-                <app-map-edit *ngIf="currentMap && tabs === 0 && displayed && currentMap.id === map.id"
-                              [map]="currentMap"
-                              (mapModification)="editMap($event)"></app-map-edit>
 
                 <div class="map">
                     <app-mini-map *ngIf="map" [map]="map"></app-mini-map>
