@@ -1,0 +1,7 @@
+<div class="number-box">
+    <div class="form-short-number-input">
+        <input type="number" [id]="'n-value'" [max]="200" [min]="1"
+               [(ngModel)]="currentValue"
+               (keyup.enter)="changeValue()" (blur)="changeValue()" />
+    </div>
+</div>

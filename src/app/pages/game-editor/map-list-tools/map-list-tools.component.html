@@ -1,5 +1,8 @@
 <!--TABS 0-->
 <div class="content-container">
+    <app-map-edit *ngIf="currentMap && tabs === 0 && displayed"
+                  [map]="currentMap"
+                  (mapModification)="editMap($event)"></app-map-edit>
 
     <!--  TABS 0  -->
     <div *ngIf="tabs === 0" style="position:relative;">
@@ -20,7 +23,6 @@
                             <img style="filter:invert(100%)" height="20px" src="assets/icons/points.png" alt="options" (click)="toggleMapOption(map, i)">
                         </div>
                         <div class="item-options box-shadow" *ngIf="openMapOption === i">
-                            <div class="item" (click)="editMap(map, $event)">Edit</div>
                             <div class="item" (click)="deleteMap(map, $event)">Delete</div>
                         </div>
                     </div>
@@ -29,7 +31,7 @@
         </div>
         <!-- ADD NEW -->
         <div class="add-control">
-            <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="editMap()">
+            <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="createMap()">
         </div>
     </div>
 

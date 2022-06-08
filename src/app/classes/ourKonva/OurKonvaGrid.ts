@@ -3,26 +3,30 @@ import {Coords} from '../Coords';
 export class OurKonvaGrid {
     cellSize: number;
     opacity: number;
-    color: string;
+    stroke: string;
     squareFeet: number;
+    strokeSize: number;
 
     constructor(
         cellSize?: number,
         opacity?: number,
-        color?: string,
-        squareFeet?: number) {
+        stroke?: string,
+        squareFeet?: number,
+        strokeSize?: number) {
         this.cellSize = cellSize ? cellSize : 40;
         this.opacity = opacity ? opacity : 100;
-        this.color = color ? color : '#e6e6e6';
+        this.stroke = stroke ? stroke : '#e6e6e6';
         this.squareFeet = squareFeet ? squareFeet : 5;
+        this.strokeSize = strokeSize ? strokeSize : 1;
     }
 
     static fromJSON(json: any): OurKonvaGrid {
         const grid = new OurKonvaGrid();
         grid.cellSize = json.cellSize;
         grid.opacity = json.opacity;
-        grid.color = json.color;
+        grid.stroke = json.stroke;
         grid.squareFeet = json.squareFeet;
+        grid.strokeSize = json.strokeSize;
         return grid;
     }
 
@@ -37,8 +41,9 @@ export class OurKonvaGrid {
         const json: any = {};
         json.cellSize = this.cellSize;
         json.opacity = this.opacity;
-        json.color = this.color;
+        json.stroke = this.stroke;
         json.squareFeet = this.squareFeet;
+        json.strokeSize = this.strokeSize;
         return json;
     }
 

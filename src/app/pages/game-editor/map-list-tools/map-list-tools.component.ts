@@ -12,9 +12,11 @@ import {MatDialog} from '@angular/material/dialog';
     styleUrls: ['./map-list-tools.component.scss']
 })
 export class MapListToolsComponent implements OnInit, OnDestroy {
-    @Input() openModal = false;
-
     @Input() maps: OurKonvaMap[] = [];
+    @Input() currentMap: OurKonvaMap = null;
+    @Input() tabs: number = 0;
+    @Input() displayed: boolean = false;
+    @Output() tabsChange: EventEmitter<number> = new EventEmitter<number>();
     @Output() mapsChange: EventEmitter<OurKonvaMap[]> = new EventEmitter<OurKonvaMap[]>();
     @Output() createMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() deleteMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
@@ -22,17 +24,12 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     @Output() selectedMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
-    @Input() currentMap: OurKonvaMap = null;
-
     newMapForm: FormGroup;
     updateMapForm: FormGroup;
     openMapOption: number;
     openObjectOption: number;
 
     getSelectedKonvaObjectSubscription: Subscription;
-
-    @Input() tabs: number = 0;
-    @Output() tabsChange: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(private mouseInteractor: MouseInteractor, private dialog: MatDialog) { }
 
@@ -60,28 +57,16 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         }
     }
 
-    editMap(map?: OurKonvaMap, e?): void {
-        e?.stopPropagation();
-        this.openMapOption = null;
-        const dialogSub = this.dialog.open(MapEditComponent, {
-            data: {
-                map: map ? map : new OurKonvaMap(),
-                title: map ? 'Edit map' : 'Create map'
-            }
-        }).afterClosed().subscribe(res => {
-            if (res) {
-                if (map) {
-                    this.updateMapEvent.emit(res.map);
-                    this.currentMap = res.map;
-                    this.selectedMapEvent.emit(this.currentMap);
-                }
-                else {
-                    this.maps.push(res.map);
-                    this.createMapEvent.emit(res.map);
-                }
-            }
-            dialogSub.unsubscribe();
-        });
+    createMap(): void {
+        const newMap = new OurKonvaMap();
+        this.maps.push(newMap);
+        this.createMapEvent.emit(newMap);
+    }
+
+    editMap(map: OurKonvaMap): void {
+        this.updateMapEvent.emit(map);
+        this.currentMap = map;
+        this.selectedMapEvent.emit(this.currentMap);
     }
 
     deleteMap(map: OurKonvaMap, e?): void {

@@ -268,42 +268,42 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             fill: this.map.backgroundColor,
         }));
 
-        try {
-            if (this.map.backgroundImage) {
-                await this.drawGridBackgroundImage(gridGroup);
-            }
-            this.drawGridLines(gridGroup);
+        // try {
+            // if (this.map.backgroundImage) {
+            //     await this.drawGridBackgroundImage(gridGroup);
+            // }
+        this.drawGridLines(gridGroup);
 
-            this.layers.grid.add(gridGroup);
-            this.layers?.grid?.cache();
-        }
-        catch (e) {
-            console.log(e);
-        }
+        this.layers.grid.add(gridGroup);
+        this.layers?.grid?.cache();
+        // }
+        // catch (e) {
+        //     console.log(e);
+        // }
     }
 
-    drawGridBackgroundImage(gridGroup: Konva.Group): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const image = new Image();
-            image.src = this.map.backgroundImage.uri;
-            image.onload = () => {
-                gridGroup.add(new Konva.Rect({
-                    x: 0,
-                    y: 0,
-                    draggable: false,
-                    width: Math.round(this.map.grid.cellSize * this.map.nColumns),
-                    height: Math.round(this.map.grid.cellSize * this.map.nRows),
-                    id: this.map.backgroundImage.id,
-                    name: this.map.backgroundImage.name,
-                    fillPatternImage: image,
-                    fillPatternOffset: { x: 0, y: 0 },
-                    fillPatternRepeat: 'no-repeat',
-                }));
-                resolve();
-            };
-
-        });
-    }
+    // drawGridBackgroundImage(gridGroup: Konva.Group): Promise<void> {
+    //     return new Promise((resolve, reject) => {
+    //         const image = new Image();
+    //         image.src = this.map.backgroundImage.uri;
+    //         image.onload = () => {
+    //             gridGroup.add(new Konva.Rect({
+    //                 x: 0,
+    //                 y: 0,
+    //                 draggable: false,
+    //                 width: Math.round(this.map.grid.cellSize * this.map.nColumns),
+    //                 height: Math.round(this.map.grid.cellSize * this.map.nRows),
+    //                 id: this.map.backgroundImage.id,
+    //                 name: this.map.backgroundImage.name,
+    //                 fillPatternImage: image,
+    //                 fillPatternOffset: { x: 0, y: 0 },
+    //                 fillPatternRepeat: 'no-repeat',
+    //             }));
+    //             resolve();
+    //         };
+    //
+    //     });
+    // }
 
     drawGridLines(gridGroup: Konva.Group): void {
         for (let i = 0; i <= this.map.nColumns; i++) {
@@ -314,8 +314,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     Math.round(i * this.map.grid.cellSize) + 0.5,
                     this.map.nRows * this.map.grid.cellSize
                 ],
-                stroke: this.map.grid.color,
-                strokeWidth: 1,
+                stroke: this.map.grid.stroke,
+                strokeWidth: this.map.grid.strokeSize,
             }));
         }
 
@@ -330,8 +330,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     this.map.nColumns * this.map.grid.cellSize,
                     Math.round(j * this.map.grid.cellSize)
                 ],
-                stroke: this.map.grid.color,
-                strokeWidth: 1,
+                stroke: this.map.grid.stroke,
+                strokeWidth: this.map.grid.strokeSize,
             }));
         }
     }

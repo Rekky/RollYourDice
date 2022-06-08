@@ -1,8 +1,10 @@
 @import "src/styles.scss";
+
 .content-container{
     height: calc(100vh - 180px);
     overflow: hidden;
 }
+
 .tabs-line {
     top: -1px;
     height: 2px;
@@ -11,6 +13,7 @@
     background: rgba(235, 235, 239, 1);
     position: absolute;
 }
+
 .maps-container {
     display: flex;
     flex-direction: column;
@@ -24,6 +27,7 @@
 
     width: 100%;
 }
+
 .item {
     position: relative;
     height: 48px;
@@ -45,6 +49,7 @@
         grid-template-columns: 1fr 20px;
         grid-template-rows: 1fr;
     }
+
     .item-options {
         display: grid;
         grid-template-columns: 1fr;

@@ -26,13 +26,14 @@
         <div body>
             <app-map-list-tools
                 [maps]="maps"
-                (mapsChange)="onMapsOrderChange($event)"
                 [currentMap]="maps[0]"
+                [tabs]="0"
+                [displayed]="openMapList"
+                (mapsChange)="onMapsOrderChange($event)"
                 (createMapEvent)="onCreateMap($event)"
                 (selectedMapEvent)="onSelectedMap($event)"
                 (deleteMapEvent)="onDeleteMap($event)"
                 (updateMapEvent)="onUpdateMap($event)"
-                [tabs]="0"
                 (tabsChange)="onTabsChange($event)"
             ></app-map-list-tools>
         </div>

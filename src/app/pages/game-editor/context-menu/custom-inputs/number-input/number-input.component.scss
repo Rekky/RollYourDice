@@ -1,0 +1,32 @@
+@import 'src/styles.scss';
+
+.number-box {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    width: 40px;
+    height: 50px;
+}
+
+.form-short-number-input {
+    width: 100%;
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance:textfield; /* Firefox */
+    }
+
+    input {
+        width: 100%;
+        text-align: center;
+    }
+}

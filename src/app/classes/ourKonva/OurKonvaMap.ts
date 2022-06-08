@@ -16,7 +16,6 @@ export class  OurKonvaMap {
     nRows: number;
     isFogOfWar: boolean;
     backgroundColor: string;
-    backgroundImage: AssetModel | null;
     nFogOfWarPercent: number;
     isDndDiagonalSystem: boolean;
     nZoom: number;
@@ -34,7 +33,6 @@ export class  OurKonvaMap {
         this.nRows = 50;
         this.isFogOfWar = false;
         this.backgroundColor = 'white';
-        this.backgroundImage = null;
         this.nFogOfWarPercent = 50;
         this.isDndDiagonalSystem = false;
         this.nZoom = 100;

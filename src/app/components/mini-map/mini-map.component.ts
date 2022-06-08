@@ -46,7 +46,7 @@ export class MiniMapComponent implements AfterViewInit {
         this.gridStage = stage;
     }
 
-    async drawGrid(): Promise<void> {
+    drawGrid(): void {
         const gridGroup = new Konva.Group({
             id: 'gridGroup',
         });
@@ -61,44 +61,34 @@ export class MiniMapComponent implements AfterViewInit {
             name: 'grid-background',
             fill: this.map.backgroundColor,
         }));
-
-        try {
-            if (this.map.backgroundImage) {
-                await this.drawGridBackgroundImage(gridGroup);
-            }
-
-            this.layers.grid.add(gridGroup);
-            this.layers?.grid?.cache();
-        }
-        catch (e) {
-            console.log(e);
-        }
+        this.layers.grid.add(gridGroup);
+        this.layers?.grid?.cache();
     }
 
-    drawGridBackgroundImage(gridGroup: Konva.Group): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const image = new Image();
-            image.src = this.map.backgroundImage.uri;
-            image.onload = () => {
-                gridGroup.add(new Konva.Rect({
-                    x: 0,
-                    y: 0,
-                    draggable: false,
-                    width: 290,
-                    height: 170,
-                    id: this.map.backgroundImage.id,
-                    name: this.map.backgroundImage.name,
-                    fillPatternImage: image,
-                    fillPatternOffset: { x: 0, y: 0 },
-                    fillPatternRepeat: 'no-repeat',
-                    fillPatternScaleX: 290 / (this.map.nColumns * this.map.grid.cellSize),
-                    fillPatternScaleY: 170 / (this.map.nRows * this.map.grid.cellSize),
-                }));
-                resolve();
-            };
-
-        });
-    }
+    // drawGridBackgroundImage(gridGroup: Konva.Group): Promise<void> {
+    //     return new Promise((resolve, reject) => {
+    //         const image = new Image();
+    //         image.src = this.map.backgroundImage.uri;
+    //         image.onload = () => {
+    //             gridGroup.add(new Konva.Rect({
+    //                 x: 0,
+    //                 y: 0,
+    //                 draggable: false,
+    //                 width: 290,
+    //                 height: 170,
+    //                 id: this.map.backgroundImage.id,
+    //                 name: this.map.backgroundImage.name,
+    //                 fillPatternImage: image,
+    //                 fillPatternOffset: { x: 0, y: 0 },
+    //                 fillPatternRepeat: 'no-repeat',
+    //                 fillPatternScaleX: 290 / (this.map.nColumns * this.map.grid.cellSize),
+    //                 fillPatternScaleY: 170 / (this.map.nRows * this.map.grid.cellSize),
+    //             }));
+    //             resolve();
+    //         };
+    //
+    //     });
+    // }
 
     paintObjectsOnMap(objects: any, layers: OurKonvaLayers): void {
         objects.forEach((object: any) => {
