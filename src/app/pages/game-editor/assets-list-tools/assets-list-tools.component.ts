@@ -35,6 +35,7 @@ export class AssetsListToolsComponent {
     async getAllAssets(): Promise<void> {
         try {
             this.assets = await this.assetService.getAllAssets();
+            this.assets.sort((a: AssetModel, b: AssetModel) => a.createdAt > b.createdAt ? 1 : -1);
         } catch (e) {
             console.log(e);
         }

@@ -20,6 +20,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { ModalCustomComponent } from './components/modal-custom/modal-custom.component';
 import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom.component';
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
+import {MiniMenuComponent} from './components/mini-menu/mini-menu.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { MiniMapComponent } from './components/mini-map/mini-map.component';
         UserListComponent,
         ModalCustomComponent,
         SidebarCustomComponent,
-        MiniMapComponent
+        MiniMapComponent,
+        MiniMenuComponent
     ],
     imports: [
         CommonModule,
@@ -62,7 +64,8 @@ import { MiniMapComponent } from './components/mini-map/mini-map.component';
         EditGameDataComponent,
         ModalCustomComponent,
         SidebarCustomComponent,
-        MiniMapComponent
+        MiniMapComponent,
+        MiniMenuComponent
     ],
 })
 
