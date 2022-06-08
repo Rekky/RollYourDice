@@ -28,6 +28,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     updateMapForm: FormGroup;
     openMapOption: number;
     openObjectOption: number;
+    isEditNameDisplayed: boolean = false;
 
     getSelectedKonvaObjectSubscription: Subscription;
 

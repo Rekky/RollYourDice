@@ -14,12 +14,12 @@ export class  OurKonvaMap {
     position: Coords;
     nColumns: number;
     nRows: number;
-    isFogOfWar: boolean;
     backgroundColor: string;
+    grid: OurKonvaGrid;
+    isFogOfWar: boolean;
     nFogOfWarPercent: number;
     isDndDiagonalSystem: boolean;
     nZoom: number;
-    grid: OurKonvaGrid;
     objects: (OurKonvaRect | OurKonvaText | OurKonvaImage)[];
     characters: string[];
     stage: Konva.Stage;

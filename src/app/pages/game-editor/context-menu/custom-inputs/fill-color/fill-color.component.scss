@@ -13,8 +13,9 @@
 
 .filled-circle {
     position: relative;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid $c-white-grey;
     border-radius: 50%;
 
     background-image: url("../../../../../../assets/transparent-background.png");
@@ -22,6 +23,7 @@
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: 200%;
     cursor: pointer;
+    box-sizing: content-box;
 
     .filled-circle-color {
         position: absolute;
@@ -29,8 +31,9 @@
         left: 0;
         z-index: 2;
 
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
+        border: 2px solid transparent;
         border-radius: 50%;
 
         color-chrome {

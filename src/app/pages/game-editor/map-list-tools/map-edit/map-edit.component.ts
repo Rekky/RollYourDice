@@ -33,6 +33,16 @@ export class MapEditComponent implements OnInit {
         this.assetFormData = formData;
     }
 
+    nRowsModified(rows: number): void {
+        this.map.nRows = rows;
+        this.mapModification.emit(this.map);
+    }
+
+    nColumnsModified(columns: number): void {
+        this.map.nColumns = columns;
+        this.mapModification.emit(this.map);
+    }
+
     cellSizeModified(size: number): void {
         this.map.grid.cellSize = size;
         this.mapModification.emit(this.map);

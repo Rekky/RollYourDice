@@ -1,5 +1,14 @@
 <div *ngIf="map" class="floating-bar-box">
     <div class="properties-box">
+        <app-number-input [matTooltip]="'Number of rows'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                          [nValue]="map.nRows"
+                          (nValueChange)="nRowsModified($event)">
+        </app-number-input>
+        <span class="mx-1">x</span>
+        <app-number-input [matTooltip]="'Number of columns'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                          [nValue]="map.nColumns"
+                          (nValueChange)="nColumnsModified($event)">
+        </app-number-input>
         <app-fill-color [matTooltip]="'Background color'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
                         [color]="map.backgroundColor" (colorChange)="backgroundModified($event)">
         </app-fill-color>
@@ -12,5 +21,11 @@
                           [options]="{color: map.grid.stroke, width: map.grid.strokeSize}"
                           (optionsChange)="strokeModified($event)">
         </app-stroke-color>
+
+        <ng-container>
+            <div class="divider"></div>
+            <app-more-options [matTooltip]="'More options'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'">
+            </app-more-options>
+        </ng-container>
     </div>
 </div>
