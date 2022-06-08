@@ -37,6 +37,7 @@ export class MiniMapComponent implements AfterViewInit {
             draggable: false,
             scale: {x: 0.3, y: 0.3}
         });
+        stage.container().style.backgroundColor = '#f2f2f2';
         this.drawGrid();
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);

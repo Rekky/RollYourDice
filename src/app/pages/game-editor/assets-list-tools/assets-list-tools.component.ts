@@ -22,7 +22,6 @@ export class AssetsListToolsComponent {
 
     constructor(protected assetService: AssetService) {
         this.formAsset = new FormGroup({
-            type: new FormControl(null, [Validators.required]),
             name: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
             file: new FormControl(null, [Validators.required]),
             fileSource: new FormControl(null, [Validators.required])
@@ -82,7 +81,6 @@ export class AssetsListToolsComponent {
 
                 // set fileName and type
                 this.formAsset.get('name').patchValue(file.name);
-                this.formAsset.get('type').patchValue(this.getFileType(file));
             };
         }
     }

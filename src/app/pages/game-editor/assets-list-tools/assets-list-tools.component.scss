@@ -79,3 +79,10 @@ input[type=file] {
     font-size: 1.2em;
     color: $c-indigo;
 }
+
+.modal-container {
+    position: fixed;
+    top:40%;
+    left:40%;
+    background: #fff;
+}
