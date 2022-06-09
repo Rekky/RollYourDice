@@ -17,9 +17,7 @@
 .maps-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    //justify-content: flex-start;
-    //align-items: center;
+    grid-template-rows: repeat(auto-fit, 200px);
     overflow: hidden;
     overflow-y: scroll;
     height: calc(100vh - 180px);
@@ -128,7 +126,7 @@
 
 .selected-map-box {
     background-color: rgba(0, 0, 0, 0.025);
-    border: 1px dashed black;
+    border: 1px solid lightgray;
     .tag {
         background-color: rgba($c-black, 0.7) !important;
     }
