@@ -1,3 +1,14 @@
+.mini-menu-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0 6px;
+    cursor: pointer;
+    border-radius: 2px;
+    filter: invert(100%);
+}
+
 .mini-menu {
     position: absolute;
     right: 0;
@@ -6,27 +17,21 @@
     border-radius: 4px;
     z-index: 9999;
 }
-//.item {
-//    cursor: pointer;
-//    padding: 10px 20px;
-//
-//    &:hover {
-//        background: rgba(0,0,0,0.04);
-//    }
-//}
+
 :host ::ng-deep .menu-item {
     cursor: pointer;
     padding: 10px 20px;
 
     &:hover {
-        background: rgba(0,0,0,0.04);
+        background: rgba(0, 0, 0, 0.04);
     }
 }
+
 .mini-menu-out {
     position: fixed;
     z-index: 9990;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     right: 0;
     bottom: 0;
 }

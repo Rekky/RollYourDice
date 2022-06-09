@@ -119,15 +119,23 @@
     cursor: pointer;
 
     &:hover {
-        background-color: $c-white;
-        .map {
-            border: 1px solid black;
+        background-color: rgba(0, 0, 0, 0.025);
+        .tag {
+            background-color: rgba($c-black, 0.7) !important;
         }
     }
 }
 
 .selected-map-box {
-    background-color: $c-white;
+    background-color: rgba(0, 0, 0, 0.025);
+    border: 1px dashed black;
+    .tag {
+        background-color: rgba($c-black, 0.7) !important;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.025);
+    }
 }
 
 .map {
@@ -140,7 +148,7 @@
 
     width: 84%;
     height: 160px;
-    border: 1px solid $c-white-grey;
+    border: 1px solid #e4e4e4;
 
     &:hover {
 
