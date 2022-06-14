@@ -15,20 +15,21 @@ jobs:
                   check-latest: true
 
             - name: Install dependencies
-              run: npm i
+              run: ls -l
+#              run: npm i
 
-            - name: Building
-              run: npm run build --prod
+#            - name: Building
+#              run: npm run build --prod
 
-            - name: "Deploy to FTP"
-              uses: SamKirkland/FTP-Deploy-Action@4.3.0
-              with:
-                   server: ${{ secrets.HOST }}
-                   username: ${{ secrets.USERNAME }}
-                   password: ${{ secrets.PASSWORD }}
-                   port: ${{ secrets.PORT }}
-                   local-dir: ./dist/Rollinn/
-                   server-dir: ./game/
+#            - name: "Deploy to FTP"
+#              uses: SamKirkland/FTP-Deploy-Action@4.3.0
+#              with:
+#                   server: ${{ secrets.HOST }}
+#                   username: ${{ secrets.USERNAME }}
+#                   password: ${{ secrets.PASSWORD }}
+#                   port: ${{ secrets.PORT }}
+#                   local-dir: ./dist/Rollinn/
+#                   server-dir: ./public/game/
 
 #      with:
 #        host: ${{ secrets.HOST }}
