@@ -1,8 +1,5 @@
-name: Deploy angular to FTP server
-on:
-    push:
-        branches:
-            - master
+name: "Deploy to FTP"
+on: push
 jobs:
     build:
         runs-on: ubuntu-latest
