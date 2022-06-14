@@ -7,14 +7,15 @@ jobs:
         steps:
 #            uses: actions/checkout@v2
 
-            name: Use node.js to build the project
             uses: actions/setup-node@v2
-            with:
-                node-version: '12.x'
-                check-latest: true
+            name: Use node.js to build the project
+            run: npm i
+#            with:
+#                node-version: '12.x'
+#                check-latest: true
 
-            name: Install dependencies
-            runs: npm i
+#            name: Install dependencies
+#            runs: npm i
 #
 #            -   name: Build
 #                runs: npm run build --prod
