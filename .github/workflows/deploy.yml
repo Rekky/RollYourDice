@@ -39,16 +39,17 @@ jobs:
               run: npm run build --prod
 
             - name: test
-              run: ls -l
-#            - name: "Deploy to FTP"
-#              uses: SamKirkland/FTP-Deploy-Action@4.3.0
-#              with:
-#                   server: ${{ secrets.HOST }}
-#                   username: ${{ secrets.USERNAME }}
-#                   password: ${{ secrets.PASSWORD }}
-#                   port: ${{ secrets.PORT }}
-#                   local-dir: ./dist/Rollinn/
-#                   server-dir: ./public/game/
+              run: ls ./dist/
+
+            - name: "Deploy to FTP"
+              uses: SamKirkland/FTP-Deploy-Action@4.3.0
+              with:
+                   server: ${{ secrets.HOST }}
+                   username: ${{ secrets.USERNAME }}
+                   password: ${{ secrets.PASSWORD }}
+                   port: ${{ secrets.PORT }}
+                   local-dir: ./dist/Rollinn/
+                   server-dir: ./public/game/
 
 #      with:
 #        host: ${{ secrets.HOST }}
