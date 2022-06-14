@@ -48,7 +48,7 @@ jobs:
                    username: ${{ secrets.USERNAME }}
                    password: ${{ secrets.PASSWORD }}
                    port: ${{ secrets.PORT }}
-                   local-dir: ./dist/Rollinn/
+                   local-dir: ./dist/RollInn/
                    server-dir: ./public/game/
 
 #      with:
