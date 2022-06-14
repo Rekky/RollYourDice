@@ -51,10 +51,4 @@ jobs:
                    local-dir: ./dist/RollInn/
                    server-dir: ./public/game/
 
-#      with:
-#        host: ${{ secrets.HOST }}
-#        username: ${{ secrets.USERNAME }}
-#        password: ${{ secrets.PASSWORD }}
-#        port: ${{ secrets.PORT }}
-#        local-dir: game
 
