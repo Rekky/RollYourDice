@@ -35,7 +35,7 @@ jobs:
         -    name: Install dependencies
              if: steps.cache-nodemodules.outputs.cache-hit != 'true'
                  run: |
-                     npm deploy
+                     npm install
 
         -   name: Build
             runs: npm run build --prod
