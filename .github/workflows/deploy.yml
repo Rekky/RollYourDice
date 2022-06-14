@@ -13,11 +13,11 @@ jobs:
 
             name: Use node.js ${{ matrix.node-version }}
             uses: actions/setup-node@v2
-#                with:
-#                    node-version: ${{ matrix.node-version }}
+                with:
+                    node-version: ${{ matrix.node-version }}
 
-            name: Install dependencies
-            runs: npm install
+#            name: Install dependencies
+#            runs: npm install
 #
 #            -   name: Build
 #                runs: npm run build --prod
