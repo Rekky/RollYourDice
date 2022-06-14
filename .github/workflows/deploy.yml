@@ -27,8 +27,8 @@ jobs:
                    username: ${{ secrets.USERNAME }}
                    password: ${{ secrets.PASSWORD }}
                    port: ${{ secrets.PORT }}
-                   local-dir: dist/Rollinn
-                   server-dir: /game/
+                   local-dir: ./dist/Rollinn/
+                   server-dir: ./game/
 
 #      with:
 #        host: ${{ secrets.HOST }}
