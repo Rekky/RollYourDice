@@ -14,10 +14,10 @@ jobs:
                   check-latest: true
 
             - name: Install dependencies
-              runs: npm i
+              run: npm i
 
             - name: Build
-              runs: npm run build --prod
+              run: npm run build --prod
 
 #    - name: "Deploy to FTP"
 #      uses: SamKirkland/FTP-Deploy-Action@3.1.1
