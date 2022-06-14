@@ -19,11 +19,11 @@ jobs:
                 with:
                     node-version: ${{ matrix.node-version }}
 
-            -   name: Install dependencies
-                runs: npm install
-
-            -   name: Build
-                runs: npm run build --prod
+#            -   name: Install dependencies
+#                runs: npm install
+#
+#            -   name: Build
+#                runs: npm run build --prod
 
 #    - name: "Deploy to FTP"
 #      uses: SamKirkland/FTP-Deploy-Action@3.1.1
