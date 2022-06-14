@@ -18,7 +18,7 @@ jobs:
               run: npm i
 
             - name: Build
-              run: ng build --prod
+              run: npm run build --prod
 
 #    - name: "Deploy to FTP"
 #      uses: SamKirkland/FTP-Deploy-Action@3.1.1
