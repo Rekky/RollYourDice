@@ -9,7 +9,6 @@ jobs:
 
             - uses: actions/setup-node@v2
               name: Use node.js to build the project
-              run: npm i
               with:
                   node-version: '12.x'
                   check-latest: true
