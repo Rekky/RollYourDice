@@ -39,17 +39,17 @@ export class OurKonvaBrush extends OurKonvaMouse {
             y: object.position.y
         });
 
-        const transformer = new Konva.Transformer({
-            rotateAnchorOffset: 120,
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
-            padding: 10,
-            anchorCornerRadius: 20
-        });
-        layers.draws.add(transformer);
-        transformer.nodes([line]);
-        transformer.id('tr-' + object.id);
-        transformer.enabledAnchors();
-        transformer.hide();
+        // const transformer = new Konva.Transformer({
+        //     rotateAnchorOffset: 120,
+        //     enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+        //     padding: 10,
+        //     anchorCornerRadius: 20
+        // });
+        // layers.draws.add(transformer);
+        // transformer.nodes([line]);
+        // transformer.id('tr-' + object.id);
+        // transformer.enabledAnchors();
+        // transformer.hide();
 
         layers.draws.add(line);
         layers.draws.batchDraw();
@@ -59,7 +59,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
         toEmit.konvaObject = line;
         toEmit.type = object.state;
         toEmit.layer = layers.draws;
-        toEmit.transformer = transformer;
+        // toEmit.transformer = transformer;
         return toEmit;
     }
 
@@ -110,16 +110,16 @@ export class OurKonvaBrush extends OurKonvaMouse {
 
         this.line.points(this.points);
 
-        const transformer = new Konva.Transformer({
-            rotateAnchorOffset: 120,
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
-            padding: 10,
-            anchorCornerRadius: 20
-        });
-        this.layers.draws.add(transformer);
-        transformer.nodes([this.line]);
-        transformer.id('tr-' + this.id);
-        transformer.hide();
+        // const transformer = new Konva.Transformer({
+        //     rotateAnchorOffset: 120,
+        //     enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+        //     padding: 10,
+        //     anchorCornerRadius: 20
+        // });
+        // this.layers.draws.add(transformer);
+        // transformer.nodes([this.line]);
+        // transformer.id('tr-' + this.id);
+        // transformer.hide();
 
         this.layers.draws.add(this.line);
         this.layers.draws.batchDraw();
@@ -129,7 +129,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
         toEmit.konvaObject = this.line;
         toEmit.type = this.state;
         toEmit.layer = this.layers.draws;
-        toEmit.transformer = transformer;
+        // toEmit.transformer = transformer;
         return toEmit;
     }
 

@@ -26,12 +26,21 @@ import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/
 export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     @ViewChild('mapEl') mapEl: ElementRef;
+
     @Input() map: OurKonvaMap;
     @Input() modification: OurKonvaMapModification;
     @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapMoveEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
-    public currentMapObjectSelected: CurrentSelectedKonvaObject;
+
+    // SCALE MAP PARAMS
+    @Input() scale: number = 1;
+    @Input() maxScale: number = 3;
+    @Input() minScale: number = 0.3;
+    @Input() scaleStep: number = 0.1;
+    @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
+
+    public currentMapObjectSelected: CurrentSelectedKonvaObject[] | null;
     public selectedObjectEditorPosition: Coords;
     public displaySelectedObjectEditor: boolean = false;
     Konvadraggable = true;
@@ -60,20 +69,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     public displayCursor: string;
     protected mouseIsABrush: boolean = false;
 
-    // SCALE MAP PARAMS
-    @Input() scale: number = 1;
-    @Input() maxScale: number = 3;
-    @Input() minScale: number = 0.3;
-    @Input() scaleStep: number = 0.1;
-    @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
+    private hasCtrlKeydownFired: boolean = false;
 
     constructor(private mouseInteractor: MouseInteractor,
                 private cdr: ChangeDetectorRef) {
         this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
-            .subscribe((object: CurrentSelectedKonvaObject) => {
+            .subscribe((object: CurrentSelectedKonvaObject[] | null) => {
                 this.currentMapObjectSelected = object;
                 if (object) {
-                    this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(object, this.gridStage);
+                    this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(object[0], this.gridStage);
                     this.displaySelectedObjectEditor = true;
                 } else {
                     this.displaySelectedObjectEditor = false;
@@ -115,15 +119,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             if (this.modification.type === 'update') {
                 this.mouseInteractor.deleteObjectOnMap(this.modification);
                 this.mouseInteractor.paintObjectOnMap(this.modification.object, this.layers);
-                if (this.currentMapObjectSelected.ourKonvaObject.id === this.modification.object.id) {
-                    this.mouseInteractor.unsetSelectedKonvaObject();
-                }
+                console.log('update');
+                this.currentMapObjectSelected.forEach((object: CurrentSelectedKonvaObject) => {
+                    if (object.ourKonvaObject.id === this.modification.object.id) {
+                        this.mouseInteractor.unsetSelectedKonvaObject();
+                    }
+                });
             }
             if (this.modification.type === 'delete') {
                 this.mouseInteractor.deleteObjectOnMap(this.modification);
-                if (this.currentMapObjectSelected.ourKonvaObject.id === this.modification.object.id) {
-                    this.mouseInteractor.unsetSelectedKonvaObject();
-                }
+                this.currentMapObjectSelected.forEach((object: CurrentSelectedKonvaObject) => {
+                    if (object.ourKonvaObject.id === this.modification.object.id) {
+                        this.mouseInteractor.unsetSelectedKonvaObject();
+                    }
+                });
             }
         }
     }
@@ -148,18 +157,65 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             draggable: false,
             scale: {x: this.scale, y: this.scale}
         });
-        console.log('hey', this.scale);
 
         stage.container().style.backgroundColor = '#f2f2f2';
 
         this.mapWidth = window.innerWidth;
         this.mapHeight = window.innerHeight;
 
-        stage.on('click tap', (e) => {
-            if (this.currentMapObjectSelected?.transformer &&
-                e.target.attrs !== this.currentMapObjectSelected?.konvaObject?.getAttrs()) {
-                this.mouseInteractor.unsetSelectedKonvaObject();
+        this.setStageListeners(stage);
+
+        this.drawGrid();
+        const selectedObjects = new Konva.Group({
+            id: 'selectedObjects',
+            draggable: true,
+        });
+        this.layers.draws.add(selectedObjects);
+
+        const transformer = new Konva.Transformer({
+            rotateAnchorOffset: 120,
+            padding: 10,
+            anchorCornerRadius: 20
+        });
+        this.layers.draws.add(transformer);
+        transformer.nodes([selectedObjects]);
+        transformer.id('tr-selectedObjects');
+        transformer.show();
+
+        stage.add(this.layers.grid);
+        stage.add(this.layers.objects);
+        stage.add(this.layers.shadows);
+        stage.add(this.layers.draws);
+        stage.add(this.layers.texts);
+        this.gridStage = stage;
+        this.mouseInteractor.setStage(stage);
+    }
+
+    setStageListeners(stage: Konva.Stage): void {
+        const container = stage.container();
+        container.tabIndex = 1;
+        container.focus();
+        container.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.ctrlKey && !this.hasCtrlKeydownFired) {
+                this.mouseInteractor.setCtrlKey(true);
+                this.hasCtrlKeydownFired = true;
             }
+            e.preventDefault();
+        });
+        container.addEventListener('keyup', (e: KeyboardEvent) => {
+            if (e.ctrlKey) {
+                this.hasCtrlKeydownFired = true;
+                this.mouseInteractor.setCtrlKey(false);
+            }
+        });
+
+        stage.on('click tap', (e) => {
+            // this.currentMapObjectSelected?.forEach((object: CurrentSelectedKonvaObject) => {
+            //     if (object?.transformer &&
+            //         e.target.attrs !== object?.konvaObject?.getAttrs()) {
+            //         this.mouseInteractor.unsetSelectedKonvaObject();
+            //     }
+            // });
         });
 
         stage.on('mousedown', (e) => {
@@ -168,7 +224,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 return;
             }
             if (e.evt.button === 2) {
-                this.currentMapObjectSelected?.transformer.hide();
+                this.currentMapObjectSelected?.forEach((object: CurrentSelectedKonvaObject) => {
+                    object?.transformer.hide();
+                });
                 if (this.layers?.draws?.children?.length > 0) {
                     this.layers?.draws?.cache();
                 }
@@ -179,7 +237,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         stage.on('mouseup', (e) => {
             if (e.evt.button === 2) {
-                this.currentMapObjectSelected?.transformer.show();
+                this.currentMapObjectSelected?.forEach((object: CurrentSelectedKonvaObject) => {
+                    object?.transformer.show();
+                });
                 if (this.layers?.draws?.children?.length > 0) {
                     this.layers?.draws?.clearCache();
                 }
@@ -187,15 +247,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 stage.setDraggable(false);
             }
         });
-
-        this.drawGrid();
-        stage.add(this.layers.grid);
-        stage.add(this.layers.objects);
-        stage.add(this.layers.shadows);
-        stage.add(this.layers.draws);
-        stage.add(this.layers.texts);
-        this.gridStage = stage;
-        this.mouseInteractor.setStage(stage);
     }
 
     /**Zoom the stage at the given position
@@ -232,7 +283,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // Apply position to stage
         stage.position(newPos);
         // return the new zoom factor.
-        this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectSelected, this.gridStage);
+        if (this.currentMapObjectSelected) {
+            this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectSelected[0], this.gridStage);
+        }
         // this.zoomChange.emit(zoomAfter);
         return zoomAfter;
     }
@@ -343,7 +396,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
             if (this.currentMapObjectSelected) {
                 this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(
-                    this.currentMapObjectSelected, this.gridStage);
+                    this.currentMapObjectSelected[0], this.gridStage);
                 this.displaySelectedObjectEditor = true;
             }
         });

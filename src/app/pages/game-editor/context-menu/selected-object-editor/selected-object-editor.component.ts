@@ -23,7 +23,7 @@ export class SelectedObjectEditorComponent implements OnInit {
     updateObject(ev: any): void {
         this.selectedObject.konvaObject.setAttrs(ev);
         this.selectedObject.layer.batchDraw();
-        this.mouseInteractor.updateSelectedObject(this.selectedObject);
+        this.mouseInteractor.updateSelectedObject([this.selectedObject]);
         this.mouseInteractor.updateObject(ev);
     }
 
@@ -32,7 +32,7 @@ export class SelectedObjectEditorComponent implements OnInit {
         if (ev) {
             this.selectedObject = this.mouseInteractor.adaptObjectToMap(this.selectedObject);
         }
-        this.mouseInteractor.updateSelectedObject(this.selectedObject);
+        this.mouseInteractor.updateSelectedObject([this.selectedObject]);
         this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
     }
 
@@ -46,7 +46,7 @@ export class SelectedObjectEditorComponent implements OnInit {
             this.selectedObject.transformer.show();
         }
         this.selectedObject.layer.batchDraw();
-        this.mouseInteractor.updateSelectedObject(this.selectedObject);
+        this.mouseInteractor.updateSelectedObject([this.selectedObject]);
         this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
     }
 

@@ -1,17 +1,17 @@
-<div class="floating-bar-box"
-     [style.top]="position.y - 65 + 'px'"
-     [style.left]="position.x + 'px'">
-    <app-konva-rectangle-properties *ngIf="selectedObject.type === 'square'"
-                                    [rectangle]="selectedObject.ourKonvaObject"
-                                    (rectangleChange)="updateObject($event)"
-                                    (isAdaptedToGridChange)="isObjectAdaptedToGridToggle($event)"
-                                    (isEditionBlockedChange)="editionBlockedToggle($event)"
-                                    (isDisplayedJustForMasterChange)="displayedJustForMaster($event)">
-    </app-konva-rectangle-properties>
-    <app-konva-brush-properties *ngIf="selectedObject.type === 'brush'"
-                                [brush]="selectedObject.ourKonvaObject"
-                                (brushChange)="updateObject($event)"
-                                (isEditionBlockedChange)="editionBlockedToggle($event)">
-    </app-konva-brush-properties>
-</div>
+<!--<div class="floating-bar-box"-->
+<!--     [style.top]="position.y - 65 + 'px'"-->
+<!--     [style.left]="position.x + 'px'">-->
+<!--    <app-konva-rectangle-properties *ngIf="selectedObject.type === 'square'"-->
+<!--                                    [rectangle]="selectedObject.ourKonvaObject"-->
+<!--                                    (rectangleChange)="updateObject($event)"-->
+<!--                                    (isAdaptedToGridChange)="isObjectAdaptedToGridToggle($event)"-->
+<!--                                    (isEditionBlockedChange)="editionBlockedToggle($event)"-->
+<!--                                    (isDisplayedJustForMasterChange)="displayedJustForMaster($event)">-->
+<!--    </app-konva-rectangle-properties>-->
+<!--    <app-konva-brush-properties *ngIf="selectedObject.type === 'brush'"-->
+<!--                                [brush]="selectedObject.ourKonvaObject"-->
+<!--                                (brushChange)="updateObject($event)"-->
+<!--                                (isEditionBlockedChange)="editionBlockedToggle($event)">-->
+<!--    </app-konva-brush-properties>-->
+<!--</div>-->
 

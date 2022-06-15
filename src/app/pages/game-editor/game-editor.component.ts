@@ -92,8 +92,11 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
                 this.mouse = mouse;
             });
-            this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe(konva => {
-                this.selectedKonvaObject = konva;
+            this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
+                .subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
+                if (selectedObject) {
+                    this.selectedKonvaObject = selectedObject[0];
+                }
             });
 
             this.getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
@@ -140,7 +143,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onCreateMap(map: OurKonvaMap): void {
-        console.log('map =', map);
         this.socketService.sendGameCreateMap(this.gameInteractor.getCurrentGame().id, map);
     }
 

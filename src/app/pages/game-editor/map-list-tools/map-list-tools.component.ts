@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import { MapEditComponent } from './map-edit/map-edit.component';
 import {MatDialog} from '@angular/material/dialog';
+import {CurrentSelectedKonvaObject} from '../../../classes/ourKonva/OurKonvaMouse';
 
 @Component({
     selector: 'app-map-list-tools',
@@ -35,11 +36,14 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
     constructor(private mouseInteractor: MouseInteractor, private dialog: MatDialog) { }
 
     ngOnInit(): void {
-        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva: any) => {
+        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
             this.maps?.find(map => {
-                const objectToSelect = map.objects.find(object => {
-                    return object?.id === konva?.konvaObject.getAttr('id');
-                });
+                // const objectToSelect = map.objects.find(object => {
+                //     return object?.id === selectedObject?.konvaObject.getAttr('id');
+                //     selectedObject?.forEach(object => {
+                //         object?.id === object?.konvaObject.getAttr('id');
+                //     });
+                // });
             });
         });
         this.updateMapForm = this.newMapForm;
