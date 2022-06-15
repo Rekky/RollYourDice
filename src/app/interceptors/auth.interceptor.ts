@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {UserInteractor} from '../interactors/UserInteractor';
+import jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

@@ -16,7 +16,7 @@ export class UserInteractor {
                 private storageService: StorageService) {
         const session = storageService.getCurrentSession();
         if (session) {
-            console.log('EXISTS_SESSION', session);
+            // console.log('EXISTS_SESSION', session);
             this.userSubject.next(session.user);
         }
     }

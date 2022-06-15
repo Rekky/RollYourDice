@@ -12,6 +12,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { NotificationComponent } from './components/notification/notification.component';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
+import {JwtModule} from '@auth0/angular-jwt';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,9 @@ import { MatDialogModule } from '@angular/material/dialog';
                 deps: [HttpClient]
             }
         }),
+        JwtModule.forRoot({
+            config: {}
+        })
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
