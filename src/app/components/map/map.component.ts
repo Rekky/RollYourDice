@@ -175,7 +175,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         const transformer = new Konva.Transformer({
             rotateAnchorOffset: 120,
             padding: 10,
-            anchorCornerRadius: 20
+            anchorCornerRadius: 20,
+            draggable: true,
         });
         this.layers.draws.add(transformer);
         transformer.nodes([selectedObjects]);
@@ -200,12 +201,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 this.mouseInteractor.setCtrlKey(true);
                 this.hasCtrlKeydownFired = true;
             }
-            e.preventDefault();
         });
         container.addEventListener('keyup', (e: KeyboardEvent) => {
-            if (e.ctrlKey) {
-                this.hasCtrlKeydownFired = true;
+            if (this.hasCtrlKeydownFired) {
                 this.mouseInteractor.setCtrlKey(false);
+                this.hasCtrlKeydownFired = false;
             }
         });
 
