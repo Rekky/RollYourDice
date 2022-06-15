@@ -38,7 +38,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             fill: object.fill,
             stroke: object.stroke,
             strokeWidth: object.strokeWidth,
-            draggable: false,
+            draggable: !object.isEditionBlocked,
             opacity: object.opacity,
             name: object.name,
             strokeScaleEnabled: false
@@ -149,7 +149,7 @@ export class OurKonvaRect extends OurKonvaMouse {
             fill: this.fill,
             stroke: this.stroke,
             strokeWidth: this.strokeWidth,
-            draggable: false,
+            draggable: !this.isEditionBlocked,
             opacity: this.opacity / 100,
             id: this.id,
             name: this.name,

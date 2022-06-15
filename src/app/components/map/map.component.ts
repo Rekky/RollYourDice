@@ -166,22 +166,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.setStageListeners(stage);
 
         this.drawGrid();
-        const selectedObjects = new Konva.Group({
-            id: 'selectedObjects',
-            draggable: true,
-        });
-        this.layers.draws.add(selectedObjects);
-
-        const transformer = new Konva.Transformer({
-            rotateAnchorOffset: 120,
-            padding: 10,
-            anchorCornerRadius: 20,
-            draggable: true,
-        });
-        this.layers.draws.add(transformer);
-        transformer.nodes([selectedObjects]);
-        transformer.id('tr-selectedObjects');
-        transformer.show();
+        this.createKonvaNodeTransformer();
 
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
@@ -247,6 +232,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 stage.setDraggable(false);
             }
         });
+    }
+
+    createKonvaNodeTransformer(): void {
+        const transformer = new Konva.Transformer({
+            rotateAnchorOffset: 120,
+            padding: 10,
+            anchorCornerRadius: 20,
+        });
+        transformer.id('tr-selectedObjects');
+        transformer.show();
+        this.layers.draws.add(transformer);
     }
 
     /**Zoom the stage at the given position

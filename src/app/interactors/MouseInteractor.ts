@@ -128,7 +128,9 @@ export class MouseInteractor implements OnDestroy {
 
     newObjectSetEvents(object: any): void {
         object?.konvaObject.on('mouseover', (e) => {
-          document.body.style.cursor = 'pointer';
+          if (!object.ourKonvaObject.isEditionBlocked) {
+              document.body.style.cursor = 'pointer';
+          }
         });
         object?.konvaObject.on('mouseout', (e) => {
             document.body.style.cursor = 'default';
@@ -137,49 +139,47 @@ export class MouseInteractor implements OnDestroy {
         object?.konvaObject.on('click', () => {
             if (this.mouse.state !== 'pointer') { return; }
             const selectedObjects = this.selectedKonvaObjects?.getValue();
-            const selectedGroup: Konva.Group = object.layer.find('#selectedObjects')[0];
             const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
+            const selectedGroup = selectedGroupTr.getNodes();
 
-            object.konvaObject.draggable(!object.ourKonvaObject.isEditionBlocked);
             if (this.isCtrlKeyPressed) {
                 const objectAlreadySelectedIndex = selectedObjects?.findIndex((o) => {
                     return o.ourKonvaObject.id === object.ourKonvaObject.id;
                 });
                 if (objectAlreadySelectedIndex >= 0) {
                     selectedObjects.splice(objectAlreadySelectedIndex, 1);
+                    selectedGroup.splice(objectAlreadySelectedIndex, 1);
                     object.layer.add(object.konvaObject);
-                    selectedGroupTr.nodes([selectedGroup]);
+                    selectedGroupTr.nodes(selectedGroup);
                     object.layer.batchDraw();
                     this.selectedKonvaObjects.next(selectedObjects);
                     return;
                 }
             }
 
-            if (!this.isCtrlKeyPressed && selectedGroup.getChildren()) {
+            if (!this.isCtrlKeyPressed && selectedGroup) {
                 const children = [];
-                selectedGroup.getChildren().forEach((o) => {
+                selectedGroup.forEach((o) => {
                     children.push(o);
+                    object.layer.add(o);
                     selectedObjects.splice(0, 1);
                 });
                 children.forEach((o) => {
-                    object.layer.add(o);
+                    selectedGroup.splice(0, 1);
                 });
             }
 
             if (!object.ourKonvaObject.isEditionBlocked) {
-                selectedGroup.add(object.konvaObject);
                 selectedObjects.push(object);
-                selectedGroup.add(object.konvaObject);
+                selectedGroupTr.nodes(selectedGroup.concat([object.konvaObject]));
             }
-
-            selectedGroupTr.nodes([selectedGroup]);
             object.layer.batchDraw();
             this.selectedKonvaObjects.next(selectedObjects);
         });
         object?.konvaObject.on('dragend', () => {
             if (object.ourKonvaObject.isAdaptedToGrid) {
                 object = this.adaptObjectToMap(object); // Adapt object to a grid
-                this.selectedKonvaObjects.next([object]);
+                // this.selectedKonvaObjects.next([object]);
             }
             this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
         });
