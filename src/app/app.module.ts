@@ -34,7 +34,9 @@ import {JwtModule} from '@auth0/angular-jwt';
                 deps: [HttpClient]
             }
         }),
-        JwtModule.forRoot({})
+        JwtModule.forRoot({
+            config: {}
+        })
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
