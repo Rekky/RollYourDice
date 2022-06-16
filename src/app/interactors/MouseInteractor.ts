@@ -127,6 +127,7 @@ export class MouseInteractor implements OnDestroy {
     }
 
     newObjectSetEvents(object: any): void {
+        const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
         object?.konvaObject.on('mouseover', (e) => {
           if (!object.ourKonvaObject.isEditionBlocked) {
               document.body.style.cursor = 'pointer';
@@ -135,12 +136,10 @@ export class MouseInteractor implements OnDestroy {
         object?.konvaObject.on('mouseout', (e) => {
             document.body.style.cursor = 'default';
         });
-
         object?.konvaObject.on('click', () => {
             if (this.mouse.state !== 'pointer') { return; }
-            const selectedObjects = this.selectedKonvaObjects?.getValue();
-            const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
             const selectedGroup = selectedGroupTr.getNodes();
+            const selectedObjects = this.selectedKonvaObjects?.getValue();
 
             if (this.isCtrlKeyPressed) {
                 const objectAlreadySelectedIndex = selectedObjects?.findIndex((o) => {
@@ -183,22 +182,23 @@ export class MouseInteractor implements OnDestroy {
             }
             this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
         });
-    }
+        selectedGroupTr?.on('transformend', (ev) => {
+            const selectedGroup = selectedGroupTr.getNodes();
+            const isSelected = selectedGroup.find(o => {
+                return o.getAttr('id') === object.ourKonvaObject.id;
+            });
+            if (!isSelected) { return; }
 
-    applyTransformEndToNewObject(object: any): void {
-        object.transformer.on('transformend', (ev) => {
             const selectedObjects = this.selectedKonvaObjects?.getValue();
-            const newWidth = Math.round(object.konvaObject.getAttr('width') * ev.target.attrs.scaleX);
-            const newHeight = Math.round(object.konvaObject.getAttr('height') * ev.target.attrs.scaleY);
+            const newWidth = Math.round(object?.konvaObject.getAttr('width') * ev.target.attrs.scaleX);
+            const newHeight = Math.round(object?.konvaObject.getAttr('height') * ev.target.attrs.scaleY);
             object.konvaObject.setAttr('scaleX', 1);
             object.konvaObject.setAttr('scaleY', 1);
             object.konvaObject.setAttr('width', newWidth);
             object.konvaObject.setAttr('height', newHeight);
-            selectedObjects.forEach((selectedObject) => {
-                if (selectedObject.ourKonvaObject.isAdaptedToGrid) {
-                    object = this.adaptObjectToMap(object); // Adapt object to a grid
-                }
-            });
+            if (object.ourKonvaObject.isAdaptedToGrid) {
+                object = this.adaptObjectToMap(object); // Adapt object to a grid
+            }
             this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
         });
     }
@@ -323,7 +323,6 @@ export class MouseInteractor implements OnDestroy {
     paintObjectOnMap(object: any, layers: OurKonvaLayers): void {
         if (object?.state === 'square') {
             const createdObject = OurKonvaRect.paint(object, layers);
-            this.applyTransformEndToNewObject(createdObject);
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'text') {
