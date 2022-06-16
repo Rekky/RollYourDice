@@ -4,11 +4,11 @@ import {AssetModel, AssetType} from '../../../classes/AssetModel';
 import {AssetService} from '../../../services/asset.service';
 
 @Component({
-    selector: 'app-assets-list-tools',
-    templateUrl: './assets-list-tools.component.html',
-    styleUrls: ['./assets-list-tools.component.scss']
+    selector: 'app-assets-list',
+    templateUrl: './assets-list.component.html',
+    styleUrls: ['./assets-list.component.scss']
 })
-export class AssetsListToolsComponent {
+export class AssetsListComponent {
 
     @Input() assets: AssetModel[] = [];
     @Output() assetsChange: EventEmitter<any> = new EventEmitter();

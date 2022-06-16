@@ -194,7 +194,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         } else if (tab === 2){
             this.leftSidebarTitle = 'ASSETS';
         } else {
-            this.leftSidebarTitle = 'UNKNOWN';
+            this.leftSidebarTitle = 'CAMERAS';
         }
     }
 

@@ -41,23 +41,17 @@
 
     <!--   TABS 1   -->
     <div *ngIf="tabs === 1">
-        <div class="item" *ngFor="let obj of currentMap.objects;let i = index">
-            <div class="item-content">
-                <div>{{obj.state}}</div>
-                <div>
-                    <img width="16px" src="assets/icons/points.png" alt="options" (click)="toggleObjectOption(obj, i)">
-                    <div class="item-options box-shadow" *ngIf="openObjectOption === i">
-                        <div class="item" (click)="editObject(obj, $event)">Edit</div>
-                        <div class="item" (click)="deleteObject(obj, $event)">Delete</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <app-objects-list [objects]="currentMap.objects"></app-objects-list>
     </div>
 
     <!--   TABS 2   -->
     <div *ngIf="tabs === 2">
-        <app-assets-list-tools></app-assets-list-tools>
+        <app-assets-list></app-assets-list>
+    </div>
+
+    <!--   TABS 3   -->
+    <div *ngIf="tabs === 3">
+        camerasa
     </div>
 </div>
 
@@ -73,6 +67,6 @@
         <img height="25px" src="assets/icons/gallery.png" alt="assets">
     </div>
     <div class="tab" [class.active]="tabs === 3" (click)="tabs = 3;tabsChange.emit(tabs)">
-        <img height="25px" src="assets/icons/mouse.png" alt="mouse">
+        <img height="25px" src="assets/icons/camera.png" alt="camera">
     </div>
 </div>

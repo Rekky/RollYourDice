@@ -1,0 +1,11 @@
+<div style="position: relative">
+    <div class="objects-list">
+        <div class="item" *ngFor="let obj of objects;let i = index">
+            <span>{{obj.state}}</span>
+            <app-mini-menu>
+                <div class="menu-item" (click)="editObject(obj, $event)">Edit</div>
+                <div class="menu-item" (click)="deleteObject(obj, $event)">Delete</div>
+            </app-mini-menu>
+        </div>
+    </div>
+</div>

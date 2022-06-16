@@ -32,8 +32,9 @@ import { MapEditComponent } from './map-list-tools/map-edit/map-edit.component';
 import { GameStatusToolsComponent } from './game-status-tools/game-status-tools.component';
 import { MapZoomToolsComponent } from './map-zoom-tools/map-zoom-tools.component';
 import { PropertiesListToolsComponent } from './properties-list-tools/properties-list-tools.component';
-import { AssetsListToolsComponent } from './assets-list-tools/assets-list-tools.component';
+import { AssetsListComponent } from './assets-list/assets-list.component';
 import { NumberInputComponent } from './context-menu/custom-inputs/number-input/number-input.component';
+import { ObjectsListComponent } from './objects-list/objects-list.component';
 
 @NgModule({
     declarations: [
@@ -60,8 +61,9 @@ import { NumberInputComponent } from './context-menu/custom-inputs/number-input/
         GameStatusToolsComponent,
         MapZoomToolsComponent,
         PropertiesListToolsComponent,
-        AssetsListToolsComponent,
+        AssetsListComponent,
         NumberInputComponent,
+        ObjectsListComponent,
     ],
     imports: [
         CommonModule,
