@@ -173,6 +173,11 @@ export class SocketService {
         this.socket.emit('game-editor-update-map-object', {mapId, object});
     }
 
+    newUpdateGameObject(mapId: string, objects: any[]): void {
+        console.log('Called new update game object =', objects);
+        this.socket.emit('game-editor-update-map-object', {mapId, object: objects});
+    }
+
     deleteGameObject(mapId: string, object: any): void {
         this.socket.emit('game-editor-delete-map-object', {mapId, objectId: object.id});
         const mod = OurKonvaMapModification.generateModification('delete', {mapId, object});

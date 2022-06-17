@@ -180,7 +180,7 @@ export class MouseInteractor implements OnDestroy {
                 object = this.adaptObjectToMap(object); // Adapt object to a grid
                 // this.selectedKonvaObjects.next([object]);
             }
-            this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
+            this.socketService.newUpdateGameObject(this.currentMap.id, [object.ourKonvaObject]);
         });
         selectedGroupTr?.on('transformend', (ev) => {
             const selectedGroup = selectedGroupTr.getNodes();
