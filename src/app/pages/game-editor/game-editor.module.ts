@@ -35,6 +35,7 @@ import { PropertiesListToolsComponent } from './properties-list-tools/properties
 import { AssetsListComponent } from './assets-list/assets-list.component';
 import { NumberInputComponent } from './context-menu/custom-inputs/number-input/number-input.component';
 import { ObjectsListComponent } from './objects-list/objects-list.component';
+import { CamerasListComponent } from './cameras-list/cameras-list.component';
 
 @NgModule({
     declarations: [
@@ -64,6 +65,7 @@ import { ObjectsListComponent } from './objects-list/objects-list.component';
         AssetsListComponent,
         NumberInputComponent,
         ObjectsListComponent,
+        CamerasListComponent,
     ],
     imports: [
         CommonModule,
