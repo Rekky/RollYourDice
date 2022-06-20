@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import { MapEditComponent } from './map-edit/map-edit.component';
 import {MatDialog} from '@angular/material/dialog';
+import {Camera} from '../../../classes/Camera';
 
 @Component({
     selector: 'app-map-list-tools',
@@ -82,22 +83,12 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         this.isEditNameDisplayed = null;
     }
 
-    toggleMapOption(map: OurKonvaMap, option: number, e?): void {
-        e?.stopPropagation();
-        if (this.openMapOption === option) {
-            this.openMapOption = null;
-        }
-        else {
-            this.openMapOption = option;
-        }
-    }
-
     onDragulaMapsChange(maps: any): void {
         this.maps = maps;
         this.mapsChange.emit(this.maps);
     }
 
-    // OTHERS ===========================================================================================================
+    // ==== OTHERS ==== //
     toPlayersMap(map: OurKonvaMap): void {
         // map.toPlayers = !map.toPlayers;
         this.toPlayersMapEvent.emit(map);

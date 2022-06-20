@@ -94,6 +94,11 @@ export class SocketService {
             this.mapInteractor.setCurrentMapMod(mod);
         });
 
+        // ======================== MAP CAMERAS ================================
+        this.socket.on('game-editor-create-map-camera', (data: any) => {
+
+        });
+
         // ======================== SOCIAL =====================================
         this.socket.on('social-join-game-request', (data) => {
             this.myAdventuresInteractor.updateGamePlayersRequested(data);
@@ -161,7 +166,7 @@ export class SocketService {
         this.socket.emit('game-status', {gameId, status});
     }
 
-    //////////////////////////////////////////////////////////////////////
+    ////////////////////// OBJECTS //////////////////////////////
 
     createGameObject(mapId: string, object: any): void {
         console.log('Called create game object');
@@ -179,7 +184,20 @@ export class SocketService {
         this.mapInteractor.setCurrentMapMod(mod);
     }
 
-    //////////////////////////////////////////////////////////////////////
+    ///////////////////////// CAMERAS //////////////////////////////////
+    createCamera(mapId: string, camera: any): void {
+        this.socket.emit('game-editor-create-map-camera', {mapId, camera});
+    }
+
+    updateCamera(mapId: string, camera: any): void {
+        this.socket.emit('game-editor-update-map-camera', {mapId, camera});
+    }
+
+    deleteCamera(mapId: string, camera: any): void {
+        this.socket.emit('game-editor-delete-map-camera', {mapId, camera});
+    }
+
+    ///////////////////////// REQUESTS //////////////////////////////////
 
     requestJoinGame(gameId: string, authorId: string): void {
         this.socket.emit('social-join-game-request', {gameId, authorId});

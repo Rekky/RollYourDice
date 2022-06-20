@@ -1,4 +1,4 @@
-<div class="container-list">
+<div style="position: relative;">
     <div class="cameras-list">
         <div class="item" *ngFor="let camera of cameras">
             <div class="preview">
@@ -9,6 +9,9 @@
                 </app-mini-menu>
             </div>
         </div>
+    </div>
+    <div class="add-control">
+        <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="createCamera()">
     </div>
 </div>
 
