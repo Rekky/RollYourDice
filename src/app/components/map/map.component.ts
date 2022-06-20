@@ -114,6 +114,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         if (this.modification) {
             if (this.modification.type === 'create') {
+                console.log(this.modification);
                 this.modification.objects.forEach(object => {
                     this.mouseInteractor.paintObjectOnMap(object, this.layers);
                 });

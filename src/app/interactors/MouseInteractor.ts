@@ -105,8 +105,7 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.mouseOut();
         }, false);
 
-        const draws = layers.draws as any;
-        const selectedGroupTr: Konva.Transformer = draws.find('#tr-selectedObjects')[0];
+        const selectedGroupTr: Konva.Transformer = layers.draws.getChildren()[0] as Konva.Transformer;
         selectedGroupTr?.on('transformend', (ev) => {
             const selectedGroup = selectedGroupTr.getNodes();
             const selectedObjects = this.selectedKonvaObjects?.getValue();
@@ -229,12 +228,14 @@ export class MouseInteractor implements OnDestroy {
 
     unsetSelectedKonvaObject(): void {
         const selectedKonvaObjects = this.selectedKonvaObjects.getValue();
-        if (selectedKonvaObjects) {
+        if (selectedKonvaObjects.length > 0) {
             selectedKonvaObjects.forEach((selectedKonvaObject) => {
                 selectedKonvaObject.konvaObject.draggable(false);
-                selectedKonvaObject.transformer.hide();
                 selectedKonvaObject.layer.batchDraw();
             });
+
+            const selectedGroupTr: Konva.Transformer = selectedKonvaObjects[0].layer.getChildren()[0] as Konva.Transformer;
+            selectedGroupTr.nodes([]);
         }
         this.selectedKonvaObjects.next([]);
     }

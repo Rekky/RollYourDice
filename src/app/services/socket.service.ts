@@ -80,7 +80,10 @@ export class SocketService {
 
         // ======================== MAP OBJECTS ================================
         this.socket.on('game-editor-create-map-object', (data: any) => {
-            const mod = OurKonvaMapModification.generateModification('create', data);
+            const mod = OurKonvaMapModification.generateModification('create', {
+                mapId: data.mapId,
+                objects: [data.object]
+            });
             this.mapInteractor.setCurrentMapMod(mod);
         });
 
