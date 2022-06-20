@@ -4,9 +4,9 @@ import Konva from 'konva';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import { OurKonvaRect } from './OurKonvaRect';
 import { OurKonvaText } from './OurKonvaText';
-import {AssetModel} from '../AssetModel';
 import {OurKonvaImage} from './OurKonvaImage';
 import { ulid } from 'ulid';
+import {Camera} from '../Camera';
 
 export class  OurKonvaMap {
     id: string;
@@ -21,6 +21,7 @@ export class  OurKonvaMap {
     isDndDiagonalSystem: boolean;
     nZoom: number;
     objects: (OurKonvaRect | OurKonvaText | OurKonvaImage)[];
+    cameras: Camera[];
     characters: string[];
     stage: Konva.Stage;
     layers: OurKonvaLayers;
@@ -39,6 +40,10 @@ export class  OurKonvaMap {
         this.grid = new OurKonvaGrid();
         this.objects = [];
         this.characters = [];
+        this.cameras = [
+            {id: '1233123', name: 'Camera Test 1', x: 0, y: 0, width: 10, height: 50, active: false },
+            {id: '567657', name: 'Camera Test 2', x: 110, y: 10, width: 100, height: 100, active: false },
+        ];
         // this.stage = new Konva.Stage({
         //     container: 'map' + this.id,
         //     width: this.nColumns * this.grid.cellSize,

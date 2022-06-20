@@ -53,6 +53,7 @@ export class MapListToolsComponent implements OnInit, OnDestroy {
         ev?.stopPropagation();
         if (this.currentMap.id !== map.id) {
             this.currentMap = map;
+            console.log(this.currentMap);
             this.selectedMapEvent.emit(this.currentMap);
         }
     }

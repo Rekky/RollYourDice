@@ -51,7 +51,7 @@
 
     <!--   TABS 3   -->
     <div *ngIf="tabs === 3">
-        <app-cameras-list></app-cameras-list>
+        <app-cameras-list [cameras]="currentMap.cameras"></app-cameras-list>
     </div>
 </div>
 
