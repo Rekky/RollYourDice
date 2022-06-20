@@ -59,19 +59,19 @@ export class  OurKonvaMap {
 
 export class OurKonvaMapModification {
     type: string;
-    object: any;
+    objects: any;
     mapId: string;
 
     constructor() {
         this.type = null;
-        this.object = null;
+        this.objects = null;
         this.mapId = null;
     }
 
     static generateModification(type: string, data: any): OurKonvaMapModification {
         const mod = new OurKonvaMapModification();
         mod.type = type;
-        mod.object = data.object;
+        mod.objects = data.objects;
         mod.mapId = data.mapId;
         return mod;
     }

@@ -29,6 +29,7 @@ export class MouseInteractor implements OnDestroy {
     stage: Konva.Stage;
     currentMap: OurKonvaMap = null;
     isCtrlKeyPressed: boolean = false;
+    mouseIsOverKonvaObjectId: string;
 
     constructor(private mouseService: MouseService,
                 private mapObjectService: MapObjectService,
@@ -38,13 +39,13 @@ export class MouseInteractor implements OnDestroy {
                 this.mouse = res;
             }
         });
-        this.selectedKonvaObjectSubscription = this.getSelectedKonvaObjectObservable().subscribe((object: CurrentSelectedKonvaObject[]) => {
-            if (object) {
+        this.selectedKonvaObjectSubscription = this.getSelectedKonvaObjectObservable().subscribe(
+            (selectedObjects: CurrentSelectedKonvaObject[]) => {
+            if (selectedObjects) {
                 document.onkeyup = (ev) => {
                     if (ev.key === 'Delete' && document.activeElement.tagName !== 'INPUT') {
-                        object.forEach((o) => {
-                            this.socketService.deleteGameObject(this.currentMap.id, o.ourKonvaObject);
-                        });
+                        const ourSelectedKonvaObjects = selectedObjects.map(obj => obj.ourKonvaObject);
+                        this.socketService.deleteGameObject(this.currentMap.id, ourSelectedKonvaObjects);
                         this.selectedKonvaObjects.next([]);
                     }
                 };
@@ -77,18 +78,7 @@ export class MouseInteractor implements OnDestroy {
                 this.selectedKonvaObjects.next([]);
             }
 
-
             this.mouse.mouseDown(); // Executa la funció mouseDown() que correspongui a l'estat en el que està el ratolí
-
-            // const mouseDown = this.mouse.mouseDown(); // Agafa la funció mouseDown() que correspongui a l'estat en el que està el ratolí
-            // if (mouseDown) {
-            //     // this.mouseService.setMouse(new OurKonvaPointer());
-            //     if (this.mouse.state === 'text') {
-            //         // const ourKonvaElement = OurKonvaText.getOurKonvaText(konvaElement.konvaObject as Konva.Text);
-            //         // this.addKonvaObjectToMap(ourKonvaElement, map);
-            //     }
-            //     this.newObjectAddSelectedOption(mouseDown);
-            // }
         }, false);
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {
@@ -114,6 +104,37 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.ev = e;
             this.mouse.mouseOut();
         }, false);
+
+        const draws = layers.draws as any;
+        const selectedGroupTr: Konva.Transformer = draws.find('#tr-selectedObjects')[0];
+        selectedGroupTr?.on('transformend', (ev) => {
+            const selectedGroup = selectedGroupTr.getNodes();
+            const selectedObjects = this.selectedKonvaObjects?.getValue();
+            const scale: {scaleX: number, scaleY: number} = {
+                scaleX: ev.target.attrs.scaleX,
+                scaleY: ev.target.attrs.scaleY
+            };
+            selectedGroup.forEach(object => {
+                const newWidth = Math.round(object.getAttr('width') * scale.scaleX);
+                const newHeight = Math.round(object.getAttr('height') * scale.scaleY);
+                object.setAttr('scaleX', 1);
+                object.setAttr('scaleY', 1);
+                object.setAttr('width', newWidth);
+                object.setAttr('height', newHeight);
+
+                let mySelectedObjectReference = selectedObjects.find(obj => obj.ourKonvaObject.id === object.getAttr('id'));
+                mySelectedObjectReference.konvaObject = object;
+                mySelectedObjectReference.ourKonvaObject.size.width = newWidth;
+                mySelectedObjectReference.ourKonvaObject.size.height = newHeight;
+                if (mySelectedObjectReference.ourKonvaObject.isAdaptedToGrid) {
+                    mySelectedObjectReference = this.adaptObjectToMap(mySelectedObjectReference); // Adapt object to a grid
+                }
+            });
+
+            this.selectedKonvaObjects.next(selectedObjects);
+            const ourSelectedKonvaObjects = selectedObjects.map(obj => obj.ourKonvaObject);
+            this.socketService.updateGameObjects(this.currentMap.id, ourSelectedKonvaObjects);
+        });
     }
 
     addMouseKonvaObjectToMap(object: any): void {
@@ -129,11 +150,13 @@ export class MouseInteractor implements OnDestroy {
     newObjectSetEvents(object: any): void {
         const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
         object?.konvaObject.on('mouseover', (e) => {
-          if (!object.ourKonvaObject.isEditionBlocked) {
-              document.body.style.cursor = 'pointer';
-          }
+            this.mouseIsOverKonvaObjectId = object.ourKonvaObject.id;
+            if (!object.ourKonvaObject.isEditionBlocked) {
+                document.body.style.cursor = 'pointer';
+            }
         });
         object?.konvaObject.on('mouseout', (e) => {
+            this.mouseIsOverKonvaObjectId = null;
             document.body.style.cursor = 'default';
         });
         object?.konvaObject.on('click', () => {
@@ -180,125 +203,31 @@ export class MouseInteractor implements OnDestroy {
                 object = this.adaptObjectToMap(object); // Adapt object to a grid
                 // this.selectedKonvaObjects.next([object]);
             }
-            this.socketService.newUpdateGameObject(this.currentMap.id, [object.ourKonvaObject]);
-        });
-        selectedGroupTr?.on('transformend', (ev) => {
-            const selectedGroup = selectedGroupTr.getNodes();
-            const isSelected = selectedGroup.find(o => {
-                return o.getAttr('id') === object.ourKonvaObject.id;
-            });
-            if (!isSelected) { return; }
-
             const selectedObjects = this.selectedKonvaObjects?.getValue();
-            const newWidth = Math.round(object?.konvaObject.getAttr('width') * ev.target.attrs.scaleX);
-            const newHeight = Math.round(object?.konvaObject.getAttr('height') * ev.target.attrs.scaleY);
-            object.konvaObject.setAttr('scaleX', 1);
-            object.konvaObject.setAttr('scaleY', 1);
-            object.konvaObject.setAttr('width', newWidth);
-            object.konvaObject.setAttr('height', newHeight);
-            if (object.ourKonvaObject.isAdaptedToGrid) {
-                object = this.adaptObjectToMap(object); // Adapt object to a grid
+            const amITheLastElement = selectedObjects[selectedObjects.length - 1]?.ourKonvaObject.id === object.ourKonvaObject.id;
+            const amIThePreLastElement = selectedObjects[selectedObjects.length - 2]?.ourKonvaObject.id === object.ourKonvaObject.id;
+            const isMouseDraggingLastElement = selectedObjects[selectedObjects.length - 1].ourKonvaObject.id === this.mouseIsOverKonvaObjectId;
+
+            if (selectedObjects.length > 1 && isMouseDraggingLastElement && amITheLastElement) { return; }
+
+            if (isMouseDraggingLastElement && amIThePreLastElement) {
+                const ourSelectedKonvaObjectsPre = selectedObjects.map(obj => obj.ourKonvaObject);
+                this.socketService.updateGameObjects(this.currentMap.id, ourSelectedKonvaObjectsPre);
+                return;
             }
-            this.socketService.updateGameObject(this.currentMap.id, object.ourKonvaObject);
+
+            if (!amITheLastElement) { return; }
+
+            const ourSelectedKonvaObjects = selectedObjects.map(obj => obj.ourKonvaObject);
+            this.socketService.updateGameObjects(this.currentMap.id, ourSelectedKonvaObjects);
         });
-    }
-
-    clickMapObject(object: any): void {
-        // this.mouseService.setMouse(new OurKonvaPointer());
-        // const obj = this.stage.find('#' + object.id)[0];
-        // const childrens = obj.getLayer().getChildren().toArray();
-        // childrens.forEach(child => {
-        //     const id = child.getAttr('id');
-        //     if (id.startsWith('tr-')) {
-        //         if (id === ('tr-' + obj.getAttr('id'))) {
-        //             child.show();
-        //             child.getLayer().batchDraw();
-        //             const currentSelectedKonvaObject = new CurrentSelectedKonvaObject();
-        //             if (object.state === 'square') {
-        //                 (obj as Konva.Rect).draggable(true);
-        //                 currentSelectedKonvaObject.konvaObject = obj as Konva.Rect;
-        //             } else if (object.state === 'image') {
-        //                 (obj as Konva.Image).draggable(true);
-        //                 currentSelectedKonvaObject.konvaObject = obj as Konva.Image;
-        //             } else if (object.state === 'text') {
-        //                 (obj as Konva.Text).draggable(true);
-        //                 currentSelectedKonvaObject.konvaObject = obj as Konva.Text;
-        //             }
-        //             currentSelectedKonvaObject.type = object.state;
-        //             currentSelectedKonvaObject.layer = child.getLayer();
-        //             currentSelectedKonvaObject.transformer = child as Konva.Transformer;
-        //             this.selectedKonvaObjects.next(currentSelectedKonvaObject);
-        //         } else {
-        //             child.hide();
-        //             child.getLayer().batchDraw();
-        //         }
-        //     } else {
-        //         if (id !== ('tr-' + obj.getAttr('id'))) {
-        //             if (id !== obj.getAttr('id')) {
-        //                 child.setAttr('draggable', false);
-        //             }
-        //         }
-        //     }
-        // });
-        // this.modifyOtherLayers(obj);
-    }
-
-    modifyOtherLayers(obj: any): void {
-        // const layers = this.stage.getLayers().toArray();
-        // const getMyLayerIndex = layers.findIndex(layer => {
-        //     return layer.getChildren().toArray().find(child => child.getAttr('id') === obj.getAttr('id'));
-        // });
-        // layers.splice(getMyLayerIndex, 1);
-        // layers.forEach(layer => {
-        //     layer.getChildren().toArray().forEach(child => {
-        //         if (child.getAttr('id').startsWith('tr-')) {
-        //             child.hide();
-        //             child.getLayer().batchDraw();
-        //         } else {
-        //             if (child.getAttr('draggable')) {
-        //                 child.setAttr('draggable', false);
-        //             }
-        //         }
-        //     });
-        // });
     }
 
     setStage(stage: Konva.Stage): void {
         this.stage = stage;
     }
 
-    // setSelectedKonvaObject(object: any): void {
-    //     if (object.state === 'square') {
-    //         console.log('ourKonvaRect =', object);
-    //         console.log('selectedKonvaObjects =', this.selectedKonvaObjects.getValue());
-    //         // this.selectedKonvaObjects.next(ourKonvaRect);
-    //     }
-    // }
-
-    // setSelectedKonvaObject(object: CurrentSelectedKonvaObject | null): void {
-    //     if (object) {
-    //         if (this.selectedKonvaObjects?.getValue()?.konvaObject.getAttr('id') !== object.konvaObject.getAttr('id')) {
-    //             if (this.selectedKonvaObjects && this.selectedKonvaObjects.getValue()) {
-    //                 this.selectedKonvaObjects.getValue().konvaObject.draggable(false);
-    //                 this.selectedKonvaObjects.getValue().transformer.hide();
-    //                 this.selectedKonvaObjects.getValue().layer.batchDraw();
-    //             }
-    //         }
-    //         object.konvaObject.draggable(true);
-    //         object.transformer.show();
-    //         object.layer.batchDraw();
-    //     } else {
-    //         if (this.selectedKonvaObjects && this.selectedKonvaObjects.getValue()) {
-    //             this.selectedKonvaObjects.getValue().konvaObject.draggable(false);
-    //             this.selectedKonvaObjects.getValue().transformer.hide();
-    //             this.selectedKonvaObjects.getValue().layer.batchDraw();
-    //         }
-    //     }
-    //     this.selectedKonvaObjects.next(object);
-    // }
-
     unsetSelectedKonvaObject(): void {
-        console.log('unsetSelectedKonvaObject');
         const selectedKonvaObjects = this.selectedKonvaObjects.getValue();
         if (selectedKonvaObjects) {
             selectedKonvaObjects.forEach((selectedKonvaObject) => {
@@ -344,26 +273,19 @@ export class MouseInteractor implements OnDestroy {
     }
 
     updateObject(object: OurKonvaMouse): void {
-        this.socketService.updateGameObject(this.currentMap.id, object);
+        this.socketService.updateGameObjects(this.currentMap.id, [object]);
     }
 
-    deleteObjectOnMap(mod: OurKonvaMapModification): void {
-        const obj = this.stage.find('#' + mod.object.id)[0];
+    deleteObjectOnMap(selectedObject: any): void {
+        console.log(selectedObject);
+        const obj = this.stage.find('#' + selectedObject.id)[0];
         const childrens = obj?.getLayer().getChildren().slice();
         childrens.forEach(child => {
             const id = child.getAttr('id');
-            if (id.startsWith('tr-')) {
-                if (id === ('tr-' + mod.object.id)) {
-                    const layer = child.getLayer();
-                    child.destroy();
-                    layer.batchDraw();
-                }
-            } else {
-                if (id === mod.object.id) {
-                    const layer = child.getLayer();
-                    child.destroy();
-                    layer.batchDraw();
-                }
+            if (id === selectedObject.id) {
+                const layer = child.getLayer();
+                child.destroy();
+                layer.batchDraw();
             }
         });
     }

@@ -71,7 +71,7 @@ export class OurKonvaMouse {
 }
 
 export class CurrentSelectedKonvaObject {
-    konvaObject: Konva.Rect | Konva.Text | Konva.Image | Konva.Line;
+    konvaObject: Konva.Rect | Konva.Text | Konva.Image | Konva.Line | Konva.Node;
     ourKonvaObject: OurKonvaRect | OurKonvaText | OurKonvaImage | OurKonvaBrush;
     type: string;
     layer: Konva.Layer;

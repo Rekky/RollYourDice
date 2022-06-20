@@ -8,7 +8,7 @@
     <div #mapEl id="map{{map.id}}" (click)="setCurrentObjectSelected($event, map, 'map')"></div>
 </div>
 <app-selected-object-editor *ngIf="displaySelectedObjectEditor &&
-                            currentMapObjectSelected.length === 1"
-                            [selectedObject]="currentMapObjectSelected[0]"
+                            currentMapObjectsSelected.length === 1"
+                            [selectedObject]="currentMapObjectsSelected[0]"
                             [position]="selectedObjectEditorPosition">
 </app-selected-object-editor>
