@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PageAsset} from '../../classes/web/PageAsset';
 
 @Component({
   selector: 'asset',
@@ -8,7 +7,7 @@ import {PageAsset} from '../../classes/web/PageAsset';
 })
 export class AssetComponent implements OnInit {
 
-  @Input() asset: PageAsset | null = null;
+  @Input() asset: any = null;
   @Input() src: string | null = null;
   @Input() alt: string | null = null;
 
