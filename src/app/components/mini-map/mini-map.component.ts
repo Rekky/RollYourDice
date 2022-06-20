@@ -32,10 +32,10 @@ export class MiniMapComponent implements AfterViewInit {
     initializeMap(): void {
         const stage = new Konva.Stage({
             container: 'mini-map-' + this.map?.id,
-            width: 290,
-            height: 170,
+            width: 292,
+            height: 165,
             draggable: false,
-            scale: {x: 0.3, y: 0.3}
+            scale: {x: 0.2, y: 0.2}
         });
         stage.container().style.backgroundColor = '#f2f2f2';
         this.drawGrid();

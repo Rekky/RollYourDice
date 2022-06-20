@@ -1,1 +1,14 @@
-<p>cameras-list works!</p>
+<div class="container-list">
+    <div class="cameras-list">
+        <div class="item" *ngFor="let camera of cameras">
+            <div class="preview">
+                <div class="preview-name">{{camera.name}}</div>
+                <app-mini-menu>
+                    <div class="menu-item" (click)="rename(camera, $event)">Rename</div>
+                    <div class="menu-item" (click)="delete(camera, $event)">Delete</div>
+                </app-mini-menu>
+            </div>
+        </div>
+    </div>
+</div>
+

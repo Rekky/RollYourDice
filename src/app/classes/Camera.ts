@@ -1,5 +1,8 @@
+import {ulid} from 'ulid';
+
 export class Camera {
     id: string;
+    name: string;
     width: number;
     height: number;
     x: number;
@@ -7,8 +10,9 @@ export class Camera {
     z?: number;
     active: boolean;
 
-    constructor() {
-        this.id = null;
+    constructor(id?: string, name?: string) {
+        this.id = id ? id : ulid();
+        this.name = name ? name : 'New Camera';
         this.width = 0;
         this.height = 0;
         this.x = 0;
