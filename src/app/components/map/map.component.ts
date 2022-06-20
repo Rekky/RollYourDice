@@ -17,6 +17,7 @@ import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
+import {Player} from '../../classes/User';
 
 @Component({
     selector: 'app-map',
@@ -114,7 +115,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         if (this.modification) {
             if (this.modification.type === 'create') {
-                console.log(this.modification);
                 this.modification.objects.forEach(object => {
                     this.mouseInteractor.paintObjectOnMap(object, this.layers);
                 });

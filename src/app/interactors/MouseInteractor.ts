@@ -11,7 +11,6 @@ import {OurKonvaImage} from '../classes/ourKonva/OurKonvaImage';
 import {OurKonvaText} from '../classes/ourKonva/OurKonvaText';
 import {SocketService} from '../services/socket.service';
 import {MapObjectService} from '../services/map-object.service';
-import {OurKonvaGrid} from '../classes/ourKonva/OurKonvaGrid';
 import {Coords} from '../classes/Coords';
 import {OurKonvaBrush} from '../classes/ourKonva/OurKonvaBrush';
 
@@ -84,13 +83,50 @@ export class MouseInteractor implements OnDestroy {
         mapEl.nativeElement.addEventListener('mousemove', (e) => {
             this.mouse.ev = e;
             this.mouse.mouseMove();
+
+            if (this.mouse.isActive && this.mouse.state === 'pointer') {
+                const selectedObjects = this.selectedKonvaObjects.getValue();
+                const nodes = selectedGroupTr.getNodes();
+                const mapObjects = layers.draws.getChildren();
+                const mouse = this.mouse as OurKonvaPointer;
+                mapObjects.forEach((object, i) => {
+                    const isObjectSelected = nodes.find(selObj => {
+                        return object.getAttr('id') === selObj.getAttr('id');
+                    });
+                    if (object.getAttr('id') === 'tr-selectedObjects' || i === mapObjects.length - 1) {
+                        return;
+                    }
+                    if (this.isHitCheck(object, mouse.tempRect) && !isObjectSelected) {
+                        selectedGroupTr.nodes(nodes.concat([object]));
+                        // const toEmit = new CurrentSelectedKonvaObject();
+                        // const ourKonvaObject = map.objects.find(obj => obj.id === object.getAttr('id'));
+                        // toEmit.ourKonvaObject = ourKonvaObject;
+                        // toEmit.konvaObject = object;
+                        // toEmit.type = object.getAttr('type');
+                        // toEmit.layer = layers.draws;
+                        // selectedObjects.push(toEmit);
+                        // this.selectedKonvaObjects.next(selectedObjects);
+                    }
+                    if (!this.isHitCheck(object, mouse.tempRect) && isObjectSelected) {
+                        const selectObjIndex = nodes.findIndex(selObj => {
+                            return object.getAttr('id') === selObj.getAttr('id');
+                        });
+                        nodes.splice(selectObjIndex, 1);
+                        selectedGroupTr.nodes(nodes);
+                    }
+                });
+            }
         }, false);
 
         mapEl.nativeElement.addEventListener('mouseup', (e) => {
+            let konvaElement = this.mouse.mouseUp();
+            this.mouse.isActive = false;
+            this.mouse.ev = e;
+            if (this.mouse.state === 'pointer') {
+                this.mouseService.setMouse(new OurKonvaPointer());
+                return;
+            }
             if (this.mouse.state !== 'pointer') {
-                this.mouse.isActive = false;
-                this.mouse.ev = e;
-                let konvaElement = this.mouse.mouseUp();
                 if (konvaElement.ourKonvaObject.isAdaptedToGrid) {
                     konvaElement = this.adaptObjectToMap(konvaElement); // Adapt object to a grid
                 }
@@ -136,6 +172,35 @@ export class MouseInteractor implements OnDestroy {
         });
     }
 
+    isHitCheck(shape1, shape2): boolean{
+        const s1 = shape1.getClientRect(); // use this to get bounding rect for shapes other than rectangles.
+        const s2 = shape2.getClientRect();
+
+        // console.log(s1, s2);
+
+        // corners of shape 1
+        const X = s1.x;
+        const Y  = s1.y;
+        const A = s1.x + s1.width;
+        const B = s1.y + s1.height;
+
+        // corners of shape 2
+        const X1 = s2.x;
+        const A1 = s2.x + s2.width;
+        const Y1 = s2.y;
+        const B1 = s2.y + s2.height;
+        // console.log(A < X1, A1 < X, B < Y1, B1 < Y);
+
+        // Simple overlapping rect collision test
+        if (A < X1 || A1 < X || B < Y1 || B1 < Y) {
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
     addMouseKonvaObjectToMap(object: any): void {
         this.socketService.createGameObject(this.currentMap.id, object);
         this.currentMap.objects.push(object.ourKonvaObject);
@@ -149,10 +214,10 @@ export class MouseInteractor implements OnDestroy {
     newObjectSetEvents(object: any): void {
         const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
         object?.konvaObject.on('mouseover', (e) => {
-            this.mouseIsOverKonvaObjectId = object.ourKonvaObject.id;
             if (!object.ourKonvaObject.isEditionBlocked) {
                 document.body.style.cursor = 'pointer';
             }
+            this.mouseIsOverKonvaObjectId = object.ourKonvaObject.id;
         });
         object?.konvaObject.on('mouseout', (e) => {
             this.mouseIsOverKonvaObjectId = null;
@@ -160,7 +225,7 @@ export class MouseInteractor implements OnDestroy {
         });
         object?.konvaObject.on('click', () => {
             if (this.mouse.state !== 'pointer') { return; }
-            const selectedGroup = selectedGroupTr.getNodes();
+            const nodes = selectedGroupTr.getNodes();
             const selectedObjects = this.selectedKonvaObjects?.getValue();
 
             if (this.isCtrlKeyPressed) {
@@ -169,30 +234,30 @@ export class MouseInteractor implements OnDestroy {
                 });
                 if (objectAlreadySelectedIndex >= 0) {
                     selectedObjects.splice(objectAlreadySelectedIndex, 1);
-                    selectedGroup.splice(objectAlreadySelectedIndex, 1);
+                    nodes.splice(objectAlreadySelectedIndex, 1);
                     object.layer.add(object.konvaObject);
-                    selectedGroupTr.nodes(selectedGroup);
+                    selectedGroupTr.nodes(nodes);
                     object.layer.batchDraw();
                     this.selectedKonvaObjects.next(selectedObjects);
                     return;
                 }
             }
 
-            if (!this.isCtrlKeyPressed && selectedGroup) {
+            if (!this.isCtrlKeyPressed && nodes) {
                 const children = [];
-                selectedGroup.forEach((o) => {
+                nodes.forEach((o) => {
                     children.push(o);
                     object.layer.add(o);
                     selectedObjects.splice(0, 1);
                 });
                 children.forEach((o) => {
-                    selectedGroup.splice(0, 1);
+                    nodes.splice(0, 1);
                 });
             }
 
             if (!object.ourKonvaObject.isEditionBlocked) {
                 selectedObjects.push(object);
-                selectedGroupTr.nodes(selectedGroup.concat([object.konvaObject]));
+                selectedGroupTr.nodes(nodes.concat([object.konvaObject]));
             }
             object.layer.batchDraw();
             this.selectedKonvaObjects.next(selectedObjects);
