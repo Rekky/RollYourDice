@@ -137,6 +137,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     onSelectedMap(ev: OurKonvaMap): void {
         this.currentZoomOptions.value = 1;
         this.mapInteractor.setCurrentMap(ev);
+        this.socketService.sendMetaSelectedMap(this.mapInteractor.getCurrentMap().id);
     }
 
     onCreateMap(map: OurKonvaMap): void {

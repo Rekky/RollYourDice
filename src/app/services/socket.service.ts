@@ -137,6 +137,10 @@ export class SocketService {
         this.socket.emit('game-play-load', {gameId, userId});
     }
 
+    sendMetaSelectedMap(mapId: string): void {
+        this.socket.emit('meta-selected-map', {mapId});
+    }
+
     sendGameCreateMap(gameId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-create-map', {gameId, map});
     }
