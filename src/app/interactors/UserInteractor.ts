@@ -10,7 +10,7 @@ import {Session} from '../classes/Session';
 })
 export class UserInteractor {
 
-    private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+    userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
     constructor(private userService: UserService,
                 private storageService: StorageService) {
@@ -23,6 +23,7 @@ export class UserInteractor {
 
     async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
         const response = await this.userService.signIn(email, password);
+        console.log(response);
         if (response.session) {
             this.setLoginSession(response.session);
         }

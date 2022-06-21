@@ -81,7 +81,14 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
             // 2. Call to get map's list and set first map as selected
             this.maps = await this.mapInteractor.getAllMaps(gameId);
-            this.mapInteractor.setCurrentMap(this.maps[0]);
+
+            // 2.1 Seteo de meta
+            const metaMapIndex = this.maps.findIndex(map => map.id === this.userInteractor.getCurrentUser()?.meta?.selectedMapId);
+            if (metaMapIndex !== -1) {
+                this.mapInteractor.setCurrentMap(this.maps[metaMapIndex]);
+            } else {
+                this.mapInteractor.setCurrentMap(this.maps[0]);
+            }
 
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);

@@ -148,7 +148,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             draggable: false,
             scale: {x: this.scale, y: this.scale}
         });
-        console.log('hey', this.scale);
 
         stage.container().style.backgroundColor = '#f2f2f2';
 

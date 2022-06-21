@@ -44,6 +44,12 @@ export class SocketService {
             console.log('RECIBO_GAME_EDITOR_LOAD', data);
         });
 
+        // =========================== META =====================================
+        this.socket.on('meta-selected-map', (data) => {
+            this.userInteractor.userSubject.value.meta = data.meta;
+            console.log('RECEIVE_META', data);
+        });
+
         // ========================= START MAPS ================================
         this.socket.on('game-editor-create-map', (data: OurKonvaMap) => {
             const game: Game = this.gameSocketSubscription.getValue();
@@ -70,9 +76,6 @@ export class SocketService {
         });
 
         // ======================== START GAME PLAY ============================
-        // this.socket.on('game-play-load', (data) => {
-        //     console.log('RECIBO_GAME_PLAY', data);
-        // });
         this.socket.on('game-status', (data) => {
             console.log('game-status', data);
             this.myAdventuresInteractor.updateGameStatus(data);
@@ -96,6 +99,9 @@ export class SocketService {
 
         // ======================== MAP CAMERAS ================================
         this.socket.on('game-editor-create-map-camera', (data: any) => {
+
+        });
+        this.socket.on('game-editor-delete-map-camera', (data: any) => {
 
         });
 
