@@ -49,6 +49,10 @@ export class SocketService {
             this.userInteractor.userSubject.value.meta = data.meta;
             console.log('RECEIVE_META', data);
         });
+        this.socket.on('meta-map', (data) => {
+            this.userInteractor.userSubject.value.meta = data.meta;
+            console.log('RECEIVE_MAP_META', data);
+        });
 
         // ========================= START MAPS ================================
         this.socket.on('game-editor-create-map', (data: OurKonvaMap) => {
@@ -121,11 +125,6 @@ export class SocketService {
         this.socket.on('social-kick-game-request', (data) => {
             this.myAdventuresInteractor.kickGamePlayers(data);
             this.gameInteractor.kickedGameId.next(data.gameId);
-            setTimeout(() => {
-                // this.myAdventuresInteractor.
-                console.log('entrassssss--->', data);
-                // if current game is equal to gameId sended
-            }, 2000);
         });
 
         this.socket.on('social-cancel-game-request', (data) => {
@@ -133,7 +132,7 @@ export class SocketService {
         });
     }
 
-    ////////////////////////////// SENDERSS ////////////////////////////////////
+    ////////////////////////////// SENDERS ////////////////////////////////////
     sendGameEditorId(gameId: string): void {
         this.socket.emit('game-editor-load', gameId);
     }
@@ -143,8 +142,13 @@ export class SocketService {
         this.socket.emit('game-play-load', {gameId, userId});
     }
 
+    ////////////////////////////// META //////////////////////////////////////
     sendMetaSelectedMap(mapId: string): void {
         this.socket.emit('meta-selected-map', {mapId});
+    }
+
+    sendMetaDragMap(mapId: string, attrs: any): void {
+        this.socket.emit('meta-drag-map', {mapId, attrs});
     }
 
     sendGameCreateMap(gameId: string, map: OurKonvaMap): void {

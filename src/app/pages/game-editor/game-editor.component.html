@@ -9,6 +9,7 @@
             [maxScale]="currentZoomOptions.max"
             [minScale]="currentZoomOptions.min"
             (scaleChange)="onScaleChange($event)"
+            (mapDragEvent)="onMapDrag($event)"
             ></app-map>
     </div>
 
@@ -26,7 +27,7 @@
         <div body>
             <app-map-list-tools
                 [maps]="maps"
-                [currentMap]="maps[0]"
+                [currentMap]="map"
                 [tabs]="0"
                 [displayed]="openMapList"
                 (mapsChange)="onMapsOrderChange($event)"

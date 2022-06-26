@@ -23,7 +23,7 @@ export class  OurKonvaMap {
     objects: (OurKonvaRect | OurKonvaText | OurKonvaImage)[];
     cameras: Camera[];
     characters: string[];
-    stage: Konva.Stage;
+    stage: Konva.Stage | any;
     layers: OurKonvaLayers;
 
     constructor() {
@@ -44,6 +44,7 @@ export class  OurKonvaMap {
             {id: '1233123', name: 'Camera Test 1', x: 0, y: 0, width: 10, height: 50, active: false },
             {id: '567657', name: 'Camera Test 2', x: 110, y: 10, width: 100, height: 100, active: false },
         ];
+        this.stage = {attrs: {x: 0, y: 0}};
         // this.stage = new Konva.Stage({
         //     container: 'map' + this.id,
         //     width: this.nColumns * this.grid.cellSize,

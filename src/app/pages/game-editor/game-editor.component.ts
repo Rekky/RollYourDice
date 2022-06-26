@@ -12,6 +12,8 @@ import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
 import {withIdentifier} from 'codelyzer/util/astQuery';
+import Konva from 'konva';
+import Stage = Konva.Stage;
 
 @Component({
     selector: 'app-game-editor',
@@ -26,7 +28,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     gameStatus: GameStatus = GameStatus.Stopped;
     GameStatus = GameStatus;
 
-    leftColumnTabs = LeftColumnTabs;
     tabs: LeftColumnTabs = LeftColumnTabs.Library;
     currentObjectSelected: any;
     mouse: any;
@@ -89,6 +90,18 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             } else {
                 this.mapInteractor.setCurrentMap(this.maps[0]);
             }
+
+            // 2.2 Seteo de meta 2
+            // this.map.stage = new Stage(this.userInteractor.getCurrentUser()?.meta?.maps[0]);
+            const metaMaps = this.userInteractor.getCurrentUser()?.meta?.maps ?? [];
+            const foundMetaMap = metaMaps.find(map => map.id === this.mapInteractor.getCurrentMap().id);
+            if (foundMetaMap) {
+                console.log('foundMetaMap', foundMetaMap);
+                this.currentZoomOptions.value = foundMetaMap.zoom;
+                console.log('stage', this.map.stage);
+                this.map.stage.attrs = foundMetaMap;
+            }
+
 
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);
@@ -185,6 +198,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         // this.socketService.sendGameSetToPlayersMap(this.game.id, this.selectedPage.id, map);
     }
 
+    onMapDrag(attrs: any): void {
+        this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
+    }
+
     onStatusChange(status: GameStatus): void {
         this.gameStatus = status;
         this.socketService.sendGameStatus(this.game.id, this.gameStatus);
@@ -192,6 +209,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onScaleChange(zoom: number): void {
         this.currentZoomOptions.value = zoom;
+        this.onMapDrag({scaleX: zoom});
     }
 
     onTabsChange(tab: number): void {

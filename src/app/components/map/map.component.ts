@@ -17,6 +17,7 @@ import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
+import KonvaEventObject = Konva.KonvaEventObject;
 
 @Component({
     selector: 'app-map',
@@ -31,17 +32,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() mapMoveEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() currentObjectSelected: EventEmitter<any> = new EventEmitter();
+    @Output() mapDragEvent: EventEmitter<any> = new EventEmitter<any>();
     public currentMapObjectSelected: CurrentSelectedKonvaObject;
     public selectedObjectEditorPosition: Coords;
     public displaySelectedObjectEditor: boolean = false;
-    Konvadraggable = true;
 
     // MAP VARS
     public mapWidth: number = 100;
     public mapHeight: number = 100;
-    protected isMovingMap: boolean = false;
-    protected startCoords: Coords = new Coords();
-    protected offsetCoords: Coords = new Coords();
 
     // KONVA LIB
     // gridLayer: Konva.Layer = null;
@@ -62,10 +60,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
     // SCALE MAP PARAMS
     @Input() scale: number = 1;
-    @Input() maxScale: number = 3;
-    @Input() minScale: number = 0.3;
-    @Input() scaleStep: number = 0.1;
     @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
+    @Input() minScale: number = 0.3;
+    @Input() maxScale: number = 3;
+    @Input() scaleStep: number = 0.1;
 
     constructor(private mouseInteractor: MouseInteractor,
                 private cdr: ChangeDetectorRef) {
@@ -108,6 +106,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }, 100);
         }
 
+        if (changes.map) {
+            setTimeout(() => {
+                console.log('GRID_STAGE', this.gridStage);
+                console.log('changes_map_stage', changes.map.currentValue.stage.attrs.y);
+                this.gridStage.y(changes.map.currentValue.stage.attrs.y);
+                this.gridStage.x(changes.map.currentValue.stage.attrs.x);
+            }, 300);
+        }
+
         if (this.modification) {
             if (this.modification.type === 'create') {
                 this.mouseInteractor.paintObjectOnMap(this.modification.object, this.layers);
@@ -146,7 +153,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             width: window.innerWidth,
             height: window.innerHeight,
             draggable: false,
-            scale: {x: this.scale, y: this.scale}
+            scale: {x: this.scale, y: this.scale},
+            x: 0,
+            y: 0
         });
 
         stage.container().style.backgroundColor = '#f2f2f2';
@@ -187,6 +196,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }
         });
 
+        stage.on('dragend', (ev: KonvaEventObject<DragEvent>) => {
+            if (ev.target.attrs.container?.id?.includes('map')) {
+                this.mapDragEvent.emit(ev.target.attrs);
+            }
+        });
+
         this.drawGrid();
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
@@ -197,14 +212,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mouseInteractor.setStage(stage);
     }
 
-    /**Zoom the stage at the given position
-     Parameters:
-     stage: the stage to be zoomed.
-     zoomPoint: the (x, y) for centre of zoom.
-     zoomBefore: the zoom factor at the start of the process.
-     inc : the amount of zoom to apply.
-     returns: zoom factor after zoom completed.
-     */
     zoomStage2(stage, zoomPoint, zoomBefore, inc): any {
         // remember the scale before new zoom is applied - we are scaling
         // same in x & y so either will work
