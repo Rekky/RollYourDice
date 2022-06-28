@@ -94,7 +94,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 2.2 Seteo de meta 2
             // this.map.stage = new Stage(this.userInteractor.getCurrentUser()?.meta?.maps[0]);
             const metaMaps = this.userInteractor.getCurrentUser()?.meta?.maps ?? [];
-            const foundMetaMap = metaMaps.find(map => map.id === this.mapInteractor.getCurrentMap().id);
+            const foundMetaMap = metaMaps.find(map => map.id === this.mapInteractor.getCurrentMap()?.id);
             if (foundMetaMap) {
                 console.log('foundMetaMap', foundMetaMap);
                 this.currentZoomOptions.value = foundMetaMap.zoom;
@@ -161,11 +161,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onCreateMap(map: OurKonvaMap): void {
-        console.log('map =', map);
+        this.map = map;
         this.socketService.sendGameCreateMap(this.gameInteractor.getCurrentGame().id, map);
     }
 
     onDeleteMap(map: OurKonvaMap): void {
+        this.mapInteractor.setCurrentMap(this.maps[this.maps.length - 1] ?? null);
         this.socketService.sendGameDeleteMap(this.gameInteractor.getCurrentGame().id, map);
     }
 

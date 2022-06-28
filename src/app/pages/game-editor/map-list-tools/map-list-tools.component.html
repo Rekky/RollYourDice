@@ -1,17 +1,17 @@
 <!--TABS 0-->
 <div class="content-container">
 
-    <app-map-edit *ngIf="currentMap && tabs === 0 && displayed"
-                  [map]="currentMap"
+    <app-map-edit *ngIf="selectedMap && tabs === 0 && displayed"
+                  [map]="selectedMap"
                   (mapModification)="editMap($event)"></app-map-edit>
 
     <!--  TABS 0  -->
     <div *ngIf="tabs === 0" style="position:relative;">
-        <div class="maps-container" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
+        <div #scrollMe class="maps-container" dragula="MAPS" [dragulaModel]="maps" (dragulaModelChange)="onDragulaMapsChange($event)">
             <div class="map-box"
                  (mouseleave)="openMapOption = null"
                  *ngFor="let map of maps; let i = index;"
-                 [ngClass]="{'selected-map-box' : currentMap === map}"
+                 [ngClass]="{'selected-map-box' : selectedMap === map}"
                  (click)="onSelectMap(map, $event)">
 
                 <div class="map">
@@ -41,7 +41,7 @@
 
     <!--   TABS 1   -->
     <div *ngIf="tabs === 1">
-        <app-objects-list [objects]="currentMap.objects"></app-objects-list>
+        <app-objects-list [objects]="selectedMap.objects"></app-objects-list>
     </div>
 
     <!--   TABS 2   -->
@@ -51,7 +51,7 @@
 
     <!--   TABS 3   -->
     <div *ngIf="tabs === 3">
-        <app-cameras-list [cameras]="currentMap.cameras"></app-cameras-list>
+        <app-cameras-list [cameras]="selectedMap.cameras"></app-cameras-list>
     </div>
 </div>
 
