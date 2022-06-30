@@ -154,6 +154,12 @@ export class MouseInteractor implements OnDestroy {
         }, false);
 
         const selectedGroupTr: Konva.Transformer = layers.draws.getChildren()[0] as Konva.Transformer;
+        selectedGroupTr?.on('mouseenter', (ev) => {
+            this.mouseIsOverKonvaObjectId = selectedGroupTr.getNodes()[0].getAttr('id');
+        });
+        selectedGroupTr?.on('mouseleave', (ev) => {
+            this.mouseIsOverKonvaObjectId = null;
+        });
         selectedGroupTr?.on('transformend', (ev) => {
             const selectedGroup = selectedGroupTr.getNodes();
             const selectedObjects = this.selectedKonvaObjects?.getValue();
