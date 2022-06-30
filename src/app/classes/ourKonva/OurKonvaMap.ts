@@ -7,6 +7,7 @@ import { OurKonvaText } from './OurKonvaText';
 import {AssetModel} from '../AssetModel';
 import {OurKonvaImage} from './OurKonvaImage';
 import { ulid } from 'ulid';
+import {OurKonvaBrush} from './OurKonvaBrush';
 
 export class  OurKonvaMap {
     id: string;
@@ -20,7 +21,7 @@ export class  OurKonvaMap {
     nFogOfWarPercent: number;
     isDndDiagonalSystem: boolean;
     nZoom: number;
-    objects: (OurKonvaRect | OurKonvaText | OurKonvaImage)[];
+    objects: (OurKonvaRect | OurKonvaText | OurKonvaImage | OurKonvaBrush)[];
     characters: string[];
     stage: Konva.Stage;
     layers: OurKonvaLayers;

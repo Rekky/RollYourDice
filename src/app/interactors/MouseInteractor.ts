@@ -29,6 +29,7 @@ export class MouseInteractor implements OnDestroy {
     currentMap: OurKonvaMap = null;
     isCtrlKeyPressed: boolean = false;
     mouseIsOverKonvaObjectId: string;
+    dragHasStartedOnObject: boolean = false;
 
     constructor(private mouseService: MouseService,
                 private mapObjectService: MapObjectService,
@@ -61,30 +62,31 @@ export class MouseInteractor implements OnDestroy {
         }
     }
 
-    // Serveix per passar tota l'informació que es necessita per saber en quin mapa es troba treballant l'usuari i la referència a aquest
     setMouseEvents(mapEl: ElementRef, map: OurKonvaMap, stage: Konva.Stage, layers: OurKonvaLayers): void {
-        // Estableix un listener per saber quan es fa MouseDown en el mapa sobre el que es treballa
         this.currentMap = map;
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
-            // Seteja les propietats del this.mouse amb les del mapa en el que s'està treballant
             this.mouse.stage = stage;
             this.mouse.layers = layers;
             this.mouse.isActive = true;
             this.mouse.ev = e;
 
-            // Si el ratolí no és un punter es deselecciona l'objecte que estigui seleccionat en aquell moment
             if (this.mouse.state !== 'pointer') {
                 this.selectedKonvaObjects.next([]);
             }
 
-            this.mouse.mouseDown(); // Executa la funció mouseDown() que correspongui a l'estat en el que està el ratolí
+            this.mouse.mouseDown();
+            if (this.mouseIsOverKonvaObjectId) {
+                this.dragHasStartedOnObject = true;
+            }
         }, false);
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {
             this.mouse.ev = e;
-            this.mouse.mouseMove();
+            if (!this.dragHasStartedOnObject && this.mouse.state === 'pointer' || this.mouse.state !== 'pointer') {
+                this.mouse.mouseMove();
+            }
 
-            if (this.mouse.isActive && this.mouse.state === 'pointer') {
+            if (this.mouse.isActive && this.mouse.state === 'pointer' && !this.dragHasStartedOnObject) {
                 const selectedObjects = this.selectedKonvaObjects.getValue();
                 const nodes = selectedGroupTr.getNodes();
                 const mapObjects = layers.draws.getChildren();
@@ -98,21 +100,29 @@ export class MouseInteractor implements OnDestroy {
                     }
                     if (this.isHitCheck(object, mouse.tempRect) && !isObjectSelected) {
                         selectedGroupTr.nodes(nodes.concat([object]));
-                        // const toEmit = new CurrentSelectedKonvaObject();
-                        // const ourKonvaObject = map.objects.find(obj => obj.id === object.getAttr('id'));
-                        // toEmit.ourKonvaObject = ourKonvaObject;
-                        // toEmit.konvaObject = object;
-                        // toEmit.type = object.getAttr('type');
-                        // toEmit.layer = layers.draws;
-                        // selectedObjects.push(toEmit);
-                        // this.selectedKonvaObjects.next(selectedObjects);
+                        const toEmit = new CurrentSelectedKonvaObject();
+                        const ourKonvaObject = map.objects.find(obj => obj.id === object.getAttr('id'));
+                        object.draggable(!ourKonvaObject.isEditionBlocked);
+                        toEmit.ourKonvaObject = ourKonvaObject;
+                        toEmit.konvaObject = object;
+                        toEmit.type = object.getAttr('type');
+                        toEmit.layer = layers.draws;
+                        selectedObjects.push(toEmit);
+                        this.selectedKonvaObjects.next(selectedObjects);
                     }
                     if (!this.isHitCheck(object, mouse.tempRect) && isObjectSelected) {
+                        object.draggable(false);
                         const selectObjIndex = nodes.findIndex(selObj => {
                             return object.getAttr('id') === selObj.getAttr('id');
                         });
                         nodes.splice(selectObjIndex, 1);
                         selectedGroupTr.nodes(nodes);
+
+                        const selectKonvaObjIndex = selectedObjects.findIndex(selObj => {
+                            return object.getAttr('id') === selObj.ourKonvaObject.id;
+                        });
+                        selectedObjects.splice(selectKonvaObjIndex, 1);
+                        this.selectedKonvaObjects.next(selectedObjects);
                     }
                 });
             }
@@ -122,6 +132,7 @@ export class MouseInteractor implements OnDestroy {
             let konvaElement = this.mouse.mouseUp();
             this.mouse.isActive = false;
             this.mouse.ev = e;
+            this.dragHasStartedOnObject = false;
             if (this.mouse.state === 'pointer') {
                 this.mouseService.setMouse(new OurKonvaPointer());
                 return;
@@ -130,6 +141,7 @@ export class MouseInteractor implements OnDestroy {
                 if (konvaElement.ourKonvaObject.isAdaptedToGrid) {
                     konvaElement = this.adaptObjectToMap(konvaElement); // Adapt object to a grid
                 }
+                this.currentMap.objects.push(konvaElement.ourKonvaObject);
                 this.addMouseKonvaObjectToMap(konvaElement.ourKonvaObject);
                 this.newObjectSetEvents(konvaElement);
             }
@@ -236,6 +248,7 @@ export class MouseInteractor implements OnDestroy {
                     selectedObjects.splice(objectAlreadySelectedIndex, 1);
                     nodes.splice(objectAlreadySelectedIndex, 1);
                     object.layer.add(object.konvaObject);
+                    object.konvaObject.draggable(false);
                     selectedGroupTr.nodes(nodes);
                     object.layer.batchDraw();
                     this.selectedKonvaObjects.next(selectedObjects);
@@ -248,14 +261,17 @@ export class MouseInteractor implements OnDestroy {
                 nodes.forEach((o) => {
                     children.push(o);
                     object.layer.add(o);
+                    o.draggable(false);
                     selectedObjects.splice(0, 1);
                 });
                 children.forEach((o) => {
                     nodes.splice(0, 1);
                 });
+                selectedGroupTr.nodes(nodes);
             }
 
             if (!object.ourKonvaObject.isEditionBlocked) {
+                object.konvaObject.draggable(!object.ourKonvaObject.isEditionBlocked);
                 selectedObjects.push(object);
                 selectedGroupTr.nodes(nodes.concat([object.konvaObject]));
             }
@@ -268,9 +284,10 @@ export class MouseInteractor implements OnDestroy {
                 // this.selectedKonvaObjects.next([object]);
             }
             const selectedObjects = this.selectedKonvaObjects?.getValue();
+            console.log(selectedObjects);
             const amITheLastElement = selectedObjects[selectedObjects.length - 1]?.ourKonvaObject.id === object.ourKonvaObject.id;
             const amIThePreLastElement = selectedObjects[selectedObjects.length - 2]?.ourKonvaObject.id === object.ourKonvaObject.id;
-            const isMouseDraggingLastElement = selectedObjects[selectedObjects.length - 1].ourKonvaObject.id === this.mouseIsOverKonvaObjectId;
+            const isMouseDraggingLastElement = selectedObjects[selectedObjects.length - 1]?.ourKonvaObject.id === this.mouseIsOverKonvaObjectId;
 
             if (selectedObjects.length > 1 && isMouseDraggingLastElement && amITheLastElement) { return; }
 
