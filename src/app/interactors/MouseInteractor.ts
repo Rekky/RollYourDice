@@ -101,7 +101,7 @@ export class MouseInteractor implements OnDestroy {
                     if (this.isHitCheck(object, mouse.tempRect) && !isObjectSelected) {
                         selectedGroupTr.nodes(nodes.concat([object]));
                         const toEmit = new CurrentSelectedKonvaObject();
-                        const ourKonvaObject = map.objects.find(obj => obj.id === object.getAttr('id'));
+                        const ourKonvaObject = this.currentMap.objects.find(obj => obj.id === object.getAttr('id'));
                         object.draggable(!ourKonvaObject.isEditionBlocked);
                         toEmit.ourKonvaObject = ourKonvaObject;
                         toEmit.konvaObject = object;
@@ -139,10 +139,9 @@ export class MouseInteractor implements OnDestroy {
             }
             if (this.mouse.state !== 'pointer') {
                 if (konvaElement.ourKonvaObject.isAdaptedToGrid) {
-                    konvaElement = this.adaptObjectToMap(konvaElement); // Adapt object to a grid
+                    konvaElement = this.adaptObjectToMap(konvaElement); // Adapt object
                 }
-                this.currentMap.objects.push(konvaElement.ourKonvaObject);
-                this.addMouseKonvaObjectToMap(konvaElement.ourKonvaObject);
+                this.addMouseKonvaObjectToMap(konvaElement);
                 this.newObjectSetEvents(konvaElement);
             }
         }, false);
@@ -194,8 +193,6 @@ export class MouseInteractor implements OnDestroy {
         const s1 = shape1.getClientRect(); // use this to get bounding rect for shapes other than rectangles.
         const s2 = shape2.getClientRect();
 
-        // console.log(s1, s2);
-
         // corners of shape 1
         const X = s1.x;
         const Y  = s1.y;
@@ -207,7 +204,6 @@ export class MouseInteractor implements OnDestroy {
         const A1 = s2.x + s2.width;
         const Y1 = s2.y;
         const B1 = s2.y + s2.height;
-        // console.log(A < X1, A1 < X, B < Y1, B1 < Y);
 
         // Simple overlapping rect collision test
         if (A < X1 || A1 < X || B < Y1 || B1 < Y) {
@@ -219,8 +215,8 @@ export class MouseInteractor implements OnDestroy {
 
     }
 
-    addMouseKonvaObjectToMap(object: any): void {
-        this.socketService.createGameObject(this.currentMap.id, object);
+    addMouseKonvaObjectToMap(object: CurrentSelectedKonvaObject): void {
+        this.socketService.createGameObject(this.currentMap.id, object.ourKonvaObject);
         this.currentMap.objects.push(object.ourKonvaObject);
         this.mouseService.setMouse(new OurKonvaPointer());
     }
@@ -290,7 +286,6 @@ export class MouseInteractor implements OnDestroy {
                 // this.selectedKonvaObjects.next([object]);
             }
             const selectedObjects = this.selectedKonvaObjects?.getValue();
-            console.log(selectedObjects);
             const amITheLastElement = selectedObjects[selectedObjects.length - 1]?.ourKonvaObject.id === object.ourKonvaObject.id;
             const amIThePreLastElement = selectedObjects[selectedObjects.length - 2]?.ourKonvaObject.id === object.ourKonvaObject.id;
             const isMouseDraggingLastElement = selectedObjects[selectedObjects.length - 1]?.ourKonvaObject.id === this.mouseIsOverKonvaObjectId;
@@ -366,7 +361,6 @@ export class MouseInteractor implements OnDestroy {
     }
 
     deleteObjectOnMap(selectedObject: any): void {
-        console.log(selectedObject);
         const obj = this.stage.find('#' + selectedObject.id)[0];
         const childrens = obj?.getLayer().getChildren().slice();
         childrens.forEach(child => {
