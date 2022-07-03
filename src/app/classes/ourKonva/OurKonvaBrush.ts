@@ -4,6 +4,7 @@ import {Player} from '../User';
 import {ulid} from 'ulid';
 import {Coords} from '../Coords';
 import {OurKonvaLayers} from './OurKonvaLayers';
+import {OurKonvaScale, OurKonvaSize} from './OurKonvaSize';
 
 export class OurKonvaBrush extends OurKonvaMouse {
     id: string;
@@ -14,6 +15,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
     stroke: string;
     strokeWidth: number;
     minPos: Coords;
+    strokeScaleEnabled: boolean;
 
     constructor(author: Player) {
         super(author);
@@ -24,6 +26,7 @@ export class OurKonvaBrush extends OurKonvaMouse {
         this.strokeWidth = 5;
         this.points = [];
         this.minPos = new Coords();
+        this.strokeScaleEnabled = false;
     }
 
     static paint(object: OurKonvaBrush, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
@@ -36,20 +39,12 @@ export class OurKonvaBrush extends OurKonvaMouse {
             globalCompositeOperation: 'source-over',
             points: object.points,
             x: object.position.x,
-            y: object.position.y
+            y: object.position.y,
+            draggable: false,
+            scaleX: object.scale.x,
+            scaleY: object.scale.y,
+            strokeScaleEnabled: false,
         });
-
-        const transformer = new Konva.Transformer({
-            rotateAnchorOffset: 120,
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
-            padding: 10,
-            anchorCornerRadius: 20
-        });
-        layers.draws.add(transformer);
-        transformer.nodes([line]);
-        transformer.id('tr-' + object.id);
-        transformer.enabledAnchors();
-        transformer.hide();
 
         layers.draws.add(line);
         layers.draws.batchDraw();
@@ -59,7 +54,6 @@ export class OurKonvaBrush extends OurKonvaMouse {
         toEmit.konvaObject = line;
         toEmit.type = object.state;
         toEmit.layer = layers.draws;
-        toEmit.transformer = transformer;
         return toEmit;
     }
 
@@ -75,10 +69,11 @@ export class OurKonvaBrush extends OurKonvaMouse {
             points: [0, 0],
             id: this.id,
             x: this.position.x,
-            y: this.position.y
+            y: this.position.y,
+            draggable: false,
+            strokeScaleEnabled: false,
         });
         this.layers.draws.add(this.line);
-        this.isAdaptedToGrid = false;
         this.minPos = new Coords(this.position.x, this.position.y);
     }
 
@@ -110,17 +105,6 @@ export class OurKonvaBrush extends OurKonvaMouse {
 
         this.line.points(this.points);
 
-        const transformer = new Konva.Transformer({
-            rotateAnchorOffset: 120,
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
-            padding: 10,
-            anchorCornerRadius: 20
-        });
-        this.layers.draws.add(transformer);
-        transformer.nodes([this.line]);
-        transformer.id('tr-' + this.id);
-        transformer.hide();
-
         this.layers.draws.add(this.line);
         this.layers.draws.batchDraw();
 
@@ -129,7 +113,6 @@ export class OurKonvaBrush extends OurKonvaMouse {
         toEmit.konvaObject = this.line;
         toEmit.type = this.state;
         toEmit.layer = this.layers.draws;
-        toEmit.transformer = transformer;
         return toEmit;
     }
 

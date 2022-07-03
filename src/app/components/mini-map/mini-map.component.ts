@@ -62,6 +62,7 @@ export class MiniMapComponent implements AfterViewInit {
             name: 'grid-background',
             fill: this.map.backgroundColor,
         }));
+
         this.layers.grid.add(gridGroup);
         this.layers?.grid?.cache();
     }

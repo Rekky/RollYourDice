@@ -17,25 +17,11 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
     text: OurKonvaText;
     getMouseObservableSubscription: Subscription;
     getSelectedKonvaObjectSubscription: Subscription;
-    konvaText: CurrentSelectedKonvaObject;
+    konvaText: CurrentSelectedKonvaObject[];
 
-    constructor(private mouseService: MouseService,
-                private mouseInteractor: MouseInteractor,
-                private socketService: SocketService) { }
+    constructor(private mouseService: MouseService) { }
 
-    ngOnInit(): void {
-        this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
-            this.text = mouse;
-        });
-        this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable().subscribe((konva) => {
-            if (konva && konva.type === 'text') {
-                this.konvaText = konva;
-                const konvaAttrs = konva.konvaObject.getAttrs();
-                this.text.color = konvaAttrs.fill;
-                this.text.fontSize = konvaAttrs.fontSize;
-            }
-        });
-    }
+    ngOnInit(): void {}
 
     ngOnDestroy(): void {
         if (this.getMouseObservableSubscription) {
@@ -47,24 +33,8 @@ export class KonvaTextPropertiesComponent implements OnInit, OnDestroy {
     }
 
     colorModified(ev: string): void {
-        this.text.color = ev;
-        this.mouseService.setMouse(this.text);
-        if (this.konvaText) {
-            this.konvaText.konvaObject.setAttr('fill', ev);
-            this.konvaText.layer.batchDraw();
-            // const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
-            // this.socketService.updateGameObject(ourKonvaRect);
-        }
     }
 
     sizeModified(ev: number): void {
-        this.text.fontSize = ev;
-        this.mouseService.setMouse(this.text);
-        if (this.konvaText) {
-            this.konvaText.konvaObject.setAttr('fontSize', ev);
-            this.konvaText.layer.batchDraw();
-            // const ourKonvaRect = OurKonvaRect.getOurKonvaRect(this.konvaText.konvaObject as Konva.Rect);
-            // this.socketService.updateGameObject(ourKonvaRect);
-        }
     }
 }
