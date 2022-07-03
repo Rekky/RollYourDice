@@ -97,6 +97,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
+        console.log(this.layers);
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
         this.setMapElEvents();

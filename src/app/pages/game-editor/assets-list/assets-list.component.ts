@@ -2,6 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AssetModel, AssetType} from '../../../classes/AssetModel';
 import {AssetService} from '../../../services/asset.service';
+import {MouseInteractor} from '../../../interactors/MouseInteractor';
+import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
+import {UserInteractor} from '../../../interactors/UserInteractor';
+import {Player} from '../../../classes/User';
+import {OurKonvaRect} from '../../../classes/ourKonva/OurKonvaRect';
 
 @Component({
     selector: 'app-assets-list',
@@ -9,7 +14,6 @@ import {AssetService} from '../../../services/asset.service';
     styleUrls: ['./assets-list.component.scss']
 })
 export class AssetsListComponent {
-
     @Input() assets: AssetModel[] = [];
     @Output() assetsChange: EventEmitter<any> = new EventEmitter();
     @Input() selectedAssets: AssetModel[] = [];
@@ -20,7 +24,8 @@ export class AssetsListComponent {
     AssetType = AssetType;
     previewUploadFile: any;
 
-    constructor(protected assetService: AssetService) {
+    constructor(protected assetService: AssetService,
+                private mouseInteractor: MouseInteractor) {
         this.formAsset = new FormGroup({
             name: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
             file: new FormControl(null, [Validators.required]),
@@ -87,5 +92,9 @@ export class AssetsListComponent {
 
     getFileType(file: any): any {
         return file.type.split('/')[0];
+    }
+
+    paintAssetOnMap(asset: AssetModel): any {
+        this.mouseInteractor.addImageOnMap(asset);
     }
 }

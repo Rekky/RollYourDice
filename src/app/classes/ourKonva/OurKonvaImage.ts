@@ -22,6 +22,8 @@ export class OurKonvaImage extends OurKonvaMouse {
         this.opacity = 100;
         this.state = 'image';
         this.name = 'new image';
+        this.size.width = 300;
+        this.size.height = 300;
     }
 
     static paint(object: OurKonvaImage, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
@@ -38,24 +40,18 @@ export class OurKonvaImage extends OurKonvaMouse {
             name: object.name
         });
 
-        const transformer = new Konva.Transformer();
-        layers.objects.add(transformer);
-        transformer.nodes([img]);
-        transformer.id('tr-' + object.id);
-        transformer.hide();
-
-        layers.objects.add(img);
-        layers.objects.batchDraw();
+        layers.draws.add(img);
+        layers.draws.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
+        toEmit.ourKonvaObject = object;
         toEmit.konvaObject = img;
         toEmit.type = object.state;
         toEmit.layer = layers.draws;
-        toEmit.transformer = transformer;
         return toEmit;
     }
 
-    static getKonvaImage(object: OurKonvaImage): Konva.Image {
+    public getKonvaImage(object: OurKonvaImage): Konva.Image {
         const image = new Image();
         image.src = object.src;
         return new Konva.Image({

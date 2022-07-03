@@ -2,7 +2,7 @@
     <div class="assets-grid">
         <div class="item" *ngFor="let asset of assets;let i = index;">
             <div class="item-img">
-                <img class="asset-img" [src]="asset.uri" alt="asset">
+                <img class="asset-img" [src]="asset.uri" alt="asset" (click)="paintAssetOnMap(asset)">
                 <app-mini-menu>
                     <div class="menu-item" (click)="removeItem(asset, $event)">Delete</div>
                 </app-mini-menu>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="upload-input">
                             <span class="msg"><img style="width:20px;margin-right:8px;" src="assets/svg/upload.svg" alt="upload-svg" /> Upload</span>
-                            <input type="file" [formControlName]="'file'" (change)="onFileChange($event)">
+                            <input type="file" [formControlName]="'file'" (change)="onFileChange($event)" multiple>
                         </div>
                     </div>
                 </div>
