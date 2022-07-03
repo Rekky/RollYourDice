@@ -2,7 +2,7 @@ import Konva from 'konva';
 import {Coords} from '../Coords';
 import {OurKonvaGrid} from './OurKonvaGrid';
 import {OurKonvaLayers} from './OurKonvaLayers';
-import {OurKonvaSize} from './OurKonvaSize';
+import {OurKonvaScale, OurKonvaSize} from './OurKonvaSize';
 import {OurKonvaRect} from './OurKonvaRect';
 import {OurKonvaText} from './OurKonvaText';
 import {OurKonvaImage} from './OurKonvaImage';
@@ -18,6 +18,7 @@ export class OurKonvaMouse {
     ev: MouseEvent;
     cellSize: number;
     size: OurKonvaSize;
+    scale: OurKonvaScale;
     name: string;
     isAdaptedToGrid: boolean;
     isEditionBlocked: boolean;
@@ -32,6 +33,7 @@ export class OurKonvaMouse {
         this.isAdaptedToGrid = true;
         this.isEditionBlocked = false;
         this.author = author;
+        this.scale = new OurKonvaScale();
     }
 
     static calculateObjectPositionOnGrid(object: CurrentSelectedKonvaObject, gridStage: Konva.Stage): Coords {

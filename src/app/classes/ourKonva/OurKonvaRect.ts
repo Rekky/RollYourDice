@@ -41,20 +41,8 @@ export class OurKonvaRect extends OurKonvaMouse {
             draggable: false,
             opacity: object.opacity,
             name: object.name,
-            strokeScaleEnabled: false
+            strokeScaleEnabled: false,
         });
-
-        // const transformer = new Konva.Transformer({
-        //     rotateAnchorOffset: 120,
-        //     padding: 10,
-        //     anchorCornerRadius: 20
-        // });
-        //
-        // layers.draws.add(transformer);
-        // transformer.nodes([rect]);
-        // transformer.id('tr-' + object.id);
-        // transformer.enabledAnchors();
-        // transformer.hide();
 
         layers.draws.add(rect);
         layers.draws.batchDraw();
@@ -64,7 +52,6 @@ export class OurKonvaRect extends OurKonvaMouse {
         toEmit.konvaObject = rect;
         toEmit.type = object.state;
         toEmit.layer = layers.draws;
-        // toEmit.transformer = transformer;
         return toEmit;
     }
 
@@ -160,17 +147,6 @@ export class OurKonvaRect extends OurKonvaMouse {
         this.size.height = Math.abs(this.position.y - pos.y);
         this.position.x = this.position.x > pos.x ? this.position.x - this.size.width : this.position.x;
         this.position.y = this.position.y > pos.y ? this.position.y - this.size.height : this.position.y;
-
-        // const transformer = new Konva.Transformer({
-        //     rotateAnchorOffset: 120,
-        //     padding: 10,
-        //     anchorCornerRadius: 20
-        // });
-        //
-        // this.layers.draws.add(transformer);
-        // transformer.nodes([rect]);
-        // transformer.id('tr-' + this.id);
-        // transformer.hide();
 
         this.layers.draws.add(rect);
         this.layers.draws.batchDraw();

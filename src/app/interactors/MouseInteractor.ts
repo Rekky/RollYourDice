@@ -92,16 +92,18 @@ export class MouseInteractor implements OnDestroy {
                 const mapObjects = layers.draws.getChildren();
                 const mouse = this.mouse as OurKonvaPointer;
                 mapObjects.forEach((object, i) => {
+                    const ourKonvaObject = this.currentMap.objects.find(obj => obj.id === object.getAttr('id'));
                     const isObjectSelected = nodes.find(selObj => {
                         return object.getAttr('id') === selObj.getAttr('id');
                     });
-                    if (object.getAttr('id') === 'tr-selectedObjects' || i === mapObjects.length - 1) {
+                    if (object.getAttr('id') === 'tr-selectedObjects' ||
+                        i === mapObjects.length - 1 ||
+                        ourKonvaObject.state === 'brush') {
                         return;
                     }
                     if (this.isHitCheck(object, mouse.tempRect) && !isObjectSelected) {
                         selectedGroupTr.nodes(nodes.concat([object]));
                         const toEmit = new CurrentSelectedKonvaObject();
-                        const ourKonvaObject = this.currentMap.objects.find(obj => obj.id === object.getAttr('id'));
                         object.draggable(!ourKonvaObject.isEditionBlocked);
                         toEmit.ourKonvaObject = ourKonvaObject;
                         toEmit.konvaObject = object;
@@ -167,17 +169,21 @@ export class MouseInteractor implements OnDestroy {
                 scaleY: ev.target.attrs.scaleY
             };
             selectedGroup.forEach(object => {
-                const newWidth = Math.round(object.getAttr('width') * scale.scaleX);
-                const newHeight = Math.round(object.getAttr('height') * scale.scaleY);
-                object.setAttr('scaleX', 1);
-                object.setAttr('scaleY', 1);
-                object.setAttr('width', newWidth);
-                object.setAttr('height', newHeight);
-
                 let mySelectedObjectReference = selectedObjects.find(obj => obj.ourKonvaObject.id === object.getAttr('id'));
+
+                if (mySelectedObjectReference.ourKonvaObject.state !== 'brush') {
+                    const newWidth = Math.round(object.getAttr('width') * scale.scaleX);
+                    const newHeight = Math.round(object.getAttr('height') * scale.scaleY);
+                    object.setAttr('scaleX', 1);
+                    object.setAttr('scaleY', 1);
+                    object.setAttr('width', newWidth);
+                    object.setAttr('height', newHeight);
+                }
+
                 mySelectedObjectReference.konvaObject = object;
-                mySelectedObjectReference.ourKonvaObject.size.width = newWidth;
-                mySelectedObjectReference.ourKonvaObject.size.height = newHeight;
+                mySelectedObjectReference.ourKonvaObject.scale.x = scale.scaleX;
+                mySelectedObjectReference.ourKonvaObject.scale.y = scale.scaleY;
+
                 if (mySelectedObjectReference.ourKonvaObject.isAdaptedToGrid) {
                     mySelectedObjectReference = this.adaptObjectToMap(mySelectedObjectReference); // Adapt object to a grid
                 }
@@ -281,10 +287,16 @@ export class MouseInteractor implements OnDestroy {
             this.selectedKonvaObjects.next(selectedObjects);
         });
         object?.konvaObject.on('dragend', () => {
+            console.log(object);
             if (object.ourKonvaObject.isAdaptedToGrid) {
-                object = this.adaptObjectToMap(object); // Adapt object to a grid
-                // this.selectedKonvaObjects.next([object]);
+                object = this.adaptObjectToMap(object);
+            } else {
+                object.ourKonvaObject.position.x = object.konvaObject.getAttr('x');
+                object.ourKonvaObject.position.y = object.konvaObject.getAttr('y');
+                object.ourKonvaObject.size.width = object.konvaObject.getAttr('width');
+                object.ourKonvaObject.size.height = object.konvaObject.getAttr('height');
             }
+
             const selectedObjects = this.selectedKonvaObjects?.getValue();
             const amITheLastElement = selectedObjects[selectedObjects.length - 1]?.ourKonvaObject.id === object.ourKonvaObject.id;
             const amIThePreLastElement = selectedObjects[selectedObjects.length - 2]?.ourKonvaObject.id === object.ourKonvaObject.id;
