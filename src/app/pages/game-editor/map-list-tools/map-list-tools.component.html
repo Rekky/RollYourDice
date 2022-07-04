@@ -15,7 +15,7 @@
                  (click)="onSelectMap(map, $event)">
 
                 <div class="map">
-                    <app-mini-map *ngIf="map" [map]="map"></app-mini-map>
+                    <app-mini-map *ngIf="map" [map]="map" [stage]="map.stage"></app-mini-map>
                     <div class="map-name">
                         <div class="tag" *ngIf="!isEditNameDisplayed || isEditNameDisplayed !== map.id"
                              (dblclick)="isEditNameDisplayed = map.id">
