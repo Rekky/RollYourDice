@@ -12,7 +12,7 @@ import {GameInteractor} from '../interactors/GameInteractor';
 import {NotificationsService} from './notifications.service';
 import {MyAdventuresInteractor} from '../pages/launcher/my-adventures/my-adventures-interactor';
 import { Player } from '../classes/User';
-import {Meta} from '../classes/Meta';
+import {MetaInteractor} from '../interactors/MetaInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +26,7 @@ export class SocketService {
 
     constructor(private apiService: ApiService,
                 private userInteractor: UserInteractor,
+                private metaInteractor: MetaInteractor,
                 private mapInteractor: MapInteractor,
                 private notificationService: NotificationsService,
                 private gameInteractor: GameInteractor,
@@ -47,7 +48,7 @@ export class SocketService {
 
         // =========================== META =====================================
         this.socket.on('meta', (data: any) => {
-            this.userInteractor.$userMeta.next(data.meta);
+            this.metaInteractor.$userMeta.next(data.meta);
             console.log('RECEIVE_META', data.meta);
         });
 
