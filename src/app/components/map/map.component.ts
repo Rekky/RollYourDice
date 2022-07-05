@@ -19,6 +19,7 @@ import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
 import KonvaEventObject = Konva.KonvaEventObject;
 import {Player} from '../../classes/User';
+import {MetaMap} from '../../classes/Meta';
 
 @Component({
     selector: 'app-map',
@@ -43,6 +44,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Input() minScale: number = 0.3;
     @Input() scaleStep: number = 0.1;
     @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
+
+    // META PARAMS
+    @Input() meta: MetaMap = null;
 
     public currentMapObjectsSelected: CurrentSelectedKonvaObject[] | null;
     public selectedObjectEditorPosition: Coords;
@@ -167,7 +171,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
-        const stage = new Konva.Stage({
+        let stage = new Konva.Stage({
             container: 'map' + this.map.id,
             width: window.innerWidth,
             height: window.innerHeight,
@@ -186,6 +190,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         this.drawGrid();
         this.createKonvaNodeTransformer();
+        stage = this.setMetaParams(stage);
 
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
@@ -194,6 +199,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.add(this.layers.texts);
         this.gridStage = stage;
         this.mouseInteractor.setStage(stage);
+    }
+
+    setMetaParams(stage: Konva.Stage): Konva.Stage {
+        // TODO
+        return stage;
     }
 
     setStageListeners(stage: Konva.Stage): void {

@@ -148,7 +148,7 @@ export class SocketService {
     }
 
     sendMetaDragMap(mapId: string, attrs: any): void {
-        this.socket.emit('meta-drag-map', {mapId, attrs});
+        this.socket.emit('meta-map-attrs', {mapId, attrs});
     }
 
     sendGameCreateMap(gameId: string, map: OurKonvaMap): void {
