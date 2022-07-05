@@ -227,12 +227,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 return;
             }
             if (e.evt.button === 2) {
-                this.currentMapObjectsSelected?.forEach((object: CurrentSelectedKonvaObject) => {
-                    object?.transformer.hide();
-                });
-                if (this.layers?.draws?.children?.length > 0) {
-                    this.layers?.draws?.cache();
-                }
+                // this.layers?.draws?.cache();
+                // const tr = this.layers.draws.getChildren()[0] as Konva.Transformer;
+                // tr.hide();
+                // this.layers?.draws.cache({
+                //     drawBorder: true,
+                // });
+                // this.layers.draws.batchDraw();
                 Konva.dragButtons = [2];
                 stage.setDraggable(true);
             }
@@ -240,12 +241,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         stage.on('mouseup', (e) => {
             if (e.evt.button === 2) {
-                this.currentMapObjectsSelected?.forEach((object: CurrentSelectedKonvaObject) => {
-                    object?.transformer.show();
-                });
-                if (this.layers?.draws?.children?.length > 0) {
-                    this.layers?.draws?.clearCache();
-                }
+                // const tr = this.layers.draws.getChildren()[0] as Konva.Transformer;
+                // tr.show();
+                // this.layers?.draws?.clearCache();
+                // this.layers.draws.batchDraw();
                 Konva.dragButtons = [0];
                 stage.setDraggable(false);
             }
