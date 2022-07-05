@@ -83,8 +83,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 2. Call to get map's list and set first map as selected
             this.maps = await this.mapInteractor.getAllMaps(gameId);
 
-            // 2.1 Seteo de meta
-            const metaMapIndex = this.maps.findIndex(map => map.id === this.userInteractor.getCurrentUser()?.meta?.selectedMapId);
+            // 2.1 Seteo de meta map
+            const metaMapIndex = this.maps.findIndex(map => map.id === this.userInteractor.$userMeta.value?.maps[0]?.id);
             if (metaMapIndex !== -1) {
                 this.mapInteractor.setCurrentMap(this.maps[metaMapIndex]);
             } else {
@@ -93,14 +93,15 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
             // 2.2 Seteo de meta 2
             // this.map.stage = new Stage(this.userInteractor.getCurrentUser()?.meta?.maps[0]);
-            const metaMaps = this.userInteractor.getCurrentUser()?.meta?.maps ?? [];
-            const foundMetaMap = metaMaps.find(map => map.id === this.mapInteractor.getCurrentMap()?.id);
-            if (foundMetaMap) {
-                console.log('foundMetaMap', foundMetaMap);
-                this.currentZoomOptions.value = foundMetaMap.zoom;
-                console.log('stage', this.map.stage);
-                this.map.stage.attrs = foundMetaMap;
-            }
+            // TODO
+            // const metaMaps = this.userInteractor.getCurrentUser()?.meta?.maps ?? [];
+            // const foundMetaMap = metaMaps.find(map => map.id === this.mapInteractor.getCurrentMap()?.id);
+            // if (foundMetaMap) {
+            //     console.log('foundMetaMap', foundMetaMap);
+            //     this.currentZoomOptions.value = foundMetaMap.zoom;
+            //     console.log('stage', this.map.stage);
+            //     this.map.stage.attrs = foundMetaMap;
+            // }
 
 
             // 3. Socket connection with map selected
@@ -157,10 +158,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.map = {...ev};
     }
 
-    onSelectedMap(ev: OurKonvaMap): void {
+    onSelectedMap(map: OurKonvaMap): void {
         this.currentZoomOptions.value = 1;
-        this.mapInteractor.setCurrentMap(ev);
-        this.socketService.sendMetaSelectedMap(this.mapInteractor.getCurrentMap().id);
+        this.mapInteractor.setCurrentMap(map);
+        this.socketService.sendMetaSelectedMap(map.id);
     }
 
     onCreateMap(map: OurKonvaMap): void {

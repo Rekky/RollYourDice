@@ -63,10 +63,13 @@ export class MapListToolsComponent implements OnInit, AfterViewInit, OnDestroy {
     // MAPS ===========================================================================================================
     onSelectMap(map: OurKonvaMap, ev?): void {
         ev?.stopPropagation();
-        if (this.selectedMap.id !== map.id) {
-            this.selectedMap = map;
-            this.selectedMapEvent.emit(this.selectedMap);
+
+        if (this.selectedMap && this.selectedMap.id === map.id) {
+            return;
         }
+
+        this.selectedMap = map;
+        this.selectedMapEvent.emit(this.selectedMap);
     }
 
     createMap(): void {
@@ -74,15 +77,13 @@ export class MapListToolsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.maps.push(newMap);
         this.createMapEvent.emit(newMap);
 
-        this.selectedMap = newMap;
-        this.selectedMapEvent.emit(this.selectedMap);
+        this.onSelectMap(newMap);
         this.scrollToBottom();
     }
 
     editMap(map: OurKonvaMap): void {
         this.updateMapEvent.emit(map);
-        this.selectedMap = map;
-        this.selectedMapEvent.emit(this.selectedMap);
+        this.onSelectMap(map);
     }
 
     deleteMap(map: OurKonvaMap, e?): void {

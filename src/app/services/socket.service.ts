@@ -12,6 +12,7 @@ import {GameInteractor} from '../interactors/GameInteractor';
 import {NotificationsService} from './notifications.service';
 import {MyAdventuresInteractor} from '../pages/launcher/my-adventures/my-adventures-interactor';
 import { Player } from '../classes/User';
+import {Meta} from '../classes/Meta';
 
 @Injectable({
     providedIn: 'root'
@@ -45,13 +46,9 @@ export class SocketService {
         });
 
         // =========================== META =====================================
-        this.socket.on('meta-selected-map', (data) => {
-            this.userInteractor.userSubject.value.meta = data.meta;
-            console.log('RECEIVE_META', data);
-        });
-        this.socket.on('meta-map', (data) => {
-            this.userInteractor.userSubject.value.meta = data.meta;
-            console.log('RECEIVE_MAP_META', data);
+        this.socket.on('meta', (data: any) => {
+            this.userInteractor.$userMeta.next(data.meta);
+            console.log('RECEIVE_META', data.meta);
         });
 
         // ========================= START MAPS ================================

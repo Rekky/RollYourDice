@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../classes/User';
 import {StorageService} from '../services/storage.service';
 import {Session} from '../classes/Session';
+import {Meta} from '../classes/Meta';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,7 @@ import {Session} from '../classes/Session';
 export class UserInteractor {
 
     userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+    $userMeta: BehaviorSubject<Meta> = new BehaviorSubject<Meta>(null);
 
     constructor(private userService: UserService,
                 private storageService: StorageService) {
@@ -23,7 +25,6 @@ export class UserInteractor {
 
     async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
         const response = await this.userService.signIn(email, password);
-        console.log(response);
         if (response.session) {
             this.setLoginSession(response.session);
         }

@@ -16,6 +16,8 @@ export class MiniMapComponent implements AfterViewInit {
 
     @ViewChild('mapEl') mapEl: ElementRef;
     @Input() map: OurKonvaMap;
+    @Input() stage: any;
+
     protected layers: OurKonvaLayers = new OurKonvaLayers();
     protected gridStage: Konva.Stage;
 
@@ -38,33 +40,16 @@ export class MiniMapComponent implements AfterViewInit {
             scale: {x: 0.2, y: 0.2}
         });
         stage.container().style.backgroundColor = '#f2f2f2';
-        this.drawGrid();
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
         stage.add(this.layers.shadows);
         stage.add(this.layers.draws);
         stage.add(this.layers.texts);
         this.gridStage = stage;
-    }
 
-    drawGrid(): void {
-        const gridGroup = new Konva.Group({
-            id: 'gridGroup',
-        });
-
-        gridGroup.add(new Konva.Rect({
-            x: 0,
-            y: 0,
-            draggable: false,
-            width: 290,
-            height: 170,
-            id: 'grid-background',
-            name: 'grid-background',
-            fill: this.map.backgroundColor,
-        }));
-
-        this.layers.grid.add(gridGroup);
-        this.layers?.grid?.cache();
+        // const cloned_stage = this.stage.clone();
+        // cloned_stage.setContainer('mini-map-' + this.map?.id);
+        // cloned_stage.draw();
     }
 
     // drawGridBackgroundImage(gridGroup: Konva.Group): Promise<void> {

@@ -115,10 +115,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         if (changes.map) {
             setTimeout(() => {
-                console.log('GRID_STAGE', this.gridStage);
-                console.log('changes_map_stage', changes.map.currentValue.stage.attrs.y);
-                this.gridStage.y(changes.map.currentValue.stage.attrs.y);
-                this.gridStage.x(changes.map.currentValue.stage.attrs.x);
+                // TODO
+                // console.log('GRID_STAGE', this.gridStage);
+                // console.log('changes_map_stage', changes.map.currentValue.stage.attrs.y);
+                // this.gridStage.y(changes.map.currentValue.stage.attrs.y);
+                // this.gridStage.x(changes.map.currentValue.stage.attrs.x);
             }, 300);
         }
 
