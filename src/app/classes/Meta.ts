@@ -3,7 +3,8 @@ import {ulid} from 'ulid';
 export interface MapAttrs {
     x: number;
     y: number;
-    zoom: number;
+    scaleX: number;
+    scaleY: number;
 }
 
 export interface MetaMap {

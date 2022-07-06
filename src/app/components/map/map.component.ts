@@ -101,7 +101,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     ngAfterViewInit(): void {
         // INICIALIZAMOS MAP CON KONVA
         this.initializeMap();
-        console.log(this.layers);
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
         this.setMapElEvents();
@@ -171,15 +170,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
-        let stage = new Konva.Stage({
-            container: 'map' + this.map.id,
-            width: window.innerWidth,
-            height: window.innerHeight,
-            draggable: false,
-            scale: {x: this.scale, y: this.scale},
-            x: 0,
-            y: 0
-        });
+        const stage = this.createStage();
 
         stage.container().style.backgroundColor = '#f2f2f2';
 
@@ -190,7 +181,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
 
         this.drawGrid();
         this.createKonvaNodeTransformer();
-        stage = this.setMetaParams(stage);
 
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
@@ -201,9 +191,35 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mouseInteractor.setStage(stage);
     }
 
-    setMetaParams(stage: Konva.Stage): Konva.Stage {
-        // TODO
+    createStage(): Konva.Stage {
+        console.log('MAP', this.meta.attrs.scaleX);
+        let stage;
+        if (this.meta) {
+            stage = this.setMetaParams();
+        } else {
+            stage = new Konva.Stage({
+                container: 'map' + this.map.id,
+                width: window.innerWidth,
+                height: window.innerHeight,
+                draggable: false,
+                scale: {x: this.scale, y: this.scale},
+                x: 0,
+                y: 0
+            });
+        }
         return stage;
+    }
+
+    setMetaParams(): Konva.Stage {
+        return new Konva.Stage({
+            container: 'map' + this.map.id,
+            width: window.innerWidth,
+            height: window.innerHeight,
+            draggable: false,
+            scale: {x: this.meta.attrs.scaleX, y: this.meta.attrs.scaleY},
+            x: this.meta.attrs.x,
+            y: this.meta.attrs.y
+        });
     }
 
     setStageListeners(stage: Konva.Stage): void {
