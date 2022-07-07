@@ -192,7 +192,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     createStage(): Konva.Stage {
-        console.log('@INPUT_META->', this.meta.attrs);
+        console.log('@INPUT_META->', this.meta);
         let stage;
         if (this.meta) {
             console.log('tiene meta');

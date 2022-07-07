@@ -89,23 +89,22 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 2. Call to get map's list and set first map as selected
             this.maps = await this.mapInteractor.getAllMaps(gameId);
 
+            this.mapInteractor.setCurrentMap(this.maps[0]);
             // 2.1 Set lasted selected map
-            const metaLastMapSelectedIndex = this.maps?.findIndex(map => map.id === this.metaInteractor.$userMeta.value?.maps[0]?.id);
-            if (metaLastMapSelectedIndex !== -1) {
-                // this.map = this.maps[metaLastMapSelectedIndex];
-                this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
-            } else {
-                this.mapInteractor.setCurrentMap(this.maps[0]);
-                // this.map = this.maps[0];
-            }
+            // const metaLastMapSelectedIndex = this.maps?.findIndex(map => map.id === this.metaInteractor.$userMeta.value?.maps[0]?.id);
+            // if (metaLastMapSelectedIndex !== -1) {
+            //     this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
+            // } else {
+            //     this.mapInteractor.setCurrentMap(this.maps[0]);
+            // }
 
             // 2.2 set map selected meta attrs
-            const metaMapAttrsFound = this.metaInteractor.$userMeta.value.maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
-            if (metaMapAttrsFound) {
-                console.log('game-editor_metaMapAttrsFound', metaMapAttrsFound.id);
-                this.mapMeta = metaMapAttrsFound;
-                // this.currentZoomOptions.value = metaMapAttrsFound.attrs.scaleX;
-            }
+            // const metaMapAttrsFound = this.metaInteractor.$userMeta.value.maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
+            // if (metaMapAttrsFound) {
+            //     console.log('game-editor_metaMapAttrsFound', metaMapAttrsFound.id);
+            //     this.mapMeta = metaMapAttrsFound;
+            //     // this.currentZoomOptions.value = metaMapAttrsFound.attrs.scaleX;
+            // }
 
 
             // 2.2 Seteo de meta 2
