@@ -90,11 +90,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.maps = await this.mapInteractor.getAllMaps(gameId);
 
             // 2.1 Set lasted selected map
-            const metaLastMapSelectedIndex = this.maps?.findIndex(map => map.id === this.metaInteractor.$userMeta.value.maps[0]?.id);
+            const metaLastMapSelectedIndex = this.maps?.findIndex(map => map.id === this.metaInteractor.$userMeta.value?.maps[0]?.id);
             if (metaLastMapSelectedIndex !== -1) {
+                // this.map = this.maps[metaLastMapSelectedIndex];
                 this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
             } else {
                 this.mapInteractor.setCurrentMap(this.maps[0]);
+                // this.map = this.maps[0];
             }
 
             // 2.2 set map selected meta attrs
@@ -136,10 +138,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             });
 
             this.getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
-                if (res) {
-                    this.mapModification = res;
-                    this.cdr.detectChanges();
-                }
+                // if (res) {
+                //     this.mapModification = res;
+                //     this.cdr.detectChanges();
+                // }
             });
             this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
                 if (adventures) {
@@ -229,7 +231,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onScaleChange(zoom: number): void {
         this.currentZoomOptions.value = zoom;
-        this.onMapDrag({scaleX: zoom});
+        this.onMapDrag({scaleX: zoom, scaleY: zoom});
     }
 
     onTabsChange(tab: number): void {

@@ -99,21 +99,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     ngAfterViewInit(): void {
-        // INICIALIZAMOS MAP CON KONVA
+        // INICIALIZAMOS MAP CON KONVA DESPUES DEL RENDER
         this.initializeMap();
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
         this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
         this.setMapElEvents();
-        this.gridStage.batchDraw();
         this.cdr.detectChanges();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.scale) {
-            // scale with the new valor on input this.scale
-            setTimeout(() => {
-                this.gridStage.scale({ x: this.scale, y: this.scale });
-            }, 100);
+            // scale with the outSide @Input value of this.scale
+            // setTimeout(() => {this.gridStage.scale({ x: this.scale, y: this.scale }); }, 0);
         }
 
         if (changes.map) {
@@ -170,8 +167,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
+        // setTimeout(() => {
+        //     stage.scale({ x: this.meta.attrs.scaleX, y: this.meta.attrs.scaleY });
         const stage = this.createStage();
-
         stage.container().style.backgroundColor = '#f2f2f2';
 
         this.mapWidth = window.innerWidth;
@@ -189,14 +187,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.add(this.layers.texts);
         this.gridStage = stage;
         this.mouseInteractor.setStage(stage);
+        // }, 50);
+
     }
 
     createStage(): Konva.Stage {
-        console.log('MAP', this.meta.attrs.scaleX);
+        console.log('@INPUT_META->', this.meta.attrs);
         let stage;
         if (this.meta) {
+            console.log('tiene meta');
             stage = this.setMetaParams();
         } else {
+            console.log('no tiene meta');
             stage = new Konva.Stage({
                 container: 'map' + this.map.id,
                 width: window.innerWidth,
@@ -216,9 +218,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             width: window.innerWidth,
             height: window.innerHeight,
             draggable: false,
-            scale: {x: this.meta.attrs.scaleX, y: this.meta.attrs.scaleY},
-            x: this.meta.attrs.x,
-            y: this.meta.attrs.y
+            scale: {x: this.meta.attrs?.scaleX ?? this.scale , y: this.meta.attrs?.scaleY ?? this.scale},
+            x: this.meta.attrs?.x ?? 0,
+            y: this.meta.attrs?.y ?? 0
         });
     }
 
@@ -334,7 +336,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         if (this.currentMapObjectsSelected) {
             this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectsSelected[0], this.gridStage);
         }
-        // this.zoomChange.emit(zoomAfter);
         return zoomAfter;
     }
 
@@ -466,10 +467,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 return;
             }
 
+            // scale map
             const zoomInc = ev.deltaY > 0 ? -this.scaleStep : this.scaleStep;
             this.scale = this.zoomStage2(this.gridStage, pointer, this.scale, zoomInc);
             this.scale = Math.round(this.scale * 100) / 100;
-
             this.scaleChange.emit(this.scale);
         });
     }
