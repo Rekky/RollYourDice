@@ -32,7 +32,6 @@ export class MapInteractor {
     }
 
     setCurrentMap(map: OurKonvaMap): void {
-        console.log('setCurrentMap', map);
         this.currentMap.next(map);
     }
 

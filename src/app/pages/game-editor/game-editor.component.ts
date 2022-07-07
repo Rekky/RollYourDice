@@ -14,6 +14,8 @@ import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-
 import {withIdentifier} from 'codelyzer/util/astQuery';
 import Konva from 'konva';
 import Stage = Konva.Stage;
+import {MetaInteractor} from '../../interactors/MetaInteractor';
+import {MetaMap} from '../../classes/Meta';
 
 @Component({
     selector: 'app-game-editor',
@@ -41,6 +43,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     destroying: boolean = false;
 
+    // META
+    mapMeta: MetaMap;
+
     // ZOOM
     currentZoomOptions = {
         min: 0.3,
@@ -57,6 +62,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private router: ActivatedRoute,
                 private socketService: SocketService,
                 public userInteractor: UserInteractor,
+                private metaInteractor: MetaInteractor,
                 public myAdventureInteractor: MyAdventuresInteractor,
                 private cdr: ChangeDetectorRef) {
         this.mapInteractor.getCurrentMapObs().subscribe(map => {
@@ -83,13 +89,22 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 2. Call to get map's list and set first map as selected
             this.maps = await this.mapInteractor.getAllMaps(gameId);
 
-            // 2.1 Seteo de meta map
-            const metaMapIndex = this.maps.findIndex(map => map.id === this.userInteractor.$userMeta.value?.maps[0]?.id);
-            if (metaMapIndex !== -1) {
-                this.mapInteractor.setCurrentMap(this.maps[metaMapIndex]);
+            // 2.1 Set lasted selected map
+            const metaLastMapSelectedIndex = this.maps?.findIndex(map => map.id === this.metaInteractor.$userMeta.value.maps[0]?.id);
+            if (metaLastMapSelectedIndex !== -1) {
+                this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
             } else {
                 this.mapInteractor.setCurrentMap(this.maps[0]);
             }
+
+            // 2.2 set map selected meta attrs
+            const metaMapAttrsFound = this.metaInteractor.$userMeta.value.maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
+            if (metaMapAttrsFound) {
+                console.log('game-editor_metaMapAttrsFound', metaMapAttrsFound.id);
+                this.mapMeta = metaMapAttrsFound;
+                // this.currentZoomOptions.value = metaMapAttrsFound.attrs.scaleX;
+            }
+
 
             // 2.2 Seteo de meta 2
             // this.map.stage = new Stage(this.userInteractor.getCurrentUser()?.meta?.maps[0]);

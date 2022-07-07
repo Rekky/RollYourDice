@@ -12,7 +12,6 @@ import {Meta} from '../classes/Meta';
 export class UserInteractor {
 
     userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
-    $userMeta: BehaviorSubject<Meta> = new BehaviorSubject<Meta>(null);
 
     constructor(private userService: UserService,
                 private storageService: StorageService) {
