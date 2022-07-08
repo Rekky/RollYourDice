@@ -4,18 +4,16 @@ import {Game, GameStatus} from '../../classes/Game';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
 import {SocketService} from '../../services/socket.service';
-import {Subscription} from 'rxjs';
+import {combineLatest, Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
-import {withIdentifier} from 'codelyzer/util/astQuery';
-import Konva from 'konva';
-import Stage = Konva.Stage;
 import {MetaInteractor} from '../../interactors/MetaInteractor';
-import {MetaMap} from '../../classes/Meta';
+import {Meta, MetaMap} from '../../classes/Meta';
+import {first, take} from 'rxjs/operators';
 
 @Component({
     selector: 'app-game-editor',
@@ -29,22 +27,15 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     maps: OurKonvaMap[] = [];
     gameStatus: GameStatus = GameStatus.Stopped;
     GameStatus = GameStatus;
-
-    tabs: LeftColumnTabs = LeftColumnTabs.Library;
     currentObjectSelected: any;
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
     openMapList = false;
     leftSidebarTitle: string = 'MAPS';
-
-    getMouseObservableSubscription: Subscription;
-    getSelectedKonvaObjectSubscription: Subscription;
-    getCurrentMapModificationSubs: Subscription;
-
     destroying: boolean = false;
 
     // META
-    mapMeta: MetaMap;
+    meta: MetaMap;
 
     // ZOOM
     currentZoomOptions = {
@@ -54,6 +45,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         value: 1
     };
 
+    $getMouseObservableSubscription: Subscription;
+    $getSelectedKonvaObjectSubscription: Subscription;
+    $getCurrentMapModificationSubs: Subscription;
+    $mapInteractorSubs: Subscription;
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -65,7 +60,34 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private metaInteractor: MetaInteractor,
                 public myAdventureInteractor: MyAdventuresInteractor,
                 private cdr: ChangeDetectorRef) {
-        this.mapInteractor.getCurrentMapObs().subscribe(map => {
+        // get MAP from socket call
+        // combineLatest([this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()]).pipe().subscribe((result: any[]) => {
+            // const map = result[0];
+            // const meta = result[1];
+            // console.log('entras');
+            // if (map) {
+            //     console.log('tiene map', map);
+            //     this.destroying = true;
+            //     this.mouseInteractor.unsetSelectedKonvaObject();
+            //     this.map = map;
+            //     setTimeout(() => { this.destroying = false; }, 0);
+            // }
+            // if (meta) {
+            //     console.log('tienen meta', meta);
+            //     this.meta = meta;
+            //
+            //     // set latest selected map
+            //     const metaLastMapSelectedIndex = this.maps?.findIndex(_map => _map.id === meta.maps[0]?.id) ?? -1;
+            //     if (metaLastMapSelectedIndex !== -1) {
+            //         this.map = this.maps[metaLastMapSelectedIndex];
+            //         // this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
+            //     } else {
+            //         this.map = this.maps[0];
+            //         // this.mapInteractor.setCurrentMap(this.maps[0]);
+            //     }
+            // }
+        // });
+        this.$mapInteractorSubs = this.mapInteractor.getCurrentMapObs().pipe().subscribe(map => {
             if (map) {
                 this.destroying = true;
                 this.mouseInteractor.unsetSelectedKonvaObject();
@@ -86,10 +108,25 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 1. Call to get game info
             this.game = await this.gameInteractor.getGame(gameId);
 
-            // 2. Call to get map's list and set first map as selected
+            // 2. Call to get map's list
             this.maps = await this.mapInteractor.getAllMaps(gameId);
 
-            this.mapInteractor.setCurrentMap(this.maps[0]);
+            // 2.1 Load last selected map if you have meta
+            this.metaInteractor.getUserMetaObs().subscribe((meta: Meta) => {
+                if (meta) {
+                    const metaLastMapSelectedIndex = this.maps?.findIndex(_map => _map.id === meta.maps[0]?.id) ?? -1;
+                    if (metaLastMapSelectedIndex !== -1) {
+                        this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
+                    } else {
+                        this.mapInteractor.setCurrentMap(this.maps[0]);
+                    }
+                } else {
+                    this.mapInteractor.setCurrentMap(this.maps[0]);
+                }
+            });
+
+            // this.mapInteractor.setCurrentMap(this.maps[0]);
+
             // 2.1 Set lasted selected map
             // const metaLastMapSelectedIndex = this.maps?.findIndex(map => map.id === this.metaInteractor.$userMeta.value?.maps[0]?.id);
             // if (metaLastMapSelectedIndex !== -1) {
@@ -126,17 +163,17 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.gameStatus = this.game.status;
             }
 
-            this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
+            this.$getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
                 this.mouse = mouse;
             });
-            this.getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
+            this.$getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
                 .subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
                 if (selectedObject) {
                     this.selectedKonvaObject = selectedObject[0];
                 }
             });
 
-            this.getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
+            this.$getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
                 // if (res) {
                 //     this.mapModification = res;
                 //     this.cdr.detectChanges();
@@ -159,14 +196,17 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.getMouseObservableSubscription) {
-            this.getMouseObservableSubscription.unsubscribe();
+        if (this.$getMouseObservableSubscription) {
+            this.$getMouseObservableSubscription.unsubscribe();
         }
-        if (this.getSelectedKonvaObjectSubscription) {
-            this.getSelectedKonvaObjectSubscription.unsubscribe();
+        if (this.$getSelectedKonvaObjectSubscription) {
+            this.$getSelectedKonvaObjectSubscription.unsubscribe();
         }
-        if (this.getCurrentMapModificationSubs) {
-            this.getCurrentMapModificationSubs.unsubscribe();
+        if (this.$getCurrentMapModificationSubs) {
+            this.$getCurrentMapModificationSubs.unsubscribe();
+        }
+        if (this.$mapInteractorSubs) {
+            this.$mapInteractorSubs.unsubscribe();
         }
     }
 

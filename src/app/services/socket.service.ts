@@ -48,8 +48,7 @@ export class SocketService {
 
         // =========================== META =====================================
         this.socket.on('meta', (data: any) => {
-            this.metaInteractor.$userMeta.next(data.meta);
-            console.log('RECEIVE_META', data.meta);
+            this.metaInteractor.setUserMeta(data.meta);
         });
 
         // ========================= START MAPS ================================
