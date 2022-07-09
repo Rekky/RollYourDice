@@ -48,6 +48,7 @@ export class SocketService {
 
         // =========================== META =====================================
         this.socket.on('meta', (data: any) => {
+            console.log('SOCKET RECIBO META', data);
             this.metaInteractor.setUserMeta(data.meta);
         });
 

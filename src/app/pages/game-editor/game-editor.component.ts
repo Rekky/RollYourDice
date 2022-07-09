@@ -35,7 +35,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     destroying: boolean = false;
 
     // META
-    meta: MetaMap;
+    metaMap: MetaMap;
 
     // ZOOM
     currentZoomOptions = {
@@ -49,6 +49,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     $getSelectedKonvaObjectSubscription: Subscription;
     $getCurrentMapModificationSubs: Subscription;
     $mapInteractorSubs: Subscription;
+    $metaSubs: Subscription;
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -60,7 +61,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private metaInteractor: MetaInteractor,
                 public myAdventureInteractor: MyAdventuresInteractor,
                 private cdr: ChangeDetectorRef) {
-        // get MAP from socket call
         // combineLatest([this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()]).pipe().subscribe((result: any[]) => {
             // const map = result[0];
             // const meta = result[1];
@@ -93,6 +93,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.mouseInteractor.unsetSelectedKonvaObject();
                 this.map = map;
 
+                // set meta attrs to map
+                const metaMapAttrsFound = this.metaInteractor.getUserMeta().maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
+                if (metaMapAttrsFound) {
+                    this.metaMap = metaMapAttrsFound;
+                }
+
                 setTimeout(() => {
                     this.destroying = false;
                 });
@@ -112,7 +118,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.maps = await this.mapInteractor.getAllMaps(gameId);
 
             // 2.1 Load last selected map if you have meta
-            this.metaInteractor.getUserMetaObs().subscribe((meta: Meta) => {
+            this.$metaSubs = this.metaInteractor.getUserMetaObs().subscribe((meta: Meta) => {
                 if (meta) {
                     const metaLastMapSelectedIndex = this.maps?.findIndex(_map => _map.id === meta.maps[0]?.id) ?? -1;
                     if (metaLastMapSelectedIndex !== -1) {
@@ -207,6 +213,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         }
         if (this.$mapInteractorSubs) {
             this.$mapInteractorSubs.unsubscribe();
+        }
+        if (this.$metaSubs) {
+            this.$metaSubs.unsubscribe();
         }
     }
 
