@@ -269,6 +269,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onMapDrag(attrs: any): void {
+        this.metaMap.attrs = attrs;
         this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
     }
 
