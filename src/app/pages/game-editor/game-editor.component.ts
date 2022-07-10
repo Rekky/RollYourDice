@@ -101,7 +101,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
         // tslint:disable-next-line:no-shadowed-variable
         combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
-
+            console.log('map->', map);
+            console.log('meta->', meta);
         });
     }
 
