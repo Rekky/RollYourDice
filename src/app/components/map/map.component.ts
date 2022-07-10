@@ -33,7 +33,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Input() scale: number = 1;
     @Input() maxScale: number = 3;
     @Input() minScale: number = 0.3;
-    @Input() scaleStep: number = 0.1;
+    @Input() stepScale: number = 0.1;
     @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
 
     // META PARAMS
@@ -450,15 +450,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             const pointer = this.gridStage.getPointerPosition();
 
             if (this.scale <= this.minScale) {
-                this.scale = this.minScale + this.scaleStep;
+                this.scale = this.minScale + this.stepScale;
                 return;
             } else if (this.scale >= this.maxScale) {
-                this.scale = this.maxScale - this.scaleStep;
+                this.scale = this.maxScale - this.stepScale;
                 return;
             }
 
             // scale map
-            const zoomInc = ev.deltaY > 0 ? -this.scaleStep : this.scaleStep;
+            const zoomInc = ev.deltaY > 0 ? -this.stepScale : this.stepScale;
             this.scale = this.zoomStage2(this.gridStage, pointer, this.scale, zoomInc);
             this.scale = Math.round(this.scale * 100) / 100;
             this.scaleChange.emit(this.scale);

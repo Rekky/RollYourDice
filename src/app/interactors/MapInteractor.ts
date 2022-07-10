@@ -28,7 +28,11 @@ export class MapInteractor {
     }
 
     async getAllMaps(gameId: string): Promise<OurKonvaMap[]> {
-        return  await this.mapService.getAllMaps(gameId);
+        return await this.mapService.getAllMaps(gameId);
+    }
+
+    getAllMapsObs(gameId: string): Observable<any> {
+        return this.mapService.getAllMapsObs(gameId);
     }
 
     setCurrentMap(map: OurKonvaMap): void {
@@ -51,9 +55,9 @@ export class MapInteractor {
         return this.currentMap.getValue();
     }
 
-    setMapPosition(id: string | number, pos: Coords): void {
-        this.mapService.setMapPosition(id, pos);
-    }
+    // setMapPosition(id: string | number, pos: Coords): void {
+    //     this.mapService.setMapPosition(id, pos);
+    // }
 
     createObjectFromMap(mod: OurKonvaMapModification): void {
         // const map = this.getCurrentMap();

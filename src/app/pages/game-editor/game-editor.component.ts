@@ -13,7 +13,7 @@ import {MapInteractor} from '../../interactors/MapInteractor';
 import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
 import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaMap} from '../../classes/Meta';
-import {first, take} from 'rxjs/operators';
+import {first, switchMap, take} from 'rxjs/operators';
 
 @Component({
     selector: 'app-game-editor',
@@ -39,10 +39,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     // ZOOM
     currentZoomOptions = {
-        min: 0.3,
-        max: 3,
-        step: 0.1,
-        value: 1
+        minScale: 0.3,
+        maxScale: 3,
+        stepScale: 0.1,
+        scale: 1
     };
 
     $getMouseObservableSubscription: Subscription;
@@ -61,49 +61,27 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private metaInteractor: MetaInteractor,
                 public myAdventureInteractor: MyAdventuresInteractor,
                 private cdr: ChangeDetectorRef) {
-        // combineLatest([this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()]).pipe().subscribe((result: any[]) => {
-            // const map = result[0];
-            // const meta = result[1];
-            // console.log('entras');
-            // if (map) {
-            //     console.log('tiene map', map);
-            //     this.destroying = true;
-            //     this.mouseInteractor.unsetSelectedKonvaObject();
-            //     this.map = map;
-            //     setTimeout(() => { this.destroying = false; }, 0);
-            // }
-            // if (meta) {
-            //     console.log('tienen meta', meta);
-            //     this.meta = meta;
-            //
-            //     // set latest selected map
-            //     const metaLastMapSelectedIndex = this.maps?.findIndex(_map => _map.id === meta.maps[0]?.id) ?? -1;
-            //     if (metaLastMapSelectedIndex !== -1) {
-            //         this.map = this.maps[metaLastMapSelectedIndex];
-            //         // this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
-            //     } else {
-            //         this.map = this.maps[0];
-            //         // this.mapInteractor.setCurrentMap(this.maps[0]);
-            //     }
-            // }
+        // this.$mapInteractorSubs = this.mapInteractor.getCurrentMapObs().pipe().subscribe(map => {
+        //     if (map) {
+        //         this.destroying = true;
+        //         this.mouseInteractor.unsetSelectedKonvaObject();
+        //         this.map = map;
+        //
+        //         // set meta attrs to map
+        //         //TODO
+        //         const metaMapAttrsFound = this.metaInteractor.getUserMeta()?.maps?.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
+        //         if (metaMapAttrsFound) {
+        //             this.metaMap = metaMapAttrsFound;
+        //             if (metaMapAttrsFound.attrs) {
+        //                 this.currentZoomOptions.scale = metaMapAttrsFound.attrs.scaleX ?? 1;
+        //             }
+        //         }
+        //
+        //         setTimeout(() => {
+        //             this.destroying = false;
+        //         });
+        //     }
         // });
-        this.$mapInteractorSubs = this.mapInteractor.getCurrentMapObs().pipe().subscribe(map => {
-            if (map) {
-                this.destroying = true;
-                this.mouseInteractor.unsetSelectedKonvaObject();
-                this.map = map;
-
-                // set meta attrs to map
-                const metaMapAttrsFound = this.metaInteractor.getUserMeta().maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
-                if (metaMapAttrsFound) {
-                    this.metaMap = metaMapAttrsFound;
-                }
-
-                setTimeout(() => {
-                    this.destroying = false;
-                });
-            }
-        });
     }
 
     async ngOnInit(): Promise<void> {
@@ -115,7 +93,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.game = await this.gameInteractor.getGame(gameId);
 
             // 2. Call to get map's list
-            this.maps = await this.mapInteractor.getAllMaps(gameId);
+            // this.maps = await this.mapInteractor.getAllMaps(gameId);
+            this.mapInteractor.getAllMapsObs(gameId).subscribe(result => {
+                const maps = result.data ?? [];
+                this.maps = maps;
+
+                this.metaInteractor.getUserMetaObs().subscribe(meta => {});
+            });
 
             // 2.1 Load last selected map if you have meta
             this.$metaSubs = this.metaInteractor.getUserMetaObs().subscribe((meta: Meta) => {
@@ -130,38 +114,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                     this.mapInteractor.setCurrentMap(this.maps[0]);
                 }
             });
-
-            // this.mapInteractor.setCurrentMap(this.maps[0]);
-
-            // 2.1 Set lasted selected map
-            // const metaLastMapSelectedIndex = this.maps?.findIndex(map => map.id === this.metaInteractor.$userMeta.value?.maps[0]?.id);
-            // if (metaLastMapSelectedIndex !== -1) {
-            //     this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
-            // } else {
-            //     this.mapInteractor.setCurrentMap(this.maps[0]);
-            // }
-
-            // 2.2 set map selected meta attrs
-            // const metaMapAttrsFound = this.metaInteractor.$userMeta.value.maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
-            // if (metaMapAttrsFound) {
-            //     console.log('game-editor_metaMapAttrsFound', metaMapAttrsFound.id);
-            //     this.mapMeta = metaMapAttrsFound;
-            //     // this.currentZoomOptions.value = metaMapAttrsFound.attrs.scaleX;
-            // }
-
-
-            // 2.2 Seteo de meta 2
-            // this.map.stage = new Stage(this.userInteractor.getCurrentUser()?.meta?.maps[0]);
-            // TODO
-            // const metaMaps = this.userInteractor.getCurrentUser()?.meta?.maps ?? [];
-            // const foundMetaMap = metaMaps.find(map => map.id === this.mapInteractor.getCurrentMap()?.id);
-            // if (foundMetaMap) {
-            //     console.log('foundMetaMap', foundMetaMap);
-            //     this.currentZoomOptions.value = foundMetaMap.zoom;
-            //     console.log('stage', this.map.stage);
-            //     this.map.stage.attrs = foundMetaMap;
-            // }
-
 
             // 3. Socket connection with map selected
             this.gameInteractor.setCurrentGame(this.game);
@@ -180,10 +132,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             });
 
             this.$getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
-                // if (res) {
-                //     this.mapModification = res;
-                //     this.cdr.detectChanges();
-                // }
+                if (res) {
+                    this.mapModification = res;
+                    this.cdr.detectChanges();
+                }
             });
             this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
                 if (adventures) {
@@ -224,7 +176,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedMap(map: OurKonvaMap): void {
-        this.currentZoomOptions.value = 1;
+        // this.currentZoomOptions.value = 1;
         this.mapInteractor.setCurrentMap(map);
         this.socketService.sendMetaSelectedMap(map.id);
     }
@@ -279,7 +231,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onScaleChange(zoom: number): void {
-        this.currentZoomOptions.value = zoom;
+        this.currentZoomOptions.scale = zoom;
         this.onMapDrag({scaleX: zoom, scaleY: zoom});
     }
 
@@ -295,9 +247,4 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         }
     }
 
-}
-
-export enum LeftColumnTabs {
-    Maps = 'maps',
-    Library = 'library'
 }
