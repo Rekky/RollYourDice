@@ -82,6 +82,27 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         //         });
         //     }
         // });
+
+        this.$mapInteractorSubs = this.mapInteractor.getCurrentMapObs().pipe().subscribe(map => {
+            if (map) {
+                this.destroying = true;
+                this.mouseInteractor.unsetSelectedKonvaObject();
+                this.map = map;
+
+                // === META == set meta params to current map
+                // this.metaMap = this.metaInteractor.getUserMeta().maps.find((metaMap: MetaMap) => metaMap.id === this.map.id);
+                // this.currentZoomOptions.scale = this.metaMap.attrs.scaleX ?? 1;
+
+                setTimeout(() => {
+                    this.destroying = false;
+                });
+            }
+        });
+
+        // tslint:disable-next-line:no-shadowed-variable
+        combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
+
+        });
     }
 
     async ngOnInit(): Promise<void> {
@@ -94,11 +115,24 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
             // 2. Call to get map's list
             // this.maps = await this.mapInteractor.getAllMaps(gameId);
-            this.mapInteractor.getAllMapsObs(gameId).subscribe(result => {
-                const maps = result.data ?? [];
+            combineLatest(this.mapInteractor.getAllMapsObs(gameId), this.metaInteractor.getUserMetaObs()).subscribe((result: any) => {
+                const maps = result[0].data ?? [];
+                const meta = result[1] ?? {};
                 this.maps = maps;
 
-                this.metaInteractor.getUserMetaObs().subscribe(meta => {});
+                // === META === select last selected map from meta
+                if (meta && meta.maps && meta.maps.length > 0) {
+                    const mapFound = this.maps.find(map => map.id === meta.maps[0].id);
+                    this.mapInteractor.setCurrentMap(mapFound);
+                } else {
+                    this.mapInteractor.setCurrentMap(this.maps[0]);
+                }
+
+                // === META === set meta attrs to map
+                // if (meta && meta.maps && meta.maps.length > 0) {
+                //     this.metaMap = meta.maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
+                //     this.currentZoomOptions.scale = this.metaMap.attrs.scaleX ?? 1;
+                // }
             });
 
             // 2.1 Load last selected map if you have meta
@@ -221,7 +255,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onMapDrag(attrs: any): void {
-        this.metaMap.attrs = attrs;
+        if (this.metaMap?.attrs) {
+            this.metaMap.attrs = attrs;
+        }
         this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
     }
 
