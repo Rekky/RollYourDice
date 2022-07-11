@@ -1,8 +1,8 @@
 import Konva from 'konva';
 import { Player } from '../User';
-import {OurKonvaMouse} from './OurKonvaMouse';
+import {OurKonvaObject} from './OurKonvaObject';
 
-export class OurKonvaEraser extends OurKonvaMouse {
+export class OurKonvaEraser extends OurKonvaObject {
     state: string = 'eraser';
     line: Konva.Line;
     brushSize: number;

@@ -1,12 +1,12 @@
 import Konva from 'konva';
-import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
+import {CurrentSelectedKonvaObject, OurKonvaObject} from './OurKonvaObject';
 import {Player} from '../User';
 import {ulid} from 'ulid';
 import {Coords} from '../Coords';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import {OurKonvaScale, OurKonvaSize} from './OurKonvaSize';
 
-export class OurKonvaBrush extends OurKonvaMouse {
+export class OurKonvaBrush extends OurKonvaObject {
     id: string;
     position: Coords;
     state: string = 'brush';

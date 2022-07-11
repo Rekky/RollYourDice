@@ -1,8 +1,8 @@
 import {Coords} from '../Coords';
-import {OurKonvaMouse} from './OurKonvaMouse';
+import {OurKonvaObject} from './OurKonvaObject';
 import {Player} from '../User';
 
-export class OurKonvaHand extends OurKonvaMouse {
+export class OurKonvaHand extends OurKonvaObject {
     state: string = 'hand';
     startCoords: Coords;
     offsetCoords: Coords;

@@ -2,7 +2,7 @@ import {ElementRef, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {MouseService} from '../services/mouse.service';
 import Konva from 'konva';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../classes/ourKonva/OurKonvaMouse';
+import {CurrentSelectedKonvaObject, OurKonvaObject} from '../classes/ourKonva/OurKonvaObject';
 import {OurKonvaPointer} from '../classes/ourKonva/OurKonvaPointer';
 import {OurKonvaMap, OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {OurKonvaLayers} from '../classes/ourKonva/OurKonvaLayers';
@@ -23,7 +23,7 @@ import {Player} from '../classes/User';
 export class MouseInteractor implements OnDestroy {
     private selectedKonvaObjects: BehaviorSubject<CurrentSelectedKonvaObject[]> = new BehaviorSubject<CurrentSelectedKonvaObject[]>([]);
 
-    mouse: OurKonvaMouse | OurKonvaRect | OurKonvaText | OurKonvaImage;
+    mouse: OurKonvaObject | OurKonvaRect | OurKonvaText | OurKonvaImage;
 
     getMouseObservableSubscription: Subscription;
     selectedKonvaObjectSubscription: Subscription;
@@ -394,7 +394,7 @@ export class MouseInteractor implements OnDestroy {
         this.selectedKonvaObjects.next(object);
     }
 
-    updateObject(object: OurKonvaMouse): void {
+    updateObject(object: OurKonvaObject): void {
         this.socketService.updateGameObjects(this.currentMap.id, [object]);
     }
 

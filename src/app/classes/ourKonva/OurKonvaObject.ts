@@ -9,7 +9,7 @@ import {OurKonvaImage} from './OurKonvaImage';
 import { Player } from '../User';
 import {OurKonvaBrush} from './OurKonvaBrush';
 
-export class OurKonvaMouse {
+export class OurKonvaObject {
     isActive: boolean;
     author: Player;
     stage: Konva.Stage;

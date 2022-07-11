@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {MouseService} from '../../../../../services/mouse.service';
 import {OurKonvaText} from '../../../../../classes/ourKonva/OurKonvaText';
-import {CurrentSelectedKonvaObject} from '../../../../../classes/ourKonva/OurKonvaMouse';
+import {CurrentSelectedKonvaObject} from '../../../../../classes/ourKonva/OurKonvaObject';
 import {MouseInteractor} from '../../../../../interactors/MouseInteractor';
 import {OurKonvaRect} from '../../../../../classes/ourKonva/OurKonvaRect';
 import Konva from 'konva';

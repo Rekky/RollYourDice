@@ -1,4 +1,4 @@
-import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
+import {CurrentSelectedKonvaObject, OurKonvaObject} from './OurKonvaObject';
 import Konva from 'konva';
 import {Coords} from '../Coords';
 import {OurKonvaLayers} from './OurKonvaLayers';
@@ -6,7 +6,7 @@ import { ulid } from 'ulid';
 import {Player} from '../User';
 
 
-export class OurKonvaImage extends OurKonvaMouse {
+export class OurKonvaImage extends OurKonvaObject {
     id: string;
     position: Coords;
     tempImage: Konva.Image;

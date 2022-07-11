@@ -8,7 +8,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {UserInteractor} from '../../interactors/UserInteractor';
-import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaMouse';
+import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
 import {withIdentifier} from 'codelyzer/util/astQuery';

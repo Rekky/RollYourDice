@@ -1,11 +1,11 @@
 import Konva from 'konva';
-import {CurrentSelectedKonvaObject, OurKonvaMouse} from './OurKonvaMouse';
+import {CurrentSelectedKonvaObject, OurKonvaObject} from './OurKonvaObject';
 import {OurKonvaLayers} from './OurKonvaLayers';
 import {Coords} from '../Coords';
 import { ulid } from 'ulid';
 import {Player} from '../User';
 
-export class OurKonvaText extends OurKonvaMouse {
+export class OurKonvaText extends OurKonvaObject {
     id: string;
     state: string = 'text';
     color: string;

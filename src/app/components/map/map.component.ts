@@ -16,7 +16,7 @@ import {document} from 'ngx-bootstrap/utils';
 import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
+import {CurrentSelectedKonvaObject, OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import KonvaEventObject = Konva.KonvaEventObject;
 import {Player} from '../../classes/User';
 import {MetaMap} from '../../classes/Meta';
@@ -81,7 +81,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             .subscribe((object: CurrentSelectedKonvaObject[] | null) => {
                 this.currentMapObjectsSelected = object;
                 if (object) {
-                    this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(object[0], this.gridStage);
+                    this.selectedObjectEditorPosition = OurKonvaObject.calculateObjectPositionOnGrid(object[0], this.gridStage);
                     this.displaySelectedObjectEditor = true;
                 } else {
                     this.displaySelectedObjectEditor = false;
@@ -333,7 +333,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.position(newPos);
         // return the new zoom factor.
         if (this.currentMapObjectsSelected) {
-            this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(this.currentMapObjectsSelected[0], this.gridStage);
+            this.selectedObjectEditorPosition = OurKonvaObject.calculateObjectPositionOnGrid(this.currentMapObjectsSelected[0], this.gridStage);
         }
         return zoomAfter;
     }
@@ -443,7 +443,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         });
         this.mapEl.nativeElement.addEventListener('mouseup', (ev: MouseEvent) => {
             if (this.currentMapObjectsSelected) {
-                this.selectedObjectEditorPosition = OurKonvaMouse.calculateObjectPositionOnGrid(
+                this.selectedObjectEditorPosition = OurKonvaObject.calculateObjectPositionOnGrid(
                     this.currentMapObjectsSelected[0], this.gridStage);
                 this.displaySelectedObjectEditor = true;
             }

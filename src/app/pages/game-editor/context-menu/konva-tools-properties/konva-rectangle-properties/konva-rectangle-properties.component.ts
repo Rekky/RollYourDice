@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import { Coords } from 'src/app/classes/Coords';
 import {OurKonvaRect} from '../../../../../classes/ourKonva/OurKonvaRect';
 import {StrokeOptions} from '../../custom-inputs/stroke-input/stroke-input.component';
-import {OurKonvaMouse} from '../../../../../classes/ourKonva/OurKonvaMouse';
+import {OurKonvaObject} from '../../../../../classes/ourKonva/OurKonvaObject';
 
 @Component({
   selector: 'app-konva-rectangle-properties',

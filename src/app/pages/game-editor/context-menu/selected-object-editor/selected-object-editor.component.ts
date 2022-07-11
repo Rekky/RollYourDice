@@ -4,7 +4,7 @@ import {
     OnInit,
 } from '@angular/core';
 import {MouseInteractor} from '../../../../interactors/MouseInteractor';
-import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../../../classes/ourKonva/OurKonvaMouse';
+import {CurrentSelectedKonvaObject, OurKonvaObject} from '../../../../classes/ourKonva/OurKonvaObject';
 import { Coords } from 'src/app/classes/Coords';
 
 @Component({
