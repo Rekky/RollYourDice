@@ -3,23 +3,15 @@ import {
     Output, SimpleChanges, ViewChild
 } from '@angular/core';
 import Konva from 'konva';
-import {MapInteractor} from '../../interactors/MapInteractor';
 import {Coords} from '../../classes/Coords';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
-import {interval, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
-import {OurKonvaGrid} from '../../classes/ourKonva/OurKonvaGrid';
-import {SocketService} from '../../services/socket.service';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
-import {MouseService} from '../../services/mouse.service';
-import {document} from 'ngx-bootstrap/utils';
-import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
-import {OurKonvaText} from '../../classes/ourKonva/OurKonvaText';
-import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {CurrentSelectedKonvaObject, OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
+import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
 import KonvaEventObject = Konva.KonvaEventObject;
-import {Player} from '../../classes/User';
 import {MetaMap} from '../../classes/Meta';
+import { OurKonvaObject } from 'src/app/classes/ourKonva/OurKonvaObject';
 
 @Component({
     selector: 'app-map',
@@ -42,7 +34,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Input() scale: number = 1;
     @Input() maxScale: number = 3;
     @Input() minScale: number = 0.3;
-    @Input() scaleStep: number = 0.1;
+    @Input() stepScale: number = 0.1;
     @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
 
     // META PARAMS
@@ -114,13 +106,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         }
 
         if (changes.map) {
-            setTimeout(() => {
-                // TODO
+            // setTimeout(() => {
                 // console.log('GRID_STAGE', this.gridStage);
                 // console.log('changes_map_stage', changes.map.currentValue.stage.attrs.y);
                 // this.gridStage.y(changes.map.currentValue.stage.attrs.y);
                 // this.gridStage.x(changes.map.currentValue.stage.attrs.x);
-            }, 300);
+            // }, 300);
         }
 
         if (this.modification) {
@@ -192,13 +183,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     createStage(): Konva.Stage {
-        console.log('@INPUT_META->', this.meta);
+        // console.log('@INPUT_META->', this.meta);
         let stage;
         if (this.meta) {
-            console.log('tiene meta');
+            // console.log('tiene meta');
             stage = this.setMetaParams();
         } else {
-            console.log('no tiene meta');
+            // console.log('no tiene meta');
             stage = new Konva.Stage({
                 container: 'map' + this.map.id,
                 width: window.innerWidth,
@@ -459,15 +450,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             const pointer = this.gridStage.getPointerPosition();
 
             if (this.scale <= this.minScale) {
-                this.scale = this.minScale + this.scaleStep;
+                this.scale = this.minScale + this.stepScale;
                 return;
             } else if (this.scale >= this.maxScale) {
-                this.scale = this.maxScale - this.scaleStep;
+                this.scale = this.maxScale - this.stepScale;
                 return;
             }
 
             // scale map
-            const zoomInc = ev.deltaY > 0 ? -this.scaleStep : this.scaleStep;
+            const zoomInc = ev.deltaY > 0 ? -this.stepScale : this.stepScale;
             this.scale = this.zoomStage2(this.gridStage, pointer, this.scale, zoomInc);
             this.scale = Math.round(this.scale * 100) / 100;
             this.scaleChange.emit(this.scale);

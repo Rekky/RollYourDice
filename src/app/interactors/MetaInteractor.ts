@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Meta} from '../classes/Meta';
 
 @Injectable({
@@ -7,10 +7,22 @@ import {Meta} from '../classes/Meta';
 })
 export class MetaInteractor {
 
-    $userMeta: BehaviorSubject<Meta> = new BehaviorSubject<Meta>(null);
+    private $userMeta: BehaviorSubject<Meta | null> = new BehaviorSubject<Meta>(null);
 
     constructor() {
 
+    }
+
+    public setUserMeta(meta: Meta): void {
+        this.$userMeta.next(meta);
+    }
+
+    public getUserMeta(): Meta {
+        return this.$userMeta.getValue();
+    }
+
+    public getUserMetaObs(): Observable<Meta> {
+        return this.$userMeta.asObservable();
     }
 
 }

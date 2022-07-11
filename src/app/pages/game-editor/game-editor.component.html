@@ -4,11 +4,11 @@
     <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStatus === GameStatus.Running))" class="map-container">
         <app-map *ngIf="!destroying"
             [map]="map"
-            [meta]="mapMeta"
+            [meta]="currentMapMeta"
             [modification]="mapModification"
-            [scale]="currentZoomOptions.value"
-            [maxScale]="currentZoomOptions.max"
-            [minScale]="currentZoomOptions.min"
+            [scale]="currentZoomOptions.scale"
+            [maxScale]="currentZoomOptions.maxScale"
+            [minScale]="currentZoomOptions.minScale"
             (scaleChange)="onScaleChange($event)"
             (mapDragEvent)="onMapDrag($event)"
             ></app-map>
@@ -74,9 +74,9 @@
             <div class="tools-middle"></div>
             <div class="tools-bottom">
                 <app-map-zoom-tools
-                [(zoom)]="currentZoomOptions.value"
-                [maxZoom]="currentZoomOptions.max"
-                [minZoom]="currentZoomOptions.min"
+                [(zoom)]="currentZoomOptions.scale"
+                [maxZoom]="currentZoomOptions.maxScale"
+                [minZoom]="currentZoomOptions.minScale"
                 ></app-map-zoom-tools>
             </div>
         </div>

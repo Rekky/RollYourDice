@@ -1,6 +1,7 @@
 import {ulid} from 'ulid';
 
 export interface MapAttrs {
+    container?: any;
     x: number;
     y: number;
     scaleX: number;

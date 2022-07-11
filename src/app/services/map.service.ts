@@ -6,6 +6,7 @@ import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {HttpService} from './http.service';
 import {UserInteractor} from '../interactors/UserInteractor';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +34,15 @@ export class MapService {
         });
     }
 
+    getAllMapsObs(gameId: string): Observable<any> {
+        const options = {
+            headers: new HttpHeaders({
+                Authorization: this.userInteractor.getCurrentToken()
+            })
+        };
+        return this.httpService.get(`/game/${gameId}/maps`, options);
+    }
+
     createNewMap(gameId: string, map: OurKonvaMap): Promise<OurKonvaMap> {
         const body = {
             gameId: gameId,
@@ -48,9 +58,5 @@ export class MapService {
                 }
             );
         });
-    }
-
-    setMapPosition(id: string | number, pos: Coords): void {
-        // this.apiService.setMapPosition(id, pos.toJSON());
     }
 }
