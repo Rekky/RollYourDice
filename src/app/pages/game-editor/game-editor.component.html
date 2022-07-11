@@ -4,7 +4,7 @@
     <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStatus === GameStatus.Running))" class="map-container">
         <app-map *ngIf="!destroying"
             [map]="map"
-            [meta]="metaMap"
+            [meta]="currentMapMeta"
             [modification]="mapModification"
             [scale]="currentZoomOptions.scale"
             [maxScale]="currentZoomOptions.maxScale"

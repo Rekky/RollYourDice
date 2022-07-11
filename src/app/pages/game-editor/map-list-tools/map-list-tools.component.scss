@@ -75,7 +75,8 @@
     cursor: pointer;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.025);
+        //background-color: rgba(0, 0, 0, 0.025);
+        background-color: lighten(#03a9f4, 48%);
         .tag {
             background-color: rgba($c-black, 0.7) !important;
         }
@@ -83,13 +84,15 @@
 }
 
 .selected-map-box {
-    background-color: rgba(0, 0, 0, 0.025);
+    background-color: lighten(#03a9f4, 35%);
+    //background-color: rgba(0, 0, 0, 0.025);
     .tag {
         background-color: rgba($c-black, 0.7) !important;
     }
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.025);
+        //background-color: lighten(#03a9f4, 35%);
+        background-color: lighten(#03a9f4, 35%);
     }
 }
 

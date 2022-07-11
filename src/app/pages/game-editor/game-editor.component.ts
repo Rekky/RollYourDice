@@ -35,7 +35,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     destroying: boolean = false;
 
     // META
-    metaMap: MetaMap;
+    gameMeta: Meta;
+    currentMapMeta: MetaMap;
 
     // ZOOM
     currentZoomOptions = {
@@ -61,48 +62,25 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private metaInteractor: MetaInteractor,
                 public myAdventureInteractor: MyAdventuresInteractor,
                 private cdr: ChangeDetectorRef) {
-        // this.$mapInteractorSubs = this.mapInteractor.getCurrentMapObs().pipe().subscribe(map => {
-        //     if (map) {
-        //         this.destroying = true;
-        //         this.mouseInteractor.unsetSelectedKonvaObject();
-        //         this.map = map;
-        //
-        //         // set meta attrs to map
-        //         //TODO
-        //         const metaMapAttrsFound = this.metaInteractor.getUserMeta()?.maps?.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
-        //         if (metaMapAttrsFound) {
-        //             this.metaMap = metaMapAttrsFound;
-        //             if (metaMapAttrsFound.attrs) {
-        //                 this.currentZoomOptions.scale = metaMapAttrsFound.attrs.scaleX ?? 1;
-        //             }
-        //         }
-        //
-        //         setTimeout(() => {
-        //             this.destroying = false;
-        //         });
-        //     }
-        // });
 
-        this.$mapInteractorSubs = this.mapInteractor.getCurrentMapObs().pipe().subscribe(map => {
+        combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
             if (map) {
                 this.destroying = true;
                 this.mouseInteractor.unsetSelectedKonvaObject();
                 this.map = map;
-
-                // === META == set meta params to current map
-                // this.metaMap = this.metaInteractor.getUserMeta().maps.find((metaMap: MetaMap) => metaMap.id === this.map.id);
-                // this.currentZoomOptions.scale = this.metaMap.attrs.scaleX ?? 1;
-
-                setTimeout(() => {
-                    this.destroying = false;
-                });
             }
-        });
+            if (map && meta) {
+                this.gameMeta = meta;
+                this.currentMapMeta = this.gameMeta.maps.find(m => m.id === map.id);
 
-        // tslint:disable-next-line:no-shadowed-variable
-        combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
-            console.log('map->', map);
-            console.log('meta->', meta);
+                if (this.currentMapMeta && this.currentMapMeta.attrs) {
+                    this.currentZoomOptions.scale = this.currentMapMeta.attrs?.scaleX ?? 1;
+                }
+            }
+
+            setTimeout(() => {
+                this.destroying = false;
+            });
         });
     }
 
@@ -115,7 +93,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.game = await this.gameInteractor.getGame(gameId);
 
             // 2. Call to get map's list
-            // this.maps = await this.mapInteractor.getAllMaps(gameId);
             combineLatest(this.mapInteractor.getAllMapsObs(gameId), this.metaInteractor.getUserMetaObs()).subscribe((result: any) => {
                 const maps = result[0].data ?? [];
                 const meta = result[1] ?? {};
@@ -128,12 +105,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 } else {
                     this.mapInteractor.setCurrentMap(this.maps[0]);
                 }
-
-                // === META === set meta attrs to map
-                // if (meta && meta.maps && meta.maps.length > 0) {
-                //     this.metaMap = meta.maps.find((metaMap: MetaMap) => metaMap.id === this.mapInteractor.getCurrentMap().id);
-                //     this.currentZoomOptions.scale = this.metaMap.attrs.scaleX ?? 1;
-                // }
             });
 
             // 2.1 Load last selected map if you have meta
@@ -217,7 +188,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onCreateMap(map: OurKonvaMap): void {
-        this.map = map;
+        this.mapInteractor.setCurrentMap(map);
         this.socketService.sendGameCreateMap(this.gameInteractor.getCurrentGame().id, map);
     }
 
@@ -256,8 +227,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onMapDrag(attrs: any): void {
-        if (this.metaMap?.attrs) {
-            this.metaMap.attrs = attrs;
+        if (this.currentMapMeta) {
+            this.currentMapMeta.attrs = attrs;
+            console.log('tiene meta', this.gameMeta);
+        } else {
+            const newMapAttrs = {id: this.mapInteractor.getCurrentMap().id, attrs};
+            this.gameMeta.maps.push(newMapAttrs);
+            console.log('no tiene meta', this.gameMeta);
         }
         this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
     }
