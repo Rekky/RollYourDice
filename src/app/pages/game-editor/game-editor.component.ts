@@ -229,11 +229,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     onMapDrag(attrs: any): void {
         if (this.currentMapMeta) {
             this.currentMapMeta.attrs = attrs;
-            console.log('tiene meta', this.gameMeta);
         } else {
             const newMapAttrs = {id: this.mapInteractor.getCurrentMap().id, attrs};
             this.gameMeta.maps.push(newMapAttrs);
-            console.log('no tiene meta', this.gameMeta);
         }
         this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
     }
