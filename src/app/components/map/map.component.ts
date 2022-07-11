@@ -8,7 +8,7 @@ import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {Subscription} from 'rxjs';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
-import {CurrentSelectedKonvaObject, OurKonvaMouse} from '../../classes/ourKonva/OurKonvaMouse';
+import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import KonvaEventObject = Konva.KonvaEventObject;
 import {MetaMap} from '../../classes/Meta';
 import { OurKonvaObject } from 'src/app/classes/ourKonva/OurKonvaObject';
@@ -324,7 +324,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.position(newPos);
         // return the new zoom factor.
         if (this.currentMapObjectsSelected) {
-            this.selectedObjectEditorPosition = OurKonvaObject.calculateObjectPositionOnGrid(this.currentMapObjectsSelected[0], this.gridStage);
+            this.selectedObjectEditorPosition = OurKonvaObject.calculateObjectPositionOnGrid(
+                this.currentMapObjectsSelected[0], this.gridStage);
         }
         return zoomAfter;
     }
