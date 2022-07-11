@@ -33,6 +33,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     openMapList = false;
     leftSidebarTitle: string = 'MAPS';
     destroying: boolean = false;
+    isBlueprintDisplayed: boolean = false;
 
     // META
     gameMeta: Meta;

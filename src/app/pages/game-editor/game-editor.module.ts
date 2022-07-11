@@ -36,6 +36,7 @@ import { AssetsListComponent } from './assets-list/assets-list.component';
 import { NumberInputComponent } from './context-menu/custom-inputs/number-input/number-input.component';
 import { ObjectsListComponent } from './objects-list/objects-list.component';
 import { CamerasListComponent } from './cameras-list/cameras-list.component';
+import {BlueprintLayoutComponent} from '../../components/blueprint-layout/blueprint-layout.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import { CamerasListComponent } from './cameras-list/cameras-list.component';
         NumberInputComponent,
         ObjectsListComponent,
         CamerasListComponent,
+        BlueprintLayoutComponent
     ],
     imports: [
         CommonModule,

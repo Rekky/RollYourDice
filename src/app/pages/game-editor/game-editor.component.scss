@@ -1,5 +1,18 @@
 @import 'src/styles.scss';
 
+.tempButton {
+    position: absolute;
+    left: 10px;
+    top: 100px;
+    z-index: 9999;
+    background-color: aquamarine;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: larger;
+    font-weight: bolder;
+}
+
 .game-editor{
     position: absolute;
     top:0;
@@ -8,6 +21,11 @@
     bottom: 0;
     background: $c-blackest;
     overflow: hidden;
+
+    app-blueprint-layout {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .map-container {
