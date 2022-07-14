@@ -1,0 +1,42 @@
+.library-list {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 80px;
+    width: 100%;
+    height: calc(100vh - 180px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.category-item {
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+
+    padding-left: 24px;
+    padding-right: 24px;
+    font-size: 14px;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+
+    .title {
+        color: #FFF;
+        z-index: 1;
+        font-size: 20px;
+    }
+    .bg {
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

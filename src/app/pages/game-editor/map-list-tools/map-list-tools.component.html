@@ -53,11 +53,6 @@
     <div *ngIf="tabs === 3">
         <app-cameras-list [cameras]="selectedMap.cameras"></app-cameras-list>
     </div>
-
-    <!--   TABS 4   -->
-    <div *ngIf="tabs === 4">
-        <div>LIBRARYYYYYY</div>
-    </div>
 </div>
 
 <!-- FOOTER -->
@@ -73,8 +68,5 @@
     </div>
     <div class="tab" [class.active]="tabs === 3" (click)="tabs = 3;tabsChange.emit(tabs)">
         <img height="25px" src="assets/icons/camera.png" alt="camera">
-    </div>
-    <div class="tab" [class.active]="tabs === 4" (click)="tabs = 4;tabsChange.emit(tabs)">
-        <img height="25px" src="assets/icons/library.png" alt="library">
     </div>
 </div>

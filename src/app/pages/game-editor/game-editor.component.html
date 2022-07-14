@@ -30,7 +30,7 @@
     <app-sidebar-custom class="left-panel" [(open)]="openMapList" [sidebarType]="'left'" [top]="'54px'">
         <div header>{{leftSidebarTitle}}</div>
         <div body>
-            <app-map-list-tools
+            <app-map-list-tools *ngIf="!openLibraryList"
                 [maps]="maps"
                 [selectedMap]="map"
                 [tabs]="0"
@@ -42,6 +42,9 @@
                 (updateMapEvent)="onUpdateMap($event)"
                 (tabsChange)="onTabsChange($event)"
             ></app-map-list-tools>
+            <div *ngIf="openLibraryList">
+                <app-library-list></app-library-list>
+            </div>
         </div>
         <div toolsbar>
             <div class="tools-top"></div>
@@ -49,7 +52,10 @@
                 <app-editor-tools></app-editor-tools>
             </div>
             <div class="tools-bottom">
-                <div class="btn btn-white box-shadow" (click)="openMapList = !openMapList">
+                <div class="btn btn-white box-shadow" (click)="openMapList = true;openLibraryList = true;leftSidebarTitle = 'LIBRARY'">
+                    <img height="25px" src="assets/icons/library.png" alt="library">
+                </div>
+                <div class="btn btn-white box-shadow" (click)="openMapList = true;openLibraryList = false;leftSidebarTitle = 'MAPS'">
                     <svg fill="none" height="24" stroke-width="1.5" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19 21L5 21C3.89543 21 3 20.1046 3 19L3 5C3 3.89543 3.89543 3 5 3L19 3C20.1046 3 21 3.89543 21 5L21 19C21 20.1046 20.1046 21 19 21Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M9.5 21V3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
@@ -59,6 +65,11 @@
             </div>
         </div>
     </app-sidebar-custom>
+
+<!--    <app-sidebar-custom class="left-panel" [(open)]="openLibraryList" [sidebarType]="'left'" [top]="'54px'">-->
+<!--        <div header>LIBRARY</div>-->
+<!--        <div body></div>-->
+<!--    </app-sidebar-custom>-->
 
 
     <!-- RIGHT PANEL -->

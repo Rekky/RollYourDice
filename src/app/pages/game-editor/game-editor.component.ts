@@ -31,6 +31,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
     openMapList = false;
+    openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
     destroying: boolean = false;
     isBlueprintDisplayed: boolean = false;
@@ -261,9 +262,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 break;
             case 3:
                 this.leftSidebarTitle = 'CAMERAS';
-                break;
-            case 4:
-                this.leftSidebarTitle = 'LIBRARY';
                 break;
             default:
                 this.leftSidebarTitle = 'UNKNOWN';
