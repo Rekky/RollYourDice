@@ -8,11 +8,21 @@ import {Component, OnInit} from '@angular/core';
 export class LibraryListComponent implements OnInit {
 
     categories: any[] = [];
+    currentCategory: string | null = null;
+    modalNewCategoryItem: boolean = false;
 
     constructor() {
     }
 
     ngOnInit(): void {
+    }
+
+    selectCategory(category: string): void {
+        this.currentCategory = category;
+    }
+
+    onAddItem(): void {
+        this.modalNewCategoryItem = true;
     }
 
 }
