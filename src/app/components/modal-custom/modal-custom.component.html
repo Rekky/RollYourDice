@@ -1,9 +1,10 @@
-<div *ngIf="open" class="modal-custom box-shadow">
+<div *ngIf="open" class="modal-overlay" (click)="close()"></div>
+<div *ngIf="open" class="modal-custom box-shadow" [style.left.px]="(windowWidth - 300) / 2">
     <div class="control">
         <img
             style="width: 20px; height: 20px"
             class="cursor-pointer"
-            (click)="open = false; openChange.emit(open)"
+            (click)="close()"
             src="/assets/svg/close.svg"
             alt="close"
         />

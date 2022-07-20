@@ -22,6 +22,8 @@ import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import {MiniMenuComponent} from './components/mini-menu/mini-menu.component';
 import {BlueprintLayoutComponent} from './components/blueprint-layout/blueprint-layout.component';
+import {CustomWizardActorComponent} from './components/custom-wizard-actor/custom-wizard-actor.component';
+
 
 @NgModule({
     declarations: [
@@ -41,7 +43,8 @@ import {BlueprintLayoutComponent} from './components/blueprint-layout/blueprint-
         ModalCustomComponent,
         SidebarCustomComponent,
         MiniMapComponent,
-        MiniMenuComponent
+        MiniMenuComponent,
+        CustomWizardActorComponent
     ],
     imports: [
         CommonModule,
@@ -66,7 +69,8 @@ import {BlueprintLayoutComponent} from './components/blueprint-layout/blueprint-
         ModalCustomComponent,
         SidebarCustomComponent,
         MiniMapComponent,
-        MiniMenuComponent
+        MiniMenuComponent,
+        CustomWizardActorComponent
     ],
 })
 

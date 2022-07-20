@@ -1,0 +1,29 @@
+@import "/src/assets/scss/colors";
+
+.wizard-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 1fr;
+}
+.wizard-head {
+
+}
+.wizard-body {
+
+}
+
+
+.card-list {
+    display: grid;
+    grid-auto-columns: 1fr;
+
+    .card-item {
+        width: 130px;
+        height: 100px;
+        cursor: pointer;
+
+        &:hover {
+            border: 2px solid $c-wizard-blue;
+        }
+    }
+}

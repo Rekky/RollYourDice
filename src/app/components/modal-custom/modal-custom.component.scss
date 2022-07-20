@@ -1,11 +1,20 @@
-
+.modal-overlay {
+    position: fixed;
+    z-index: 99;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background: rgba(30,30,30,0.8);
+}
 
 .modal-custom {
     position:fixed;
-    width: auto;
-    height: auto;
-    top:30%;
-    left:50%;
+    z-index: 100;
+    min-width: 300px;
+    min-height: 300px;
+    top:10%;
+    left:0;
     background:#fff;
     border-radius:4px;
     padding: 20px;
