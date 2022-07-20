@@ -1,0 +1,12 @@
+<div class="blueprints-container">
+    <div class="frame">
+        <div class="canvas">
+            <div class="droppable" appDroppable [options]="{ accept: '.task' }" (dropping)="assignTask($event, user)">
+                Droppable element
+            </div>
+            <div class="draggable" (draggableClick)="openDetail(task)" [model]="task" appDraggable>
+                Draggable Element
+            </div>
+        </div>
+    </div>
+</div>
