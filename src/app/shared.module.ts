@@ -23,6 +23,7 @@ import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import {MiniMenuComponent} from './components/mini-menu/mini-menu.component';
 import {BlueprintLayoutComponent} from './components/blueprint-layout/blueprint-layout.component';
 import {CustomWizardActorComponent} from './components/custom-wizard-actor/custom-wizard-actor.component';
+import { CustomListComponent } from './components/custom-list/custom-list.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {CustomWizardActorComponent} from './components/custom-wizard-actor/custo
         SidebarCustomComponent,
         MiniMapComponent,
         MiniMenuComponent,
-        CustomWizardActorComponent
+        CustomWizardActorComponent,
+        CustomListComponent
     ],
     imports: [
         CommonModule,

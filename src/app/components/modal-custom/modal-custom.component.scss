@@ -1,5 +1,16 @@
+.modal-custom {
+    position:fixed;
+    z-index: 100;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .modal-overlay {
-    position: fixed;
+    position: absolute;
     z-index: 99;
     top:0;
     left:0;
@@ -7,14 +18,11 @@
     bottom:0;
     background: rgba(30,30,30,0.8);
 }
-
-.modal-custom {
-    position:fixed;
+.modal-container {
+    position: relative;
     z-index: 100;
     min-width: 300px;
     min-height: 300px;
-    top:10%;
-    left:0;
     background:#fff;
     border-radius:4px;
     padding: 20px;

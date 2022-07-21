@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AssetService} from '../../services/asset.service';
 
 @Component({
     selector: 'app-custom-wizard-actor',
@@ -12,9 +13,12 @@ export class CustomWizardActorComponent implements OnInit {
     @Input() currentStep: number = 0;
     protected currentActorType: string = null;
 
+    public assets: any[] = [];
+    showAssets: boolean = false;
+
     public fg: FormGroup;
 
-    constructor() {
+    constructor(protected assetService: AssetService) {
         this.fg = new FormGroup({
             hp: new FormControl(50, [Validators.required]),
             mp: new FormControl(50, [Validators.required]),
@@ -23,7 +27,9 @@ export class CustomWizardActorComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        this.assets = await this.assetService.getAllAssets();
+        console.log(this.assets);
     }
 
     selectActorType(type: string): void {
