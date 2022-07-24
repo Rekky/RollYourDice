@@ -31,6 +31,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
     openMapList = false;
+    openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
     destroying: boolean = false;
     isBlueprintDisplayed: boolean = true;
@@ -249,14 +250,22 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onTabsChange(tab: number): void {
-        if (tab === 0) {
-            this.leftSidebarTitle = 'MAPS';
-        } else if (tab === 1){
-            this.leftSidebarTitle = 'MAP OBJECTS';
-        } else if (tab === 2){
-            this.leftSidebarTitle = 'ASSETS';
-        } else {
-            this.leftSidebarTitle = 'CAMERAS';
+        switch (tab) {
+            case 0:
+                this.leftSidebarTitle = 'MAPS';
+                break;
+            case 1:
+                this.leftSidebarTitle = 'MAP OBJECTS';
+                break;
+            case 2:
+                this.leftSidebarTitle = 'ASSETS';
+                break;
+            case 3:
+                this.leftSidebarTitle = 'CAMERAS';
+                break;
+            default:
+                this.leftSidebarTitle = 'UNKNOWN';
+                break;
         }
     }
 

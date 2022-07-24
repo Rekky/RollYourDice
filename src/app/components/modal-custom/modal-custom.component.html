@@ -1,12 +1,15 @@
 <div *ngIf="open" class="modal-custom box-shadow">
-    <div class="control">
-        <img
-            style="width: 20px; height: 20px"
-            class="cursor-pointer"
-            (click)="open = false; openChange.emit(open)"
-            src="/assets/svg/close.svg"
-            alt="close"
-        />
+    <div class="modal-overlay" (click)="close()"></div>
+    <div class="modal-container">
+        <div class="control">
+            <img
+                style="width: 20px; height: 20px"
+                class="cursor-pointer"
+                (click)="close()"
+                src="/assets/svg/close.svg"
+                alt="close"
+            />
+        </div>
+        <ng-content></ng-content>
     </div>
-    <ng-content></ng-content>
 </div>
