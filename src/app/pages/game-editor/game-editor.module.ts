@@ -37,7 +37,6 @@ import { NumberInputComponent } from './context-menu/custom-inputs/number-input/
 import { ObjectsListComponent } from './objects-list/objects-list.component';
 import { CamerasListComponent } from './cameras-list/cameras-list.component';
 import {BlueprintsModule} from '../../blueprints/blueprints.module';
-import {BlueprintLayoutComponent} from '../../components/blueprint-layout/blueprint-layout.component';
 import { LibraryListComponent } from './library-list/library-list.component';
 
 @NgModule({
@@ -69,7 +68,6 @@ import { LibraryListComponent } from './library-list/library-list.component';
         NumberInputComponent,
         ObjectsListComponent,
         CamerasListComponent,
-        BlueprintLayoutComponent,
         LibraryListComponent
     ],
     imports: [

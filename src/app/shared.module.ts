@@ -21,7 +21,6 @@ import { ModalCustomComponent } from './components/modal-custom/modal-custom.com
 import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom.component';
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import {MiniMenuComponent} from './components/mini-menu/mini-menu.component';
-import {BlueprintLayoutComponent} from './components/blueprint-layout/blueprint-layout.component';
 import {CustomWizardActorComponent} from './components/custom-wizard-actor/custom-wizard-actor.component';
 import { CustomListComponent } from './components/custom-list/custom-list.component';
 
