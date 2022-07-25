@@ -39,11 +39,10 @@ import {JwtModule} from '@auth0/angular-jwt';
         })
     ],
     providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
     bootstrap: [AppComponent],
-    exports: [],
-    entryComponents: [NotificationComponent]
+    exports: []
 })
 export class AppModule { }
 
