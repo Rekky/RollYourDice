@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnDestroy, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
@@ -29,8 +29,8 @@ export class MapListToolsComponent implements OnInit, AfterViewInit, OnDestroy {
     @Output() selectedMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
     @Output() toPlayersMapEvent: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
-    newMapForm: FormGroup;
-    updateMapForm: FormGroup;
+    newMapForm: UntypedFormGroup;
+    updateMapForm: UntypedFormGroup;
     openMapOption: number;
     isEditNameDisplayed: string = null;
 

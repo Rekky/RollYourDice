@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Router} from '@angular/router';
 import {User} from '../../../classes/User';
@@ -13,17 +13,17 @@ import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 export class SignInComponent implements OnInit, AfterViewInit {
 
     @Output() display: EventEmitter<'signUp' | 'signIn' | 'loaded'> = new EventEmitter<'signUp'>();
-    signInForm: FormGroup;
+    signInForm: UntypedFormGroup;
     displayPassword: boolean = false;
 
     constructor(private userInteractor: UserInteractor,
                 private router: Router) { }
 
     ngOnInit(): void {
-        this.signInForm = new FormGroup({
-            email: new FormControl(null, Validators.required),
-            password: new FormControl(null, Validators.required),
-            stayLogged: new FormControl(false),
+        this.signInForm = new UntypedFormGroup({
+            email: new UntypedFormControl(null, Validators.required),
+            password: new UntypedFormControl(null, Validators.required),
+            stayLogged: new UntypedFormControl(false),
         });
     }
 

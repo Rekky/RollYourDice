@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 
 @Component({
@@ -12,7 +12,7 @@ export class MapPropertiesComponent implements OnInit {
     @Input() map: OurKonvaMap;
     @Output() mapChange: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
-    mapForm: FormGroup;
+    mapForm: UntypedFormGroup;
     imgURL: any = null;
     imagePath: string = null;
     errorMessage: string = null;
@@ -20,10 +20,10 @@ export class MapPropertiesComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        this.mapForm = new FormGroup({
-            width: new FormControl(this.map.nColumns),
-            height: new FormControl(this.map.nRows),
-            cellWidth: new FormControl(this.map.grid.cellSize)
+        this.mapForm = new UntypedFormGroup({
+            width: new UntypedFormControl(this.map.nColumns),
+            height: new UntypedFormControl(this.map.nRows),
+            cellWidth: new UntypedFormControl(this.map.grid.cellSize)
         });
     }
 

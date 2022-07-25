@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {User} from '../../../classes/User';
 import {Router} from '@angular/router';
@@ -12,18 +12,18 @@ import {Router} from '@angular/router';
 export class SignUpComponent implements OnInit {
 
     @Output() display: EventEmitter<'signIn'> = new EventEmitter<'signIn'>();
-    signUpForm: FormGroup;
+    signUpForm: UntypedFormGroup;
     displayPassword: boolean = false;
     displayRepeatPassword: boolean = false;
 
     constructor(private userInteractor: UserInteractor, private router: Router) { }
 
     ngOnInit(): void {
-        this.signUpForm = new FormGroup({
-            username: new FormControl(null, Validators.required),
-            email: new FormControl(null, Validators.required),
-            password: new FormControl(null, Validators.required),
-            repeatPassword: new FormControl(null, Validators.required)
+        this.signUpForm = new UntypedFormGroup({
+            username: new UntypedFormControl(null, Validators.required),
+            email: new UntypedFormControl(null, Validators.required),
+            password: new UntypedFormControl(null, Validators.required),
+            repeatPassword: new UntypedFormControl(null, Validators.required)
         });
     }
 

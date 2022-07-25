@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetService} from '../../services/asset.service';
 
 @Component({
@@ -16,14 +16,14 @@ export class CustomWizardActorComponent implements OnInit {
     public assets: any[] = [];
     showAssets: boolean = false;
 
-    public fg: FormGroup;
+    public fg: UntypedFormGroup;
 
     constructor(protected assetService: AssetService) {
-        this.fg = new FormGroup({
-            hp: new FormControl(50, [Validators.required]),
-            mp: new FormControl(50, [Validators.required]),
-            name: new FormControl('new character', [Validators.required]),
-            movement: new FormControl(3, [Validators.required]),
+        this.fg = new UntypedFormGroup({
+            hp: new UntypedFormControl(50, [Validators.required]),
+            mp: new UntypedFormControl(50, [Validators.required]),
+            name: new UntypedFormControl('new character', [Validators.required]),
+            movement: new UntypedFormControl(3, [Validators.required]),
         });
     }
 

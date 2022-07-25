@@ -122,7 +122,6 @@
             }
         }
     },
-    "defaultProject": "RollInn",
     "cli": {
         "analytics": false
     }

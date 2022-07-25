@@ -1,6 +1,6 @@
 import {Component,  Inject, NgZone, OnInit} from '@angular/core';
 import { Game, GameTypes } from 'src/app/classes/Game';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '../../classes/User';
 
@@ -12,7 +12,7 @@ import {User} from '../../classes/User';
 export class EditGameDataComponent implements OnInit {
     game: Game;
 
-    gameForm: FormGroup;
+    gameForm: UntypedFormGroup;
     newGame: Game;
     gameTypes: string[] = [];
     loaded: boolean = false;
@@ -27,14 +27,14 @@ export class EditGameDataComponent implements OnInit {
 
     ngOnInit(): void {
         this.newGame = Game.fromJSON(this.game);
-        this.gameForm = new FormGroup({
-            name: new FormControl(this.newGame.name, Validators.required),
-            description: new FormControl(this.newGame.description),
-            nPlayers: new FormControl(this.newGame.maxNPlayers, Validators.required),
-            gameType: new FormControl(this.newGame.gameType, Validators.required),
-            imageCover: new FormControl(null),
-            imageCoverSource: new FormControl(null),
-            publish: new FormControl(this.newGame.published, Validators.required),
+        this.gameForm = new UntypedFormGroup({
+            name: new UntypedFormControl(this.newGame.name, Validators.required),
+            description: new UntypedFormControl(this.newGame.description),
+            nPlayers: new UntypedFormControl(this.newGame.maxNPlayers, Validators.required),
+            gameType: new UntypedFormControl(this.newGame.gameType, Validators.required),
+            imageCover: new UntypedFormControl(null),
+            imageCoverSource: new UntypedFormControl(null),
+            publish: new UntypedFormControl(this.newGame.published, Validators.required),
         });
         this.gameTypes = Object.values(GameTypes);
         setTimeout(() => {

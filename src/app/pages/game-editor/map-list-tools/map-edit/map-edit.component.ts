@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, NgZone, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { OurKonvaMap } from '../../../../classes/ourKonva/OurKonvaMap';
 import { AssetService } from '../../../../services/asset.service';
 import { AssetModel } from '../../../../classes/AssetModel';
@@ -14,7 +14,7 @@ export class MapEditComponent implements OnInit {
     @Input() map: OurKonvaMap;
     @Output() mapModification: EventEmitter<OurKonvaMap> = new EventEmitter<OurKonvaMap>();
 
-    mapForm: FormGroup;
+    mapForm: UntypedFormGroup;
     loaded: boolean = false;
     assetFormData: FormData = null;
 

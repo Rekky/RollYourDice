@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetModel, AssetType} from '../../../classes/AssetModel';
 import {AssetService} from '../../../services/asset.service';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
@@ -20,16 +20,16 @@ export class AssetsListComponent {
     @Output() selectedAssetsChange: EventEmitter<any> = new EventEmitter();
 
     openModal: boolean = false;
-    formAsset: FormGroup;
+    formAsset: UntypedFormGroup;
     AssetType = AssetType;
     previewUploadFile: any;
 
     constructor(protected assetService: AssetService,
                 private mouseInteractor: MouseInteractor) {
-        this.formAsset = new FormGroup({
-            name: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
-            file: new FormControl(null, [Validators.required]),
-            fileSource: new FormControl(null, [Validators.required])
+        this.formAsset = new UntypedFormGroup({
+            name: new UntypedFormControl(null, [Validators.required, Validators.maxLength(100)]),
+            file: new UntypedFormControl(null, [Validators.required]),
+            fileSource: new UntypedFormControl(null, [Validators.required])
         });
 
         this.getAllAssets();
