@@ -1,5 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {document} from 'ngx-bootstrap/utils';
 
 @Component({
     selector: 'app-blueprints-interface',
