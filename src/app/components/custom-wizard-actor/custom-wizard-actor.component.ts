@@ -24,6 +24,7 @@ export class CustomWizardActorComponent implements OnInit {
             mp: new UntypedFormControl(50, [Validators.required]),
             name: new UntypedFormControl('new character', [Validators.required]),
             movement: new UntypedFormControl(3, [Validators.required]),
+            asset: new UntypedFormControl(null, [Validators.required]),
         });
     }
 
@@ -39,6 +40,11 @@ export class CustomWizardActorComponent implements OnInit {
 
     createCharacter(): void {
         console.log(this.fg.value);
+    }
+
+    onSelectedAsset(asset): void {
+        console.log('selected asset', asset);
+        this.fg.patchValue({asset: asset});
     }
 
 }
