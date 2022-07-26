@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
 import {HttpService} from './http.service';
 import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {UserInteractor} from '../interactors/UserInteractor';
-import {AssetModel} from '../classes/AssetModel';
+import {Actor} from '../classes/Actor';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +11,19 @@ export class LibraryService {
 
     constructor(private httpService: HttpService,
                 private userInteractor: UserInteractor) {}
+
+
+    async createLibraryActor(actor: Actor): Promise<any[]> {
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/library`, {actor: actor}).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
 
 
     async getLibrarySection(section): Promise<any[]> {

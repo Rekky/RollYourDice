@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetService} from '../../services/asset.service';
+import {LibraryService} from '../../services/library.service';
+import {Actor} from '../../classes/Actor';
 
 @Component({
     selector: 'app-custom-wizard-actor',
@@ -18,7 +20,7 @@ export class CustomWizardActorComponent implements OnInit {
 
     public fg: UntypedFormGroup;
 
-    constructor(protected assetService: AssetService) {
+    constructor(protected assetService: AssetService, protected libraryService: LibraryService) {
         this.fg = new UntypedFormGroup({
             hp: new UntypedFormControl(50, [Validators.required]),
             mp: new UntypedFormControl(50, [Validators.required]),
@@ -38,12 +40,17 @@ export class CustomWizardActorComponent implements OnInit {
         this.currentActorType = type;
     }
 
-    createCharacter(): void {
-        console.log(this.fg.value);
+    async createCharacter(): Promise<void> {
+        try {
+            const actor: Actor = new Actor();
+            console.log('CREATE_CHARACTER', actor);
+            await this.libraryService.createLibraryActor(actor);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     onSelectedAsset(asset): void {
-        console.log('selected asset', asset);
         this.fg.patchValue({asset: asset});
     }
 
