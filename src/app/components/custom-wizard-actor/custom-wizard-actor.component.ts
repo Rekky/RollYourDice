@@ -37,4 +37,8 @@ export class CustomWizardActorComponent implements OnInit {
         this.currentActorType = type;
     }
 
+    createCharacter(): void {
+        console.log(this.fg.value);
+    }
+
 }

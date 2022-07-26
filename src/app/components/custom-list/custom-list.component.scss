@@ -1,3 +1,5 @@
+@import "./../../../../src/assets/scss/colors.scss";
+
 .custom-list {
     position: relative;
     width: 100%;
@@ -10,28 +12,27 @@
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
-    border: 2px solid #f2f2f2;
     overflow: hidden;
     overflow-y: auto;
 }
 .item {
     position: relative;
     display: flex;
-    width: 80px;
-    height: 80px;
+    width: 95px;
+    height: 95px;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    border: 1px solid gray;
+    border: 1px solid $c-gray-200;
     overflow: hidden;
     cursor: pointer;
 
     &.selected {
-        border: 2px solid #ea4c89;
+        border: 1px solid #ea4c89;
     }
 
     &:hover {
-        border: 2px solid #ea4c89;
+        border: 1px solid #ea4c89;
     }
 
     .name {
@@ -40,7 +41,7 @@
         left: 0;
         width: 100%;
         font-size: 8px;
-        height: 10px;
+        height: 12px;
         background: #fff;
         color: black;
         display: flex;
@@ -49,11 +50,12 @@
         text-overflow: ellipsis;
         flex-wrap: nowrap;
         white-space: nowrap;
+        padding: 0 8px;
     }
 
     .img {
-        width: 80px;
-        height: 80px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
     }
 }

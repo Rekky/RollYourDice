@@ -3,7 +3,11 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "outDir": "./out-tsc/app",
-        "types": []
+        "types": [],
+        "baseUrl": "./",
+        "paths": {
+            "@scss/colors": ["./src/assets/scss/colors.scss"]
+        }
     },
     "angularCompilerOptions": {
         "enableIvy": true

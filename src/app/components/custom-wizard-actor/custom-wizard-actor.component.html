@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="step-container" *ngIf="currentStep === 1">
-            <form [formGroup]="fg">
+            <form [formGroup]="fg" (submit)="createCharacter()">
                 <div>
                     <div class="btn btn-primary" (click)="showAssets = !showAssets">Asset Select</div>
                     <div *ngIf="true" style="width: 100%;height: 200px;">
@@ -59,7 +59,7 @@
                     <label>movement</label>
                     <input type="number" [formControlName]="'movement'">
                 </div>
-                <button class="btn btn-primary">CREATE</button>
+                <button class="btn btn-primary" type="submit">CREATE</button>
             </form>
         </div>
     </div>

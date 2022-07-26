@@ -34,9 +34,10 @@
                 <div class="category-header-name">{{currentCategory}}</div>
             </div>
             <div class="category-body">
-                <div class="list">
-                    <div class="item" *ngFor="let item of [0,1,2,3,4,5]">test {{item}}</div>
-                </div>
+<!--                <div class="list">-->
+<!--                    <div class="item" *ngFor="let item of [0,1,2,3,4,5]">test {{item}}</div>-->
+<!--                </div>-->
+                <app-custom-list [items]="libraryItems[0].items"></app-custom-list>
                 <div class="list-add">
                     <img src="assets/svg/add.svg" alt="add" style="width: 20px;" (click)="onAddItem()">
                 </div>

@@ -71,7 +71,8 @@ import { CustomListComponent } from './components/custom-list/custom-list.compon
         SidebarCustomComponent,
         MiniMapComponent,
         MiniMenuComponent,
-        CustomWizardActorComponent
+        CustomWizardActorComponent,
+        CustomListComponent
     ],
 })
 
