@@ -3,33 +3,33 @@
     <div class="wizard-body">
         <div class="step-container" *ngIf="currentStep === 0">
             <div class="card-list">
-                <div class="w-32 h-32 card-body border border-transparent text-base font-medium rounded-md bg-white hover:bg-indigo-50" (click)="selectActorType('CHARACTER')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('CHARACTER')">
                     <div>
                         CHARACTER
                     </div>
                 </div>
-                <div class="border border-transparent text-base font-medium rounded-md bg-white hover:bg-indigo-50" (click)="selectActorType('MONSTERS')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('MONSTERS')">
                     <div>
                         MONSTERS
                     </div>
                 </div>
-                <div class="card-item" (click)="selectActorType('NPC')">
-                    <div class="card-body">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('NPC')">
+                    <div>
                         NPC
                     </div>
                 </div>
-                <div class="card-item" (click)="selectActorType('OBJECT')">
-                    <div class="card-body">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('OBJECT')">
+                    <div>
                         OBJECT
                     </div>
                 </div>
-                <div class="card-item" (click)="selectActorType('SPELL')">
-                    <div class="card-body">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('SPELL')">
+                    <div>
                         SPELL
                     </div>
                 </div>
-                <div class="card-item" (click)="selectActorType('PET')">
-                    <div class="card-body">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('PET')">
+                    <div>
                         PET
                     </div>
                 </div>
@@ -44,20 +44,20 @@
                     </div>
                 </div>
                 <div>
-                    <label>name</label>
-                    <input type="text" [formControlName]="'name'">
+                    <label class="block text-sm font-medium text-gray-700">name</label>
+                    <input type="text" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'name'">
                 </div>
                 <div>
-                    <label>HP</label>
-                    <input type="number" [formControlName]="'hp'">
+                    <label class="block text-sm font-medium text-gray-700">HP</label>
+                    <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'hp'">
                 </div>
                 <div>
-                    <label>MP</label>
-                    <input type="number" [formControlName]="'mp'">
+                    <label class="block text-sm font-medium text-gray-700">MP</label>
+                    <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'mp'">
                 </div>
                 <div>
-                    <label>movement</label>
-                    <input type="number" [formControlName]="'movement'">
+                    <label class="block text-sm font-medium text-gray-700">movement</label>
+                    <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'movement'">
                 </div>
                 <button class="btn btn-primary" type="submit">CREATE</button>
             </form>

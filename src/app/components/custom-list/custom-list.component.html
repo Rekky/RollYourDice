@@ -1,7 +1,7 @@
 <div class="custom-list">
     <div class="list-items" *ngIf="type === 'grid'">
-        <div class="item" *ngFor="let item of items" (click)="selectItem(item)" [class.selected]="selectedItem === item">
-            <img class="img" *ngIf="item.uri" [src]="item.uri" loading="lazy">
+        <div class="item rounded-md" *ngFor="let item of items" (click)="selectItem(item)" [class.selected]="selectedItem === item">
+            <img class="img hover:contrast-125" *ngIf="item.uri" [src]="item.uri" loading="lazy">
             <div class="name">{{item.name}}</div>
         </div>
     </div>
