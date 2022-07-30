@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetService} from '../../services/asset.service';
-import {LibraryService} from '../../services/library.service';
 import {Actor} from '../../classes/Actor';
+import {Character} from '../../classes/Character';
+import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 
 @Component({
     selector: 'app-custom-wizard-actor',
@@ -20,7 +21,7 @@ export class CustomWizardActorComponent implements OnInit {
 
     public fg: UntypedFormGroup;
 
-    constructor(protected assetService: AssetService, protected libraryService: LibraryService) {
+    constructor(protected assetService: AssetService, protected libraryInteractor: LibraryInteractor) {
         this.fg = new UntypedFormGroup({
             hp: new UntypedFormControl(50, [Validators.required]),
             mp: new UntypedFormControl(50, [Validators.required]),
@@ -40,13 +41,17 @@ export class CustomWizardActorComponent implements OnInit {
         this.currentActorType = type;
     }
 
-    async createCharacter(): Promise<void> {
+    async createActor(): Promise<void> {
+        let actor: Actor = null;
         try {
-            const actor: Actor = new Actor();
-            console.log('CREATE_CHARACTER', actor);
-            await this.libraryService.createLibraryActor(actor);
+            if (this.currentActorType === 'character') {
+                actor = new Character();
+                console.log('CREATE_CHARACTER', actor);
+            }
         } catch (e) {
             console.log(e);
+        } finally {
+            await this.libraryInteractor.createActor(actor);
         }
     }
 
