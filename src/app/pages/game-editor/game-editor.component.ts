@@ -14,6 +14,7 @@ import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-
 import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaMap} from '../../classes/Meta';
 import {first, switchMap, take} from 'rxjs/operators';
+import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 
 @Component({
     selector: 'app-game-editor',
@@ -48,6 +49,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         scale: 1
     };
 
+    // Library
+    library: any[] = [];
+
     $getMouseObservableSubscription: Subscription;
     $getSelectedKonvaObjectSubscription: Subscription;
     $getCurrentMapModificationSubs: Subscription;
@@ -63,6 +67,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 public userInteractor: UserInteractor,
                 private metaInteractor: MetaInteractor,
                 public myAdventureInteractor: MyAdventuresInteractor,
+                public libraryInteractor: LibraryInteractor,
                 private cdr: ChangeDetectorRef) {
 
         combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
@@ -83,6 +88,19 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             setTimeout(() => {
                 this.destroying = false;
             });
+        });
+
+        this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
+            this.library = [
+                {
+                    category: 'Characters', items: [
+                        {name: 'Character 1', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
+                        {name: 'Character 2', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
+                        {name: 'Character 3', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
+                        {name: 'Character 4', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
+                    ]
+                }
+            ];
         });
     }
 

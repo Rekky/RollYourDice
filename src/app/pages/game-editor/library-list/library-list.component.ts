@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-library-list',
@@ -10,17 +10,7 @@ export class LibraryListComponent implements OnInit {
     categories: any[] = [];
     currentCategory: string | null = null;
     modalNewCategoryItem: boolean = false;
-
-    libraryItems: any[] = [
-        {
-            category: 'Characters', items: [
-                {name: 'Character 1', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                {name: 'Character 2', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                {name: 'Character 3', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                {name: 'Character 4', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-            ]
-        },
-    ];
+    @Input() library: any[] = [];
 
     constructor() {
     }
@@ -31,7 +21,7 @@ export class LibraryListComponent implements OnInit {
 
     getLibraryItems(): any[] {
         if (this.currentCategory) {
-            return this.libraryItems.filter(item => item.category === this.currentCategory);
+            return this.library.filter(item => item.category === this.currentCategory);
         }
         return [];
     }
