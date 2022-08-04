@@ -1,11 +1,16 @@
 <div class="blueprints-container">
     <div class="frame">
-        <div class="canvas">
-            <div class="droppable" appDroppable [options]="{ accept: '.task' }" (dropping)="assignTask($event, user)">
-                Droppable element
-            </div>
-            <div class="draggable" (draggableClick)="openDetail(task)" [model]="task" appDraggable>
-                Draggable Element o
+        <div appDroppable class="canvas droppable"
+             [options]="{ accept: '.draggable' }"
+             (dropping)="assignTask($event)">
+
+            <div appDraggable class="draggable"
+                 [id]="theObject.id"
+                 [style.top]="theObject.y + 'px'"
+                 [style.left]="theObject.x + 'px'"
+                 [objectData]="theObject"
+                 (draggableClick)="openDetail(theObject)">
+                I'm a draggable task
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@ import interact from 'interactjs';
 export class DraggableDirective implements OnInit {
 
     @Input()
-    model: any;
+    objectData: any;
 
     @Input()
     options: any;
@@ -22,7 +22,7 @@ export class DraggableDirective implements OnInit {
     @HostListener('click', ['$event'])
     public onClick(event: any): void {
         if (!this.currentlyDragged) {
-            this.draggableClick.emit();
+            this.draggableClick.emit(event);
         }
     }
 
@@ -40,13 +40,14 @@ export class DraggableDirective implements OnInit {
 
                 target.classList.add('getting-dragged');
                 this.currentlyDragged = true;
-                (window as any).dragData = this.model;
+                (window as any).dragData = {x, y, id: this.objectData.id};
             })
             .on('dragend', (event) => {
                 event.target.style.transform = 'none';
                 event.target.removeAttribute('data-x');
                 event.target.removeAttribute('data-y');
                 event.target.classList.remove('getting-dragged');
+                // update the posiion attributes
                 setTimeout(() => {
                     (window as any).dragData = null;
                     this.currentlyDragged = false;

@@ -8,7 +8,11 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class BlueprintsInterfaceComponent implements OnInit {
     @Output() closeBlueprints: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    task: any = 5;
+    theObject: any = {
+        x: 0,
+        y: 0,
+        id: 'object-id'
+    };
     user: any;
 
     constructor() { }
@@ -20,13 +24,9 @@ export class BlueprintsInterfaceComponent implements OnInit {
         console.log(kio);
     }
 
-    assignTask(task: any, user: any): void {
-        console.log("This is our dragged task model: ");
-        console.log(task);
-
-        console.log("This is our user: ");
-        console.log(user);
+    assignTask(object: any): void {
+        this.theObject.y = this.theObject.y + object.y;
+        this.theObject.x = this.theObject.x + object.x;
     }
-
 
 }
