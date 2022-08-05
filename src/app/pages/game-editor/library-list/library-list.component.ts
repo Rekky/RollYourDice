@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-library-list',
@@ -10,11 +10,20 @@ export class LibraryListComponent implements OnInit {
     categories: any[] = [];
     currentCategory: string | null = null;
     modalNewCategoryItem: boolean = false;
+    @Input() library: any[] = [];
 
     constructor() {
     }
 
     ngOnInit(): void {
+        this.getLibraryItems();
+    }
+
+    getLibraryItems(): any[] {
+        if (this.currentCategory) {
+            return this.library.filter(item => item.category === this.currentCategory);
+        }
+        return [];
     }
 
     selectCategory(category: string): void {

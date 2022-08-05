@@ -2,7 +2,7 @@
 
     <button *ngIf="!isBlueprintDisplayed" class="tempButton"
             type="button" (click)="isBlueprintDisplayed = true">Display blueprint</button>
-    <app-blueprints-interface *ngIf="isBlueprintDisplayed" (closeBlueprints)="isBlueprintDisplayed = false"></app-blueprints-interface>
+<!--    <app-blueprints-interface *ngIf="isBlueprintDisplayed" (closeBlueprints)="isBlueprintDisplayed = false"></app-blueprints-interface>-->
 
     <!-- MAP -->
     <div *ngIf="((map && game.author.id === userInteractor.getCurrentUser().id) || (map && gameStatus === GameStatus.Running))" class="map-container">
@@ -43,7 +43,7 @@
                 (tabsChange)="onTabsChange($event)"
             ></app-map-list-tools>
             <div *ngIf="openLibraryList">
-                <app-library-list></app-library-list>
+                <app-library-list [library]="library"></app-library-list>
             </div>
         </div>
         <div toolsbar>
@@ -65,11 +65,6 @@
             </div>
         </div>
     </app-sidebar-custom>
-
-<!--    <app-sidebar-custom class="left-panel" [(open)]="openLibraryList" [sidebarType]="'left'" [top]="'54px'">-->
-<!--        <div header>LIBRARY</div>-->
-<!--        <div body></div>-->
-<!--    </app-sidebar-custom>-->
 
 
     <!-- RIGHT PANEL -->

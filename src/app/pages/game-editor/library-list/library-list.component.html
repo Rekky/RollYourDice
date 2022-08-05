@@ -1,29 +1,29 @@
 <div class="content-container">
     <div class="position-relative">
         <div class="library-list" *ngIf="!currentCategory">
-            <div class="category-item" (click)="selectCategory('CHARACTERS')">
+            <div class="category-item rounded-md" (click)="selectCategory('CHARACTERS')">
                 <span class="title">CHARACTERS</span>
-                <img class="bg" src="assets/backgrounds/library/characters-bg.webp">
+                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/characters-bg.webp">
             </div>
-            <div class="category-item" (click)="selectCategory('MONSTERS')">
+            <div class="category-item rounded-md" (click)="selectCategory('MONSTERS')">
                 <span class="title">MONSTERS</span>
-                <img class="bg" src="assets/backgrounds/library/monsters-bg.webp">
+                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/monsters-bg.webp">
             </div>
-            <div class="category-item" (click)="selectCategory('NPCs')">
+            <div class="category-item rounded-md" (click)="selectCategory('NPCs')">
                 <span class="title">NPCs</span>
-                <img class="bg" src="assets/backgrounds/library/npcs-bg.webp">
+                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/npcs-bg.webp">
             </div>
-            <div class="category-item" (click)="selectCategory('OBJECTS')">
+            <div class="category-item rounded-md" (click)="selectCategory('OBJECTS')">
                 <span class="title">OBJECTS</span>
-                <img class="bg" src="assets/backgrounds/library/objects-bg.webp">
+                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/objects-bg.webp">
             </div>
-            <div class="category-item" (click)="selectCategory('SPELLS')">
+            <div class="category-item rounded-md" (click)="selectCategory('SPELLS')">
                 <span class="title">SPELLS</span>
-                <img class="bg" src="assets/backgrounds/library/spells-bg.webp">
+                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/spells-bg.webp">
             </div>
-            <div class="category-item" (click)="selectCategory('PETS')">
+            <div class="category-item rounded-md" (click)="selectCategory('PETS')">
                 <span class="title">PETS</span>
-                <img class="bg" src="assets/backgrounds/library/pets-bg.webp">
+                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/pets-bg.webp">
             </div>
         </div>
         <div class="library-content" *ngIf="currentCategory">
@@ -34,9 +34,7 @@
                 <div class="category-header-name">{{currentCategory}}</div>
             </div>
             <div class="category-body">
-                <div class="list">
-                    <div class="item" *ngFor="let item of [0,1,2,3,4,5]">test {{item}}</div>
-                </div>
+                <app-custom-list [items]="library[0].items"></app-custom-list>
                 <div class="list-add">
                     <img src="assets/svg/add.svg" alt="add" style="width: 20px;" (click)="onAddItem()">
                 </div>

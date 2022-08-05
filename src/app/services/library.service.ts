@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
 import {HttpService} from './http.service';
 import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {UserInteractor} from '../interactors/UserInteractor';
-import {AssetModel} from '../classes/AssetModel';
+import {Actor} from '../classes/Actor';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -14,33 +14,22 @@ export class LibraryService {
                 private userInteractor: UserInteractor) {}
 
 
-    async getLibrarySection(section): Promise<any[]> {
+    createLibraryActor(actor: Actor): Observable<any> {
+        return this.httpService.post(`/library`, {actor: actor});
+    }
+
+
+    getLibrarySection(section): Observable<any> {
         const options = {
             headers: new HttpHeaders({
                 Authorization: this.userInteractor.getCurrentToken()
             })
         };
-        return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/library/${section}`, options).subscribe(
-                (response) => {
-                    resolve(response.data);
-                }, (error: HttpErrorResponse) => {
-                    reject(error);
-                }
-            );
-        });
+        return this.httpService.get(`/library/${section}`, options);
     }
 
 
-    async deleteLibraryAsset(id: string): Promise<any[]> {
-        return new Promise<any>( (resolve, reject) => {
-            this.httpService.delete(`/library/assets/${id}`).subscribe(
-                (response) => {
-                    resolve(response.data);
-                }, (error: HttpErrorResponse) => {
-                    reject(error);
-                }
-            );
-        });
+    deleteLibraryAsset(id: string): Observable<any> {
+        return this.httpService.delete(`/library/assets/${id}`);
     }
 }
