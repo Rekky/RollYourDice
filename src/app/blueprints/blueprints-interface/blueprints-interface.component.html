@@ -6,8 +6,8 @@
 
             <div appDraggable class="draggable"
                  [id]="theObject.id"
-                 [style.top]="theObject.y + 'px'"
-                 [style.left]="theObject.x + 'px'"
+                 [style.top]="theObject.blueprint.position.y + 'px'"
+                 [style.left]="theObject.blueprint.position.x + 'px'"
                  [objectData]="theObject"
                  (draggableClick)="openDetail(theObject)">
                 I'm a draggable task

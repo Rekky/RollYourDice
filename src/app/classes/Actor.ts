@@ -5,14 +5,26 @@ import {OurKonvaObject} from './ourKonva/OurKonvaObject';
 import {AssetModel} from './AssetModel';
 import Konva from 'konva';
 import {OurKonvaRect} from './ourKonva/OurKonvaRect';
+import {Coords} from './Coords';
 
 export class Actor {
     asset: AssetModel;
     author: Player;
+    blueprint: BlueprintModel;
     healthPoints: Health;
     id: string;
     mapRepresentation: OurKonvaImage;
     name: string;
 
-    constructor() {}
+    constructor() {
+        this.blueprint = new BlueprintModel();
+    }
+}
+
+export class BlueprintModel {
+    position: Coords;
+
+    constructor() {
+        this.position = new Coords();
+    }
 }
