@@ -24,8 +24,8 @@ export class UserInteractor {
 
     async signIn(email: string, password: string, stayLogged: boolean): Promise<any> {
         const response = await this.userService.signIn(email, password);
-        if (response.session) {
-            this.setLoginSession(response.session);
+        if (response.data) {
+            this.setLoginSession(response.data);
         }
         return response;
     }
