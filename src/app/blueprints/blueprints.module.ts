@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BlueprintsInterfaceComponent} from './blueprints-interface/blueprints-interface.component';
 import {DraggableDirective} from './directives/draggable.directive';
 import {DroppableDirective} from './directives/droppable.directive';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -9,7 +10,9 @@ import {DroppableDirective} from './directives/droppable.directive';
         DraggableDirective,
         DroppableDirective,
     ],
-    imports: [],
+    imports: [
+        CommonModule
+    ],
     exports: [
         BlueprintsInterfaceComponent
     ],

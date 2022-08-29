@@ -1,4 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Coords } from 'src/app/classes/Coords';
+import {Actor} from '../../classes/Actor';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -8,7 +10,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class BlueprintsInterfaceComponent implements OnInit {
     @Output() closeBlueprints: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    task: any = 5;
+    theObject: Actor = new Actor();
     user: any;
 
     constructor() { }
@@ -20,13 +22,9 @@ export class BlueprintsInterfaceComponent implements OnInit {
         console.log(kio);
     }
 
-    assignTask(task: any, user: any): void {
-        console.log("This is our dragged task model: ");
-        console.log(task);
-
-        console.log("This is our user: ");
-        console.log(user);
+    assignTask(object: any): void {
+        this.theObject.blueprint.position.y = this.theObject.blueprint.position.y + object.y;
+        this.theObject.blueprint.position.x = this.theObject.blueprint.position.x + object.x;
     }
-
 
 }

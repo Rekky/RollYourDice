@@ -19,7 +19,6 @@ export class DroppableDirective implements OnInit {
             .dropzone(Object.assign({}, this.options || {}))
             .on('dropactivate', event => event.target.classList.add('can-drop'))
             .on('dragenter', event => {
-
                 const draggableElement = event.relatedTarget;
                 const dropzoneElement = event.target;
 
