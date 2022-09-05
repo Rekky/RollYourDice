@@ -24,7 +24,7 @@ export class UserService {
     }
 
     signUp(user: User): Promise<any> {
-        const data = {user};
+        const data = {email: user.email, password: user.password, username: user.username};
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/user/register`, data).subscribe(
                 (response) => {
