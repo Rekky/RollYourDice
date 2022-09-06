@@ -22,9 +22,30 @@ export class Actor {
 }
 
 export class BlueprintModel {
+    blueprintBoxes: BBArea[];
+
+    constructor() {
+        this.blueprintBoxes = [];
+    }
+}
+
+export class BlueprintBox {
+    id: string;
+    type: string;
     position: Coords;
 
     constructor() {
+        this.id = '';
         this.position = new Coords();
+    }
+}
+
+export class BBArea extends BlueprintBox {
+    name: string;
+
+    constructor() {
+        super();
+        this.name = 'Area box';
+        this.type = 'area';
     }
 }

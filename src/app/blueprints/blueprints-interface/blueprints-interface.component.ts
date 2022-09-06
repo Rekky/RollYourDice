@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Coords } from 'src/app/classes/Coords';
-import {Actor} from '../../classes/Actor';
+import {Actor, BBArea, BlueprintBox} from '../../classes/Actor';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -10,12 +10,22 @@ import {Actor} from '../../classes/Actor';
 export class BlueprintsInterfaceComponent implements OnInit {
     @Output() closeBlueprints: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    theObject: Actor = new Actor();
+    objects: Actor[] = [new Actor()];
     user: any;
 
     constructor() { }
 
     ngOnInit(): void {
+        this.objects[0].blueprint.blueprintBoxes.push(new BBArea());
+        this.objects[0].blueprint.blueprintBoxes.push(new BBArea());
+
+        this.objects[0].blueprint.blueprintBoxes[0].position.x = 800;
+        this.objects[0].blueprint.blueprintBoxes[0].position.y = 200;
+        this.objects[0].blueprint.blueprintBoxes[1].position.x = 1200;
+        this.objects[0].blueprint.blueprintBoxes[1].position.y = 200;
+        this.objects[0].blueprint.blueprintBoxes[0].id = 'first';
+        this.objects[0].blueprint.blueprintBoxes[1].id = 'second';
+        this.objects[0].blueprint.blueprintBoxes[1].name = 'Area box (1)';
     }
 
     openDetail(kio: any): void {
@@ -23,8 +33,9 @@ export class BlueprintsInterfaceComponent implements OnInit {
     }
 
     assignTask(object: any): void {
-        this.theObject.blueprint.position.y = this.theObject.blueprint.position.y + object.y;
-        this.theObject.blueprint.position.x = this.theObject.blueprint.position.x + object.x;
+        const bb = this.objects[0].blueprint.blueprintBoxes.find(bbox => bbox.id === object.id);
+        bb.position.y = bb.position.y + object.y;
+        bb.position.x = bb.position.x + object.x;
     }
 
 }

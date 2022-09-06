@@ -23,6 +23,7 @@ import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import {MiniMenuComponent} from './components/mini-menu/mini-menu.component';
 import {CustomWizardActorComponent} from './components/custom-wizard-actor/custom-wizard-actor.component';
 import { CustomListComponent } from './components/custom-list/custom-list.component';
+import { FormErrorsComponent } from './components/form-errors/form-errors.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { CustomListComponent } from './components/custom-list/custom-list.compon
         MiniMapComponent,
         MiniMenuComponent,
         CustomWizardActorComponent,
-        CustomListComponent
+        CustomListComponent,
+        FormErrorsComponent
     ],
     imports: [
         CommonModule,
@@ -72,7 +74,8 @@ import { CustomListComponent } from './components/custom-list/custom-list.compon
         MiniMapComponent,
         MiniMenuComponent,
         CustomWizardActorComponent,
-        CustomListComponent
+        CustomListComponent,
+        FormErrorsComponent
     ],
 })
 

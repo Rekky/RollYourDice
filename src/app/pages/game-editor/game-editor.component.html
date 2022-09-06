@@ -2,6 +2,8 @@
 
     <button *ngIf="!isBlueprintDisplayed" class="tempButton"
             type="button" (click)="isBlueprintDisplayed = true">Display blueprint</button>
+    <button *ngIf="isBlueprintDisplayed" class="tempButton"
+            type="button" (click)="isBlueprintDisplayed = false">Close blueprint</button>
     <app-blueprints-interface *ngIf="isBlueprintDisplayed" (closeBlueprints)="isBlueprintDisplayed = false"></app-blueprints-interface>
 
     <!-- MAP -->

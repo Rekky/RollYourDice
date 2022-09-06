@@ -1,0 +1,29 @@
+<div *ngIf="errors && errors['required']"
+     class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+    This field is required
+</div>
+
+<div *ngIf="errors && errors['email']"
+     class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+    Introduce a valid direction
+</div>
+
+<div *ngIf="errors && errors['minlength']"
+     class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+    Introduce at least {{ errors['minlength'].requiredLength }} characters
+</div>
+
+<div *ngIf="errors && errors['maxlength']"
+     class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+    Introduce a maximum {{ errors['maxlength'].requiredLength }} characters
+</div>
+
+<div *ngIf="errors && errors['pattern']"
+     class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+    Invalid format
+</div>
+
+<div *ngIf="errors && errors['custom']"
+     class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+    {{ errors['custom'] }}
+</div>

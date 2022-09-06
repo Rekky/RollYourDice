@@ -221,10 +221,9 @@ export class MouseInteractor implements OnDestroy {
         if (A < X1 || A1 < X || B < Y1 || B1 < Y) {
             return false;
         }
-        else{
+        else {
             return true;
         }
-
     }
 
     addMouseKonvaObjectToMap(object: CurrentSelectedKonvaObject): void {

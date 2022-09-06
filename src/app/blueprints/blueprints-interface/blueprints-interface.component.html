@@ -4,14 +4,15 @@
              [options]="{ accept: '.draggable' }"
              (dropping)="assignTask($event)">
 
-            <div appDraggable class="draggable"
-                 [id]="theObject.id"
-                 [style.top]="theObject.blueprint.position.y + 'px'"
-                 [style.left]="theObject.blueprint.position.x + 'px'"
-                 [objectData]="theObject"
-                 (draggableClick)="openDetail(theObject)">
-                I'm a draggable task
-            </div>
+            <ng-container *ngFor="let bb of objects[0].blueprint.blueprintBoxes;">
+                <app-bb-area *ngIf="bb.type === 'area'" appDraggable class="draggable"
+                             [area]="bb"
+                             [id]="bb.id"
+                             [style.top]="bb.position.y + 'px'"
+                             [style.left]="bb.position.x + 'px'"
+                             [objectData]="bb"
+                             (draggableClick)="openDetail(bb)"></app-bb-area>
+            </ng-container>
         </div>
     </div>
 </div>
