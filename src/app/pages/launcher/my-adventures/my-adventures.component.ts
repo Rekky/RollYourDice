@@ -24,6 +24,7 @@ import {MyAdventuresInteractor} from './my-adventures-interactor';
     templateUrl: './my-adventures.component.html',
     styleUrls: ['./my-adventures.component.scss']
 })
+
 export class MyAdventuresComponent implements OnInit, OnDestroy {
     mouseCoords: Coords = new Coords();
     bgX: number = 50;
@@ -49,6 +50,11 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         this.currentUser = this.userInteractor.getCurrentUser();
         this.myAdventuresSub = this.myAdventuresInteractor.getMyAdventures().subscribe(adv => {
             this.adventures = adv;
+            // adv.forEach(element => {
+            //     element.playersRequested
+            // });
+
+            console.log(adv)
         });
     }
 
