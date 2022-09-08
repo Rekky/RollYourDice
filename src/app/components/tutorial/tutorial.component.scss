@@ -9,7 +9,7 @@
 }
 .tutorial-overlap {
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
@@ -17,13 +17,13 @@
 }
 .tutorial-selector-area {
     position: fixed;
-    top:280px;
-    left:0;
-    width: 70px;
-    height: 280px;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
     z-index: 8889;
     border-radius: 5px;
-    border: 5px solid #02fb14;
+    border: 6px solid #ffeb3b;
 }
 .tutorial-box-description {
     position: fixed;
