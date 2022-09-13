@@ -12,6 +12,7 @@ import {User} from '../../classes/User';
 export class EditGameDataComponent implements OnInit {
     game: Game;
 
+    gameName:string;
     gameForm: UntypedFormGroup;
     newGame: Game;
     gameTypes: string[] = [];
@@ -65,6 +66,8 @@ export class EditGameDataComponent implements OnInit {
 
     imageChanged(file: File): void {
         this.gameForm.patchValue({imageCoverSource: file});
+        console.log('holaaaa');
+        
     }
 
     transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {
