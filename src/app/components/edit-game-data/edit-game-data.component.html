@@ -17,6 +17,7 @@
                 <div class="centered">{{gameName}}</div>
             </div>
             <div class="create-game-form">
+                
                 <div class="title">
                     <label [for]="'title-game-' + newGame.id">Name</label>
                     <input [(ngModel)]="gameName" [id]="'title-game-' + newGame.id" maxlength="40" [formControlName]="'name'"/>
@@ -54,7 +55,7 @@
     <!--                       [accept]="'image/jpeg, image/png, image/webp, image/jpg'" [formControlName]="'imageCover'"/>-->
     <!--            </div>-->
                 <div class="d-block">
-                    <upload-input (file)="imageChanged($event)"></upload-input>
+                    <upload-input (files)="imageChanged($event)"></upload-input>
                 </div>
                 <label class="text" [for]="'publish-game-' + newGame.id">Join game request permission</label>
                 <div class="form-row">
@@ -67,14 +68,14 @@
                     </div> -->
                     <div class="example">
                         <label class="radio-button">
-                          <input type="radio" class="radio-button__input" id="choice1-1" name="choice1">
+                          <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="true">
                           <span class="radio-button__control"></span>
                           <span class="radio-button__label">Public access</span>
                         </label>                    
                     </div>
                     <div class="example">
                         <label class="radio-button">
-                          <input type="radio" class="radio-button__input" id="choice1-1" name="choice1">
+                          <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="false" >
                           <span class="radio-button__control"></span>
                           <span class="radio-button__label">Private acces</span>
                         </label>               

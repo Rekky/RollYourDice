@@ -35,21 +35,18 @@
     height: 70vh;
     border-radius: 8px;
     background-color: $c-whitest;
-    animation: expand-card 1s;
+    animation: expand-card 0.5s;
     letter-spacing: 1px;
 }
 
 @keyframes expand-card {
     from {
-        width: 200px;
-        height: 60vh;
+        transform: translateY(-110%);
     }
     to {
-        width: 600px;
-        height: 70vh;
+        transform: translateY(0%);
     }
 }
-
 .header {
     width: 100%;
     height: 100px;
