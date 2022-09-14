@@ -16,8 +16,7 @@
                 <img src="../../../assets/backgrounds/library/petitCthulhu.png" alt="">
                 <div class="centered">{{gameName}}</div>
             </div>
-            <div class="create-game-form">
-                
+                <ng-scrollbar class="create-game-form">
                 <div class="title">
                     <label [for]="'title-game-' + newGame.id">Name</label>
                     <input [(ngModel)]="gameName" [id]="'title-game-' + newGame.id" maxlength="40" [formControlName]="'name'"/>
@@ -83,10 +82,10 @@
                 </div>
                 <div class="footer" *ngIf="loaded">
                     <div class="button-box">
-                        <button type="submit" class="big-button">CREATE GAME</button>
+                        <button [disabled]="!gameForm.valid" type="submit" class="big-button">{{newGame.name === 'My adventure rocks!' ? 'CREATE GAME' : 'EDIT GAME'}}</button>
                     </div>
                 </div>
-            </div>
+            </ng-scrollbar>
         </div>
     </form>
 </div>

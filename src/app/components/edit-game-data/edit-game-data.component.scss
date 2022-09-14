@@ -212,6 +212,10 @@ label, .form-short-number-input label{
         height: 34px;
         border-radius: 8px;
     }
+
+    button[disabled]{
+       background-color: $c-black-grey;
+    }
 }
 
   

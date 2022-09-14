@@ -13,7 +13,7 @@ import { NotificationComponent } from './components/notification/notification.co
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 import {JwtModule} from '@auth0/angular-jwt';
-import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
     declarations: [
@@ -39,6 +39,8 @@ import { NgScrollbarModule, NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
             config: {}
         }),
         NgScrollbarModule
+
+        
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

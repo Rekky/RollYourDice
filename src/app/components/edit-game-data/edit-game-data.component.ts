@@ -30,7 +30,6 @@ export class EditGameDataComponent implements OnInit {
 
         
         this.newGame = Game.fromJSON(this.game);
-        console.log(this.newGame.published);
         this.gameForm = new UntypedFormGroup({
             name: new UntypedFormControl(this.newGame.name, Validators.required),
             description: new UntypedFormControl(this.newGame.description),
