@@ -11,9 +11,9 @@ export class LibraryInteractor {
     private library: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
 
     constructor(private libraryService: LibraryService) {
-        this.libraryService.getLibrarySection('').subscribe((res: any) => {
-            this.library.next(res);
-        });
+        // this.libraryService.getLibrarySection('').subscribe((res: any) => {
+        //     this.library.next(res);
+        // });
     }
 
     getCurrentLibraryObs(): Observable<any> {

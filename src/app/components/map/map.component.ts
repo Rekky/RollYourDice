@@ -407,8 +407,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     Math.round(i * this.map.grid.cellSize) + 0.5,
                     this.map.nRows * this.map.grid.cellSize
                 ],
-                stroke: this.map.grid.stroke,
-                strokeWidth: this.map.grid.strokeSize,
+                stroke: '#e6e6e6',
+                strokeWidth: 1,
             }));
         }
 
@@ -423,8 +423,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     this.map.nColumns * this.map.grid.cellSize,
                     Math.round(j * this.map.grid.cellSize)
                 ],
-                stroke: this.map.grid.stroke,
-                strokeWidth: this.map.grid.strokeSize,
+                stroke: '#e6e6e6',
+                strokeWidth: 1,
             }));
         }
     }
