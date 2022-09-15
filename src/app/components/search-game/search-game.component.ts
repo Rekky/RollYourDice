@@ -14,6 +14,7 @@ export class SearchGameComponent implements OnInit {
     loaded: boolean = false;
     searchGameId: string = '';
     gamesList: Game[];
+    selectedGame: Game | null = null;
 
     constructor(
         private dialogRef: MatDialogRef<Game>,
@@ -47,6 +48,11 @@ export class SearchGameComponent implements OnInit {
         this.ngZone.run(() => {
             this.dialogRef.close(send);
         });
+    }
+    selectGame(game:Game): void {
+
+        this.selectedGame = game;
+
     }
 
 }
