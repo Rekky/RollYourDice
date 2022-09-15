@@ -38,7 +38,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     isBlueprintDisplayed: boolean = true;
 
     // META
-    gameMeta: Meta;
+    gameMeta: Meta = new Meta('', '');
     currentMapMeta: MetaMap;
 
     // ZOOM
@@ -252,7 +252,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.currentMapMeta.attrs = attrs;
         } else {
             const newMapAttrs = {id: this.mapInteractor.getCurrentMap().id, attrs};
-            this.gameMeta.maps.push(newMapAttrs);
+            this.gameMeta.maps?.push(newMapAttrs);
         }
         this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
     }

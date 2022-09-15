@@ -174,7 +174,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
         stage.add(this.layers.shadows);
-        stage.add(this.layers.draws);
+        // stage.add(this.layers.draws);
         stage.add(this.layers.texts);
         this.gridStage = stage;
         this.mouseInteractor.setStage(stage);
