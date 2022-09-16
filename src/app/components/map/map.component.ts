@@ -161,7 +161,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // setTimeout(() => {
         //     stage.scale({ x: this.meta.attrs.scaleX, y: this.meta.attrs.scaleY });
         const stage = this.createStage();
-        stage.container().style.backgroundColor = '#f3f4f6';
+        stage.container().style.backgroundColor = '#252525';
 
         this.mapWidth = window.innerWidth;
         this.mapHeight = window.innerHeight;
