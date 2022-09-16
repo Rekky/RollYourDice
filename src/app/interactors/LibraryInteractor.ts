@@ -21,6 +21,7 @@ export class LibraryInteractor {
     }
 
     createActor(actor: Actor): Observable<any> {
+        console.log('createActor->', actor);
         this.library.value.push(actor);
         return this.libraryService.createLibraryActor(actor);
     }

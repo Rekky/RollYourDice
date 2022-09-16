@@ -43,15 +43,15 @@ export class CustomWizardActorComponent implements OnInit {
 
     async createActor(): Promise<void> {
         let actor: Actor = null;
+        console.log('wizard-createActor');
         try {
-            if (this.currentActorType === 'character') {
+            if (this.currentActorType === 'CHARACTER') {
                 actor = new Character();
                 console.log('CREATE_CHARACTER', actor);
+                await this.libraryInteractor.createActor(actor);
             }
         } catch (e) {
             console.log(e);
-        } finally {
-            await this.libraryInteractor.createActor(actor);
         }
     }
 
