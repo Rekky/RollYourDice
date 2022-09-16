@@ -26,10 +26,8 @@
                 <div style="display: flex; flex-direction: column; justify-content: space-between;">
                 </div>   
                 <div class="horizontal-line"></div> 
-                <div class="games-list">
-                    
-                    <div class="game" *ngFor="let game of gamesList"
-                        
+                <div class="games-list">                   
+                    <div class="game" *ngFor="let game of gamesList"                       
                             (click)="selectGame(game)">
                         <div class="viewGame"
                         [ngClass]="selectedGame === game ? 'selectedGame' : ''"

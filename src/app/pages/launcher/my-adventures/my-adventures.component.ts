@@ -145,7 +145,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     displayUsersList(game: Game, e: Event): void {
         e.stopPropagation();
         const dialogSub = this.dialog.open(UserListComponent, {
-            data: {players: game.players, playersRequest: game.playersRequested, gameId: game.id}
+            data: {players: game.players, playersRequest: game.playersRequested, gameId: game.id, gameName: game.name}
         }).afterClosed().subscribe(res => {
             dialogSub.unsubscribe();
         });

@@ -79,6 +79,7 @@ label, .form-short-number-input label{
     color: $c-white;
     animation: expand-card 0.5s;
     letter-spacing: 1px;
+    border: 1px solid #2A2A2A;
 }
 
 @keyframes expand-card {
@@ -162,9 +163,11 @@ label, .form-short-number-input label{
         left: 50%;
         transform: translate(-50%,-50%);
         text-shadow: 2px 2px 4px 0px #101010;
-        font-weight: 500;
+        font-weight: 600;
         line-height: 71px;
         font-size: 48px;
+        text-transform: uppercase;
+        font-family: oswald,sans-serif;
         
     }
 }
