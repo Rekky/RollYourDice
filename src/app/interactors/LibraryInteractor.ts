@@ -20,8 +20,8 @@ export class LibraryInteractor {
         return this.library.asObservable();
     }
 
-    createActor(actor: Actor): Observable<any> {
+    async createActor(actor: Actor): Promise<any> {
         this.library.value.push(actor);
-        return this.libraryService.createLibraryActor(actor);
+        await this.libraryService.createActor(actor);
     }
 }
