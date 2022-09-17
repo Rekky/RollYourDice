@@ -1,6 +1,16 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { Coords } from 'src/app/classes/Coords';
-import {Actor, BBArea, BlueprintBox} from '../../classes/Actor';
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    OnInit,
+    Output,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
+import { BlueprintModel } from '../models/base-blueprint';
+import {BlueprintsService} from './blueprints.service';
+import {BlueprintLink} from '../models/blueprint-link';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -8,24 +18,18 @@ import {Actor, BBArea, BlueprintBox} from '../../classes/Actor';
     styleUrls: ['./blueprints-interface.component.scss']
 })
 export class BlueprintsInterfaceComponent implements OnInit {
+    @ViewChild('svg') svg: ElementRef;
     @Output() closeBlueprints: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    objects: Actor[] = [new Actor()];
+    blueprint: BlueprintModel = new BlueprintModel();
     user: any;
 
-    constructor() { }
+    constructor(private blueprintsService: BlueprintsService,
+                private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
-        this.objects[0].blueprint.blueprintBoxes.push(new BBArea());
-        this.objects[0].blueprint.blueprintBoxes.push(new BBArea());
-
-        this.objects[0].blueprint.blueprintBoxes[0].position.x = 800;
-        this.objects[0].blueprint.blueprintBoxes[0].position.y = 200;
-        this.objects[0].blueprint.blueprintBoxes[1].position.x = 1200;
-        this.objects[0].blueprint.blueprintBoxes[1].position.y = 200;
-        this.objects[0].blueprint.blueprintBoxes[0].id = 'first';
-        this.objects[0].blueprint.blueprintBoxes[1].id = 'second';
-        this.objects[0].blueprint.blueprintBoxes[1].name = 'Area box (1)';
+        this.blueprint = this.blueprintsService.getBlueprintData();
+        this.cdr.detectChanges();
     }
 
     openDetail(kio: any): void {
@@ -33,9 +37,18 @@ export class BlueprintsInterfaceComponent implements OnInit {
     }
 
     assignTask(object: any): void {
-        const bb = this.objects[0].blueprint.blueprintBoxes.find(bbox => bbox.id === object.id);
+        const bb = this.blueprint.blueprintBoxes.find(bbox => bbox.id === object.id);
         bb.position.y = bb.position.y + object.y;
         bb.position.x = bb.position.x + object.x;
+    }
+
+    getSVGPath(link: BlueprintLink): string {
+        // M 0 0 C135,0 135,320 270,320
+        return `M
+        ${link.startingNode.position.x} ${link.startingNode.position.y}
+        C${link.endingNode.position.x / 2},${link.startingNode.position.y}
+        ${link.endingNode.position.x / 2},${link.endingNode.position.y}
+        ${link.endingNode.position.x} ${link.endingNode.position.y}`;
     }
 
 }

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
-import {BBArea} from '../../../../classes/Actor';
+import { BaseBlueprintBox } from 'src/app/blueprints/models/base-blueprint';
+import { BBArea } from 'src/app/blueprints/models/bb-area';
 
 @Component({
     selector: 'app-bb-area',
@@ -8,14 +9,16 @@ import {BBArea} from '../../../../classes/Actor';
     styleUrls: ['./bb-area.component.scss']
 })
 export class BbAreaComponent implements OnInit {
-    @Input() area: BBArea;
+    @Input() bb: BaseBlueprintBox;
     @Input() bbOwner: boolean;
 
     form: FormGroup;
+    area: BBArea;
 
     constructor(private fb: FormBuilder) { }
 
     ngOnInit(): void {
+        this.area = BBArea.create(this.bb);
         this.initForm();
     }
 

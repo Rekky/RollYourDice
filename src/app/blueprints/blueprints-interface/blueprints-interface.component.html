@@ -4,14 +4,33 @@
              [options]="{ accept: '.draggable' }"
              (dropping)="assignTask($event)">
 
-            <ng-container *ngFor="let bb of objects[0].blueprint.blueprintBoxes;">
-                <app-bb-area *ngIf="bb.type === 'area'" appDraggable class="draggable"
-                             [area]="bb"
+            <ng-container *ngFor="let link of blueprint.blueprintLinks">
+                <svg class="link" #svg
+                     [style.left]="link.position.x + 'px'"
+                     [style.top]="link.position.y + 'px'"
+                     [style.width]="link.width + 'px'"
+                     [style.height]="link.height + 'px'"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path [attr.d]="getSVGPath(link)"
+                          transform
+                          pointer-events="visibleStroke"
+                          fill="none"
+                          stroke="#FFFFFF"
+                          style=""
+                          stroke-width="2"></path>
+                </svg>
+            </ng-container>
+            <ng-container *ngFor="let bb of blueprint.blueprintBoxes;">
+                <app-bb-area *ngIf="bb.type === 'area'"
+                             appDraggable
+                             class="draggable"
+                             [bb]="bb"
                              [id]="bb.id"
                              [style.top]="bb.position.y + 'px'"
                              [style.left]="bb.position.x + 'px'"
                              [objectData]="bb"
-                             (draggableClick)="openDetail(bb)"></app-bb-area>
+                             (draggableClick)="openDetail(bb)">
+                </app-bb-area>
             </ng-container>
         </div>
     </div>
