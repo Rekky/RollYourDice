@@ -8,12 +8,14 @@ import {HttpService} from './http.service';
 })
 export class UserService {
 
+    protected endPointName: string = 'users';
+
     constructor(private http: HttpClient, private httpService: HttpService) {}
 
     signIn(email: string, password: string): Promise<any> {
         const data = {email, password};
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/user/login`, data).subscribe(
+            this.httpService.post(`/${this.endPointName}/login`, data).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -26,7 +28,7 @@ export class UserService {
     signUp(user: User): Promise<any> {
         const data = {email: user.email, password: user.password, username: user.username};
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/user/register`, data).subscribe(
+            this.httpService.post(`/${this.endPointName}/register`, data).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

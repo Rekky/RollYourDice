@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
-import {ApiService} from './api.service';
 import {BehaviorSubject} from 'rxjs';
 import {Game, GameStatus} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
@@ -24,8 +23,7 @@ export class SocketService {
     gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
 
-    constructor(private apiService: ApiService,
-                private userInteractor: UserInteractor,
+    constructor(private userInteractor: UserInteractor,
                 private metaInteractor: MetaInteractor,
                 private mapInteractor: MapInteractor,
                 private notificationService: NotificationsService,

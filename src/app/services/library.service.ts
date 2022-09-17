@@ -11,15 +11,26 @@ import {Actor} from '../classes/Actor';
 })
 export class LibraryService {
 
+    protected endPointName: string = 'libraries';
+
     constructor(private httpService: HttpService,
                 private userInteractor: UserInteractor) {}
 
     createActor(actor: Actor): Promise<any> {
-        const body = {
-            actor: actor
-        };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/library/actor`, body).subscribe(
+            this.httpService.post(`/${this.endPointName}/actor`, actor).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    getMyActors(): Promise<any> {
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.get(`/${this.endPointName}/my-actors`).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -36,11 +47,11 @@ export class LibraryService {
                 Authorization: this.userInteractor.getCurrentToken()
             })
         };
-        return this.httpService.get(`/library/${section}`, options);
+        return this.httpService.get(`/${this.endPointName}/${section}`, options);
     }
 
 
     deleteLibraryActor(id: string): Observable<any> {
-        return this.httpService.delete(`/library/assets/${id}`);
+        return this.httpService.delete(`/${this.endPointName}/assets/${id}`);
     }
 }

@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-import {ApiService} from './api.service';
 import {Game} from '../classes/Game';
-import {HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
-import {User} from '../classes/User';
+import {HttpErrorResponse} from '@angular/common/http';
 import {HttpService} from './http.service';
-import {UserInteractor} from '../interactors/UserInteractor';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameService {
 
-    constructor(private apiService: ApiService,
-                private httpService: HttpService) { }
+    protected endPointName: string = 'games';
+
+    constructor(private httpService: HttpService) { }
 
     getGame(gameId: string): Promise<Game> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/${gameId}`).subscribe(
+            this.httpService.get(`/${this.endPointName}/${gameId}`).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -28,7 +26,7 @@ export class GameService {
 
     getGamesByString(gameId: string): Promise<Game[]> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game/games`, {searchText: gameId}).subscribe(
+            this.httpService.post(`/${this.endPointName}/games`, {searchText: gameId}).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -40,7 +38,7 @@ export class GameService {
 
     createGame(game: Game): Promise<Game> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game`, game).subscribe(
+            this.httpService.post(`/${this.endPointName}`, game).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -52,7 +50,7 @@ export class GameService {
 
     editGame(game: Game): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.patch(`/game/${game.id}`, game).subscribe(
+            this.httpService.patch(`/${this.endPointName}/${game.id}`, game).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -64,7 +62,7 @@ export class GameService {
 
     removeGame(id: string): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.delete(`/game/${id}`).subscribe(
+            this.httpService.delete(`/${this.endPointName}/${id}`).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -76,7 +74,7 @@ export class GameService {
 
     getAllGames(): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/search`).subscribe(
+            this.httpService.get(`/${this.endPointName}/search`).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {
@@ -88,7 +86,7 @@ export class GameService {
 
     getMyGames(): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/game/my-games`, {}).subscribe(
+            this.httpService.post(`/${this.endPointName}/my-games`, {}).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
