@@ -8,7 +8,7 @@ import {Actor} from '../classes/Actor';
     providedIn: 'root'
 })
 export class LibraryInteractor {
-    private library: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
+    private library: BehaviorSubject<Actor[]> = new BehaviorSubject<Actor[]>([]);
 
     constructor(private libraryService: LibraryService) {
         // this.libraryService.getLibrarySection('').subscribe((res: any) => {
@@ -21,7 +21,6 @@ export class LibraryInteractor {
     }
 
     createActor(actor: Actor): Observable<any> {
-        console.log('createActor->', actor);
         this.library.value.push(actor);
         return this.libraryService.createLibraryActor(actor);
     }
