@@ -4,6 +4,7 @@ import {AssetService} from '../../services/asset.service';
 import {Actor} from '../../classes/Actor';
 import {Character} from '../../classes/Character';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
+import {Monster} from '../../classes/Monster';
 
 @Component({
     selector: 'app-custom-wizard-actor',
@@ -43,10 +44,28 @@ export class CustomWizardActorComponent implements OnInit {
 
     async createActor(): Promise<void> {
         let actor: Actor = null;
+        console.log('wizard-createActor');
         try {
-            if (this.currentActorType === 'character') {
-                actor = new Character();
-                console.log('CREATE_CHARACTER', actor);
+            switch (this.currentActorType) {
+                case 'CHARACTER':
+                    const character = new Character();
+                    actor = {...this.fg.value, ...character};
+                    break;
+                case 'MONSTER':
+                    actor = new Monster();
+                    break;
+                case 'NPC':
+                    // todo
+                    break;
+                case 'OBJECT':
+                    // todo
+                    break;
+                case 'SPELL':
+                    // todo
+                    break;
+                case 'PET':
+                    // todo
+                    break;
             }
         } catch (e) {
             console.log(e);
@@ -56,7 +75,7 @@ export class CustomWizardActorComponent implements OnInit {
     }
 
     onSelectedAsset(asset): void {
-        this.fg.patchValue({asset: asset});
+        this.fg.patchValue({asset});
     }
 
 }

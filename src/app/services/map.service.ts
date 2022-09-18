@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import {ApiService} from './api.service';
-import {Coords} from '../classes/Coords';
-import {Game} from '../classes/Game';
 import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {HttpService} from './http.service';
 import {UserInteractor} from '../interactors/UserInteractor';
@@ -13,8 +10,9 @@ import {Observable} from 'rxjs';
 })
 export class MapService {
 
-    constructor(private apiService: ApiService,
-                private httpService: HttpService,
+    protected endPointName: string = 'games';
+
+    constructor(private httpService: HttpService,
                 private userInteractor: UserInteractor) { }
 
     getAllMaps(gameId: string): Promise<OurKonvaMap[]> {
@@ -24,7 +22,7 @@ export class MapService {
             })
         };
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/game/${gameId}/maps`, options).subscribe(
+            this.httpService.get(`/${this.endPointName}/${gameId}/maps`, options).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -40,7 +38,7 @@ export class MapService {
                 Authorization: this.userInteractor.getCurrentToken()
             })
         };
-        return this.httpService.get(`/game/${gameId}/maps`, options);
+        return this.httpService.get(`/${this.endPointName}/${gameId}/maps`, options);
     }
 
     createNewMap(gameId: string, map: OurKonvaMap): Promise<OurKonvaMap> {

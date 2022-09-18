@@ -8,12 +8,14 @@ import {AssetModel} from '../classes/AssetModel';
 })
 export class AssetService {
 
+    protected endPointName: string = 'assets';
+
     constructor(private httpService: HttpService) {}
 
 
     async uploadFile(formData: FormData): Promise<AssetModel[]> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/assets/upload`, formData).subscribe(
+            this.httpService.post(`/${this.endPointName}/upload`, formData).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -25,7 +27,7 @@ export class AssetService {
 
     async getAllAssets(): Promise<AssetModel[]> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/assets/my-assets`, {}).subscribe(
+            this.httpService.post(`/${this.endPointName}/my-assets`, {}).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -37,7 +39,7 @@ export class AssetService {
 
     async removeAsset(asset: AssetModel): Promise<AssetModel[]> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.delete(`/assets/${asset.id}`).subscribe(
+            this.httpService.delete(`/${this.endPointName}/${asset.id}`).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {

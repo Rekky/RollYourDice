@@ -8,6 +8,7 @@ export class Character extends Actor {
     magicPoints: number;
     magicResist: number;
     movementSpeed: number;
+    steps: number;
 
     constructor() {
         super();

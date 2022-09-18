@@ -38,7 +38,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     isBlueprintDisplayed: boolean = true;
 
     // META
-    gameMeta: Meta;
+    gameMeta: Meta = new Meta('', '');
     currentMapMeta: MetaMap;
 
     // ZOOM
@@ -91,16 +91,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         });
 
         this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
-            this.library = [
-                {
-                    category: 'Characters', items: [
-                        {name: 'Character 1', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                        {name: 'Character 2', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                        {name: 'Character 3', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                        {name: 'Character 4', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                    ]
-                }
-            ];
+            this.library = [{type: 'CHARACTERS', items: library}];
+            console.log('librarys--->', this.library);
         });
     }
 
@@ -252,7 +244,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.currentMapMeta.attrs = attrs;
         } else {
             const newMapAttrs = {id: this.mapInteractor.getCurrentMap().id, attrs};
-            this.gameMeta.maps.push(newMapAttrs);
+            this.gameMeta.maps?.push(newMapAttrs);
         }
         this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
     }

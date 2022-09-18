@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {ApiService} from "./api.service";
 import {HttpService} from "./http.service";
 import {UserInteractor} from "../interactors/UserInteractor";
 import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
@@ -9,8 +8,9 @@ import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 })
 export class MapObjectService {
 
-    constructor(private apiService: ApiService,
-                private httpService: HttpService,
+    protected endPointName: string = 'maps';
+
+    constructor(private httpService: HttpService,
                 private userInteractor: UserInteractor) {
     }
 
@@ -21,7 +21,7 @@ export class MapObjectService {
         };
 
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/map/object`, body).subscribe(
+            this.httpService.post(`/${this.endPointName}/object`, body).subscribe(
                 (response) => {
                     resolve(response);
                 }, (error: HttpErrorResponse) => {

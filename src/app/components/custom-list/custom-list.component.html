@@ -1,8 +1,15 @@
 <div class="custom-list">
-    <div class="list-items" *ngIf="type === 'grid'">
-        <div class="item rounded-md" *ngFor="let item of items" (click)="selectItem(item)" [class.selected]="selectedItem === item">
-            <img class="img hover:contrast-125" *ngIf="item.uri" [src]="item.uri" loading="lazy">
-            <div class="name">{{item.name}}</div>
+    <ng-container *ngIf="!items && items.length <= 0">
+        <div class="flex items-center justify-content-center w-100 h-100" style="background: #f7f7f7;">
+            <div class="text-lg font-medium text-gray-500">No items Found</div>
         </div>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="items && items.length > 0">
+        <div class="list-items" *ngIf="type === 'grid'">
+            <div class="item rounded-md" *ngFor="let item of items" (click)="selectItem(item)" [class.selected]="selectedItem === item">
+                <img class="img hover:contrast-125" *ngIf="item.uri" [src]="item.uri" loading="lazy">
+                <div class="name">{{item.name}}</div>
+            </div>
+        </div>
+    </ng-container>
 </div>

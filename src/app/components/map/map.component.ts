@@ -161,7 +161,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // setTimeout(() => {
         //     stage.scale({ x: this.meta.attrs.scaleX, y: this.meta.attrs.scaleY });
         const stage = this.createStage();
-        stage.container().style.backgroundColor = '#f3f4f6';
+        stage.container().style.backgroundColor = '#252525';
 
         this.mapWidth = window.innerWidth;
         this.mapHeight = window.innerHeight;
@@ -174,7 +174,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
         stage.add(this.layers.shadows);
-        stage.add(this.layers.draws);
+        // stage.add(this.layers.draws);
         stage.add(this.layers.texts);
         this.gridStage = stage;
         this.mouseInteractor.setStage(stage);
@@ -407,8 +407,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     Math.round(i * this.map.grid.cellSize) + 0.5,
                     this.map.nRows * this.map.grid.cellSize
                 ],
-                stroke: this.map.grid.stroke,
-                strokeWidth: this.map.grid.strokeSize,
+                stroke: '#e6e6e6',
+                strokeWidth: 1,
             }));
         }
 
@@ -423,8 +423,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     this.map.nColumns * this.map.grid.cellSize,
                     Math.round(j * this.map.grid.cellSize)
                 ],
-                stroke: this.map.grid.stroke,
-                strokeWidth: this.map.grid.strokeSize,
+                stroke: '#e6e6e6',
+                strokeWidth: 1,
             }));
         }
     }

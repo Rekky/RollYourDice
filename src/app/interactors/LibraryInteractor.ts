@@ -8,20 +8,24 @@ import {Actor} from '../classes/Actor';
     providedIn: 'root'
 })
 export class LibraryInteractor {
-    private library: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
+    private actors: BehaviorSubject<Actor[]> = new BehaviorSubject<Actor[]>([]);
 
     constructor(private libraryService: LibraryService) {
-        // this.libraryService.getLibrarySection('').subscribe((res: any) => {
-        //     this.library.next(res);
-        // });
+       this.getMyActors().subscribe((res) => {
+           this.actors.next(res.data);
+       });
     }
 
     getCurrentLibraryObs(): Observable<any> {
-        return this.library.asObservable();
+        return this.actors.asObservable();
     }
 
-    createActor(actor: Actor): Observable<any> {
-        this.library.value.push(actor);
-        return this.libraryService.createLibraryActor(actor);
+    getMyActors(): Observable<any> {
+        return this.libraryService.getMyActors();
+    }
+
+    async createActor(actor: Actor): Promise<any> {
+        await this.libraryService.createActor(actor);
+        this.getMyActors().subscribe((res) => this.actors.next(res.data));
     }
 }

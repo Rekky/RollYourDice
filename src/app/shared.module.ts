@@ -24,6 +24,7 @@ import {MiniMenuComponent} from './components/mini-menu/mini-menu.component';
 import {CustomWizardActorComponent} from './components/custom-wizard-actor/custom-wizard-actor.component';
 import { CustomListComponent } from './components/custom-list/custom-list.component';
 import { FormErrorsComponent } from './components/form-errors/form-errors.component';
+import {TutorialComponent} from './components/tutorial/tutorial.component';
 
 
 @NgModule({
@@ -48,6 +49,8 @@ import { FormErrorsComponent } from './components/form-errors/form-errors.compon
         CustomWizardActorComponent,
         CustomListComponent,
         FormErrorsComponent
+        CustomListComponent,
+        TutorialComponent
     ],
     imports: [
         CommonModule,
@@ -76,6 +79,8 @@ import { FormErrorsComponent } from './components/form-errors/form-errors.compon
         CustomWizardActorComponent,
         CustomListComponent,
         FormErrorsComponent
+        CustomListComponent,
+        TutorialComponent
     ],
 })
 
