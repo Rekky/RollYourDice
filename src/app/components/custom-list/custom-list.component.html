@@ -6,7 +6,8 @@
     </ng-container>
     <ng-container *ngIf="items && items.length > 0">
         <div class="list-items" *ngIf="type === 'grid'">
-            <div class="item rounded-md" *ngFor="let item of items" (click)="selectItem(item)" [class.selected]="selectedItem === item">
+            <div class="item rounded-md ring-2 ring-gray-100 hover:ring-red-500" *ngFor="let item of items" (click)="selectItem(item)" [class.ring-red-500]="selectedItem === item">
+                <img class="img hover:contrast-125" *ngIf="item.asset" [src]="item.asset.uri" loading="lazy">
                 <img class="img hover:contrast-125" *ngIf="item.uri" [src]="item.uri" loading="lazy">
                 <div class="name">{{item.name}}</div>
             </div>

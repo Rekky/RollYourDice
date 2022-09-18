@@ -13,6 +13,7 @@ export class CustomListComponent {
     @Output() selectedItemChanges: EventEmitter<any> = new EventEmitter<any>();
 
     constructor() {
+
     }
 
     selectItem(item: any): void  {

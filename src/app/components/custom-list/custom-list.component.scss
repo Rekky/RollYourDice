@@ -23,17 +23,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    border: 1px solid $c-gray-200;
     overflow: hidden;
     cursor: pointer;
-
-    &.selected {
-        border: 1px solid #ea4c89;
-    }
-
-    &:hover {
-        border: 1px solid #ea4c89;
-    }
 
     .name {
         position: absolute;
