@@ -91,16 +91,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         });
 
         this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
-            this.library = [
-                {
-                    category: 'Characters', items: [
-                        {name: 'Character 1', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                        {name: 'Character 2', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                        {name: 'Character 3', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                        {name: 'Character 4', description: 'This is a character', type: 'character', uri: 'https://picsum.photos/200/300'},
-                    ]
-                }
-            ];
+            this.library = [{type: 'CHARACTERS', items: library}];
+            console.log('librarys--->', this.library);
         });
     }
 

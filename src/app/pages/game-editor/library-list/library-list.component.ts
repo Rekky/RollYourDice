@@ -16,12 +16,15 @@ export class LibraryListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getLibraryItems();
+        setInterval(() => {
+            console.log(this.library);
+        }, 2000);
+        // this.getLibraryItems();
     }
 
     getLibraryItems(): any[] {
         if (this.currentCategory) {
-            return this.library.filter(item => item.category === this.currentCategory);
+            return this.library.filter(item => item.type === this.currentCategory);
         }
         return [];
     }

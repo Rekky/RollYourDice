@@ -18,7 +18,7 @@ export class LibraryService {
 
     createActor(actor: Actor): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/${this.endPointName}/actor`, actor).subscribe(
+            this.httpService.post(`/${this.endPointName}/`, actor).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
@@ -28,16 +28,8 @@ export class LibraryService {
         });
     }
 
-    getMyActors(): Promise<any> {
-        return new Promise<any>( (resolve, reject) => {
-            this.httpService.get(`/${this.endPointName}/my-actors`).subscribe(
-                (response) => {
-                    resolve(response.data);
-                }, (error: HttpErrorResponse) => {
-                    reject(error);
-                }
-            );
-        });
+    getMyActors(): Observable<any> {
+        return this.httpService.get(`/${this.endPointName}/my-actors`);
     }
 
 
