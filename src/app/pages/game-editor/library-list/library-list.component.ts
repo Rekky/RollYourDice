@@ -16,9 +16,6 @@ export class LibraryListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        setInterval(() => {
-            console.log(this.library);
-        }, 2000);
         // this.getLibraryItems();
     }
 
