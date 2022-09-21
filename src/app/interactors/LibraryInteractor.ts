@@ -28,4 +28,8 @@ export class LibraryInteractor {
         await this.libraryService.createActor(actor);
         this.getMyActors().subscribe((res) => this.actors.next(res.data));
     }
+
+    async deleteActor(actor): Promise<void> {
+        await this.libraryService.deleteActor(actor.id).subscribe().unsubscribe();
+    }
 }

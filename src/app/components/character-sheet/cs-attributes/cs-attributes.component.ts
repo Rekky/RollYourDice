@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Character} from '../../../classes/Character';
 import { Attributes } from 'src/app/classes/character-properties/attributes';
 
 @Component({

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Character} from '../../classes/Character';
 import {CharacterInteractor} from '../../interactors/CharacterInteractor';
 import {Subscription} from 'rxjs';
+import {CHARACTER} from '../../classes/Actor';
 
 @Component({
     selector: 'app-character-sheet',
@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs';
 })
 export class CharacterSheetComponent implements OnInit, OnDestroy {
 
-    character: Character;
+    character: CHARACTER;
 
     getCharacterSubs: Subscription;
 

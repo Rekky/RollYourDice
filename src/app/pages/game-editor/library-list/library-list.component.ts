@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
     selector: 'app-library-list',
@@ -11,6 +11,7 @@ export class LibraryListComponent implements OnInit {
     currentCategory: string | null = null;
     modalNewCategoryItem: boolean = false;
     @Input() library: any[] = [];
+    @Output() onDeleteItemChanges: EventEmitter<any> = new EventEmitter<any>();
 
     constructor() {
     }
@@ -32,6 +33,10 @@ export class LibraryListComponent implements OnInit {
 
     onAddItem(): void {
         this.modalNewCategoryItem = true;
+    }
+
+    onDeleteItem(item: any): void {
+        this.onDeleteItemChanges.emit(item);
     }
 
 }

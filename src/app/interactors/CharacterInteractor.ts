@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Character} from '../classes/Character';
+
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Game} from '../classes/Game';
+import {CHARACTER} from '../classes/Actor';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CharacterInteractor {
 
-    characterSubject: BehaviorSubject<Character> = new BehaviorSubject<Character>(null);
+    characterSubject: BehaviorSubject<CHARACTER> = new BehaviorSubject<CHARACTER>(null);
     // character: Character = {
     //     name: 'Steiner',
     //     class: 'paladin',
@@ -374,7 +374,7 @@ export class CharacterInteractor {
         // this.characterSubject.next(this.character);
     }
 
-    getCharacter(): Observable<Character> {
+    getCharacter(): Observable<CHARACTER> {
         return this.characterSubject.asObservable();
     }
 }

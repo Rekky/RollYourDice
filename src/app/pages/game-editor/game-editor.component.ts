@@ -15,6 +15,7 @@ import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaMap} from '../../classes/Meta';
 import {first, switchMap, take} from 'rxjs/operators';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
+import {Actor} from '../../classes/Actor';
 
 @Component({
     selector: 'app-game-editor',
@@ -277,6 +278,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.leftSidebarTitle = 'UNKNOWN';
                 break;
         }
+    }
+
+    onDeleteActor(actor: Actor): void {
+        this.libraryInteractor.deleteActor(actor);
     }
 
 }
