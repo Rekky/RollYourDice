@@ -48,9 +48,9 @@ import {TutorialComponent} from './components/tutorial/tutorial.component';
         MiniMenuComponent,
         CustomWizardActorComponent,
         CustomListComponent,
-        FormErrorsComponent
+        FormErrorsComponent,
         CustomListComponent,
-        TutorialComponent
+        TutorialComponent,
     ],
     imports: [
         CommonModule,
@@ -78,9 +78,9 @@ import {TutorialComponent} from './components/tutorial/tutorial.component';
         MiniMenuComponent,
         CustomWizardActorComponent,
         CustomListComponent,
-        FormErrorsComponent
+        FormErrorsComponent,
         CustomListComponent,
-        TutorialComponent
+        TutorialComponent,
     ],
 })
 

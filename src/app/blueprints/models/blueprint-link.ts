@@ -5,8 +5,6 @@ export class BlueprintLink {
     position: Coords;
     startingNode: BlueprintNode;
     endingNode: BlueprintNode;
-    width: number;
-    height: number;
     stroke: string;
     strokeWidth: number;
 

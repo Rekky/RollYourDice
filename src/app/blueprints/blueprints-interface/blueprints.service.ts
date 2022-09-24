@@ -27,13 +27,11 @@ export class BlueprintsService {
         this.blueprint.blueprintLinks[0].startingNode.id = 'first';
         this.blueprint.blueprintLinks[0].endingNode.id = 'second';
         this.blueprint.blueprintLinks[0].position.x = 950;
-        this.blueprint.blueprintLinks[0].position.y = 440;
+        this.blueprint.blueprintLinks[0].position.y = 430;
         this.blueprint.blueprintLinks[0].startingNode.position.x = 0;
         this.blueprint.blueprintLinks[0].startingNode.position.y = 10;
         this.blueprint.blueprintLinks[0].endingNode.position.x = 650;
-        this.blueprint.blueprintLinks[0].endingNode.position.y = 400;
-        this.blueprint.blueprintLinks[0].width = 650;
-        this.blueprint.blueprintLinks[0].height = 470;
+        this.blueprint.blueprintLinks[0].endingNode.position.y = 410;
         return this.blueprint;
     }
 }

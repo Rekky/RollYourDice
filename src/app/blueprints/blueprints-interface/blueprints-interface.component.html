@@ -8,8 +8,8 @@
                 <svg class="link" #svg
                      [style.left]="link.position.x + 'px'"
                      [style.top]="link.position.y + 'px'"
-                     [style.width]="link.width + 'px'"
-                     [style.height]="link.height + 'px'"
+                     [style.width]="link.endingNode.position.x - link.startingNode.position.x + 10 + 'px'"
+                     [style.height]="link.endingNode.position.y - link.startingNode.position.y + 20 + 'px'"
                      xmlns="http://www.w3.org/2000/svg">
                     <path [attr.d]="getSVGPath(link)"
                           transform
