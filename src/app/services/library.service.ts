@@ -16,7 +16,7 @@ export class LibraryService {
     constructor(private httpService: HttpService,
                 private userInteractor: UserInteractor) {}
 
-    createActor(actor: Actor): Promise<any> {
+    async createActor(actor: Actor): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/${this.endPointName}/`, actor).subscribe(
                 (response) => {
@@ -34,16 +34,12 @@ export class LibraryService {
 
 
     getLibrarySection(section): Observable<any> {
-        const options = {
-            headers: new HttpHeaders({
-                Authorization: this.userInteractor.getCurrentToken()
-            })
-        };
-        return this.httpService.get(`/${this.endPointName}/${section}`, options);
+        return this.httpService.get(`/${this.endPointName}/${section}`);
     }
 
 
-    deleteLibraryActor(id: string): Observable<any> {
-        return this.httpService.delete(`/${this.endPointName}/assets/${id}`);
+    deleteActor(id: string): Observable<any> {
+        console.log('LibraryService_deleteActor');
+        return this.httpService.delete(`/${this.endPointName}/${id}`);
     }
 }

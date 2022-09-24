@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Character} from '../../../classes/Character';
+import {CHARACTER} from '../../../classes/Actor';
+
 
 @Component({
     selector: 'app-cs-header',
@@ -8,7 +9,7 @@ import {Character} from '../../../classes/Character';
 })
 export class CsHeaderComponent implements OnInit {
 
-    @Input() character: Character;
+    @Input() character: CHARACTER;
 
     constructor() { }
 

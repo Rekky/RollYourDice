@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetService} from '../../services/asset.service';
-import {Actor} from '../../classes/Actor';
-import {Character} from '../../classes/Character';
+import {Actor, ActorTypesEnum, CHARACTER, MONSTER, NPC, OBJECT, PET, SPELL} from '../../classes/Actor';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
-import {Monster} from '../../classes/Monster';
+
 
 @Component({
     selector: 'app-custom-wizard-actor',
@@ -15,12 +14,13 @@ export class CustomWizardActorComponent implements OnInit {
 
     @Input() steps: number = 0;
     @Input() currentStep: number = 0;
-    protected currentActorType: string = null;
+    protected currentActorType: any = null;
 
     public assets: any[] = [];
     showAssets: boolean = false;
 
     public fg: UntypedFormGroup;
+    public ActorTypesEnum = ActorTypesEnum;
 
     constructor(protected assetService: AssetService, protected libraryInteractor: LibraryInteractor) {
         this.fg = new UntypedFormGroup({
@@ -37,34 +37,36 @@ export class CustomWizardActorComponent implements OnInit {
         console.log(this.assets);
     }
 
-    selectActorType(type: string): void {
+    selectActorType(type: ActorTypesEnum): void {
+        console.log(type);
         this.currentStep = 1;
         this.currentActorType = type;
     }
 
     async createActor(): Promise<void> {
         let actor: Actor = null;
-        console.log('wizard-createActor');
         try {
             switch (this.currentActorType) {
-                case 'CHARACTER':
-                    const character = new Character();
+                case ActorTypesEnum.CHARACTER:
+                    const character = new CHARACTER();
                     actor = {...this.fg.value, ...character};
                     break;
-                case 'MONSTER':
-                    actor = new Monster();
+                case ActorTypesEnum.MONSTER:
+                    actor = new MONSTER();
                     break;
-                case 'NPC':
-                    // todo
+                case ActorTypesEnum.NPC:
+                    actor = new NPC();
                     break;
-                case 'OBJECT':
-                    // todo
+                case ActorTypesEnum.OBJECT:
+                    actor = new OBJECT();
                     break;
-                case 'SPELL':
-                    // todo
+                case ActorTypesEnum.SPELL:
+                    actor = new SPELL();
                     break;
-                case 'PET':
-                    // todo
+                case ActorTypesEnum.PET:
+                    actor = new PET();
+                    break;
+                default:
                     break;
             }
         } catch (e) {

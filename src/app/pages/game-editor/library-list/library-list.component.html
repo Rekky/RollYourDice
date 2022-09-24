@@ -34,7 +34,12 @@
                 <div class="category-header-name">{{currentCategory}}</div>
             </div>
             <div class="category-body">
-                <app-custom-list [items]="library[0].items"></app-custom-list>
+                <app-custom-list
+                    [items]="library[0].items"
+                    (deleteItemChanges)="onDeleteItem($event)"
+                    (selectedItemChanges)="onSelectedItem($event)"
+                    [editable]="true">
+                </app-custom-list>
                 <div class="list-add">
                     <img src="assets/svg/add.svg" alt="add" style="width: 20px;" (click)="onAddItem()">
                 </div>

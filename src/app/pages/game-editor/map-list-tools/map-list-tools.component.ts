@@ -107,7 +107,6 @@ export class MapListToolsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     scrollToBottom(): void {
         try {
-            console.log('scrollToBottom');
             setTimeout(() => {
                 this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
             }, 500);

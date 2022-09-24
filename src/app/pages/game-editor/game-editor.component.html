@@ -48,7 +48,11 @@
                 (tabsChange)="onTabsChange($event)"
             ></app-map-list-tools>
             <div *ngIf="openLibraryList">
-                <app-library-list [library]="library"></app-library-list>
+                <app-library-list
+                    [library]="library"
+                    (onSelectedItemChanges)="onSelectedActor($event)"
+                    (onDeleteItemChanges)="onDeleteActor($event)"
+                ></app-library-list>
             </div>
         </div>
         <div toolsbar>

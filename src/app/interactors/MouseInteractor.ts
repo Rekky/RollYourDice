@@ -344,27 +344,28 @@ export class MouseInteractor implements OnDestroy {
         return this.selectedKonvaObjects.asObservable();
     }
 
-    paintObjectsOnMap(objects: any, layers: OurKonvaLayers): void {
+    paintObjectsOnMap(objects: any): void {
         objects.forEach((object: any) => {
-            this.paintObjectOnMap(object, layers);
+            this.paintObjectOnMap(object);
         });
     }
 
-    paintObjectOnMap(object: any, layers: OurKonvaLayers): void {
+    paintObjectOnMap(object: any): void {
         if (object?.state === 'square') {
-            const createdObject = OurKonvaRect.paint(object, layers);
+            console.log(this.ourLayers);
+            const createdObject = OurKonvaRect.paint(object, this.ourLayers);
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'text') {
-            const createdObject = OurKonvaText.paint(object, layers);
+            const createdObject = OurKonvaText.paint(object, this.ourLayers);
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'image') {
-            const createdObject = OurKonvaImage.paint(object, layers);
+            const createdObject = OurKonvaImage.paint(object, this.ourLayers);
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'brush') {
-            const createdObject = OurKonvaBrush.paint(object, layers);
+            const createdObject = OurKonvaBrush.paint(object, this.ourLayers);
             this.newObjectSetEvents(createdObject);
         }
     }
@@ -386,7 +387,7 @@ export class MouseInteractor implements OnDestroy {
         }
         this.addMouseKonvaObjectToMap(currentObject);
         this.newObjectSetEvents(currentObject);
-        this.paintObjectOnMap(ourKonvaImage, this.ourLayers);
+        this.paintObjectOnMap(ourKonvaImage);
     }
 
     updateSelectedObject(object: CurrentSelectedKonvaObject[]): void {

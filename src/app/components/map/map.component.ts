@@ -94,7 +94,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // INICIALIZAMOS MAP CON KONVA DESPUES DEL RENDER
         this.initializeMap();
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
-        this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
+        this.mouseInteractor.paintObjectsOnMap(this.map.objects);
         this.setMapElEvents();
         this.cdr.detectChanges();
     }
@@ -117,13 +117,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         if (this.modification) {
             if (this.modification.type === 'create') {
                 this.modification.objects.forEach(object => {
-                    this.mouseInteractor.paintObjectOnMap(object, this.layers);
+                    this.mouseInteractor.paintObjectOnMap(object);
                 });
             }
             if (this.modification.type === 'update') {
                 this.modification.objects.forEach(object => {
                     this.mouseInteractor.deleteObjectOnMap(object);
-                    this.mouseInteractor.paintObjectOnMap(object, this.layers);
+                    this.mouseInteractor.paintObjectOnMap(object);
 
                     const selectedObject = this.currentMapObjectsSelected.find(obj =>
                         obj.ourKonvaObject.id === object.id);
@@ -166,7 +166,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mapWidth = window.innerWidth;
         this.mapHeight = window.innerHeight;
 
-        this.setStageListeners(stage);
+        // this.setStageListeners(stage);
 
         this.drawGrid();
         this.createKonvaNodeTransformer();
@@ -174,7 +174,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
         stage.add(this.layers.shadows);
-        // stage.add(this.layers.draws);
+        stage.add(this.layers.draws);
         stage.add(this.layers.texts);
         this.gridStage = stage;
         this.mouseInteractor.setStage(stage);
@@ -276,7 +276,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }
         });
 
-        this.drawGrid();
+        // this.drawGrid();
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
         stage.add(this.layers.shadows);

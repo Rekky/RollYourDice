@@ -60,32 +60,32 @@
     <div class="wizard-body pt-5">
         <div class="step-container" *ngIf="currentStep === 0">
             <div class="card-list">
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('CHARACTER')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.CHARACTER)">
                     <div>
                         CHARACTER
                     </div>
                 </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('MONSTERS')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.MONSTER)">
                     <div>
                         MONSTERS
                     </div>
                 </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('NPC')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.NPC)">
                     <div>
                         NPC
                     </div>
                 </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('OBJECT')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.OBJECT)">
                     <div>
                         OBJECT
                     </div>
                 </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('SPELL')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.SPELL)">
                     <div>
                         SPELL
                     </div>
                 </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType('PET')">
+                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.PET)">
                     <div>
                         PET
                     </div>
@@ -99,7 +99,10 @@
                         Assets list
                     </div>
                     <div *ngIf="showAssets" style="width: 100%;height: 200px;">
-                        <app-custom-list [items]="assets" (selectedItemChanges)="onSelectedAsset($event)"></app-custom-list>
+                        <app-custom-list
+                            [items]="assets"
+                            (selectedItemChanges)="onSelectedAsset($event)">
+                        </app-custom-list>
                     </div>
                 </div>
                 <div>
