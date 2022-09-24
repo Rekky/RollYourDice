@@ -166,7 +166,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         this.mapWidth = window.innerWidth;
         this.mapHeight = window.innerHeight;
 
-        this.setStageListeners(stage);
+        // this.setStageListeners(stage);
 
         this.drawGrid();
         this.createKonvaNodeTransformer();
@@ -174,7 +174,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
         stage.add(this.layers.shadows);
-        // stage.add(this.layers.draws);
+        stage.add(this.layers.draws);
         stage.add(this.layers.texts);
         this.gridStage = stage;
         this.mouseInteractor.setStage(stage);
@@ -276,7 +276,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
             }
         });
 
-        this.drawGrid();
+        // this.drawGrid();
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
         stage.add(this.layers.shadows);
