@@ -8,14 +8,15 @@ import {combineLatest, Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {UserInteractor} from '../../interactors/UserInteractor';
-import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
+import {CurrentSelectedKonvaObject, OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import {MapInteractor} from '../../interactors/MapInteractor';
 import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
 import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaMap} from '../../classes/Meta';
-import {first, switchMap, take} from 'rxjs/operators';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 import {Actor} from '../../classes/Actor';
+import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
+import {Player} from '../../classes/User';
 
 @Component({
     selector: 'app-game-editor',
@@ -282,7 +283,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onSelectedActor(actor: Actor): void {
         console.log('selectedActor->', actor);
-        // this.mouseInteractor.paintObjectOnMap(actor, '');
+        const newLayer: OurKonvaLayers = new OurKonvaLayers();
+        const konvaObject = new OurKonvaObject(new Player());
+        this.mouseInteractor.paintObjectOnMap(konvaObject, newLayer);
     }
 
     onDeleteActor(actor: Actor): void {

@@ -40,6 +40,7 @@ export class LibraryListComponent implements OnInit {
 
     onSelectedItem(item: any): void {
         this.selectedItem = item;
+        this.onSelectedItemChanges.emit(this.selectedItem);
     }
 
     onDeleteItem(item: any): void {
