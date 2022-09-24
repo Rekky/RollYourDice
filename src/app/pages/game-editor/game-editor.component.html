@@ -48,6 +48,7 @@
             <div *ngIf="openLibraryList">
                 <app-library-list
                     [library]="library"
+                    (onSelectedItemChanges)="onSelectedActor($event)"
                     (onDeleteItemChanges)="onDeleteActor($event)"
                 ></app-library-list>
             </div>

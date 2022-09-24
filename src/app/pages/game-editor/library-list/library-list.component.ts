@@ -10,7 +10,10 @@ export class LibraryListComponent implements OnInit {
     categories: any[] = [];
     currentCategory: string | null = null;
     modalNewCategoryItem: boolean = false;
+
     @Input() library: any[] = [];
+    @Input() selectedItem: any = null;
+    @Output() onSelectedItemChanges: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDeleteItemChanges: EventEmitter<any> = new EventEmitter<any>();
 
     constructor() {
@@ -33,6 +36,10 @@ export class LibraryListComponent implements OnInit {
 
     onAddItem(): void {
         this.modalNewCategoryItem = true;
+    }
+
+    onSelectedItem(item: any): void {
+        this.selectedItem = item;
     }
 
     onDeleteItem(item: any): void {

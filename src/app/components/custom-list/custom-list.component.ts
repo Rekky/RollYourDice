@@ -9,10 +9,10 @@ export class CustomListComponent {
 
     @Input() items: any[] = [];
     @Input() type: string = 'grid';
-    @Input() selectedItem: any = null;
     @Input() editable: boolean = false;
-    @Output() selectedItemChanges: EventEmitter<any> = new EventEmitter<any>();
     @Output() deleteItemChanges: EventEmitter<any> = new EventEmitter<any>();
+    @Input() selectedItem: any = null;
+    @Output() selectedItemChanges: EventEmitter<any> = new EventEmitter<any>();
 
     constructor() {
 

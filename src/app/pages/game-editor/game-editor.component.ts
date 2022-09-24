@@ -280,6 +280,11 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         }
     }
 
+    onSelectedActor(actor: Actor): void {
+        console.log('selectedActor->', actor);
+        // this.mouseInteractor.paintObjectOnMap(actor, '');
+    }
+
     onDeleteActor(actor: Actor): void {
         this.libraryInteractor.deleteActor(actor);
     }
