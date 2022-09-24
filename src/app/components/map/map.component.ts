@@ -94,7 +94,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         // INICIALIZAMOS MAP CON KONVA DESPUES DEL RENDER
         this.initializeMap();
         this.mouseInteractor.setMouseEvents(this.mapEl, this.map, this.gridStage, this.layers);
-        this.mouseInteractor.paintObjectsOnMap(this.map.objects, this.layers);
+        this.mouseInteractor.paintObjectsOnMap(this.map.objects);
         this.setMapElEvents();
         this.cdr.detectChanges();
     }
@@ -117,13 +117,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         if (this.modification) {
             if (this.modification.type === 'create') {
                 this.modification.objects.forEach(object => {
-                    this.mouseInteractor.paintObjectOnMap(object, this.layers);
+                    this.mouseInteractor.paintObjectOnMap(object);
                 });
             }
             if (this.modification.type === 'update') {
                 this.modification.objects.forEach(object => {
                     this.mouseInteractor.deleteObjectOnMap(object);
-                    this.mouseInteractor.paintObjectOnMap(object, this.layers);
+                    this.mouseInteractor.paintObjectOnMap(object);
 
                     const selectedObject = this.currentMapObjectsSelected.find(obj =>
                         obj.ourKonvaObject.id === object.id);
