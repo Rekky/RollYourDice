@@ -15,6 +15,9 @@ export class DraggableDirective implements OnInit {
     @Output()
     draggableClick = new EventEmitter();
 
+    @Output()
+    dragging = new EventEmitter();
+
     private currentlyDragged = false;
 
     constructor(private element: ElementRef) {}
@@ -41,6 +44,16 @@ export class DraggableDirective implements OnInit {
                 target.classList.add('getting-dragged');
                 this.currentlyDragged = true;
                 (window as any).dragData = {x, y, id: this.objectData.id};
+                this.dragging.emit({x, y, id: this.objectData.id});
+                event.target.style.transform = 'none';
+                event.target.removeAttribute('data-x');
+                event.target.removeAttribute('data-y');
+                event.target.classList.remove('getting-dragged');
+                // update the posiion attributes
+                setTimeout(() => {
+                    (window as any).dragData = null;
+                    this.currentlyDragged = false;
+                });
             })
             .on('dragend', (event) => {
                 event.target.style.transform = 'none';

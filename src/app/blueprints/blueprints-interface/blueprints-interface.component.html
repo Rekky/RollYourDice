@@ -2,7 +2,7 @@
     <div class="frame">
         <div appDroppable class="canvas droppable"
              [options]="{ accept: '.draggable' }"
-             (dropping)="modifyBBPosition($event)">
+             (dropping)="elementDropped($event)">
 
             <ng-container *ngFor="let link of blueprint.blueprintLinks">
                 <svg class="link" #svg
@@ -30,7 +30,8 @@
                              [style.top]="bb.position.y + 'px'"
                              [style.left]="bb.position.x + 'px'"
                              [objectData]="bb"
-                             (draggableClick)="openDetail(bb)">
+                             (draggableClick)="clickedBB($event)"
+                             (dragging)="modifyBBPosition($event, bb)">
                 </app-bb-area>
             </ng-container>
         </div>

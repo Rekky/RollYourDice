@@ -33,22 +33,17 @@ export class BlueprintsInterfaceComponent implements OnInit {
         this.cdr.detectChanges();
     }
 
-    openDetail(kio: any): void {
-        console.log(kio);
-    }
-
-    modifyBBPosition(object: any): void {
-        const bb = this.blueprint.blueprintBoxes.find(bbox => bbox.id === object.id);
-        const newPos = new Coords(bb.position.x + object.x, bb.position.y + object.y);
+    modifyBBPosition(coords: any, bb: BaseBlueprintBox): void {
+        const newPos = new Coords(bb.position.x + coords.x, bb.position.y + coords.y);
         this.blueprint.blueprintLinks.forEach((link: BlueprintLink) => {
             if (link.startingNode.boxId === bb.id) {
-                link.startingNode.position.x = link.startingNode.position.x + (newPos.x - bb.position.x);
-                link.startingNode.position.y = link.startingNode.position.y + (newPos.y - bb.position.y);
+                link.startingNode.position.x = link.startingNode.position.x + coords.x;
+                link.startingNode.position.y = link.startingNode.position.y + coords.y;
                 link.controlLinkPosition();
             }
             if (link.endingNode.boxId === bb.id) {
-                link.endingNode.position.x = link.endingNode.position.x + (newPos.x - bb.position.x);
-                link.endingNode.position.y = link.endingNode.position.y + (newPos.y - bb.position.y);
+                link.endingNode.position.x = link.endingNode.position.x + coords.x;
+                link.endingNode.position.y = link.endingNode.position.y + coords.y;
                 link.controlLinkPosition();
             }
         });
@@ -75,5 +70,9 @@ export class BlueprintsInterfaceComponent implements OnInit {
     getLinkHeight(link: BlueprintLink): number {
         return Math.abs(link.endingNode.position.y - link.startingNode.position.y) + 20;
     }
+
+    elementDropped(object: any): void {}
+
+    clickedBB(bb: any): void {}
 
 }
