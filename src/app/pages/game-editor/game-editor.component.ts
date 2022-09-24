@@ -282,8 +282,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedActor(actor: Actor): void {
-        console.log('selectedActor->', actor);
-        // this.mouseInteractor.paintObjectOnMap();
+        console.log('ActorToPaint->', actor);
+        const ourKonvaObject = new OurKonvaObject(new Player());
+        this.mouseInteractor.paintObjectOnMap(ourKonvaObject);
     }
 
     onDeleteActor(actor: Actor): void {
