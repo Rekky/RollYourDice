@@ -1,5 +1,5 @@
 import {Coords} from '../../classes/Coords';
-import {BlueprintLink} from './blueprint-link';
+import {BlueprintLink, BlueprintNode} from './blueprint-link';
 
 export class BlueprintModel {
     blueprintBoxes: BaseBlueprintBox[];

@@ -2,14 +2,15 @@
     <div class="frame">
         <div appDroppable class="canvas droppable"
              [options]="{ accept: '.draggable' }"
-             (dropping)="assignTask($event)">
+             (dropping)="modifyBBPosition($event)">
 
             <ng-container *ngFor="let link of blueprint.blueprintLinks">
                 <svg class="link" #svg
                      [style.left]="link.position.x + 'px'"
                      [style.top]="link.position.y + 'px'"
-                     [style.width]="link.endingNode.position.x - link.startingNode.position.x + 10 + 'px'"
-                     [style.height]="link.endingNode.position.y - link.startingNode.position.y + 20 + 'px'"
+                     [style.background-color]="'red'"
+                     [style.width]="getLinkWidth(link) + 'px'"
+                     [style.height]="getLinkHeight(link) + 'px'"
                      xmlns="http://www.w3.org/2000/svg">
                     <path [attr.d]="getSVGPath(link)"
                           transform

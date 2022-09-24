@@ -16,16 +16,19 @@ export class BlueprintLink {
         this.stroke = 'white';
         this.strokeWidth = 2;
     }
+
+    controlLinkPosition(): void {
+        this.position.x = Math.min(this.startingNode.position.x, this.endingNode.position.x);
+        this.position.y = Math.min(this.startingNode.position.y, this.endingNode.position.y);
+    }
 }
 
 export class BlueprintNode {
-    id: string;
     position: Coords;
-    fill: string;
+    boxId: string;
 
     constructor() {
-        this.id = '';
         this.position = new Coords();
-        this.fill = 'yellow';
+        this.boxId = '';
     }
 }
