@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ParticlesConfig} from '../../../assets/particlesjs-config';
 declare let particlesJS: any;
 
@@ -11,12 +11,19 @@ export class LauncherComponent implements OnInit, OnDestroy {
 
     bgX: number = 25;
     music: any;
+    isPlayingMusic: boolean = false;
 
     constructor() { }
 
     ngOnInit(): void {
-        this.playMusic();
         this.invokeParticles();
+        this.playMusic();
+
+        // setInterval(() => {
+        //     if (this.music.paused) {
+        //         this.playMusic();
+        //     }
+        // }, 1000);
     }
 
     ngOnDestroy(): void {
@@ -37,8 +44,19 @@ export class LauncherComponent implements OnInit, OnDestroy {
         this.music.src = '../../../assets/music/battle-of-the-dragons-8037.mp3';
         this.music.volume = 0.3;
         this.music.loop = true;
+        this.music.autoplay = true;
         this.music.load();
-        this.music.play();
+        this.isPlayingMusic = true;
+    }
+
+    handleMusic(): void {
+        if (this.music.volume > 0) {
+            this.music.volume = 0;
+            this.isPlayingMusic = true;
+        } else {
+            this.music.volume = 0.3;
+            this.isPlayingMusic = false;
+        }
     }
 
 }

@@ -55,7 +55,7 @@
             border: 1px solid $c-white-grey;
             border-radius: 5px;
 
-            text-transform: uppercase; 
+            text-transform: uppercase;
             font-family: $oswald;
             font-size: 18px;
             font-weight: 600;
@@ -65,9 +65,9 @@
             &:hover {
                 background-color: $c-whitest;
                 cursor: pointer;
-            }      
+            }
         }
-    }       
+    }
 }
 
 .my-adventures-box {
@@ -80,7 +80,7 @@
     height: 70%;
     padding: 4px;
     overflow: hidden;
-    
+
 }
 
 .adventure-box {
@@ -111,7 +111,7 @@
     &:hover {
 
         box-shadow:  0px 0px 4px 2px #CFB525;
-        
+
         .top-cover {
             display: inline-block;
         }

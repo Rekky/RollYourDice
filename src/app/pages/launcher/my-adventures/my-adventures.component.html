@@ -4,7 +4,7 @@
         <div class="my-adventures-options">
             <div class="settings-option" (click)="searchGame()">find game</div>
             <div class="settings-option" (click)="startNewGame()">new game</div>
-        </div> 
+        </div>
     </div>
     <div class="my-adventures-box" *ngIf="adventures">
         <div *ngFor="let adventure of adventures; let i = index;" class="adventure-box">
