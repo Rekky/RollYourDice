@@ -103,9 +103,6 @@
     0 4px 8px rgba($c-black,0.12),
     0 8px 16px rgba($c-black,0.12),
     0 16px 32px rgba($c-black,0.12);
-    //background-color: rgba($c-black, 100%);
-    background-image: url('../../../../assets/backgrounds/menus/menu-bg.jpg');
-
     cursor: pointer;
 
     &:hover {
@@ -133,18 +130,8 @@
             right: 10px;
             top: 15px;
             z-index: 3;
-
             width: 30px;
             height: 30px;
-
-            &:hover {
-                cursor: pointer;
-
-                .settings-icon-svg {
-                    fill: $c-whitest;
-                    opacity: 1;
-                }
-            }
         }
 
         .enter-adventure {
@@ -323,6 +310,15 @@
         height: 100%;
         background-size: cover;
         background-position: center;
+    }
+    .bg-image {
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background-image: url('../../../../assets/backgrounds/menus/background-default-game.webp');
+        background-size: cover;
     }
 }
 

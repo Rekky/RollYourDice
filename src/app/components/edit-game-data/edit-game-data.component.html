@@ -1,4 +1,4 @@
-<div class="box-shadow"></div>
+<div class="box-shadow blur" (click)="closeDialog()"></div>
 <div *ngIf="game && gameForm" class="edit-game-box">
     <form class="edit-game-card" [formGroup]="gameForm" (submit)="acceptChanges()">
         <div class="header" *ngIf="loaded">
