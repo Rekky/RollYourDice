@@ -17,6 +17,8 @@ import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 import {Actor} from '../../classes/Actor';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {Player} from '../../classes/User';
+import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
+import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 
 @Component({
     selector: 'app-game-editor',
@@ -284,7 +286,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     onSelectedActor(actor: Actor): void {
         console.log('ActorToPaint->', actor);
         const ourKonvaObject = new OurKonvaObject(new Player());
-        this.mouseInteractor.paintObjectOnMap(ourKonvaObject);
+        const ourKonvaImage = new OurKonvaImage(new Player(), actor.asset.uri);
+        this.mouseInteractor.paintObjectOnMap(ourKonvaImage);
     }
 
     onDeleteActor(actor: Actor): void {
