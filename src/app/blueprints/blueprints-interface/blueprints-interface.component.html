@@ -1,9 +1,23 @@
 <div class="blueprints-container">
     <div class="frame">
-        <div appDroppable class="canvas droppable"
+        <div appDroppable class="canvas droppable" #droppable
              [options]="{ accept: '.draggable' }"
              (dropping)="elementDropped($event)">
 
+            <svg *ngIf="temporalLink" class="link" #svg
+                 [style.left]="temporalLink.position.x + 'px'"
+                 [style.top]="temporalLink.position.y + 'px'"
+                 [style.width]="getLinkWidth(temporalLink) + 'px'"
+                 [style.height]="getLinkHeight(temporalLink) + 'px'"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path [attr.d]="getSVGPath(temporalLink)"
+                      transform
+                      pointer-events="visibleStroke"
+                      fill="none"
+                      stroke="#FFFFFF"
+                      style=""
+                      stroke-width="2"></path>
+            </svg>
             <ng-container *ngFor="let link of blueprint.blueprintLinks">
                 <svg class="link" #svg
                      [style.left]="link.position.x + 'px'"
@@ -29,6 +43,8 @@
                              [style.top]="bb.position.y + 'px'"
                              [style.left]="bb.position.x + 'px'"
                              [objectData]="bb"
+                             (nodeOutHasBeenTouched)="newLinkNodeOut($event)"
+                             (nodeInHasBeenTouched)="newLinkNodeIn($event)"
                              (draggableClick)="clickedBB($event)"
                              (dragging)="modifyBBPosition($event, bb)">
                 </app-bb-area>

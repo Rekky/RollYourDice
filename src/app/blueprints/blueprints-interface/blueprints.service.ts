@@ -22,16 +22,16 @@ export class BlueprintsService {
         this.blueprint.blueprintBoxes[1].position.x = 1600;
         this.blueprint.blueprintBoxes[1].position.y = 800;
 
-        this.blueprint.blueprintLinks.push(new BlueprintLink());
-        this.blueprint.blueprintLinks[0].id = 'onlyOne';
-        this.blueprint.blueprintLinks[0].startingNode.boxId = 'first';
-        this.blueprint.blueprintLinks[0].endingNode.boxId = 'second';
-        this.blueprint.blueprintLinks[0].position.x = 950;
-        this.blueprint.blueprintLinks[0].position.y = 440;
-        this.blueprint.blueprintLinks[0].startingNode.position.x = 950;
-        this.blueprint.blueprintLinks[0].startingNode.position.y = 440;
-        this.blueprint.blueprintLinks[0].endingNode.position.x = 1600;
-        this.blueprint.blueprintLinks[0].endingNode.position.y = 840;
+        // this.blueprint.blueprintLinks.push(new BlueprintLink());
+        // this.blueprint.blueprintLinks[0].id = 'onlyOne';
+        // this.blueprint.blueprintLinks[0].startingNode.boxId = 'first';
+        // this.blueprint.blueprintLinks[0].endingNode.boxId = 'second';
+        // this.blueprint.blueprintLinks[0].position.x = 950;
+        // this.blueprint.blueprintLinks[0].position.y = 440;
+        // this.blueprint.blueprintLinks[0].startingNode.position.x = 950;
+        // this.blueprint.blueprintLinks[0].startingNode.position.y = 440;
+        // this.blueprint.blueprintLinks[0].endingNode.position.x = 1600;
+        // this.blueprint.blueprintLinks[0].endingNode.position.y = 840;
         return this.blueprint;
     }
 }

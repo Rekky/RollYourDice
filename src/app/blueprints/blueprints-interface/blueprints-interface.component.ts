@@ -10,8 +10,9 @@ import {
 } from '@angular/core';
 import {BaseBlueprintBox, BlueprintModel} from '../models/base-blueprint';
 import {BlueprintsService} from './blueprints.service';
-import {BlueprintLink} from '../models/blueprint-link';
+import {BlueprintLink, BlueprintNode} from '../models/blueprint-link';
 import {Coords} from '../../classes/Coords';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -20,10 +21,14 @@ import {Coords} from '../../classes/Coords';
 })
 export class BlueprintsInterfaceComponent implements OnInit {
     @ViewChild('svg') svg: ElementRef;
+    @ViewChild('droppable') droppable: ElementRef;
     @Output() closeBlueprints: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     blueprint: BlueprintModel = new BlueprintModel();
     user: any;
+
+    functionOnEventListener;
+    temporalLink: BlueprintLink;
 
     constructor(private blueprintsService: BlueprintsService,
                 private cdr: ChangeDetectorRef) { }
@@ -71,8 +76,82 @@ export class BlueprintsInterfaceComponent implements OnInit {
         return Math.abs(link.endingNode.position.y - link.startingNode.position.y) + 20;
     }
 
+    newLinkNodeOut(node: BlueprintNode): void {
+        if (this.temporalLink) {
+            this.endsNewLinkNodeOut(node);
+        } else {
+            this.startsNewLinkNodeOut(node);
+        }
+    }
+
+    startsNewLinkNodeOut(node: BlueprintNode): void {
+        const newLink = new BlueprintLink();
+        newLink.id = 'onlyOne';
+        newLink.position.x = node.position.x;
+        newLink.position.y = node.position.y;
+        newLink.startingNode = node;
+        const droppable = this.droppable;
+        this.temporalLink = newLink;
+
+        this.functionOnEventListener = function myListener(e): void {
+            const bounds = droppable.nativeElement.getBoundingClientRect();
+            const mouseX = e.clientX - bounds.left; // Gets Mouse X
+            const mouseY = e.clientY - bounds.top; // Gets Mouse Y
+            newLink.endingNode.boxId = 'second';
+            newLink.endingNode.position.x = mouseX;
+            newLink.endingNode.position.y = mouseY;
+        };
+
+        this.droppable.nativeElement.addEventListener('mousemove', this.functionOnEventListener, false);
+    }
+
+    endsNewLinkNodeOut(node: BlueprintNode): void {
+        this.temporalLink.startingNode = node;
+        this.blueprint.blueprintLinks.push(this.temporalLink);
+        this.temporalLink = null;
+        this.droppable.nativeElement.removeEventListener('mousemove', this.functionOnEventListener, false);
+    }
+
+    newLinkNodeIn(node: BlueprintNode): void {
+        if (this.temporalLink) {
+            this.endsNewLinkNodeIn(node);
+        } else {
+            this.startsNewLinkNodeIn(node);
+        }
+    }
+
+    startsNewLinkNodeIn(node: BlueprintNode): void {
+        const newLink = new BlueprintLink();
+        newLink.id = 'onlyOne';
+        newLink.position.x = node.position.x;
+        newLink.position.y = node.position.y;
+        newLink.endingNode = node;
+        const droppable = this.droppable;
+        this.temporalLink = newLink;
+
+        this.functionOnEventListener = function myListener(e): void {
+            const bounds = droppable.nativeElement.getBoundingClientRect();
+            const mouseX = e.clientX - bounds.left; // Gets Mouse X
+            const mouseY = e.clientY - bounds.top; // Gets Mouse Y
+            newLink.startingNode.boxId = 'first';
+            newLink.startingNode.position.x = mouseX;
+            newLink.startingNode.position.y = mouseY;
+        };
+
+        this.droppable.nativeElement.addEventListener('mousemove', this.functionOnEventListener, false);
+    }
+
+    endsNewLinkNodeIn(node: BlueprintNode): void {
+        this.temporalLink.endingNode = node;
+        this.blueprint.blueprintLinks.push(this.temporalLink);
+        this.temporalLink = null;
+        this.droppable.nativeElement.removeEventListener('mousemove', this.functionOnEventListener, false);
+    }
+
     elementDropped(object: any): void {}
 
-    clickedBB(bb: any): void {}
+    clickedBB(bb: any): void {
+        console.log('hey');
+    }
 
 }

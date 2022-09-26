@@ -6,8 +6,8 @@
     </div>
     <div class="body col-lg-12">
         <div class="connectors">
-            <div class="node-in"></div>
-            <div class="node-out"></div>
+            <div class="node-in cursor-pointer" (click)="nodeInClicked($event)"></div>
+            <div class="node-out cursor-pointer" (click)="nodeOutClicked($event)"></div>
         </div>
         <form class="form col-lg-12 px-4 pt-2 pb-3" [formGroup]="form" (ngSubmit)="submit()" #f="ngForm">
             <div class="row">
