@@ -8,11 +8,6 @@ import {MyAdventuresComponent} from './my-adventures/my-adventures.component';
 const routes: Routes = [
     {
         path: 'launcher',
-        redirectTo: '/launcher/menu',
-        pathMatch: 'full',
-    },
-    {
-        path: 'launcher',
         component: LauncherComponent,
         canActivate: [AuthGuardService],
         children: [

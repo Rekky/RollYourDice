@@ -53,8 +53,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             // adv.forEach(element => {
             //     element.playersRequested
             // });
-
-            console.log(adv)
         });
     }
 
@@ -178,10 +176,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     loadGame(adventure: Game): void {
-        if(this.isAccessRequested(adventure) === true) {
+        if (this.isAccessRequested(adventure) === true) {
             return;
         }
-        
         this.router.navigate(['/game-editor/', adventure.id]);
     }
 

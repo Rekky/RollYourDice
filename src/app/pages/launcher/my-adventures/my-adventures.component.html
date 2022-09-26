@@ -58,21 +58,13 @@
                 Access requested
             </div>
             <div class="settings-overlay" *ngIf="adventure.id === adventureSettingsDisplayedId">
-                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option"
-                    (click)="displayUsersList(adventure, $event)">See players list</div>
-                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option"
-                     (click)="editGame(adventure, i, $event)">Edit game</div>
-                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option"
-                     (click)="duplicateGame(adventure, $event)">Duplicate game</div>
+                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option" (click)="displayUsersList(adventure, $event)">See players list</div>
+                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option" (click)="editGame(adventure, i, $event)">Edit game</div>
+<!--                <div *ngIf="currentUser.id === adventure.author.id" class="settings-option" (click)="duplicateGame(adventure, $event)">Duplicate game</div>-->
                 <div *ngIf="!isAccessRequested(adventure)" class="settings-option" (click)="deleteGame(adventure, i , $event)">Delete game</div>
                 <div *ngIf="isAccessRequested(adventure)" class="settings-option" (click)="cancelGameRequest(adventure, i , $event)">Cancel request</div>
             </div>
-            <div *ngIf="adventure?.coverImage?.uri" class="cover-image"
-                 [id]="adventure.id"
-                 [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
-<!--            <div *ngIf="!adventure?.coverImage?.uri" class="cover-image"-->
-<!--                 [id]="adventure.id"-->
-<!--                 [style.backgroundImage]="'url(' + './assets/backgrounds/menu-bg.jpg' + ')'"></div>-->
+            <div *ngIf="adventure?.coverImage?.uri" class="cover-image" [id]="adventure.id" [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
         </div>
     </div>
 </div>
