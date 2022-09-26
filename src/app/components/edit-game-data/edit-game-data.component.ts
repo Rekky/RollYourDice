@@ -12,6 +12,7 @@ import {User} from '../../classes/User';
 export class EditGameDataComponent implements OnInit {
     game: Game;
 
+    gameName:string;
     gameForm: UntypedFormGroup;
     newGame: Game;
     gameTypes: string[] = [];
@@ -26,6 +27,8 @@ export class EditGameDataComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        
         this.newGame = Game.fromJSON(this.game);
         this.gameForm = new UntypedFormGroup({
             name: new UntypedFormControl(this.newGame.name, Validators.required),
@@ -34,12 +37,14 @@ export class EditGameDataComponent implements OnInit {
             gameType: new UntypedFormControl(this.newGame.gameType, Validators.required),
             imageCover: new UntypedFormControl(null),
             imageCoverSource: new UntypedFormControl(null),
-            publish: new UntypedFormControl(this.newGame.published, Validators.required),
+            published: new UntypedFormControl(this.newGame.published, Validators.required),
         });
         this.gameTypes = Object.values(GameTypes);
         setTimeout(() => {
             this.loaded = true;
         }, 1000);
+
+        this.gameName = this.game.name;
     }
 
     closeDialog(): void {
@@ -49,10 +54,13 @@ export class EditGameDataComponent implements OnInit {
     }
 
     acceptChanges(): void {
+        
+        
         Object.keys(this.gameForm.value).forEach((key: string) => {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
-
+        this.newGame.published = this.gameForm.get('published').value;
+        this.newGame.maxNPlayers = this.gameForm.get('nPlayers').value;
         const formData = new FormData();
         formData.append('asset', this.gameForm.get('imageCoverSource').value);
 
@@ -61,10 +69,13 @@ export class EditGameDataComponent implements OnInit {
         //     formData.append(key.toString(), value);
         // });
         this.dialogRef.close({game: this.newGame, formData: formData});
+        console.log(this.newGame);
     }
 
-    imageChanged(file: File): void {
+    imageChanged(file: Array<File>): void {
         this.gameForm.patchValue({imageCoverSource: file});
+        console.log(file);
+        
     }
 
     transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {

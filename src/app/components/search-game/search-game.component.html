@@ -3,36 +3,53 @@
     <div class="search-game-card card-roll">
         <div class="header" *ngIf="loaded">
             <div class="exit">
-                <svg (click)="closeDialog()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.3 50.3">
-                    <defs><style>.cls-1{fill:none;stroke-miterlimit:10;stroke-width:3px;}</style></defs>
+                <svg (click)="closeDialog()" width="26px" height="26px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.7929 7.49998L1.14645 1.85353L1.85356 1.14642L7.50001 6.79287L13.1465 1.14642L13.8536 1.85353L8.20711 7.49998L13.8536 13.1464L13.1465 13.8535L7.50001 8.20708L1.85356 13.8535L1.14645 13.1464L6.7929 7.49998Z" />
                     <title>close</title>
-                    <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1">
-                        <circle class="cls-1" cx="25.15" cy="25.15" r="23.65"/>
-                        <line class="cls-1" x1="16.79" y1="16.79" x2="33.51" y2="33.51"/>
-                        <line class="cls-1" x1="16.79" y1="33.51" x2="33.51" y2="16.79"/>
-                    </g></g>
-                </svg>
+                </svg>        
             </div>
-            <div class="title">Search game</div>
+            <div class="title">Find Game</div>
         </div>
+        <div class="vertical-line"></div>
         <div class="body" *ngIf="loaded">
-            <div class="form-text-search">
-<!--                <label [for]="'game-id'">Game Id</label>-->
-                <input type="text" [id]="'game-id'" maxlength="40"
-                       [(ngModel)]="searchGameId" placeholder="Game Id"/>
-                <button type="button" (click)="searchGame()">Search</button>
+            <div class="image-container">
+                <img src="../../../assets/backgrounds/library/esglesia.png" alt="">
+                <div class="centered">{{selectedGame === null ? '' : selectedGame.name }}</div>
             </div>
-            <div class="games-list">
-                <div class="game" *ngFor="let game of gamesList"
-                     [style.backgroundImage]="game.coverImage.uri"
-                     (click)="requestGameAccess(game.id, game.author.id)">
-                    <div class="game-name">
-                        {{game.name}}
+            <div class="search-game">
+                <div class="">
+                <label [for]="'game-id'">Name, Id or Author</label>
+                    <input type="text" [id]="'game-id'" maxlength="40"
+                            [(ngModel)]="searchGameId"/>
+                    <button [disabled]="searchGameId === ''" type="button" (click)="searchGame()">FIND</button>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                </div>   
+                <div class="horizontal-line"></div> 
+                <div class="games-list">                   
+                    <div class="game" *ngFor="let game of gamesList"                       
+                            (click)="selectGame(game)">
+                        <div class="viewGame"
+                        [ngClass]="selectedGame === game ? 'selectedGame' : ''"
+                        >
+                            <img src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar" >
+                            <div>
+                                <div class="game-name">
+                                    <span>{{game.name}}</span>
+                                    <span>{{game.hash}}</span>
+                                </div>
+                                <div class="game-author">
+                                    <span>by </span>
+                                    <span>{{game.author.name}}</span>
+                                    <span>{{game.author.hash}}</span>                           
+                                </div>
+                            </div>                      
+                        </div>  
+                        <div class="horizontal-line"></div>                      
                     </div>
-                    <div class="game-author">
-                        {{game.author.name}}
-                        {{game.author.hash}}
-                    </div>
+                </div>
+                <div>
+                    <button [disabled]="selectedGame === null" (click)="requestGameAccess(selectedGame.id, selectedGame.author.id)" class="request">REQUEST ACCESS</button>
                 </div>
             </div>
         </div>

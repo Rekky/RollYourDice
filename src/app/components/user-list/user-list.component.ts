@@ -13,12 +13,13 @@ export class UserListComponent implements OnInit {
     players: Player[];
     playersRequest: Player[];
     loaded: boolean = false;
+    playerNameOrId: string = '';
 
     constructor(
         private dialogRef: MatDialogRef<any>,
         private ngZone: NgZone,
         private socketService: SocketService,
-        @Inject(MAT_DIALOG_DATA) public data: {players: Player[], playersRequest: Player[], gameId: string}
+        @Inject(MAT_DIALOG_DATA) public data: {players: Player[], playersRequest: Player[], gameId: string,gameName: string}
     ) { }
 
     ngOnInit(): void {
@@ -46,5 +47,6 @@ export class UserListComponent implements OnInit {
     kickPlayer(player: Player): void {
         this.socketService.kickJoinGame(this.data.gameId, player);
     }
+    searchPlayer(): void{}
 
 }

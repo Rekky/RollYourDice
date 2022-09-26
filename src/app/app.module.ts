@@ -12,6 +12,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 import {JwtModule} from '@auth0/angular-jwt';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,10 @@ import {JwtModule} from '@auth0/angular-jwt';
         }),
         JwtModule.forRoot({
             config: {}
-        })
+        }),
+        NgScrollbarModule
+
+        
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
