@@ -14,53 +14,73 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    margin: 0 2%;
 }
 
 .my-adventures-title {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
 
-    height: 20%;
+    height: 15%;
     width: 100%;
     padding-right: 50px;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 
-    .settings-option {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
+    .my-games-title {
 
-        width: 170px;
-        height: 45px;
-        margin-right: 20px;
-        background-color: $c-white;
-        border: 1px solid $c-white-grey;
+        font-family: $oswald;
+        font-size: 40px;
+        font-weight: 600;
+        line-height: 59px;
+        color: #FFFFFF;
 
-        font-family: $rubik;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 21px;
-        text-align: center;
-
-        &:hover {
-            background-color: $c-whitest;
-            cursor: pointer;
-        }
+        margin: 0 25px;
     }
+
+    .my-adventures-options{
+        display: flex;
+
+        .settings-option {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            width: 144px;
+            height: 41px;
+            margin-right: 20px;
+            background-color: $c-white;
+            border: 1px solid $c-white-grey;
+            border-radius: 5px;
+
+            text-transform: uppercase; 
+            font-family: $oswald;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 27px;
+            text-align: center;
+
+            &:hover {
+                background-color: $c-whitest;
+                cursor: pointer;
+            }      
+        }
+    }       
 }
 
 .my-adventures-box {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 
     min-width: 100vw;
-    height: 60%;
+    height: 70%;
+    padding: 4px;
     overflow: hidden;
+    
 }
 
 .adventure-box {
@@ -83,11 +103,15 @@
     0 4px 8px rgba($c-black,0.12),
     0 8px 16px rgba($c-black,0.12),
     0 16px 32px rgba($c-black,0.12);
-    background-color: rgba($c-black, 100%);
+    //background-color: rgba($c-black, 100%);
+    background-image: url('../../../../assets/backgrounds/menu-bg.jpg');
 
     cursor: pointer;
 
     &:hover {
+
+        box-shadow:  0px 0px 4px 2px #CFB525;
+        
         .top-cover {
             display: inline-block;
         }

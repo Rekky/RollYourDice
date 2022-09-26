@@ -37,7 +37,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 0;
-    background-image: url('../../../assets/backgrounds/background-menu.png');
+    //background-image: url('../../../assets/backgrounds/background-menu.png');
     background-position-x: 25%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -50,7 +50,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 2;
-    background-image: url('../../../assets/backgrounds/floating-char-menu.png');
+    //background-image: url('../../../assets/backgrounds/floating-char-menu.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -62,10 +62,11 @@
     width: 100%;
     height: 100vh;
     z-index: 1;
-    background: linear-gradient(43deg,
-        rgba(134, 3, 3, 0.4995041962) 0%,
-        rgba(120, 50, 1, 0.4995041962) 50%,
-        rgba(0, 0, 0, 0.8972632999) 95%);
+    // background: linear-gradient(43deg,
+    //     rgba(134, 3, 3, 0.4995041962) 0%,
+    //     rgba(120, 50, 1, 0.4995041962) 50%,
+    //     rgba(0, 0, 0, 0.8972632999) 95%);
+    background: linear-gradient(135deg, #191919 0% 0%, #101010 100% 100%);
 }
 
 .my-adventures-background {
