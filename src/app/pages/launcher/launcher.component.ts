@@ -9,7 +9,6 @@ declare let particlesJS: any;
 })
 export class LauncherComponent implements OnInit, OnDestroy {
 
-    bgX: number = 25;
     music: any;
     isPlayingMusic: boolean = false;
 
@@ -19,16 +18,18 @@ export class LauncherComponent implements OnInit, OnDestroy {
         this.invokeParticles();
         this.playMusic();
 
-        // setInterval(() => {
-        //     if (this.music.paused) {
-        //         this.playMusic();
-        //     }
-        // }, 1000);
+        document.addEventListener('visibilitychange', event => {
+            if (document.visibilityState === 'visible') {
+                this.playMusic();
+            } else {
+                this.stopMusic();
+            }
+        });
     }
 
     ngOnDestroy(): void {
         if (this.music) {
-            this.music.pause();
+            this.stopMusic();
             this.music = null;
         }
     }
@@ -49,14 +50,10 @@ export class LauncherComponent implements OnInit, OnDestroy {
         this.isPlayingMusic = true;
     }
 
-    handleMusic(): void {
-        if (this.music.volume > 0) {
-            this.music.volume = 0;
-            this.isPlayingMusic = true;
-        } else {
-            this.music.volume = 0.3;
-            this.isPlayingMusic = false;
-        }
+    stopMusic(): void  {
+        this.music.pause();
+        this.music.currentTime = 0;
+        this.isPlayingMusic = false;
     }
 
 }

@@ -6,5 +6,5 @@
     <div id="particles-js-2"></div>
     <div id="particles-js-3"></div>
     <router-outlet></router-outlet>
-    <img src="./assets/svg/music.svg" alt="sound" class="invert sound-icon cursor-pointer" (click)="handleMusic()" [class.invert]="isPlayingMusic">
+    <img src="./assets/svg/music.svg" alt="sound" class="invert sound-icon cursor-pointer" (click)="isPlayingMusic ? stopMusic() : playMusic()" [class.invert]="isPlayingMusic">
 </div>
