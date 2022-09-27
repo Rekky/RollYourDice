@@ -1,5 +1,5 @@
 <div class="blueprints-container">
-    <div class="frame">
+    <div class="frame" (click)="cancelNewLink()">
         <div appDroppable class="canvas droppable" #droppable
              [options]="{ accept: '.draggable' }"
              (dropping)="elementDropped($event)">
@@ -15,7 +15,6 @@
                       pointer-events="visibleStroke"
                       fill="none"
                       stroke="#FFFFFF"
-                      style=""
                       stroke-width="2"></path>
             </svg>
             <ng-container *ngFor="let link of blueprint.blueprintLinks">
@@ -25,26 +24,43 @@
                      [style.width]="getLinkWidth(link) + 'px'"
                      [style.height]="getLinkHeight(link) + 'px'"
                      xmlns="http://www.w3.org/2000/svg">
-                    <path [attr.d]="getSVGPath(link)"
+                    <path *ngIf="selectedLink?.id !== link?.id" [attr.d]="getSVGPath(link)"
+                          (click)="toggleLinkSelection(link)"
                           transform
                           pointer-events="visibleStroke"
                           fill="none"
                           stroke="#FFFFFF"
-                          style=""
                           stroke-width="2"></path>
+                    <path *ngIf="selectedLink?.id === link?.id" [attr.d]="getSVGPath(link)"
+                          (click)="toggleLinkSelection(link)"
+                          class="selected-link"
+                          transform
+                          pointer-events="visibleStroke"
+                          fill="none"
+                          stroke="#CFB525"
+                          stroke-width="2"></path>
+                    <path [attr.d]="getSVGPath(link)"
+                          (click)="toggleLinkSelection(link)"
+                          (mouseenter)="mouseHoversLink($event, link)"
+                          (mouseleave)="mouseLeavesLink($event, link)"
+                          transform
+                          pointer-events="visibleStroke"
+                          fill="none"
+                          stroke="transparent"
+                          stroke-width="15"></path>
                 </svg>
             </ng-container>
             <ng-container *ngFor="let bb of blueprint.blueprintBoxes;">
                 <app-bb-area *ngIf="bb.type === 'area'"
                              appDraggable
                              class="draggable"
-                             [bb]="bb"
+                             [area]="bb"
                              [id]="bb.id"
                              [style.top]="bb.position.y + 'px'"
                              [style.left]="bb.position.x + 'px'"
                              [objectData]="bb"
-                             (nodeOutHasBeenTouched)="newLinkNodeOut($event)"
-                             (nodeInHasBeenTouched)="newLinkNodeIn($event)"
+                             (nodeOutHasBeenTouched)="touchedNodeOut($event)"
+                             (nodeInHasBeenTouched)="touchedNodeIn($event)"
                              (draggableClick)="clickedBB($event)"
                              (dragging)="modifyBBPosition($event, bb)">
                 </app-bb-area>

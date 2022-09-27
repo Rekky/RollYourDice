@@ -18,13 +18,17 @@
     position: relative;
     width: 90%;
     height: 90%;
-    background-color: #0a1435;
+    background-color: $c-wizard-blue;
     overflow: hidden;
 }
 
 .link {
     position: absolute;
     z-index: 4;
+
+    path {
+        cursor: pointer;
+    }
 }
 
 .canvas {

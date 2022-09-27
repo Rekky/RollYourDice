@@ -13,6 +13,7 @@ import {BlueprintsService} from './blueprints.service';
 import {BlueprintLink, BlueprintNode} from '../models/blueprint-link';
 import {Coords} from '../../classes/Coords';
 import {Subscription} from 'rxjs';
+import {ulid} from 'ulid';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -26,9 +27,11 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     blueprint: BlueprintModel = new BlueprintModel();
     user: any;
-
-    functionOnEventListener;
     temporalLink: BlueprintLink;
+    selectedLink: BlueprintLink;
+
+    droppableMouseMoveListener;
+    selectedLinkDeleteListener;
 
     constructor(private blueprintsService: BlueprintsService,
                 private cdr: ChangeDetectorRef) { }
@@ -42,19 +45,27 @@ export class BlueprintsInterfaceComponent implements OnInit {
         const newPos = new Coords(bb.position.x + coords.x, bb.position.y + coords.y);
         this.blueprint.blueprintLinks.forEach((link: BlueprintLink) => {
             if (link.startingNode.boxId === bb.id) {
-                link.startingNode.position.x = link.startingNode.position.x + coords.x;
-                link.startingNode.position.y = link.startingNode.position.y + coords.y;
+                link.startingNode.position.x += coords.x;
+                link.startingNode.position.y += coords.y;
                 link.controlLinkPosition();
             }
             if (link.endingNode.boxId === bb.id) {
-                link.endingNode.position.x = link.endingNode.position.x + coords.x;
-                link.endingNode.position.y = link.endingNode.position.y + coords.y;
+                link.endingNode.position.x += coords.x;
+                link.endingNode.position.y += coords.y;
                 link.controlLinkPosition();
             }
         });
         bb.position = newPos;
     }
 
+    elementDropped(object: any): void {}
+
+    clickedBB(bb: any): void {
+        console.log('hey');
+    }
+
+
+    // --------------- LINK STUFF -------------
     /**
      * returns the svg used to draw the link
      * @param link has to be a BlueprintLink type
@@ -76,82 +87,141 @@ export class BlueprintsInterfaceComponent implements OnInit {
         return Math.abs(link.endingNode.position.y - link.startingNode.position.y) + 20;
     }
 
-    newLinkNodeOut(node: BlueprintNode): void {
+    touchedNodeOut(node: BlueprintNode): void {
+        if (this.isNodeUsed(node) && !this.temporalLink) {
+            this.temporalLink = this.getLinkNodeUsed(node);
+            this.moveNodeOut(this.temporalLink, node);
+            return;
+        }
         if (this.temporalLink) {
             this.endsNewLinkNodeOut(node);
-        } else {
-            this.startsNewLinkNodeOut(node);
+            return;
         }
+        this.startsNewLinkNodeOut(node);
+    }
+
+    isNodeUsed(node: BlueprintNode): boolean {
+        const found = this.blueprint.blueprintLinks.find(link => link.startingNode.id === node.id || link.endingNode.id === node.id);
+        return !!found;
+    }
+
+    getLinkNodeUsed(node: BlueprintNode): BlueprintLink {
+        return this.blueprint.blueprintLinks.find(link => link.startingNode.id === node.id || link.endingNode.id === node.id);
     }
 
     startsNewLinkNodeOut(node: BlueprintNode): void {
         const newLink = new BlueprintLink();
-        newLink.id = 'onlyOne';
+        newLink.id = ulid();
         newLink.position.x = node.position.x;
         newLink.position.y = node.position.y;
         newLink.startingNode = node;
-        const droppable = this.droppable;
+        newLink.endingNode.boxId = 'second';
         this.temporalLink = newLink;
+        this.moveNodeIn(newLink, node);
+    }
 
-        this.functionOnEventListener = function myListener(e): void {
+    moveNodeIn(link: BlueprintLink, node: BlueprintNode): void {
+        const droppable = this.droppable;
+        this.droppableMouseMoveListener = function myListener(e): void {
             const bounds = droppable.nativeElement.getBoundingClientRect();
             const mouseX = e.clientX - bounds.left; // Gets Mouse X
             const mouseY = e.clientY - bounds.top; // Gets Mouse Y
-            newLink.endingNode.boxId = 'second';
-            newLink.endingNode.position.x = mouseX;
-            newLink.endingNode.position.y = mouseY;
+            link.endingNode.position.x = mouseX;
+            link.endingNode.position.y = mouseY;
+            link.position.x = mouseX < node.position.x ? mouseX : node.position.x;
+            link.position.y = mouseY < node.position.y ? mouseY : node.position.y;
         };
 
-        this.droppable.nativeElement.addEventListener('mousemove', this.functionOnEventListener, false);
+        this.droppable.nativeElement.addEventListener('mousemove', this.droppableMouseMoveListener, false);
     }
 
     endsNewLinkNodeOut(node: BlueprintNode): void {
         this.temporalLink.startingNode = node;
         this.blueprint.blueprintLinks.push(this.temporalLink);
-        this.temporalLink = null;
-        this.droppable.nativeElement.removeEventListener('mousemove', this.functionOnEventListener, false);
+        this.cancelNewLink();
     }
 
-    newLinkNodeIn(node: BlueprintNode): void {
+    touchedNodeIn(node: BlueprintNode): void {
+        if (this.isNodeUsed(node) && !this.temporalLink) {
+            this.temporalLink = this.getLinkNodeUsed(node);
+            this.moveNodeIn(this.temporalLink, node);
+            return;
+        }
         if (this.temporalLink) {
             this.endsNewLinkNodeIn(node);
-        } else {
-            this.startsNewLinkNodeIn(node);
+            return;
         }
+        this.startsNewLinkNodeIn(node);
     }
 
     startsNewLinkNodeIn(node: BlueprintNode): void {
         const newLink = new BlueprintLink();
-        newLink.id = 'onlyOne';
+        newLink.id = ulid();
         newLink.position.x = node.position.x;
         newLink.position.y = node.position.y;
         newLink.endingNode = node;
-        const droppable = this.droppable;
+        newLink.startingNode.boxId = 'first';
         this.temporalLink = newLink;
+        this.moveNodeOut(newLink, node);
+    }
 
-        this.functionOnEventListener = function myListener(e): void {
+    moveNodeOut(link: BlueprintLink, node: BlueprintNode): void {
+        const droppable = this.droppable;
+        this.droppableMouseMoveListener = function newLinkListener(e): void {
             const bounds = droppable.nativeElement.getBoundingClientRect();
             const mouseX = e.clientX - bounds.left; // Gets Mouse X
             const mouseY = e.clientY - bounds.top; // Gets Mouse Y
-            newLink.startingNode.boxId = 'first';
-            newLink.startingNode.position.x = mouseX;
-            newLink.startingNode.position.y = mouseY;
+            link.startingNode.position.x = mouseX;
+            link.startingNode.position.y = mouseY;
+            link.position.x = mouseX < node.position.x ? mouseX : node.position.x;
+            link.position.y = mouseY < node.position.y ? mouseY : node.position.y;
         };
 
-        this.droppable.nativeElement.addEventListener('mousemove', this.functionOnEventListener, false);
+        this.droppable.nativeElement.addEventListener('mousemove', this.droppableMouseMoveListener, false);
     }
 
     endsNewLinkNodeIn(node: BlueprintNode): void {
         this.temporalLink.endingNode = node;
         this.blueprint.blueprintLinks.push(this.temporalLink);
-        this.temporalLink = null;
-        this.droppable.nativeElement.removeEventListener('mousemove', this.functionOnEventListener, false);
+        this.cancelNewLink();
     }
 
-    elementDropped(object: any): void {}
+    toggleLinkSelection(link: BlueprintLink): void {
+        document.removeEventListener('keydown', this.selectedLinkDeleteListener, false);
+        if (this.selectedLink?.id === link?.id) {
+            this.selectedLink = null;
+            return;
+        }
+        this.selectedLink = link;
+        const blueprint = this.blueprint;
 
-    clickedBB(bb: any): void {
-        console.log('hey');
+        this.selectedLinkDeleteListener = function deleteLinkListener(e): void {
+            if (e.keyCode === 46) {
+                const index = blueprint.blueprintLinks.findIndex(sLink => {
+                    return sLink.id === link.id;
+                });
+                blueprint.blueprintLinks.splice(index);
+            }
+        };
+
+        document.addEventListener('keydown', this.selectedLinkDeleteListener, false);
+    }
+
+    mouseHoversLink(e, link): void {
+        if (link?.id === this.selectedLink?.id) { return; }
+        e.target.previousElementSibling.style.stroke = '#CFB525';
+    }
+
+    mouseLeavesLink(e, link: BlueprintLink): void {
+        if (link?.id === this.selectedLink?.id) { return; }
+        e.target.previousElementSibling.style.stroke = '#FFFFFF';
+    }
+
+    cancelNewLink(): void {
+        if (this.temporalLink) {
+            this.temporalLink = null;
+            this.droppable.nativeElement.removeEventListener('mousemove', this.droppableMouseMoveListener, false);
+        }
     }
 
 }

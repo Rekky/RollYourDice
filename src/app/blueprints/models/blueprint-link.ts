@@ -1,4 +1,5 @@
 import {Coords} from '../../classes/Coords';
+import {ulid} from 'ulid';
 
 export class BlueprintLink {
     id: string;
@@ -26,9 +27,11 @@ export class BlueprintLink {
 export class BlueprintNode {
     position: Coords;
     boxId: string;
+    id: string;
 
     constructor() {
         this.position = new Coords();
         this.boxId = '';
+        this.id = ulid();
     }
 }

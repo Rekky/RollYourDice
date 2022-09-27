@@ -1,4 +1,14 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChange,
+    SimpleChanges
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
 import { BaseBlueprintBox } from 'src/app/blueprints/models/base-blueprint';
 import { BBArea } from 'src/app/blueprints/models/bb-area';
@@ -11,18 +21,18 @@ import {BlueprintLink, BlueprintNode} from '../../../models/blueprint-link';
     styleUrls: ['./bb-area.component.scss']
 })
 export class BbAreaComponent implements OnInit {
-    @Input() bb: BaseBlueprintBox;
+    @Input() area: any;
     @Input() bbOwner: boolean;
     @Output() nodeOutHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
     @Output() nodeInHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
 
     form: FormGroup;
-    area: BBArea;
+    nodeIn: BlueprintNode = new BlueprintNode();
+    nodeOut: BlueprintNode = new BlueprintNode();
 
     constructor(private fb: FormBuilder) { }
 
     ngOnInit(): void {
-        this.area = BBArea.create(this.bb);
         this.initForm();
     }
 
@@ -36,20 +46,18 @@ export class BbAreaComponent implements OnInit {
         ev.stopPropagation();
         const top = ev.target.offsetTop + 30 + this.area.position.y;
         const left = ev.target.offsetLeft + this.area.position.x;
-        const newNode = new BlueprintNode();
-        newNode.boxId = this.area.id;
-        newNode.position = new Coords(left, top);
-        this.nodeInHasBeenTouched.emit(newNode);
+        this.nodeIn.boxId = this.area.id;
+        this.nodeIn.position = new Coords(left, top);
+        this.nodeInHasBeenTouched.emit(this.nodeIn);
     }
 
     nodeOutClicked(ev): void {
         ev.stopPropagation();
         const top = ev.target.offsetTop + 30 + this.area.position.y;
         const left = ev.target.offsetLeft + this.area.position.x;
-        const newNode = new BlueprintNode();
-        newNode.boxId = this.area.id;
-        newNode.position = new Coords(left, top);
-        this.nodeOutHasBeenTouched.emit(newNode);
+        this.nodeOut.boxId = this.area.id;
+        this.nodeOut.position = new Coords(left, top);
+        this.nodeOutHasBeenTouched.emit(this.nodeOut);
     }
 
     submit(): void {
