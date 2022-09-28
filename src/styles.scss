@@ -26,7 +26,7 @@ $rubik-italic: 'rubik-italic', sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 a {
-    color: inherit;
+    //color: inherit;
     text-decoration: none;
 
     &:hover {
@@ -259,18 +259,18 @@ ng-scrollbar {
 
 ::-webkit-scrollbar {
     width: 5px;
-} 
+}
 
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
+    box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
-}  
+}
 
 ::-webkit-scrollbar-thumb {
     background: rgba(85, 85, 85, 0.619);
     border-radius: 10px;
 }
-  
+
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(39, 39, 39, 0.596); 
+    background: rgba(39, 39, 39, 0.596);
 }
