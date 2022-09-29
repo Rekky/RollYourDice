@@ -1,6 +1,6 @@
 <div class="box-shadow blur" (click)="closeDialog()"></div>
 <div *ngIf="game && gameForm" class="edit-game-box">
-    <form class="edit-game-card" [formGroup]="gameForm" (submit)="acceptChanges()">
+    <form class="edit-game-card" [formGroup]="gameForm" (submit)="saveChanges()">
         <div class="header" *ngIf="loaded">
             <div class="exit">
                 <svg (click)="closeDialog()" width="26px" height="26px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,17 +14,16 @@
         <div class="body" *ngIf="loaded && newGame">
             <div class="image-container">
                 <img src="../../../assets/backgrounds/menus/background-default-game.webp" alt="" class="grayscale">
-                <div class="centered">{{gameName}}</div>
+                <div class="centered">{{gameForm.get('name').value}}</div>
             </div>
                 <ng-scrollbar class="create-game-form">
-                <div class="title">
-                    <label [for]="'title-game-' + newGame.id">Name</label>
-                    <input [(ngModel)]="gameName" [id]="'title-game-' + newGame.id" maxlength="40" [formControlName]="'name'"/>
+                <div class="title mb-4">
+                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Game name</label>
+                    <input [formControlName]="'name'" type="text" maxlength="40" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
-                <div class="">
-                    <label [for]="'description-game-' + newGame.id">History introduction</label>
-                    <textarea [id]="'description-game-' + newGame.id" maxlength="255"
-                            [formControlName]="'description'"></textarea>
+                <div class="description mb-4">
+                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">History introduction</label>
+                    <textarea [formControlName]="'description'" type="text" maxlength="255" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
                 </div>
                 <!-- <div class="form-input-dropdown">
                     <label [for]="'gameType-game-' + newGame.id">Type</label>
@@ -33,8 +32,8 @@
                     </select>
                 </div> -->
                 <div  class="form-short-number n-players">
-                    <label [for]="'nPlayers-game-' + newGame.id">Number of players</label>
-                    <input type="number" [id]="'nPlayers-game-' + newGame.id" [formControlName]="'nPlayers'"/>
+                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Players number</label>
+                    <input type="number" [formControlName]="'nPlayers'" maxlength="2" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 text-center p-2.5"/>
                 </div>
     <!--            <div *ngIf="newGame?.coverImage?.uri" class="form-file-input cover-image">-->
     <!--                <label [for]="'cover-image-game-' + newGame.id">Cover</label>-->
@@ -56,24 +55,17 @@
                 <div class="d-block">
                     <upload-input (files)="imageChanged($event)"></upload-input>
                 </div>
-                <label class="text" [for]="'publish-game-' + newGame.id">Join game request permission</label>
-                <div class="form-row">
-                    <!-- <div class="form-radio-input">
-                        <label class="text" [for]="'publish-game-' + newGame.id">Join game request permission</label>
-                        <div class="fake-input">
-                            <input type="radio" [id]="'publish-game-' + newGame.id" [formControlName]="'publish'"/>
-                            <label [for]="'publish-game-' + newGame.id"></label>
-                        </div>
-                    </div> -->
+                <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Join game request permission</label>
+                <div class="form-row mb-4">
                     <div class="example">
-                        <label class="radio-button">
+                        <label class="radio-button cursor-pointer">
                           <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="true">
                           <span class="radio-button__control"></span>
                           <span class="radio-button__label">Public access</span>
                         </label>
                     </div>
                     <div class="example">
-                        <label class="radio-button">
+                        <label class="radio-button cursor-pointer">
                           <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="false" >
                           <span class="radio-button__control"></span>
                           <span class="radio-button__label">Private acces</span>

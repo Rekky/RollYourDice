@@ -11,7 +11,6 @@ import {User} from '../../classes/User';
 })
 export class EditGameDataComponent implements OnInit {
     game: Game;
-
     gameName: string;
     gameForm: UntypedFormGroup;
     newGame: Game;
@@ -51,7 +50,7 @@ export class EditGameDataComponent implements OnInit {
         });
     }
 
-    acceptChanges(): void {
+    saveChanges(): void {
         Object.keys(this.gameForm.value).forEach((key: string) => {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
@@ -65,20 +64,11 @@ export class EditGameDataComponent implements OnInit {
         //     formData.append(key.toString(), value);
         // });
         this.dialogRef.close({game: this.newGame, formData: formData});
-        console.log(this.newGame);
+        console.log('NEW_GAME', this.newGame);
     }
 
     imageChanged(file: Array<File>): void {
         this.gameForm.patchValue({imageCoverSource: file});
         console.log(file);
-    }
-
-    transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
     }
 }

@@ -2,39 +2,36 @@
 @import "src/assets/scss/form-inputs.scss";
 @import "src/assets/scss/buttons.scss";
 
-input, select, textarea{
-    font-size: 16px;
-    //background-color: $c-white !important;
-    color: $c-black;
-    border: none;
-    overflow: auto;
-    outline: none;
-
-    width: 100%;
-    height: 43px;
-
-}
-
-textarea{
-
-    padding: 10px 20px;
-    height: 80px;
-
-}
-
-
-label, .form-short-number-input label{
-    font-size: 18px;
-    padding: 10px 0px 10px;
-    font-weight: 400;
-    line-height: 22px;
-}
-
-.form-short-number input{
-    width: 50px;
-    padding: 3px;
-    text-align: center;
-}
+//input, select, textarea{
+//    font-size: 16px;
+//    //background-color: $c-white !important;
+//    color: $c-black;
+//    border: none;
+//    overflow: auto;
+//    outline: none;
+//
+//    width: 100%;
+//    height: 43px;
+//
+//}
+//
+//textarea{
+//
+//    padding: 10px 20px;
+//    height: 80px;
+//
+//}
+//label, .form-short-number-input label{
+//    font-size: 18px;
+//    padding: 10px 0px 10px;
+//    font-weight: 400;
+//    line-height: 22px;
+//}
+//.form-short-number input{
+//    width: 50px;
+//    padding: 3px;
+//    text-align: center;
+//}
 
 .form-row{
     justify-content: space-between;
@@ -126,7 +123,6 @@ label, .form-short-number-input label{
 }
 
 .body{
-
     display: flex;
     justify-content: space-around;
     padding: 0px 50px;
@@ -145,27 +141,30 @@ label, .form-short-number-input label{
     color: $c-white;
     width: 472px;
     height: 570px;
+    overflow: hidden;
 
     img{
-
         width: 100%;
         height: 100%;
         object-fit: cover;
-
     }
 
     .centered {
         position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        text-shadow: 2px 2px 4px 0px #101010;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 100%;
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        text-shadow: 2px 2px 4px 0 #101010;
         font-weight: 600;
         line-height: 71px;
         font-size: 48px;
         text-transform: uppercase;
         font-family: oswald,sans-serif;
-
     }
 }
 .create-game-form {
@@ -218,24 +217,9 @@ label, .form-short-number-input label{
     }
 }
 
-
-.radio-button {
-    cursor: pointer;
-}
-
 input[type=radio] {
     box-sizing: border-box;
     padding: 0;
-}
-
-input {
-    font-size: 1rem;
-    line-height: 1.5;
-    padding: 11px 23px;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 0;
-    outline: 0;
-    background-color: transparent;
 }
 
 .radio-button__input {
