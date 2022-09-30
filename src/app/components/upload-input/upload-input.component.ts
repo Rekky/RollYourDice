@@ -11,8 +11,9 @@ export class UploadInputComponent implements OnInit {
 
     @Input() multiple: boolean = false;
     @Input() maxFilesLimit: number = 3;
-    @Input() maxFileSize: number = 3000000;
+    @Input() maxFileSize: number = 2000000;
     @Output() files: EventEmitter<any> = new EventEmitter<any>();
+    @Output() previewOutput: EventEmitter<any> = new EventEmitter<any>();
 
     previewFiles: {file: any, reader: string}[] = [];
     AssetType = AssetType;
@@ -35,6 +36,8 @@ export class UploadInputComponent implements OnInit {
         // reset error
         this.uploadError.active = false;
 
+        console.log('files', ev.target.files.length);
+
         // check max files limit
         if (ev.target.files.length > this.maxFilesLimit) {
             this.uploadError.active = true;
@@ -56,12 +59,17 @@ export class UploadInputComponent implements OnInit {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => {
-                    this.previewFiles.push({file: file, reader: reader.result as string});
+                    if (this.multiple) {
+                        this.previewFiles.push({file: file, reader: reader.result as string});
+                    } else {
+                        this.previewFiles[0] = {file: file, reader: reader.result as string};
+                    }
                 };
                 reader.onloadend = () => {
                     // when all files are loaded, emit them
                     if (this.previewFiles.length === files.length) {
                         const filesToEmit = this.toFormData(this.previewFiles);
+                        this.previewOutput.emit(this.previewFiles[0]);
                         this.files.emit(filesToEmit);
                     }
                 };
@@ -71,6 +79,9 @@ export class UploadInputComponent implements OnInit {
 
     removeFile(file: {file: File, reader: string}): void {
         this.previewFiles = this.previewFiles.filter(f => f.file !== file.file);
+        if (this.previewFiles.length <= 0) {
+            this.previewOutput.emit(null);
+        }
     }
 
     getFileType(file: any): any {

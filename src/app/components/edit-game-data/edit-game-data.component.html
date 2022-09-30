@@ -13,7 +13,8 @@
         <div class="vertical-line"></div>
         <div class="body" *ngIf="loaded && newGame">
             <div class="image-container">
-                <img src="../../../assets/backgrounds/menus/background-default-game.webp" alt="" class="grayscale">
+                <img src="../../../assets/backgrounds/menus/background-default-game.webp" *ngIf="!previewImage" alt="" class="grayscale">
+                <img [src]="previewImage.reader" *ngIf="previewImage" alt="">
                 <div class="centered">{{gameForm.get('name').value}}</div>
             </div>
                 <ng-scrollbar class="create-game-form">
@@ -53,7 +54,7 @@
     <!--                       [accept]="'image/jpeg, image/png, image/webp, image/jpg'" [formControlName]="'imageCover'"/>-->
     <!--            </div>-->
                 <div class="d-block">
-                    <upload-input (files)="imageChanged($event)"></upload-input>
+                    <upload-input (files)="imageChanged($event)" [multiple]="false" [maxFilesLimit]="1" (previewOutput)="previewImage = $event"></upload-input>
                 </div>
                 <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Join game request permission</label>
                 <div class="form-row mb-4">

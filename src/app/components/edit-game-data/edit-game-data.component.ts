@@ -16,6 +16,7 @@ export class EditGameDataComponent implements OnInit {
     newGame: Game;
     gameTypes: string[] = [];
     loaded: boolean = false;
+    previewImage: any;
 
     constructor(
         private dialogRef: MatDialogRef<Game>,
