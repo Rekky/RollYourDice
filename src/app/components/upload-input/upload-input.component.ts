@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AssetModel, AssetType} from 'src/app/classes/AssetModel';
+import {AssetType} from 'src/app/classes/AssetModel';
 import {AssetService} from 'src/app/services/asset.service';
 
 @Component({
@@ -35,8 +35,6 @@ export class UploadInputComponent implements OnInit {
     onFilesChange(ev: any): void {
         // reset error
         this.uploadError.active = false;
-
-        console.log('files', ev.target.files.length);
 
         // check max files limit
         if (ev.target.files.length > this.maxFilesLimit) {

@@ -65,11 +65,9 @@ export class EditGameDataComponent implements OnInit {
         //     formData.append(key.toString(), value);
         // });
         this.dialogRef.close({game: this.newGame, formData: formData});
-        console.log('NEW_GAME', this.newGame);
     }
 
     imageChanged(file: Array<File>): void {
         this.gameForm.patchValue({imageCoverSource: file});
-        console.log(file);
     }
 }

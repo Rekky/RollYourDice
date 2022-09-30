@@ -18,66 +18,43 @@
                 <div class="centered">{{gameForm.get('name').value}}</div>
             </div>
                 <ng-scrollbar class="create-game-form">
-                <div class="title mb-4">
-                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Game name</label>
-                    <input [formControlName]="'name'" type="text" maxlength="40" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                </div>
-                <div class="description mb-4">
-                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">History introduction</label>
-                    <textarea [formControlName]="'description'" type="text" maxlength="255" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
-                </div>
-                <!-- <div class="form-input-dropdown">
-                    <label [for]="'gameType-game-' + newGame.id">Type</label>
-                    <select [id]="'gameType-game-' + newGame.id" [formControlName]="'gameType'">
-                        <option *ngFor="let type of gameTypes" [value]="type">{{type}}</option>
-                    </select>
-                </div> -->
-                <div  class="form-short-number n-players">
-                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Players number</label>
-                    <input type="number" [formControlName]="'nPlayers'" maxlength="2" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 text-center p-2.5"/>
-                </div>
-    <!--            <div *ngIf="newGame?.coverImage?.uri" class="form-file-input cover-image">-->
-    <!--                <label [for]="'cover-image-game-' + newGame.id">Cover</label>-->
-    <!--                <label class="fake-input" [for]="'cover-image-game-' + newGame.id">-->
-    <!--                    <span>{{newGame.image.name ? newGame.image.name : 'Select an image'}}</span>-->
-    <!--                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.47 30.56">-->
-    <!--                        <defs><style>.cls-1{fill:none;stroke-miterlimit:10;stroke-width: 1px}</style></defs>-->
-    <!--                        <title>folder</title>-->
-    <!--                        <g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1">-->
-    <!--                            <rect class="cls-1" x="0.5" y="6.41" width="35.47" height="23.65"/>-->
-    <!--                            <path class="cls-1" d="M36,3.45v3H.5V.5H9.9l2.42,3Z"/>-->
-    <!--                        </g></g>-->
-    <!--                    </svg>-->
-    <!--                </label>-->
-    <!--                <input type="file" [id]="'cover-image-game-' + newGame.id"-->
-    <!--                       [name]="'cover-image-game-' + newGame.id" (change)="imageChanged($event.target.files[0])"-->
-    <!--                       [accept]="'image/jpeg, image/png, image/webp, image/jpg'" [formControlName]="'imageCover'"/>-->
-    <!--            </div>-->
-                <div class="d-block">
-                    <upload-input (files)="imageChanged($event)" [multiple]="false" [maxFilesLimit]="1" (previewOutput)="previewImage = $event"></upload-input>
-                </div>
-                <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">Join game request permission</label>
-                <div class="form-row mb-4">
-                    <div class="example">
-                        <label class="radio-button cursor-pointer">
-                          <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="true">
-                          <span class="radio-button__control"></span>
-                          <span class="radio-button__label">Public access</span>
-                        </label>
+                    <div class="title mb-4">
+                        <label class="block mb-2 text-lg font-medium text-gray-50">Game name</label>
+                        <input [formControlName]="'name'" type="text" maxlength="40" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     </div>
-                    <div class="example">
-                        <label class="radio-button cursor-pointer">
-                          <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="false" >
-                          <span class="radio-button__control"></span>
-                          <span class="radio-button__label">Private acces</span>
-                        </label>
+                    <div class="description mb-4">
+                        <label class="block mb-2 text-lg font-medium text-gray-50">History introduction</label>
+                        <textarea [formControlName]="'description'" type="text" maxlength="255" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
                     </div>
-                </div>
-                <div class="footer" *ngIf="loaded">
-                    <div class="button-box">
-                        <button [disabled]="!gameForm.valid" type="submit" class="big-button">{{newGame.name === 'My adventure rocks!' ? 'CREATE GAME' : 'EDIT GAME'}}</button>
+                    <div  class="form-short-number n-players">
+                        <label class="block mb-2 text-lg font-medium text-gray-50">Players number</label>
+                        <input type="number" [formControlName]="'nPlayers'" maxlength="2" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 text-center p-2.5"/>
                     </div>
-                </div>
+                    <div class="d-block">
+                        <upload-input (files)="imageChanged($event)" [multiple]="false" [maxFilesLimit]="1" (previewOutput)="previewImage = $event"></upload-input>
+                    </div>
+                    <label class="block mb-2 text-lg font-medium text-gray-50">Join game request permission</label>
+                    <div class="form-row mb-4">
+                        <div class="example">
+                            <label class="radio-button cursor-pointer">
+                              <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="true">
+                              <span class="radio-button__control"></span>
+                              <span class="radio-button__label">Public access</span>
+                            </label>
+                        </div>
+                        <div class="example">
+                            <label class="radio-button cursor-pointer">
+                              <input type="radio" class="radio-button__input" [id]="'publish-game-' + newGame.id" [formControlName]="'published'" [value]="false" >
+                              <span class="radio-button__control"></span>
+                              <span class="radio-button__label">Private acces</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="footer" *ngIf="loaded">
+                        <div class="button-box">
+                            <button [disabled]="!gameForm.valid" type="submit" class="big-button">{{newGame.name === 'My adventure rocks!' ? 'CREATE GAME' : 'EDIT GAME'}}</button>
+                        </div>
+                    </div>
             </ng-scrollbar>
         </div>
     </form>

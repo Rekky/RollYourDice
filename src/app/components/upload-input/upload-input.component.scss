@@ -1,16 +1,18 @@
 @import "src/styles.scss";
 
 .files-list{
+    position: relative;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     margin-top: 10px;
     width: 100%;
+    z-index: 1;
 
     .item {
         position: relative;
         display: grid;
-        grid-template-columns: 70px 1fr 30px;
+        grid-template-columns: 60px 1fr 30px;
         grid-template-rows: 50px;
         gap: 10px;
         align-items: center;
@@ -19,6 +21,7 @@
         margin: 0 10px;
         margin-bottom: 10px;
         z-index: 10;
+        background: #fff;
     }
     .item-info {
         display: flex;
