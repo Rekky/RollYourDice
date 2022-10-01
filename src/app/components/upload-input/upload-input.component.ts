@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AssetType} from 'src/app/classes/AssetModel';
 import {AssetService} from 'src/app/services/asset.service';
+import {Form} from '@angular/forms';
 
 @Component({
     selector: 'upload-input',
@@ -24,9 +25,9 @@ export class UploadInputComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    toFormData<T>(files: {file: any, reader: string}[]): FormData {
+    toFormData<T>(param: {file: any, reader: string}[]): FormData {
         const formData = new FormData();
-        files.forEach(file => {
+        param.forEach(file => {
             formData.append('file', file.file);
         });
         return formData;
@@ -67,6 +68,10 @@ export class UploadInputComponent implements OnInit {
                     // when all files are loaded, emit them
                     if (this.previewFiles.length === files.length) {
                         const filesToEmit = this.toFormData(this.previewFiles);
+                        console.log('filesToEmit', filesToEmit);
+                        for (const pair of (filesToEmit as any).entries()) {
+                            console.log(pair[0] + '---' + pair[1]);
+                        }
                         this.previewOutput.emit(this.previewFiles[0]);
                         this.files.emit(filesToEmit);
                     }

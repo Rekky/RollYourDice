@@ -13,7 +13,10 @@ export class AssetService {
     constructor(private httpService: HttpService) {}
 
 
-    async uploadFile(formData: FormData): Promise<AssetModel[]> {
+    async uploadFile(formData: any): Promise<AssetModel[]> {
+        for (const pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/${this.endPointName}/upload`, formData).subscribe(
                 (response) => {

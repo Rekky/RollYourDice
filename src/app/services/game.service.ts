@@ -49,7 +49,6 @@ export class GameService {
     }
 
     editGame(game: Game): Promise<any> {
-        console.log('editGame', game);
         return new Promise<any>( (resolve, reject) => {
             this.httpService.patch(`/${this.endPointName}/${game.id}`, game).subscribe(
                 (response) => {

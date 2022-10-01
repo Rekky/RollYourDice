@@ -18,6 +18,7 @@ import {SearchGameComponent} from '../../../components/search-game/search-game.c
 import {Coords} from '../../../classes/Coords';
 import { UserListComponent } from 'src/app/components/user-list/user-list.component';
 import {MyAdventuresInteractor} from './my-adventures-interactor';
+import {AssetInteractor} from '../../../interactors/AssetInteractor';
 
 @Component({
     selector: 'app-my-adventures',
@@ -46,6 +47,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 private myAdventuresInteractor: MyAdventuresInteractor,
                 private dialog: MatDialog,
                 private socketService: SocketService,
+                private assetInteractor: AssetInteractor,
                 private router: Router) {
         this.currentUser = this.userInteractor.getCurrentUser();
         this.myAdventuresSub = this.myAdventuresInteractor.getMyAdventures().subscribe(adv => {
@@ -112,6 +114,10 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(async res => {
             if (res) {
                 try {
+                    console.log('editGame_RES', res);
+                    const assetResponse = await this.assetInteractor.uploadFile(res.formData);
+                    //todo me quedao aqui
+                    console.log('assetResponse:', assetResponse);
                     await this.gameInteractor.editGame(res.game);
                     this.adventures[i] = Game.fromJSON(res.game);
                 }
