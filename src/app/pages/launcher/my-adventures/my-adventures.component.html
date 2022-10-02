@@ -8,7 +8,10 @@
     </div>
     <div class="my-adventures-box" *ngIf="adventures">
         <div *ngFor="let adventure of adventures; let i = index;" class="adventure-box">
-            <div class="bg-image grayscale"></div>
+            <div class="cover-image">
+                <img class="grayscale" *ngIf="!adventure.coverImage?.uri" [src]="'../../../../assets/backgrounds/menus/background-default-game.webp'" alt="adventure background">
+                <img class="" *ngIf="adventure.coverImage?.uri" [src]="adventure.coverImage?.uri" alt="adventure background">
+            </div>
             <div class="game-status">
                 <div *ngIf="adventure.status === 0" class="game-activated"></div>
                 <div *ngIf="adventure.status === 1" class="game-paused"></div>
@@ -48,7 +51,6 @@
                 <div *ngIf="!isAccessRequested(adventure)" class="settings-option hover:brightness-95" (click)="deleteGame(adventure, i , $event)">Delete game</div>
                 <div *ngIf="isAccessRequested(adventure)" class="settings-option hover:brightness-95" (click)="cancelGameRequest(adventure, i , $event)">Cancel request</div>
             </div>
-            <div *ngIf="adventure?.coverImage?.uri" class="cover-image" [id]="adventure.id" [style.backgroundImage]="'url(' + adventure.coverImage.uri + ')'"></div>
         </div>
     </div>
 </div>

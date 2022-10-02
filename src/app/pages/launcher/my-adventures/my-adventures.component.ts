@@ -1,24 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Game} from '../../../classes/Game';
 import {GameInteractor} from '../../../interactors/GameInteractor';
-import {Player, User} from '../../../classes/User';
+import {User} from '../../../classes/User';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
 import {MapInteractor} from '../../../interactors/MapInteractor';
-import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
 import {MatDialog} from '@angular/material/dialog';
 import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
 import {SocketService} from '../../../services/socket.service';
 import {Router} from '@angular/router';
-import {
-    NotificationComponent,
-    NotificationMessageDialogOptions
-} from '../../../components/notification/notification.component';
 import {SearchGameComponent} from '../../../components/search-game/search-game.component';
 import {Coords} from '../../../classes/Coords';
 import { UserListComponent } from 'src/app/components/user-list/user-list.component';
 import {MyAdventuresInteractor} from './my-adventures-interactor';
 import {AssetInteractor} from '../../../interactors/AssetInteractor';
+import {AssetModel} from '../../../classes/AssetModel';
 
 @Component({
     selector: 'app-my-adventures',
@@ -114,10 +110,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(async res => {
             if (res) {
                 try {
-                    console.log('editGame_RES', res);
-                    const assetResponse = await this.assetInteractor.uploadFile(res.formData);
-                    //todo me quedao aqui
-                    console.log('assetResponse:', assetResponse);
+                    const assetResponse: AssetModel[] = await this.assetInteractor.uploadFile(res.formData);
+                    (res.game as Game).coverImage = assetResponse[0];
                     await this.gameInteractor.editGame(res.game);
                     this.adventures[i] = Game.fromJSON(res.game);
                 }

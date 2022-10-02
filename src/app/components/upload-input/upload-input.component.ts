@@ -68,10 +68,6 @@ export class UploadInputComponent implements OnInit {
                     // when all files are loaded, emit them
                     if (this.previewFiles.length === files.length) {
                         const filesToEmit = this.toFormData(this.previewFiles);
-                        console.log('filesToEmit', filesToEmit);
-                        for (const pair of (filesToEmit as any).entries()) {
-                            console.log(pair[0] + '---' + pair[1]);
-                        }
                         this.previewOutput.emit(this.previewFiles[0]);
                         this.files.emit(filesToEmit);
                     }
