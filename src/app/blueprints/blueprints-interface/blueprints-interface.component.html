@@ -1,10 +1,11 @@
 <div class="blueprints-container">
-    <div class="frame" (click)="cancelNewLink()">
+    <div class="frame" (click)="clickedOnFrame($event)">
         <div appDroppable class="canvas droppable" #droppable
              [options]="{ accept: '.draggable' }"
              (dropping)="elementDropped($event)">
 
             <svg *ngIf="temporalLink" class="link" #svg
+                 [style.background-color]="'red'"
                  [style.left]="temporalLink.position.x + 'px'"
                  [style.top]="temporalLink.position.y + 'px'"
                  [style.width]="getLinkWidth(temporalLink) + 'px'"
@@ -51,7 +52,7 @@
                 </svg>
             </ng-container>
             <ng-container *ngFor="let bb of blueprint.blueprintBoxes;">
-                <app-bb-area *ngIf="bb.type === 'area'"
+                <app-bb-area *ngIf="bb.kind === 'AREA'"
                              appDraggable
                              class="draggable"
                              [area]="bb"

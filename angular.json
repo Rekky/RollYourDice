@@ -34,7 +34,7 @@
                         ],
                         "scripts": ["node_modules/particles.js/particles.js"],
                         "allowedCommonJsDependencies": [
-                            "loadash",
+                            "lodash",
                             "rxjs-compat",
                             "ulid",
                             "konva",

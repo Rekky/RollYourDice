@@ -138,7 +138,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
     endsNewLinkNodeOut(node: BlueprintNode): void {
         this.temporalLink.startingNode = node;
         this.blueprint.blueprintLinks.push(this.temporalLink);
-        this.cancelNewLink();
+        this.temporalLink = null;
+        this.droppable.nativeElement.removeEventListener('mousemove', this.droppableMouseMoveListener, false);
     }
 
     touchedNodeIn(node: BlueprintNode): void {
@@ -183,7 +184,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
     endsNewLinkNodeIn(node: BlueprintNode): void {
         this.temporalLink.endingNode = node;
         this.blueprint.blueprintLinks.push(this.temporalLink);
-        this.cancelNewLink();
+        this.temporalLink = null;
+        this.droppable.nativeElement.removeEventListener('mousemove', this.droppableMouseMoveListener, false);
     }
 
     toggleLinkSelection(link: BlueprintLink): void {
@@ -200,7 +202,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
                 const index = blueprint.blueprintLinks.findIndex(sLink => {
                     return sLink.id === link.id;
                 });
-                blueprint.blueprintLinks.splice(index);
+                blueprint.blueprintLinks.splice(index, 1);
             }
         };
 
@@ -217,11 +219,18 @@ export class BlueprintsInterfaceComponent implements OnInit {
         e.target.previousElementSibling.style.stroke = '#FFFFFF';
     }
 
-    cancelNewLink(): void {
+    cancelLink(): void {
         if (this.temporalLink) {
+            const index = this.blueprint.blueprintLinks.findIndex(link => link.id === this.temporalLink.id);
+            this.blueprint.blueprintLinks.splice(index, 1);
             this.temporalLink = null;
             this.droppable.nativeElement.removeEventListener('mousemove', this.droppableMouseMoveListener, false);
         }
+    }
+
+    clickedOnFrame(e): void {
+        e.stopPropagation();
+        this.cancelLink();
     }
 
 }

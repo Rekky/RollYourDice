@@ -16,6 +16,7 @@ export type StaticThis<T> = new () => T;
 export class BaseBlueprintBox {
     id: string;
     type: string;
+    kind: string;
     position: Coords;
 
     constructor() {
@@ -26,4 +27,12 @@ export class BaseBlueprintBox {
     static create<T extends BaseBlueprintBox>(this: StaticThis<T>, json: BaseBlueprintBox): T {
         return {...new this(), ...json};
     }
+}
+
+export enum BoxTypeEnum {
+    FUNCTION = 'FUNCTION'
+}
+
+export enum BoxKindEnum {
+    AREA = 'AREA'
 }

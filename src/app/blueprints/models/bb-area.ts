@@ -1,4 +1,4 @@
-import {BaseBlueprintBox} from './base-blueprint';
+import {BaseBlueprintBox, BoxKindEnum, BoxTypeEnum} from './base-blueprint';
 
 export class BBArea extends BaseBlueprintBox {
     name: string;
@@ -6,6 +6,7 @@ export class BBArea extends BaseBlueprintBox {
     constructor() {
         super();
         this.name = 'namesito';
-        this.type = 'area';
+        this.type = BoxTypeEnum.FUNCTION;
+        this.kind = BoxKindEnum.AREA;
     }
 }
