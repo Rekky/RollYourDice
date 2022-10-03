@@ -1,25 +1,19 @@
 <div class="menu-box">
+    <div class="bg"></div>
     <div class="menu-container">
-<!--        <div class="menu-logo">ROLLINN</div>-->
         <div class="menu-left">
             <div class="menu-block">
-                <div class="menu-option"
-                     (mouseenter)="playButtonSound();"
-                     (click)="goToMyAdventures()">
+                <div class="menu-option" [routerLink]="'/launcher/adventures'">
                     Play <div class="fake-shadow-text">Play</div>
                 </div>
-                <div class="menu-option"
-                     (mouseenter)="playButtonSound();">
+                <div class="menu-option">
                     Library <div class="fake-shadow-text">Library</div>
                 </div>
-                <div class="menu-option"
-                     (mouseenter)="playButtonSound();">
+                <div class="menu-option">
                     Settings <div class="fake-shadow-text">Settings</div>
                 </div>
             </div>
-            <div class="menu-option exit"
-                 (mouseenter)="playZap();"
-                 (click)="logout()">
+            <div class="menu-option exit" (click)="logout()">
                 <img class="light" src="assets/animations/light.svg" />
                 Exit <span class="fake-shadow-text">Exit</span>
             </div>

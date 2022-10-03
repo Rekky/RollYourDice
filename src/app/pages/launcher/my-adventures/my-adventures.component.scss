@@ -55,7 +55,7 @@
             border: 1px solid $c-white-grey;
             border-radius: 5px;
 
-            text-transform: uppercase; 
+            text-transform: uppercase;
             font-family: $oswald;
             font-size: 18px;
             font-weight: 600;
@@ -65,9 +65,9 @@
             &:hover {
                 background-color: $c-whitest;
                 cursor: pointer;
-            }      
+            }
         }
-    }       
+    }
 }
 
 .my-adventures-box {
@@ -80,7 +80,7 @@
     height: 70%;
     padding: 4px;
     overflow: hidden;
-    
+
 }
 
 .adventure-box {
@@ -103,15 +103,12 @@
     0 4px 8px rgba($c-black,0.12),
     0 8px 16px rgba($c-black,0.12),
     0 16px 32px rgba($c-black,0.12);
-    //background-color: rgba($c-black, 100%);
-    background-image: url('../../../../assets/backgrounds/menu-bg.jpg');
-
     cursor: pointer;
 
     &:hover {
 
         box-shadow:  0px 0px 4px 2px #CFB525;
-        
+
         .top-cover {
             display: inline-block;
         }
@@ -133,18 +130,8 @@
             right: 10px;
             top: 15px;
             z-index: 3;
-
             width: 30px;
             height: 30px;
-
-            &:hover {
-                cursor: pointer;
-
-                .settings-icon-svg {
-                    fill: $c-whitest;
-                    opacity: 1;
-                }
-            }
         }
 
         .enter-adventure {
@@ -317,12 +304,22 @@
             }
         }
     }
-
     .cover-image {
+        position: absolute;
+        top:0;
+        left:0;
         width: 100%;
         height: 100%;
-        background-size: cover;
-        background-position: center;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            align-content: center;
+        }
     }
 }
 

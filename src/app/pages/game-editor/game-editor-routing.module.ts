@@ -8,12 +8,12 @@ const routes: Routes = [
         path: ':id',
         component: GameEditorComponent,
         canActivate: [AuthGuardService],
-    },
-    {
-        path: '',
-        redirectTo: '/launcher/menu',
-        pathMatch: 'full',
     }
+    // {
+    //     path: '',
+    //     redirectTo: '/launcher/menu',
+    //     pathMatch: 'full',
+    // }
 ];
 
 @NgModule({

@@ -11,12 +11,12 @@ import {User} from '../../classes/User';
 })
 export class EditGameDataComponent implements OnInit {
     game: Game;
-
-    gameName:string;
+    gameName: string;
     gameForm: UntypedFormGroup;
     newGame: Game;
     gameTypes: string[] = [];
     loaded: boolean = false;
+    previewImage: any;
 
     constructor(
         private dialogRef: MatDialogRef<Game>,
@@ -27,8 +27,6 @@ export class EditGameDataComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
-        
         this.newGame = Game.fromJSON(this.game);
         this.gameForm = new UntypedFormGroup({
             name: new UntypedFormControl(this.newGame.name, Validators.required),
@@ -53,37 +51,16 @@ export class EditGameDataComponent implements OnInit {
         });
     }
 
-    acceptChanges(): void {
-        
-        
+    saveChanges(): void {
         Object.keys(this.gameForm.value).forEach((key: string) => {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
         this.newGame.published = this.gameForm.get('published').value;
         this.newGame.maxNPlayers = this.gameForm.get('nPlayers').value;
-        const formData = new FormData();
-        formData.append('asset', this.gameForm.get('imageCoverSource').value);
-
-        // Object.keys(this.gameForm.value).forEach((key: string) => {
-        //     const value = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
-        //     formData.append(key.toString(), value);
-        // });
-        this.dialogRef.close({game: this.newGame, formData: formData});
-        console.log(this.newGame);
+        this.dialogRef.close({game: this.newGame, formData: this.gameForm.get('imageCoverSource').value});
     }
 
-    imageChanged(file: Array<File>): void {
-        this.gameForm.patchValue({imageCoverSource: file});
-        console.log(file);
-        
-    }
-
-    transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
+    imageChanged(formData: FormData): void {
+        this.gameForm.patchValue({imageCoverSource: formData});
     }
 }
