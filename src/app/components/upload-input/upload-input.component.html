@@ -1,25 +1,25 @@
-<div class="upload-input-container">
-    <div style="color: red;font-size: 11px" *ngIf="uploadError.active">
-        {{uploadError.message}}
-    </div>
-    <div class="files-input">
-        <div style="text-align: center">
-            <img width="20" src="assets/svg/upload.svg" alt="upload-svg"/>
-            <span style="margin-left: 8px;">Upload</span>
-            <div style="color:gray;font-size: 8px;">Max File Size {{maxFileSize / 1000000}}MB</div>
+<div class="position-relative flex justify-center items-center w-full overflow-hidden">
+    <div class="flex flex-col justify-center items-center w-100 min-h-[70px] max-h-full bg-gray-200 rounded-lg border-2 border-gray-400 border-dashed cursor-pointer hover:bg-gray-100">
+        <div class="flex flex-col justify-center items-center pt-3 pb-3">
+            <svg aria-hidden="true" class="mb-3 w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+            <p class="text-xs text-gray-500">PNG, JPG or WEBP (Max size. {{maxFileSize / 1000000}}MB)</p>
         </div>
-        <input type="file" [multiple]="multiple" (change)="onFilesChange($event)" [max]="2">
-    </div>
-    <div class="files-list">
-        <div class="item" *ngFor="let file of previewFiles">
-            <img style="width: 60px;" [src]="file.reader" *ngIf="getFileType(file.file) === AssetType.Image">
-            <img style="width: 50px;" src="assets/icons/sound.png" *ngIf="getFileType(file.file) === AssetType.Audio">
-            <img style="width: 50px;" src="assets/icons/film.png" *ngIf="getFileType(file.file) === AssetType.Video">
-            <span class="item-info">
-                <span class="item-info-name">{{file.file.name}}</span>
-                <span class="item-info-size">{{formatBytes(file.file.size)}}</span>
-            </span>
-            <div class="item-options" (click)="removeFile(file)">x</div>
+        <input type="file" class="cursor-pointer" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;" [multiple]="multiple" (change)="onFilesChange($event)" [max]="maxFilesLimit"/>
+        <div class="files-list" [class.mb-4]="uploadError.active" *ngIf="previewFiles && previewFiles.length > 0">
+            <div class="item border-2 border-gray-300 hover:bg-cyan-200" *ngFor="let file of previewFiles">
+                <img style="width: 40px;height: 40px;" [src]="file.reader" *ngIf="getFileType(file.file) === AssetType.Image">
+                <img style="width: 40px;height: 40px;" src="assets/icons/sound.png" *ngIf="getFileType(file.file) === AssetType.Audio">
+                <img style="width: 40px;height: 40px;" src="assets/icons/film.png" *ngIf="getFileType(file.file) === AssetType.Video">
+                <span class="item-info text-gray-500">
+                    <span class="item-info-name">{{file.file.name}}</span>
+                    <span class="item-info-size">{{formatBytes(file.file.size)}}</span>
+                </span>
+                <div class="item-options" (click)="removeFile(file)">x</div>
+            </div>
+        </div>
+        <div *ngIf="uploadError.active" class="absolute left-0 bottom-0 p-2 rounded-lg w-100 text-sm font-medium text-red-700 bg-red-100">
+            {{uploadError.message}}
         </div>
     </div>
 </div>

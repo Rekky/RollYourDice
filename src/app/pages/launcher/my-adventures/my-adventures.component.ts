@@ -1,29 +1,27 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Game} from '../../../classes/Game';
 import {GameInteractor} from '../../../interactors/GameInteractor';
-import {Player, User} from '../../../classes/User';
+import {User} from '../../../classes/User';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';
 import {MapInteractor} from '../../../interactors/MapInteractor';
-import { OurKonvaMap } from 'src/app/classes/ourKonva/OurKonvaMap';
 import {MatDialog} from '@angular/material/dialog';
 import {EditGameDataComponent} from '../../../components/edit-game-data/edit-game-data.component';
 import {SocketService} from '../../../services/socket.service';
 import {Router} from '@angular/router';
-import {
-    NotificationComponent,
-    NotificationMessageDialogOptions
-} from '../../../components/notification/notification.component';
 import {SearchGameComponent} from '../../../components/search-game/search-game.component';
 import {Coords} from '../../../classes/Coords';
 import { UserListComponent } from 'src/app/components/user-list/user-list.component';
 import {MyAdventuresInteractor} from './my-adventures-interactor';
+import {AssetInteractor} from '../../../interactors/AssetInteractor';
+import {AssetModel} from '../../../classes/AssetModel';
 
 @Component({
     selector: 'app-my-adventures',
     templateUrl: './my-adventures.component.html',
     styleUrls: ['./my-adventures.component.scss']
 })
+
 export class MyAdventuresComponent implements OnInit, OnDestroy {
     mouseCoords: Coords = new Coords();
     bgX: number = 50;
@@ -45,10 +43,14 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
                 private myAdventuresInteractor: MyAdventuresInteractor,
                 private dialog: MatDialog,
                 private socketService: SocketService,
+                private assetInteractor: AssetInteractor,
                 private router: Router) {
         this.currentUser = this.userInteractor.getCurrentUser();
         this.myAdventuresSub = this.myAdventuresInteractor.getMyAdventures().subscribe(adv => {
             this.adventures = adv;
+            // adv.forEach(element => {
+            //     element.playersRequested
+            // });
         });
     }
 
@@ -108,6 +110,8 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(async res => {
             if (res) {
                 try {
+                    const assetResponse: AssetModel[] = await this.assetInteractor.uploadFile(res.formData);
+                    (res.game as Game).coverImage = assetResponse[0];
                     await this.gameInteractor.editGame(res.game);
                     this.adventures[i] = Game.fromJSON(res.game);
                 }
@@ -139,7 +143,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     displayUsersList(game: Game, e: Event): void {
         e.stopPropagation();
         const dialogSub = this.dialog.open(UserListComponent, {
-            data: {players: game.players, playersRequest: game.playersRequested, gameId: game.id}
+            data: {players: game.players, playersRequest: game.playersRequested, gameId: game.id, gameName: game.name}
         }).afterClosed().subscribe(res => {
             dialogSub.unsubscribe();
         });
@@ -172,10 +176,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     }
 
     loadGame(adventure: Game): void {
-        if(this.isAccessRequested(adventure) === true) {
+        if (this.isAccessRequested(adventure) === true) {
             return;
         }
-        
         this.router.navigate(['/game-editor/', adventure.id]);
     }
 

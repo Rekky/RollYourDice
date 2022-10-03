@@ -14,40 +14,58 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    margin: 0 2%;
 }
 
 .my-adventures-title {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
 
-    height: 20%;
+    height: 15%;
     width: 100%;
     padding-right: 50px;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 
-    .settings-option {
+    .my-games-title {
+
+        font-family: $oswald;
+        font-size: 40px;
+        font-weight: 600;
+        line-height: 59px;
+        color: #FFFFFF;
+
+        margin: 0 25px;
+    }
+
+    .my-adventures-options{
         display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
 
-        width: 170px;
-        height: 45px;
-        margin-right: 20px;
-        background-color: $c-white;
-        border: 1px solid $c-white-grey;
+        .settings-option {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
 
-        font-family: $rubik;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 21px;
-        text-align: center;
+            width: 144px;
+            height: 41px;
+            margin-right: 20px;
+            background-color: $c-white;
+            border: 1px solid $c-white-grey;
+            border-radius: 5px;
 
-        &:hover {
-            background-color: $c-whitest;
-            cursor: pointer;
+            text-transform: uppercase;
+            font-family: $oswald;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 27px;
+            text-align: center;
+
+            &:hover {
+                background-color: $c-whitest;
+                cursor: pointer;
+            }
         }
     }
 }
@@ -55,12 +73,14 @@
 .my-adventures-box {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 
     min-width: 100vw;
-    height: 60%;
+    height: 70%;
+    padding: 4px;
     overflow: hidden;
+
 }
 
 .adventure-box {
@@ -83,11 +103,12 @@
     0 4px 8px rgba($c-black,0.12),
     0 8px 16px rgba($c-black,0.12),
     0 16px 32px rgba($c-black,0.12);
-    background-color: rgba($c-black, 100%);
-
     cursor: pointer;
 
     &:hover {
+
+        box-shadow:  0px 0px 4px 2px #CFB525;
+
         .top-cover {
             display: inline-block;
         }
@@ -109,18 +130,8 @@
             right: 10px;
             top: 15px;
             z-index: 3;
-
             width: 30px;
             height: 30px;
-
-            &:hover {
-                cursor: pointer;
-
-                .settings-icon-svg {
-                    fill: $c-whitest;
-                    opacity: 1;
-                }
-            }
         }
 
         .enter-adventure {
@@ -293,12 +304,22 @@
             }
         }
     }
-
     .cover-image {
+        position: absolute;
+        top:0;
+        left:0;
         width: 100%;
         height: 100%;
-        background-size: cover;
-        background-position: center;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            align-content: center;
+        }
     }
 }
 

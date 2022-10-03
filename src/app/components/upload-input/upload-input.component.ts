@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AssetModel, AssetType} from 'src/app/classes/AssetModel';
+import {AssetType} from 'src/app/classes/AssetModel';
 import {AssetService} from 'src/app/services/asset.service';
+import {Form} from '@angular/forms';
 
 @Component({
     selector: 'upload-input',
@@ -11,8 +12,9 @@ export class UploadInputComponent implements OnInit {
 
     @Input() multiple: boolean = false;
     @Input() maxFilesLimit: number = 3;
-    @Input() maxFileSize: number = 3000000;
+    @Input() maxFileSize: number = 2000000;
     @Output() files: EventEmitter<any> = new EventEmitter<any>();
+    @Output() previewOutput: EventEmitter<any> = new EventEmitter<any>();
 
     previewFiles: {file: any, reader: string}[] = [];
     AssetType = AssetType;
@@ -23,9 +25,9 @@ export class UploadInputComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    toFormData<T>(files: {file: any, reader: string}[]): FormData {
+    toFormData<T>(param: {file: any, reader: string}[]): FormData {
         const formData = new FormData();
-        files.forEach(file => {
+        param.forEach(file => {
             formData.append('file', file.file);
         });
         return formData;
@@ -56,12 +58,17 @@ export class UploadInputComponent implements OnInit {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => {
-                    this.previewFiles.push({file: file, reader: reader.result as string});
+                    if (this.multiple) {
+                        this.previewFiles.push({file: file, reader: reader.result as string});
+                    } else {
+                        this.previewFiles[0] = {file: file, reader: reader.result as string};
+                    }
                 };
                 reader.onloadend = () => {
                     // when all files are loaded, emit them
                     if (this.previewFiles.length === files.length) {
                         const filesToEmit = this.toFormData(this.previewFiles);
+                        this.previewOutput.emit(this.previewFiles[0]);
                         this.files.emit(filesToEmit);
                     }
                 };
@@ -71,6 +78,9 @@ export class UploadInputComponent implements OnInit {
 
     removeFile(file: {file: File, reader: string}): void {
         this.previewFiles = this.previewFiles.filter(f => f.file !== file.file);
+        if (this.previewFiles.length <= 0) {
+            this.previewOutput.emit(null);
+        }
     }
 
     getFileType(file: any): any {

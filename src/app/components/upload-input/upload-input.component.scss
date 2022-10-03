@@ -1,40 +1,39 @@
 @import "src/styles.scss";
 
-.upload-input-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding: 4px;
-}
-
 .files-list{
+    position: relative;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     margin-top: 10px;
+    width: 100%;
+    z-index: 1;
 
     .item {
+        position: relative;
         display: grid;
-        grid-template-columns: 70px 1fr 30px;
+        grid-template-columns: 60px 1fr 30px;
         grid-template-rows: 50px;
         gap: 10px;
         align-items: center;
-        border: 2px solid #d5d5d5;
         border-radius: 4px;
         padding: 0 10px;
+        margin: 0 10px;
         margin-bottom: 10px;
+        z-index: 10;
+        background: #fff;
     }
     .item-info {
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        width: 150px;
+        width: 160px;
 
         .item-info-name {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            width: 150px;
+            width: 160px;
         }
         .item-info-size {
             font-size: 10px;
@@ -50,30 +49,7 @@
         font-size: 20px;
 
         &:hover {
-            color: darken(#d5d5d5, 30%);
+            color: #f87171;
         }
-    }
-}
-
-.files-input {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    border: 2px dashed $c-black-grey;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    input[type=file] {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        cursor: pointer;
     }
 }

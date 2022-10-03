@@ -11,11 +11,12 @@ import {User} from '../../classes/User';
 })
 export class EditGameDataComponent implements OnInit {
     game: Game;
-
+    gameName: string;
     gameForm: UntypedFormGroup;
     newGame: Game;
     gameTypes: string[] = [];
     loaded: boolean = false;
+    previewImage: any;
 
     constructor(
         private dialogRef: MatDialogRef<Game>,
@@ -34,12 +35,14 @@ export class EditGameDataComponent implements OnInit {
             gameType: new UntypedFormControl(this.newGame.gameType, Validators.required),
             imageCover: new UntypedFormControl(null),
             imageCoverSource: new UntypedFormControl(null),
-            publish: new UntypedFormControl(this.newGame.published, Validators.required),
+            published: new UntypedFormControl(this.newGame.published, Validators.required),
         });
         this.gameTypes = Object.values(GameTypes);
         setTimeout(() => {
             this.loaded = true;
         }, 1000);
+
+        this.gameName = this.game.name;
     }
 
     closeDialog(): void {
@@ -48,31 +51,16 @@ export class EditGameDataComponent implements OnInit {
         });
     }
 
-    acceptChanges(): void {
+    saveChanges(): void {
         Object.keys(this.gameForm.value).forEach((key: string) => {
              this.newGame[key] = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
         });
-
-        const formData = new FormData();
-        formData.append('asset', this.gameForm.get('imageCoverSource').value);
-
-        // Object.keys(this.gameForm.value).forEach((key: string) => {
-        //     const value = this.gameForm.value[key] ? this.gameForm.value[key] : this.newGame[key];
-        //     formData.append(key.toString(), value);
-        // });
-        this.dialogRef.close({game: this.newGame, formData: formData});
+        this.newGame.published = this.gameForm.get('published').value;
+        this.newGame.maxNPlayers = this.gameForm.get('nPlayers').value;
+        this.dialogRef.close({game: this.newGame, formData: this.gameForm.get('imageCoverSource').value});
     }
 
-    imageChanged(file: File): void {
-        this.gameForm.patchValue({imageCoverSource: file});
-    }
-
-    transformFileToBase64(file: File): Promise<string | ArrayBuffer | null> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
+    imageChanged(formData: FormData): void {
+        this.gameForm.patchValue({imageCoverSource: formData});
     }
 }
