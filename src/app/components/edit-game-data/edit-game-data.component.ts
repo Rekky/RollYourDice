@@ -24,6 +24,7 @@ export class EditGameDataComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: Game
     ) {
         this.game = data;
+        console.log('data', data);
     }
 
     ngOnInit(): void {

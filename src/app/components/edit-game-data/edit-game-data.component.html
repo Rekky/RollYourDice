@@ -13,8 +13,9 @@
         <div class="vertical-line"></div>
         <div class="body" *ngIf="loaded && newGame">
             <div class="image-container">
-                <img src="../../../assets/backgrounds/menus/background-default-game.webp" *ngIf="!previewImage" alt="" class="grayscale">
-                <img [src]="previewImage.reader" *ngIf="previewImage" alt="">
+                <img src="../../../assets/backgrounds/menus/background-default-game.webp" *ngIf="!previewImage" class="grayscale">
+                <img [src]="previewImage.reader" *ngIf="previewImage">
+                <img [src]="game.coverImage.uri" *ngIf="!previewImage && game.coverImage.uri">
                 <div class="centered">{{gameForm.get('name').value}}</div>
             </div>
                 <ng-scrollbar class="create-game-form">
