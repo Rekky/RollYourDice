@@ -110,8 +110,10 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(async res => {
             if (res) {
                 try {
-                    const assetResponse: AssetModel[] = await this.assetInteractor.uploadFile(res.formData);
-                    (res.game as Game).coverImage = assetResponse[0];
+                    if (res.formData) {
+                        const assetResponse: AssetModel[] = await this.assetInteractor.uploadFile(res.formData);
+                        (res.game as Game).coverImage = assetResponse[0];
+                    }
                     await this.gameInteractor.editGame(res.game);
                     this.adventures[i] = Game.fromJSON(res.game);
                 }
