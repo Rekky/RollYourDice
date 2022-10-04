@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import * as envProd from 'src/environments/environment.prod';
 import { HttpErrorService } from './http-error.service';
 
 
@@ -43,6 +44,24 @@ export class HttpService {
     public post(url: string, body: any): Observable<any> {
         return new Observable<any>(observable => {
             this.http.post(environment.api_url + url, body, { observe: 'response' }).subscribe(
+                (response) => {
+                    observable.next(response.body);
+                }, (error: HttpErrorResponse) => {
+                    this.httpErrorService.manageError(error, true);
+                    observable.error(error);
+                }
+            );
+        });
+    }
+
+    /**
+     * a testing call
+     * @param url a complate url in string format
+     * @param body a params for send to server
+     */
+    public postTest(url: string, body: any): Observable<any> {
+        return new Observable<any>(observable => {
+            this.http.post(envProd.environment.api_url + url, body, { observe: 'response' }).subscribe(
                 (response) => {
                     observable.next(response.body);
                 }, (error: HttpErrorResponse) => {

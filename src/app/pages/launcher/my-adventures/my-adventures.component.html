@@ -1,13 +1,13 @@
 <div class="my-adventures-container">
-    <div class="my-adventures-title">
+    <div class="my-adventures-header">
         <div class="my-games-title">MY GAMES</div>
         <div class="my-adventures-options">
-            <div class="settings-option" (click)="searchGame()">find game</div>
-            <div class="settings-option" (click)="startNewGame()">new game</div>
+            <button class="settings-option cursor-pointer mr-4 bg-white hover:bg-gray" (click)="searchGame()">find game</button>
+            <button class="settings-option cursor-pointer bg-white hover:bg-gray" (click)="startNewGame()">new game</button>
         </div>
     </div>
-    <div class="my-adventures-box" *ngIf="adventures">
-        <div *ngFor="let adventure of adventures; let i = index;" class="adventure-box">
+    <div class="my-adventures-body" *ngIf="adventures">
+        <div class="adventure-box" *ngFor="let adventure of adventures; let i = index;">
             <div class="cover-image">
                 <img class="grayscale" *ngIf="!adventure.coverImage?.uri" [src]="'../../../../assets/backgrounds/menus/background-default-game.webp'" alt="adventure background">
                 <img class="" *ngIf="adventure.coverImage?.uri" [src]="adventure.coverImage?.uri" alt="adventure background">

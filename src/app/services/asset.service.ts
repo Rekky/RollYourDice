@@ -14,11 +14,8 @@ export class AssetService {
 
 
     async uploadFile(formData: any): Promise<AssetModel[]> {
-        for (const pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
         return new Promise<any>( (resolve, reject) => {
-            this.httpService.post(`/${this.endPointName}/upload`, formData).subscribe(
+            this.httpService.postTest(`/${this.endPointName}/upload`, formData).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {

@@ -1,42 +1,31 @@
 @import "src/styles.scss";
 
 .my-adventures-container {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: .6fr 2fr .5fr;
     z-index: 10;
-
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+    overflow: hidden;
 
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
-    margin: 0 2%;
+    padding: 0 6rem;
 }
 
-.my-adventures-title {
+.my-adventures-header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: flex-end;
-
-    height: 15%;
-    width: 100%;
-    padding-right: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 2rem;
 
     .my-games-title {
-
         font-family: $oswald;
         font-size: 40px;
         font-weight: 600;
         line-height: 59px;
         color: #FFFFFF;
-
-        margin: 0 25px;
     }
 
     .my-adventures-options{
@@ -50,9 +39,8 @@
 
             width: 144px;
             height: 41px;
-            margin-right: 20px;
-            background-color: $c-white;
-            border: 1px solid $c-white-grey;
+            //background-color: $c-white;
+            //border: 1px solid $c-white-grey;
             border-radius: 5px;
 
             text-transform: uppercase;
@@ -61,26 +49,25 @@
             font-weight: 600;
             line-height: 27px;
             text-align: center;
-
-            &:hover {
-                background-color: $c-whitest;
-                cursor: pointer;
-            }
         }
     }
 }
 
-.my-adventures-box {
+.my-adventures-body {
     display: flex;
-    flex-flow: row nowrap;
     justify-content: start;
     align-items: center;
-
-    min-width: 100vw;
-    height: 70%;
-    padding: 4px;
+    height: 100%;
     overflow: hidden;
+    overflow-y: auto;
+    flex-wrap: wrap;
+    padding: 0 5px;
 
+    //display: grid;
+    //grid-auto-columns: auto;
+    //grid-template-columns: repeat(4, 1fr);
+    //overflow: hidden;
+    //overflow-y: scroll;
 }
 
 .adventure-box {
@@ -92,18 +79,13 @@
     position: relative;
     z-index: 1;
 
-    width: 20vw;
-    min-width: 400px;
-    height: 100%;
-    margin: 25px;
+    width: 16vw;
+    height: 56vh;
     border: 3px solid #181818;
-
-    box-shadow: 0 1px 2px rgba($c-black,0.12),
-    0 2px 4px rgba($c-black,0.12),
-    0 4px 8px rgba($c-black,0.12),
-    0 8px 16px rgba($c-black,0.12),
-    0 16px 32px rgba($c-black,0.12);
     cursor: pointer;
+    margin-top: 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
 
     &:hover {
 
@@ -297,11 +279,6 @@
             font-weight: 400;
             line-height: 21px;
             text-align: center;
-
-            &:hover {
-                background-color: $c-whitest;
-                cursor: pointer;
-            }
         }
     }
     .cover-image {
