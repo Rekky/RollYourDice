@@ -13,7 +13,6 @@
 
     width: 100vw;
     height: 100vh;
-    background-color: rgba($c-blackest, 0.2);
 }
 
 .edit-game-box {
@@ -29,20 +28,21 @@
 
     width: 100%;
     height: 100%;
-
-    letter-spacing: 1px;
 }
 
 .edit-game-card {
     position: relative;
-    width: 1098px;
+    width: 1000px;
     height: 754px;
     border-radius: 8px;
-    background-color: #101010;
+    background: #18181b;
     color: $c-white;
     animation: expand-card 0.5s;
     letter-spacing: 1px;
     border: 1px solid #2A2A2A;
+    display: grid;
+    grid-template-rows: 80px 1fr;
+    grid-template-columns: 1fr;
 }
 
 @keyframes expand-card {
@@ -55,28 +55,33 @@
 }
 
 .header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr .1fr;
+    grid-template-rows: 1fr;
     width: 100%;
-    height: 90px;
-    padding: 20px 20px 20px 50px;
+    height: 100%;
+    padding: 30px;
+    align-items: center;
     letter-spacing: 1px;
 
     .exit {
+        position: absolute;
+        top: 25px;
+        right: 25px;
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-end;
         align-items: center;
-
-        width: 100%;
+        width: auto;
         height: 30px;
+        padding: 5px;
+        border-radius: 4px;
         cursor: pointer;
 
         svg {
             stroke: $c-white;
             height: 100%;
-
-            &:hover {
-                stroke: $c-white;
-            }
         }
     }
 
@@ -92,24 +97,22 @@
 }
 
 .body{
-    display: flex;
-    justify-content: space-around;
-    padding: 0px 50px;
+    position: relative;
+    width: 100%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: .6fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 0 30px;
+    padding-left: 50px;
 }
 
-.vertical-line {
-    border-left: 1px solid #191919;
-    height: 630px;
-    position: absolute;
-    left: 383px;
-    top: 70px;
-}
 .image-container{
     position: relative;
     text-align: center;
     color: $c-white;
-    width: 472px;
-    height: 570px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
 
     img{
@@ -125,7 +128,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 300px;
+        width: 100%;
         height: 100%;
         display: flex;
         overflow: hidden;
@@ -146,9 +149,9 @@
     justify-content: space-between;
     flex-direction: column;
 
-    height: calc(70vh - 23px);
+    height: 100%;
     width: 100%;
-    padding: 0 90px;
+    padding: 0 70px;
     letter-spacing: 1px;
 
     overflow-y: auto;
