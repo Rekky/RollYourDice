@@ -2,14 +2,16 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@ang
 
 
 @Component({
-    selector: 'app-modal-custom',
-    templateUrl: './modal-custom.component.html',
-    styleUrls: ['./modal-custom.component.scss']
+    selector: 'app-custom-modal',
+    templateUrl: './custom-modal.component.html',
+    styleUrls: ['./custom-modal.component.scss']
 })
-export class ModalCustomComponent implements OnInit {
+export class CustomModalComponent implements OnInit {
 
     @Input() open = false;
     @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() title: string = '';
+    @Input() type: string = 'small';
     windowWidth: number = 0;
 
     constructor() {
@@ -22,7 +24,6 @@ export class ModalCustomComponent implements OnInit {
     @HostListener('window:resize', ['$event'])
     onResize(event): void {
         this.windowWidth = event.target.innerWidth;
-        console.log(this.windowWidth);
     }
 
     close(): void {

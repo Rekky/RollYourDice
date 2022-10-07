@@ -15,7 +15,6 @@ export class EditGameDataComponent implements OnInit {
     gameForm: UntypedFormGroup;
     newGame: Game;
     gameTypes: string[] = [];
-    loaded: boolean = false;
     previewImage: any;
 
     constructor(
@@ -39,10 +38,6 @@ export class EditGameDataComponent implements OnInit {
             published: new UntypedFormControl(this.newGame.published, Validators.required),
         });
         this.gameTypes = Object.values(GameTypes);
-        setTimeout(() => {
-            this.loaded = true;
-        }, 1000);
-
         this.gameName = this.game.name;
     }
 

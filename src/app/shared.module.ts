@@ -17,7 +17,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {SafePipe} from './pipes/safe-pipe';
 import { SearchGameComponent } from './components/search-game/search-game.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { ModalCustomComponent } from './components/modal-custom/modal-custom.component';
+import { CustomModalComponent } from './components/custom-modal/custom-modal.component';
 import {SidebarCustomComponent} from './components/sidebar-custom/sidebar-custom.component';
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import {MiniMenuComponent} from './components/mini-menu/mini-menu.component';
@@ -42,7 +42,7 @@ import {TutorialComponent} from './components/tutorial/tutorial.component';
         EditGameDataComponent,
         SearchGameComponent,
         UserListComponent,
-        ModalCustomComponent,
+        CustomModalComponent,
         SidebarCustomComponent,
         MiniMapComponent,
         MiniMenuComponent,
@@ -72,7 +72,7 @@ import {TutorialComponent} from './components/tutorial/tutorial.component';
         AssetComponent,
         UploadInputComponent,
         EditGameDataComponent,
-        ModalCustomComponent,
+        CustomModalComponent,
         SidebarCustomComponent,
         MiniMapComponent,
         MiniMenuComponent,
