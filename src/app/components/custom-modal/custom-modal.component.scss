@@ -1,4 +1,4 @@
-.modal-custom {
+.custom-modal {
     position:fixed;
     z-index: 100;
     top:0;
@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
 }
-.modal-overlay {
+.custom-modal-overlay {
     position: absolute;
     z-index: 99;
     top:0;
@@ -17,13 +17,12 @@
     right:0;
     bottom:0;
 }
-.modal-container {
+.custom-modal-container {
     position: relative;
     z-index: 100;
     min-width: 300px;
     min-height: 300px;
     border-radius:8px;
-    padding: 20px;
     color: inherit;
 
     &.modal-small {
@@ -37,16 +36,27 @@
     }
 }
 
-.control {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-    justify-items: end;
-    margin-bottom: 6px;
+.custom-modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+
+    .close {
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .title {
+        font-size: 23px;
+        font-weight: 600;
+        padding: 0;
+        margin: 0;
+    }
 }
 
-.title {
-    font-size: 23px;
-    font-weight: 600;
+.custom-modal-body {
+
 }

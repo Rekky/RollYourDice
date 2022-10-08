@@ -45,15 +45,6 @@
     grid-template-columns: 1fr;
 }
 
-@keyframes expand-card {
-    from {
-        transform: translateY(-110%);
-    }
-    to {
-        transform: translateY(0%);
-    }
-}
-
 .header {
     position: relative;
     display: grid;
@@ -103,8 +94,7 @@
     display: grid;
     grid-template-columns: .6fr 1fr;
     grid-template-rows: 1fr;
-    padding: 0 30px;
-    //padding-left: 30px;
+    padding: 0 30px 30px 30px;
 }
 
 .image-container{
@@ -112,7 +102,7 @@
     text-align: center;
     color: $c-white;
     width: 100%;
-    height: 100%;
+    height: 94%;
     overflow: hidden;
 
     img{
@@ -151,14 +141,10 @@
 
     height: 100%;
     width: 100%;
-    padding: 0 70px;
+    padding: 0 60px;
     letter-spacing: 1px;
 
     overflow-y: auto;
-
-    & > div {
-        margin-bottom: 2vh;
-    }
 }
 
 .footer {
@@ -170,27 +156,6 @@
     height: 100px;
     width: 100%;
     letter-spacing: 1px;
-
-    .button-box {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-
-        width: 100%;
-    }
-    .big-button{
-        background-color: #CFB525;
-        color: $c-black !important;
-
-        width: 202px;
-        height: 34px;
-        border-radius: 8px;
-    }
-
-    button[disabled]{
-       background-color: $c-black-grey;
-    }
 }
 
 input[type=radio] {
