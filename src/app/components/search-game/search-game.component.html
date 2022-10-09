@@ -21,7 +21,7 @@
                     </svg>
                     <span class="sr-only">Loading...</span>
                 </div>
-                <ng-container *ngIf="!loading">
+                <ng-container *ngIf="!loading && gamesList.length > 0">
                     <div class="relative overflow-hidden hover:bg-zinc-800 cursor-pointer grid grid-cols-[0.18fr_1fr] grid-rows-1 h-[70px]" [class.bg-zinc-600]="game?.id === selectedGame?.id" *ngFor="let game of gamesList" (click)="selectGame(game)" [ngClass]="selectedGame === game ? 'selectedGame' : ''">
                         <div class="flex align-items-center">
                             <img class="w-[50px] h-[50px] rounded-full" src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar" >
@@ -39,6 +39,9 @@
                         </div>
                         <div class="absolute left-0 right-0 bottom-0 h-[2px] bg-gray-50 opacity-10"></div>
                     </div>
+                </ng-container>
+                <ng-container *ngIf="!loading && gamesList.length <= 0">
+                    <h2 class="flex justify-content-center align-items-center text-4xl font-extrabold text-white w-full h-full">No games found</h2>
                 </ng-container>
             </div>
             <div class="flex justify-content-center align-items-center">
