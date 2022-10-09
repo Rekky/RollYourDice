@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Game} from '../../classes/Game';
 import {GameService} from '../../services/game.service';
 import {SocketService} from '../../services/socket.service';
+import {FormGroup, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-search-game',
@@ -11,31 +12,36 @@ import {SocketService} from '../../services/socket.service';
 })
 export class SearchGameComponent implements OnInit {
 
-    loaded: boolean = false;
-    searchGameId: string = '';
+    loading: boolean = false;
     gamesList: Game[];
     selectedGame: Game | null = null;
+    fgSearch: UntypedFormGroup;
 
     constructor(
         private dialogRef: MatDialogRef<Game>,
         private ngZone: NgZone,
         private gameService: GameService,
         private socketService: SocketService
-    ) { }
+    ) {
+        this.fgSearch = new UntypedFormGroup({
+            search: new UntypedFormControl(null, Validators.required)
+        });
+    }
 
     async ngOnInit(): Promise<void> {
         await this.searchGame();
-        setTimeout(() => {
-            this.loaded = true;
-        }, 1000);
     }
 
     async searchGame(): Promise<void> {
         try {
-            this.gamesList = await this.gameService.getGamesByString(this.searchGameId);
+            this.loading = true;
+            const textToSearch: string = this.fgSearch.get('search').value;
+            this.gamesList = await this.gameService.getGamesByString(textToSearch);
         }
         catch (e) {
-
+            console.log(e);
+        } finally {
+            this.loading = false;
         }
     }
 
@@ -49,10 +55,8 @@ export class SearchGameComponent implements OnInit {
             this.dialogRef.close(send);
         });
     }
-    selectGame(game:Game): void {
-
+    selectGame(game: Game): void {
         this.selectedGame = game;
-
     }
 
 }

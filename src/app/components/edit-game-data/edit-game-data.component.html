@@ -9,15 +9,15 @@
         <ng-scrollbar class="create-game-form">
                 <div class="title mb-4">
                     <label class="block mb-2 text-lg font-medium text-gray-50">Game name</label>
-                    <input [formControlName]="'name'" type="text" maxlength="40" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <input [formControlName]="'name'" type="text" maxlength="40" class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
                 <div class="description mb-4">
                     <label class="block mb-2 text-lg font-medium text-gray-50">History introduction</label>
-                    <textarea [formControlName]="'description'" type="text" maxlength="255" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
+                    <textarea [formControlName]="'description'" type="text" maxlength="255" class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
                 </div>
                 <div  class="mb-4">
                     <label class="block mb-2 text-lg font-medium text-gray-50">Players number</label>
-                    <input type="number" [formControlName]="'nPlayers'" maxlength="2" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 text-center p-2.5"/>
+                    <input type="number" [formControlName]="'nPlayers'" maxlength="2" class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-20 text-center p-2.5"/>
                 </div>
                 <div class="mb-4">
                     <label class="block mb-2 text-lg font-medium text-gray-50">Image cover</label>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="flex justify-content-center align-items-center">
-                    <button type="button" class="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">{{newGame.name === 'My adventure rocks!' ? 'CREATE GAME' : 'EDIT GAME'}}</button>
+                    <button type="button" class="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-md text-sm px-5 py-2.5 mr-2 mb-2">{{newGame.name === 'My adventure rocks!' ? 'CREATE GAME' : 'EDIT GAME'}}</button>
                 </div>
         </ng-scrollbar>
         </form>
