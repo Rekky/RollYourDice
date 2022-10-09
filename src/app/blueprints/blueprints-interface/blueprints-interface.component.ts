@@ -14,7 +14,7 @@ import {BlueprintLink, BlueprintNode} from '../models/blueprint-link';
 import {Coords} from '../../classes/Coords';
 import {Subscription} from 'rxjs';
 import {ulid} from 'ulid';
-import {BBArea, BBGetAllActors} from '../models/blueprint-boxes';
+import {BBArea, BBEquals, BBGet, BBGetAllActors} from '../models/blueprint-boxes';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -47,6 +47,18 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     addBBGetAllActors(): void {
         this.blueprint.blueprintBoxes.push(new BBGetAllActors());
+    }
+
+    addBBEquals(): void {
+        this.blueprint.blueprintBoxes.push(new BBEquals());
+    }
+
+    addBBGet(): void {
+        this.blueprint.blueprintBoxes.push(new BBGet());
+    }
+
+    addBBMoveActorToLocation(): void {
+        this.blueprint.blueprintBoxes.push(new BBGet());
     }
 
     modifyBBPosition(coords: any, bb: BaseBlueprintBox): void {

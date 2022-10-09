@@ -4,6 +4,12 @@
                 (click)="addBBArea()">Area</button>
         <button type="button" class="btn btn-white px-3 my-2"
                 (click)="addBBGetAllActors()">GetAllActors</button>
+        <button type="button" class="btn btn-white px-3 my-2"
+                (click)="addBBEquals()">Equals</button>
+        <button type="button" class="btn btn-white px-3 my-2"
+                (click)="addBBGet()">Get</button>
+        <button type="button" class="btn btn-white px-3 my-2"
+                (click)="addBBMoveActorToLocation()">Move actor to location</button>
     </div>
     <div class="frame" (click)="clickedOnFrame($event)">
         <div appDroppable class="canvas droppable" #droppable
@@ -83,6 +89,45 @@
                              (draggableClick)="clickedBB($event)"
                              (dragging)="modifyBBPosition($event, bb)">
                 </app-bb-get-all-actors>
+                <app-bb-equals *ngIf="bb.kind === 'EQUALS'"
+                                       appDraggable
+                                       class="draggable"
+                                       [bb]="bb"
+                                       [id]="bb.id"
+                                       [style.top]="bb.position.y + 'px'"
+                                       [style.left]="bb.position.x + 'px'"
+                                       [objectData]="bb"
+                                       (nodeOutHasBeenTouched)="touchedNodeOut($event)"
+                                       (nodeInHasBeenTouched)="touchedNodeIn($event)"
+                                       (draggableClick)="clickedBB($event)"
+                                       (dragging)="modifyBBPosition($event, bb)">
+                </app-bb-equals>
+                <app-bb-get *ngIf="bb.kind === 'GET'"
+                               appDraggable
+                               class="draggable"
+                               [bb]="bb"
+                               [id]="bb.id"
+                               [style.top]="bb.position.y + 'px'"
+                               [style.left]="bb.position.x + 'px'"
+                               [objectData]="bb"
+                               (nodeOutHasBeenTouched)="touchedNodeOut($event)"
+                               (nodeInHasBeenTouched)="touchedNodeIn($event)"
+                               (draggableClick)="clickedBB($event)"
+                               (dragging)="modifyBBPosition($event, bb)">
+                </app-bb-get>
+                <app-bb-move-actor-to-location *ngIf="bb.kind === 'MOVE_ACTOR_TO_LOCATION'"
+                               appDraggable
+                               class="draggable"
+                               [bb]="bb"
+                               [id]="bb.id"
+                               [style.top]="bb.position.y + 'px'"
+                               [style.left]="bb.position.x + 'px'"
+                               [objectData]="bb"
+                               (nodeOutHasBeenTouched)="touchedNodeOut($event)"
+                               (nodeInHasBeenTouched)="touchedNodeIn($event)"
+                               (draggableClick)="clickedBB($event)"
+                               (dragging)="modifyBBPosition($event, bb)">
+                </app-bb-move-actor-to-location>
             </ng-container>
         </div>
     </div>
