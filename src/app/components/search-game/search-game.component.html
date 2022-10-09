@@ -1,7 +1,8 @@
 <app-custom-modal [open]="true" (openChange)="closeDialog()" [type]="'medium'" [title]="'Find Game'">
     <div class="grid grid-cols-[0.6fr_1fr] grid-rows-1 pt-0 p-[30px] h-[70vh]">
         <div class="image-container">
-            <img src="../../../assets/backgrounds/library/esglesia.png" alt="">
+            <img src="../../../assets/backgrounds/library/esglesia.png" *ngIf="!selectedGame || !selectedGame.coverImage.uri">
+            <img [src]="selectedGame.coverImage.uri" *ngIf="selectedGame && selectedGame.coverImage.uri">
             <div class="centered">{{selectedGame === null ? '' : selectedGame.name }}</div>
         </div>
         <div class="search-game px-[50px]">
@@ -9,7 +10,7 @@
                 <label class="text-lg mb-2">Name or Author</label>
                 <div class="flex items-end mb-3">
                     <input type="text" [formControlName]="'search'" maxlength="40" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Search" required>
-                    <button type="submit" class="cursor-pointer inline-flex items-center py-2.5 px-4 ml-2 text-sm font-semibold text-black bg-white rounded-md border border-blue-700 hover:bg-zinc-500 focus:ring-4 focus:outline-none focus:ring-blue-300">SEARCH</button>
+                    <button type="submit" [disabled]="this.fgSearch.get('search').value === null" class="cursor-pointer inline-flex items-center py-2.5 px-4 ml-2 text-sm font-semibold text-black bg-white rounded-md border border-blue-700 hover:bg-zinc-500 focus:ring-4 focus:outline-none focus:ring-blue-300">SEARCH</button>
                 </div>
             </form>
 
@@ -24,7 +25,7 @@
                 <ng-container *ngIf="!loading && gamesList.length > 0">
                     <div class="relative overflow-hidden hover:bg-zinc-800 cursor-pointer grid grid-cols-[0.18fr_1fr] grid-rows-1 h-[70px]" [class.bg-zinc-600]="game?.id === selectedGame?.id" *ngFor="let game of gamesList" (click)="selectGame(game)" [ngClass]="selectedGame === game ? 'selectedGame' : ''">
                         <div class="flex align-items-center">
-                            <img class="w-[50px] h-[50px] rounded-full" src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar" >
+                            <img class="w-[50px] h-[50px] rounded-full" src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar">
                         </div>
                         <div class="flex flex-column justify-content-center align-items-start">
                             <div class="game-name mb-1">
