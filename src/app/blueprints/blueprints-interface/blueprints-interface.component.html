@@ -1,11 +1,16 @@
 <div class="blueprints-container">
+    <div class="buttons-box p-3">
+        <button type="button" class="btn btn-white px-3 my-2"
+                (click)="addBBArea()">Area</button>
+        <button type="button" class="btn btn-white px-3 my-2"
+                (click)="addBBGetAllActors()">GetAllActors</button>
+    </div>
     <div class="frame" (click)="clickedOnFrame($event)">
         <div appDroppable class="canvas droppable" #droppable
              [options]="{ accept: '.draggable' }"
              (dropping)="elementDropped($event)">
 
             <svg *ngIf="temporalLink" class="link" #svg
-                 [style.background-color]="'red'"
                  [style.left]="temporalLink.position.x + 'px'"
                  [style.top]="temporalLink.position.y + 'px'"
                  [style.width]="getLinkWidth(temporalLink) + 'px'"
@@ -55,7 +60,7 @@
                 <app-bb-area *ngIf="bb.kind === 'AREA'"
                              appDraggable
                              class="draggable"
-                             [area]="bb"
+                             [bb]="bb"
                              [id]="bb.id"
                              [style.top]="bb.position.y + 'px'"
                              [style.left]="bb.position.x + 'px'"
@@ -65,6 +70,19 @@
                              (draggableClick)="clickedBB($event)"
                              (dragging)="modifyBBPosition($event, bb)">
                 </app-bb-area>
+                <app-bb-get-all-actors *ngIf="bb.kind === 'GET_ALL_ACTORS'"
+                             appDraggable
+                             class="draggable"
+                             [bb]="bb"
+                             [id]="bb.id"
+                             [style.top]="bb.position.y + 'px'"
+                             [style.left]="bb.position.x + 'px'"
+                             [objectData]="bb"
+                             (nodeOutHasBeenTouched)="touchedNodeOut($event)"
+                             (nodeInHasBeenTouched)="touchedNodeIn($event)"
+                             (draggableClick)="clickedBB($event)"
+                             (dragging)="modifyBBPosition($event, bb)">
+                </app-bb-get-all-actors>
             </ng-container>
         </div>
     </div>

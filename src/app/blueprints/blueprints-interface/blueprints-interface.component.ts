@@ -14,6 +14,7 @@ import {BlueprintLink, BlueprintNode} from '../models/blueprint-link';
 import {Coords} from '../../classes/Coords';
 import {Subscription} from 'rxjs';
 import {ulid} from 'ulid';
+import {BBArea, BBGetAllActors} from '../models/blueprint-boxes';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -37,8 +38,15 @@ export class BlueprintsInterfaceComponent implements OnInit {
                 private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
-        this.blueprint = this.blueprintsService.getBlueprintData();
-        this.cdr.detectChanges();
+        // this.blueprint = this.blueprintsService.getBlueprintData();
+    }
+
+    addBBArea(): void {
+        this.blueprint.blueprintBoxes.push(new BBArea());
+    }
+
+    addBBGetAllActors(): void {
+        this.blueprint.blueprintBoxes.push(new BBGetAllActors());
     }
 
     modifyBBPosition(coords: any, bb: BaseBlueprintBox): void {

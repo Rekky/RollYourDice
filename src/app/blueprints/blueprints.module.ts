@@ -7,6 +7,7 @@ import { BbAreaComponent } from './blueprint-boxes/elements/bb-area/bb-area.comp
 import {ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared.module';
 import { BbTeleportComponent } from './blueprint-boxes/actions/bb-teleport/bb-teleport.component';
+import { BbGetAllActorsComponent } from './blueprint-boxes/actions/bb-get-all-actors/bb-get-all-actors.component';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { BbTeleportComponent } from './blueprint-boxes/actions/bb-teleport/bb-te
         DroppableDirective,
         BbAreaComponent,
         BbTeleportComponent,
+        BbGetAllActorsComponent,
     ],
     imports: [
         CommonModule,

@@ -1,5 +1,6 @@
 import {Coords} from '../../classes/Coords';
 import {BlueprintLink, BlueprintNode} from './blueprint-link';
+import {ulid} from 'ulid';
 
 export class BlueprintModel {
     blueprintBoxes: BaseBlueprintBox[];
@@ -20,7 +21,7 @@ export class BaseBlueprintBox {
     position: Coords;
 
     constructor() {
-        this.id = '';
+        this.id = ulid();
         this.position = new Coords();
     }
 
@@ -34,5 +35,9 @@ export enum BoxTypeEnum {
 }
 
 export enum BoxKindEnum {
-    AREA = 'AREA'
+    AREA = 'AREA',
+    GET_ALL_ACTORS = 'GET_ALL_ACTORS',
+    EQUALS = 'EQUALS',
+    MOVE_ACTOR_TO_LOCATION = 'MOVE_ACTOR_TO_LOCATION',
+    GET = 'GET',
 }
