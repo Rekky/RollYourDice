@@ -1,16 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BlueprintNode} from '../../../models/blueprint-link';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Coords} from '../../../../classes/Coords';
 
 @Component({
-  selector: 'app-bb-teleport',
-  templateUrl: './bb-teleport.component.html',
-  styleUrls: ['./bb-teleport.component.scss']
+  selector: 'app-bb-get-all-actors',
+  templateUrl: './bb-get-all-actors.component.html',
+  styleUrls: ['./bb-get-all-actors.component.scss']
 })
-export class BbTeleportComponent implements OnInit {
+export class BbGetAllActorsComponent implements OnInit {
     @Input() bb: any;
-    @Input() bbOwner: boolean;
     @Output() nodeOutHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
     @Output() nodeInHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
 
