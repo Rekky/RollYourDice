@@ -1,4 +1,5 @@
 import {ulid} from 'ulid';
+import {OurKonvaMap} from "./ourKonva/OurKonvaMap";
 
 export interface MapAttrs {
     container?: any;
@@ -8,7 +9,7 @@ export interface MapAttrs {
     scaleY: number;
 }
 
-export interface MetaMap {
+export class MetaMap {
     id: string;
     attrs?: MapAttrs;
 }
@@ -18,7 +19,7 @@ export class Meta {
     userId: string;
     maps?: MetaMap[];
 
-    constructor(id: string, userId: string, maps?: {id: string, attrs: MapAttrs}[]) {
+    constructor(id: string, userId: string, maps?: MetaMap[]) {
         this.id = id ? id : ulid();
         this.userId = userId ? userId : null;
         this.maps = maps ? maps : [];

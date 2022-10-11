@@ -43,10 +43,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     destroying: boolean = false;
     isBlueprintDisplayed: boolean = false;
 
-    // META
-    gameMeta: Meta = new Meta('', '');
-    currentMapMeta: MetaMap;
-
     // ZOOM
     currentZoomOptions = {
         minScale: 0.3,
@@ -97,47 +93,32 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                     })
                 );
             }),
+            // 3. call meta from server and set attrs map
             switchMap((res) => {
                 return this.metaInteractor.getUserMetaObs().pipe(
                     tap((meta: Meta) => {
-                        const mapFound: OurKonvaMap = this.maps.find((map: OurKonvaMap) => map.id === meta.maps[0].id);
-                        if (mapFound) {
-                            mapFound.stage.attrs = meta.maps[0].attrs;
-                            this.currentMap = null;
-                            this.currentMap = mapFound;
-                            this.mapInteractor.setCurrentMap(mapFound);
-                            this.currentMapMeta = mapFound.stage.attrs;
-                            console.log('currentMap', this.currentMap);
+                        const metaMap: MetaMap = MetaMap.fromJSON(meta.maps.find((map: MetaMap) => map.id === this.currentMap.id));
+                        if (metaMap) {
+                            this.currentMap = metaMap.setMetaMap(this.currentMap);
+                            this.mapInteractor.setCurrentMap(this.currentMap);
                         }
                     })
                 );
             }),
+            // 4.
             tap(() => {
                 setTimeout(() => { this.destroying = false; });
                 this.cdr.detectChanges();
             })
         ).subscribe();
 
-        // 2.1 Load last selected map if you have meta
-        // this.$metaSubs = this.metaInteractor.getUserMetaObs().subscribe((meta: Meta) => {
-        //     if (meta) {
-        //         const metaLastMapSelectedIndex = this.maps?.findIndex(_map => _map.id === meta.maps[0]?.id) ?? -1;
-        //         if (metaLastMapSelectedIndex !== -1) {
-        //             this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
-        //         } else {
-        //             this.mapInteractor.setCurrentMap(this.maps[0]);
-        //         }
-        //     } else {
-        //         this.mapInteractor.setCurrentMap(this.maps[0]);
-        //     }
-        // });
-
-        // 3. Socket connection with map selected
+        // Socket connection with map selected
         this.gameInteractor.setCurrentGame(this.game);
         if (this.game?.mapsId) {
             this.gameStatus = this.game.status;
         }
 
+        // todo ========= MIRAR ========
         this.$getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
             this.mouse = mouse;
         });
@@ -271,11 +252,22 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onSelectedMap(map: OurKonvaMap): void {
-        // this.currentZoomOptions.value = 1;
-        console.log('onSelectedMap', map);
+        this.destroying = true;
         this.currentMap = map;
-        this.mapInteractor.setCurrentMap(map);
-        this.socketService.sendMetaSelectedMap(map.id);
+
+        // ============== meta =================== //
+        const meta = this.metaInteractor.getUserMeta();
+        const metaMap: MetaMap = MetaMap.fromJSON(meta.maps.find((map: MetaMap) => map.id === this.currentMap.id));
+        if (metaMap) {
+            this.currentMap = metaMap.setMetaMap(this.currentMap);
+            this.mapInteractor.setCurrentMap(this.currentMap);
+        }
+        // ======================================= //
+        this.mapInteractor.setCurrentMap(this.currentMap);
+        this.socketService.sendMetaSelectedMap(this.currentMap.id);
+        setTimeout(() => {
+            this.destroying = false;
+        });
     }
 
     onCreateMap(map: OurKonvaMap): void {
@@ -319,13 +311,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onMapDrag(attrs: any): void {
-        if (this.currentMapMeta) {
-            this.currentMapMeta.attrs = attrs;
-        } else {
-            const newMapAttrs = {id: this.mapInteractor.getCurrentMap().id, attrs};
-            this.gameMeta.maps?.push(newMapAttrs);
-        }
-        this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, attrs);
+        const newMetaToSave: Meta = this.metaInteractor.getUserMeta();
+        const metaMapFound: MetaMap = newMetaToSave.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
+        metaMapFound.attrs = {...metaMapFound.attrs, ...attrs};
+
+        this.metaInteractor.setUserMeta(newMetaToSave);
+        this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, metaMapFound.attrs);
     }
 
     onStatusChange(status: GameStatus): void {
