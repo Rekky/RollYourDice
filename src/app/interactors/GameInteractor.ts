@@ -3,7 +3,7 @@ import {GameService} from '../services/game.service';
 import {Game, GameStatus} from '../classes/Game';
 import {UserInteractor} from './UserInteractor';
 import {Router} from '@angular/router';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, from, Observable} from 'rxjs';
 import {OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {AssetService} from '../services/asset.service';
 import {Player} from '../classes/User';
@@ -12,23 +12,23 @@ import {Player} from '../classes/User';
     providedIn: 'root'
 })
 export class GameInteractor {
-    private currentGame: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
-    public kickedGameId: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+    private currentGame$: BehaviorSubject<Game | null> = new BehaviorSubject<Game>(null);
+    public kickedGameId$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
     constructor(private gameService: GameService,
                 private imageService: AssetService) {
     }
 
     setCurrentGame(game: Game): void {
-        this.currentGame.next(game);
+        this.currentGame$.next(game);
     }
 
     getCurrentGameObs(): Observable<Game> {
-        return this.currentGame.asObservable();
+        return this.currentGame$.asObservable();
     }
 
     getCurrentGame(): Game {
-        return this.currentGame.value;
+        return this.currentGame$.value;
     }
 
     getGameEditor(id: string): void {
@@ -37,6 +37,10 @@ export class GameInteractor {
 
     async getGame(gameId: string): Promise<Game> {
         return await this.gameService.getGame(gameId);
+    }
+
+    getGameObs(gameId: string): Observable<Game> {
+        return from(this.gameService.getGame(gameId));
     }
 
     async createGame(game: Game, asset: any): Promise<Game> {

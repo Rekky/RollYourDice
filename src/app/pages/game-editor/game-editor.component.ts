@@ -19,6 +19,7 @@ import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {Player} from '../../classes/User';
 import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
+import {map, switchMap, tap} from "rxjs/operators";
 
 @Component({
     selector: 'app-game-editor',
@@ -26,10 +27,11 @@ import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
     styleUrls: ['./game-editor.component.scss']
 })
 export class GameEditorComponent implements OnInit, OnDestroy {
-    map: OurKonvaMap;
+    currentMap: OurKonvaMap;
     mapModification: OurKonvaMapModification;
     game: Game;
     maps: OurKonvaMap[] = [];
+
     gameStatus: GameStatus = GameStatus.Stopped;
     GameStatus = GameStatus;
     currentObjectSelected: any;
@@ -39,7 +41,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
     destroying: boolean = false;
-    isBlueprintDisplayed: boolean = true;
+    isBlueprintDisplayed: boolean = false;
 
     // META
     gameMeta: Meta = new Meta('', '');
@@ -74,105 +76,176 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 public libraryInteractor: LibraryInteractor,
                 private cdr: ChangeDetectorRef) {
 
-        combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
-            if (map) {
-                this.destroying = true;
-                this.mouseInteractor.unsetSelectedKonvaObject();
-                this.map = map;
-            }
-            if (map && meta) {
-                this.gameMeta = meta;
-                this.currentMapMeta = this.gameMeta.maps.find(m => m.id === map.id);
+        // 0. get game id from url and send to server the gameId
+        const gameId = this.router.snapshot.paramMap.get('id');
+        this.socketService.sendPlayerEnterGame(gameId);
 
-                if (this.currentMapMeta && this.currentMapMeta.attrs) {
-                    this.currentZoomOptions.scale = this.currentMapMeta.attrs?.scaleX ?? 1;
-                }
-            }
+        this.gameInteractor.getGameObs(gameId).pipe(
+            // 1. call to game from gameId url
+            tap((game: Game) => {
+                this.game = game;
+            }),
+            // 2. call maps from current game
+            switchMap((game) => {
+                return this.mapInteractor.getAllMapsObs(game.id).pipe(
+                    tap((maps) => {
+                        this.maps = maps.data ?? [];
+                        if (this.maps.length > 0) {
+                            this.currentMap = this.maps[0];
+                            this.mapInteractor.setCurrentMap(this.maps[0]);
+                        }
+                    })
+                );
+            }),
+            switchMap((res) => {
+                return this.metaInteractor.getUserMetaObs().pipe(
+                    tap((meta: Meta) => {
+                        const mapFound: OurKonvaMap = this.maps.find((map: OurKonvaMap) => map.id === meta.maps[0].id);
+                        if (mapFound) {
+                            mapFound.stage.attrs = meta.maps[0].attrs;
+                            this.currentMap = null;
+                            this.currentMap = mapFound;
+                            this.mapInteractor.setCurrentMap(mapFound);
+                            this.currentMapMeta = mapFound.stage.attrs;
+                            console.log('currentMap', this.currentMap);
+                        }
+                    })
+                );
+            }),
+            tap(() => {
+                setTimeout(() => { this.destroying = false; });
+                this.cdr.detectChanges();
+            })
+        ).subscribe();
 
-            setTimeout(() => {
-                this.destroying = false;
-            });
+        // 2.1 Load last selected map if you have meta
+        // this.$metaSubs = this.metaInteractor.getUserMetaObs().subscribe((meta: Meta) => {
+        //     if (meta) {
+        //         const metaLastMapSelectedIndex = this.maps?.findIndex(_map => _map.id === meta.maps[0]?.id) ?? -1;
+        //         if (metaLastMapSelectedIndex !== -1) {
+        //             this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
+        //         } else {
+        //             this.mapInteractor.setCurrentMap(this.maps[0]);
+        //         }
+        //     } else {
+        //         this.mapInteractor.setCurrentMap(this.maps[0]);
+        //     }
+        // });
+
+        // 3. Socket connection with map selected
+        this.gameInteractor.setCurrentGame(this.game);
+        if (this.game?.mapsId) {
+            this.gameStatus = this.game.status;
+        }
+
+        this.$getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
+            this.mouse = mouse;
         });
-
-        this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
-            this.library = [{type: 'CHARACTERS', items: library}];
-            console.log('librarys--->', this.library);
-        });
-    }
-
-    async ngOnInit(): Promise<void> {
-        try {
-            const gameId = this.router.snapshot.paramMap.get('id');
-            this.socketService.sendPlayerEnterGame(gameId);
-
-            // 1. Call to get game info
-            this.game = await this.gameInteractor.getGame(gameId);
-
-            // 2. Call to get map's list
-            combineLatest(this.mapInteractor.getAllMapsObs(gameId), this.metaInteractor.getUserMetaObs()).subscribe((result: any) => {
-                const maps = result[0].data ?? [];
-                const meta = result[1] ?? {};
-                this.maps = maps;
-
-                // === META === select last selected map from meta
-                if (meta && meta.maps && meta.maps.length > 0) {
-                    const mapFound = this.maps.find(map => map.id === meta.maps[0].id);
-                    this.mapInteractor.setCurrentMap(mapFound);
-                } else {
-                    this.mapInteractor.setCurrentMap(this.maps[0]);
-                }
-            });
-
-            // 2.1 Load last selected map if you have meta
-            this.$metaSubs = this.metaInteractor.getUserMetaObs().subscribe((meta: Meta) => {
-                if (meta) {
-                    const metaLastMapSelectedIndex = this.maps?.findIndex(_map => _map.id === meta.maps[0]?.id) ?? -1;
-                    if (metaLastMapSelectedIndex !== -1) {
-                        this.mapInteractor.setCurrentMap(this.maps[metaLastMapSelectedIndex]);
-                    } else {
-                        this.mapInteractor.setCurrentMap(this.maps[0]);
-                    }
-                } else {
-                    this.mapInteractor.setCurrentMap(this.maps[0]);
-                }
-            });
-
-            // 3. Socket connection with map selected
-            this.gameInteractor.setCurrentGame(this.game);
-            if (this.game?.mapsId) {
-                this.gameStatus = this.game.status;
-            }
-
-            this.$getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
-                this.mouse = mouse;
-            });
-            this.$getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
-                .subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
+        this.$getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
+            .subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
                 if (selectedObject) {
                     this.selectedKonvaObject = selectedObject[0];
                 }
             });
 
-            this.$getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
-                if (res) {
-                    this.mapModification = res;
-                    this.cdr.detectChanges();
+        this.$getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
+            if (res) {
+                this.mapModification = res;
+                this.cdr.detectChanges();
+            }
+        });
+        this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
+            if (adventures) {
+                const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
+                if (currentGame) {
+                    this.gameStatus = currentGame.status;
                 }
-            });
-            this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
-                if (adventures) {
-                    const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
-                    if (currentGame) {
-                        this.gameStatus = currentGame.status;
-                    }
-                }
-            });
+            }
+        });
 
-            this.cdr.detectChanges();
-        }
-        catch (e) {
-            console.error(e);
-        }
+        // combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
+        //     if (map) {
+        //         this.destroying = true;
+        //         this.mouseInteractor.unsetSelectedKonvaObject();
+        //         this.currentMap = map;
+        //     }
+        //     if (map && meta) {
+        //         this.gameMeta = meta;
+        //         this.currentMapMeta = this.gameMeta.maps.find(m => m.id === map.id);
+        //
+        //         if (this.currentMapMeta && this.currentMapMeta.attrs) {
+        //             this.currentZoomOptions.scale = this.currentMapMeta.attrs?.scaleX ?? 1;
+        //         }
+        //     }
+        //
+        //     setTimeout(() => { this.destroying = false; });
+        // });
+
+        // this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
+        //     this.library = [{type: 'CHARACTERS', items: library}];
+        //     console.log('librarys--->', this.library);
+        // });
+    }
+
+    async ngOnInit(): Promise<void> {
+        // try {
+            // const gameId = this.router.snapshot.paramMap.get('id');
+            // this.socketService.sendPlayerEnterGame(gameId);
+
+            // 1. Call to get game info
+            // this.game = await this.gameInteractor.getGame(gameId);
+
+            // 2. Call to get map's list
+            // combineLatest(this.mapInteractor.getAllMapsObs(gameId), this.metaInteractor.getUserMetaObs()).subscribe((result: any) => {
+            //     const maps = result[0].data ?? [];
+            //     const meta = result[1] ?? {};
+            //     this.maps = maps;
+            //
+            //     // === META === select last selected map from meta
+            //     if (meta && meta.maps && meta.maps.length > 0) {
+            //         const mapFound = this.maps.find(map => map.id === meta.maps[0].id);
+            //         this.mapInteractor.setCurrentMap(mapFound);
+            //     } else {
+            //         this.mapInteractor.setCurrentMap(this.maps[0]);
+            //     }
+            // });
+
+            // // 3. Socket connection with map selected
+            // this.gameInteractor.setCurrentGame(this.game);
+            // if (this.game?.mapsId) {
+            //     this.gameStatus = this.game.status;
+            // }
+            //
+            // this.$getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
+            //     this.mouse = mouse;
+            // });
+            // this.$getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
+            //     .subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
+            //     if (selectedObject) {
+            //         this.selectedKonvaObject = selectedObject[0];
+            //     }
+            // });
+            //
+            // this.$getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
+            //     if (res) {
+            //         this.mapModification = res;
+            //         this.cdr.detectChanges();
+            //     }
+            // });
+            // this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
+            //     if (adventures) {
+            //         const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
+            //         if (currentGame) {
+            //             this.gameStatus = currentGame.status;
+            //         }
+            //     }
+            // });
+            //
+            // this.cdr.detectChanges();
+        // }
+        // catch (e) {
+        //     console.error(e);
+        // }
     }
 
     ngOnDestroy(): void {
@@ -194,11 +267,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     updateProperties(ev): void {
-        this.map = {...ev};
+        this.currentMap = {...ev};
     }
 
     onSelectedMap(map: OurKonvaMap): void {
         // this.currentZoomOptions.value = 1;
+        console.log('onSelectedMap', map);
+        this.currentMap = map;
         this.mapInteractor.setCurrentMap(map);
         this.socketService.sendMetaSelectedMap(map.id);
     }

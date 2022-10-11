@@ -37,9 +37,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     @Input() stepScale: number = 0.1;
     @Output() scaleChange: EventEmitter<number> = new EventEmitter<number>();
 
-    // META PARAMS
-    @Input() meta: MetaMap = null;
-
     public currentMapObjectsSelected: CurrentSelectedKonvaObject[] | null;
     public selectedObjectEditorPosition: Coords;
     public displaySelectedObjectEditor: boolean = false;
@@ -158,8 +155,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     }
 
     initializeMap(): void {
-        // setTimeout(() => {
-        //     stage.scale({ x: this.meta.attrs.scaleX, y: this.meta.attrs.scaleY });
         const stage = this.createStage();
         stage.container().style.backgroundColor = '#252525';
 
@@ -178,40 +173,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
         stage.add(this.layers.texts);
         this.gridStage = stage;
         this.mouseInteractor.setStage(stage);
-        // }, 50);
-
     }
 
     createStage(): Konva.Stage {
-        // console.log('@INPUT_META->', this.meta);
-        let stage;
-        if (this.meta) {
-            // console.log('tiene meta');
-            stage = this.setMetaParams();
-        } else {
-            // console.log('no tiene meta');
-            stage = new Konva.Stage({
-                container: 'map' + this.map.id,
-                width: window.innerWidth,
-                height: window.innerHeight,
-                draggable: false,
-                scale: {x: this.scale, y: this.scale},
-                x: 0,
-                y: 0
-            });
-        }
-        return stage;
-    }
-
-    setMetaParams(): Konva.Stage {
         return new Konva.Stage({
             container: 'map' + this.map.id,
             width: window.innerWidth,
             height: window.innerHeight,
             draggable: false,
-            scale: {x: this.meta.attrs?.scaleX ?? this.scale , y: this.meta.attrs?.scaleY ?? this.scale},
-            x: this.meta.attrs?.x ?? 0,
-            y: this.meta.attrs?.y ?? 0
+            scale: {x: this.map.stage.attrs.scaleX ?? this.scale, y: this.map.stage.attrs.scaleX ?? this.scale},
+            x: this.map.stage.attrs.x ?? 0,
+            y: this.map.stage.attrs.y ?? 0
         });
     }
 
