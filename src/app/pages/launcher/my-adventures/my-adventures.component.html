@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="my-adventures-body" *ngIf="adventures">
-        <div class="adventure-box" *ngFor="let adventure of adventures; let i = index;">
+        <div class="adventure-box w-[16vw] h-[60vh]" *ngFor="let adventure of adventures; let i = index;">
             <div class="cover-image">
                 <img class="grayscale" *ngIf="!adventure.coverImage?.uri" [src]="'../../../../assets/backgrounds/menus/background-default-game.webp'" alt="adventure background">
                 <img class="" *ngIf="adventure.coverImage?.uri" [src]="adventure.coverImage?.uri" alt="adventure background">
