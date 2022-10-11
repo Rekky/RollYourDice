@@ -2,19 +2,6 @@
 @import "src/assets/scss/form-inputs.scss";
 @import "src/assets/scss/buttons.scss";
 
-*{
-    color: $c-white;
-}
-.box-shadow {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba($c-blackest, 0.2);
-}
-
 .user-list-box {
     display: flex;
     flex-flow: row nowrap;
@@ -44,89 +31,37 @@
     border: 1px solid #2A2A2A;
 }
 
-@keyframes expand-card {
-    from {
-        transform: translateY(-110%);
-    }
-    to {
-        transform: translateY(0%);
-    }
-}
-button[disabled]{
-    background-color: $c-black-grey !important;
-}
-.vertical-line {
-    border-left: 1px solid #191919;
-    height: 630px;
-    position: absolute;
-    left: 383px;
-    top: 70px;
-}
-.header {
-    width: 100%;
-    height: 100px;
-    padding: 20px 20px 20px 50px;
-    letter-spacing: 1px;
-
-    .exit {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-end;
-        align-items: center;
-
-        width: 100%;
-        height: 30px;
-        cursor: pointer;
-
-        svg {
-            stroke: $c-white;
-            height: 100%;
-
-            &:hover {
-                stroke: $c-white;
-            }
-        }
-    }
-
-    .title {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-        align-items: center;
-
-        width: 100%;
-        font-size: 24px;
-        font-weight: 600;
-    }
-}
 
 .image-container{
     position: relative;
     text-align: center;
-    color: $c-white;
-    width: 300px;
-    height: 570px;
+    color: #fff;
+    width: 100%;
+    height: 94%;
+    overflow: hidden;
 
-    img{
-
+    img {
+        position: absolute;
+        top:0;
+        left:0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-
     }
 
-    .centered {
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%,-50%);
+    .game-name {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
         text-shadow: 2px 2px 4px 0px #101010;
         font-weight: 600;
         line-height: 71px;
         font-size: 48px;
         text-transform: uppercase;
         font-family: oswald,sans-serif;
-
     }
 }
 
@@ -147,37 +82,37 @@ button[disabled]{
             left: 383px;
             margin-top: 12px;
         }
-        input{
-            background-color: $c-white !important;
-            color: #A0A0A0;
-            font-weight: 600;
-            border: none;
-            overflow: auto;
-            outline: none;
-            border-radius: 8px;
-            margin: 10px 0;
-            padding: 0 10px;
-
-            width: 75%;
-            height: 34px;
-
-        }
-        label{
-            font-size: 18px;
-            line-height: 22px;
-            font-weight: 600;
-
-        }
-        input + button{
-            background-color: #cfb525;
-            width: 92px;
-            margin: 10px;
-            height: 34px;
-            border-radius: 8px;
-
-            font-weight: 600;
-            color: #16191d!important;
-        }
+        //input{
+        //    background-color: $c-white !important;
+        //    color: #A0A0A0;
+        //    font-weight: 600;
+        //    border: none;
+        //    overflow: auto;
+        //    outline: none;
+        //    border-radius: 8px;
+        //    margin: 10px 0;
+        //    padding: 0 10px;
+        //
+        //    width: 75%;
+        //    height: 34px;
+        //
+        //}
+        //label{
+        //    font-size: 18px;
+        //    line-height: 22px;
+        //    font-weight: 600;
+        //
+        //}
+        //input + button{
+        //    background-color: #cfb525;
+        //    width: 92px;
+        //    margin: 10px;
+        //    height: 34px;
+        //    border-radius: 8px;
+        //
+        //    font-weight: 600;
+        //    color: #16191d!important;
+        //}
         .players-list {
 
 
