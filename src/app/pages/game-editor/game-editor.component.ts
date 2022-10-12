@@ -97,7 +97,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             switchMap((res) => {
                 return this.metaInteractor.getUserMetaObs().pipe(
                     tap((meta: Meta) => {
-                        const metaMap: MetaMap = MetaMap.fromJSON(meta.maps.find((map: MetaMap) => map.id === this.currentMap.id));
+                        const foundMeta: MetaMap = meta.maps.find((_map: MetaMap) => _map.id === this.currentMap.id);
+                        const metaMap = new MetaMap(foundMeta.id, foundMeta.attrs);
                         if (metaMap) {
                             this.currentMap = metaMap.setMetaMap(this.currentMap);
                             this.mapInteractor.setCurrentMap(this.currentMap);
@@ -273,7 +274,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
         // ============== meta =================== //
         const meta = this.metaInteractor.getUserMeta();
-        const metaMap: MetaMap = MetaMap.fromJSON(meta.maps.find((map: MetaMap) => map.id === this.currentMap.id));
+        // const metaMap: MetaMap = MetaMap.fromJSON(meta.maps.find((map: MetaMap) => map.id === this.currentMap.id));
+        const foundMeta: MetaMap = meta.maps.find((_map: MetaMap) => _map.id === this.currentMap.id);
+        const metaMap: MetaMap = new MetaMap(foundMeta.id, foundMeta.attrs);
         if (metaMap) {
             this.currentMap = metaMap.setMetaMap(this.currentMap);
             this.mapInteractor.setCurrentMap(this.currentMap);
