@@ -3,6 +3,8 @@ import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
 export interface MapAttrs {
     container?: any;
+    height: number;
+    width: number;
     x: number;
     y: number;
     scaleX: number;
@@ -26,10 +28,12 @@ export class MetaMap {
     }
 
     public setMetaMap(map: OurKonvaMap): OurKonvaMap {
-        if (map.stage.attrs !== null) {
-            map.stage.attrs = this.attrs;
-        }
-        // map.stage.attrs = this.attrs;
+        console.log('eso1', map);
+        console.log('eso2', this.attrs);
+        // if (map.stage.attrs !== null) {
+        //     map.stage.attrs = this.attrs;
+        // }
+        map.stage.attrs = this.attrs;
         return map;
     }
 }

@@ -98,10 +98,12 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 return this.metaInteractor.getUserMetaObs().pipe(
                     tap((meta: Meta) => {
                         const foundMeta: MetaMap = meta.maps.find((_map: MetaMap) => _map.id === this.currentMap.id);
-                        const metaMap = new MetaMap(foundMeta.id, foundMeta.attrs);
-                        if (metaMap) {
-                            this.currentMap = metaMap.setMetaMap(this.currentMap);
-                            this.mapInteractor.setCurrentMap(this.currentMap);
+                        if (foundMeta) {
+                            const metaMap = new MetaMap(foundMeta.id, foundMeta.attrs);
+                            if (metaMap) {
+                                this.currentMap = metaMap.setMetaMap(this.currentMap);
+                                this.mapInteractor.setCurrentMap(this.currentMap);
+                            }
                         }
                     })
                 );
@@ -333,9 +335,14 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onMapDrag(attrs: any): void {
         const newMetaToSave: Meta = this.metaInteractor.getUserMeta();
-        const metaMapFound: MetaMap = newMetaToSave.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
-        metaMapFound.attrs = {...metaMapFound.attrs, ...attrs};
-
+        let metaMapFound: MetaMap = newMetaToSave.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
+        if (metaMapFound) {
+            metaMapFound.attrs = {...metaMapFound.attrs, ...attrs};
+        } else {
+            metaMapFound = new MetaMap();
+            metaMapFound.setMetaMap(this.currentMap);
+            console.log('else', metaMapFound);
+        }
         this.metaInteractor.setUserMeta(newMetaToSave);
         this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, metaMapFound.attrs);
     }
