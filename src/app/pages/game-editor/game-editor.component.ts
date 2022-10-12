@@ -109,7 +109,49 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             tap(() => {
                 setTimeout(() => { this.destroying = false; });
                 this.cdr.detectChanges();
-            })
+            }),
+            // 5.
+            switchMap((res) => {
+                return this.mouseService.getMouseObservable().pipe(
+                    tap((mouse) => {
+                        this.mouse = mouse;
+                    })
+                );
+            }),
+            // 6.
+            switchMap((res) => {
+                return this.mouseInteractor.getSelectedKonvaObjectObservable().pipe(
+                    tap((selectedObject: CurrentSelectedKonvaObject[] | null) => {
+                        if (selectedObject) {
+                            this.selectedKonvaObject = selectedObject[0];
+                        }
+                    })
+                );
+            }),
+            // 7.
+            switchMap((res) => {
+                return this.mapInteractor.getCurrentMapModificationObs().pipe(
+                    tap((_res: OurKonvaMapModification) => {
+                        if (res) {
+                            this.mapModification = _res;
+                            this.cdr.detectChanges();
+                        }
+                    })
+                );
+            }),
+            // 8.
+            switchMap((res) => {
+                return this.myAdventureInteractor.getMyAdventures().pipe(
+                    tap((games: Game[]) => {
+                        if (games) {
+                            const currentGame: Game = games.find((game: Game) => game.id === this.game.id);
+                            if (currentGame) {
+                                this.gameStatus = currentGame.status;
+                            }
+                        }
+                    })
+                );
+            }),
         ).subscribe();
 
         // Socket connection with map selected
@@ -117,32 +159,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         if (this.game?.mapsId) {
             this.gameStatus = this.game.status;
         }
-
-        // todo ========= MIRAR ========
-        this.$getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
-            this.mouse = mouse;
-        });
-        this.$getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
-            .subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
-                if (selectedObject) {
-                    this.selectedKonvaObject = selectedObject[0];
-                }
-            });
-
-        this.$getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
-            if (res) {
-                this.mapModification = res;
-                this.cdr.detectChanges();
-            }
-        });
-        this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
-            if (adventures) {
-                const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
-                if (currentGame) {
-                    this.gameStatus = currentGame.status;
-                }
-            }
-        });
 
         // combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
         //     if (map) {
