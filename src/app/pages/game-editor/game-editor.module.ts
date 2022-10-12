@@ -38,6 +38,7 @@ import { ObjectsListComponent } from './objects-list/objects-list.component';
 import { CamerasListComponent } from './cameras-list/cameras-list.component';
 import {BlueprintsModule} from '../../blueprints/blueprints.module';
 import { LibraryListComponent } from './library-list/library-list.component';
+import { KonvaImagePropertiesComponent } from './context-menu/konva-tools-properties/konva-image-properties/konva-image-properties.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import { LibraryListComponent } from './library-list/library-list.component';
         NumberInputComponent,
         ObjectsListComponent,
         CamerasListComponent,
-        LibraryListComponent
+        LibraryListComponent,
+        KonvaImagePropertiesComponent
     ],
     imports: [
         CommonModule,

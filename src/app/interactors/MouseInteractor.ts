@@ -16,6 +16,7 @@ import {OurKonvaBrush} from '../classes/ourKonva/OurKonvaBrush';
 import {AssetModel} from '../classes/AssetModel';
 import {UserInteractor} from './UserInteractor';
 import {Player} from '../classes/User';
+import {MapInteractor} from './MapInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,7 @@ export class MouseInteractor implements OnDestroy {
     constructor(private mouseService: MouseService,
                 private mapObjectService: MapObjectService,
                 private socketService: SocketService,
+                private mapInteractor: MapInteractor,
                 private userInteractor: UserInteractor) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             if (res) {
@@ -239,9 +241,7 @@ export class MouseInteractor implements OnDestroy {
     newObjectSetEvents(object: any): void {
         const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
         object?.konvaObject.on('mouseover', (e) => {
-            if (!object.ourKonvaObject.isEditionBlocked) {
-                document.body.style.cursor = 'pointer';
-            }
+            document.body.style.cursor = 'pointer';
             this.mouseIsOverKonvaObjectId = object.ourKonvaObject.id;
         });
         object?.konvaObject.on('mouseout', (e) => {
@@ -250,6 +250,7 @@ export class MouseInteractor implements OnDestroy {
         });
         object?.konvaObject.on('click', () => {
             if (this.mouse.state !== 'pointer') { return; }
+            if (object.ourKonvaObject.isEditionBlocked && this.isCtrlKeyPressed) { return; }
             const nodes = selectedGroupTr.getNodes();
             const selectedObjects = this.selectedKonvaObjects?.getValue();
 
@@ -285,9 +286,10 @@ export class MouseInteractor implements OnDestroy {
 
             if (!object.ourKonvaObject.isEditionBlocked) {
                 object.konvaObject.draggable(!object.ourKonvaObject.isEditionBlocked);
-                selectedObjects.push(object);
-                selectedGroupTr.nodes(nodes.concat([object.konvaObject]));
             }
+
+            selectedObjects.push(object);
+            selectedGroupTr.nodes(nodes.concat([object.konvaObject]));
             object.layer.batchDraw();
             this.selectedKonvaObjects.next(selectedObjects);
         });
@@ -352,7 +354,6 @@ export class MouseInteractor implements OnDestroy {
 
     paintObjectOnMap(object: any): void {
         if (object?.state === 'square') {
-            console.log(this.ourLayers);
             const createdObject = OurKonvaRect.paint(object, this.ourLayers);
             this.newObjectSetEvents(createdObject);
         }
@@ -428,5 +429,23 @@ export class MouseInteractor implements OnDestroy {
         obj.ourKonvaObject.size.width = width;
         obj.ourKonvaObject.size.height = height;
         return obj;
+    }
+
+    moveElementToTop(selectedObject: CurrentSelectedKonvaObject): void {
+        const elements = selectedObject.layer.getChildren();
+        const ourKonvaObjects = this.mapInteractor.getCurrentMap().objects;
+        elements.forEach(el => {
+            if (el.attrs.id === selectedObject.ourKonvaObject.id) {
+                // el.zIndex(elements.length - 1);
+                // selectedObject.ourKonvaObject.zIndex = elements.length - 1;
+                selectedObject.ourKonvaObject.zIndex = 5;
+                return;
+            }
+
+            if (el.getZIndex() > selectedObject.konvaObject.getZIndex()) {
+                el.zIndex(el.getZIndex() - 1);
+            }
+        });
+        this.socketService.updateGameObjects(this.currentMap.id, [selectedObject.ourKonvaObject]);
     }
 }

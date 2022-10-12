@@ -13,5 +13,13 @@
                                 (brushChange)="updateObject($event)"
                                 (isEditionBlockedChange)="editionBlockedToggle($event)">
     </app-konva-brush-properties>
+    <app-konva-image-properties *ngIf="selectedObject.type === 'image'"
+                                [image]="selectedObject.ourKonvaObject"
+                                (imageChange)="updateObject($event)"
+                                (isAdaptedToGridChange)="isObjectAdaptedToGridToggle($event)"
+                                (isEditionBlockedChange)="editionBlockedToggle($event)"
+                                (isDisplayedJustForMasterChange)="displayedJustForMaster($event)"
+                                (itemToTop)="moveItemToTop()" (itemToBottom)="moveItemToBottom()">
+    </app-konva-image-properties>
 </div>
 
