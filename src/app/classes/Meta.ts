@@ -1,5 +1,5 @@
 import {ulid} from 'ulid';
-import {OurKonvaMap} from "./ourKonva/OurKonvaMap";
+import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
 export interface MapAttrs {
     container?: any;
@@ -12,6 +12,23 @@ export interface MapAttrs {
 export class MetaMap {
     id: string;
     attrs?: MapAttrs;
+
+    constructor(id?: string, attrs?: MapAttrs) {
+        this.id = id ? id : ulid();
+        this.attrs = attrs ? attrs : null;
+    }
+
+    static fromJSON(json: any): MetaMap {
+        const metaMap = new MetaMap();
+        metaMap.id = json.id;
+        metaMap.attrs = json.attrs;
+        return metaMap;
+    }
+
+    public setMetaMap(map: OurKonvaMap): OurKonvaMap {
+        map.stage.attrs = this.attrs;
+        return map;
+    }
 }
 
 export class Meta {
