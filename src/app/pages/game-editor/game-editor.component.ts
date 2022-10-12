@@ -19,7 +19,7 @@ import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {Player} from '../../classes/User';
 import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {map, switchMap, tap} from "rxjs/operators";
+import {map, switchMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-game-editor',
@@ -153,13 +153,19 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                     })
                 );
             }),
+            // 9. Socket connection with game selected
+            tap(() => {
+                this.gameInteractor.setCurrentGame(this.game);
+                if (this.game?.mapsId) {
+                    this.gameStatus = this.game.status;
+                }
+            })
         ).subscribe();
 
-        // Socket connection with map selected
-        this.gameInteractor.setCurrentGame(this.game);
-        if (this.game?.mapsId) {
-            this.gameStatus = this.game.status;
-        }
+        this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
+            this.library = [{type: 'CHARACTERS', items: library}];
+            console.log('library--->', this.library);
+        });
 
         // combineLatest(this.mapInteractor.getCurrentMapObs(), this.metaInteractor.getUserMetaObs()).subscribe(([map, meta]) => {
         //     if (map) {
@@ -177,11 +183,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         //     }
         //
         //     setTimeout(() => { this.destroying = false; });
-        // });
-
-        // this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
-        //     this.library = [{type: 'CHARACTERS', items: library}];
-        //     console.log('librarys--->', this.library);
         // });
     }
 
@@ -272,21 +273,22 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.destroying = true;
         this.currentMap = map;
 
-        // ============== meta =================== //
+        // // ============== meta =================== //
         const meta = this.metaInteractor.getUserMeta();
         // const metaMap: MetaMap = MetaMap.fromJSON(meta.maps.find((map: MetaMap) => map.id === this.currentMap.id));
         const foundMeta: MetaMap = meta.maps.find((_map: MetaMap) => _map.id === this.currentMap.id);
-        const metaMap: MetaMap = new MetaMap(foundMeta.id, foundMeta.attrs);
-        if (metaMap) {
+        if (foundMeta) {
+            const metaMap: MetaMap = new MetaMap(foundMeta?.id, foundMeta?.attrs);
+            console.log('metaMap', metaMap);
+            console.log('this.currentMap', this.currentMap);
             this.currentMap = metaMap.setMetaMap(this.currentMap);
             this.mapInteractor.setCurrentMap(this.currentMap);
         }
         // ======================================= //
         this.mapInteractor.setCurrentMap(this.currentMap);
         this.socketService.sendMetaSelectedMap(this.currentMap.id);
-        setTimeout(() => {
-            this.destroying = false;
-        });
+
+        setTimeout(() => { this.destroying = false; });
     }
 
     onCreateMap(map: OurKonvaMap): void {

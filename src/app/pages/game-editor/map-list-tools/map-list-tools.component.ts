@@ -3,7 +3,6 @@ import {UntypedFormGroup} from '@angular/forms';
 import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
-import { MapEditComponent } from './map-edit/map-edit.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Camera} from '../../../classes/Camera';
 import {CurrentSelectedKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';

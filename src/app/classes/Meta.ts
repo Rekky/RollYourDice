@@ -26,7 +26,10 @@ export class MetaMap {
     }
 
     public setMetaMap(map: OurKonvaMap): OurKonvaMap {
-        map.stage.attrs = this.attrs;
+        if (map.stage.attrs !== null) {
+            map.stage.attrs = this.attrs;
+        }
+        // map.stage.attrs = this.attrs;
         return map;
     }
 }
