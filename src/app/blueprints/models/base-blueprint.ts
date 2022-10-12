@@ -31,7 +31,8 @@ export class BaseBlueprintBox {
 }
 
 export enum BoxTypeEnum {
-    FUNCTION = 'FUNCTION'
+    FUNCTION = 'FUNCTION',
+    EVENT = 'EVENT',
 }
 
 export enum BoxKindEnum {
@@ -40,4 +41,6 @@ export enum BoxKindEnum {
     EQUALS = 'EQUALS',
     MOVE_ACTOR_TO_LOCATION = 'MOVE_ACTOR_TO_LOCATION',
     GET = 'GET',
+    ON_INIT = 'ON_INIT',
+    ON_OVERLAP = 'ON_OVERLAP',
 }

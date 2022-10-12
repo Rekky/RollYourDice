@@ -11,6 +11,8 @@ import { BbGetAllActorsComponent } from './blueprint-boxes/actions/bb-get-all-ac
 import { BbEqualsComponent } from './blueprint-boxes/actions/bb-equals/bb-equals.component';
 import { BbMoveActorToLocationComponent } from './blueprint-boxes/actions/bb-move-actor-to-location/bb-move-actor-to-location.component';
 import { BbGetComponent } from './blueprint-boxes/actions/bb-get/bb-get.component';
+import { BbOnInitComponent } from './blueprint-boxes/events/bb-on-init/bb-on-init.component';
+import { BbOnOverlapComponent } from './blueprint-boxes/events/bb-on-overlap/bb-on-overlap.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +25,8 @@ import { BbGetComponent } from './blueprint-boxes/actions/bb-get/bb-get.componen
         BbEqualsComponent,
         BbMoveActorToLocationComponent,
         BbGetComponent,
+        BbOnInitComponent,
+        BbOnOverlapComponent,
     ],
     imports: [
         CommonModule,

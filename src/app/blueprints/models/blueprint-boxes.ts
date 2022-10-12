@@ -46,3 +46,21 @@ export class BBGet extends BaseBlueprintBox {
         this.kind = BoxKindEnum.GET;
     }
 }
+
+export class BBOnInit extends BaseBlueprintBox {
+
+    constructor() {
+        super();
+        this.type = BoxTypeEnum.EVENT;
+        this.kind = BoxKindEnum.ON_INIT;
+    }
+}
+
+export class BBOnOverlap extends BaseBlueprintBox {
+
+    constructor() {
+        super();
+        this.type = BoxTypeEnum.EVENT;
+        this.kind = BoxKindEnum.ON_OVERLAP;
+    }
+}

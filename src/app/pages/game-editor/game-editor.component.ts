@@ -41,7 +41,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
     destroying: boolean = false;
-    isBlueprintDisplayed: boolean = false;
+    isBlueprintDisplayed: boolean = true;
 
     // ZOOM
     currentZoomOptions = {
