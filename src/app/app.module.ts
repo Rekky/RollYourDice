@@ -38,8 +38,6 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
             config: {}
         }),
         NgScrollbarModule
-
-        
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
