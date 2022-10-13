@@ -46,7 +46,7 @@ export class  OurKonvaMap {
             {id: '567657', name: 'Camera Test 2', x: 110, y: 10, width: 100, height: 100, active: false },
         ];
         this.stage = {
-            attrs: {x: 0, y: 0, scaleX: 1, scaleY: 1}
+            attrs: {height: 100, width: 100, x: 0, y: 0, scaleX: 1, scaleY: 1}
         };
         // this.stage = new Konva.Stage({
         //     container: 'map' + this.id,
