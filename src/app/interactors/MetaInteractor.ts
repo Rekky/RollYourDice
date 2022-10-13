@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Meta} from '../classes/Meta';
+import {Meta, MetaGame, MetaMap} from '../classes/Meta';
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +23,16 @@ export class MetaInteractor {
 
     public getUserMetaObs(): Observable<Meta> {
         return this.$userMeta.asObservable();
+    }
+
+    // meta GAME
+    public setMetaGame(metaGame: MetaGame): void {
+
+    }
+
+    // meta MAP
+    public setMetaMap(metaMap: MetaMap): void {
+
     }
 
 }

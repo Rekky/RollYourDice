@@ -12,7 +12,7 @@ import {CurrentSelectedKonvaObject, OurKonvaObject} from '../../classes/ourKonva
 import {MapInteractor} from '../../interactors/MapInteractor';
 import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
 import {MetaInteractor} from '../../interactors/MetaInteractor';
-import {Meta, MetaMap} from '../../classes/Meta';
+import {Meta, MetaGame, MetaMap} from '../../classes/Meta';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 import {Actor} from '../../classes/Actor';
 import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
@@ -325,9 +325,35 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onMapDrag(attrs: any): void {
-        const newMetaToSave: Meta = this.metaInteractor.getUserMeta();
+        const userMeta: Meta = this.metaInteractor.getUserMeta();
 
-        // let metaMapFound: MetaMap = newMetaToSave.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
+        // if user no have meta then create new meta
+        if (!userMeta) {
+            console.log('user dont have meta then CREATE META');
+            const _newMapMeta: MetaMap = new MetaMap(this.currentMap.id, attrs);
+            const _newGameMeta: MetaGame = new MetaGame(this.gameInteractor.getCurrentGame().id, [_newMapMeta]);
+            const _newUserMeta: Meta = new Meta(null, this.userInteractor.getCurrentUser().id, [_newGameMeta]);
+            this.socketService.sendMeta(_newUserMeta);
+            return;
+        }
+
+        // if user already have meta
+        // const metaGameFound: MetaGame = userMeta.games.find((metaGame: MetaGame) => metaGame.id === this.gameInteractor.getCurrentGame().id);
+        // if (!metaGameFound) {
+        //     const __newMapMeta: MetaMap = new MetaMap(this.currentMap.id, attrs);
+        //     const __newGameMeta: MetaGame = new MetaGame(this.gameInteractor.getCurrentGame().id, [__newMapMeta]);
+        //     userMeta.games.push(__newGameMeta);
+        // }
+        // const metaMapFound: MetaMap = metaGameFound.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
+        // const metaGameFound: MetaGame = userMeta.games.push();
+        return;
+        const newMetaGame: MetaGame = new MetaGame(this.gameInteractor.getCurrentGame().id);
+        // const newMetaMap: MetaMap = new MetaMap();
+        userMeta.games.push(newMetaGame);
+
+        this.socketService.sendMeta(userMeta);
+
+        // let metaMapFound: MetaMap = userMeta.games..find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
         // si encuentro mapa ya existente dentro del meta del usuario
         // if (metaMapFound) {
         //     metaMapFound.attrs = {...metaMapFound.attrs, ...attrs};

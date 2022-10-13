@@ -13,6 +13,11 @@ export interface MapAttrs {
 export class MetaGame {
     id: string;
     maps: MetaMap[];
+
+    constructor(id: string, maps?: MetaMap[]) {
+        this.id = id;
+        this.maps = maps ? maps : [new MetaMap()];
+    }
 }
 export class MetaMap {
     id: string;
