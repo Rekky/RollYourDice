@@ -16,20 +16,20 @@ export class MetaGame {
 
     constructor(id: string, maps?: MetaMap[]) {
         this.id = id;
-        this.maps = maps ? maps : [new MetaMap()];
+        this.maps = maps ? maps : [];
     }
 }
 export class MetaMap {
     id: string;
     attrs?: MapAttrs;
 
-    constructor(id?: string, attrs?: MapAttrs) {
-        this.id = id ? id : ulid();
+    constructor(id: string, attrs?: MapAttrs) {
+        this.id = id;
         this.attrs = attrs ? attrs : {x: 0, y: 0, scaleX: 0, scaleY: 0};
     }
 
     static fromJSON(json: any): MetaMap {
-        const metaMap = new MetaMap();
+        const metaMap = new MetaMap(json.id);
         metaMap.id = json.id;
         metaMap.attrs = json.attrs;
         return metaMap;

@@ -4,7 +4,7 @@ import {Game, GameStatus} from '../../classes/Game';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
 import {SocketService} from '../../services/socket.service';
-import {combineLatest, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {UserInteractor} from '../../interactors/UserInteractor';
@@ -19,7 +19,7 @@ import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {Player} from '../../classes/User';
 import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {delay, retry, retryWhen, switchMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-game-editor',
@@ -72,14 +72,20 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 public libraryInteractor: LibraryInteractor,
                 private cdr: ChangeDetectorRef) {
 
-        // 0. get game id from url and send to server the gameId
         const gameId = this.router.snapshot.paramMap.get('id');
-        this.socketService.sendPlayerEnterGame(gameId);
 
         this.gameInteractor.getGameObs(gameId).pipe(
             // 1. call to game from gameId url
             tap((game: Game) => {
                 this.game = game;
+                this.socketService.sendPlayerEnterGame(gameId);
+                this.destroying = true;
+            }),
+            tap(() => {
+                this.gameInteractor.setCurrentGame(this.game);
+                if (this.game?.mapsId) {
+                    this.gameStatus = this.game.status;
+                }
             }),
             // 2. call maps from current game
             switchMap((game) => {
@@ -96,24 +102,30 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 3. call meta from server and set attrs map
             switchMap((res) => {
                 return this.metaInteractor.getUserMetaObs().pipe(
+                    delay(500),
                     tap((meta: Meta) => {
+                        console.log('getUserMeta', meta);
                         if (meta) {
-                            // const foundMeta: MetaMap = meta.maps.find((_map: MetaMap) => _map.id === this.currentMap.id);
-                            // if (foundMeta) {
-                            //     const metaMap = new MetaMap(foundMeta.id, foundMeta.attrs);
-                            //     if (metaMap) {
-                            //         this.currentMap = metaMap.setMetaMap(this.currentMap);
-                            //         this.mapInteractor.setCurrentMap(this.currentMap);
-                            //     }
-                            // }
+                            const foundMetaGame: MetaGame = meta.games
+                                .find((metaGame: MetaGame) => metaGame.id === this.gameInteractor.getCurrentGame().id);
+
+                            if (!foundMetaGame) {
+                                const newMetaGame: MetaGame = new MetaGame(this.gameInteractor.getCurrentGame().id);
+                                this.metaInteractor.getUserMeta().games.push(newMetaGame);
+                                this.socketService.sendMeta(this.metaInteractor.getUserMeta());
+                                return;
+                            }
+
+                            const foundMetaMap: MetaMap = foundMetaGame.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
+                            if (foundMetaMap) {
+                                this.currentMap.stage.attrs = foundMetaMap.attrs;
+                            }
+                        } else {
+                            throw new Error('meta not load');
                         }
-                    })
+                    }),
+                    retry(10)
                 );
-            }),
-            // 4.
-            tap(() => {
-                setTimeout(() => { this.destroying = false; });
-                this.cdr.detectChanges();
             }),
             // 5.
             switchMap((res) => {
@@ -159,10 +171,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             }),
             // 9. Socket connection with game selected
             tap(() => {
-                this.gameInteractor.setCurrentGame(this.game);
-                if (this.game?.mapsId) {
-                    this.gameStatus = this.game.status;
-                }
+                setTimeout(() => { this.destroying = false; });
+                this.cdr.detectChanges();
             })
         ).subscribe();
 
@@ -326,48 +336,22 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onMapDrag(attrs: any): void {
         const userMeta: Meta = this.metaInteractor.getUserMeta();
+        const metaMapFound: MetaMap = userMeta.games
+            .find((metaGame: MetaGame) => metaGame.id === this.gameInteractor.getCurrentGame().id).maps
+            .find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
 
-        // if user no have meta then create new meta
-        if (!userMeta) {
+        // not have metaMap
+        if (!metaMapFound) {
             console.log('user dont have meta then CREATE META');
-            const _newMapMeta: MetaMap = new MetaMap(this.currentMap.id, attrs);
-            const _newGameMeta: MetaGame = new MetaGame(this.gameInteractor.getCurrentGame().id, [_newMapMeta]);
-            const _newUserMeta: Meta = new Meta(null, this.userInteractor.getCurrentUser().id, [_newGameMeta]);
-            this.socketService.sendMeta(_newUserMeta);
+            const newMetaMap: MetaMap = new MetaMap(this.currentMap.id, attrs);
+            userMeta.games.find((metaGame: MetaGame) => metaGame.id === this.gameInteractor.getCurrentGame().id).maps.push(newMetaMap);
+            this.socketService.sendMeta(this.metaInteractor.getUserMeta());
             return;
         }
 
-        // if user already have meta
-        // const metaGameFound: MetaGame = userMeta.games.find((metaGame: MetaGame) => metaGame.id === this.gameInteractor.getCurrentGame().id);
-        // if (!metaGameFound) {
-        //     const __newMapMeta: MetaMap = new MetaMap(this.currentMap.id, attrs);
-        //     const __newGameMeta: MetaGame = new MetaGame(this.gameInteractor.getCurrentGame().id, [__newMapMeta]);
-        //     userMeta.games.push(__newGameMeta);
-        // }
-        // const metaMapFound: MetaMap = metaGameFound.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
-        // const metaGameFound: MetaGame = userMeta.games.push();
-        return;
-        const newMetaGame: MetaGame = new MetaGame(this.gameInteractor.getCurrentGame().id);
-        // const newMetaMap: MetaMap = new MetaMap();
-        userMeta.games.push(newMetaGame);
-
-        this.socketService.sendMeta(userMeta);
-
-        // let metaMapFound: MetaMap = userMeta.games..find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
-        // si encuentro mapa ya existente dentro del meta del usuario
-        // if (metaMapFound) {
-        //     metaMapFound.attrs = {...metaMapFound.attrs, ...attrs};
-        //     console.log('onMapDrag_metaFound', metaMapFound);
-        // } else {
-        // si no encuentro el mapa dentro del meta del usuario
-        //     console.log('onMapDrag_NOT_metaFound');
-        //     metaMapFound = new MetaMap(this.currentMap.id);
-        //     metaMapFound.setMetaMap(this.currentMap);
-        //     console.log('else_curr', this.currentMap);
-        //     console.log('else_metaFound', metaMapFound);
-        // }
-        // this.metaInteractor.setUserMeta(newMetaToSave);
-        // this.socketService.sendMetaDragMap(this.mapInteractor.getCurrentMap().id, metaMapFound.attrs);
+        // have metaMap
+        metaMapFound.attrs = attrs;
+        this.socketService.sendMeta(this.metaInteractor.getUserMeta());
     }
 
     onStatusChange(status: GameStatus): void {
