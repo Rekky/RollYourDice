@@ -3,33 +3,39 @@ import {OurKonvaMap} from './ourKonva/OurKonvaMap';
 
 export interface MapAttrs {
     container?: any;
-    height: number;
-    width: number;
+    height?: number;
+    width?: number;
     x: number;
     y: number;
     scaleX: number;
     scaleY: number;
 }
+export class MetaGame {
+    id: string;
+    maps: MetaMap[];
 
+    constructor(id: string, maps?: MetaMap[]) {
+        this.id = id;
+        this.maps = maps ? maps : [];
+    }
+}
 export class MetaMap {
     id: string;
     attrs?: MapAttrs;
 
-    constructor(id?: string, attrs?: MapAttrs) {
-        this.id = id ? id : ulid();
-        this.attrs = attrs ? attrs : null;
+    constructor(id: string, attrs?: MapAttrs) {
+        this.id = id;
+        this.attrs = attrs ? attrs : {x: 0, y: 0, scaleX: 0, scaleY: 0};
     }
 
     static fromJSON(json: any): MetaMap {
-        const metaMap = new MetaMap();
+        const metaMap = new MetaMap(json.id);
         metaMap.id = json.id;
         metaMap.attrs = json.attrs;
         return metaMap;
     }
 
     public setMetaMap(map: OurKonvaMap): OurKonvaMap {
-        console.log('eso1', map);
-        console.log('eso2', this.attrs);
         // if (map.stage.attrs !== null) {
         //     map.stage.attrs = this.attrs;
         // }
@@ -41,12 +47,12 @@ export class MetaMap {
 export class Meta {
     id: string;
     userId: string;
-    maps?: MetaMap[];
+    games: MetaGame[];
 
-    constructor(id: string, userId: string, maps?: MetaMap[]) {
+    constructor(id: string, userId: string, games?: MetaGame[]) {
         this.id = id ? id : ulid();
         this.userId = userId ? userId : null;
-        this.maps = maps ? maps : [];
+        this.games = games ? games : [];
     }
 }
 

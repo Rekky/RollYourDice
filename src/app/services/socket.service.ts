@@ -12,6 +12,7 @@ import {NotificationsService} from './notifications.service';
 import {MyAdventuresInteractor} from '../pages/launcher/my-adventures/my-adventures-interactor';
 import { Player } from '../classes/User';
 import {MetaInteractor} from '../interactors/MetaInteractor';
+import {Meta} from "../classes/Meta";
 
 @Injectable({
     providedIn: 'root'
@@ -146,10 +147,11 @@ export class SocketService {
         this.socket.emit('meta-selected-map', {mapId});
     }
 
-    sendMetaDragMap(mapId: string, attrs: any): void {
-        this.socket.emit('meta-map-attrs', {mapId, attrs});
+    sendMeta(meta: Meta): void {
+        this.socket.emit('meta', {meta});
     }
 
+    ////////////////////////////// MAP ///////////////////////////////////////
     sendGameCreateMap(gameId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-create-map', {gameId, map});
     }
@@ -167,6 +169,7 @@ export class SocketService {
         this.socket.emit('game-editor-update-order-maps', {gameId, mapsIds});
     }
 
+    //////////////////////////// PLAYER STATES //////////////////////////////
     sendGameSetToPlayersMap(gameId: string, map: OurKonvaMap): void {
         this.socket.emit('game-editor-set-players-map', {gameId, map});
     }
