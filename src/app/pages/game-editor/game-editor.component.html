@@ -12,9 +12,9 @@
         <app-map *ngIf="!destroying"
             [map]="currentMap"
             [modification]="mapModification"
-            [scale]="currentZoomOptions.scale"
-            [maxScale]="currentZoomOptions.maxScale"
-            [minScale]="currentZoomOptions.minScale"
+            [scale]="currentMap.stage.attrs.scaleX"
+            [maxScale]="zoomOptions.max"
+            [minScale]="zoomOptions.min"
             (scaleChange)="onScaleChange($event)"
             (mapDragEvent)="onMapDrag($event)"
             ></app-map>
@@ -97,30 +97,37 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--    </app-sidebar-custom>-->
-    <!-- <div class="right-panel">
-        <app-properties-list-tools [(open)]="openPropertiesList"></app-properties-list-tools>
-        <app-assets-list [(open)]="openAssetsList"></app-assets-list>
+<!--    <div class="right-panel">-->
+<!--        <app-properties-list-tools [(open)]="openPropertiesList"></app-properties-list-tools>-->
+<!--        <app-assets-list [(open)]="openAssetsList"></app-assets-list>-->
 
-        <div class="tools-top">
-            <div class="tools-container btn btn-white box-shadow">
-                <div (click)="openAssetsList = !openAssetsList">
-                    ASSETS
-                </div>
-                <div>
-                    USER
-                </div>
-            </div>
-        </div>
-        <div class="tools-middle"></div>
-        <div class="tools-bottom">
-            <app-map-zoom-tools
-                [(zoom)]="currentZoomOptions.value"
-                [maxZoom]="currentZoomOptions.max"
-                [minZoom]="currentZoomOptions.min"
-                ></app-map-zoom-tools>
-        </div>
-    </div> -->
-
+<!--        <div class="tools-top">-->
+<!--            <div class="tools-container btn btn-white box-shadow">-->
+<!--                <div (click)="openAssetsList = !openAssetsList">-->
+<!--                    ASSETS-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    USER-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="tools-middle"></div>-->
+<!--        <div class="tools-bottom">-->
+<!--            <app-map-zoom-tools-->
+<!--                [(zoom)]="zoomOptions.scale"-->
+<!--                [maxZoom]="zoomOptions.max"-->
+<!--                [minZoom]="zoomOptions.min"-->
+<!--            ></app-map-zoom-tools>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="absolute right-[8px] bottom-[8px]">
+        <app-map-zoom-tools
+            *ngIf="currentMap"
+            [(zoom)]="currentMap.stage.attrs.scaleX"
+            [max]="zoomOptions.max"
+            [min]="zoomOptions.min"
+        ></app-map-zoom-tools>
+    </div>
 
 
 <!--    <div class="left-column" *ngIf="true">-->
