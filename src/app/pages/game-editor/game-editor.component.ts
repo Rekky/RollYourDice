@@ -151,7 +151,18 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                     tap((_res: OurKonvaMapModification) => {
                         if (res) {
                             this.mapModification = _res;
-                            this.cdr.detectChanges();
+                        }
+                    })
+                );
+            }),
+            switchMap((res) => {
+                return this.mapInteractor.getCurrentMapObs().pipe(
+                    tap((_res: OurKonvaMap) => {
+                        if (_res) {
+                            console.log('entra_getCurrentMapObs');
+                            this.currentMap.stage.attrs = this.metaInteractor.getUserMeta().games
+                                .find((game) => game.id === this.gameInteractor.getCurrentGame().id).maps
+                                .find((map) => map.id === this.currentMap.id).attrs;
                         }
                     })
                 );
