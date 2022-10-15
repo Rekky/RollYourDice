@@ -35,21 +35,22 @@
             </div>
             <div class="category-body">
                 <app-custom-list
-                    [items]="library[0].items"
-                    (deleteItemChanges)="onDeleteItem($event)"
-                    (selectedItemChanges)="onSelectedItem($event)"
+                    *ngIf="actors && actors.length > 0"
+                    [items]="actors"
+                    (deleteItemChanges)="onDeleteActor($event)"
+                    (selectedItemChanges)="onSelectedActor($event)"
                     [editable]="true">
                 </app-custom-list>
                 <div class="list-add">
-                    <img src="assets/svg/add.svg" alt="add" style="width: 20px;" (click)="onAddItem()">
+                    <img src="assets/svg/add.svg" alt="add" style="width: 20px;" (click)="onAddActor()">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<app-custom-modal [(open)]="modalNewCategoryItem">
-    <div style="width: 550px;">
+<app-custom-modal [(open)]="modalNewCategoryItem" [bgColor]="'white'">
+    <div class="w-50">
         <app-custom-wizard-actor></app-custom-wizard-actor>
     </div>
 </app-custom-modal>

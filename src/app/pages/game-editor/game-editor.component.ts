@@ -15,11 +15,9 @@ import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaGame, MetaMap} from '../../classes/Meta';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 import {Actor} from '../../classes/Actor';
-import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {Player} from '../../classes/User';
-import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {delay, retry, retryWhen, switchMap, tap} from 'rxjs/operators';
+import {delay, retry, switchMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-game-editor',
@@ -31,6 +29,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mapModification: OurKonvaMapModification;
     game: Game;
     maps: OurKonvaMap[] = [];
+    destroying: boolean = false;
 
     gameStatus: GameStatus = GameStatus.Stopped;
     GameStatus = GameStatus;
@@ -40,7 +39,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     openMapList = false;
     openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
-    destroying: boolean = false;
     isBlueprintDisplayed: boolean = false;
 
     // ZOOM
@@ -51,14 +49,13 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         stepScale: 0.1
     };
 
-    // Library
-    library: any[] = [];
-
     $getMouseObservableSubscription: Subscription;
     $getSelectedKonvaObjectSubscription: Subscription;
     $getCurrentMapModificationSubs: Subscription;
     $mapInteractorSubs: Subscription;
     $metaSubs: Subscription;
+
+
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -186,10 +183,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.cdr.detectChanges();
             })
         ).subscribe();
-
-        this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
-            this.library = [{type: 'CHARACTERS', items: library}];
-        });
     }
 
     ngOnInit(): void {
@@ -313,17 +306,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.leftSidebarTitle = 'UNKNOWN';
                 break;
         }
-    }
-
-    onSelectedActor(actor: Actor): void {
-        console.log('ActorToPaint->', actor);
-        const ourKonvaObject = new OurKonvaObject(new Player());
-        const ourKonvaImage = new OurKonvaImage(new Player(), actor.asset.uri);
-        this.mouseInteractor.paintObjectOnMap(ourKonvaImage);
-    }
-
-    onDeleteActor(actor: Actor): void {
-        this.libraryInteractor.deleteActor(actor);
     }
 
 }

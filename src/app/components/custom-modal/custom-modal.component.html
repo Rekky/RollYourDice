@@ -1,6 +1,6 @@
 <div *ngIf="open" class="custom-modal">
     <div class="custom-modal-overlay backdrop-blur-md" (click)="close()"></div>
-    <div class="custom-modal-container bg-zinc-900 text-white" [class.modal-small]="type === 'small'" [class.modal-medium]="type === 'medium'" [class.modal-large]="type === 'large'">
+    <div class="custom-modal-container bg-zinc-900 shadow" [class.bg-white]="bgColor === 'white'" [class.text-black]="bgColor === 'white'" [class.modal-small]="type === 'small'" [class.modal-medium]="type === 'medium'" [class.modal-large]="type === 'large'">
         <div class="custom-modal-header">
             <h3 class="title">{{title}}</h3>
             <div class="close">

@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Injectable, OnDestroy} from '@angular/core';
+import {BehaviorSubject, from, Observable, Subscription} from 'rxjs';
 import {LibraryService} from '../services/library.service';
 import {Actor} from '../classes/Actor';
 
@@ -7,29 +7,32 @@ import {Actor} from '../classes/Actor';
 @Injectable({
     providedIn: 'root'
 })
-export class LibraryInteractor {
-    private actors: BehaviorSubject<Actor[]> = new BehaviorSubject<Actor[]>([]);
+export class LibraryInteractor implements OnDestroy {
+    private actors$: BehaviorSubject<Actor[]> = new BehaviorSubject<Actor[]>([]);
+    private actorsSub$: Subscription;
 
-    constructor(private libraryService: LibraryService) {
-       this.getMyActors().subscribe((res) => {
-           this.actors.next(res.data);
-       });
+    constructor(private libraryService: LibraryService) {}
+
+    ngOnDestroy(): void {
+        if (this.actorsSub$) {
+            this.actorsSub$.unsubscribe();
+        }
     }
 
-    getCurrentLibraryObs(): Observable<any> {
-        return this.actors.asObservable();
+    public getCurrentLibraryObs(): Observable<any> {
+        return this.actors$.asObservable();
     }
 
-    getMyActors(): Observable<any> {
-        return this.libraryService.getMyActors();
+    public async getMyActors(type?: string): Promise<any> {
+        return await this.libraryService.getMyActorsFromApi(type);
     }
 
-    async createActor(actor: Actor): Promise<any> {
-        await this.libraryService.createActor(actor);
-        this.getMyActors().subscribe((res) => this.actors.next(res.data));
+    public async createActor(actor: Actor): Promise<any> {
+        await this.libraryService.createActorFromApi(actor);
+        await from(this.getMyActors()).subscribe((res) => this.actors$.next(res.data));
     }
 
-    async deleteActor(actor): Promise<void> {
-        await this.libraryService.deleteActor(actor.id).subscribe().unsubscribe();
+    public async deleteActor(actor): Promise<void> {
+        return await this.libraryService.deleteActorFromApi(actor.id);
     }
 }
