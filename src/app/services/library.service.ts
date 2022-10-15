@@ -13,10 +13,9 @@ export class LibraryService {
 
     protected endPointName: string = 'libraries';
 
-    constructor(private httpService: HttpService,
-                private userInteractor: UserInteractor) {}
+    constructor(private httpService: HttpService) {}
 
-    async createActor(actor: Actor): Promise<any> {
+    public async createActorFromApi(actor: Actor): Promise<any> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/${this.endPointName}/`, actor).subscribe(
                 (response) => {
@@ -28,18 +27,27 @@ export class LibraryService {
         });
     }
 
-    getMyActors(): Observable<any> {
-        return this.httpService.get(`/${this.endPointName}/my-actors`);
+    public async getMyActorsFromApi(type: string): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            this.httpService.get(`/${this.endPointName}/my-actors`).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
     }
 
-
-    getLibrarySection(section): Observable<any> {
-        return this.httpService.get(`/${this.endPointName}/${section}`);
-    }
-
-
-    deleteActor(id: string): Observable<any> {
-        console.log('LibraryService_deleteActor');
-        return this.httpService.delete(`/${this.endPointName}/${id}`);
+    public deleteActorFromApi(id: string): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            this.httpService.delete(`/${this.endPointName}/${id}`).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
     }
 }

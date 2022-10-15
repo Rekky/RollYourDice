@@ -34,7 +34,6 @@ export class CustomWizardActorComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.assets = await this.assetService.getAllAssets();
-        console.log(this.assets);
     }
 
     selectActorType(type: ActorTypesEnum): void {

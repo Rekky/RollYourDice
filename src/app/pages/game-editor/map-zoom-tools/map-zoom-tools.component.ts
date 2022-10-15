@@ -9,8 +9,8 @@ export class MapZoomToolsComponent implements OnInit {
 
   @Input() zoom: number = 1;
   @Input() zoomStep: number = 0.1;
-  @Input() maxZoom: number = 3;
-  @Input() minZoom: number = 0.3;
+  @Input() max: number = 3;
+  @Input() min: number = 0.3;
 
   @Output() zoomChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -19,11 +19,11 @@ export class MapZoomToolsComponent implements OnInit {
   ngOnInit(): void {}
 
   setZoom(zoom: number): void {
-    if (zoom < this.minZoom) {
-      this.zoom = this.minZoom;
+    if (zoom < this.min) {
+      this.zoom = this.min;
       return;
-    } else if (zoom > this.maxZoom) {
-      this.zoom = this.maxZoom;
+    } else if (zoom > this.max) {
+      this.zoom = this.max;
       return;
     }
     this.zoom = Math.round(zoom * 100) / 100;

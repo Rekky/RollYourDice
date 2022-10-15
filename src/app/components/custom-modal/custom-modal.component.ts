@@ -11,7 +11,8 @@ export class CustomModalComponent implements OnInit {
     @Input() open = false;
     @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() title: string = '';
-    @Input() type: string = 'small';
+    @Input() type: string = 'medium';
+    @Input() bgColor: string = 'dark';
     windowWidth: number = 0;
 
     constructor() {

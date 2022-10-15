@@ -15,11 +15,9 @@ import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaGame, MetaMap} from '../../classes/Meta';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 import {Actor} from '../../classes/Actor';
-import {OurKonvaLayers} from '../../classes/ourKonva/OurKonvaLayers';
 import {Player} from '../../classes/User';
-import {OurKonvaRect} from '../../classes/ourKonva/OurKonvaRect';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
-import {delay, retry, retryWhen, switchMap, tap} from 'rxjs/operators';
+import {delay, retry, switchMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-game-editor',
@@ -31,6 +29,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     mapModification: OurKonvaMapModification;
     game: Game;
     maps: OurKonvaMap[] = [];
+    destroying: boolean = false;
 
     gameStatus: GameStatus = GameStatus.Stopped;
     GameStatus = GameStatus;
@@ -40,25 +39,23 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     openMapList = false;
     openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
-    destroying: boolean = false;
     isBlueprintDisplayed: boolean = false;
 
     // ZOOM
-    currentZoomOptions = {
-        minScale: 0.3,
-        maxScale: 3,
-        stepScale: 0.1,
-        scale: 1
+    zoomOptions = {
+        min: 0.3,
+        max: 3,
+        scale: 1,
+        stepScale: 0.1
     };
-
-    // Library
-    library: any[] = [];
 
     $getMouseObservableSubscription: Subscription;
     $getSelectedKonvaObjectSubscription: Subscription;
     $getCurrentMapModificationSubs: Subscription;
     $mapInteractorSubs: Subscription;
     $metaSubs: Subscription;
+
+
 
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
@@ -158,7 +155,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             switchMap((res) => {
                 return this.mapInteractor.getCurrentMapObs().pipe(
                     tap((_res: OurKonvaMap) => {
-                        if (_res) {
+                        if (_res && this.currentMap) {
                             console.log('entra_getCurrentMapObs');
                             this.currentMap.stage.attrs = this.metaInteractor.getUserMeta().games
                                 .find((game) => game.id === this.gameInteractor.getCurrentGame().id).maps
@@ -186,71 +183,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.cdr.detectChanges();
             })
         ).subscribe();
-
-        this.libraryInteractor.getCurrentLibraryObs().subscribe(library => {
-            this.library = [{type: 'CHARACTERS', items: library}];
-        });
     }
 
-    async ngOnInit(): Promise<void> {
-        // try {
-            // const gameId = this.router.snapshot.paramMap.get('id');
-            // this.socketService.sendPlayerEnterGame(gameId);
+    ngOnInit(): void {
 
-            // 1. Call to get game info
-            // this.game = await this.gameInteractor.getGame(gameId);
-
-            // 2. Call to get map's list
-            // combineLatest(this.mapInteractor.getAllMapsObs(gameId), this.metaInteractor.getUserMetaObs()).subscribe((result: any) => {
-            //     const maps = result[0].data ?? [];
-            //     const meta = result[1] ?? {};
-            //     this.maps = maps;
-            //
-            //     // === META === select last selected map from meta
-            //     if (meta && meta.maps && meta.maps.length > 0) {
-            //         const mapFound = this.maps.find(map => map.id === meta.maps[0].id);
-            //         this.mapInteractor.setCurrentMap(mapFound);
-            //     } else {
-            //         this.mapInteractor.setCurrentMap(this.maps[0]);
-            //     }
-            // });
-
-            // // 3. Socket connection with map selected
-            // this.gameInteractor.setCurrentGame(this.game);
-            // if (this.game?.mapsId) {
-            //     this.gameStatus = this.game.status;
-            // }
-            //
-            // this.$getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe(mouse => {
-            //     this.mouse = mouse;
-            // });
-            // this.$getSelectedKonvaObjectSubscription = this.mouseInteractor.getSelectedKonvaObjectObservable()
-            //     .subscribe((selectedObject: CurrentSelectedKonvaObject[] | null) => {
-            //     if (selectedObject) {
-            //         this.selectedKonvaObject = selectedObject[0];
-            //     }
-            // });
-            //
-            // this.$getCurrentMapModificationSubs = this.mapInteractor.getCurrentMapModificationObs().subscribe((res) => {
-            //     if (res) {
-            //         this.mapModification = res;
-            //         this.cdr.detectChanges();
-            //     }
-            // });
-            // this.myAdventureInteractor.getMyAdventures().subscribe((adventures: Game[]) => {
-            //     if (adventures) {
-            //         const currentGame: Game = adventures.find((game: Game) => game.id === this.game.id);
-            //         if (currentGame) {
-            //             this.gameStatus = currentGame.status;
-            //         }
-            //     }
-            // });
-            //
-            // this.cdr.detectChanges();
-        // }
-        // catch (e) {
-        //     console.error(e);
-        // }
     }
 
     ngOnDestroy(): void {
@@ -278,33 +214,14 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     onSelectedMap(map: OurKonvaMap): void {
         this.destroying = true;
         this.currentMap = map;
-
-        // // ============== meta =================== //
-        const meta = this.metaInteractor.getUserMeta();
-        if (meta) {
-            // const foundMeta: MetaMap = meta.maps.find((_map: MetaMap) => _map.id === this.currentMap.id);
-
-            // if (foundMeta) {
-            //     console.log('onSelectedMap_foundMetaMap');
-                //     const metaMap: MetaMap = new MetaMap(foundMeta?.id, foundMeta?.attrs);
-                //     console.log('metaMap', metaMap);
-                //     console.log('this.currentMap', this.currentMap);
-                //     this.currentMap = metaMap.setMetaMap(this.currentMap);
-                //     this.mapInteractor.setCurrentMap(this.currentMap);
-            // } else {
-            //     console.log('onSelectedMap_notFoundMetaMap');
-            // }
-        }
-        // // ======================================= //
         this.mapInteractor.setCurrentMap(this.currentMap);
         this.socketService.sendMetaSelectedMap(this.currentMap.id);
-
         setTimeout(() => { this.destroying = false; });
     }
 
     onCreateMap(map: OurKonvaMap): void {
         console.log('onCreateMap', map);
-        this.currentZoomOptions.scale = 1;
+        this.zoomOptions.scale = 1;
         this.socketService.sendGameCreateMap(this.gameInteractor.getCurrentGame().id, map);
     }
 
@@ -324,10 +241,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendGameUpdateMapsOrder(this.gameInteractor.getCurrentGame().id, maps);
     }
 
-    onMapMove(map: OurKonvaMap): void {
-        // this.socketService.sendGameMoveMap(map);
-    }
-
     // USADA EN MOUSEINTERACTOR
     // onCreateMapObject(object: any): void {
     //     this.socketService.sendGameCreateMapObject(this.map.id, object);
@@ -345,6 +258,11 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         // this.socketService.sendGameSetToPlayersMap(this.game.id, this.selectedPage.id, map);
     }
 
+    onScaleChange(zoom: number): void {
+        this.zoomOptions.scale = zoom;
+        this.onMapDrag({scaleX: zoom, scaleY: zoom});
+    }
+
     onMapDrag(attrs: any): void {
         const userMeta: Meta = this.metaInteractor.getUserMeta();
         const metaMapFound: MetaMap = userMeta.games
@@ -353,7 +271,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
         // not have metaMap
         if (!metaMapFound) {
-            console.log('user dont have meta then CREATE META');
             const newMetaMap: MetaMap = new MetaMap(this.currentMap.id, attrs);
             userMeta.games.find((metaGame: MetaGame) => metaGame.id === this.gameInteractor.getCurrentGame().id).maps.push(newMetaMap);
             this.socketService.sendMeta(this.metaInteractor.getUserMeta());
@@ -361,18 +278,14 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         }
 
         // have metaMap
-        metaMapFound.attrs = attrs;
+        // metaMapFound.attrs = attrs;
+        metaMapFound.attrs = {...metaMapFound.attrs, ...attrs};
         this.socketService.sendMeta(this.metaInteractor.getUserMeta());
     }
 
     onStatusChange(status: GameStatus): void {
         this.gameStatus = status;
         this.socketService.sendGameStatus(this.game.id, this.gameStatus);
-    }
-
-    onScaleChange(zoom: number): void {
-        this.currentZoomOptions.scale = zoom;
-        this.onMapDrag({scaleX: zoom, scaleY: zoom});
     }
 
     onTabsChange(tab: number): void {
@@ -393,17 +306,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 this.leftSidebarTitle = 'UNKNOWN';
                 break;
         }
-    }
-
-    onSelectedActor(actor: Actor): void {
-        console.log('ActorToPaint->', actor);
-        const ourKonvaObject = new OurKonvaObject(new Player());
-        const ourKonvaImage = new OurKonvaImage(new Player(), actor.asset.uri);
-        this.mouseInteractor.paintObjectOnMap(ourKonvaImage);
-    }
-
-    onDeleteActor(actor: Actor): void {
-        this.libraryInteractor.deleteActor(actor);
     }
 
 }
