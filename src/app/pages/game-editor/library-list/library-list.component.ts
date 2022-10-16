@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {LibraryInteractor} from '../../../interactors/LibraryInteractor';
-import {Actor} from "../../../classes/Actor";
-import {OurKonvaObject} from "../../../classes/ourKonva/OurKonvaObject";
-import {Player} from "../../../classes/User";
-import {OurKonvaImage} from "../../../classes/ourKonva/OurKonvaImage";
-import {MouseInteractor} from "../../../interactors/MouseInteractor";
+import {Actor} from '../../../classes/Actor';
+import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
+import {Player} from '../../../classes/User';
+import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
+import {MouseInteractor} from '../../../interactors/MouseInteractor';
 
 @Component({
     selector: 'app-library-list',
@@ -15,7 +15,7 @@ export class LibraryListComponent implements OnInit {
 
     categories: any[] = [];
     currentCategory: string | null = null;
-    modalNewCategoryItem: boolean = false;
+    openActorWizard: boolean = false;
 
     @Input() actors: any[] = [];
     @Input() selectedItem: any = null;
@@ -30,27 +30,13 @@ export class LibraryListComponent implements OnInit {
 
     }
 
-    getLibraryItems(): any[] {
-        if (this.currentCategory) {
-            return this.actors.filter(item => item.type === this.currentCategory);
-        }
-        return [];
-    }
-
     async selectCategory(category: string): Promise<void> {
         this.currentCategory = category;
-        // try {
         this.actors = await this.libraryInteractor.getMyActors(category);
-        // } catch (e) {
-        //     console.log(e);
-        // }
-        // this.libraryInteractor.getMyActors().subscribe(library => {
-        //     this.library = [{type: 'CHARACTERS', items: library}];
-        // });
     }
 
     onAddActor(): void {
-        this.modalNewCategoryItem = true;
+        this.openActorWizard = true;
     }
 
     onSelectedActor(actor: Actor): void {

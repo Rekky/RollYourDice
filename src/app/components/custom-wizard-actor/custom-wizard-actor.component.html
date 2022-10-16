@@ -1,132 +1,134 @@
-<div class="wizard-container">
-    <div class="wizard-head">
-        <div class="w-full">
-            <div class="flex">
-                <div class="w-1/3">
-                    <div class="relative mb-2">
-                        <div class="w-10 h-10 mx-auto rounded-full border-2 border-gray-200 text-lg text-white flex items-center hover:bg-green-400 cursor-pointer" [class.bg-green-500]="currentStep >= 0" (click)="currentStep = 0">
-          <span class="text-center text-gray-600 w-full" [class.text-white]="currentStep >= 0">
-            <svg class="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path class="heroicon-ui" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm14 8V5H5v6h14zm0 2H5v6h14v-6zM8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-            </svg>
-          </span>
-                        </div>
-                    </div>
-
-                    <div class="text-xs text-center md:text-base">Select Type</div>
-                </div>
-
-                <div class="w-1/3">
-                    <div class="relative mb-2">
-                        <div class="absolute flex align-center items-center align-middle content-center" style="width: calc(100% - 2.5rem - 1rem); top: 50%; transform: translate(-50%, -50%)">
-                            <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
-                                <div class="w-0 py-1 rounded" style="width: 100%;" [class.bg-green-300]="currentStep >= 1"></div>
+<app-custom-modal [open]="open" [bgColor]="'white'">
+    <div class="wizard-container p-[30px]">
+        <div class="wizard-head">
+            <div class="w-full">
+                <div class="flex">
+                    <div class="w-1/3">
+                        <div class="relative mb-2">
+                            <div class="w-10 h-10 mx-auto rounded-full border-2 border-gray-200 text-lg text-white flex items-center hover:bg-green-400 cursor-pointer" [class.bg-green-500]="currentStep >= 0" (click)="currentStep = 0">
+              <span class="text-center text-gray-600 w-full" [class.text-white]="currentStep >= 0">
+                <svg class="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path class="heroicon-ui" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm14 8V5H5v6h14zm0 2H5v6h14v-6zM8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                </svg>
+              </span>
                             </div>
                         </div>
 
-                        <div class="w-10 h-10 mx-auto rounded-full border-2 border-gray-200 text-lg text-white flex items-center hover:bg-green-400 cursor-pointer" [class.bg-green-500]="currentStep >= 1" (click)="currentStep = 1">
-          <span class="text-center text-gray-600 w-full" [class.text-white]="currentStep >= 1">
-            <svg class="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path class="heroicon-ui" d="M19 10h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2V8a1 1 0 0 1 2 0v2zM9 12A5 5 0 1 1 9 2a5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v2z"/>
-            </svg>
-          </span>
-                        </div>
+                        <div class="text-xs text-center md:text-base">Select Type</div>
                     </div>
 
-                    <div class="text-xs text-center md:text-base">Actor Config</div>
-                </div>
-                <div class="w-1/3">
-                    <div class="relative mb-2">
-                        <div class="absolute flex align-center items-center align-middle content-center" style="width: calc(100% - 2.5rem - 1rem); top: 50%; transform: translate(-50%, -50%)">
-                            <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
-                                <div class="w-0 py-1 rounded" style="width: 0%;" [class.bg-green-300]="currentStep >= 2"></div>
+                    <div class="w-1/3">
+                        <div class="relative mb-2">
+                            <div class="absolute flex align-center items-center align-middle content-center" style="width: calc(100% - 2.5rem - 1rem); top: 50%; transform: translate(-50%, -50%)">
+                                <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
+                                    <div class="w-0 py-1 rounded" style="width: 100%;" [class.bg-green-300]="currentStep >= 1"></div>
+                                </div>
+                            </div>
+
+                            <div class="w-10 h-10 mx-auto rounded-full border-2 border-gray-200 text-lg text-white flex items-center hover:bg-green-400 cursor-pointer" [class.bg-green-500]="currentStep >= 1" (click)="currentStep = 1">
+              <span class="text-center text-gray-600 w-full" [class.text-white]="currentStep >= 1">
+                <svg class="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path class="heroicon-ui" d="M19 10h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2V8a1 1 0 0 1 2 0v2zM9 12A5 5 0 1 1 9 2a5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v2z"/>
+                </svg>
+              </span>
                             </div>
                         </div>
 
-                        <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center hover:bg-green-400 cursor-pointer">
-          <span class="text-center text-gray-600 w-full" [class.text-white]="currentStep >= 2">
-            <svg class="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/>
-            </svg>
-          </span>
-                        </div>
+                        <div class="text-xs text-center md:text-base">Actor Config</div>
                     </div>
+                    <div class="w-1/3">
+                        <div class="relative mb-2">
+                            <div class="absolute flex align-center items-center align-middle content-center" style="width: calc(100% - 2.5rem - 1rem); top: 50%; transform: translate(-50%, -50%)">
+                                <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
+                                    <div class="w-0 py-1 rounded" style="width: 0%;" [class.bg-green-300]="currentStep >= 2"></div>
+                                </div>
+                            </div>
 
-                    <div class="text-xs text-center md:text-base">Finished</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="wizard-body pt-5">
-        <div class="step-container" *ngIf="currentStep === 0">
-            <div class="card-list">
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.CHARACTER)">
-                    <div>
-                        CHARACTER
-                    </div>
-                </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.MONSTER)">
-                    <div>
-                        MONSTERS
-                    </div>
-                </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.NPC)">
-                    <div>
-                        NPC
-                    </div>
-                </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.OBJECT)">
-                    <div>
-                        OBJECT
-                    </div>
-                </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.SPELL)">
-                    <div>
-                        SPELL
-                    </div>
-                </div>
-                <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.PET)">
-                    <div>
-                        PET
+                            <div class="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center hover:bg-green-400 cursor-pointer">
+              <span class="text-center text-gray-600 w-full" [class.text-white]="currentStep >= 2">
+                <svg class="w-full fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"/>
+                </svg>
+              </span>
+                            </div>
+                        </div>
+
+                        <div class="text-xs text-center md:text-base">Finished</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="step-container" *ngIf="currentStep === 1">
-            <form [formGroup]="fg" (submit)="createActor()">
-                <div>
-                    <div (click)="showAssets = !showAssets" class="group relative cursor-pointer flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Assets list
+        <div class="wizard-body">
+            <div class="step-container pt-[60px]" *ngIf="currentStep === 0">
+                <div class="card-list">
+                    <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.CHARACTER)">
+                        <div>
+                            CHARACTER
+                        </div>
                     </div>
-                    <div *ngIf="showAssets" style="width: 100%;height: 200px;">
-                        <app-custom-list
-                            [items]="assets"
-                            (selectedItemChanges)="onSelectedAsset($event)">
-                        </app-custom-list>
+                    <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.MONSTER)">
+                        <div>
+                            MONSTERS
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.NPC)">
+                        <div>
+                            NPC
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.OBJECT)">
+                        <div>
+                            OBJECT
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.SPELL)">
+                        <div>
+                            SPELL
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center w-32 h-24 border border-transparent text-base rounded-md cursor-pointer hover:bg-cyan-600 hover:text-white" (click)="selectActorType(ActorTypesEnum.PET)">
+                        <div>
+                            PET
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">name</label>
-                    <input type="text" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'name'">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">HP</label>
-                    <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'hp'">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">MP</label>
-                    <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'mp'">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">movement</label>
-                    <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'movement'">
-                </div>
-                <div class="mt-5">
-                    <button type="submit" class="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        CREATE
-                    </button>
-                </div>
-            </form>
+            </div>
+            <div class="step-container pt-[60px]" *ngIf="currentStep === 1">
+                <form class="w-50" [formGroup]="fg" (submit)="createActor()">
+                    <div class="w-50">
+                        <div (click)="showAssets = !showAssets" class="group relative cursor-pointer flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Assets list
+                        </div>
+                        <div *ngIf="showAssets" style="width: 100%;height: 200px;">
+                            <app-custom-list
+                                [items]="assets"
+                                (selectedItemChanges)="onSelectedAsset($event)">
+                            </app-custom-list>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">name</label>
+                        <input type="text" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'name'">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">HP</label>
+                        <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'hp'">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">MP</label>
+                        <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'mp'">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">movement</label>
+                        <input type="number" class="p-2 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border border-gray-300 rounded-md" [formControlName]="'movement'">
+                    </div>
+                    <div class="mt-5">
+                        <button type="submit" class="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            CREATE
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</app-custom-modal>
