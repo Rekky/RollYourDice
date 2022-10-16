@@ -74,7 +74,8 @@ export class CustomWizardActorComponent implements OnInit {
         } catch (e) {
             console.log(e);
         } finally {
-            //
+            this.open = false;
+            this.openChanges.emit(this.open);
         }
     }
 
