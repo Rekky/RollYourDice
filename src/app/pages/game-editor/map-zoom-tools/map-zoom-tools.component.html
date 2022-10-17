@@ -1,5 +1,5 @@
 <div class="zoom-tools box-shadow">
-    <div><img class="cursor-pointer" style="width: 20px;" src="assets/svg/minus.svg" (click)="setZoom(zoom - zoomStep)"></div>
+    <div><img class="cursor-pointer hover:bg-gray-200 rounded-lg" style="width: 20px;" src="assets/svg/minus.svg" (click)="setZoom(zoom - zoomStep)"></div>
     <div class="zoom-value">{{zoom | percent}}</div>
-    <div><img class="cursor-pointer" style="width: 20px;" src="assets/svg/add.svg" (click)="setZoom(zoom + zoomStep)"></div>
+    <div><img class="cursor-pointer hover:bg-gray-200 rounded-lg" style="width: 20px;" src="assets/svg/add.svg" (click)="setZoom(zoom + zoomStep)"></div>
 </div>

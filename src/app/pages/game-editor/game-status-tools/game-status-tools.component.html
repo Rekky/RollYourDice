@@ -1,16 +1,16 @@
 <div class="panel-bar box-shadow">
-    <a class="logo" [routerLink]="'/'">
+    <a class="logo hover:scale-110 transition" [routerLink]="'/'">
         <img src="assets/logo.png" style="width: 34px; margin-right: 8px" />
         <span>ROLLINN</span>
         <div class="separator-right"></div>
     </a>
-    <div class="map-name">
+    <div class="map-name select-none">
         <span class="text-ellipsis">{{mapName}}</span>
     </div>
     <div class="controls">
         <svg
             (click)="selectStatus(GameStatus.Running)"
-            class="cursor-pointer"
+            class="cursor-pointer hover:scale-110 hover:saturate-150 transition"
             width="20px"
             height="20px"
             viewBox="0 0 48 48"
@@ -40,7 +40,7 @@
 
         <svg
             (click)="selectStatus(GameStatus.Paused)"
-            class="cursor-pointer"
+            class="cursor-pointer hover:scale-110 hover:saturate-150 transition"
             width="15px"
             height="15px"
             version="1.1"
@@ -82,7 +82,7 @@
 
         <svg
             (click)="selectStatus(GameStatus.Stopped)"
-            class="cursor-pointer"
+            class="cursor-pointer hover:scale-110 hover:saturate-150 transition"
             width="15px"
             height="15px"
             viewBox="-32 0 512 512"
