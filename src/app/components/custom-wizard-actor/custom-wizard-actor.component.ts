@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetService} from '../../services/asset.service';
 import {Actor, ActorTypesEnum, CHARACTER, MONSTER, NPC, OBJECT, PET, SPELL} from '../../classes/Actor';
@@ -13,7 +13,7 @@ import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 export class CustomWizardActorComponent implements OnInit {
 
     @Input() open: boolean = false;
-    @Input() openChanges: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() currentStep: number = 1;
     protected currentActorType: ActorTypesEnum = ActorTypesEnum.CHARACTER;
 
@@ -35,6 +35,11 @@ export class CustomWizardActorComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.assets = await this.assetService.getAllAssets();
+    }
+
+    close(): void {
+        this.open = false;
+        this.openChange.emit(this.open);
     }
 
     selectActorType(type: ActorTypesEnum): void {
@@ -75,7 +80,7 @@ export class CustomWizardActorComponent implements OnInit {
             console.log(e);
         } finally {
             this.open = false;
-            this.openChanges.emit(this.open);
+            this.openChange.emit(this.open);
         }
     }
 

@@ -1,4 +1,4 @@
-<app-custom-modal [open]="open" [bgColor]="'white'">
+<app-custom-modal [open]="open" [bgColor]="'white'" (openChange)="close()">
     <div class="wizard-container p-[30px]">
         <div class="wizard-head">
             <div class="w-full">
