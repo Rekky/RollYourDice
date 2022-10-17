@@ -113,7 +113,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                                 return;
                             }
 
-                            const foundMetaMap: MetaMap = foundMetaGame.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap.id);
+                            const foundMetaMap: MetaMap = foundMetaGame.maps.find((metaMap: MetaMap) => metaMap.id === this.currentMap?.id);
                             if (foundMetaMap) {
                                 this.currentMap.stage.attrs = foundMetaMap.attrs;
                             }
@@ -156,10 +156,15 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 return this.mapInteractor.getCurrentMapObs().pipe(
                     tap((_res: OurKonvaMap) => {
                         if (_res && this.currentMap) {
-                            console.log('entra_getCurrentMapObs');
-                            this.currentMap.stage.attrs = this.metaInteractor.getUserMeta().games
-                                .find((game) => game.id === this.gameInteractor.getCurrentGame().id).maps
-                                .find((map) => map.id === this.currentMap.id).attrs;
+                            const currentMetaGameFound: MetaGame = this.metaInteractor.getUserMeta().games
+                                .find((game: MetaGame) => game.id === this.gameInteractor.getCurrentGame().id);
+                            if (currentMetaGameFound) {
+                                const currentMetaMapFound: MetaMap = currentMetaGameFound.maps
+                                    .find((map: MetaMap) => map.id === this.currentMap.id);
+                                if (currentMetaMapFound) {
+                                    this.currentMap.stage.attrs = currentMetaMapFound.attrs;
+                                }
+                            }
                         }
                     })
                 );
