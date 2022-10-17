@@ -3,6 +3,7 @@ import { Input } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import Konva from 'konva';
+import {MouseInteractor} from '../../../../../interactors/MouseInteractor';
 
 @Component({
     selector: 'app-more-options',
@@ -15,17 +16,17 @@ export class MoreOptionsComponent implements OnInit {
 
     displayMoreOptions: boolean = false;
 
-    constructor() { }
+    constructor(private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
     }
 
     moveElementToTop(): void {
-        this.itemToTop.emit();
+        this.mouseInteractor.moveSelectedElementToTop();
     }
 
     moveElementToBottom(): void {
-        this.itemToBottom.emit();
+        this.mouseInteractor.moveSelectedElementToBottom();
     }
 
 }

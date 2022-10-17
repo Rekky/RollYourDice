@@ -3,10 +3,12 @@ import {BlueprintLink, BlueprintNode} from './blueprint-link';
 import {ulid} from 'ulid';
 
 export class BlueprintModel {
+    id: string;
     blueprintBoxes: BaseBlueprintBox[];
     blueprintLinks: BlueprintLink[];
 
     constructor() {
+        this.id = ulid();
         this.blueprintBoxes = [];
         this.blueprintLinks = [];
     }

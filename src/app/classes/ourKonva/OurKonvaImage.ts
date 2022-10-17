@@ -40,7 +40,6 @@ export class OurKonvaImage extends OurKonvaObject {
             name: object.name
         });
 
-        img.zIndex(object.zIndex);
         layers.draws.add(img);
         layers.draws.batchDraw();
 

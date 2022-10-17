@@ -12,6 +12,7 @@ export class BbEqualsComponent implements OnInit {
     @Input() bb: any;
     @Output() nodeOutHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
     @Output() nodeInHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
+    @Output() deleteBB: EventEmitter<void> = new EventEmitter<void>();
 
     form: FormGroup;
     nodeIn: BlueprintNode = new BlueprintNode();
@@ -49,7 +50,7 @@ export class BbEqualsComponent implements OnInit {
     }
 
     delete(): void {
-
+        this.deleteBB.emit();
     }
 
 }

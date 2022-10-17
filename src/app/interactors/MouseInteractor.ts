@@ -17,6 +17,7 @@ import {AssetModel} from '../classes/AssetModel';
 import {UserInteractor} from './UserInteractor';
 import {Player} from '../classes/User';
 import {MapInteractor} from './MapInteractor';
+import {GameInteractor} from './GameInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -40,7 +41,8 @@ export class MouseInteractor implements OnDestroy {
                 private mapObjectService: MapObjectService,
                 private socketService: SocketService,
                 private mapInteractor: MapInteractor,
-                private userInteractor: UserInteractor) {
+                private userInteractor: UserInteractor,
+                private gameInteractor: GameInteractor) {
         this.getMouseObservableSubscription = this.mouseService.getMouseObservable().subscribe((res) => {
             if (res) {
                 this.mouse = res;
@@ -431,21 +433,21 @@ export class MouseInteractor implements OnDestroy {
         return obj;
     }
 
-    moveElementToTop(selectedObject: CurrentSelectedKonvaObject): void {
-        const elements = selectedObject.layer.getChildren();
-        const ourKonvaObjects = this.mapInteractor.getCurrentMap().objects;
-        elements.forEach(el => {
-            if (el.attrs.id === selectedObject.ourKonvaObject.id) {
-                // el.zIndex(elements.length - 1);
-                // selectedObject.ourKonvaObject.zIndex = elements.length - 1;
-                selectedObject.ourKonvaObject.zIndex = 5;
-                return;
-            }
+    moveSelectedElementToTop(): void {
+        const selectedObject = this.selectedKonvaObjects.getValue()[0];
+        selectedObject.konvaObject.moveToTop();
+        const index = this.currentMap.objects.findIndex(object => object.id === selectedObject.ourKonvaObject.id);
+        this.currentMap.objects.splice(index, 1);
+        this.currentMap.objects.push(selectedObject.ourKonvaObject);
+        this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, this.currentMap);
+    }
 
-            if (el.getZIndex() > selectedObject.konvaObject.getZIndex()) {
-                el.zIndex(el.getZIndex() - 1);
-            }
-        });
-        this.socketService.updateGameObjects(this.currentMap.id, [selectedObject.ourKonvaObject]);
+    moveSelectedElementToBottom(): void {
+        const selectedObject = this.selectedKonvaObjects.getValue()[0];
+        selectedObject.konvaObject.moveToBottom();
+        const index = this.currentMap.objects.findIndex(object => object.id === selectedObject.ourKonvaObject.id);
+        this.currentMap.objects.splice(index, 1);
+        this.currentMap.objects.unshift(selectedObject.ourKonvaObject);
+        this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, this.currentMap);
     }
 }

@@ -22,7 +22,6 @@ export class OurKonvaObject {
     name: string;
     isAdaptedToGrid: boolean;
     isEditionBlocked: boolean;
-    zIndex: number;
 
     constructor(author: Player) {
         this.isActive = false;
@@ -35,7 +34,6 @@ export class OurKonvaObject {
         this.isEditionBlocked = false;
         this.author = author;
         this.scale = new OurKonvaScale();
-        this.zIndex = 9999;
     }
 
     static calculateObjectPositionOnGrid(object: CurrentSelectedKonvaObject, gridStage: Konva.Stage): Coords {

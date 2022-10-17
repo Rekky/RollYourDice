@@ -15,8 +15,6 @@ export class KonvaImagePropertiesComponent implements OnInit {
     @Output() isAdaptedToGridChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() isEditionBlockedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() isDisplayedJustForMasterChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() itemToTop: EventEmitter<void> = new EventEmitter<void>();
-    @Output() itemToBottom: EventEmitter<void> = new EventEmitter<void>();
 
     constructor() { }
 
@@ -35,14 +33,6 @@ export class KonvaImagePropertiesComponent implements OnInit {
     isObjectEditionBlocked(ev: boolean): void {
         this.image.isEditionBlocked = ev;
         this.isEditionBlockedChange.emit(ev);
-    }
-
-    moveItemToTop(): void {
-        this.itemToTop.emit();
-    }
-
-    moveItemToBottom(): void {
-        this.itemToBottom.emit();
     }
 
 }

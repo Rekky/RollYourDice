@@ -1,7 +1,7 @@
 <div class="blueprints-container">
     <div class="buttons-box p-3">
-        <button type="button" class="btn btn-white px-3 my-2"
-                (click)="addBBArea()">Area</button>
+<!--        <button type="button" class="btn btn-white px-3 my-2"-->
+<!--                (click)="addBBArea()">Area</button>-->
         <button type="button" class="btn btn-white px-3 my-2"
                 (click)="addBBGetAllActors()">GetAllActors</button>
         <button type="button" class="btn btn-white px-3 my-2"
@@ -69,19 +69,19 @@
                 </svg>
             </ng-container>
             <ng-container *ngFor="let bb of blueprint.blueprintBoxes;">
-                <app-bb-area *ngIf="bb.kind === 'AREA'"
-                             appDraggable
-                             class="draggable"
-                             [bb]="bb"
-                             [id]="bb.id"
-                             [style.top]="bb.position.y + 'px'"
-                             [style.left]="bb.position.x + 'px'"
-                             [objectData]="bb"
-                             (nodeOutHasBeenTouched)="touchedNodeOut($event)"
-                             (nodeInHasBeenTouched)="touchedNodeIn($event)"
-                             (draggableClick)="clickedBB($event)"
-                             (dragging)="modifyBBPosition($event, bb)">
-                </app-bb-area>
+<!--                <app-bb-area *ngIf="bb.kind === 'AREA'"-->
+<!--                             appDraggable-->
+<!--                             class="draggable"-->
+<!--                             [bb]="bb"-->
+<!--                             [id]="bb.id"-->
+<!--                             [style.top]="bb.position.y + 'px'"-->
+<!--                             [style.left]="bb.position.x + 'px'"-->
+<!--                             [objectData]="bb"-->
+<!--                             (nodeOutHasBeenTouched)="touchedNodeOut($event)"-->
+<!--                             (nodeInHasBeenTouched)="touchedNodeIn($event)"-->
+<!--                             (draggableClick)="clickedBB($event)"-->
+<!--                             (dragging)="modifyBBPosition($event, bb)">-->
+<!--                </app-bb-area>-->
                 <app-bb-get-all-actors *ngIf="bb.kind === 'GET_ALL_ACTORS'"
                              appDraggable
                              class="draggable"
@@ -96,17 +96,18 @@
                              (dragging)="modifyBBPosition($event, bb)">
                 </app-bb-get-all-actors>
                 <app-bb-equals *ngIf="bb.kind === 'EQUALS'"
-                                       appDraggable
-                                       class="draggable"
-                                       [bb]="bb"
-                                       [id]="bb.id"
-                                       [style.top]="bb.position.y + 'px'"
-                                       [style.left]="bb.position.x + 'px'"
-                                       [objectData]="bb"
-                                       (nodeOutHasBeenTouched)="touchedNodeOut($event)"
-                                       (nodeInHasBeenTouched)="touchedNodeIn($event)"
-                                       (draggableClick)="clickedBB($event)"
-                                       (dragging)="modifyBBPosition($event, bb)">
+                               appDraggable
+                               class="draggable"
+                               [bb]="bb"
+                               [id]="bb.id"
+                               [style.top]="bb.position.y + 'px'"
+                               [style.left]="bb.position.x + 'px'"
+                               [objectData]="bb"
+                               (nodeOutHasBeenTouched)="touchedNodeOut($event)"
+                               (nodeInHasBeenTouched)="touchedNodeIn($event)"
+                               (draggableClick)="clickedBB($event)"
+                               (dragging)="modifyBBPosition($event, bb)"
+                               (deleteBB)="deleteBB(bb)">
                 </app-bb-equals>
                 <app-bb-get *ngIf="bb.kind === 'GET'"
                                appDraggable
