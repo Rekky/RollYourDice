@@ -53,4 +53,12 @@ export class SelectedObjectEditorComponent implements OnInit {
     displayedJustForMaster(ev: any): void {
     }
 
+    moveItemToTop(): void {
+        this.mouseInteractor.moveElementToTop(this.selectedObject);
+    }
+
+    moveItemToBottom(): void {
+
+    }
+
 }

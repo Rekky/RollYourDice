@@ -1,0 +1,30 @@
+<div class="properties-box">
+    <ng-container *ngIf="!image.isEditionBlocked">
+        <app-fit-grid-input [matTooltip]="'Fit grid'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                            [isAdaptedToGrid]="image.isAdaptedToGrid"
+                            (isAdaptedToGridChange)="isAdaptedToGrid($event)">
+        </app-fit-grid-input>
+        <app-display-just-for-master [matTooltip]="'Display just for master'" [matTooltipShowDelay]="1000"
+                                     [matTooltipPosition]="'above'"
+                                     [isDisplayed]=""
+                                     (isDisplayedChange)="isDisplayedJustForMaster($event)">
+        </app-display-just-for-master>
+
+        <div class="divider"></div>
+    </ng-container>
+
+    <app-block-object-edition [matTooltip]="'Block edition'"
+                              [matTooltipShowDelay]="1000"
+                              [matTooltipPosition]="'above'"
+                              [isBlocked]="image.isEditionBlocked"
+                              (isBlockedChange)="isObjectEditionBlocked($event)">
+    </app-block-object-edition>
+
+    <ng-container *ngIf="!image.isEditionBlocked">
+        <div class="divider"></div>
+        <app-more-options [matTooltip]="'More options'" [matTooltipShowDelay]="1000" [matTooltipPosition]="'above'"
+                          (itemToTop)="moveItemToTop()" (itemToBottom)="moveItemToBottom()">
+        </app-more-options>
+    </ng-container>
+</div>
+

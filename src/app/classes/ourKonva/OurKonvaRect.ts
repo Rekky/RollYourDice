@@ -44,6 +44,7 @@ export class OurKonvaRect extends OurKonvaObject {
             strokeScaleEnabled: false,
         });
 
+        rect.zIndex(object.zIndex);
         layers.draws.add(rect);
         layers.draws.batchDraw();
 
