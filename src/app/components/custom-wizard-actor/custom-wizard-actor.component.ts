@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetService} from '../../services/asset.service';
 import {Actor, ActorTypesEnum, CHARACTER, MONSTER, NPC, OBJECT, PET, SPELL} from '../../classes/Actor';
@@ -12,9 +12,10 @@ import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 })
 export class CustomWizardActorComponent implements OnInit {
 
-    @Input() steps: number = 0;
-    @Input() currentStep: number = 0;
-    protected currentActorType: any = null;
+    @Input() open: boolean = false;
+    @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() currentStep: number = 1;
+    protected currentActorType: ActorTypesEnum = ActorTypesEnum.CHARACTER;
 
     public assets: any[] = [];
     showAssets: boolean = false;
@@ -36,6 +37,11 @@ export class CustomWizardActorComponent implements OnInit {
         this.assets = await this.assetService.getAllAssets();
     }
 
+    close(): void {
+        this.open = false;
+        this.openChange.emit(this.open);
+    }
+
     selectActorType(type: ActorTypesEnum): void {
         console.log(type);
         this.currentStep = 1;
@@ -44,6 +50,7 @@ export class CustomWizardActorComponent implements OnInit {
 
     async createActor(): Promise<void> {
         let actor: Actor = null;
+        console.log('createActor', this.currentActorType);
         try {
             switch (this.currentActorType) {
                 case ActorTypesEnum.CHARACTER:
@@ -68,10 +75,12 @@ export class CustomWizardActorComponent implements OnInit {
                 default:
                     break;
             }
+            await this.libraryInteractor.createActor(actor);
         } catch (e) {
             console.log(e);
         } finally {
-            await this.libraryInteractor.createActor(actor);
+            this.open = false;
+            this.openChange.emit(this.open);
         }
     }
 
