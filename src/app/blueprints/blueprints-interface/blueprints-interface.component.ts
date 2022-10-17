@@ -77,6 +77,10 @@ export class BlueprintsInterfaceComponent implements OnInit {
         this.blueprint.blueprintBoxes.push(new BBOnOverlap());
     }
 
+    viewBluePrint(): void  {
+        console.log('BLUEPRINT', this.blueprint);
+    }
+
     modifyBBPosition(coords: any, bb: BaseBlueprintBox): void {
         const newPos = new Coords(bb.position.x + coords.x, bb.position.y + coords.y);
         this.blueprint.blueprintLinks.forEach((link: BlueprintLink) => {
