@@ -111,6 +111,9 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             if (res) {
                 try {
                     if (res.formData) {
+                        res.formData.forEach((form) => {
+                            console.log('resFormData', form);
+                        });
                         const assetResponse: AssetModel[] = await this.assetInteractor.uploadFile(res.formData);
                         (res.game as Game).coverImage = assetResponse[0];
                     }

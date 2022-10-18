@@ -19,32 +19,23 @@
 
 
 <!-- NEW ASSET MODAL -->
-<app-custom-modal [(open)]="openModal" [title]="'Add new asset'" [bgColor]="'white'" [type]="'small'">
-    <form [formGroup]="formAsset" (submit)="uploadAsset()">
-        <div class="modal-content-body">
-            <div class="modal-content-body-title">
-                <h4>Asset name</h4>
-            </div>
-            <div class="modal-content-body-input">
-                <input type="text" placeholder="Enter asset name" [formControlName]="'name'">
+<app-custom-modal [(open)]="openModal" [title]="'New asset'" [bgColor]="'white'" [type]="'small'">
+    <form class="p-[50px]" [formGroup]="fgAsset" (submit)="uploadAsset()">
+        <div class="mb-4">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Name</label>
+            <input type="text" [formControlName]="'name'" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter asset name" required>
+        </div>
+        <div class="mb-4">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asset</label>
+            <upload-input *ngIf="!loading" (files)="onInputFilesChange($event)" [multiple]="false" [maxFilesLimit]="1"></upload-input>
+            <div *ngIf="loading" class="py-5">
+                <app-loading-spinner></app-loading-spinner>
             </div>
         </div>
-        <div class="modal-content-body">
-            <div class="modal-content-body-title">
-                <h4>Asset URL</h4>
-            </div>
-            <div class="modal-content-body-input">
-                <div class="upload-preview" *ngIf="previewUploadFile">
-                    <img style="width: 120px;" [src]="previewUploadFile" alt="upload-file">
-                </div>
-                <div class="upload-input">
-                    <span class="msg"><img style="width:20px;margin-right:8px;" src="assets/svg/upload.svg" alt="upload-svg" /> Upload</span>
-                    <input type="file" [formControlName]="'file'" (change)="onFileChange($event)" multiple>
-                </div>
-            </div>
-        </div>
-        <div class="modal-content-body" style="display: flex;justify-content: center;align-content: center;margin-top: 20px;">
-            <button type="submit" class="btn btn-primary" [disabled]="formAsset.invalid">UPLOAD</button>
+        <div class="mt-4 flex justify-content-center align-items-center">
+            <button type="submit" [disabled]="fgAsset.invalid" class="cursor-pointer focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
+                UPLOAD
+            </button>
         </div>
     </form>
 </app-custom-modal>

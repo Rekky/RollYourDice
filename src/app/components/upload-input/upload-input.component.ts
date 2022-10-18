@@ -13,7 +13,7 @@ export class UploadInputComponent implements OnInit {
     @Input() multiple: boolean = false;
     @Input() maxFilesLimit: number = 3;
     @Input() maxFileSize: number = 2000000;
-    @Output() files: EventEmitter<any> = new EventEmitter<any>();
+    @Output() files: EventEmitter<FormData> = new EventEmitter<FormData>();
     @Output() previewOutput: EventEmitter<any> = new EventEmitter<any>();
 
     previewFiles: {file: any, reader: string}[] = [];
@@ -67,7 +67,7 @@ export class UploadInputComponent implements OnInit {
                 reader.onloadend = () => {
                     // when all files are loaded, emit them
                     if (this.previewFiles.length === files.length) {
-                        const filesToEmit = this.toFormData(this.previewFiles);
+                        const filesToEmit: FormData = this.toFormData(this.previewFiles);
                         this.previewOutput.emit(this.previewFiles[0]);
                         this.files.emit(filesToEmit);
                     }

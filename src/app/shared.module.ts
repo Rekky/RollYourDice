@@ -25,6 +25,7 @@ import {CustomWizardActorComponent} from './components/custom-wizard-actor/custo
 import { CustomListComponent } from './components/custom-list/custom-list.component';
 import { FormErrorsComponent } from './components/form-errors/form-errors.component';
 import {TutorialComponent} from './components/tutorial/tutorial.component';
+import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spinner.component";
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {TutorialComponent} from './components/tutorial/tutorial.component';
         FormErrorsComponent,
         CustomListComponent,
         TutorialComponent,
+        LoadingSpinnerComponent
     ],
     imports: [
         CommonModule,
@@ -81,6 +83,7 @@ import {TutorialComponent} from './components/tutorial/tutorial.component';
         FormErrorsComponent,
         CustomListComponent,
         TutorialComponent,
+        LoadingSpinnerComponent
     ],
 })
 

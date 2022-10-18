@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from './http.service';
-import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import {AssetModel} from '../classes/AssetModel';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AssetService {
     constructor(private httpService: HttpService) {}
 
 
-    async uploadFile(formData: any): Promise<AssetModel[]> {
+    async uploadFile(formData: FormData): Promise<AssetModel[]> {
         return new Promise<any>( (resolve, reject) => {
             this.httpService.postTest(`/${this.endPointName}/upload`, formData).subscribe(
                 (response) => {
