@@ -13,6 +13,7 @@ export class OurKonvaImage extends OurKonvaObject {
     src: string;
     opacity: number;
     state: 'image';
+    isBackground: boolean = false;
 
     constructor(author: Player, src: string) {
         super(author);
@@ -26,7 +27,7 @@ export class OurKonvaImage extends OurKonvaObject {
         this.size.height = 300;
     }
 
-    static paint(object: OurKonvaImage, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
+    static paint(object: OurKonvaImage, layer: Konva.Layer): CurrentSelectedKonvaObject {
         const image = new Image();
         image.src = object.src;
         const img = new Konva.Image({
@@ -40,14 +41,15 @@ export class OurKonvaImage extends OurKonvaObject {
             name: object.name
         });
 
-        layers.draws.add(img);
-        layers.draws.batchDraw();
+        layer.add(img);
+        object.layer = layer;
+        layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
         toEmit.konvaObject = img;
         toEmit.type = object.state;
-        toEmit.layer = layers.draws;
+        toEmit.layer = layer;
         return toEmit;
     }
 
@@ -80,8 +82,9 @@ export class OurKonvaImage extends OurKonvaObject {
         this.name = objectAttrs.name;
     }
 
-    mouseDown(): void {
-        super.mouseDown();
+    mouseDown(layers: OurKonvaLayers): void {
+        super.mouseDown(layers);
+        this.layer = layers.draws;
         this.position = new Coords(this.ev.offsetX, this.ev.offsetY);
     }
 
@@ -102,14 +105,14 @@ export class OurKonvaImage extends OurKonvaObject {
                     opacity: this.opacity / 100,
                     name: this.name
                 });
-                this.layers.objects.add(this.tempImage);
+                this.layer.add(this.tempImage);
             } else {
                 this.tempImage.setAttr('x', this.position.x > pos.x ? pos.x : this.position.x);
                 this.tempImage.setAttr('y', this.position.y > pos.y ? pos.y : this.position.y);
                 this.tempImage.setAttr('width', Math.abs(this.position.x - pos.x));
                 this.tempImage.setAttr('height', Math.abs(this.position.y - pos.y));
             }
-            this.layers.objects.batchDraw();
+            this.layer.batchDraw();
         }
     }
 
@@ -139,18 +142,18 @@ export class OurKonvaImage extends OurKonvaObject {
         this.position.y = this.position.y > pos.y ? this.position.y - this.size.height : this.position.y;
 
         const transformer = new Konva.Transformer();
-        this.layers.objects.add(transformer);
+        this.layer.add(transformer);
         transformer.nodes([img]);
         transformer.id('tr-' + this.id);
         transformer.hide();
 
-        this.layers.objects.add(img);
-        this.layers.objects.batchDraw();
+        this.layer.add(img);
+        this.layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = img;
         toEmit.type = this.state;
-        toEmit.layer = this.layers.draws;
+        toEmit.layer = this.layer;
         toEmit.transformer = transformer;
         return toEmit;
     }

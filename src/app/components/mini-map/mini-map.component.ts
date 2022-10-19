@@ -40,9 +40,9 @@ export class MiniMapComponent implements AfterViewInit {
             scale: {x: 0.2, y: 0.2}
         });
         stage.container().style.backgroundColor = '#f2f2f2';
+        stage.add(this.layers.background);
         stage.add(this.layers.grid);
         stage.add(this.layers.objects);
-        stage.add(this.layers.shadows);
         stage.add(this.layers.draws);
         stage.add(this.layers.texts);
         this.gridStage = stage;
@@ -85,16 +85,16 @@ export class MiniMapComponent implements AfterViewInit {
 
     paintObjectOnMap(object: any, layers: OurKonvaLayers): void {
         if (object?.state === 'square') {
-            OurKonvaRect.paint(object, layers);
+            OurKonvaRect.paint(object, layers.draws);
         }
         if (object?.state === 'text') {
-            OurKonvaText.paint(object, layers);
+            OurKonvaText.paint(object, layers.texts);
         }
         if (object?.state === 'image') {
-            OurKonvaImage.paint(object, layers);
+            OurKonvaImage.paint(object, layers.draws);
         }
         if (object?.state === 'brush') {
-            OurKonvaBrush.paint(object, layers);
+            OurKonvaBrush.paint(object, layers.draws);
         }
     }
 

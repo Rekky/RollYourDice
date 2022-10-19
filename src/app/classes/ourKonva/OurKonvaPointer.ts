@@ -2,6 +2,7 @@ import {Coords} from '../Coords';
 import { OurKonvaObject } from './OurKonvaObject';
 import Konva from 'konva';
 import { Player } from '../User';
+import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaPointer extends OurKonvaObject {
     state: string = 'pointer';
@@ -16,8 +17,9 @@ export class OurKonvaPointer extends OurKonvaObject {
         this.offsetCoords = new Coords();
     }
 
-    mouseDown(): void {
-        super.mouseDown();
+    mouseDown(layers: OurKonvaLayers): void {
+        super.mouseDown(layers);
+        this.layer = layers.draws;
         this.startCoords.x = this.ev.clientX - this.offsetCoords.x;
         this.startCoords.y = this.ev.clientY - this.offsetCoords.y;
         this.position = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
@@ -45,14 +47,14 @@ export class OurKonvaPointer extends OurKonvaObject {
                     listening: false,
                     dash: [2, 2]
                 });
-                this.layers.draws.add(this.tempRect);
+                this.layer.add(this.tempRect);
             } else {
                 this.tempRect.setAttr('x', this.position.x > pos.x ? pos.x : this.position.x);
                 this.tempRect.setAttr('y', this.position.y > pos.y ? pos.y : this.position.y);
                 this.tempRect.setAttr('width', Math.abs(this.position.x - pos.x));
                 this.tempRect.setAttr('height', Math.abs(this.position.y - pos.y));
             }
-            this.layers.draws.batchDraw();
+            this.layer.batchDraw();
         }
     }
 
@@ -61,6 +63,6 @@ export class OurKonvaPointer extends OurKonvaObject {
         if (this.tempRect) {
             this.tempRect.destroy();
         }
-        this.layers.draws.batchDraw();
+        this.layer.batchDraw();
     }
 }

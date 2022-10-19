@@ -6,12 +6,6 @@ import { ulid } from 'ulid';
 import {Player} from '../User';
 
 export class OurKonvaText extends OurKonvaObject {
-    id: string;
-    state: string = 'text';
-    color: string;
-    fontSize: number;
-    text: string;
-    position: Coords;
 
     constructor(author: Player) {
         super(author);
@@ -22,6 +16,12 @@ export class OurKonvaText extends OurKonvaObject {
         this.name = 'new text';
         this.position = new Coords();
     }
+    id: string;
+    state: string = 'text';
+    color: string;
+    fontSize: number;
+    text: string;
+    position: Coords;
 
     static getKonvaText(object: OurKonvaText): Konva.Text {
         return new Konva.Text({
@@ -38,21 +38,7 @@ export class OurKonvaText extends OurKonvaObject {
         });
     }
 
-    getOurKonvaText(object: Konva.Text): void {
-        const objectAttrs = object.getAttrs();
-        this.position.x = objectAttrs.x;
-        this.position.y = objectAttrs.y;
-        // this.size.height = objectAttrs.height;
-        this.size.width = objectAttrs.width;
-        this.state = 'text';
-        this.color = objectAttrs.fill;
-        this.fontSize = objectAttrs.fontSize;
-        this.text = objectAttrs.text;
-        this.id = objectAttrs.id;
-        this.name = objectAttrs.name;
-    }
-
-    static paint(object: OurKonvaText, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
+    static paint(object: OurKonvaText, layer: Konva.Layer): CurrentSelectedKonvaObject {
         const text = new Konva.Text({
             text: object.text,
             x: object.position.x,
@@ -77,20 +63,40 @@ export class OurKonvaText extends OurKonvaObject {
         transformer.id('tr-' + object.id);
 
         // this.adaptPositionToGrid(text);
-        layers.texts.add(text);
-        layers.texts.add(transformer);
-        layers.texts.batchDraw();
+        layer.add(text);
+        layer.add(transformer);
+        object.layer = layer;
+        layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = text;
         toEmit.type = object.state;
-        toEmit.layer = layers.texts;
+        toEmit.layer = layer;
         toEmit.transformer = transformer;
         return toEmit;
     }
 
+    getOurKonvaText(object: Konva.Text): void {
+        const objectAttrs = object.getAttrs();
+        this.position.x = objectAttrs.x;
+        this.position.y = objectAttrs.y;
+        // this.size.height = objectAttrs.height;
+        this.size.width = objectAttrs.width;
+        this.state = 'text';
+        this.color = objectAttrs.fill;
+        this.fontSize = objectAttrs.fontSize;
+        this.text = objectAttrs.text;
+        this.id = objectAttrs.id;
+        this.name = objectAttrs.name;
+    }
+
+    mouseDown(layers: OurKonvaLayers): void {
+        super.mouseDown(layers);
+        this.layer = layers.texts;
+    }
+
     mouseUp(): CurrentSelectedKonvaObject {
-        super.mouseDown();
+        super.mouseUp();
         const pos = this.stage.getPointerPosition();
         const text = new Konva.Text({
             text: 'Some text here',
@@ -137,16 +143,16 @@ export class OurKonvaText extends OurKonvaObject {
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = text;
         toEmit.type = this.state;
-        toEmit.layer = this.layers.texts;
+        toEmit.layer = this.layer;
         toEmit.transformer = transformer;
         return toEmit;
     }
 
     refresh(text, transformer): void {
         this.adaptPositionToGrid(text);
-        this.layers.texts.add(text);
-        this.layers.texts.add(transformer);
-        this.layers.texts.batchDraw();
+        this.layer.add(text);
+        this.layer.add(transformer);
+        this.layer.batchDraw();
     }
 
     editMode(text, transformer): void {

@@ -28,7 +28,7 @@ export class OurKonvaRect extends OurKonvaObject {
         this.strokeScaleEnabled = false;
     }
 
-    static paint(object: OurKonvaRect, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
+    static paint(object: OurKonvaRect, layer: Konva.Layer): CurrentSelectedKonvaObject {
         const rect = new Konva.Rect({
             id: object.id,
             x: object.position.x,
@@ -44,14 +44,15 @@ export class OurKonvaRect extends OurKonvaObject {
             strokeScaleEnabled: false,
         });
 
-        layers.draws.add(rect);
-        layers.draws.batchDraw();
+        layer.add(rect);
+        object.layer = layer;
+        layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
         toEmit.konvaObject = rect;
         toEmit.type = object.state;
-        toEmit.layer = layers.draws;
+        toEmit.layer = layer;
         return toEmit;
     }
 
@@ -88,8 +89,9 @@ export class OurKonvaRect extends OurKonvaObject {
         this.strokeScaleEnabled = objectAttrs.false;
     }
 
-    mouseDown(): void {
-        super.mouseDown();
+    mouseDown(layers: OurKonvaLayers): void {
+        super.mouseDown(layers);
+        this.layer = layers.draws;
         this.position = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
     }
 
@@ -111,14 +113,14 @@ export class OurKonvaRect extends OurKonvaObject {
                     name: this.name,
                     strokeScaleEnabled: false
                 });
-                this.layers.draws.add(this.tempRect);
+                this.layer.add(this.tempRect);
             } else {
                 this.tempRect.setAttr('x', this.position.x > pos.x ? pos.x : this.position.x);
                 this.tempRect.setAttr('y', this.position.y > pos.y ? pos.y : this.position.y);
                 this.tempRect.setAttr('width', Math.abs(this.position.x - pos.x));
                 this.tempRect.setAttr('height', Math.abs(this.position.y - pos.y));
             }
-            this.layers.draws.batchDraw();
+            this.layer.batchDraw();
         }
     }
 
@@ -148,14 +150,14 @@ export class OurKonvaRect extends OurKonvaObject {
         this.position.x = this.position.x > pos.x ? this.position.x - this.size.width : this.position.x;
         this.position.y = this.position.y > pos.y ? this.position.y - this.size.height : this.position.y;
 
-        this.layers.draws.add(rect);
-        this.layers.draws.batchDraw();
+        this.layer.add(rect);
+        this.layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = this;
         toEmit.konvaObject = rect;
         toEmit.type = this.state;
-        toEmit.layer = this.layers.draws;
+        toEmit.layer = this.layer;
         // toEmit.transformer = transformer;
         return toEmit;
     }

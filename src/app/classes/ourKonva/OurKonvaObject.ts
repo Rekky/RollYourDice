@@ -13,7 +13,7 @@ export class OurKonvaObject {
     isActive: boolean;
     author: Player;
     stage: Konva.Stage;
-    layers: OurKonvaLayers;
+    layer: Konva.Layer;
     state: string;
     ev: MouseEvent;
     cellSize: number;
@@ -26,7 +26,7 @@ export class OurKonvaObject {
     constructor(author: Player) {
         this.isActive = false;
         this.stage = null;
-        this.layers = null;
+        this.layer = null;
         this.ev = null;
         this.cellSize = 40;
         this.size = new OurKonvaSize();
@@ -48,7 +48,7 @@ export class OurKonvaObject {
         }
     }
 
-    mouseDown(): any {}
+    mouseDown(layers: OurKonvaLayers): any {}
     mouseMove(): void {}
     mouseUp(): any {}
     mouseOut(): void {}

@@ -1,6 +1,7 @@
 import Konva from 'konva';
 import { Player } from '../User';
 import {OurKonvaObject} from './OurKonvaObject';
+import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaEraser extends OurKonvaObject {
     state: string = 'eraser';
@@ -13,8 +14,8 @@ export class OurKonvaEraser extends OurKonvaObject {
         this.brushSize = 20;
     }
 
-    mouseDown(): void {
-        super.mouseDown();
+    mouseDown(layers: OurKonvaLayers): void {
+        super.mouseDown(layers);
         const pos = this.stage.getPointerPosition();
         this.line = new Konva.Line({
             stroke: '#ffc107',
@@ -22,7 +23,8 @@ export class OurKonvaEraser extends OurKonvaObject {
             globalCompositeOperation: 'destination-out',
             points: [pos.x, pos.y],
         });
-        this.layers.draws.add(this.line);
+        this.layer = layers.draws;
+        this.layer.add(this.line);
     }
 
     mouseMove(): void {
@@ -31,7 +33,7 @@ export class OurKonvaEraser extends OurKonvaObject {
             const pos = this.stage.getPointerPosition();
             const newPoints = this.line.points().concat([pos.x, pos.y]);
             this.line.points(newPoints);
-            this.layers.draws.batchDraw();
+            this.layer.batchDraw();
         }
     }
 }

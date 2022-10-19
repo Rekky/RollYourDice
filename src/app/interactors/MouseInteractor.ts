@@ -76,7 +76,6 @@ export class MouseInteractor implements OnDestroy {
         this.ourLayers = layers;
         mapEl.nativeElement.addEventListener('mousedown', (e) => {
             this.mouse.stage = stage;
-            this.mouse.layers = layers;
             this.mouse.isActive = true;
             this.mouse.ev = e;
 
@@ -84,7 +83,7 @@ export class MouseInteractor implements OnDestroy {
                 this.selectedKonvaObjects.next([]);
             }
 
-            this.mouse.mouseDown();
+            this.mouse.mouseDown(layers);
             if (this.mouseIsOverKonvaObjectId) {
                 this.dragHasStartedOnObject = true;
             }
@@ -142,6 +141,7 @@ export class MouseInteractor implements OnDestroy {
 
         mapEl.nativeElement.addEventListener('mouseup', (e) => {
             let konvaElement = this.mouse.mouseUp();
+            // if (this.mouse.state === 'text') { this.mouse.layer = this.ourLayers.texts; }
             this.mouse.isActive = false;
             this.mouse.ev = e;
             this.dragHasStartedOnObject = false;
@@ -165,7 +165,7 @@ export class MouseInteractor implements OnDestroy {
         }, false);
 
         const selectedGroupTr: Konva.Transformer = layers.draws.getChildren()[0] as Konva.Transformer;
-        selectedGroupTr.moveToTop();
+        selectedGroupTr?.moveToTop();
         selectedGroupTr?.on('mouseenter', (ev) => {
             this.mouseIsOverKonvaObjectId = selectedGroupTr.getNodes()[0].getAttr('id');
         });
@@ -242,9 +242,8 @@ export class MouseInteractor implements OnDestroy {
     }
 
     newObjectSetEvents(object: any): void {
-        const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
-        selectedGroupTr.moveToTop();
         object?.konvaObject.on('mouseover', (e) => {
+            console.log('heyo');
             document.body.style.cursor = 'pointer';
             this.mouseIsOverKonvaObjectId = object.ourKonvaObject.id;
         });
@@ -255,6 +254,8 @@ export class MouseInteractor implements OnDestroy {
         object?.konvaObject.on('click', () => {
             if (this.mouse.state !== 'pointer') { return; }
             if (object.ourKonvaObject.isEditionBlocked && this.isCtrlKeyPressed) { return; }
+            const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
+            selectedGroupTr?.moveToTop();
             const nodes = selectedGroupTr.getNodes();
             const selectedObjects = this.selectedKonvaObjects?.getValue();
 
@@ -298,7 +299,6 @@ export class MouseInteractor implements OnDestroy {
             this.selectedKonvaObjects.next(selectedObjects);
         });
         object?.konvaObject.on('dragend', () => {
-            console.log(object);
             if (object.ourKonvaObject.isAdaptedToGrid) {
                 object = this.adaptObjectToMap(object);
             } else {
@@ -341,7 +341,7 @@ export class MouseInteractor implements OnDestroy {
             });
 
             const selectedGroupTr: Konva.Transformer = selectedKonvaObjects[0].layer.getChildren()[0] as Konva.Transformer;
-            selectedGroupTr.moveToTop();
+            selectedGroupTr?.moveToTop();
             selectedGroupTr.nodes([]);
         }
         this.selectedKonvaObjects.next([]);
@@ -359,19 +359,20 @@ export class MouseInteractor implements OnDestroy {
 
     paintObjectOnMap(object: any): void {
         if (object?.state === 'square') {
-            const createdObject = OurKonvaRect.paint(object, this.ourLayers);
+            const createdObject = OurKonvaRect.paint(object, this.ourLayers.draws);
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'text') {
-            const createdObject = OurKonvaText.paint(object, this.ourLayers);
+            const createdObject = OurKonvaText.paint(object, this.ourLayers.texts);
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'image') {
-            const createdObject = OurKonvaImage.paint(object, this.ourLayers);
+            const layer = object.isBackground ? this.ourLayers.background : this.ourLayers.draws;
+            const createdObject = OurKonvaImage.paint(object, layer);
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'brush') {
-            const createdObject = OurKonvaBrush.paint(object, this.ourLayers);
+            const createdObject = OurKonvaBrush.paint(object, this.ourLayers.draws);
             this.newObjectSetEvents(createdObject);
         }
     }
@@ -454,7 +455,6 @@ export class MouseInteractor implements OnDestroy {
         this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, this.currentMap);
     }
 
-
     moveSelectedElementUp(): void {
         const selectedObject = this.selectedKonvaObjects.getValue()[0];
         const index = this.currentMap.objects.findIndex(object => object.id === selectedObject.ourKonvaObject.id);
@@ -466,7 +466,6 @@ export class MouseInteractor implements OnDestroy {
         }
     }
 
-
     moveSelectedElementDown(): void {
         const selectedObject = this.selectedKonvaObjects.getValue()[0];
         const index = this.currentMap.objects.findIndex(object => object.id === selectedObject.ourKonvaObject.id);
@@ -476,5 +475,22 @@ export class MouseInteractor implements OnDestroy {
             this.currentMap.objects.splice(index - 1, 0, el);
             this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, this.currentMap);
         }
+    }
+
+    setAsBackgroundImage(): void {
+        const selectedObject = this.selectedKonvaObjects.getValue()[0];
+        (selectedObject.ourKonvaObject as OurKonvaImage).isBackground = true;
+        selectedObject.layer = this.ourLayers.background;
+        selectedObject.konvaObject.draggable(false);
+        this.ourLayers.background.add(selectedObject.konvaObject as Konva.Image);
+
+        const selectedGroupTr: Konva.Transformer = this.ourLayers.draws.find('#tr-selectedObjects')[0] as Konva.Transformer;
+        selectedGroupTr.nodes([]);
+        this.selectedKonvaObjects.next([]);
+
+        this.ourLayers.background.batchDraw();
+        this.ourLayers.grid.batchDraw();
+        this.ourLayers.draws.batchDraw();
+        this.updateObject(selectedObject.ourKonvaObject);
     }
 }

@@ -29,7 +29,7 @@ export class OurKonvaBrush extends OurKonvaObject {
         this.strokeScaleEnabled = false;
     }
 
-    static paint(object: OurKonvaBrush, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
+    static paint(object: OurKonvaBrush, layer: Konva.Layer): CurrentSelectedKonvaObject {
         const line = new Konva.Line({
             id: object.id,
             stroke: object.stroke,
@@ -46,19 +46,20 @@ export class OurKonvaBrush extends OurKonvaObject {
             strokeScaleEnabled: false,
         });
 
-        layers.draws.add(line);
-        layers.draws.batchDraw();
+        layer.add(line);
+        object.layer = layer;
+        layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
         toEmit.konvaObject = line;
         toEmit.type = object.state;
-        toEmit.layer = layers.draws;
+        toEmit.layer = layer;
         return toEmit;
     }
 
-    mouseDown(): void {
-        super.mouseDown();
+    mouseDown(layers: OurKonvaLayers): void {
+        super.mouseDown(layers);
         this.position = new Coords(this.stage.getRelativePointerPosition().x, this.stage.getRelativePointerPosition().y);
         this.line = new Konva.Line({
             stroke: this.stroke,
@@ -73,7 +74,8 @@ export class OurKonvaBrush extends OurKonvaObject {
             draggable: false,
             strokeScaleEnabled: false,
         });
-        this.layers.draws.add(this.line);
+        this.layer = layers.draws;
+        this.layer.add(this.line);
         this.minPos = new Coords(this.position.x, this.position.y);
     }
 
@@ -88,7 +90,7 @@ export class OurKonvaBrush extends OurKonvaObject {
             this.minPos.y = pos.y < this.minPos.y ? pos.y : this.minPos.y;
 
             this.line.points(newPoints);
-            this.layers.draws.batchDraw();
+            this.layer.batchDraw();
         }
     }
 
@@ -105,14 +107,14 @@ export class OurKonvaBrush extends OurKonvaObject {
 
         this.line.points(this.points);
 
-        this.layers.draws.add(this.line);
-        this.layers.draws.batchDraw();
+        this.layer.add(this.line);
+        this.layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = this;
         toEmit.konvaObject = this.line;
         toEmit.type = this.state;
-        toEmit.layer = this.layers.draws;
+        toEmit.layer = this.layer;
         return toEmit;
     }
 

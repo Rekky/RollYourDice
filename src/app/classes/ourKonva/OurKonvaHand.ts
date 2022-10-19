@@ -1,6 +1,7 @@
 import {Coords} from '../Coords';
 import {OurKonvaObject} from './OurKonvaObject';
 import {Player} from '../User';
+import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaHand extends OurKonvaObject {
     state: string = 'hand';
@@ -13,8 +14,9 @@ export class OurKonvaHand extends OurKonvaObject {
         this.offsetCoords = new Coords();
     }
 
-    mouseDown(): void {
-        super.mouseDown();
+    mouseDown(layers: OurKonvaLayers): void {
+        super.mouseDown(layers);
+        this.layer = layers.draws;
     }
 
     mouseMove(): void {

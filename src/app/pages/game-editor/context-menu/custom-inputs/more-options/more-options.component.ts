@@ -37,4 +37,8 @@ export class MoreOptionsComponent implements OnInit {
         this.mouseInteractor.moveSelectedElementDown();
     }
 
+    setAsBackgroundImage(): void {
+        this.mouseInteractor.setAsBackgroundImage();
+    }
+
 }
