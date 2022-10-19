@@ -18,6 +18,8 @@ import {UserInteractor} from './UserInteractor';
 import {Player} from '../classes/User';
 import {MapInteractor} from './MapInteractor';
 import {GameInteractor} from './GameInteractor';
+import {Actor} from "../classes/Actor";
+import {OurKonvaActor} from "../classes/ourKonva/OurKonvaActor";
 
 @Injectable({
     providedIn: 'root'
@@ -232,6 +234,7 @@ export class MouseInteractor implements OnDestroy {
     }
 
     addMouseKonvaObjectToMap(object: CurrentSelectedKonvaObject): void {
+        console.log('===addMouseKonvaObjectToMap===', object);
         this.socketService.createGameObject(this.currentMap.id, object.ourKonvaObject);
         this.currentMap.objects.push(object.ourKonvaObject);
         this.mouseService.setMouse(new OurKonvaPointer());
@@ -374,12 +377,16 @@ export class MouseInteractor implements OnDestroy {
             const createdObject = OurKonvaBrush.paint(object, this.ourLayers.draws);
             this.newObjectSetEvents(createdObject);
         }
+        if (object?.state === 'actor') {
+            const createdObject = OurKonvaActor.paint(object, this.ourLayers);
+            this.newObjectSetEvents(createdObject);
+        }
     }
 
     addImageOnMap(asset: AssetModel): void {
         const author: Player = new Player();
         author.fromUserToPlayer(this.userInteractor.getCurrentUser());
-        const ourKonvaImage = new OurKonvaImage(author, asset.uri);
+        const ourKonvaImage = new OurKonvaImage(author, asset?.uri);
         ourKonvaImage.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
         ourKonvaImage.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
         let currentObject = new CurrentSelectedKonvaObject();
@@ -394,6 +401,27 @@ export class MouseInteractor implements OnDestroy {
         this.addMouseKonvaObjectToMap(currentObject);
         this.newObjectSetEvents(currentObject);
         this.paintObjectOnMap(ourKonvaImage);
+    }
+
+    addActorOnMap(actor: Actor): void {
+        const author: Player = new Player();
+        author.fromUserToPlayer(this.userInteractor.getCurrentUser());
+
+        const ourKonvaActor = new OurKonvaActor(author, actor, actor.asset.uri);
+        ourKonvaActor.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
+        ourKonvaActor.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
+        let currentObject = new CurrentSelectedKonvaObject();
+        currentObject.ourKonvaObject = ourKonvaActor;
+        currentObject.konvaObject = ourKonvaActor.getKonvaImage(ourKonvaActor);
+        currentObject.type = 'actor';
+        currentObject.layer = this.ourLayers.draws;
+
+        if (ourKonvaActor.isAdaptedToGrid) {
+            currentObject = this.adaptObjectToMap(currentObject); // Adapt object
+        }
+        this.addMouseKonvaObjectToMap(currentObject);
+        this.newObjectSetEvents(currentObject);
+        this.paintObjectOnMap(ourKonvaActor);
     }
 
     updateSelectedObject(object: CurrentSelectedKonvaObject[]): void {

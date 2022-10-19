@@ -190,6 +190,7 @@ export class SocketService {
     }
 
     updateGameObjects(mapId: string, objects: any[]): void {
+        console.log('Called update game object');
         this.socket.emit('game-editor-update-map-object', {mapId, objects: objects});
     }
 
