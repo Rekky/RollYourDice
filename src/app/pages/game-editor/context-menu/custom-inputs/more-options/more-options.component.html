@@ -10,7 +10,13 @@
         </svg>
     </div>
     <div *ngIf="displayMoreOptions" class="more-options-list">
-        <div class="option" (click)="moveElementToTop()">Move to top</div>
-        <div class="option" (click)="moveElementToBottom()">Move to bottom</div>
+        <button type="button" class="option"
+                (click)="moveElementUp()">Move up</button>
+        <button type="button" class="option"
+                (click)="moveElementDown()">Move down</button>
+        <button type="button" class="option"
+                (click)="moveElementToTop()">Move to top</button>
+        <button type="button" class="option"
+                (click)="moveElementToBottom()">Move to bottom</button>
     </div>
 </div>

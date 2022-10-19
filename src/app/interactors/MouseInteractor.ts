@@ -453,4 +453,28 @@ export class MouseInteractor implements OnDestroy {
         this.currentMap.objects.unshift(selectedObject.ourKonvaObject);
         this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, this.currentMap);
     }
+
+
+    moveSelectedElementUp(): void {
+        const selectedObject = this.selectedKonvaObjects.getValue()[0];
+        const index = this.currentMap.objects.findIndex(object => object.id === selectedObject.ourKonvaObject.id);
+        if (index !== this.currentMap.objects.length - 1) {
+            const el = this.currentMap.objects.splice(index, 1)[0];
+            selectedObject.konvaObject.moveUp();
+            this.currentMap.objects.splice(index + 1, 0, el);
+            this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, this.currentMap);
+        }
+    }
+
+
+    moveSelectedElementDown(): void {
+        const selectedObject = this.selectedKonvaObjects.getValue()[0];
+        const index = this.currentMap.objects.findIndex(object => object.id === selectedObject.ourKonvaObject.id);
+        if (index !== 0) {
+            const el = this.currentMap.objects.splice(index, 1)[0];
+            selectedObject.konvaObject.moveDown();
+            this.currentMap.objects.splice(index - 1, 0, el);
+            this.socketService.sendGameUpdateMap(this.gameInteractor.getCurrentGame().id, this.currentMap);
+        }
+    }
 }

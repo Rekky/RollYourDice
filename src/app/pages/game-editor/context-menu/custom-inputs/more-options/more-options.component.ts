@@ -29,4 +29,12 @@ export class MoreOptionsComponent implements OnInit {
         this.mouseInteractor.moveSelectedElementToBottom();
     }
 
+    moveElementUp(): void {
+        this.mouseInteractor.moveSelectedElementUp();
+    }
+
+    moveElementDown(): void {
+        this.mouseInteractor.moveSelectedElementDown();
+    }
+
 }
