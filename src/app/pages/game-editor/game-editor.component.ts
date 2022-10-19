@@ -18,6 +18,8 @@ import {Actor} from '../../classes/Actor';
 import {Player} from '../../classes/User';
 import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 import {delay, retry, switchMap, tap} from 'rxjs/operators';
+import {BlueprintInteractor} from "../../interactors/BlueprintInteractor";
+import {BoxTypeEnum} from "../../blueprints/models/base-blueprint";
 
 @Component({
     selector: 'app-game-editor',
@@ -55,8 +57,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     $mapInteractorSubs: Subscription;
     $metaSubs: Subscription;
 
-
-
     constructor(public gameInteractor: GameInteractor,
                 private mapInteractor: MapInteractor,
                 private mouseInteractor: MouseInteractor,
@@ -67,7 +67,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 private metaInteractor: MetaInteractor,
                 public myAdventureInteractor: MyAdventuresInteractor,
                 public libraryInteractor: LibraryInteractor,
-                private cdr: ChangeDetectorRef) {
+                private cdr: ChangeDetectorRef,
+                private blueprintInteractor: BlueprintInteractor) {
 
         const gameId = this.router.snapshot.paramMap.get('id');
 
@@ -165,6 +166,18 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                                     this.currentMap.stage.attrs = currentMetaMapFound.attrs;
                                 }
                             }
+
+                            const blueprint = {
+                                id: '12312324',
+                                blueprintBoxes: {
+                                    onInit: [
+                                        {id: '1111', type: 'FUNCTION', kind: 'GET_ALL_ACTORS', func: {id: '2222', type: 'FUNCTION', kind: 'GET', param: {index: 0}}},
+                                    ],
+                                    onOverlap: {}
+                                }
+                            };
+                            // Cargar logica blueprints
+                            this.blueprintInteractor.loadBlueprint(blueprint);
                         }
                     })
                 );
