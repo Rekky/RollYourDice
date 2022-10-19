@@ -79,17 +79,13 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     deleteBB(box: any): void {
         const index = this.blueprint.blueprintBoxes.findIndex(bb => bb.id === box.id);
-        console.log(box.id);
-        console.log(this.blueprint.blueprintLinks);
-        // this.blueprint.blueprintLinks.forEach((link, i) => {
-        //     if (link.startingNode.boxId === box.id) {
-        //         this.blueprint.blueprintLinks.splice(i, 1);
-        //     }
-        //     if (link.endingNode.boxId === box.id) {
-        //         this.blueprint.blueprintLinks.splice(i, 1);
-        //     }
-        // });
-        // this.blueprint.blueprintBoxes.splice(index, 1);
+        this.blueprint.blueprintLinks.map((link, i) => {
+            if (link.startingNode.boxId === box.id || link.endingNode.boxId === box.id) {
+                delete this.blueprint.blueprintLinks[i];
+            }
+        });
+        this.blueprint.blueprintBoxes.splice(index, 1);
+        this.cdr.detectChanges();
     }
 
     viewBluePrint(): void  {

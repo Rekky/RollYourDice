@@ -165,6 +165,7 @@ export class MouseInteractor implements OnDestroy {
         }, false);
 
         const selectedGroupTr: Konva.Transformer = layers.draws.getChildren()[0] as Konva.Transformer;
+        selectedGroupTr.moveToTop();
         selectedGroupTr?.on('mouseenter', (ev) => {
             this.mouseIsOverKonvaObjectId = selectedGroupTr.getNodes()[0].getAttr('id');
         });
@@ -242,6 +243,7 @@ export class MouseInteractor implements OnDestroy {
 
     newObjectSetEvents(object: any): void {
         const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
+        selectedGroupTr.moveToTop();
         object?.konvaObject.on('mouseover', (e) => {
             document.body.style.cursor = 'pointer';
             this.mouseIsOverKonvaObjectId = object.ourKonvaObject.id;
@@ -339,6 +341,7 @@ export class MouseInteractor implements OnDestroy {
             });
 
             const selectedGroupTr: Konva.Transformer = selectedKonvaObjects[0].layer.getChildren()[0] as Konva.Transformer;
+            selectedGroupTr.moveToTop();
             selectedGroupTr.nodes([]);
         }
         this.selectedKonvaObjects.next([]);
