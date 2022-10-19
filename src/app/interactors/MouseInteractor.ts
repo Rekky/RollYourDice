@@ -243,7 +243,6 @@ export class MouseInteractor implements OnDestroy {
 
     newObjectSetEvents(object: any): void {
         object?.konvaObject.on('mouseover', (e) => {
-            console.log('heyo');
             document.body.style.cursor = 'pointer';
             this.mouseIsOverKonvaObjectId = object.ourKonvaObject.id;
         });
