@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {MapInteractor} from './MapInteractor';
+import {Coords} from '../classes/Coords';
+import {OurKonvaActor} from '../classes/ourKonva/OurKonvaActor';
+import {MouseInteractor} from './MouseInteractor';
 
 
 @Injectable({
@@ -7,12 +10,12 @@ import {MapInteractor} from './MapInteractor';
 })
 export class BlueprintInteractor {
 
-    constructor(protected mapInteractor: MapInteractor) {
+    constructor(protected mapInteractor: MapInteractor, protected mouseInteractor: MouseInteractor) {
 
     }
 
     loadBlueprint(blueprint: any): void {
-        console.log('loadBlueprint', blueprint);
+        console.log('loadBlueprint');
         if (!blueprint.blueprintBoxes) {
             throw new Error('not have bleurprints to load');
         }
@@ -36,28 +39,39 @@ export class BlueprintInteractor {
         if (box.kind === 'GET') {
             result = new ExecuteGet().execute(data, box.param.index);
         }
-        console.log(result);
+        if (box.kind === 'MOVE_ACTOR_TO_LOCATION') {
+            result = new ExecuteMoveActorToLocation().execute(data, new Coords(box.param.x, box.param.y, box.param.z));
+            console.log('---------------->', this.mapInteractor.getCurrentMap());
+            this.mouseInteractor.updateObject(result);
+            // todo buscar como pintar en locoal el actor que ya se ha movido y enviado por socket
+        }
+        console.log('boxReader', result);
         if (box.func) {
             this.boxReader(box.func, result);
         }
-    }
-
-    executeBlueprint(blueprint: any): void {
-        console.log('executeBlueprint', blueprint);
     }
 }
 
 
 class ExecuteGetAllActors {
 
-    public execute(map: any): any {
-        return map.objects.filter((obj: any) => obj.state === 'square');
+    public execute(map: any): OurKonvaActor[] {
+        return map.objects.filter((obj: any) => obj.state === 'actor');
     }
 }
 
 class ExecuteGet {
 
-    public execute(array: any[], index: number): any {
+    public execute(array: any[], index: number): OurKonvaActor {
         return array[index];
+    }
+}
+
+class ExecuteMoveActorToLocation {
+
+    public execute(actor: OurKonvaActor, location: Coords): OurKonvaActor {
+        actor.position.x = location.x;
+        actor.position.y = location.y;
+        return actor;
     }
 }

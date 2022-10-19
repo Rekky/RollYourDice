@@ -8,18 +8,14 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {UserInteractor} from '../../interactors/UserInteractor';
-import {CurrentSelectedKonvaObject, OurKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
+import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import {MapInteractor} from '../../interactors/MapInteractor';
-import { MyAdventuresInteractor } from '../launcher/my-adventures/my-adventures-interactor';
+import {MyAdventuresInteractor} from '../launcher/my-adventures/my-adventures-interactor';
 import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaGame, MetaMap} from '../../classes/Meta';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
-import {Actor} from '../../classes/Actor';
-import {Player} from '../../classes/User';
-import {OurKonvaImage} from '../../classes/ourKonva/OurKonvaImage';
 import {delay, retry, switchMap, tap} from 'rxjs/operators';
-import {BlueprintInteractor} from "../../interactors/BlueprintInteractor";
-import {BoxTypeEnum} from "../../blueprints/models/base-blueprint";
+import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
 
 @Component({
     selector: 'app-game-editor',
@@ -166,18 +162,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                                     this.currentMap.stage.attrs = currentMetaMapFound.attrs;
                                 }
                             }
-
-                            const blueprint = {
-                                id: '12312324',
-                                blueprintBoxes: {
-                                    onInit: [
-                                        {id: '1111', type: 'FUNCTION', kind: 'GET_ALL_ACTORS', func: {id: '2222', type: 'FUNCTION', kind: 'GET', param: {index: 0}}},
-                                    ],
-                                    onOverlap: {}
-                                }
-                            };
-                            // Cargar logica blueprints
-                            this.blueprintInteractor.loadBlueprint(blueprint);
                         }
                     })
                 );
@@ -303,6 +287,21 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onStatusChange(status: GameStatus): void {
         this.gameStatus = status;
+
+        if (this.gameStatus === GameStatus.Running) {
+            const blueprint = {
+                id: '12312324',
+                blueprintBoxes: {
+                    onInit: [
+                        {id: '1111', type: 'FUNCTION', kind: 'GET_ALL_ACTORS', func: {id: '2222', type: 'FUNCTION', kind: 'GET', param: {index: 0}, func: {id: '3333', type: 'FUNCTION', kind: 'MOVE_ACTOR_TO_LOCATION', param: {x: 255, y: 255, z: 0}}}},
+                    ],
+                    onOverlap: {}
+                }
+            };
+            // Cargar logica blueprints
+            this.blueprintInteractor.loadBlueprint(blueprint);
+        }
+
         this.socketService.sendGameStatus(this.game.id, this.gameStatus);
     }
 
