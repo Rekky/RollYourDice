@@ -74,7 +74,7 @@ export class OurKonvaObject {
 
 export class CurrentSelectedKonvaObject {
     konvaObject: Konva.Rect | Konva.Text | Konva.Image | Konva.Line | Konva.Node;
-    ourKonvaObject: OurKonvaRect | OurKonvaText | OurKonvaImage | OurKonvaBrush;
+    ourKonvaObject: OurKonvaRect | OurKonvaText | OurKonvaImage | OurKonvaBrush | any;
     type: string;
     layer: Konva.Layer;
     transformer: Konva.Transformer;

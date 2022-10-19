@@ -1,11 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {LibraryInteractor} from '../../../interactors/LibraryInteractor';
 import {Actor} from '../../../classes/Actor';
-import {OurKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
-import {Player} from '../../../classes/User';
-import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
-import {MapInteractor} from "../../../interactors/MapInteractor";
 
 @Component({
     selector: 'app-library-list',
@@ -24,8 +20,7 @@ export class LibraryListComponent implements OnInit {
     @Output() onDeleteItemChanges: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private libraryInteractor: LibraryInteractor,
-                private mouseInteractor: MouseInteractor,
-                private mapInteractor: MapInteractor) {
+                private mouseInteractor: MouseInteractor) {
 
     }
 
@@ -54,7 +49,6 @@ export class LibraryListComponent implements OnInit {
     }
 
     paintActorOnMap(actor: Actor): void {
-        // const ourKonvaImage = new OurKonvaActor(new Player(), actor.asset.uri);
         this.mouseInteractor.addActorOnMap(actor);
     }
 

@@ -326,8 +326,6 @@ export class MouseInteractor implements OnDestroy {
             const ourSelectedKonvaObjects = selectedObjects.map(obj => obj.ourKonvaObject);
             this.socketService.updateGameObjects(this.currentMap.id, ourSelectedKonvaObjects);
         });
-
-        // this.socketService.updateGameObjects(this.currentMap.id, object);
     }
 
     setStage(stage: Konva.Stage): void {
@@ -375,12 +373,16 @@ export class MouseInteractor implements OnDestroy {
             const createdObject = OurKonvaBrush.paint(object, this.ourLayers);
             this.newObjectSetEvents(createdObject);
         }
+        if (object?.state === 'actor') {
+            const createdObject = OurKonvaActor.paint(object, this.ourLayers);
+            this.newObjectSetEvents(createdObject);
+        }
     }
 
     addImageOnMap(asset: AssetModel): void {
         const author: Player = new Player();
         author.fromUserToPlayer(this.userInteractor.getCurrentUser());
-        const ourKonvaImage = new OurKonvaImage(author, asset.uri);
+        const ourKonvaImage = new OurKonvaImage(author, asset?.uri);
         ourKonvaImage.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
         ourKonvaImage.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
         let currentObject = new CurrentSelectedKonvaObject();
@@ -401,7 +403,7 @@ export class MouseInteractor implements OnDestroy {
         const author: Player = new Player();
         author.fromUserToPlayer(this.userInteractor.getCurrentUser());
 
-        const ourKonvaActor = new OurKonvaActor(author, actor.asset.uri);
+        const ourKonvaActor = new OurKonvaActor(author, actor, actor.asset.uri);
         ourKonvaActor.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
         ourKonvaActor.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
         let currentObject = new CurrentSelectedKonvaObject();
