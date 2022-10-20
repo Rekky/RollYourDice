@@ -34,4 +34,8 @@ export class BlueprintNode {
         this.boxId = '';
         this.id = ulid();
     }
+
+    static fromJSON(json: any): BlueprintNode {
+        return {... new BlueprintNode(), ...json};
+    }
 }

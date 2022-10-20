@@ -96,7 +96,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
     }
 
     modifyBBPosition(coords: any, bb: BaseBlueprintBox): void {
-        const newPos = new Coords(bb.position.x + coords.x, bb.position.y + coords.y);
+        const newPos = new Coords(bb.render.position.x + coords.x, bb.render.position.y + coords.y);
         this.blueprint.blueprintLinks.forEach((link: BlueprintLink) => {
             if (link.startingNode.boxId === bb.id) {
                 link.startingNode.position.x += coords.x;
@@ -109,7 +109,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
                 link.controlLinkPosition();
             }
         });
-        bb.position = newPos;
+        bb.render.position = newPos;
     }
 
     elementDropped(object: any): void {}

@@ -1,4 +1,5 @@
 import {BaseBlueprintBox, BoxKindEnum, BoxTypeEnum} from './base-blueprint';
+import {BlueprintNode} from './blueprint-link';
 
 export class BBArea extends BaseBlueprintBox {
     name: string;
@@ -62,5 +63,11 @@ export class BBOnOverlap extends BaseBlueprintBox {
         super();
         this.type = BoxTypeEnum.EVENT;
         this.kind = BoxKindEnum.ON_OVERLAP;
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
     }
 }
