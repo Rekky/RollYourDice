@@ -10,6 +10,8 @@
         </svg>
     </div>
     <div *ngIf="displayMoreOptions" class="more-options-list">
+        <button *ngIf="settings.blueprint.isDisplayed" type="button" class="option"
+                (click)="displayBlueprint()">Blueprint</button>
         <button *ngIf="settings.setAsBackgroundImage.isDisplayed" type="button" class="option"
                 (click)="setAsBackgroundImage()">Background</button>
         <button *ngIf="settings.moveElementUp.isDisplayed" type="button" class="option"

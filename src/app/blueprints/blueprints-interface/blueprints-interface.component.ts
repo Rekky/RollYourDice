@@ -2,7 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
-    EventEmitter,
+    EventEmitter, Input,
     OnInit,
     Output,
     Renderer2,
@@ -23,6 +23,8 @@ import {
     BBOnInit,
     BBOnOverlap
 } from '../models/blueprint-boxes';
+import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
+import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -32,7 +34,7 @@ import {
 export class BlueprintsInterfaceComponent implements OnInit {
     @ViewChild('svg') svg: ElementRef;
     @ViewChild('droppable') droppable: ElementRef;
-    @Output() closeBlueprints: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() actor: OurKonvaActor;
 
     blueprint: BlueprintModel = new BlueprintModel();
     user: any;
@@ -43,6 +45,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
     selectedLinkDeleteListener;
 
     constructor(private blueprintsService: BlueprintsService,
+                private blueprintInteractor: BlueprintInteractor,
                 private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
@@ -282,6 +285,10 @@ export class BlueprintsInterfaceComponent implements OnInit {
     clickedOnFrame(e): void {
         e.stopPropagation();
         this.cancelLink();
+    }
+
+    close(): void {
+        this.blueprintInteractor.setDisplayedBlueprintActor(null);
     }
 
 }

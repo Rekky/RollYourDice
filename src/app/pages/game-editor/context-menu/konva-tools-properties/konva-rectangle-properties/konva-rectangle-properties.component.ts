@@ -24,7 +24,7 @@ export class KonvaRectanglePropertiesComponent implements OnInit {
 
     ngOnInit(): void {
         this.moreOptionsSettings = MoreOptionsModel.fromJSON({
-            setAsBackgroundImage: { isDisplayed: false}
+            setAsBackgroundImage: { isDisplayed: false },
         });
     }
 

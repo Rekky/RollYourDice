@@ -3,14 +3,26 @@ import {MapInteractor} from './MapInteractor';
 import {OurKonvaActor} from '../classes/ourKonva/OurKonvaActor';
 import {MouseInteractor} from './MouseInteractor';
 import { Actor } from '../classes/Actor';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {CurrentSelectedKonvaObject} from '../classes/ourKonva/OurKonvaObject';
+import {BlueprintModel} from '../blueprints/models/base-blueprint';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BlueprintInteractor {
+    private displayedBlueprintActor: BehaviorSubject<OurKonvaActor> = new BehaviorSubject<OurKonvaActor>(null);
 
     constructor(protected mapInteractor: MapInteractor,
                 protected mouseInteractor: MouseInteractor) {
+    }
+
+    setDisplayedBlueprintActor(blueprintActor: OurKonvaActor): void {
+        this.displayedBlueprintActor.next(blueprintActor);
+    }
+
+    getDisplayedBlueprintActorObs(): Observable<OurKonvaActor> {
+        return this.displayedBlueprintActor.asObservable();
     }
 
     loadBlueprintOnInit(blueprint: any): void {

@@ -16,6 +16,7 @@ import {Meta, MetaGame, MetaMap} from '../../classes/Meta';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 import {delay, retry, switchMap, tap} from 'rxjs/operators';
 import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
+import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
 
 @Component({
     selector: 'app-game-editor',
@@ -37,7 +38,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     openMapList = false;
     openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
-    isBlueprintDisplayed: boolean = false;
+    blueprintActor: OurKonvaActor;
 
     // ZOOM
     zoomOptions = {
@@ -180,7 +181,15 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                     })
                 );
             }),
-            // 9. Socket connection with game selected
+            // 9.
+            switchMap((res) => {
+                return this.blueprintInteractor.getDisplayedBlueprintActorObs().pipe(
+                    tap((blueprintActor: OurKonvaActor) => {
+                        this.blueprintActor = blueprintActor;
+                    })
+                );
+            }),
+            // 10. Socket connection with game selected
             tap(() => {
                 setTimeout(() => { this.destroying = false; });
                 this.cdr.detectChanges();

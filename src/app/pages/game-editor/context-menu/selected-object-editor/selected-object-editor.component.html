@@ -20,5 +20,12 @@
                                 (isEditionBlockedChange)="editionBlockedToggle($event)"
                                 (isDisplayedJustForMasterChange)="displayedJustForMaster($event)">
     </app-konva-image-properties>
+    <app-konva-actor-properties *ngIf="selectedObject.type === 'actor'"
+                                [actor]="selectedObject.ourKonvaObject"
+                                (actorChange)="updateObject($event)"
+                                (isAdaptedToGridChange)="isObjectAdaptedToGridToggle($event)"
+                                (isEditionBlockedChange)="editionBlockedToggle($event)"
+                                (isDisplayedJustForMasterChange)="displayedJustForMaster($event)">
+    </app-konva-actor-properties>
 </div>
 

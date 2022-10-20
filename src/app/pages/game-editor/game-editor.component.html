@@ -4,8 +4,8 @@
     <app-tutorial></app-tutorial>
 
     <!--  BLUEPRINTS  -->
-    <button class="tempButton" type="button" (click)="isBlueprintDisplayed = !isBlueprintDisplayed">Display blueprint</button>
-    <app-blueprints-interface *ngIf="isBlueprintDisplayed" (closeBlueprints)="isBlueprintDisplayed = false"></app-blueprints-interface>
+    <app-blueprints-interface *ngIf="blueprintActor"
+                              [actor]="blueprintActor"></app-blueprints-interface>
 
     <!-- MAP -->
     <div *ngIf="((currentMap && game.author.id === userInteractor.getCurrentUser().id) || (currentMap && gameStatus === GameStatus.Running))" class="map-container">

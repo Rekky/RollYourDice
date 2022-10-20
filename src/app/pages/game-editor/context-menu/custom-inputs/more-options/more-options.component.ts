@@ -4,6 +4,8 @@ import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import Konva from 'konva';
 import {MouseInteractor} from '../../../../../interactors/MouseInteractor';
+import {OurKonvaActor} from '../../../../../classes/ourKonva/OurKonvaActor';
+import {BlueprintInteractor} from '../../../../../interactors/BlueprintInteractor';
 
 @Component({
     selector: 'app-more-options',
@@ -15,10 +17,15 @@ export class MoreOptionsComponent implements OnInit {
 
     displayMoreOptions: boolean = false;
 
-    constructor(private mouseInteractor: MouseInteractor) {
+    constructor(private mouseInteractor: MouseInteractor,
+                private blueprintInteractor: BlueprintInteractor) {
     }
 
     ngOnInit(): void {
+    }
+
+    displayBlueprint(): void {
+        this.blueprintInteractor.setDisplayedBlueprintActor(this.settings.blueprint.actor);
     }
 
     moveElementToTop(): void {
@@ -45,6 +52,10 @@ export class MoreOptionsComponent implements OnInit {
 
 export class MoreOptionsModel {
     isDisplayed: boolean;
+    blueprint: {
+        isDisplayed: boolean,
+        actor: OurKonvaActor
+    };
     setAsBackgroundImage: {
         isDisplayed: boolean,
     };
@@ -63,6 +74,10 @@ export class MoreOptionsModel {
 
     constructor() {
         this.isDisplayed = true;
+        this.blueprint = {
+            isDisplayed: false,
+            actor: null,
+        };
         this.setAsBackgroundImage = {
             isDisplayed: true,
         };
