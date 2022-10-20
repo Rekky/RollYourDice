@@ -4,6 +4,7 @@ import { Coords } from 'src/app/classes/Coords';
 import {OurKonvaRect} from '../../../../../classes/ourKonva/OurKonvaRect';
 import {StrokeOptions} from '../../custom-inputs/stroke-input/stroke-input.component';
 import {OurKonvaObject} from '../../../../../classes/ourKonva/OurKonvaObject';
+import {MoreOptionsModel} from '../../custom-inputs/more-options/more-options.component';
 
 @Component({
   selector: 'app-konva-rectangle-properties',
@@ -17,9 +18,14 @@ export class KonvaRectanglePropertiesComponent implements OnInit {
     @Output() isEditionBlockedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() isDisplayedJustForMasterChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    moreOptionsSettings: MoreOptionsModel;
+
     constructor() { }
 
     ngOnInit(): void {
+        this.moreOptionsSettings = MoreOptionsModel.fromJSON({
+            setAsBackgroundImage: { isDisplayed: false}
+        });
     }
 
     fillColorModified(ev: string): void {

@@ -36,8 +36,7 @@ export class Game {
     }
 
     static fromJSON(json: any): Game {
-        const game = {...new Game(json.authorId), ...json};
-        return game;
+        return {...new Game(json.authorId), ...json};
     }
 }
 

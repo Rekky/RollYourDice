@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import {EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import { Input } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -11,12 +11,12 @@ import {MouseInteractor} from '../../../../../interactors/MouseInteractor';
     styleUrls: ['./more-options.component.scss']
 })
 export class MoreOptionsComponent implements OnInit {
-    @Output() itemToTop: EventEmitter<void> = new EventEmitter<void>();
-    @Output() itemToBottom: EventEmitter<void> = new EventEmitter<void>();
+    @Input() settings: MoreOptionsModel = new MoreOptionsModel();
 
     displayMoreOptions: boolean = false;
 
-    constructor(private mouseInteractor: MouseInteractor) { }
+    constructor(private mouseInteractor: MouseInteractor) {
+    }
 
     ngOnInit(): void {
     }
@@ -41,4 +41,46 @@ export class MoreOptionsComponent implements OnInit {
         this.mouseInteractor.setAsBackgroundImage();
     }
 
+}
+
+export class MoreOptionsModel {
+    isDisplayed: boolean;
+    setAsBackgroundImage: {
+        isDisplayed: boolean,
+    };
+    moveElementUp: {
+        isDisplayed: boolean,
+    };
+    moveElementDown: {
+        isDisplayed: boolean,
+    };
+    moveElementToTop: {
+        isDisplayed: boolean,
+    };
+    moveElementToBottom: {
+        isDisplayed: boolean,
+    };
+
+    constructor() {
+        this.isDisplayed = true;
+        this.setAsBackgroundImage = {
+            isDisplayed: true,
+        };
+        this.moveElementUp = {
+            isDisplayed: true,
+        };
+        this.moveElementDown = {
+            isDisplayed: true,
+        };
+        this.moveElementToTop = {
+            isDisplayed: true,
+        };
+        this.moveElementToBottom = {
+            isDisplayed: true,
+        };
+    }
+
+    static fromJSON(json): MoreOptionsModel {
+        return {...new MoreOptionsModel(), ...json};
+    }
 }

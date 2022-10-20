@@ -10,10 +10,15 @@
         </svg>
     </div>
     <div *ngIf="displayMoreOptions" class="more-options-list">
-        <button type="button" class="option" (click)="setAsBackgroundImage()">Background</button>
-        <button type="button" class="option" (click)="moveElementUp()">Move up</button>
-        <button type="button" class="option" (click)="moveElementDown()">Move down</button>
-        <button type="button" class="option" (click)="moveElementToTop()">Move to top</button>
-        <button type="button" class="option" (click)="moveElementToBottom()">Move to bottom</button>
+        <button *ngIf="settings.setAsBackgroundImage.isDisplayed" type="button" class="option"
+                (click)="setAsBackgroundImage()">Background</button>
+        <button *ngIf="settings.moveElementUp.isDisplayed" type="button" class="option"
+                (click)="moveElementUp()">Move up</button>
+        <button *ngIf="settings.moveElementDown.isDisplayed" type="button" class="option"
+                (click)="moveElementDown()">Move down</button>
+        <button *ngIf="settings.moveElementToTop.isDisplayed" type="button" class="option"
+                (click)="moveElementToTop()">Move to top</button>
+        <button *ngIf="settings.moveElementToBottom.isDisplayed" type="button" class="option"
+                (click)="moveElementToBottom()">Move to bottom</button>
     </div>
 </div>
