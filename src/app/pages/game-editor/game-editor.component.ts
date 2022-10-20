@@ -174,6 +174,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                             const currentGame: Game = games.find((game: Game) => game.id === this.game.id);
                             if (currentGame) {
                                 this.gameStatus = currentGame.status;
+                                console.log('currentGameStatus', currentGame);
                             }
                         }
                     })
@@ -261,7 +262,14 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     }
 
     onScaleChange(zoom: number): void {
+        // set zoom to current Map
+        this.currentMap.stage.attrs.scaleX = zoom;
+        this.currentMap.stage.attrs.scaleY = zoom;
+
+        // set option scale to current zoom
         this.zoomOptions.scale = zoom;
+
+        // call to dragMap for save the new scale
         this.onMapDrag({scaleX: zoom, scaleY: zoom});
     }
 
@@ -280,7 +288,6 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         }
 
         // have metaMap
-        // metaMapFound.attrs = attrs;
         metaMapFound.attrs = {...metaMapFound.attrs, ...attrs};
         this.socketService.sendMeta(this.metaInteractor.getUserMeta());
     }

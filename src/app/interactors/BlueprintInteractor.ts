@@ -15,9 +15,8 @@ export class BlueprintInteractor {
     }
 
     loadBlueprint(blueprint: any): void {
-        console.log('loadBlueprint');
         if (!blueprint.blueprintBoxes) {
-            throw new Error('not have bleurprints to load');
+            throw new Error('not have blueprints to load');
         }
 
         if (blueprint.blueprintBoxes.onInit?.length > 0) {

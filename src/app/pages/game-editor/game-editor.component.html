@@ -119,7 +119,8 @@
     <div class="absolute right-[8px] bottom-[8px]">
         <app-map-zoom-tools
             *ngIf="currentMap"
-            [(zoom)]="currentMap.stage.attrs.scaleX"
+            [zoom]="currentMap.stage.attrs.scaleX"
+            (zoomChange)="onScaleChange($event)"
             [max]="zoomOptions.max"
             [min]="zoomOptions.min"
         ></app-map-zoom-tools>
