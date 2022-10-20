@@ -1,25 +1,23 @@
 import {Injectable} from '@angular/core';
 import {MapInteractor} from './MapInteractor';
-import {Coords} from '../classes/Coords';
 import {OurKonvaActor} from '../classes/ourKonva/OurKonvaActor';
 import {MouseInteractor} from './MouseInteractor';
-
+import { Actor } from '../classes/Actor';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BlueprintInteractor {
 
-    constructor(protected mapInteractor: MapInteractor, protected mouseInteractor: MouseInteractor) {
-
+    constructor(protected mapInteractor: MapInteractor,
+                protected mouseInteractor: MouseInteractor) {
     }
 
-    loadBlueprint(blueprint: any): void {
+    loadBlueprintOnInit(blueprint: any): void {
         console.log('loadBlueprint');
         if (!blueprint.blueprintBoxes) {
             throw new Error('not have bleurprints to load');
         }
-
         if (blueprint.blueprintBoxes.onInit?.length > 0) {
             this.readerOnInit(blueprint.blueprintBoxes.onInit);
         }
@@ -31,23 +29,25 @@ export class BlueprintInteractor {
         });
     }
 
+    readerOnOverlap(boxes: any, mainActor: Actor, actionActor: Actor): void {
+        boxes.forEach(box => {
+            this.boxReader(box, {mainActor: mainActor, actionActor: actionActor, result: null});
+        });
+    }
+
     boxReader(box: any, data: any): void {
-        let result;
         if (box.kind === 'GET_ALL_ACTORS') {
-            result = new ExecuteGetAllActors().execute(this.mapInteractor.getCurrentMap());
+            data.result = new ExecuteGetAllActors().execute(this.mapInteractor.getCurrentMap());
         }
         if (box.kind === 'GET') {
-            result = new ExecuteGet().execute(data, box.param.index);
+            data.result = new ExecuteGet().execute(data, box.param.index);
         }
         if (box.kind === 'MOVE_ACTOR_TO_LOCATION') {
-            result = new ExecuteMoveActorToLocation().execute(data, new Coords(box.param.x, box.param.y, box.param.z));
-            console.log('---------------->', this.mapInteractor.getCurrentMap());
-            this.mouseInteractor.updateObject(result);
-            // todo buscar como pintar en locoal el actor que ya se ha movido y enviado por socket
+            data.result = new ExecuteMoveActorToLocation().execute(data.actionActor, data.result);
+            this.mouseInteractor.updateObjectOnMap(data.result);
         }
-        console.log('boxReader', result);
         if (box.func) {
-            this.boxReader(box.func, result);
+            this.boxReader(box.func, data);
         }
     }
 }
@@ -69,9 +69,16 @@ class ExecuteGet {
 
 class ExecuteMoveActorToLocation {
 
-    public execute(actor: OurKonvaActor, location: Coords): OurKonvaActor {
-        actor.position.x = location.x;
-        actor.position.y = location.y;
+    public execute(actor: OurKonvaActor, locationActor: OurKonvaActor): OurKonvaActor {
+        actor.position.x = locationActor.position.x;
+        actor.position.y = locationActor.position.y;
         return actor;
+    }
+}
+
+class ExecuteEquals {
+
+    public execute(a: string, b: string): boolean {
+        return a === b;
     }
 }

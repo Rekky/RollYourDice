@@ -299,7 +299,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 }
             };
             // Cargar logica blueprints
-            this.blueprintInteractor.loadBlueprint(blueprint);
+            this.blueprintInteractor.loadBlueprintOnInit(blueprint);
         }
 
         this.socketService.sendGameStatus(this.game.id, this.gameStatus);
