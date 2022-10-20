@@ -99,7 +99,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.scale) {
             // scale with the outSide @Input value of this.scale
-            // setTimeout(() => {this.gridStage.scale({ x: this.scale, y: this.scale }); }, 0);
+            // todo no deberia ir asi deberiamos unificar la forma de updatear cosas del mapa desde fuera
+            setTimeout(() => {this.gridStage.scale({ x: this.scale, y: this.scale }); }, 0);
         }
 
         // pinta solo el objecto que se ha modificado, para no pintar totalmente el map
