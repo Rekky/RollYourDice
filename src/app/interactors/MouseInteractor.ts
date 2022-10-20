@@ -334,18 +334,17 @@ export class MouseInteractor implements OnDestroy {
         this.stage = stage;
     }
 
-    unsetSelectedKonvaObject(): void {
+    unsetSelectedKonvaObjects(): void {
         const selectedKonvaObjects = this.selectedKonvaObjects.getValue();
+
+        const selectedGroupTr: Konva.Transformer = this.ourLayers.draws.find('#tr-selectedObjects')[0] as Konva.Transformer;
         if (selectedKonvaObjects.length > 0) {
             selectedKonvaObjects.forEach((selectedKonvaObject) => {
                 selectedKonvaObject.konvaObject.draggable(false);
                 selectedKonvaObject.layer.batchDraw();
             });
-
-            const selectedGroupTr: Konva.Transformer = selectedKonvaObjects[0].layer.getChildren()[0] as Konva.Transformer;
-            selectedGroupTr?.moveToTop();
-            selectedGroupTr.nodes([]);
         }
+        selectedGroupTr.nodes([]);
         this.selectedKonvaObjects.next([]);
     }
 
@@ -378,7 +377,7 @@ export class MouseInteractor implements OnDestroy {
             this.newObjectSetEvents(createdObject);
         }
         if (object?.state === 'actor') {
-            const createdObject = OurKonvaActor.paint(object, this.ourLayers);
+            const createdObject = OurKonvaActor.paint(object, this.ourLayers.draws);
             this.newObjectSetEvents(createdObject);
         }
     }
@@ -407,7 +406,7 @@ export class MouseInteractor implements OnDestroy {
         const author: Player = new Player();
         author.fromUserToPlayer(this.userInteractor.getCurrentUser());
 
-        const ourKonvaActor = new OurKonvaActor(author, actor, actor.asset.uri);
+        const ourKonvaActor = new OurKonvaActor(author, actor);
         ourKonvaActor.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
         ourKonvaActor.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
         let currentObject = new CurrentSelectedKonvaObject();
@@ -432,17 +431,17 @@ export class MouseInteractor implements OnDestroy {
         this.socketService.updateGameObjects(this.currentMap.id, [object]);
     }
 
+    updateObjectOnMap(object: OurKonvaObject): void {
+        this.deleteObjectOnMap(object);
+        this.paintObjectOnMap(object);
+        this.unsetSelectedKonvaObjects();
+        this.updateObject(object);
+    }
+
     deleteObjectOnMap(selectedObject: any): void {
         const obj = this.stage.find('#' + selectedObject.id)[0];
-        const childrens = obj?.getLayer().getChildren().slice();
-        childrens.forEach(child => {
-            const id = child.getAttr('id');
-            if (id === selectedObject.id) {
-                const layer = child.getLayer();
-                child.destroy();
-                layer.batchDraw();
-            }
-        });
+        obj.destroy();
+        selectedObject.layer.batchDraw();
     }
 
     adaptObjectToMap(obj: CurrentSelectedKonvaObject): CurrentSelectedKonvaObject {

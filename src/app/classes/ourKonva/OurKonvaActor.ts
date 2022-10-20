@@ -17,11 +17,11 @@ export class OurKonvaActor extends OurKonvaObject {
     type: 'actor';
     hp: number;
 
-    constructor(author: Player, actor: Actor, src: string) {
+    constructor(author: Player, actor: Actor) {
         super(author);
         this.id = ulid();
         this.position = new Coords();
-        this.src = src;
+        this.src = actor.asset?.uri;
         this.opacity = 100;
         this.state = 'actor';
         this.name = actor.name ? actor.name : 'new actor';
@@ -31,34 +31,35 @@ export class OurKonvaActor extends OurKonvaObject {
         this.hp = 50;
     }
 
-    static paint(object: OurKonvaActor, layers: OurKonvaLayers): CurrentSelectedKonvaObject {
+    static paint(object: OurKonvaActor, layer: Konva.Layer): CurrentSelectedKonvaObject {
         const group = new Konva.Group({
-            x: 0,
-            y: 0,
+            x: object.position.x,
+            y: object.position.y,
             width: object.size.width,
             height: object.size.height,
             rotation: 0,
-            draggable: true
+            draggable: false
         });
 
         const image = new Image();
-        image.src = object.src;
+        image.src = object.src ? object.src : '';
         const img = new Konva.Image({
-            x: object.position.x,
-            y: object.position.y,
+            x: 0,
+            y: 0,
             image: image,
+            fill: 'rgba(176,176,176,0.5)',
             draggable: false,
             width: object.size.width,
             height: object.size.height,
             id: object.id,
             name: object.name
         });
+
         group.add(img);
-        // layers.draws.add(img);
 
         const actorHP = new Konva.Rect({
-            x: object.position.x,
-            y: object.position.y - 50,
+            x: 0,
+            y: -50,
             width: object.size.width,
             height: 20,
             fill: '#4caf50',
@@ -67,11 +68,10 @@ export class OurKonvaActor extends OurKonvaObject {
             draggable: false,
         });
         group.add(actorHP);
-        // layers.draws.add(actorHP);
 
         const actorName = new Konva.Text({
-            x: object.position.x,
-            y: object.position.y - 80,
+            x: 0,
+            y: -80,
             text: object.name,
             fontSize: 30,
             fill: '#fff',
@@ -79,15 +79,16 @@ export class OurKonvaActor extends OurKonvaObject {
             draggable: false,
         });
         group.add(actorName);
-        // layers.draws.add(actorName);
-        layers.draws.add(group);
-        layers.draws.batchDraw();
+
+        layer.add(group);
+        object.layer = layer;
+        layer.batchDraw();
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
-        toEmit.konvaObject = img;
+        toEmit.konvaObject = group;
         toEmit.type = object.state;
-        toEmit.layer = layers.draws;
+        toEmit.layer = layer;
         return toEmit;
     }
 

@@ -74,7 +74,7 @@ export class EditorToolsComponent implements OnInit, OnDestroy {
         this.displayExtraToolsIndex = 99;
         this.changeDisplayedTool(tool);
         if (tool !== 'pointer') {
-            this.mouseInteractor.unsetSelectedKonvaObject();
+            this.mouseInteractor.unsetSelectedKonvaObjects();
         }
         switch (tool) {
             case 'pointer':

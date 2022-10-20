@@ -117,7 +117,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     const selectedObject = this.currentMapObjectsSelected.find(obj =>
                         obj.ourKonvaObject.id === object.id);
                     if (selectedObject) {
-                        this.mouseInteractor.unsetSelectedKonvaObject();
+                        this.mouseInteractor.unsetSelectedKonvaObjects();
                     }
                 });
             }
@@ -127,7 +127,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                     const selectedObject = this.currentMapObjectsSelected.find(obj =>
                         obj.ourKonvaObject.id === object.id);
                     if (selectedObject) {
-                        this.mouseInteractor.unsetSelectedKonvaObject();
+                        this.mouseInteractor.unsetSelectedKonvaObjects();
                     }
                 });
             }
