@@ -30,11 +30,19 @@ export class LibraryListComponent implements OnInit {
 
     async selectCategory(category: string): Promise<void> {
         this.currentCategory = category;
-        this.actors = await this.libraryInteractor.getMyActors(category);
+        await this.getMyActorsFromInteractor();
     }
 
     onAddActor(): void {
         this.openActorWizard = true;
+    }
+
+    async onCreateActor(actor: Actor): Promise<void> {
+        await this.getMyActorsFromInteractor();
+    }
+
+    async getMyActorsFromInteractor(): Promise<void> {
+        this.actors = await this.libraryInteractor.getMyActors(this.currentCategory);
     }
 
     onSelectedActor(actor: Actor): void {
