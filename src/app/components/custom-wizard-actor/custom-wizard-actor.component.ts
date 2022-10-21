@@ -15,6 +15,7 @@ export class CustomWizardActorComponent implements OnInit {
     @Input() open: boolean = false;
     @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() currentStep: number = 1;
+    @Output() createActorEvent: EventEmitter<Actor> = new EventEmitter<Actor>();
     protected currentActorType: ActorTypesEnum = ActorTypesEnum.CHARACTER;
 
     public assets: any[] = [];
@@ -76,6 +77,7 @@ export class CustomWizardActorComponent implements OnInit {
                     break;
             }
             await this.libraryInteractor.createActor(actor);
+            this.createActorEvent.emit(actor);
         } catch (e) {
             console.log(e);
         } finally {
