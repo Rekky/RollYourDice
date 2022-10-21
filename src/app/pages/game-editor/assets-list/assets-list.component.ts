@@ -26,6 +26,14 @@ export class AssetsListComponent {
             files: new UntypedFormControl(null, [Validators.required]),
         });
 
+        // modified name of file before upload
+        this.fgAsset.valueChanges.subscribe((formValues: {name: string, files: any}) => {
+            if (formValues.name) {
+                const oldFile = formValues.files.get('file');
+                formValues.files.set('file', oldFile, formValues.name);
+            }
+        });
+
         this.getAllAssets();
     }
 
