@@ -20,11 +20,23 @@ export class BaseBlueprintBox {
     id: string;
     type: string;
     kind: string;
-    position: Coords;
+    render: {
+        position: Coords;
+        nodes: {
+            startingNodes: BlueprintNode[];
+            endingNodes: BlueprintNode[];
+        }
+    };
 
     constructor() {
         this.id = ulid();
-        this.position = new Coords();
+        this.render = {
+            position: new Coords(),
+            nodes: {
+                startingNodes: [],
+                endingNodes: [],
+            }
+        };
     }
 
     static create<T extends BaseBlueprintBox>(this: StaticThis<T>, json: BaseBlueprintBox): T {

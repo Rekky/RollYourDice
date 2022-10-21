@@ -1,4 +1,5 @@
 import {BaseBlueprintBox, BoxKindEnum, BoxTypeEnum} from './base-blueprint';
+import {BlueprintNode} from './blueprint-link';
 
 export class BBArea extends BaseBlueprintBox {
     name: string;
@@ -17,6 +18,12 @@ export class BBGetAllActors extends BaseBlueprintBox {
         super();
         this.type = BoxTypeEnum.FUNCTION;
         this.kind = BoxKindEnum.GET_ALL_ACTORS;
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
     }
 }
 
@@ -35,6 +42,12 @@ export class BBMoveActorToLocation extends BaseBlueprintBox {
         super();
         this.type = BoxTypeEnum.FUNCTION;
         this.kind = BoxKindEnum.MOVE_ACTOR_TO_LOCATION;
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
     }
 }
 
@@ -44,6 +57,12 @@ export class BBGet extends BaseBlueprintBox {
         super();
         this.type = BoxTypeEnum.FUNCTION;
         this.kind = BoxKindEnum.GET;
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
     }
 }
 
@@ -53,6 +72,9 @@ export class BBOnInit extends BaseBlueprintBox {
         super();
         this.type = BoxTypeEnum.EVENT;
         this.kind = BoxKindEnum.ON_INIT;
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
     }
 }
 
@@ -62,5 +84,11 @@ export class BBOnOverlap extends BaseBlueprintBox {
         super();
         this.type = BoxTypeEnum.EVENT;
         this.kind = BoxKindEnum.ON_OVERLAP;
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
     }
 }

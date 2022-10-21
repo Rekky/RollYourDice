@@ -43,8 +43,8 @@ export class BbAreaComponent implements OnInit {
 
     nodeInClicked(ev): void {
         ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.position.y;
-        const left = ev.target.offsetLeft + this.bb.position.x;
+        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
+        const left = ev.target.offsetLeft + this.bb.render.position.x;
         this.nodeIn.boxId = this.bb.id;
         this.nodeIn.position = new Coords(left, top);
         this.nodeInHasBeenTouched.emit(this.nodeIn);
@@ -52,8 +52,8 @@ export class BbAreaComponent implements OnInit {
 
     nodeOutClicked(ev): void {
         ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.position.y;
-        const left = ev.target.offsetLeft + this.bb.position.x;
+        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
+        const left = ev.target.offsetLeft + this.bb.render.position.x;
         this.nodeOut.boxId = this.bb.id;
         this.nodeOut.position = new Coords(left, top);
         this.nodeOutHasBeenTouched.emit(this.nodeOut);

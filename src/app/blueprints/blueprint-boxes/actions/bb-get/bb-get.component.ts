@@ -13,10 +13,6 @@ export class BbGetComponent implements OnInit {
     @Output() nodeOutHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
     @Output() nodeInHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
 
-    form: FormGroup;
-    nodeIn: BlueprintNode = new BlueprintNode();
-    nodeOut: BlueprintNode = new BlueprintNode();
-
     constructor(private fb: FormBuilder) { }
 
     ngOnInit(): void {
@@ -26,22 +22,20 @@ export class BbGetComponent implements OnInit {
     initForm(): void {
     }
 
-    nodeInClicked(ev): void {
+    nodeInClicked(ev, i): void {
         ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.position.y;
-        const left = ev.target.offsetLeft + this.bb.position.x;
-        this.nodeIn.boxId = this.bb.id;
-        this.nodeIn.position = new Coords(left, top);
-        this.nodeInHasBeenTouched.emit(this.nodeIn);
+        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
+        const left = ev.target.offsetLeft + this.bb.render.position.x;
+        this.bb.render.nodes.startingNodes[i].position = new Coords(left, top);
+        this.nodeInHasBeenTouched.emit(this.bb.render.nodes.startingNodes[i]);
     }
 
-    nodeOutClicked(ev): void {
+    nodeOutClicked(ev, i): void {
         ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.position.y;
-        const left = ev.target.offsetLeft + this.bb.position.x;
-        this.nodeOut.boxId = this.bb.id;
-        this.nodeOut.position = new Coords(left, top);
-        this.nodeOutHasBeenTouched.emit(this.nodeOut);
+        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
+        const left = ev.target.offsetLeft + this.bb.render.position.x;
+        this.bb.render.nodes.endingNodes[i].position = new Coords(left, top);
+        this.nodeOutHasBeenTouched.emit(this.bb.render.nodes.endingNodes[i]);
     }
 
     submit(): void {
