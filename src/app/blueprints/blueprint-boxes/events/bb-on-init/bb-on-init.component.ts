@@ -11,11 +11,8 @@ import {Coords} from '../../../../classes/Coords';
 export class BbOnInitComponent implements OnInit {
     @Input() bb: any;
     @Output() nodeOutHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
-    @Output() nodeInHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
 
     form: FormGroup;
-    nodeIn: BlueprintNode = new BlueprintNode();
-    nodeOut: BlueprintNode = new BlueprintNode();
 
     constructor(private fb: FormBuilder) { }
 
@@ -26,22 +23,12 @@ export class BbOnInitComponent implements OnInit {
     initForm(): void {
     }
 
-    nodeInClicked(ev): void {
+    nodeOutClicked(ev, i: number): void {
         ev.stopPropagation();
         const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
         const left = ev.target.offsetLeft + this.bb.render.position.x;
-        this.nodeIn.boxId = this.bb.id;
-        this.nodeIn.position = new Coords(left, top);
-        this.nodeInHasBeenTouched.emit(this.nodeIn);
-    }
-
-    nodeOutClicked(ev): void {
-        ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
-        const left = ev.target.offsetLeft + this.bb.render.position.x;
-        this.nodeOut.boxId = this.bb.id;
-        this.nodeOut.position = new Coords(left, top);
-        this.nodeOutHasBeenTouched.emit(this.nodeOut);
+        this.bb.render.nodes.endingNodes[i].position = new Coords(left, top);
+        this.nodeOutHasBeenTouched.emit(this.bb.render.nodes.endingNodes[i]);
     }
 
     submit(): void {
