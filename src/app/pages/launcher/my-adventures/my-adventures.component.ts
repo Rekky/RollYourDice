@@ -79,23 +79,12 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
     async createNewGame(game, asset): Promise<void> {
         this.displayAdventureSettings(null);
         try {
+            if (asset) {
+                const assetResponse: AssetModel[] = await this.assetInteractor.uploadFile(asset);
+                game.coverImage = assetResponse[0];
+            }
             const newGame = await this.gameInteractor.createGame(game, asset);
             this.adventures.unshift(newGame);
-        }
-        catch (e) {
-            console.error(e);
-        }
-    }
-
-    async duplicateGame(adventure: Game, e: Event): Promise<void> {
-        e.stopPropagation();
-        this.displayAdventureSettings(null);
-        try {
-            const duplicatedAdventure = Game.fromJSON(adventure);
-            duplicatedAdventure.id = null;
-            duplicatedAdventure.name = duplicatedAdventure.name + ' (duplicated)';
-            // const newGame = await this.gameInteractor.createGame(duplicatedAdventure);
-            // this.adventures.unshift(newGame);
         }
         catch (e) {
             console.error(e);
@@ -111,9 +100,6 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             if (res) {
                 try {
                     if (res.formData) {
-                        res.formData.forEach((form) => {
-                            console.log('resFormData', form);
-                        });
                         const assetResponse: AssetModel[] = await this.assetInteractor.uploadFile(res.formData);
                         (res.game as Game).coverImage = assetResponse[0];
                     }
@@ -126,6 +112,21 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
             }
             dialogSub.unsubscribe();
         });
+    }
+
+    async duplicateGame(adventure: Game, e: Event): Promise<void> {
+        e.stopPropagation();
+        this.displayAdventureSettings(null);
+        try {
+            const duplicatedAdventure = Game.fromJSON(adventure);
+            duplicatedAdventure.id = null;
+            duplicatedAdventure.name = duplicatedAdventure.name + ' (duplicated)';
+            // const newGame = await this.gameInteractor.createGame(duplicatedAdventure);
+            // this.adventures.unshift(newGame);
+        }
+        catch (e) {
+            console.error(e);
+        }
     }
 
     async deleteGame(adventure: Game, i: number, e: Event): Promise<void> {
