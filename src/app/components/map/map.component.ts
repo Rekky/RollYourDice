@@ -374,6 +374,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 ],
                 stroke: '#e6e6e6',
                 strokeWidth: 1,
+                opacity: 0.1
             }));
         }
 
@@ -390,6 +391,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy
                 ],
                 stroke: '#e6e6e6',
                 strokeWidth: 1,
+                opacity: 0.1
             }));
         }
     }
