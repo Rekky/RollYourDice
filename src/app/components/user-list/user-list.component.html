@@ -16,7 +16,7 @@
             <div class="grid grid-col-1 grid-rows-[1fr_1fr] w-100 h-[80%] overflow-hidden">
                 <div class="list">
                     <h3 class="font-bold m-0 border-b border-b-gray-500/20">Access granted to:</h3>
-                    <div class="grid grid-cols-1 auto-rows-max h-[70%] overflow-y-auto" *ngIf="players.length > 0 ">
+                    <div class="grid grid-cols-1 auto-rows-max h-[10rem] overflow-y-auto" *ngIf="players.length > 0 ">
                         <div class="player-row grid grid-cols-[0.2fr_1fr_0.2fr] grid-rows-1 h-[55px] hover:bg-zinc-800 " *ngFor="let player of players">
                             <div class="flex align-items-center justify-content-center">
                                 <img class="w-[40px] h-[40px] rounded-full" src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="list">
                     <h3 class="font-bold m-0 border-b border-b-gray-500/20">Access requested by:</h3>
-                    <div class="grid grid-cols-1 auto-rows-max h-[70%] overflow-y-auto" *ngIf="playersRequest.length > 0 ">
+                    <div class="grid grid-cols-1 auto-rows-max h-[10rem] overflow-y-auto" *ngIf="playersRequest.length > 0 ">
                         <div class="player-row grid grid-cols-[0.2fr_1fr_0.2fr] grid-rows-1 h-[55px] hover:bg-zinc-800" *ngFor="let player of playersRequest">
                             <div class="flex align-items-center justify-content-center">
                                 <img class="w-[40px] h-[40px] rounded-full" src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar">
