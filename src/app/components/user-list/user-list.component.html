@@ -10,7 +10,7 @@
                 <label class="text-lg mb-2">Player's Name or Id</label>
                 <div class="flex items-end mb-3">
                     <input type="text" [formControlName]="'search'" maxlength="40" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Introduce a player's name or id" required>
-                    <button type="submit" [disabled]="this.fgSearch.get('search').value === null" class="cursor-pointer inline-flex items-center py-2.5 px-4 ml-2 text-sm font-semibold text-black bg-white rounded-md border border-blue-700 hover:bg-zinc-500 focus:ring-4 focus:outline-none focus:ring-blue-300">SEARCH</button>
+                    <button type="submit" [disabled]="this.fgSearch.get('search').value === null" class="cursor-pointer inline-flex items-center py-2.5 px-4 ml-2 text-sm font-semibold text-black bg-white rounded-md border border-blue-700 hover:bg-zinc-500 focus:ring-4 focus:outline-none focus:ring-blue-300">INVITE</button>
                 </div>
             </form>
             <div class="grid grid-col-1 grid-rows-[1fr_1fr] w-100 h-[80%] overflow-hidden">
