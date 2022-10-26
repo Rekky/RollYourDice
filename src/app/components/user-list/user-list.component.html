@@ -13,113 +13,173 @@
                     <button type="submit" [disabled]="this.fgSearch.get('search').value === null" class="cursor-pointer inline-flex items-center py-2.5 px-4 ml-2 text-sm font-semibold text-black bg-white rounded-md border border-blue-700 hover:bg-zinc-500 focus:ring-4 focus:outline-none focus:ring-blue-300">SEARCH</button>
                 </div>
             </form>
-            <div *ngIf="players.length > 0 " class="players-list">
-                <h3>Access granted to:</h3>
-                <div class="player" *ngFor="let player of players">
-                    <div class="player-row">
-                        <div class="view-player"
-                             [ngClass]="selectedGame === game ? 'selectedGame' : ''"
-                        >
-                            <img src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar" >
-                            <div>
-                                <div class="name">
-                                    <span>{{player.name}}</span>
-                                    <span>{{player.hash}}</span>
-                                </div>
+            <div class="grid grid-col-1 grid-rows-[1fr_1fr] w-100 h-[80%] overflow-hidden">
+                <div class="list">
+                    <h3 class="font-bold m-0 border-b border-b-gray-500/20">Access granted to:</h3>
+                    <div class="grid grid-cols-1 auto-rows-max h-[70%] overflow-y-auto" *ngIf="players.length > 0 ">
+                        <div class="player-row grid grid-cols-[0.2fr_1fr_0.2fr] grid-rows-1 h-[55px] hover:bg-zinc-800 " *ngFor="let player of players">
+                            <div class="flex align-items-center justify-content-center">
+                                <img class="w-[40px] h-[40px] rounded-full" src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar">
                             </div>
-                        </div>
-                        <div class="request-join-buttons">
-                            <button type="button" class="reject-player" (click)="kickPlayer(player)">
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                     width="19px" height="19px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                            <div class="flex align-items-center">
+                                <span>{{player.name}}</span>
+                                <span class="text-zinc-500">{{player.hash}}</span>
+                            </div>
+                            <div class="flex align-items-center">
+                                <button class="bg-red-500 rounded hover:bg-red-400" (click)="kickPlayer(player)">
+                                    <svg class="stroke-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                         width="19px" height="19px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
                                     <path d="M84.707,68.752L65.951,49.998l18.75-18.752c0.777-0.777,0.777-2.036,0-2.813L71.566,15.295
                                         c-0.777-0.777-2.037-0.777-2.814,0L49.999,34.047l-18.75-18.752c-0.746-0.747-2.067-0.747-2.814,0L15.297,28.431
                                         c-0.373,0.373-0.583,0.88-0.583,1.407c0,0.527,0.21,1.034,0.583,1.407L34.05,49.998L15.294,68.753
                                         c-0.373,0.374-0.583,0.88-0.583,1.407c0,0.528,0.21,1.035,0.583,1.407l13.136,13.137c0.373,0.373,0.881,0.583,1.41,0.583
                                         c0.525,0,1.031-0.21,1.404-0.583l18.755-18.755l18.756,18.754c0.389,0.388,0.896,0.583,1.407,0.583c0.511,0,1.019-0.195,1.408-0.583
                                         l13.138-13.137C85.484,70.789,85.484,69.53,84.707,68.752z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="horizontal-line"></div>
-                </div>
-            </div>
-            <div *ngIf="playersRequest.length > 0" class="players-list">
-                <h3>Access resquested by:</h3>
-                <div class="player" *ngFor="let player of playersRequest">
-                    <div class="player-row">
-                        <div class="view-player"
-                             [ngClass]="selectedGame === game ? 'selectedGame' : ''"
-                        >
-                            <img src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar" >
-                            <div>
-                                <div class="name">
-                                    <span>{{player.name}}</span>
-                                    <span>{{player.hash}}</span>
-                                </div>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                        <div class="request-join-buttons">
-                            <button type="button" class="accept-player" (click)="acceptPlayer(player)">
-                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                     width="19px" height="19px" viewBox="0 0 533.973 533.973" style="enable-background:new 0 0 533.973 533.973;"
-                                     xml:space="preserve">
-                                    <g>
-                                    <g>
-                                        <path d="M477.931,52.261c-12.821-12.821-33.605-12.821-46.427,0l-266.96,266.954l-62.075-62.069
-                                            c-12.821-12.821-33.604-12.821-46.426,0L9.616,303.572c-12.821,12.821-12.821,33.604,0,46.426l85.289,85.289l46.426,46.426
-                                            c12.821,12.821,33.611,12.821,46.426,0l46.426-46.426l290.173-290.174c12.821-12.821,12.821-33.605,0-46.426L477.931,52.261z"/>
-                                    </g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
+                    </div>
+                </div>
+                <div class="list">
+                    <h3 class="font-bold m-0 border-b border-b-gray-500/20">Access requested by:</h3>
+                    <div class="grid grid-cols-1 auto-rows-max h-[70%] overflow-y-auto" *ngIf="playersRequest.length > 0 ">
+                        <div class="player-row grid grid-cols-[0.2fr_1fr_0.2fr] grid-rows-1 h-[55px] hover:bg-zinc-800" *ngFor="let player of playersRequest">
+                            <div class="flex align-items-center justify-content-center">
+                                <img class="w-[40px] h-[40px] rounded-full" src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar">
+                            </div>
+                            <div class="flex align-items-center">
+                                <span>{{player.name}}</span>
+                                <span class="text-zinc-500">{{player.hash}}</span>
+                            </div>
+                            <div class="flex align-items-center">
+                                <button class="bg-green-500 rounded hover:bg-green-400 mr-2" (click)="acceptPlayer(player)">
+                                    <svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="19px" height="19px"><path d="M 19.980469 5.9902344 A 1.0001 1.0001 0 0 0 19.292969 6.2929688 L 9 16.585938 L 5.7070312 13.292969 A 1.0001 1.0001 0 1 0 4.2929688 14.707031 L 8.2929688 18.707031 A 1.0001 1.0001 0 0 0 9.7070312 18.707031 L 20.707031 7.7070312 A 1.0001 1.0001 0 0 0 19.980469 5.9902344 z"/></svg>
+                                </button>
+                                <button class="bg-red-500 rounded hover:bg-red-400" (click)="rejectPlayer(player)">
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                         width="19px" height="19px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                                    <path d="M84.707,68.752L65.951,49.998l18.75-18.752c0.777-0.777,0.777-2.036,0-2.813L71.566,15.295
+                                        c-0.777-0.777-2.037-0.777-2.814,0L49.999,34.047l-18.75-18.752c-0.746-0.747-2.067-0.747-2.814,0L15.297,28.431
+                                        c-0.373,0.373-0.583,0.88-0.583,1.407c0,0.527,0.21,1.034,0.583,1.407L34.05,49.998L15.294,68.753
+                                        c-0.373,0.374-0.583,0.88-0.583,1.407c0,0.528,0.21,1.035,0.583,1.407l13.136,13.137c0.373,0.373,0.881,0.583,1.41,0.583
+                                        c0.525,0,1.031-0.21,1.404-0.583l18.755-18.755l18.756,18.754c0.389,0.388,0.896,0.583,1.407,0.583c0.511,0,1.019-0.195,1.408-0.583
+                                        l13.138-13.137C85.484,70.789,85.484,69.53,84.707,68.752z"/>
                                     </svg>
-                            </button>
-                            <button type="button" class="reject-player" (click)="rejectPlayer(player)">
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                     width="19px" height="19px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-                                        <path d="M84.707,68.752L65.951,49.998l18.75-18.752c0.777-0.777,0.777-2.036,0-2.813L71.566,15.295
-                                            c-0.777-0.777-2.037-0.777-2.814,0L49.999,34.047l-18.75-18.752c-0.746-0.747-2.067-0.747-2.814,0L15.297,28.431
-                                            c-0.373,0.373-0.583,0.88-0.583,1.407c0,0.527,0.21,1.034,0.583,1.407L34.05,49.998L15.294,68.753
-                                            c-0.373,0.374-0.583,0.88-0.583,1.407c0,0.528,0.21,1.035,0.583,1.407l13.136,13.137c0.373,0.373,0.881,0.583,1.41,0.583
-                                            c0.525,0,1.031-0.21,1.404-0.583l18.755-18.755l18.756,18.754c0.389,0.388,0.896,0.583,1.407,0.583c0.511,0,1.019-0.195,1.408-0.583
-                                            l13.138-13.137C85.484,70.789,85.484,69.53,84.707,68.752z"/>
-                                    </svg>
-                            </button>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="horizontal-line"></div>
                 </div>
             </div>
+<!--            <div *ngIf="players.length > 0 " class="players-list">-->
+<!--                <h3>Access granted to:</h3>-->
+<!--                <div class="player" *ngFor="let player of players">-->
+<!--                    <div class="player-row">-->
+<!--                        <div class="view-player"-->
+<!--                             [ngClass]="selectedGame === game ? 'selectedGame' : ''"-->
+<!--                        >-->
+<!--                            <img src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar" >-->
+<!--                            <div>-->
+<!--                                <div class="name">-->
+<!--                                    <span>{{player.name}}</span>-->
+<!--                                    <span>{{player.hash}}</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="request-join-buttons">-->
+<!--                            <button type="button" class="reject-player" (click)="kickPlayer(player)">-->
+<!--                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
+<!--                                     width="19px" height="19px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">-->
+<!--                                    <path d="M84.707,68.752L65.951,49.998l18.75-18.752c0.777-0.777,0.777-2.036,0-2.813L71.566,15.295-->
+<!--                                        c-0.777-0.777-2.037-0.777-2.814,0L49.999,34.047l-18.75-18.752c-0.746-0.747-2.067-0.747-2.814,0L15.297,28.431-->
+<!--                                        c-0.373,0.373-0.583,0.88-0.583,1.407c0,0.527,0.21,1.034,0.583,1.407L34.05,49.998L15.294,68.753-->
+<!--                                        c-0.373,0.374-0.583,0.88-0.583,1.407c0,0.528,0.21,1.035,0.583,1.407l13.136,13.137c0.373,0.373,0.881,0.583,1.41,0.583-->
+<!--                                        c0.525,0,1.031-0.21,1.404-0.583l18.755-18.755l18.756,18.754c0.389,0.388,0.896,0.583,1.407,0.583c0.511,0,1.019-0.195,1.408-0.583-->
+<!--                                        l13.138-13.137C85.484,70.789,85.484,69.53,84.707,68.752z"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="horizontal-line"></div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <div *ngIf="playersRequest.length > 0" class="players-list">-->
+<!--                <h3>Access resquested by:</h3>-->
+<!--                <div class="player" *ngFor="let player of playersRequest">-->
+<!--                    <div class="player-row">-->
+<!--                        <div class="view-player"-->
+<!--                             [ngClass]="selectedGame === game ? 'selectedGame' : ''"-->
+<!--                        >-->
+<!--                            <img src="../../../assets/backgrounds/library/spells-bg.webp" alt="Avatar" >-->
+<!--                            <div>-->
+<!--                                <div class="name">-->
+<!--                                    <span>{{player.name}}</span>-->
+<!--                                    <span>{{player.hash}}</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="request-join-buttons">-->
+<!--                            <button type="button" class="accept-player" (click)="acceptPlayer(player)">-->
+<!--                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
+<!--                                     width="19px" height="19px" viewBox="0 0 533.973 533.973" style="enable-background:new 0 0 533.973 533.973;"-->
+<!--                                     xml:space="preserve">-->
+<!--                                    <g>-->
+<!--                                    <g>-->
+<!--                                        <path d="M477.931,52.261c-12.821-12.821-33.605-12.821-46.427,0l-266.96,266.954l-62.075-62.069-->
+<!--                                            c-12.821-12.821-33.604-12.821-46.426,0L9.616,303.572c-12.821,12.821-12.821,33.604,0,46.426l85.289,85.289l46.426,46.426-->
+<!--                                            c12.821,12.821,33.611,12.821,46.426,0l46.426-46.426l290.173-290.174c12.821-12.821,12.821-33.605,0-46.426L477.931,52.261z"/>-->
+<!--                                    </g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    <g>-->
+<!--                                    </g>-->
+<!--                                    </svg>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="reject-player" (click)="rejectPlayer(player)">-->
+<!--                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
+<!--                                     width="19px" height="19px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">-->
+<!--                                        <path d="M84.707,68.752L65.951,49.998l18.75-18.752c0.777-0.777,0.777-2.036,0-2.813L71.566,15.295-->
+<!--                                            c-0.777-0.777-2.037-0.777-2.814,0L49.999,34.047l-18.75-18.752c-0.746-0.747-2.067-0.747-2.814,0L15.297,28.431-->
+<!--                                            c-0.373,0.373-0.583,0.88-0.583,1.407c0,0.527,0.21,1.034,0.583,1.407L34.05,49.998L15.294,68.753-->
+<!--                                            c-0.373,0.374-0.583,0.88-0.583,1.407c0,0.528,0.21,1.035,0.583,1.407l13.136,13.137c0.373,0.373,0.881,0.583,1.41,0.583-->
+<!--                                            c0.525,0,1.031-0.21,1.404-0.583l18.755-18.755l18.756,18.754c0.389,0.388,0.896,0.583,1.407,0.583c0.511,0,1.019-0.195,1.408-0.583-->
+<!--                                            l13.138-13.137C85.484,70.789,85.484,69.53,84.707,68.752z"/>-->
+<!--                                    </svg>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="horizontal-line"></div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </app-custom-modal>
