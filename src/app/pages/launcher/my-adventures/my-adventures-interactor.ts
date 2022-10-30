@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Game, GameStatus} from '../../../classes/Game';
+import {Game, GameStatusEnum} from '../../../classes/Game';
 import {Player} from '../../../classes/User';
 import {GameService} from '../../../services/game.service';
 import {GameInteractor} from '../../../interactors/GameInteractor';
@@ -36,7 +36,7 @@ export class MyAdventuresInteractor {
         });
     }
 
-    updateGameStatus(data: {gameId: string, status: GameStatus}): void {
+    updateGameStatus(data: {gameId: string, status: GameStatusEnum}): void {
         const adventures = this.myAdventures.getValue();
         const advIndex = adventures.findIndex(adv => adv.id === data.gameId);
         adventures[advIndex].status = data.status;

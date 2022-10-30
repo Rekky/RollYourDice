@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
 import {BehaviorSubject} from 'rxjs';
-import {Game, GameStatus} from '../classes/Game';
+import {Game, GameStatusEnum} from '../classes/Game';
 import {SocketObject} from '../classes/sockets/SocketObject';
 import {OurKonvaMap, OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {UserInteractor} from '../interactors/UserInteractor';
@@ -178,7 +178,7 @@ export class SocketService {
         this.socket.emit('game-editor-player-enter', {gameId});
     }
 
-    sendGameStatus(gameId: string, status: GameStatus): void {
+    sendGameStatus(gameId: string, status: GameStatusEnum): void {
         this.socket.emit('game-status', {gameId, status});
     }
 

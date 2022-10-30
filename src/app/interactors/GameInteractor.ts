@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GameService} from '../services/game.service';
-import {Game, GameStatus} from '../classes/Game';
+import {Game, GameStatusEnum} from '../classes/Game';
 import {UserInteractor} from './UserInteractor';
 import {Router} from '@angular/router';
 import {BehaviorSubject, from, Observable} from 'rxjs';

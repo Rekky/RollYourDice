@@ -9,7 +9,7 @@
     </div>
     <div class="controls">
         <svg
-            (click)="selectStatus(GameStatus.Running)"
+            (click)="selectStatus(GameStatus.RUNNING)"
             class="cursor-pointer hover:scale-110 hover:saturate-150 transition"
             width="20px"
             height="20px"
@@ -27,7 +27,7 @@
             >
                 <g
                     id="ic_fluent_play_48_filled"
-                    [attr.fill]="status === GameStatus.Running ? '#8bc34a' : 'rgba(5, 0, 56, 1)'"
+                    [attr.fill]="status === GameStatus.RUNNING ? '#8bc34a' : 'rgba(5, 0, 56, 1)'"
                     fill-rule="nonzero"
                 >
                     <path
@@ -39,7 +39,7 @@
         </svg>
 
         <svg
-            (click)="selectStatus(GameStatus.Paused)"
+            (click)="selectStatus(GameStatus.PAUSED)"
             class="cursor-pointer hover:scale-110 hover:saturate-150 transition"
             width="15px"
             height="15px"
@@ -53,7 +53,7 @@
             style="enable-background: new 0 0 47.607 47.607"
             xml:space="preserve"
         >
-            <g [attr.fill]="status === GameStatus.Paused ? '#ffc107' : 'rgba(5, 0, 56, 1)'">
+            <g [attr.fill]="status === GameStatus.PAUSED ? '#ffc107' : 'rgba(5, 0, 56, 1)'">
                 <path
                     d="M17.991,40.976c0,3.662-2.969,6.631-6.631,6.631l0,0c-3.662,0-6.631-2.969-6.631-6.631V6.631C4.729,2.969,7.698,0,11.36,0
         l0,0c3.662,0,6.631,2.969,6.631,6.631V40.976z"
@@ -81,14 +81,14 @@
         </svg>
 
         <svg
-            (click)="selectStatus(GameStatus.Stopped)"
+            (click)="selectStatus(GameStatus.STOPPED)"
             class="cursor-pointer hover:scale-110 hover:saturate-150 transition"
             width="15px"
             height="15px"
             viewBox="-32 0 512 512"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <path [attr.fill]="status === GameStatus.Stopped ? '#f44336' : 'rgba(5, 0, 56, 1)'"
+            <path [attr.fill]="status === GameStatus.STOPPED ? '#f44336' : 'rgba(5, 0, 56, 1)'"
                 d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z"
             />
         </svg>

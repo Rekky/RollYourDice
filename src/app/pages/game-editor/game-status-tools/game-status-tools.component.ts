@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GameStatus } from 'src/app/classes/Game';
+import { GameStatusEnum } from 'src/app/classes/Game';
 
 @Component({
   selector: 'app-game-status-tools',
@@ -11,7 +11,7 @@ export class GameStatusToolsComponent implements OnInit {
   @Input() status = null; //play=0, pause=1, stop=2
   @Output() statusChange: EventEmitter<number> = new EventEmitter<number>();
   @Input() mapName: string = null;
-  GameStatus = GameStatus;
+  GameStatus = GameStatusEnum;
 
   constructor() { }
 
@@ -19,7 +19,7 @@ export class GameStatusToolsComponent implements OnInit {
 
   }
 
-  selectStatus(status: GameStatus): void {
+  selectStatus(status: GameStatusEnum): void {
     if(status === this.status) {
       return;
     }
