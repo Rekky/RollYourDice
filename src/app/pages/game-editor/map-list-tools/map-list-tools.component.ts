@@ -4,7 +4,6 @@ import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 import {Subscription} from 'rxjs';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import {MatDialog} from '@angular/material/dialog';
-import {Camera} from '../../../classes/Camera';
 import {CurrentSelectedKonvaObject} from '../../../classes/ourKonva/OurKonvaObject';
 
 @Component({

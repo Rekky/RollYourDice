@@ -1,7 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {LibraryInteractor} from '../../../interactors/LibraryInteractor';
-import {Actor} from '../../../classes/Actor';
-import {MouseInteractor} from '../../../interactors/MouseInteractor';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-library-list',
@@ -10,54 +7,14 @@ import {MouseInteractor} from '../../../interactors/MouseInteractor';
 })
 export class LibraryListComponent implements OnInit {
 
-    categories: any[] = [];
-    currentCategory: string | null = null;
-    openActorWizard: boolean = false;
+    tabs: number = 0;
 
-    @Input() actors: any[] = [];
-    @Input() selectedItem: any = null;
-    @Output() onSelectedItemChanges: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onDeleteItemChanges: EventEmitter<any> = new EventEmitter<any>();
-
-    constructor(private libraryInteractor: LibraryInteractor,
-                private mouseInteractor: MouseInteractor) {
+    constructor() {
 
     }
 
     ngOnInit(): void {
         //
-    }
-
-    async selectCategory(category: string): Promise<void> {
-        this.currentCategory = category;
-        await this.getMyActorsFromInteractor();
-    }
-
-    onAddActor(): void {
-        this.openActorWizard = true;
-    }
-
-    async onCreateActor(actor: Actor): Promise<void> {
-        await this.getMyActorsFromInteractor();
-    }
-
-    async getMyActorsFromInteractor(): Promise<void> {
-        this.actors = await this.libraryInteractor.getMyActors(this.currentCategory);
-    }
-
-    onSelectedActor(actor: Actor): void {
-        this.selectedItem = actor;
-        this.onSelectedItemChanges.emit(this.selectedItem);
-        this.paintActorOnMap(actor);
-    }
-
-    onDeleteActor(actor: Actor): void {
-        this.libraryInteractor.deleteActor(actor);
-        this.onDeleteItemChanges.emit(actor);
-    }
-
-    paintActorOnMap(actor: Actor): void {
-        this.mouseInteractor.addActorOnMap(actor);
     }
 
 }

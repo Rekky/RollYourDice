@@ -1,0 +1,9 @@
+.actors-grid {
+    width: 100%;
+    height: calc(100vh - 200px);
+    display: grid;
+    margin: 0;
+    padding: 8px;
+    overflow: hidden;
+    overflow-y: auto;
+}

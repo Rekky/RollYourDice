@@ -1,0 +1,51 @@
+<div class="relative">
+    <div class="actors-grid">
+        <div class="categories" *ngIf="!currentCategory">
+            <div class="relative category-item rounded-md overflow-hidden h-[80px] mb-2 cursor-pointer" (click)="selectCategory('CHARACTERS')">
+                <span class="absolute w-full h-full text-white z-20 fs-5 flex align-items-center pl-5 hover:scale-105 transition-all duration-200">CHARACTERS</span>
+                <img class="absolute bg w-full h-full object-cover hover:scale-105 transition-all duration-100" src="assets/backgrounds/library/characters-bg.webp">
+            </div>
+            <div class="relative category-item rounded-md overflow-hidden h-[80px] mb-2 cursor-pointer" (click)="selectCategory('MONSTERS')">
+                <span class="absolute w-full h-full text-white z-20 fs-5 flex align-items-center pl-5 hover:scale-105 transition-all duration-200">MONSTERS</span>
+                <img class="bg w-full h-full object-cover hover:scale-105 transition-all duration-100" src="assets/backgrounds/library/monsters-bg.webp">
+            </div>
+            <div class="relative category-item rounded-md overflow-hidden h-[80px] mb-2 cursor-pointer" (click)="selectCategory('NPCs')">
+                <span class="absolute w-full h-full text-white z-20 fs-5 flex align-items-center pl-5 hover:scale-105 transition-all duration-200">NPCs</span>
+                <img class="bg w-full h-full object-cover hover:scale-105 transition-all duration-100" src="assets/backgrounds/library/npcs-bg.webp">
+            </div>
+            <div class="relative category-item rounded-md overflow-hidden h-[80px] mb-2 cursor-pointer" (click)="selectCategory('OBJECTS')">
+                <span class="absolute w-full h-full text-white z-20 fs-5 flex align-items-center pl-5 hover:scale-105 transition-all duration-200">OBJECTS</span>
+                <img class="bg w-full h-full object-cover hover:scale-105 transition-all duration-100" src="assets/backgrounds/library/objects-bg.webp">
+            </div>
+            <div class="relative category-item rounded-md overflow-hidden h-[80px] mb-2 cursor-pointer" (click)="selectCategory('SPELLS')">
+                <span class="absolute w-full h-full text-white z-20 fs-5 flex align-items-center pl-5 hover:scale-105 transition-all duration-200">SPELLS</span>
+                <img class="bg w-full h-full object-cover hover:scale-105 transition-all duration-100" src="assets/backgrounds/library/spells-bg.webp">
+            </div>
+            <div class="relative category-item rounded-md overflow-hidden h-[80px] mb-2 cursor-pointer" (click)="selectCategory('PETS')">
+                <span class="absolute w-full h-full text-white z-20 fs-5 flex align-items-center pl-5 hover:scale-105 transition-all duration-200">PETS</span>
+                <img class="bg w-full h-full object-cover hover:scale-105 transition-all duration-100" src="assets/backgrounds/library/pets-bg.webp">
+            </div>
+        </div>
+        <div *ngIf="currentCategory">
+            <div class="flex">
+                <img src="assets/svg/arrow-left.svg" alt="back" (click)="currentCategory = null">
+                <div>{{currentCategory}}</div>
+            </div>
+            <div>
+                <app-custom-list
+                    *ngIf="actors && actors.length > 0"
+                    [items]="actors"
+                    (deleteItemChanges)="onDeleteActor($event)"
+                    (selectedItemChanges)="onSelectedActor($event)"
+                    [editable]="true">
+                </app-custom-list>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD NEW -->
+    <div class="add-control">
+        <img style="margin-left: 20px;" class="cursor-pointer" width="20px" src="assets/svg/add.svg" alt="add" (click)="this.openActorWizard = true">
+    </div>
+</div>
+<app-custom-wizard-actor [(open)]="openActorWizard" (createActorEvent)="onCreateActor($event)"></app-custom-wizard-actor>
