@@ -8,7 +8,7 @@
                               [actor]="blueprintActor"></app-blueprints-interface>
 
     <!-- MAP -->
-    <div *ngIf="((currentMap && game.author.id === userInteractor.getCurrentUser().id) || (currentMap && gameStatus === GameStatus.Running))" class="map-container">
+    <div *ngIf="((currentMap && game.author.id === userInteractor.getCurrentUser().id) || (currentMap && gameStatus === GameStatus.RUNNING))" class="map-container">
         <app-map *ngIf="!destroying"
             [map]="currentMap"
             [modification]="mapModification"

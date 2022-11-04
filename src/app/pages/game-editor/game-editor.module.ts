@@ -40,6 +40,7 @@ import {BlueprintsModule} from '../../blueprints/blueprints.module';
 import { LibraryListComponent } from './library-list/library-list.component';
 import { KonvaImagePropertiesComponent } from './context-menu/konva-tools-properties/konva-image-properties/konva-image-properties.component';
 import { KonvaActorPropertiesComponent } from './context-menu/konva-tools-properties/konva-actor-properties/konva-actor-properties.component';
+import { ActorsListComponent } from './actors-list/actors-list.component';
 
 @NgModule({
     declarations: [
@@ -72,7 +73,8 @@ import { KonvaActorPropertiesComponent } from './context-menu/konva-tools-proper
         CamerasListComponent,
         LibraryListComponent,
         KonvaImagePropertiesComponent,
-        KonvaActorPropertiesComponent
+        KonvaActorPropertiesComponent,
+        ActorsListComponent
     ],
     imports: [
         CommonModule,

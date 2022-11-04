@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {GameInteractor} from '../../interactors/GameInteractor';
-import {Game, GameStatus} from '../../classes/Game';
+import {Game, GameStatusEnum} from '../../classes/Game';
 import {MouseService} from '../../services/mouse.service';
 import {OurKonvaMap, OurKonvaMapModification} from '../../classes/ourKonva/OurKonvaMap';
 import {SocketService} from '../../services/socket.service';
@@ -30,8 +30,8 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     maps: OurKonvaMap[] = [];
     destroying: boolean = false;
 
-    gameStatus: GameStatus = GameStatus.Stopped;
-    GameStatus = GameStatus;
+    gameStatus: GameStatusEnum = GameStatusEnum.STOPPED;
+    GameStatus = GameStatusEnum;
     currentObjectSelected: any;
     mouse: any;
     selectedKonvaObject: CurrentSelectedKonvaObject;
@@ -301,10 +301,10 @@ export class GameEditorComponent implements OnInit, OnDestroy {
         this.socketService.sendMeta(this.metaInteractor.getUserMeta());
     }
 
-    onStatusChange(status: GameStatus): void {
+    onStatusChange(status: GameStatusEnum): void {
         this.gameStatus = status;
 
-        if (this.gameStatus === GameStatus.Running) {
+        if (this.gameStatus === GameStatusEnum.RUNNING) {
             const blueprint = {
                 id: '12312324',
                 blueprintBoxes: {

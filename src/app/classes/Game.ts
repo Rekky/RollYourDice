@@ -18,7 +18,7 @@ export class Game {
     playersRequested: Player[];
     mapsId: string[];
     published: boolean;
-    status: GameStatus;
+    status: GameStatusEnum;
 
     constructor(authorId?: string) {
         this.id = null;
@@ -32,7 +32,7 @@ export class Game {
         this.maxNPlayers = 6;
         this.coverImage = new AssetModel();
         this.description = '';
-        this.status = GameStatus.Stopped;
+        this.status = GameStatusEnum.STOPPED;
     }
 
     static fromJSON(json: any): Game {
@@ -44,8 +44,8 @@ export enum GameTypes {
     DungeonsAndDragons5e = 'DungeonsAndDragons5e',
 }
 
-export enum GameStatus {
-    Running,
-    Paused,
-    Stopped
+export enum GameStatusEnum {
+    RUNNING = 'RUNNING',
+    PAUSED = 'PAUSED',
+    STOPPED = 'STOPPED'
 }

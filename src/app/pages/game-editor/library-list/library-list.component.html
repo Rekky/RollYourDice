@@ -1,52 +1,66 @@
 <div class="content-container">
     <div class="position-relative">
-        <div class="library-list" *ngIf="!currentCategory">
-            <div class="category-item rounded-md" (click)="selectCategory('CHARACTERS')">
-                <span class="title">CHARACTERS</span>
-                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/characters-bg.webp">
-            </div>
-            <div class="category-item rounded-md" (click)="selectCategory('MONSTERS')">
-                <span class="title">MONSTER</span>
-                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/monsters-bg.webp">
-            </div>
-            <div class="category-item rounded-md" (click)="selectCategory('NPCs')">
-                <span class="title">NPCs</span>
-                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/npcs-bg.webp">
-            </div>
-            <div class="category-item rounded-md" (click)="selectCategory('OBJECTS')">
-                <span class="title">OBJECTS</span>
-                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/objects-bg.webp">
-            </div>
-            <div class="category-item rounded-md" (click)="selectCategory('SPELLS')">
-                <span class="title">SPELLS</span>
-                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/spells-bg.webp">
-            </div>
-            <div class="category-item rounded-md" (click)="selectCategory('PETS')">
-                <span class="title">PETS</span>
-                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/pets-bg.webp">
-            </div>
+        <div *ngIf="tabs === 0">
+            <app-assets-list></app-assets-list>
         </div>
-        <div class="library-content" *ngIf="currentCategory">
-            <div class="category-header">
-                <div class="category-header-icon" (click)="currentCategory = null">
-                    <img src="assets/svg/arrow-left.svg" alt="back">
-                </div>
-                <div class="category-header-name">{{currentCategory}}</div>
-            </div>
-            <div class="category-body">
-                <app-custom-list
-                    *ngIf="actors && actors.length > 0"
-                    [items]="actors"
-                    (deleteItemChanges)="onDeleteActor($event)"
-                    (selectedItemChanges)="onSelectedActor($event)"
-                    [editable]="true">
-                </app-custom-list>
-                <div class="list-add">
-                    <img src="assets/svg/add.svg" alt="add" style="width: 20px;" (click)="onAddActor()">
-                </div>
-            </div>
+        <div *ngIf="tabs === 1">
+            <app-actors-list></app-actors-list>
         </div>
+<!--        <div class="library-list" *ngIf="!currentCategory">-->
+<!--            <div class="category-item rounded-md" (click)="selectCategory('CHARACTERS')">-->
+<!--                <span class="title">CHARACTERS</span>-->
+<!--                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/characters-bg.webp">-->
+<!--            </div>-->
+<!--            <div class="category-item rounded-md" (click)="selectCategory('MONSTERS')">-->
+<!--                <span class="title">MONSTER</span>-->
+<!--                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/monsters-bg.webp">-->
+<!--            </div>-->
+<!--            <div class="category-item rounded-md" (click)="selectCategory('NPCs')">-->
+<!--                <span class="title">NPCs</span>-->
+<!--                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/npcs-bg.webp">-->
+<!--            </div>-->
+<!--            <div class="category-item rounded-md" (click)="selectCategory('OBJECTS')">-->
+<!--                <span class="title">OBJECTS</span>-->
+<!--                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/objects-bg.webp">-->
+<!--            </div>-->
+<!--            <div class="category-item rounded-md" (click)="selectCategory('SPELLS')">-->
+<!--                <span class="title">SPELLS</span>-->
+<!--                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/spells-bg.webp">-->
+<!--            </div>-->
+<!--            <div class="category-item rounded-md" (click)="selectCategory('PETS')">-->
+<!--                <span class="title">PETS</span>-->
+<!--                <img class="bg hover:brightness-125 hover:scale-105 transition-all duration-500" src="assets/backgrounds/library/pets-bg.webp">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="library-content" *ngIf="currentCategory">-->
+<!--            <div class="category-header">-->
+<!--                <div class="category-header-icon" (click)="currentCategory = null">-->
+<!--                    <img src="assets/svg/arrow-left.svg" alt="back">-->
+<!--                </div>-->
+<!--                <div class="category-header-name">{{currentCategory}}</div>-->
+<!--            </div>-->
+<!--            <div class="category-body">-->
+<!--                <app-custom-list-->
+<!--                    *ngIf="actors && actors.length > 0"-->
+<!--                    [items]="actors"-->
+<!--                    (deleteItemChanges)="onDeleteActor($event)"-->
+<!--                    (selectedItemChanges)="onSelectedActor($event)"-->
+<!--                    [editable]="true">-->
+<!--                </app-custom-list>-->
+<!--                <div class="list-add">-->
+<!--                    <img src="assets/svg/add.svg" alt="add" style="width: 20px;" (click)="onAddActor()">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 
-<app-custom-wizard-actor [(open)]="openActorWizard" (createActorEvent)="onCreateActor($event)"></app-custom-wizard-actor>
+<!-- FOOTER -->
+<div class="footer-tabs">
+    <div class="tab" [class.active]="tabs === 0" (click)="tabs = 0">
+        <img height="25px" width="25px" src="assets/icons/gallery.png" alt="assets">
+    </div>
+    <div class="tab" [class.active]="tabs === 1" (click)="tabs = 1">
+        <img height="25px" width="25px" src="assets/icons/layout.png" alt="layout">
+    </div>
+</div>
