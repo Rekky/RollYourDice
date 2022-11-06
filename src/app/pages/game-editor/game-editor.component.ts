@@ -309,7 +309,11 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                 id: '12312324',
                 blueprintBoxes: {
                     onInit: [
-                        {id: '1111', type: 'FUNCTION', kind: 'GET_ALL_ACTORS', func: {id: '2222', type: 'FUNCTION', kind: 'GET', param: {index: 0}, func: {id: '3333', type: 'FUNCTION', kind: 'MOVE_ACTOR_TO_LOCATION', param: {x: 255, y: 255, z: 0}}}},
+                        {id: '1111', type: 'FUNCTION', kind: 'GET_ALL_ACTORS', func: {
+                            id: '2222', type: 'FUNCTION', kind: 'GET', param: {index: 0}, func: {
+                                id: '3333', type: 'FUNCTION', kind: 'MOVE_ACTOR_TO_LOCATION', param: {x: 255, y: 255, z: 0}
+                            }
+                        }},
                     ],
                     onOverlap: {}
                 }

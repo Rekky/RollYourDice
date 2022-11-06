@@ -8,7 +8,7 @@ import {
     Renderer2,
     ViewChild
 } from '@angular/core';
-import {BaseBlueprintBox, BlueprintModel} from '../models/base-blueprint';
+import {BaseBlueprintBox, BlueprintModel, BlueprintRenderedModel} from '../models/base-blueprint';
 import {BlueprintsService} from './blueprints.service';
 import {BlueprintLink, BlueprintNode} from '../models/blueprint-link';
 import {Coords} from '../../classes/Coords';
@@ -36,7 +36,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
     @ViewChild('droppable') droppable: ElementRef;
     @Input() actor: OurKonvaActor;
 
-    blueprint: BlueprintModel = new BlueprintModel();
+    blueprint: BlueprintRenderedModel = new BlueprintRenderedModel();
     user: any;
     temporalLink: BlueprintLink;
     selectedLink: BlueprintLink;
@@ -93,6 +93,12 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     viewBluePrint(): void  {
         console.log('BLUEPRINT', this.blueprint);
+    }
+
+    saveBlueprint(): void {
+        console.log('---------- build blueprint to export -------');
+        const blueprint = new BlueprintModel().fromRendered(this.blueprint);
+        console.log('blueprint =', blueprint);
     }
 
     modifyBBPosition(coords: any, bb: BaseBlueprintBox): void {

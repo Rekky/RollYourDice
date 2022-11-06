@@ -25,6 +25,8 @@ export class BBGetAllActors extends BaseBlueprintBox {
             boxId: this.id,
         }));
     }
+
+
 }
 
 export class BBEquals extends BaseBlueprintBox {
