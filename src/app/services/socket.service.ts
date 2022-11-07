@@ -111,6 +111,7 @@ export class SocketService {
 
         // ======================== SOCIAL =====================================
         this.socket.on('social-join-game-request', (data) => {
+            console.log('social-join-game-reques', data);
             this.myAdventuresInteractor.updateGamePlayersRequested(data);
         });
 

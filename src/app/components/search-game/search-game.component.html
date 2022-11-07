@@ -14,7 +14,7 @@
                 </div>
             </form>
 
-            <div class="games-list flex flex-column flex-nowrap overflow-hidden overflow-y-scroll h-[39vh] mb-4">
+            <div class="games-list grid flex-column flex-nowrap overflow-y-scroll h-[39vh] mb-4">
                 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
                 <ng-container *ngIf="!loading && gamesList.length > 0">
                     <div class="relative overflow-hidden hover:bg-zinc-800 cursor-pointer grid grid-cols-[0.18fr_1fr] grid-rows-1 h-[70px]" [class.bg-zinc-600]="game?.id === selectedGame?.id" *ngFor="let game of gamesList" (click)="selectGame(game)" [ngClass]="selectedGame === game ? 'selectedGame' : ''">

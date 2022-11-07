@@ -30,7 +30,6 @@ export class UserListComponent implements OnInit {
     ngOnInit(): void {
         this.players = this.data.players;
         this.playersRequest = this.data.playersRequest;
-        console.log('data', this.data);
     }
 
     closeDialog(): void {
@@ -40,15 +39,16 @@ export class UserListComponent implements OnInit {
     }
 
     acceptPlayer(player: Player): void {
-        this.socketService.acceptRequestJoinGame(this.data.gameId, player);
+        this.socketService.acceptRequestJoinGame(this.data.game.id, player);
     }
 
     rejectPlayer(player: Player): void {
-        this.socketService.declineJoinGame(this.data.gameId, player);
+        console.log('entras', this.data);
+        this.socketService.declineJoinGame(this.data.game.id, player);
     }
 
     kickPlayer(player: Player): void {
-        this.socketService.kickJoinGame(this.data.gameId, player);
+        this.socketService.kickJoinGame(this.data.game.id, player);
     }
     searchPlayer(): void{}
 

@@ -48,6 +48,7 @@ export class MyAdventuresComponent implements OnInit, OnDestroy {
         this.currentUser = this.userInteractor.getCurrentUser();
         this.myAdventuresSub = this.myAdventuresInteractor.getMyAdventures().subscribe(adv => {
             this.adventures = adv;
+            console.log('actusss', this.adventures);
             // adv.forEach(element => {
             //     element.playersRequested
             // });
