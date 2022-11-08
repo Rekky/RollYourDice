@@ -109,7 +109,7 @@ export class MouseInteractor implements OnDestroy {
                     });
                     if (object.getAttr('id') === 'tr-selectedObjects' ||
                         i === mapObjects.length - 1 ||
-                        ourKonvaObject.state === 'brush') {
+                        ourKonvaObject?.state === 'brush') {
                         return;
                     }
                     if (this.isHitCheck(object, mouse.tempRect) && !isObjectSelected) {
