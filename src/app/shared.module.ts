@@ -26,6 +26,7 @@ import { CustomListComponent } from './components/custom-list/custom-list.compon
 import { FormErrorsComponent } from './components/form-errors/form-errors.component';
 import {TutorialComponent} from './components/tutorial/tutorial.component';
 import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spinner.component";
+import {CustomToastComponent} from './components/custom-toast/custom-toast.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spin
         FormErrorsComponent,
         CustomListComponent,
         TutorialComponent,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        CustomToastComponent
     ],
     imports: [
         CommonModule,
@@ -83,7 +85,8 @@ import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spin
         FormErrorsComponent,
         CustomListComponent,
         TutorialComponent,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        CustomToastComponent
     ],
 })
 

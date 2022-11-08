@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {UserInteractor} from './interactors/UserInteractor';
-import {NavigationEnd, Router} from '@angular/router';
+import {NotificationsService} from './services/notifications.service';
 
 @Component({
     selector: 'app-root',
@@ -9,14 +8,10 @@ import {NavigationEnd, Router} from '@angular/router';
 })
 export class AppComponent {
 
-    constructor(private userInteractor: UserInteractor,
-                private router: Router) {
-        // routing events
-        this.router.events.subscribe((ev: any) => {
-            if (ev instanceof NavigationEnd) {
-                // nothing
-            }
-        });
+    constructor(public notificationService: NotificationsService) {
+        setInterval(() => {
+            // this.notificationService.toastSuccess(Math.random().toString());
+        }, 3000);
     }
 
 }

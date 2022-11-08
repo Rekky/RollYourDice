@@ -13,6 +13,7 @@ import {AuthInterceptor} from './interceptors/auth.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 import {JwtModule} from '@auth0/angular-jwt';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import {SharedModule} from './shared.module';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
         JwtModule.forRoot({
             config: {}
         }),
-        NgScrollbarModule
+        NgScrollbarModule,
+        SharedModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

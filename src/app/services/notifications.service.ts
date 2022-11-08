@@ -4,15 +4,16 @@ import {
     NotificationComponent,
     NotificationMessageDialogOptions
 } from '../components/notification/notification.component';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationsService {
 
-    constructor(
-        private dialog: MatDialog,
-    ) { }
+    public toasts$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+
+    constructor(private dialog: MatDialog) { }
 
     showNotification(message: string): void {
         const dialogOptions: NotificationMessageDialogOptions = {
@@ -34,6 +35,12 @@ export class NotificationsService {
         this.dialog.open(NotificationComponent, {
             data: dialogOptions
         });
+    }
+
+    toastSuccess(message: string): void {
+        const oldToasts = this.toasts$.value;
+        oldToasts.push(message);
+        this.toasts$.next(oldToasts);
     }
 
 }
