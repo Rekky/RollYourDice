@@ -1,7 +1,11 @@
 name: "Deploy to FTP"
-on: push
+
+on:
+  push:
+    branches: [ master ]
+
 jobs:
-    build:
+    deploy:
         runs-on: ubuntu-latest
 
         steps:
