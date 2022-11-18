@@ -113,7 +113,7 @@ export class SocketService {
         this.socket.on('social-join-game-request', (data) => {
             console.log('social-join-game-reques', data);
             this.myAdventuresInteractor.updateGamePlayersRequested(data);
-            this.notificationService.simple('Join game request', 3000);
+            this.notificationService.simple('Join game request by (' + data.player.name + ')', 3000);
         });
 
         this.socket.on('social-accept-game-request', (data) => {
