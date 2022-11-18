@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {NotificationsService} from './services/notifications.service';
 
 @Component({
     selector: 'app-root',
@@ -8,10 +7,11 @@ import {NotificationsService} from './services/notifications.service';
 })
 export class AppComponent {
 
-    constructor(public notificationService: NotificationsService) {
-        setInterval(() => {
-            // this.notificationService.toastSuccess(Math.random().toString());
-        }, 3000);
+    constructor() {
+        // setInterval(() => {
+        //     console.log('app_notificationService');
+        //     this.notificationService.simple('app_notificationService', 3000);
+        // }, 2000);
     }
 
 }
