@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Game} from '../../classes/Game';
 import {Player} from '../../classes/User';
 import {SocketService} from '../../services/socket.service';
-import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-user-list',

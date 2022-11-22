@@ -12,6 +12,7 @@ import { Actor } from '../classes/Actor';
 export class MapService {
 
     protected endPointName: string = 'games';
+    protected endPointMap: string = 'maps';
 
     constructor(private httpService: HttpService,
                 private userInteractor: UserInteractor) { }
@@ -61,7 +62,7 @@ export class MapService {
 
     public async getActorsOnMap(mapId: string): Promise<Actor[]> {
         return new Promise<any>((resolve, reject) => {
-            this.httpService.post(`/maps/actors`, {mapId: mapId}).subscribe(
+            this.httpService.get(`/${this.endPointMap}/${mapId}/actors`).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {
