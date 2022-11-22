@@ -7,11 +7,6 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
 
-    constructor() {
-        // setInterval(() => {
-        //     console.log('app_notificationService');
-        //     this.notificationService.simple('app_notificationService', 3000);
-        // }, 2000);
-    }
+    constructor() {}
 
 }
