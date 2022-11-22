@@ -17,6 +17,7 @@ import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 import {delay, retry, switchMap, tap} from 'rxjs/operators';
 import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
 import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
+import {Actor} from '../../classes/Actor';
 
 @Component({
     selector: 'app-game-editor',
@@ -38,7 +39,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
     openMapList = false;
     openLibraryList = false;
     leftSidebarTitle: string = 'MAPS';
-    blueprintActor: OurKonvaActor;
+    blueprintActor: Actor;
 
     // ZOOM
     zoomOptions = {
@@ -184,8 +185,9 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             // 9.
             switchMap((res) => {
                 return this.blueprintInteractor.getDisplayedBlueprintActorObs().pipe(
-                    tap((blueprintActor: OurKonvaActor) => {
+                    tap((blueprintActor: Actor) => {
                         this.blueprintActor = blueprintActor;
+                        console.log(blueprintActor);
                     })
                 );
             }),

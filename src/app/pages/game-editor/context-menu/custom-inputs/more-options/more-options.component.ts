@@ -6,6 +6,8 @@ import Konva from 'konva';
 import {MouseInteractor} from '../../../../../interactors/MouseInteractor';
 import {OurKonvaActor} from '../../../../../classes/ourKonva/OurKonvaActor';
 import {BlueprintInteractor} from '../../../../../interactors/BlueprintInteractor';
+import {LibraryInteractor} from '../../../../../interactors/LibraryInteractor';
+import {MapInteractor} from '../../../../../interactors/MapInteractor';
 
 @Component({
     selector: 'app-more-options',
@@ -18,14 +20,22 @@ export class MoreOptionsComponent implements OnInit {
     displayMoreOptions: boolean = false;
 
     constructor(private mouseInteractor: MouseInteractor,
-                private blueprintInteractor: BlueprintInteractor) {
+                private blueprintInteractor: BlueprintInteractor,
+                protected map: MapInteractor) {
     }
 
     ngOnInit(): void {
     }
 
     displayBlueprint(): void {
-        this.blueprintInteractor.setDisplayedBlueprintActor(this.settings.blueprint.actor);
+        const actors = this.map.getAllActors();
+        console.log('actors =', actors);
+        const foundActor = actors.find(actor => {
+            return actor.mapRepresentation.id === this.settings.blueprint.actor.id;
+        });
+        console.log('found actors =', foundActor);
+        this.blueprintInteractor.setDisplayedBlueprintActor(foundActor);
+
     }
 
     moveElementToTop(): void {

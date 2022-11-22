@@ -11,17 +11,17 @@ import {BlueprintModel} from '../blueprints/models/base-blueprint';
     providedIn: 'root'
 })
 export class BlueprintInteractor {
-    private displayedBlueprintActor: BehaviorSubject<OurKonvaActor> = new BehaviorSubject<OurKonvaActor>(null);
+    private displayedBlueprintActor: BehaviorSubject<Actor> = new BehaviorSubject<Actor>(null);
 
     constructor(protected mapInteractor: MapInteractor,
                 protected mouseInteractor: MouseInteractor) {
     }
 
-    setDisplayedBlueprintActor(blueprintActor: OurKonvaActor): void {
+    setDisplayedBlueprintActor(blueprintActor: Actor): void {
         this.displayedBlueprintActor.next(blueprintActor);
     }
 
-    getDisplayedBlueprintActorObs(): Observable<OurKonvaActor> {
+    getDisplayedBlueprintActorObs(): Observable<Actor> {
         return this.displayedBlueprintActor.asObservable();
     }
 

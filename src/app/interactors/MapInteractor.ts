@@ -12,6 +12,7 @@ import {MouseInteractor} from './MouseInteractor';
 import {OurKonvaMap, OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {GameInteractor} from './GameInteractor';
 import {Game} from '../classes/Game';
+import {Actor} from '../classes/Actor';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +54,14 @@ export class MapInteractor {
 
     getCurrentMap(): OurKonvaMap {
         return this.currentMap.getValue();
+    }
+
+    getAllActors(): Actor[] {
+        let actors;
+        this.mapService.getActorsOnMap(this.currentMap.getValue().id).then(res => {
+            actors = res;
+        });
+        return actors;
     }
 
     // setMapPosition(id: string | number, pos: Coords): void {

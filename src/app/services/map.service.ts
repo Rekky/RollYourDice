@@ -4,6 +4,7 @@ import {HttpService} from './http.service';
 import {UserInteractor} from '../interactors/UserInteractor';
 import {OurKonvaMap} from '../classes/ourKonva/OurKonvaMap';
 import {Observable} from 'rxjs';
+import { Actor } from '../classes/Actor';
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +50,18 @@ export class MapService {
 
         return new Promise<any>( (resolve, reject) => {
             this.httpService.post(`/map`, body).subscribe(
+                (response) => {
+                    resolve(response.data);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    public async getActorsOnMap(mapId: string): Promise<Actor[]> {
+        return new Promise<any>((resolve, reject) => {
+            this.httpService.post(`/maps/actors`, {mapId: mapId}).subscribe(
                 (response) => {
                     resolve(response.data);
                 }, (error: HttpErrorResponse) => {

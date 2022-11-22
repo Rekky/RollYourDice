@@ -25,6 +25,7 @@ import {
 } from '../models/blueprint-boxes';
 import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
 import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
+import {Actor} from '../../classes/Actor';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -34,7 +35,7 @@ import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
 export class BlueprintsInterfaceComponent implements OnInit {
     @ViewChild('svg') svg: ElementRef;
     @ViewChild('droppable') droppable: ElementRef;
-    @Input() actor: OurKonvaActor;
+    @Input() actor: Actor;
 
     blueprint: BlueprintRenderedModel = new BlueprintRenderedModel();
     user: any;
