@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
 import {BehaviorSubject} from 'rxjs';
 import {Game, GameStatusEnum} from '../classes/Game';
-import {SocketObject} from '../classes/sockets/SocketObject';
 import {OurKonvaMap, OurKonvaMapModification} from '../classes/ourKonva/OurKonvaMap';
 import {UserInteractor} from '../interactors/UserInteractor';
 import {environment} from '../../environments/environment';
@@ -12,7 +11,7 @@ import {NotificationsService} from './notifications.service';
 import {MyAdventuresInteractor} from '../pages/launcher/my-adventures/my-adventures-interactor';
 import { Player } from '../classes/User';
 import {MetaInteractor} from '../interactors/MetaInteractor';
-import {Meta} from "../classes/Meta";
+import {Meta} from '../classes/Meta';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +20,6 @@ export class SocketService {
 
     socket = io.connect(environment.socket_url, {query: {token: this.userInteractor.getCurrentToken()}});
     gameSocketSubscription: BehaviorSubject<Game> = new BehaviorSubject<Game>(null);
-    gameSocketObjectSubscription: BehaviorSubject<SocketObject> = new BehaviorSubject<SocketObject>(null);
 
 
     constructor(private userInteractor: UserInteractor,
