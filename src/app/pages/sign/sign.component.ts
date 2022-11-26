@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../classes/User';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {Subscription} from 'rxjs';

@@ -1,23 +1,15 @@
-<div class="bg"></div>
-<div class="container">
-    <div class="sign-box">
-        <div class="row h-100">
-            <div class="left-box col-6">
-                <div class="img-box">
-                    <div class="load-border">
-                        <svg version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                             x="0px" y="0px" width="100%" height="100%" viewBox="0 0 500 500" xml:space="preserve">
-                        <circle id="circle" fill="none" cx="50%" cy="50%" r="49%" stroke="$c-white" stroke-width="5" stroke-dasharray="0,20000"/>
-                    </svg>
-                    </div>
-                    <div *ngIf="display === 'loading' || display === 'loaded'" class="load-value">{{percentage}}%</div>
-                    <img class="sign-logo" src="./assets/svg/logo-red-white.svg" alt="logo"/>
-                </div>
+<div class="bg">
+    <div class="flex justify-content-center w-100 h-100">
+        <div class="relative flex flex-column justify-content-center h-100 w-[416px] mt-[-9vh]">
+            <div class="w-100 flex flex-column justify-content-center align-items-center">
+                <img style="width: 120px" src="./assets/svg/logo-red-white.svg" alt="logo"/>
+                <h2 class="text-white mt-4" style="font-size: 30px;">ROLLINN</h2>
             </div>
-            <div class="right-box col-6">
+            <div class="mt-4">
                 <app-sign-in *ngIf="display === 'signIn'" (display)="changeDisplay($event)"></app-sign-in>
                 <app-sign-up *ngIf="display === 'signUp'" (display)="changeDisplay($event)"></app-sign-up>
             </div>
         </div>
     </div>
 </div>
+

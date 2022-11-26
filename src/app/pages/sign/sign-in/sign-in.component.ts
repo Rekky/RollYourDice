@@ -1,9 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../../interactors/UserInteractor';
-import {Router} from '@angular/router';
-import {User} from '../../../classes/User';
-import {OurKonvaMap} from '../../../classes/ourKonva/OurKonvaMap';
 
 @Component({
     selector: 'app-sign-in',
@@ -14,16 +11,14 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
     @Output() display: EventEmitter<'signUp' | 'signIn' | 'loaded'> = new EventEmitter<'signUp'>();
     signInForm: UntypedFormGroup;
-    displayPassword: boolean = false;
+    loading: boolean = false;
 
-    constructor(private userInteractor: UserInteractor,
-                private router: Router) { }
+    constructor(private userInteractor: UserInteractor) { }
 
     ngOnInit(): void {
         this.signInForm = new UntypedFormGroup({
             email: new UntypedFormControl(null, Validators.required),
-            password: new UntypedFormControl(null, Validators.required),
-            stayLogged: new UntypedFormControl(false),
+            password: new UntypedFormControl(null, Validators.required)
         });
     }
 
@@ -32,16 +27,17 @@ export class SignInComponent implements OnInit, AfterViewInit {
     }
 
     async signIn(): Promise<void> {
+        this.loading = true;
         const email = this.signInForm.get('email').value;
         const pass = this.signInForm.get('password').value;
-        const stayLogged = this.signInForm.get('stayLogged').value;
 
         try {
-            await this.userInteractor.signIn(email, pass, stayLogged);
+            await this.userInteractor.signIn(email, pass);
             this.display.emit('loaded');
         } catch (e) {
-            // error handle
             this.signInForm.get('password').setValue('');
+        } finally {
+            this.loading = false;
         }
     }
 
