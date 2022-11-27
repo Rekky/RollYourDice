@@ -1,6 +1,7 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../../interactors/UserInteractor';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-sign-in',
@@ -9,11 +10,10 @@ import {UserInteractor} from '../../../interactors/UserInteractor';
 })
 export class SignInComponent implements OnInit, AfterViewInit {
 
-    @Output() display: EventEmitter<'signUp' | 'signIn' | 'loaded'> = new EventEmitter<'signUp'>();
     signInForm: UntypedFormGroup;
     loading: boolean = false;
 
-    constructor(private userInteractor: UserInteractor) { }
+    constructor(private userInteractor: UserInteractor, private router: Router) { }
 
     ngOnInit(): void {
         this.signInForm = new UntypedFormGroup({
@@ -33,15 +33,11 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
         try {
             await this.userInteractor.signIn(email, pass);
-            this.display.emit('loaded');
+            await this.router.navigateByUrl('');
         } catch (e) {
             this.signInForm.get('password').setValue('');
         } finally {
             this.loading = false;
         }
-    }
-
-    createAccount(): void {
-        this.display.emit('signUp');
     }
 }

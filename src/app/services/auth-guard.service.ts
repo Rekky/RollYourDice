@@ -14,7 +14,7 @@ export class AuthGuardService implements CanActivate {
         const token = this.userInteractor.getCurrentToken();
 
         if (this.jwtHelper.isTokenExpired(token)) {
-            this.router.navigate(['/sign']);
+            this.router.navigate(['/account/sign-in']);
             return false;
         }
         return true;

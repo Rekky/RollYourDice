@@ -11,9 +11,7 @@ import {Router} from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
-    @Output() display: EventEmitter<'signIn'> = new EventEmitter<'signIn'>();
     signUpForm: UntypedFormGroup;
-    displayPassword: boolean = false;
     loading: boolean = false;
 
     constructor(private userInteractor: UserInteractor, private router: Router) { }
@@ -47,16 +45,11 @@ export class SignUpComponent implements OnInit {
 
         try {
             await this.userInteractor.signUp(user);
-            this.display.emit('signIn');
+            await this.router.navigateByUrl('/account/sign-in');
         } catch (e) {
             console.log(e.error);
         } finally {
             this.loading = false;
         }
     }
-
-    alreadyHaveAccount(): void {
-        this.display.emit('signIn');
-    }
-
 }

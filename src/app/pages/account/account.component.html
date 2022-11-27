@@ -6,8 +6,7 @@
                 <h2 class="text-white mt-4" style="font-size: 30px;">ROLLINN</h2>
             </div>
             <div class="mt-4">
-                <app-sign-in *ngIf="display === 'signIn'" (display)="changeDisplay($event)"></app-sign-in>
-                <app-sign-up *ngIf="display === 'signUp'" (display)="changeDisplay($event)"></app-sign-up>
+                <router-outlet></router-outlet>
             </div>
         </div>
     </div>
