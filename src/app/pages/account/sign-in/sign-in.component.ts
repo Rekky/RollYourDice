@@ -17,8 +17,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.signInForm = new UntypedFormGroup({
-            email: new UntypedFormControl(null, Validators.required),
-            password: new UntypedFormControl(null, Validators.required)
+            email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+            password: new UntypedFormControl(null, [Validators.required, Validators.minLength(3)])
         });
     }
 
