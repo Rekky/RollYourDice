@@ -18,8 +18,8 @@ const routes: Routes = [
         canActivate: [AuthGuardService]
     },
     {
-        path: 'sign',
-        loadChildren: () => import('./pages/sign/sign.module').then((m) => m.SignModule),
+        path: 'account',
+        loadChildren: () => import('./pages/account/account.module').then((m) => m.AccountModule),
     },
 ];
 

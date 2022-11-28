@@ -11,10 +11,8 @@ import {Router} from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
-    @Output() display: EventEmitter<'signIn'> = new EventEmitter<'signIn'>();
     signUpForm: UntypedFormGroup;
-    displayPassword: boolean = false;
-    displayRepeatPassword: boolean = false;
+    loading: boolean = false;
 
     constructor(private userInteractor: UserInteractor, private router: Router) { }
 
@@ -28,6 +26,7 @@ export class SignUpComponent implements OnInit {
     }
 
     async signUp(): Promise<void>  {
+        this.loading = true;
         const username = this.signUpForm.get('username').value;
         const email = this.signUpForm.get('email').value;
         const pass = this.signUpForm.get('password').value;
@@ -35,6 +34,7 @@ export class SignUpComponent implements OnInit {
 
         if (pass !== repeatPass) {
             alert('must be the same password');
+            this.loading = false;
             return;
         }
 
@@ -45,14 +45,11 @@ export class SignUpComponent implements OnInit {
 
         try {
             await this.userInteractor.signUp(user);
-            this.display.emit('signIn');
+            await this.router.navigateByUrl('/account/sign-in');
         } catch (e) {
             console.log(e.error);
+        } finally {
+            this.loading = false;
         }
     }
-
-    alreadyHaveAccount(): void {
-        this.display.emit('signIn');
-    }
-
 }

@@ -30,7 +30,7 @@ export class HttpErrorService {
             if (httpError.error.message === 'Expired') {
                 localStorage.removeItem('rollUser');
                 localStorage.removeItem('rollToken');
-                this.router.navigateByUrl('/sign');
+                this.router.navigateByUrl('/account/sign-in');
                 return;
             }
 
