@@ -8,7 +8,7 @@ import { Player } from '../User';
 export class OurKonvaRect extends OurKonvaObject {
     id: string;
     position: Coords;
-    state: string = 'square';
+    type: string = 'square';
     tempRect: Konva.Rect;
     fill: string;
     stroke: string;
@@ -51,7 +51,7 @@ export class OurKonvaRect extends OurKonvaObject {
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
         toEmit.konvaObject = rect;
-        toEmit.type = object.state;
+        toEmit.type = object.type;
         toEmit.layer = layer;
         return toEmit;
     }
@@ -79,7 +79,7 @@ export class OurKonvaRect extends OurKonvaObject {
         this.position.y = objectAttrs.y;
         this.size.height = objectAttrs.height;
         this.size.width = objectAttrs.width;
-        this.state = 'square';
+        this.type = 'square';
         this.fill = objectAttrs.fill;
         this.stroke = objectAttrs.stroke;
         this.strokeWidth = objectAttrs.strokeWidth;
@@ -156,7 +156,7 @@ export class OurKonvaRect extends OurKonvaObject {
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = this;
         toEmit.konvaObject = rect;
-        toEmit.type = this.state;
+        toEmit.type = this.type;
         toEmit.layer = this.layer;
         // toEmit.transformer = transformer;
         return toEmit;

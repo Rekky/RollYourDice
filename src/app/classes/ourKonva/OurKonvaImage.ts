@@ -12,7 +12,7 @@ export class OurKonvaImage extends OurKonvaObject {
     tempImage: Konva.Image;
     src: string;
     opacity: number;
-    state: 'image';
+    type: 'image';
     isBackground: boolean = false;
 
     constructor(author: Player, src: string) {
@@ -21,7 +21,7 @@ export class OurKonvaImage extends OurKonvaObject {
         this.position = new Coords();
         this.src = src;
         this.opacity = 100;
-        this.state = 'image';
+        this.type = 'image';
         this.name = 'new image';
         this.size.width = 300;
         this.size.height = 300;
@@ -48,7 +48,7 @@ export class OurKonvaImage extends OurKonvaObject {
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
         toEmit.konvaObject = img;
-        toEmit.type = object.state;
+        toEmit.type = object.type;
         toEmit.layer = layer;
         return toEmit;
     }
@@ -75,7 +75,7 @@ export class OurKonvaImage extends OurKonvaObject {
         this.position.y = objectAttrs.y;
         this.size.height = objectAttrs.height;
         this.size.width = objectAttrs.width;
-        this.state = 'image';
+        this.type = 'image';
         this.opacity = objectAttrs.opacity;
         this.src = objectAttrs.src;
         this.id = objectAttrs.id;
@@ -152,7 +152,7 @@ export class OurKonvaImage extends OurKonvaObject {
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = img;
-        toEmit.type = this.state;
+        toEmit.type = this.type;
         toEmit.layer = this.layer;
         toEmit.transformer = transformer;
         return toEmit;

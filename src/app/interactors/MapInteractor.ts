@@ -56,12 +56,8 @@ export class MapInteractor {
         return this.currentMap.getValue();
     }
 
-    getAllActors(): Actor[] {
-        let actors;
-        this.mapService.getActorsOnMap(this.currentMap.getValue().id).then(res => {
-            actors = res;
-        });
-        return actors;
+    getAllActors(): any[] {
+        return this.getCurrentMap().objects;
     }
 
     // setMapPosition(id: string | number, pos: Coords): void {

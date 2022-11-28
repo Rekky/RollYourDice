@@ -60,15 +60,15 @@ export class MapService {
         });
     }
 
-    public async getActorsOnMap(mapId: string): Promise<Actor[]> {
-        return new Promise<any>((resolve, reject) => {
-            this.httpService.get(`/${this.endPointMap}/${mapId}/actors`).subscribe(
-                (response) => {
-                    resolve(response.data);
-                }, (error: HttpErrorResponse) => {
-                    reject(error);
-                }
-            );
-        });
-    }
+    // public async getActorsOnMap(mapId: string): Promise<Actor[]> {
+    //     return new Promise<any>((resolve, reject) => {
+    //         this.httpService.get(`/${this.endPointMap}/${mapId}/actors`).subscribe(
+    //             (response) => {
+    //                 resolve(response.data);
+    //             }, (error: HttpErrorResponse) => {
+    //                 reject(error);
+    //             }
+    //         );
+    //     });
+    // }
 }

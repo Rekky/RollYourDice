@@ -13,7 +13,6 @@ export class OurKonvaActor extends OurKonvaObject {
     tempImage: Konva.Image;
     src: string;
     opacity: number;
-    state: 'actor';
     type: 'actor';
     hp: number;
 
@@ -23,7 +22,6 @@ export class OurKonvaActor extends OurKonvaObject {
         this.position = new Coords();
         this.src = actor.asset?.uri;
         this.opacity = 100;
-        this.state = 'actor';
         this.name = actor.name ? actor.name : 'new actor';
         this.type = 'actor';
         this.size.width = 300;
@@ -87,7 +85,7 @@ export class OurKonvaActor extends OurKonvaObject {
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
         toEmit.konvaObject = group;
-        toEmit.type = object.state;
+        toEmit.type = object.type;
         toEmit.layer = layer;
         return toEmit;
     }

@@ -56,7 +56,10 @@ export class MouseInteractor implements OnDestroy {
                 document.onkeyup = (ev) => {
                     if (ev.key === 'Delete' && document.activeElement.tagName !== 'INPUT') {
                         const ourSelectedKonvaObjects = selectedObjects.map(obj => obj.ourKonvaObject);
-                        this.socketService.deleteGameObject(this.currentMap.id, ourSelectedKonvaObjects);
+                        const objectsToDelete = ourSelectedKonvaObjects.map(o => {
+                            return this.currentMap.objects.find(mapObject => o.id === mapObject.mapRepresentation.id);
+                        });
+                        this.socketService.deleteGameObject(this.currentMap.id, objectsToDelete);
                         this.selectedKonvaObjects.next([]);
                     }
                 };
@@ -81,7 +84,7 @@ export class MouseInteractor implements OnDestroy {
             this.mouse.isActive = true;
             this.mouse.ev = e;
 
-            if (this.mouse.state !== 'pointer') {
+            if (this.mouse.type !== 'pointer') {
                 this.selectedKonvaObjects.next([]);
             }
 
@@ -93,29 +96,29 @@ export class MouseInteractor implements OnDestroy {
 
         mapEl.nativeElement.addEventListener('mousemove', (e) => {
             this.mouse.ev = e;
-            if (!this.dragHasStartedOnObject && this.mouse.state === 'pointer' || this.mouse.state !== 'pointer') {
+            if (!this.dragHasStartedOnObject && this.mouse.type === 'pointer' || this.mouse.type !== 'pointer') {
                 this.mouse.mouseMove();
             }
 
-            if (this.mouse.isActive && this.mouse.state === 'pointer' && !this.dragHasStartedOnObject) {
+            if (this.mouse.isActive && this.mouse.type === 'pointer' && !this.dragHasStartedOnObject) {
                 const selectedObjects = this.selectedKonvaObjects.getValue();
                 const nodes = selectedGroupTr.getNodes();
                 const mapObjects = layers.draws.getChildren();
                 const mouse = this.mouse as OurKonvaPointer;
                 mapObjects.forEach((object, i) => {
-                    const ourKonvaObject = this.currentMap.objects.find(obj => obj.id === object.getAttr('id'));
+                    const ourKonvaObject = this.currentMap?.objects?.find(obj => obj?.mapRepresentation?.id === object.getAttr('id'));
                     const isObjectSelected = nodes.find(selObj => {
                         return object.getAttr('id') === selObj.getAttr('id');
                     });
                     if (object.getAttr('id') === 'tr-selectedObjects' ||
                         i === mapObjects.length - 1 ||
-                        ourKonvaObject?.state === 'brush') {
+                        ourKonvaObject?.mapRepresentation.type === 'brush') {
                         return;
                     }
                     if (this.isHitCheck(object, mouse.tempRect) && !isObjectSelected) {
                         selectedGroupTr.nodes(nodes.concat([object]));
                         const toEmit = new CurrentSelectedKonvaObject();
-                        object.draggable(!ourKonvaObject.isEditionBlocked);
+                        object.draggable(!ourKonvaObject.mapRepresentation.isEditionBlocked);
                         toEmit.ourKonvaObject = ourKonvaObject;
                         toEmit.konvaObject = object;
                         toEmit.type = object.getAttr('type');
@@ -143,15 +146,15 @@ export class MouseInteractor implements OnDestroy {
 
         mapEl.nativeElement.addEventListener('mouseup', (e) => {
             let konvaElement = this.mouse.mouseUp();
-            // if (this.mouse.state === 'text') { this.mouse.layer = this.ourLayers.texts; }
+            // if (this.mouse.type === 'text') { this.mouse.layer = this.ourLayers.texts; }
             this.mouse.isActive = false;
             this.mouse.ev = e;
             this.dragHasStartedOnObject = false;
-            if (this.mouse.state === 'pointer') {
+            if (this.mouse.type === 'pointer') {
                 this.mouseService.setMouse(new OurKonvaPointer());
                 return;
             }
-            if (this.mouse.state !== 'pointer') {
+            if (this.mouse.type !== 'pointer') {
                 if (konvaElement.ourKonvaObject.isAdaptedToGrid) {
                     konvaElement = this.adaptObjectToMap(konvaElement); // Adapt object
                 }
@@ -184,7 +187,7 @@ export class MouseInteractor implements OnDestroy {
             selectedGroup.forEach(object => {
                 let mySelectedObjectReference = selectedObjects.find(obj => obj.ourKonvaObject.id === object.getAttr('id'));
 
-                if (mySelectedObjectReference.ourKonvaObject.state !== 'brush') {
+                if (mySelectedObjectReference.ourKonvaObject.type !== 'brush') {
                     const newWidth = Math.round(object.getAttr('width') * scale.scaleX);
                     const newHeight = Math.round(object.getAttr('height') * scale.scaleY);
                     object.setAttr('scaleX', 1);
@@ -204,7 +207,10 @@ export class MouseInteractor implements OnDestroy {
 
             this.selectedKonvaObjects.next(selectedObjects);
             const ourSelectedKonvaObjects = selectedObjects.map(obj => obj.ourKonvaObject);
-            this.socketService.updateGameObjects(this.currentMap.id, ourSelectedKonvaObjects);
+            const objectsToModify = ourSelectedKonvaObjects.map(o => {
+                return this.currentMap.objects.find(mapObjects => o.id === mapObjects.mapRepresentation.id);
+            });
+            this.socketService.updateGameObjects(this.currentMap.id, objectsToModify);
         });
     }
 
@@ -254,7 +260,7 @@ export class MouseInteractor implements OnDestroy {
             document.body.style.cursor = 'default';
         });
         object?.konvaObject.on('click', () => {
-            if (this.mouse.state !== 'pointer') { return; }
+            if (this.mouse.type !== 'pointer') { return; }
             if (object.ourKonvaObject.isEditionBlocked && this.isCtrlKeyPressed) { return; }
             const selectedGroupTr: Konva.Transformer = object.layer.find('#tr-selectedObjects')[0];
             selectedGroupTr?.moveToTop();
@@ -319,14 +325,20 @@ export class MouseInteractor implements OnDestroy {
 
             if (isMouseDraggingLastElement && amIThePreLastElement) {
                 const ourSelectedKonvaObjectsPre = selectedObjects.map(obj => obj.ourKonvaObject);
-                this.socketService.updateGameObjects(this.currentMap.id, ourSelectedKonvaObjectsPre);
+                const objectsToModify = ourSelectedKonvaObjectsPre.map(o => {
+                    return this.currentMap.objects.find(mapObject => o.id === mapObject.mapRepresentation?.id);
+                });
+                this.socketService.updateGameObjects(this.currentMap.id, objectsToModify);
                 return;
             }
 
             if (!amITheLastElement) { return; }
 
             const ourSelectedKonvaObjects = selectedObjects.map(obj => obj.ourKonvaObject);
-            this.socketService.updateGameObjects(this.currentMap.id, ourSelectedKonvaObjects);
+            const objectsToModify = ourSelectedKonvaObjects.map(o => {
+                return this.currentMap.objects.find(mapObject => o.id === mapObject.mapRepresentation?.id);
+            });
+            this.socketService.updateGameObjects(this.currentMap.id, objectsToModify);
         });
     }
 
@@ -359,76 +371,75 @@ export class MouseInteractor implements OnDestroy {
     }
 
     paintObjectOnMap(object: any): void {
-        if (object?.state === 'square') {
+        if (object?.type === 'square') {
             const createdObject = OurKonvaRect.paint(object, this.ourLayers.draws);
             this.newObjectSetEvents(createdObject);
         }
-        if (object?.state === 'text') {
+        if (object?.type === 'text') {
             const createdObject = OurKonvaText.paint(object, this.ourLayers.texts);
             this.newObjectSetEvents(createdObject);
         }
-        if (object?.state === 'image') {
+        if (object?.type === 'image') {
             const layer = object.isBackground ? this.ourLayers.background : this.ourLayers.draws;
             const createdObject = OurKonvaImage.paint(object, layer);
             this.newObjectSetEvents(createdObject);
         }
-        if (object?.state === 'brush') {
+        if (object?.type === 'brush') {
             const createdObject = OurKonvaBrush.paint(object, this.ourLayers.draws);
             this.newObjectSetEvents(createdObject);
         }
-        if (object?.state === 'actor') {
+        if (object?.type === 'actor') {
             const createdObject = OurKonvaActor.paint(object, this.ourLayers.draws);
             this.newObjectSetEvents(createdObject);
         }
     }
 
     addImageOnMap(asset: AssetModel): void {
-        const author: Player = new Player();
-        author.fromUserToPlayer(this.userInteractor.getCurrentUser());
-        const ourKonvaImage = new OurKonvaImage(author, asset?.uri);
-        ourKonvaImage.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
-        ourKonvaImage.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
+        asset.mapRepresentation = new OurKonvaImage(asset.author, asset?.uri);
+        asset.mapRepresentation.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
+        asset.mapRepresentation.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
         let currentObject = new CurrentSelectedKonvaObject();
-        currentObject.ourKonvaObject = ourKonvaImage;
-        currentObject.konvaObject = ourKonvaImage.getKonvaImage(ourKonvaImage);
+        currentObject.ourKonvaObject = asset.mapRepresentation;
+        currentObject.konvaObject = asset.mapRepresentation.getKonvaImage(asset.mapRepresentation);
         currentObject.type = 'image';
         currentObject.layer = this.ourLayers.draws;
-
-        if (ourKonvaImage.isAdaptedToGrid) {
+        if (asset.mapRepresentation.isAdaptedToGrid) {
             currentObject = this.adaptObjectToMap(currentObject); // Adapt object
         }
-        this.addMouseKonvaObjectToMap(currentObject);
+        this.socketService.createGameObject(this.currentMap.id, asset);
+        this.currentMap.objects.push(asset);
+        this.mouseService.setMouse(new OurKonvaPointer());
         this.newObjectSetEvents(currentObject);
-        this.paintObjectOnMap(ourKonvaImage);
+        this.paintObjectOnMap(asset.mapRepresentation);
     }
 
     addActorOnMap(actor: Actor): void {
-        const author: Player = new Player();
-        author.fromUserToPlayer(this.userInteractor.getCurrentUser());
-
-        const ourKonvaActor = new OurKonvaActor(author, actor);
-        ourKonvaActor.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
-        ourKonvaActor.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
+        actor.mapRepresentation = new OurKonvaActor(actor.author, actor);
+        actor.mapRepresentation.position.x = (this.currentMap.nRows * this.currentMap.grid.cellSize / 2);
+        actor.mapRepresentation.position.y = (this.currentMap.nColumns * this.currentMap.grid.cellSize / 2);
         let currentObject = new CurrentSelectedKonvaObject();
-        currentObject.ourKonvaObject = ourKonvaActor;
-        currentObject.konvaObject = ourKonvaActor.getKonvaImage(ourKonvaActor);
+        currentObject.ourKonvaObject = actor.mapRepresentation;
+        currentObject.konvaObject = actor.mapRepresentation.getKonvaImage(actor.mapRepresentation);
         currentObject.type = 'actor';
         currentObject.layer = this.ourLayers.draws;
 
-        if (ourKonvaActor.isAdaptedToGrid) {
+        if (actor.mapRepresentation.isAdaptedToGrid) {
             currentObject = this.adaptObjectToMap(currentObject); // Adapt object
         }
-        this.addMouseKonvaObjectToMap(currentObject);
+        this.socketService.createGameObject(this.currentMap.id, actor);
+        this.currentMap.objects.push(actor);
+        this.mouseService.setMouse(new OurKonvaPointer());
         this.newObjectSetEvents(currentObject);
-        this.paintObjectOnMap(ourKonvaActor);
+        this.paintObjectOnMap(actor.mapRepresentation);
     }
 
     updateSelectedObject(object: CurrentSelectedKonvaObject[]): void {
         this.selectedKonvaObjects.next(object);
     }
 
-    updateObject(object: OurKonvaObject): void {
-        this.socketService.updateGameObjects(this.currentMap.id, [object]);
+    updateObject(object: any): void {
+        const obj = this.currentMap.objects.find(mapObjects => object.id === mapObjects.mapRepresentation.id);
+        this.socketService.updateGameObjects(this.currentMap.id, [obj]);
     }
 
     updateObjectOnMap(object: OurKonvaObject): void {

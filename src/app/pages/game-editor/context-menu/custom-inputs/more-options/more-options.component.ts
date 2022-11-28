@@ -29,13 +29,8 @@ export class MoreOptionsComponent implements OnInit {
 
     displayBlueprint(): void {
         const actors = this.map.getAllActors();
-        console.log('actors =', actors);
-        const foundActor = actors.find(actor => {
-            return actor.mapRepresentation.id === this.settings.blueprint.actor.id;
-        });
-        console.log('found actors =', foundActor);
-        this.blueprintInteractor.setDisplayedBlueprintActor(foundActor);
-
+        const actor = actors.find(act => act.mapRepresentation.id === this.settings.blueprint.actor.id);
+        this.blueprintInteractor.setDisplayedBlueprintActor(actor);
     }
 
     moveElementToTop(): void {

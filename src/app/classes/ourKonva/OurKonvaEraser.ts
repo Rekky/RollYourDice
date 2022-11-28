@@ -4,7 +4,7 @@ import {OurKonvaObject} from './OurKonvaObject';
 import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaEraser extends OurKonvaObject {
-    state: string = 'eraser';
+    type: string = 'eraser';
     line: Konva.Line;
     brushSize: number;
 

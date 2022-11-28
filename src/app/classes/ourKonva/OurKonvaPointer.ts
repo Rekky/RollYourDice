@@ -5,7 +5,7 @@ import { Player } from '../User';
 import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaPointer extends OurKonvaObject {
-    state: string = 'pointer';
+    type: string = 'pointer';
     startCoords: Coords;
     offsetCoords: Coords;
     tempRect: Konva.Rect;
