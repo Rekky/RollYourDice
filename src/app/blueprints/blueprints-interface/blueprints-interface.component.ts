@@ -26,6 +26,7 @@ import {
 import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
 import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
 import {Actor} from '../../classes/Actor';
+import {MouseInteractor} from '../../interactors/MouseInteractor';
 
 @Component({
     selector: 'app-blueprints-interface',
@@ -47,7 +48,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     constructor(private blueprintsService: BlueprintsService,
                 private blueprintInteractor: BlueprintInteractor,
-                private cdr: ChangeDetectorRef) { }
+                private cdr: ChangeDetectorRef,
+                private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
         // this.blueprint = this.blueprintsService.getBlueprintData();
@@ -99,6 +101,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
     saveBlueprint(): void {
         console.log('---------- build blueprint to export -------');
         const blueprint = new BlueprintModel().fromRendered(this.blueprint);
+        this.actor.blueprint = blueprint;
+        this.mouseInteractor.updateObject(this.actor);
         console.log('blueprint =', blueprint);
     }
 

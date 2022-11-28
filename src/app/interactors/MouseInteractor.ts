@@ -437,8 +437,12 @@ export class MouseInteractor implements OnDestroy {
         this.selectedKonvaObjects.next(object);
     }
 
-    updateObject(object: any): void {
+    updateObjectRepresentation(object: any): void {
         const obj = this.currentMap.objects.find(mapObjects => object.id === mapObjects.mapRepresentation.id);
+        this.socketService.updateGameObjects(this.currentMap.id, [obj]);
+    }
+
+    updateObject(obj: Actor): void {
         this.socketService.updateGameObjects(this.currentMap.id, [obj]);
     }
 
@@ -446,7 +450,7 @@ export class MouseInteractor implements OnDestroy {
         this.deleteObjectOnMap(object);
         this.paintObjectOnMap(object);
         this.unsetSelectedKonvaObjects();
-        this.updateObject(object);
+        this.updateObjectRepresentation(object);
     }
 
     deleteObjectOnMap(selectedObject: any): void {
@@ -528,6 +532,6 @@ export class MouseInteractor implements OnDestroy {
         this.ourLayers.background.batchDraw();
         this.ourLayers.grid.batchDraw();
         this.ourLayers.draws.batchDraw();
-        this.updateObject(selectedObject.ourKonvaObject);
+        this.updateObjectRepresentation(selectedObject.ourKonvaObject);
     }
 }

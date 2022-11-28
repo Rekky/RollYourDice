@@ -24,7 +24,7 @@ export class SelectedObjectEditorComponent implements OnInit {
         this.selectedObject.konvaObject.setAttrs(ev);
         this.selectedObject.layer.batchDraw();
         this.mouseInteractor.updateSelectedObject([this.selectedObject]);
-        this.mouseInteractor.updateObject(ev);
+        this.mouseInteractor.updateObjectRepresentation(ev);
     }
 
     isObjectAdaptedToGridToggle(ev: any): void {
@@ -33,7 +33,7 @@ export class SelectedObjectEditorComponent implements OnInit {
             this.selectedObject = this.mouseInteractor.adaptObjectToMap(this.selectedObject);
         }
         this.mouseInteractor.updateSelectedObject([this.selectedObject]);
-        this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
+        this.mouseInteractor.updateObjectRepresentation(this.selectedObject.ourKonvaObject);
     }
 
     editionBlockedToggle(ev: any): void {
@@ -47,7 +47,7 @@ export class SelectedObjectEditorComponent implements OnInit {
         }
         this.selectedObject.layer.batchDraw();
         this.mouseInteractor.updateSelectedObject([this.selectedObject]);
-        this.mouseInteractor.updateObject(this.selectedObject.ourKonvaObject);
+        this.mouseInteractor.updateObjectRepresentation(this.selectedObject.ourKonvaObject);
     }
 
     displayedJustForMaster(ev: any): void {
