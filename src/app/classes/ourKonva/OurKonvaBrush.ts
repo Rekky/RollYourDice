@@ -9,7 +9,7 @@ import {OurKonvaScale, OurKonvaSize} from './OurKonvaSize';
 export class OurKonvaBrush extends OurKonvaObject {
     id: string;
     position: Coords;
-    state: string = 'brush';
+    type: string = 'brush';
     line: Konva.Line;
     points: number[];
     stroke: string;
@@ -53,7 +53,7 @@ export class OurKonvaBrush extends OurKonvaObject {
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = object;
         toEmit.konvaObject = line;
-        toEmit.type = object.state;
+        toEmit.type = object.type;
         toEmit.layer = layer;
         return toEmit;
     }
@@ -113,7 +113,7 @@ export class OurKonvaBrush extends OurKonvaObject {
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.ourKonvaObject = this;
         toEmit.konvaObject = this.line;
-        toEmit.type = this.state;
+        toEmit.type = this.type;
         toEmit.layer = this.layer;
         return toEmit;
     }

@@ -4,7 +4,7 @@ import {Player} from '../User';
 import {OurKonvaLayers} from './OurKonvaLayers';
 
 export class OurKonvaHand extends OurKonvaObject {
-    state: string = 'hand';
+    type: string = 'hand';
     startCoords: Coords;
     offsetCoords: Coords;
 

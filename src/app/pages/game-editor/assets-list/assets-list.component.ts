@@ -3,6 +3,8 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetModel} from '../../../classes/AssetModel';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
 import {AssetInteractor} from '../../../interactors/AssetInteractor';
+import {OurKonvaImage} from '../../../classes/ourKonva/OurKonvaImage';
+import {ulid} from 'ulid';
 
 @Component({
     selector: 'app-assets-list',
@@ -75,7 +77,9 @@ export class AssetsListComponent {
     }
 
     paintAssetOnMap(asset: AssetModel): any {
-        this.mouseInteractor.addImageOnMap(asset);
+        const newAsset = {...new AssetModel(), ...asset};
+        newAsset.id = ulid();
+        this.mouseInteractor.addImageOnMap(newAsset);
     }
 
 }

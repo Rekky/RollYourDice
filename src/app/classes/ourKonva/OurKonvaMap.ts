@@ -8,6 +8,8 @@ import {OurKonvaImage} from './OurKonvaImage';
 import { ulid } from 'ulid';
 import {Camera} from '../Camera';
 import {OurKonvaBrush} from './OurKonvaBrush';
+import {AssetModel} from '../AssetModel';
+import {Actor} from '../Actor';
 
 export class  OurKonvaMap {
     id: string;
@@ -22,7 +24,7 @@ export class  OurKonvaMap {
     isDndDiagonalSystem: boolean;
     nZoom: number;
     cameras: Camera[];
-    objects: (OurKonvaRect | OurKonvaText | OurKonvaImage | OurKonvaBrush)[];
+    objects: (AssetModel | Actor)[];
     characters: string[];
     stage: Konva.Stage | any;
     layers: OurKonvaLayers;

@@ -14,7 +14,7 @@ export class OurKonvaObject {
     author: Player;
     stage: Konva.Stage;
     layer: Konva.Layer;
-    state: string;
+    type: string;
     ev: MouseEvent;
     cellSize: number;
     size: OurKonvaSize;

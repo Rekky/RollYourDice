@@ -17,7 +17,7 @@ export class OurKonvaText extends OurKonvaObject {
         this.position = new Coords();
     }
     id: string;
-    state: string = 'text';
+    type: string = 'text';
     color: string;
     fontSize: number;
     text: string;
@@ -70,7 +70,7 @@ export class OurKonvaText extends OurKonvaObject {
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = text;
-        toEmit.type = object.state;
+        toEmit.type = object.type;
         toEmit.layer = layer;
         toEmit.transformer = transformer;
         return toEmit;
@@ -82,7 +82,7 @@ export class OurKonvaText extends OurKonvaObject {
         this.position.y = objectAttrs.y;
         // this.size.height = objectAttrs.height;
         this.size.width = objectAttrs.width;
-        this.state = 'text';
+        this.type = 'text';
         this.color = objectAttrs.fill;
         this.fontSize = objectAttrs.fontSize;
         this.text = objectAttrs.text;
@@ -142,7 +142,7 @@ export class OurKonvaText extends OurKonvaObject {
 
         const toEmit = new CurrentSelectedKonvaObject();
         toEmit.konvaObject = text;
-        toEmit.type = this.state;
+        toEmit.type = this.type;
         toEmit.layer = this.layer;
         toEmit.transformer = transformer;
         return toEmit;

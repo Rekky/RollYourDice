@@ -4,6 +4,7 @@ import {OurKonvaImage} from './ourKonva/OurKonvaImage';
 import {AssetModel} from './AssetModel';
 import {Coords} from './Coords';
 import { BlueprintModel } from '../blueprints/models/base-blueprint';
+import {OurKonvaActor} from './ourKonva/OurKonvaActor';
 
 export enum ActorTypesEnum {
     CHARACTER = 'CHARACTER',
@@ -24,7 +25,7 @@ export class Actor {
     author: Player;
 
     blueprint: BlueprintModel;
-    mapRepresentation: OurKonvaImage;
+    mapRepresentation: OurKonvaActor;
 
     constructor() {
         this.blueprint = new BlueprintModel();

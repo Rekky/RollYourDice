@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { ulid } from 'ulid';
 import {Actor} from '../../../classes/Actor';
 import {LibraryInteractor} from '../../../interactors/LibraryInteractor';
 import {MouseInteractor} from '../../../interactors/MouseInteractor';
@@ -50,7 +51,9 @@ export class ActorsListComponent implements OnInit {
     }
 
     paintActorOnMap(actor: Actor): void {
-        this.mouseInteractor.addActorOnMap(actor);
+        const newActor = { ...new Actor(), ...actor };
+        newActor.id = ulid();
+        this.mouseInteractor.addActorOnMap(newActor);
     }
 
 }
