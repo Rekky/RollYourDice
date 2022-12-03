@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit {
             await this.userInteractor.signUp(user);
             await this.router.navigateByUrl('/account/sign-in');
         } catch (e) {
-            console.log(e.error);
+            console.log(e);
         } finally {
             this.loading = false;
         }

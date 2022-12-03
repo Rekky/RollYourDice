@@ -25,7 +25,9 @@
         <div class="tools-start">
             <app-game-status-tools [status]="gameStatus" [mapName]="currentMap?.name" (statusChange)="onStatusChange($event)"></app-game-status-tools>
         </div>
-        <div class="tools-end"></div>
+        <div class="tools-end">
+            <app-players-bar></app-players-bar>
+        </div>
     </div>
 
     <!-- LEFT PANEL -->
