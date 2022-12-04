@@ -1,7 +1,6 @@
-import {Coords} from '../../classes/Coords';
-import {BlueprintLink, BlueprintNode} from './blueprint-link';
+import {BlueprintLink} from './blueprint-link';
 import {ulid} from 'ulid';
-import {BBOnInit} from './blueprint-boxes';
+import {BaseBlueprintBox, BBGetAllActors, BBOnInit, BoxKindEnum, BoxTypeEnum} from './blueprint-boxes';
 
 export class BlueprintModel {
     id: string;
@@ -41,6 +40,52 @@ export class BlueprintRenderedModel {
         this.blueprintLinks = [];
     }
 
+    toRendered(blueprint: BlueprintModel): BlueprintRenderedModel {
+        const rendered = new BlueprintRenderedModel();
+        rendered.id = blueprint.id;
+        if (blueprint?.blueprintBoxes) {
+            rendered.blueprintBoxes = this.buildBoxesToRender(blueprint);
+        }
+        return rendered;
+    }
+
+    public buildBoxesToRender(blueprint): any[] {
+        const boxes = [];
+        blueprint.blueprintBoxes.onInit.forEach(element => {
+            // TODO construir la caixa que pertoca
+            this.test(element, boxes);
+        });
+        return boxes;
+    }
+
+    test(element, boxes): void {
+        if (element.type === BoxTypeEnum.FUNCTION) {
+            boxes.push(this.buildFunctionBox(element));
+        }
+        if (element.type === BoxTypeEnum.EVENT) {
+            boxes.push(this.buildEventBox(element));
+        }
+        if (element.func) {
+            this.test(element.func, boxes);
+        }
+    }
+
+    buildFunctionBox(element: any): any {
+        switch (element.kind) {
+            case BoxKindEnum.GET_ALL_ACTORS: {
+                return new BBGetAllActors();
+            }
+        }
+    }
+
+    buildEventBox(element: any): any {
+        switch (element.kind) {
+            case BoxKindEnum.ON_INIT: {
+                return new BBOnInit();
+            }
+        }
+    }
+
     buildBoxesPath(currentBox: BaseBlueprintBox): void {
         const nextBox = this.getNextBox(currentBox);
         if (!nextBox) { return; }
@@ -74,51 +119,4 @@ export class BlueprintRenderedModel {
             return box.id === linkedNode.endingNode.boxId;
         });
     }
-}
-
-export type StaticThis<T> = new () => T;
-
-export class BaseBlueprintBox {
-    id: string;
-    type: string;
-    kind: string;
-    func?: any;
-    param?: any;
-    render: {
-        position: Coords;
-        nodes: {
-            startingNodes: BlueprintNode[];
-            endingNodes: BlueprintNode[];
-        }
-    };
-
-    constructor() {
-        this.id = ulid();
-        this.render = {
-            position: new Coords(),
-            nodes: {
-                startingNodes: [],
-                endingNodes: [],
-            }
-        };
-    }
-
-    static create<T extends BaseBlueprintBox>(this: StaticThis<T>, json: BaseBlueprintBox): T {
-        return {...new this(), ...json};
-    }
-}
-
-export enum BoxTypeEnum {
-    FUNCTION = 'FUNCTION',
-    EVENT = 'EVENT',
-}
-
-export enum BoxKindEnum {
-    AREA = 'AREA',
-    GET_ALL_ACTORS = 'GET_ALL_ACTORS',
-    EQUALS = 'EQUALS',
-    MOVE_ACTOR_TO_LOCATION = 'MOVE_ACTOR_TO_LOCATION',
-    GET = 'GET',
-    ON_INIT = 'ON_INIT',
-    ON_OVERLAP = 'ON_OVERLAP',
 }
