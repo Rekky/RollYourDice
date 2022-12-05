@@ -50,36 +50,44 @@ export class BlueprintRenderedModel {
     }
 
     toRendered(blueprint: BlueprintModel): BlueprintRenderedModel {
-        const rendered = new BlueprintRenderedModel();
+        let rendered = new BlueprintRenderedModel();
         rendered.id = blueprint.id;
         if (blueprint?.blueprintBoxes) {
-            rendered.blueprintBoxes = this.buildBoxesToRender(blueprint);
+            rendered = this.buildBoxesToRender(blueprint);
         }
         return rendered;
     }
 
-    public buildBoxesToRender(blueprint): any[] {
+    public buildBoxesToRender(blueprint): BlueprintRenderedModel {
+        const rendered = new BlueprintRenderedModel();
         const boxes = [];
+        const links = [];
         blueprint.blueprintBoxes.onInit.forEach(element => {
-            // TODO construir la caixa que pertoca
-            this.test(element, boxes);
+            this.buildRenderedBoxes(element, boxes, links);
         });
-        return boxes;
+        rendered.blueprintBoxes = boxes;
+        rendered.blueprintLinks = links;
+        return rendered;
     }
 
-    test(element, boxes): void {
+    buildRenderedBoxes(element, boxes, links): void {
         if (element.type === BoxTypeEnum.FUNCTION) {
-            boxes.push(this.switchGetBBox(element));
+            boxes.push(this.switchGetBBoxFunction(element));
         }
         if (element.type === BoxTypeEnum.EVENT) {
-            boxes.push(this.buildEventBox(element));
+            boxes.push(this.switchGetBBoxEvent(element));
         }
         if (element.func) {
-            this.test(element.func, boxes);
+            const link = new BlueprintLink();
+            link.position = element.render.nodes.endingNodes[0].position;
+            link.startingNode = element.render.nodes.endingNodes[0];
+            link.endingNode = element.func.render.nodes.startingNodes[0];
+            links.push(link);
+            this.buildRenderedBoxes(element.func, boxes, links);
         }
     }
 
-    switchGetBBox(element: any): any {
+    switchGetBBoxFunction(element: any): any {
         switch (element.kind) {
             case BoxKindEnum.GET_ALL_ACTORS: {
                 return { ...new BBGetAllActors(), ...element };
@@ -99,7 +107,7 @@ export class BlueprintRenderedModel {
         }
     }
 
-    buildEventBox(element: any): any {
+    switchGetBBoxEvent(element: any): any {
         switch (element.kind) {
             case BoxKindEnum.ON_INIT: {
                 return { ...new BBOnInit(), ...element };

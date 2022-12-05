@@ -10,7 +10,7 @@ export class BlueprintLink {
     strokeWidth: number;
 
     constructor() {
-        this.id = '';
+        this.id = ulid();
         this.position = new Coords();
         this.startingNode = new BlueprintNode();
         this.endingNode = new BlueprintNode();

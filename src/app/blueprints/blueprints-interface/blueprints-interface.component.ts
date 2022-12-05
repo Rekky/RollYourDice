@@ -52,8 +52,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
                 private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
-        console.log(this.actor.blueprint);
         this.blueprint = new BlueprintRenderedModel().toRendered(this.actor.blueprint);
+        this.cdr.detectChanges();
     }
 
     addBBArea(): void {
@@ -174,7 +174,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     startsNewLinkNodeOut(node: BlueprintNode): void {
         const newLink = new BlueprintLink();
-        newLink.id = ulid();
         newLink.position.x = node.position.x;
         newLink.position.y = node.position.y;
         newLink.startingNode = node;
@@ -220,7 +219,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     startsNewLinkNodeIn(node: BlueprintNode): void {
         const newLink = new BlueprintLink();
-        newLink.id = ulid();
         newLink.position.x = node.position.x;
         newLink.position.y = node.position.y;
         newLink.endingNode = node;
