@@ -1,6 +1,15 @@
 import {BlueprintLink} from './blueprint-link';
 import {ulid} from 'ulid';
-import {BaseBlueprintBox, BBGetAllActors, BBOnInit, BoxKindEnum, BoxTypeEnum} from './blueprint-boxes';
+import {
+    BaseBlueprintBox, BBArea,
+    BBEquals,
+    BBGet,
+    BBGetAllActors,
+    BBMoveActorToLocation,
+    BBOnInit, BBOnOverlap,
+    BoxKindEnum,
+    BoxTypeEnum
+} from './blueprint-boxes';
 
 export class BlueprintModel {
     id: string;
@@ -60,7 +69,7 @@ export class BlueprintRenderedModel {
 
     test(element, boxes): void {
         if (element.type === BoxTypeEnum.FUNCTION) {
-            boxes.push(this.buildFunctionBox(element));
+            boxes.push(this.switchGetBBox(element));
         }
         if (element.type === BoxTypeEnum.EVENT) {
             boxes.push(this.buildEventBox(element));
@@ -70,10 +79,22 @@ export class BlueprintRenderedModel {
         }
     }
 
-    buildFunctionBox(element: any): any {
+    switchGetBBox(element: any): any {
         switch (element.kind) {
             case BoxKindEnum.GET_ALL_ACTORS: {
-                return new BBGetAllActors();
+                return { ...new BBGetAllActors(), ...element };
+            }
+            case BoxKindEnum.GET: {
+                return { ...new BBGet(), ...element };
+            }
+            case BoxKindEnum.EQUALS: {
+                return { ...new BBEquals(), ...element };
+            }
+            case BoxKindEnum.MOVE_ACTOR_TO_LOCATION: {
+                return { ...new BBMoveActorToLocation(), ...element };
+            }
+            case BoxKindEnum.AREA: {
+                return { ...new BBArea(), ...element };
             }
         }
     }
@@ -81,7 +102,10 @@ export class BlueprintRenderedModel {
     buildEventBox(element: any): any {
         switch (element.kind) {
             case BoxKindEnum.ON_INIT: {
-                return new BBOnInit();
+                return { ...new BBOnInit(), ...element };
+            }
+            case BoxKindEnum.ON_OVERLAP: {
+                return { ...new BBOnOverlap(), ...element };
             }
         }
     }
