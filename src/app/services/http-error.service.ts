@@ -22,19 +22,19 @@ export class HttpErrorService {
     public manageError(httpError: HttpErrorResponse, doNotify: boolean = true): void {
         if (doNotify) {
 
-            if (httpError.status === 0) {
-                this.notificationsService.showErrorNotification('Cannot connect to server');
-                return;
-            }
-
-            if (httpError.error.message === 'Expired') {
-                localStorage.removeItem('rollUser');
-                localStorage.removeItem('rollToken');
-                this.router.navigateByUrl('/account/sign-in');
-                return;
-            }
-
-            this.notificationsService.showErrorNotification(httpError.error.message);
+            // if (httpError.status === 0) {
+            //     this.notificationsService.showErrorNotification('Cannot connect to server');
+            //     return;
+            // }
+            //
+            // if (httpError.error.message === 'Expired') {
+            //     localStorage.removeItem('rollUser');
+            //     localStorage.removeItem('rollToken');
+            //     this.router.navigateByUrl('/account/sign-in');
+            //     return;
+            // }
+            // console.log(httpError.error.message);
+            // this.notificationsService.showErrorNotification(httpError.error.message);
         }
     }
 }

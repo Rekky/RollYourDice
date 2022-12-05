@@ -28,6 +28,7 @@ import {TutorialComponent} from './components/tutorial/tutorial.component';
 import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spinner.component";
 import {CustomToastComponent} from './components/custom-toast/custom-toast.component';
 import {CustomToastersComponent} from "./components/custom-toasters/custom-toasters.component";
+import {PlayersBarComponent} from "./components/players-bar/players-bar.component";
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import {CustomToastersComponent} from "./components/custom-toasters/custom-toast
         TutorialComponent,
         LoadingSpinnerComponent,
         CustomToastComponent,
-        CustomToastersComponent
+        CustomToastersComponent,
+        PlayersBarComponent,
     ],
     imports: [
         CommonModule,
@@ -89,7 +91,8 @@ import {CustomToastersComponent} from "./components/custom-toasters/custom-toast
         TutorialComponent,
         LoadingSpinnerComponent,
         CustomToastComponent,
-        CustomToastersComponent
+        CustomToastersComponent,
+        PlayersBarComponent,
     ],
 })
 
