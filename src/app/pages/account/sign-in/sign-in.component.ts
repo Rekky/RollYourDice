@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Router} from '@angular/router';
+declare var google: any;
 
 @Component({
     selector: 'app-sign-in',
@@ -16,7 +17,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
     constructor(private userInteractor: UserInteractor, private router: Router) { }
 
     ngOnInit(): void {
-        // @ts-ignore
         google.accounts.id.initialize({
             client_id: '68833047415-8euts71spubf3lnqlm0e84kolrs84gmo.apps.googleusercontent.com',
             callback: this.signInWithGoogle.bind(this),
@@ -24,14 +24,11 @@ export class SignInComponent implements OnInit, AfterViewInit {
             cancel_on_tap_outside: true,
 
         });
-        // @ts-ignore
         google.accounts.id.renderButton(
-            // @ts-ignore
             document.getElementById('google-button'),
             { theme: 'outline', size: 'large', width: '100%' }
         );
-        // @ts-ignore
-        google.accounts.id.prompt((notification: PromptMomentNotification) => {});
+        google.accounts.id.prompt((notification: any) => {});
 
         this.signInForm = new UntypedFormGroup({
             email: new UntypedFormControl(null, [Validators.required, Validators.email]),
