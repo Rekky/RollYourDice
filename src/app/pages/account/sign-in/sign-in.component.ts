@@ -59,7 +59,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
     }
 
     async signInWithGoogle(response: any): Promise<void> {
-        console.log('signInWithGoogle', response);
         this.loading = true;
         const credential = response;
 
