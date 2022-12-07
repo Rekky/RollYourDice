@@ -8,19 +8,19 @@ import {
     Renderer2,
     ViewChild
 } from '@angular/core';
-import {BaseBlueprintBox, BlueprintModel, BlueprintRenderedModel} from '../models/base-blueprint';
+import {BlueprintModel, BlueprintRenderedModel} from '../models/base-blueprint';
 import {BlueprintsService} from './blueprints.service';
 import {BlueprintLink, BlueprintNode} from '../models/blueprint-link';
 import {Coords} from '../../classes/Coords';
 import {Subscription} from 'rxjs';
 import {ulid} from 'ulid';
 import {
+    BaseBlueprintBox,
     BBArea,
     BBEquals,
     BBGet,
     BBGetAllActors,
-    BBMoveActorToLocation,
-    BBOnInit,
+    BBMoveActorToLocation, BBOnInit,
     BBOnOverlap
 } from '../models/blueprint-boxes';
 import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
@@ -52,7 +52,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
                 private mouseInteractor: MouseInteractor) { }
 
     ngOnInit(): void {
-        // this.blueprint = this.blueprintsService.getBlueprintData();
+        this.blueprint = new BlueprintRenderedModel().toRendered(this.actor.blueprint);
+        this.cdr.detectChanges();
     }
 
     addBBArea(): void {
@@ -99,11 +100,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
     }
 
     saveBlueprint(): void {
-        console.log('---------- build blueprint to export -------');
-        const blueprint = new BlueprintModel().fromRendered(this.blueprint);
-        this.actor.blueprint = blueprint;
+        this.actor.blueprint = new BlueprintModel().fromRendered(this.blueprint);
         this.mouseInteractor.updateObject(this.actor);
-        console.log('blueprint =', blueprint);
     }
 
     modifyBBPosition(coords: any, bb: BaseBlueprintBox): void {
@@ -176,7 +174,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     startsNewLinkNodeOut(node: BlueprintNode): void {
         const newLink = new BlueprintLink();
-        newLink.id = ulid();
         newLink.position.x = node.position.x;
         newLink.position.y = node.position.y;
         newLink.startingNode = node;
@@ -222,7 +219,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     startsNewLinkNodeIn(node: BlueprintNode): void {
         const newLink = new BlueprintLink();
-        newLink.id = ulid();
         newLink.position.x = node.position.x;
         newLink.position.y = node.position.y;
         newLink.endingNode = node;

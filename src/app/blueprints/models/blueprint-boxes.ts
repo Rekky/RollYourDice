@@ -1,5 +1,50 @@
-import {BaseBlueprintBox, BoxKindEnum, BoxTypeEnum} from './base-blueprint';
 import {BlueprintNode} from './blueprint-link';
+import {Coords} from '../../classes/Coords';
+import {ulid} from 'ulid';
+
+export type StaticThis<T> = new () => T;
+
+export class BaseBlueprintBox {
+    id: string;
+    type: string;
+    kind: string;
+    func?: any;
+    param?: any;
+    render: {
+        position: Coords;
+        nodes: {
+            startingNodes: BlueprintNode[];
+            endingNodes: BlueprintNode[];
+        }
+    };
+
+    constructor() {
+        this.id = ulid();
+        this.render = {
+            position: new Coords(),
+            nodes: {
+                startingNodes: [],
+                endingNodes: [],
+            }
+        };
+    }
+
+    static create<T extends BaseBlueprintBox>(this: StaticThis<T>, json: BaseBlueprintBox): T {
+        return {...new this(), ...json};
+    }
+}
+
+export class BBOnInit extends BaseBlueprintBox {
+
+    constructor() {
+        super();
+        this.type = BoxTypeEnum.EVENT;
+        this.kind = BoxKindEnum.ON_INIT;
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+    }
+}
 
 export class BBArea extends BaseBlueprintBox {
     name: string;
@@ -68,18 +113,6 @@ export class BBGet extends BaseBlueprintBox {
     }
 }
 
-export class BBOnInit extends BaseBlueprintBox {
-
-    constructor() {
-        super();
-        this.type = BoxTypeEnum.EVENT;
-        this.kind = BoxKindEnum.ON_INIT;
-        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
-            boxId: this.id,
-        }));
-    }
-}
-
 export class BBOnOverlap extends BaseBlueprintBox {
 
     constructor() {
@@ -93,4 +126,19 @@ export class BBOnOverlap extends BaseBlueprintBox {
             boxId: this.id,
         }));
     }
+}
+
+export enum BoxTypeEnum {
+    FUNCTION = 'FUNCTION',
+    EVENT = 'EVENT',
+}
+
+export enum BoxKindEnum {
+    AREA = 'AREA',
+    GET_ALL_ACTORS = 'GET_ALL_ACTORS',
+    EQUALS = 'EQUALS',
+    MOVE_ACTOR_TO_LOCATION = 'MOVE_ACTOR_TO_LOCATION',
+    GET = 'GET',
+    ON_INIT = 'ON_INIT',
+    ON_OVERLAP = 'ON_OVERLAP',
 }

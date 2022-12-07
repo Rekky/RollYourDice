@@ -1,7 +1,15 @@
-import {Coords} from '../../classes/Coords';
-import {BlueprintLink, BlueprintNode} from './blueprint-link';
+import {BlueprintLink} from './blueprint-link';
 import {ulid} from 'ulid';
-import {BBOnInit} from './blueprint-boxes';
+import {
+    BaseBlueprintBox, BBArea,
+    BBEquals,
+    BBGet,
+    BBGetAllActors,
+    BBMoveActorToLocation,
+    BBOnInit, BBOnOverlap,
+    BoxKindEnum,
+    BoxTypeEnum
+} from './blueprint-boxes';
 
 export class BlueprintModel {
     id: string;
@@ -41,6 +49,75 @@ export class BlueprintRenderedModel {
         this.blueprintLinks = [];
     }
 
+    toRendered(blueprint: BlueprintModel): BlueprintRenderedModel {
+        let rendered = new BlueprintRenderedModel();
+        rendered.id = blueprint.id;
+        if (blueprint?.blueprintBoxes) {
+            rendered = this.buildBoxesToRender(blueprint);
+        }
+        return rendered;
+    }
+
+    public buildBoxesToRender(blueprint): BlueprintRenderedModel {
+        const rendered = new BlueprintRenderedModel();
+        const boxes = [];
+        const links = [];
+        blueprint.blueprintBoxes.onInit.forEach(element => {
+            this.buildRenderedBoxes(element, boxes, links);
+        });
+        rendered.blueprintBoxes = boxes;
+        rendered.blueprintLinks = links;
+        return rendered;
+    }
+
+    buildRenderedBoxes(element, boxes, links): void {
+        if (element.type === BoxTypeEnum.FUNCTION) {
+            boxes.push(this.switchGetBBoxFunction(element));
+        }
+        if (element.type === BoxTypeEnum.EVENT) {
+            boxes.push(this.switchGetBBoxEvent(element));
+        }
+        if (element.func) {
+            const link = new BlueprintLink();
+            link.position = element.render.nodes.endingNodes[0].position;
+            link.startingNode = element.render.nodes.endingNodes[0];
+            link.endingNode = element.func.render.nodes.startingNodes[0];
+            links.push(link);
+            this.buildRenderedBoxes(element.func, boxes, links);
+        }
+    }
+
+    switchGetBBoxFunction(element: any): any {
+        switch (element.kind) {
+            case BoxKindEnum.GET_ALL_ACTORS: {
+                return { ...new BBGetAllActors(), ...element };
+            }
+            case BoxKindEnum.GET: {
+                return { ...new BBGet(), ...element };
+            }
+            case BoxKindEnum.EQUALS: {
+                return { ...new BBEquals(), ...element };
+            }
+            case BoxKindEnum.MOVE_ACTOR_TO_LOCATION: {
+                return { ...new BBMoveActorToLocation(), ...element };
+            }
+            case BoxKindEnum.AREA: {
+                return { ...new BBArea(), ...element };
+            }
+        }
+    }
+
+    switchGetBBoxEvent(element: any): any {
+        switch (element.kind) {
+            case BoxKindEnum.ON_INIT: {
+                return { ...new BBOnInit(), ...element };
+            }
+            case BoxKindEnum.ON_OVERLAP: {
+                return { ...new BBOnOverlap(), ...element };
+            }
+        }
+    }
+
     buildBoxesPath(currentBox: BaseBlueprintBox): void {
         const nextBox = this.getNextBox(currentBox);
         if (!nextBox) { return; }
@@ -74,51 +151,4 @@ export class BlueprintRenderedModel {
             return box.id === linkedNode.endingNode.boxId;
         });
     }
-}
-
-export type StaticThis<T> = new () => T;
-
-export class BaseBlueprintBox {
-    id: string;
-    type: string;
-    kind: string;
-    func?: any;
-    param?: any;
-    render: {
-        position: Coords;
-        nodes: {
-            startingNodes: BlueprintNode[];
-            endingNodes: BlueprintNode[];
-        }
-    };
-
-    constructor() {
-        this.id = ulid();
-        this.render = {
-            position: new Coords(),
-            nodes: {
-                startingNodes: [],
-                endingNodes: [],
-            }
-        };
-    }
-
-    static create<T extends BaseBlueprintBox>(this: StaticThis<T>, json: BaseBlueprintBox): T {
-        return {...new this(), ...json};
-    }
-}
-
-export enum BoxTypeEnum {
-    FUNCTION = 'FUNCTION',
-    EVENT = 'EVENT',
-}
-
-export enum BoxKindEnum {
-    AREA = 'AREA',
-    GET_ALL_ACTORS = 'GET_ALL_ACTORS',
-    EQUALS = 'EQUALS',
-    MOVE_ACTOR_TO_LOCATION = 'MOVE_ACTOR_TO_LOCATION',
-    GET = 'GET',
-    ON_INIT = 'ON_INIT',
-    ON_OVERLAP = 'ON_OVERLAP',
 }

@@ -10,8 +10,7 @@ import {
     SimpleChanges
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
-import { BaseBlueprintBox } from 'src/app/blueprints/models/base-blueprint';
-import { BBArea } from 'src/app/blueprints/models/blueprint-boxes';
+import {BaseBlueprintBox, BBArea} from 'src/app/blueprints/models/blueprint-boxes';
 import { Coords } from 'src/app/classes/Coords';
 import {BlueprintLink, BlueprintNode} from '../../../models/blueprint-link';
 
