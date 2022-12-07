@@ -24,10 +24,10 @@ import {SharedModule} from './shared.module';
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        DragulaModule.forRoot(),
         AppRoutingModule,
         BrowserAnimationsModule,
         MatDialogModule,
+        DragulaModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

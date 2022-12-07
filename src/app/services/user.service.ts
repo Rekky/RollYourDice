@@ -25,6 +25,19 @@ export class UserService {
         });
     }
 
+    signInWithGoogle(credential: string): Promise<any> {
+        const data = {credential};
+        return new Promise<any>( (resolve, reject) => {
+            this.httpService.post(`/${this.endPointName}/loginWithGoogle`, data).subscribe(
+                (response) => {
+                    resolve(response);
+                }, (error: HttpErrorResponse) => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
     signUp(user: User): Promise<any> {
         const data = {email: user.email, password: user.password, username: user.username};
         return new Promise<any>( (resolve, reject) => {

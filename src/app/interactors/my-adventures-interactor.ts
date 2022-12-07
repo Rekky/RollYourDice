@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Game, GameStatusEnum} from '../../../classes/Game';
-import {Player} from '../../../classes/User';
-import {GameService} from '../../../services/game.service';
-import {GameInteractor} from '../../../interactors/GameInteractor';
-import {UserInteractor} from '../../../interactors/UserInteractor';
+import {Game, GameStatusEnum} from '../classes/Game';
+import {Player} from '../classes/User';
+import {GameService} from '../services/game.service';
+import {GameInteractor} from './GameInteractor';
+import {UserInteractor} from './UserInteractor';
 
 @Injectable({
     providedIn: 'root'

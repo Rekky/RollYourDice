@@ -10,7 +10,7 @@ import {MouseInteractor} from '../../interactors/MouseInteractor';
 import {UserInteractor} from '../../interactors/UserInteractor';
 import {CurrentSelectedKonvaObject} from '../../classes/ourKonva/OurKonvaObject';
 import {MapInteractor} from '../../interactors/MapInteractor';
-import {MyAdventuresInteractor} from '../launcher/my-adventures/my-adventures-interactor';
+import {MyAdventuresInteractor} from '../../interactors/my-adventures-interactor';
 import {MetaInteractor} from '../../interactors/MetaInteractor';
 import {Meta, MetaGame, MetaMap} from '../../classes/Meta';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';

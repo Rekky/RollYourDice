@@ -29,6 +29,14 @@ export class UserInteractor {
         return response;
     }
 
+    async signInWithGoogle(credential: string): Promise<any> {
+        const response = await this.userService.signInWithGoogle(credential);
+        if (response.data) {
+            this.setLoginSession(response.data);
+        }
+        return response;
+    }
+
     async signUp(user: User): Promise<any> {
         return await this.userService.signUp(user);
     }

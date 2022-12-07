@@ -16,6 +16,23 @@ export class SignInComponent implements OnInit, AfterViewInit {
     constructor(private userInteractor: UserInteractor, private router: Router) { }
 
     ngOnInit(): void {
+        // @ts-ignore
+        google.accounts.id.initialize({
+            client_id: '68833047415-8euts71spubf3lnqlm0e84kolrs84gmo.apps.googleusercontent.com',
+            callback: this.signInWithGoogle.bind(this),
+            auto_select: false,
+            cancel_on_tap_outside: true,
+
+        });
+        // @ts-ignore
+        google.accounts.id.renderButton(
+            // @ts-ignore
+            document.getElementById('google-button'),
+            { theme: 'outline', size: 'large', width: '100%' }
+        );
+        // @ts-ignore
+        google.accounts.id.prompt((notification: PromptMomentNotification) => {});
+
         this.signInForm = new UntypedFormGroup({
             email: new UntypedFormControl(null, [Validators.required, Validators.email]),
             password: new UntypedFormControl(null, [Validators.required, Validators.minLength(3)])
@@ -36,6 +53,21 @@ export class SignInComponent implements OnInit, AfterViewInit {
             await this.router.navigateByUrl('');
         } catch (e) {
             this.signInForm.get('password').setValue('');
+        } finally {
+            this.loading = false;
+        }
+    }
+
+    async signInWithGoogle(response: any): Promise<void> {
+        console.log('signInWithGoogle', response);
+        this.loading = true;
+        const credential = response;
+
+        try {
+            await this.userInteractor.signInWithGoogle(credential);
+            await this.router.navigateByUrl('');
+        } catch (e) {
+            console.log(e);
         } finally {
             this.loading = false;
         }
