@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment';
 import {MapInteractor} from '../interactors/MapInteractor';
 import {GameInteractor} from '../interactors/GameInteractor';
 import {NotificationsService} from './notifications.service';
-import {MyAdventuresInteractor} from '../pages/launcher/my-adventures/my-adventures-interactor';
+import {MyAdventuresInteractor} from '../interactors/my-adventures-interactor';
 import { Player } from '../classes/User';
 import {MetaInteractor} from '../interactors/MetaInteractor';
 import {Meta} from '../classes/Meta';

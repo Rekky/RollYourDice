@@ -39,8 +39,6 @@
 
             width: 144px;
             height: 41px;
-            //background-color: $c-white;
-            //border: 1px solid $c-white-grey;
             border-radius: 5px;
 
             text-transform: uppercase;
@@ -149,7 +147,6 @@
         .game-activated, .game-paused, .game-stopped {
             width: 50px;
             height: 10px;
-            //border: 1px solid rgba($c-black, 0.7);
             border-radius: 5%;
             background-color: $c-pale-blue;
             box-shadow: 0 0 8px $c-pale-blue;

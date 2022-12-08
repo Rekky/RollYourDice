@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 import {SearchGameComponent} from '../../../components/search-game/search-game.component';
 import {Coords} from '../../../classes/Coords';
 import { UserListComponent } from 'src/app/components/user-list/user-list.component';
-import {MyAdventuresInteractor} from './my-adventures-interactor';
+import {MyAdventuresInteractor} from '../../../interactors/my-adventures-interactor';
 import {AssetInteractor} from '../../../interactors/AssetInteractor';
 import {AssetModel} from '../../../classes/AssetModel';
 

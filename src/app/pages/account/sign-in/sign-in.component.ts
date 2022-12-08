@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UserInteractor} from '../../../interactors/UserInteractor';
 import {Router} from '@angular/router';
+declare var google: any;
 
 @Component({
     selector: 'app-sign-in',
@@ -24,6 +25,19 @@ export class SignInComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         document.getElementById('email').focus();
+
+        google.accounts.id.initialize({
+            client_id: '68833047415-8euts71spubf3lnqlm0e84kolrs84gmo.apps.googleusercontent.com',
+            callback: this.signInWithGoogle.bind(this),
+            auto_select: false,
+            cancel_on_tap_outside: true,
+
+        });
+        google.accounts.id.renderButton(
+            document.getElementById('google-button'),
+            { theme: 'outline', size: 'large', width: '100%' }
+        );
+        google.accounts.id.prompt((notification: any) => {});
     }
 
     async signIn(): Promise<void> {
@@ -36,6 +50,20 @@ export class SignInComponent implements OnInit, AfterViewInit {
             await this.router.navigateByUrl('');
         } catch (e) {
             this.signInForm.get('password').setValue('');
+        } finally {
+            this.loading = false;
+        }
+    }
+
+    async signInWithGoogle(response: any): Promise<void> {
+        this.loading = true;
+        const credential = response;
+
+        try {
+            await this.userInteractor.signInWithGoogle(credential);
+            await this.router.navigateByUrl('');
+        } catch (e) {
+            console.log(e);
         } finally {
             this.loading = false;
         }
