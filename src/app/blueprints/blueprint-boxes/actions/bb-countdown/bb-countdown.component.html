@@ -1,0 +1,10 @@
+
+<div class="flex flex-column justify-content-start flex-nowrap mb-3">
+    <label for="bb-countdown-seconds">Seconds</label>
+    <input type="number" id="bb-countdown-seconds"
+           min="0" max="9999" name="bb-countdown-seconds" [(ngModel)]="bb.seconds"/>
+</div>
+<div class="flex justify-content-start flex-nowrap align-items-center">
+    <input type="checkbox" id="bb-countdown-loop" [(ngModel)]="bb.isLoop" [ngModelOptions]="{standalone: true}"/>
+    <label for="bb-countdown-loop">Loop</label>
+</div>
