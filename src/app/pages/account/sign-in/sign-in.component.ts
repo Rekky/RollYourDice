@@ -17,6 +17,15 @@ export class SignInComponent implements OnInit, AfterViewInit {
     constructor(private userInteractor: UserInteractor, private router: Router) { }
 
     ngOnInit(): void {
+        this.signInForm = new UntypedFormGroup({
+            email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+            password: new UntypedFormControl(null, [Validators.required, Validators.minLength(3)])
+        });
+    }
+
+    ngAfterViewInit(): void {
+        document.getElementById('email').focus();
+
         google.accounts.id.initialize({
             client_id: '68833047415-8euts71spubf3lnqlm0e84kolrs84gmo.apps.googleusercontent.com',
             callback: this.signInWithGoogle.bind(this),
@@ -29,15 +38,6 @@ export class SignInComponent implements OnInit, AfterViewInit {
             { theme: 'outline', size: 'large', width: '100%' }
         );
         google.accounts.id.prompt((notification: any) => {});
-
-        this.signInForm = new UntypedFormGroup({
-            email: new UntypedFormControl(null, [Validators.required, Validators.email]),
-            password: new UntypedFormControl(null, [Validators.required, Validators.minLength(3)])
-        });
-    }
-
-    ngAfterViewInit(): void {
-        document.getElementById('email').focus();
     }
 
     async signIn(): Promise<void> {
