@@ -17,6 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private userInteractor: UserInteractor, private notificationsService: NotificationsService,) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+      console.log('intercept:', request);
       const authToken: string = this.userInteractor.getCurrentToken();
       if (authToken) {
           request = request.clone({
