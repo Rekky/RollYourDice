@@ -42,6 +42,7 @@ export class Game {
 
 export enum GameTypes {
     DungeonsAndDragons5e = 'DungeonsAndDragons5e',
+    Dixit = 'Dixit'
 }
 
 export enum GameStatusEnum {
