@@ -11,13 +11,15 @@
         <button type="button" class="btn btn-white px-3 my-2"
                 (click)="addBBOnInit()">OnInit</button>
         <button type="button" class="btn btn-white px-3 my-2"
-                (click)="addBBOnOverlap()">OnOverlap</button>
-        <button type="button" class="btn btn-white px-3 my-2"
-                (click)="addBBGetAllActors()">GetAllActors</button>
-        <button type="button" class="btn btn-white px-3 my-2"
-                (click)="addBBGet()">Get</button>
-        <button type="button" class="btn btn-white px-3 my-2"
-                (click)="addBBMoveActorToLocation()">MoveActorToLocation</button>
+                (click)="addBBCountdown()">Countdown</button>
+<!--        <button type="button" class="btn btn-white px-3 my-2"-->
+<!--                (click)="addBBOnOverlap()">OnOverlap</button>-->
+<!--        <button type="button" class="btn btn-white px-3 my-2"-->
+<!--                (click)="addBBGetAllActors()">GetAllActors</button>-->
+<!--        <button type="button" class="btn btn-white px-3 my-2"-->
+<!--                (click)="addBBGet()">Get</button>-->
+<!--        <button type="button" class="btn btn-white px-3 my-2"-->
+<!--                (click)="addBBMoveActorToLocation()">MoveActorToLocation</button>-->
 <!--        <button type="button" class="btn btn-white px-3 my-2"-->
 <!--                (click)="addBBEquals()">Equals</button>-->
 <!--        <button type="button" class="btn bg-red px-3 my-5"-->
@@ -77,68 +79,74 @@
                 </svg>
             </ng-container>
             <ng-container *ngFor="let bb of blueprint.blueprintBoxes;">
-                <app-bb-on-init *ngIf="bb.kind === 'ON_INIT'"
-                                appDraggable
-                                class="draggable"
-                                [bb]="bb"
-                                [id]="bb.id"
-                                [style.top]="bb.render.position.y + 'px'"
-                                [style.left]="bb.render.position.x + 'px'"
-                                [objectData]="bb"
-                                (nodeOutHasBeenTouched)="touchedNodeOut($event)"
-                                (draggableClick)="clickedBB($event)"
-                                (dragging)="modifyBBPosition($event, bb)">
-                </app-bb-on-init>
-                <app-bb-on-overlap *ngIf="bb.kind === 'ON_OVERLAP'"
-                                   appDraggable
-                                   class="draggable"
-                                   [bb]="bb"
-                                   [id]="bb.id"
-                                   [style.top]="bb.render.position.y + 'px'"
-                                   [style.left]="bb.render.position.x + 'px'"
-                                   [objectData]="bb"
-                                   (nodeOutHasBeenTouched)="touchedNodeOut($event)"
-                                   (draggableClick)="clickedBB($event)"
-                                   (dragging)="modifyBBPosition($event, bb)">
-                </app-bb-on-overlap>
-                <app-bb-get-all-actors *ngIf="bb.kind === 'GET_ALL_ACTORS'"
-                                       appDraggable
-                                       class="draggable"
-                                       [bb]="bb"
-                                       [id]="bb.id"
-                                       [style.top]="bb.render.position.y + 'px'"
-                                       [style.left]="bb.render.position.x + 'px'"
-                                       [objectData]="bb"
-                                       (nodeOutHasBeenTouched)="touchedNodeOut($event)"
-                                       (nodeInHasBeenTouched)="touchedNodeIn($event)"
-                                       (draggableClick)="clickedBB($event)"
-                                       (dragging)="modifyBBPosition($event, bb)">
-                </app-bb-get-all-actors>
-                <app-bb-get *ngIf="bb.kind === 'GET'"
-                            appDraggable
-                            class="draggable"
-                            [bb]="bb"
-                            [id]="bb.id"
-                            [style.top]="bb.render.position.y + 'px'"
-                            [style.left]="bb.render.position.x + 'px'"
-                            [objectData]="bb"
-                            (nodeOutHasBeenTouched)="touchedNodeOut($event)"
-                            (nodeInHasBeenTouched)="touchedNodeIn($event)"
-                            (draggableClick)="clickedBB($event)"
-                            (dragging)="modifyBBPosition($event, bb)">
-                </app-bb-get>
-                <app-bb-move-actor-to-location *ngIf="bb.kind === 'MOVE_ACTOR_TO_LOCATION'"
-                                               appDraggable
-                                               class="draggable"
-                                               [bb]="bb"
-                                               [id]="bb.id"
-                                               [style.top]="bb.render.position.y + 'px'"
-                                               [style.left]="bb.render.position.x + 'px'"
-                                               [objectData]="bb"
-                                               (nodeInHasBeenTouched)="touchedNodeIn($event)"
-                                               (draggableClick)="clickedBB($event)"
-                                               (dragging)="modifyBBPosition($event, bb)">
-                </app-bb-move-actor-to-location>
+                <app-bb-wrapping appDraggable
+                                 class="draggable"
+                                 [bb]="bb"
+                                 [id]="bb.id"
+                                 [style.top]="bb.render.position.y + 'px'"
+                                 [style.left]="bb.render.position.x + 'px'"
+                                 [objectData]="bb"
+                                 (nodeInHasBeenTouched)="touchedNodeIn($event)"
+                                 (nodeOutHasBeenTouched)="touchedNodeOut($event)"
+                                 (draggableClick)="clickedBB($event)"
+                                 (dragging)="modifyBBPosition($event, bb)">
+                    <app-bb-on-init *ngIf="bb.kind === 'ON_INIT'"
+                                    [bb]="bb">
+                    </app-bb-on-init>
+                    <app-bb-countdown *ngIf="bb.kind === 'COUNTDOWN'"
+                                    [bb]="bb">
+                    </app-bb-countdown>
+                </app-bb-wrapping>
+<!--                <app-bb-on-overlap *ngIf="bb.kind === 'ON_OVERLAP'"-->
+<!--                                   appDraggable-->
+<!--                                   class="draggable"-->
+<!--                                   [bb]="bb"-->
+<!--                                   [id]="bb.id"-->
+<!--                                   [style.top]="bb.render.position.y + 'px'"-->
+<!--                                   [style.left]="bb.render.position.x + 'px'"-->
+<!--                                   [objectData]="bb"-->
+<!--                                   (nodeOutHasBeenTouched)="touchedNodeOut($event)"-->
+<!--                                   (draggableClick)="clickedBB($event)"-->
+<!--                                   (dragging)="modifyBBPosition($event, bb)">-->
+<!--                </app-bb-on-overlap>-->
+<!--                <app-bb-get-all-actors *ngIf="bb.kind === 'GET_ALL_ACTORS'"-->
+<!--                                       appDraggable-->
+<!--                                       class="draggable"-->
+<!--                                       [bb]="bb"-->
+<!--                                       [id]="bb.id"-->
+<!--                                       [style.top]="bb.render.position.y + 'px'"-->
+<!--                                       [style.left]="bb.render.position.x + 'px'"-->
+<!--                                       [objectData]="bb"-->
+<!--                                       (nodeOutHasBeenTouched)="touchedNodeOut($event)"-->
+<!--                                       (nodeInHasBeenTouched)="touchedNodeIn($event)"-->
+<!--                                       (draggableClick)="clickedBB($event)"-->
+<!--                                       (dragging)="modifyBBPosition($event, bb)">-->
+<!--                </app-bb-get-all-actors>-->
+<!--                <app-bb-get *ngIf="bb.kind === 'GET'"-->
+<!--                            appDraggable-->
+<!--                            class="draggable"-->
+<!--                            [bb]="bb"-->
+<!--                            [id]="bb.id"-->
+<!--                            [style.top]="bb.render.position.y + 'px'"-->
+<!--                            [style.left]="bb.render.position.x + 'px'"-->
+<!--                            [objectData]="bb"-->
+<!--                            (nodeOutHasBeenTouched)="touchedNodeOut($event)"-->
+<!--                            (nodeInHasBeenTouched)="touchedNodeIn($event)"-->
+<!--                            (draggableClick)="clickedBB($event)"-->
+<!--                            (dragging)="modifyBBPosition($event, bb)">-->
+<!--                </app-bb-get>-->
+<!--                <app-bb-move-actor-to-location *ngIf="bb.kind === 'MOVE_ACTOR_TO_LOCATION'"-->
+<!--                                               appDraggable-->
+<!--                                               class="draggable"-->
+<!--                                               [bb]="bb"-->
+<!--                                               [id]="bb.id"-->
+<!--                                               [style.top]="bb.render.position.y + 'px'"-->
+<!--                                               [style.left]="bb.render.position.x + 'px'"-->
+<!--                                               [objectData]="bb"-->
+<!--                                               (nodeInHasBeenTouched)="touchedNodeIn($event)"-->
+<!--                                               (draggableClick)="clickedBB($event)"-->
+<!--                                               (dragging)="modifyBBPosition($event, bb)">-->
+<!--                </app-bb-move-actor-to-location>-->
 <!--                                <app-bb-area *ngIf="bb.kind === 'AREA'"-->
 <!--                                             appDraggable-->
 <!--                                             class="draggable"-->

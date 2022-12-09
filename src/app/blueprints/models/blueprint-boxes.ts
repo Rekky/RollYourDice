@@ -46,6 +46,21 @@ export class BBOnInit extends BaseBlueprintBox {
     }
 }
 
+export class BBOnOverlap extends BaseBlueprintBox {
+
+    constructor() {
+        super();
+        this.type = BoxTypeEnum.EVENT;
+        this.kind = BoxKindEnum.ON_OVERLAP;
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+    }
+}
+
 export class BBArea extends BaseBlueprintBox {
     name: string;
 
@@ -113,13 +128,17 @@ export class BBGet extends BaseBlueprintBox {
     }
 }
 
-export class BBOnOverlap extends BaseBlueprintBox {
+export class BBCountdown extends BaseBlueprintBox {
+    seconds: number;
+    isLoop: boolean;
 
     constructor() {
         super();
-        this.type = BoxTypeEnum.EVENT;
-        this.kind = BoxKindEnum.ON_OVERLAP;
-        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+        this.type = BoxTypeEnum.FUNCTION;
+        this.kind = BoxKindEnum.COUNTDOWN;
+        this.seconds = 0;
+        this.isLoop = false;
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
         }));
         this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
@@ -139,6 +158,7 @@ export enum BoxKindEnum {
     EQUALS = 'EQUALS',
     MOVE_ACTOR_TO_LOCATION = 'MOVE_ACTOR_TO_LOCATION',
     GET = 'GET',
+    COUNTDOWN = 'COUNTDOWN',
     ON_INIT = 'ON_INIT',
     ON_OVERLAP = 'ON_OVERLAP',
 }

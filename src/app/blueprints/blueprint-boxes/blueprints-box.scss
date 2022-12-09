@@ -1,10 +1,26 @@
 
+.container-event {
+    background-color: rgba($c-red-bluish, 0.8);
+}
+
+.container-function {
+    background-color: rgba($c-blueprint-element, 0.8);
+}
+
+input {
+    color: $c-black;
+}
+
+input[type='checkbox'] {
+    margin-right: 5px;
+}
+
 .container {
     width: 250px;
     padding: 0;
     border-radius: 0.75em;
 
-    color: white;
+    color: $c-white;
     touch-action: none;
     user-select: none;
 

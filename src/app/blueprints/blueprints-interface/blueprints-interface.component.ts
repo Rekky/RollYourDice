@@ -17,6 +17,7 @@ import {ulid} from 'ulid';
 import {
     BaseBlueprintBox,
     BBArea,
+    BBCountdown,
     BBEquals,
     BBGet,
     BBGetAllActors,
@@ -54,34 +55,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
     ngOnInit(): void {
         this.blueprint = new BlueprintRenderedModel().toRendered(this.actor.blueprint);
         this.cdr.detectChanges();
-    }
-
-    addBBArea(): void {
-        this.blueprint.blueprintBoxes.push(new BBArea());
-    }
-
-    addBBGetAllActors(): void {
-        this.blueprint.blueprintBoxes.push(new BBGetAllActors());
-    }
-
-    addBBEquals(): void {
-        this.blueprint.blueprintBoxes.push(new BBEquals());
-    }
-
-    addBBGet(): void {
-        this.blueprint.blueprintBoxes.push(new BBGet());
-    }
-
-    addBBMoveActorToLocation(): void {
-        this.blueprint.blueprintBoxes.push(new BBMoveActorToLocation());
-    }
-
-    addBBOnInit(): void {
-        this.blueprint.blueprintBoxes.push(new BBOnInit());
-    }
-
-    addBBOnOverlap(): void {
-        this.blueprint.blueprintBoxes.push(new BBOnOverlap());
     }
 
     deleteBB(box: any): void {
@@ -124,7 +97,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
     elementDropped(object: any): void {}
 
     clickedBB(bb: any): void {
-        console.log('hey');
     }
 
 
@@ -296,6 +268,38 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     close(): void {
         this.blueprintInteractor.setDisplayedBlueprintActor(null);
+    }
+
+    addBBOnInit(): void {
+        this.blueprint.blueprintBoxes.push(new BBOnInit());
+    }
+
+    addBBCountdown(): void {
+        this.blueprint.blueprintBoxes.push(new BBCountdown());
+    }
+
+    addBBArea(): void {
+        this.blueprint.blueprintBoxes.push(new BBArea());
+    }
+
+    addBBGetAllActors(): void {
+        this.blueprint.blueprintBoxes.push(new BBGetAllActors());
+    }
+
+    addBBEquals(): void {
+        this.blueprint.blueprintBoxes.push(new BBEquals());
+    }
+
+    addBBGet(): void {
+        this.blueprint.blueprintBoxes.push(new BBGet());
+    }
+
+    addBBMoveActorToLocation(): void {
+        this.blueprint.blueprintBoxes.push(new BBMoveActorToLocation());
+    }
+
+    addBBOnOverlap(): void {
+        this.blueprint.blueprintBoxes.push(new BBOnOverlap());
     }
 
 }

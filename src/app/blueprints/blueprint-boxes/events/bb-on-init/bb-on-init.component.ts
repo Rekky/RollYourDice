@@ -10,7 +10,6 @@ import {Coords} from '../../../../classes/Coords';
 })
 export class BbOnInitComponent implements OnInit {
     @Input() bb: any;
-    @Output() nodeOutHasBeenTouched: EventEmitter<BlueprintNode> = new EventEmitter<BlueprintNode>();
 
     form: FormGroup;
 
@@ -23,19 +22,7 @@ export class BbOnInitComponent implements OnInit {
     initForm(): void {
     }
 
-    nodeOutClicked(ev, i: number): void {
-        ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
-        const left = ev.target.offsetLeft + this.bb.render.position.x;
-        this.bb.render.nodes.endingNodes[i].position = new Coords(left, top);
-        this.nodeOutHasBeenTouched.emit(this.bb.render.nodes.endingNodes[i]);
-    }
-
     submit(): void {
-
-    }
-
-    delete(): void {
 
     }
 

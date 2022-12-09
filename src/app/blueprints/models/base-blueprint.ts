@@ -1,7 +1,7 @@
 import {BlueprintLink} from './blueprint-link';
 import {ulid} from 'ulid';
 import {
-    BaseBlueprintBox, BBArea,
+    BaseBlueprintBox, BBArea, BBCountdown,
     BBEquals,
     BBGet,
     BBGetAllActors,
@@ -103,6 +103,9 @@ export class BlueprintRenderedModel {
             }
             case BoxKindEnum.AREA: {
                 return { ...new BBArea(), ...element };
+            }
+            case BoxKindEnum.COUNTDOWN: {
+                return { ...new BBCountdown(), ...element };
             }
         }
     }
