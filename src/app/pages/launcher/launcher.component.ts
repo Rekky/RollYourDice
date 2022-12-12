@@ -3,6 +3,7 @@ import {ParticlesConfig} from '../../../assets/particlesjs-config';
 import {StorageService} from '../../services/storage.service';
 import {ActivatedRoute, Router, UrlSegment} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {UserInteractor} from "../../interactors/UserInteractor";
 declare let particlesJS: any;
 
 @Component({
@@ -15,7 +16,7 @@ export class LauncherComponent implements OnInit, OnDestroy {
     public music: any;
     private routerSub: Subscription;
 
-    constructor(public storageService: StorageService, public activatedRouter: ActivatedRoute) { }
+    constructor(public storageService: StorageService, public activatedRouter: ActivatedRoute, private userInteractor: UserInteractor) { }
 
     ngOnInit(): void {
         this.invokeParticles();

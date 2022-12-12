@@ -19,6 +19,12 @@
                     <label class="block mb-2 text-lg font-medium text-gray-50">Players number</label>
                     <input type="number" [formControlName]="'nPlayers'" maxlength="2" class="border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-20 text-center p-2.5"/>
                 </div>
+                <div  class="mb-4">
+                    <label class="block mb-2 text-lg font-medium text-gray-50">Game Type</label>
+                    <select [formControlName]="'gameType'" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option [value]="type" *ngFor="let type of gameTypes">{{type}}</option>
+                    </select>
+                </div>
                 <div class="mb-4">
                     <label class="block mb-2 text-lg font-medium text-gray-50">Image cover</label>
                     <upload-input (files)="imageChanged($event)" [multiple]="false" [maxFilesLimit]="1" (previewOutput)="previewImage = $event"></upload-input>
