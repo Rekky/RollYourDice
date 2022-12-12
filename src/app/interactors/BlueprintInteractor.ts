@@ -6,6 +6,7 @@ import { Actor } from '../classes/Actor';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {CurrentSelectedKonvaObject} from '../classes/ourKonva/OurKonvaObject';
 import {BlueprintModel} from '../blueprints/models/base-blueprint';
+import {BoxKindEnum} from '../blueprints/models/blueprint-boxes';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +29,7 @@ export class BlueprintInteractor {
     loadBlueprintOnInit(blueprint: any): void {
         console.log('loadBlueprint');
         if (!blueprint.blueprintBoxes) {
-            throw new Error('not have bleurprints to load');
+            throw new Error('no blueprints to load');
         }
         if (blueprint.blueprintBoxes.onInit?.length > 0) {
             this.readerOnInit(blueprint.blueprintBoxes.onInit);
@@ -37,7 +38,7 @@ export class BlueprintInteractor {
 
     readerOnInit(boxes: any): void {
         boxes.forEach(box => {
-            this.boxReader(box, null);
+            this.boxReader(box, {mainActor: null, actionActor: null, result: null});
         });
     }
 
@@ -48,15 +49,19 @@ export class BlueprintInteractor {
     }
 
     boxReader(box: any, data: any): void {
-        if (box.kind === 'GET_ALL_ACTORS') {
+        if (box.kind === BoxKindEnum.GET_ALL_ACTORS) {
             data.result = new ExecuteGetAllActors().execute(this.mapInteractor.getCurrentMap());
         }
-        if (box.kind === 'GET') {
+        if (box.kind === BoxKindEnum.GET) {
             data.result = new ExecuteGet().execute(data, box.param.index);
         }
-        if (box.kind === 'MOVE_ACTOR_TO_LOCATION') {
+        if (box.kind === BoxKindEnum.MOVE_ACTOR_TO_LOCATION) {
             data.result = new ExecuteMoveActorToLocation().execute(data.actionActor, data.result);
             this.mouseInteractor.updateObjectOnMap(data.result);
+        }
+        if (box.kind === BoxKindEnum.COUNTDOWN) {
+            console.log('box =', box);
+            new ExecuteCountdown().execute(box.seconds, box.isLoop);
         }
         if (box.func) {
             this.boxReader(box.func, data);
@@ -85,6 +90,20 @@ class ExecuteMoveActorToLocation {
         actor.position.x = locationActor.position.x;
         actor.position.y = locationActor.position.y;
         return actor;
+    }
+}
+
+class ExecuteCountdown {
+
+    public execute(time: number, loop: boolean): void {
+        let t = time;
+        const interval = setInterval(() => {
+            t = t - 1;
+            if (t === 0) {
+                clearInterval(interval);
+                if (loop) { this.execute(time, loop); };
+            }
+        }, 1000);
     }
 }
 

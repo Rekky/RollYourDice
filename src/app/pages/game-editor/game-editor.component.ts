@@ -18,6 +18,7 @@ import {delay, retry, switchMap, tap} from 'rxjs/operators';
 import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
 import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
 import {Actor} from '../../classes/Actor';
+import {AssetModel} from '../../classes/AssetModel';
 
 @Component({
     selector: 'app-game-editor',
@@ -91,6 +92,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
                         if (this.maps.length > 0) {
                             this.currentMap = this.maps[0];
                             this.mapInteractor.setCurrentMap(this.maps[0]);
+                            this.executeBlueprints();
                         }
                     })
                 );
@@ -305,26 +307,18 @@ export class GameEditorComponent implements OnInit, OnDestroy {
 
     onStatusChange(status: GameStatusEnum): void {
         this.gameStatus = status;
-
-        if (this.gameStatus === GameStatusEnum.RUNNING) {
-            const blueprint = {
-                id: '12312324',
-                blueprintBoxes: {
-                    onInit: [
-                        {id: '1111', type: 'FUNCTION', kind: 'GET_ALL_ACTORS', func: {
-                            id: '2222', type: 'FUNCTION', kind: 'GET', param: {index: 0}, func: {
-                                id: '3333', type: 'FUNCTION', kind: 'MOVE_ACTOR_TO_LOCATION', param: {x: 255, y: 255, z: 0}
-                            }
-                        }},
-                    ],
-                    onOverlap: {}
-                }
-            };
-            // Cargar logica blueprints
-            this.blueprintInteractor.loadBlueprintOnInit(blueprint);
-        }
-
+        this.executeBlueprints();
         this.socketService.sendGameStatus(this.game.id, this.gameStatus);
+    }
+
+    executeBlueprints(): void {
+        if (this.gameStatus === GameStatusEnum.RUNNING) {
+            this.currentMap.objects.forEach((obj: AssetModel | Actor) => {
+                const actor = obj as Actor;
+                if (!actor.blueprint) { return; }
+                this.blueprintInteractor.loadBlueprintOnInit(actor.blueprint);
+            });
+        }
     }
 
     onTabsChange(tab: number): void {
