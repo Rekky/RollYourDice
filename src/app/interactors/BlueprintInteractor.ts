@@ -7,6 +7,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {CurrentSelectedKonvaObject} from '../classes/ourKonva/OurKonvaObject';
 import {BlueprintModel} from '../blueprints/models/base-blueprint';
 import {BoxKindEnum} from '../blueprints/models/blueprint-boxes';
+import {finalize, take, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +50,7 @@ export class BlueprintInteractor {
     }
 
     boxReader(box: any, data: any): void {
+        console.log('box =', box);
         if (box.kind === BoxKindEnum.GET_ALL_ACTORS) {
             data.result = new ExecuteGetAllActors().execute(this.mapInteractor.getCurrentMap());
         }
@@ -60,8 +62,16 @@ export class BlueprintInteractor {
             this.mouseInteractor.updateObjectOnMap(data.result);
         }
         if (box.kind === BoxKindEnum.COUNTDOWN) {
-            console.log('box =', box);
-            new ExecuteCountdown().execute(box.seconds, box.isLoop);
+            console.log('-----------------------------');
+            new ExecuteCountdown().execute(box.seconds, box.isLoop).pipe(
+                tap((t: any) => {
+                    console.log(t);
+                }),
+                finalize(() => {
+                    data.result = true;
+                    console.log('end');
+                })
+            ).subscribe();
         }
         if (box.func) {
             this.boxReader(box.func, data);
@@ -95,15 +105,22 @@ class ExecuteMoveActorToLocation {
 
 class ExecuteCountdown {
 
-    public execute(time: number, loop: boolean): void {
-        let t = time;
-        const interval = setInterval(() => {
-            t = t - 1;
-            if (t === 0) {
-                clearInterval(interval);
-                if (loop) { this.execute(time, loop); };
-            }
-        }, 1000);
+    public execute(time: number, loop: boolean): Observable<boolean> {
+        return new Observable(obs => {
+            let t = time;
+            const interval = setInterval(() => {
+                console.log(t);
+                t = t - 1;
+                if (t === 0) {
+                    if (!loop) {
+                        clearInterval(interval);
+                        obs.complete();
+                    }
+                    t = time;
+                    obs.next(true);
+                }
+            }, 1000);
+        });
     }
 }
 
