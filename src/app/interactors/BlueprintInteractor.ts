@@ -50,7 +50,6 @@ export class BlueprintInteractor {
     }
 
     boxReader(box: any, data: any): void {
-        console.log('box =', box);
         if (box.kind === BoxKindEnum.GET_ALL_ACTORS) {
             data.result = new ExecuteGetAllActors().execute(this.mapInteractor.getCurrentMap());
         }
@@ -63,15 +62,22 @@ export class BlueprintInteractor {
         }
         if (box.kind === BoxKindEnum.COUNTDOWN) {
             new ExecuteCountdown().execute(box.seconds, box.isLoop).pipe(
-                tap((t: any) => {
-                    console.log(t);
+                tap((trigger: any) => {
+                    if (box.func) {
+                        this.boxReader(box.func, data);
+                        box.func.integer++; // TODO en un futur no ha de ser així, el valor ha de ser una variable blueprint
+                        if (box.func.integer === 4) { box.func.integer = 0; }
+                    }
                 }),
                 finalize(() => {
                     data.result = true;
                 })
             ).subscribe();
         }
-        if (box.func) {
+        if (box.kind === BoxKindEnum.SWITCH_INTEGER) {
+            new ExecuteSwitchInteger().execute(box.integer);
+        }
+        if (box.func && box.kind !== BoxKindEnum.COUNTDOWN) {
             this.boxReader(box.func, data);
         }
     }
@@ -119,6 +125,14 @@ class ExecuteCountdown {
                 }
             }, 1000);
         });
+    }
+}
+
+class ExecuteSwitchInteger {
+
+    public execute(int: number): void {
+        console.log('execute switch integer');
+        console.log('integer =', int);
     }
 }
 

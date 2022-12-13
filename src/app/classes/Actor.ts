@@ -6,16 +6,6 @@ import {Coords} from './Coords';
 import { BlueprintModel } from '../blueprints/models/base-blueprint';
 import {OurKonvaActor} from './ourKonva/OurKonvaActor';
 
-export enum ActorTypesEnum {
-    CHARACTER = 'CHARACTER',
-    MONSTER = 'MONSTER',
-    NPC = 'NPC',
-    OBJECT = 'OBJECT',
-    SPELL = 'SPELL',
-    PET = 'PET',
-    UNKNOWN = 'UNKNOWN'
-}
-
 export class Actor {
     id: string;
     hp: Health;
@@ -30,6 +20,17 @@ export class Actor {
 
     constructor() {
         this.blueprint = new BlueprintModel();
+    }
+}
+
+export class CARD extends Actor {
+    owner: Player;
+    state: CardState;
+
+    constructor() {
+        super();
+        this.state = CardState.DECKED;
+        this.type = ActorTypesEnum.CARD;
     }
 }
 
@@ -89,4 +90,21 @@ export class PET extends Actor {
         super();
     }
 
+}
+
+export enum ActorTypesEnum {
+    CHARACTER = 'CHARACTER',
+    MONSTER = 'MONSTER',
+    NPC = 'NPC',
+    OBJECT = 'OBJECT',
+    SPELL = 'SPELL',
+    PET = 'PET',
+    UNKNOWN = 'UNKNOWN',
+    CARD = 'CARD'
+}
+
+export enum CardState {
+    DECKED = 'DECKED',
+    PLAYED = 'PLAYED',
+    BURNED = 'BURNED'
 }
