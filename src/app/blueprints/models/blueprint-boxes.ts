@@ -71,6 +71,13 @@ export class BBOnOverlap extends BaseBlueprintBox {
             boxId: this.id,
         }));
     }
+
+    static fromJSON(json): BBOnOverlap {
+        const bb = new BBOnOverlap();
+        bb.id = json.id;
+        bb.render = json.render;
+        return bb;
+    }
 }
 
 export class BBCountdown extends BaseBlueprintBox {
@@ -122,6 +129,14 @@ export class BBGetActors extends BaseBlueprintBox {
             boxId: this.id,
         }));
     }
+
+    static fromJSON(json): BBGetActors {
+        const bb = new BBGetActors();
+        bb.id = json.id;
+        bb.render = json.render;
+        bb.filters = json.filters;
+        return bb;
+    }
 }
 
 export class BBSwitchInteger extends BaseBlueprintBox {
@@ -141,6 +156,14 @@ export class BBSwitchInteger extends BaseBlueprintBox {
         this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
         }));
+    }
+
+    static fromJSON(json): BBSwitchInteger {
+        const bb = new BBSwitchInteger();
+        bb.id = json.id;
+        bb.render = json.render;
+        bb.integer = json.integer;
+        return bb;
     }
 }
 

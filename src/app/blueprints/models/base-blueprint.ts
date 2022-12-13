@@ -89,7 +89,7 @@ export class BlueprintRenderedModel {
                 return BBCountdown.fromJSON(element);
             }
             case BoxKindEnum.GET_ACTORS: {
-                return { ...new BBGetActors(), ...element };
+                return BBGetActors.fromJSON(element);
             }
         }
     }
@@ -100,7 +100,7 @@ export class BlueprintRenderedModel {
                 return BBOnInit.fromJSON(element);
             }
             case BoxKindEnum.ON_OVERLAP: {
-                return { ...new BBOnOverlap(), ...element };
+                return BBOnOverlap.fromJSON(element);
             }
         }
     }
@@ -108,7 +108,7 @@ export class BlueprintRenderedModel {
     switchGetBBoxOperator(element: any): any {
         switch (element.kind) {
             case BoxKindEnum.SWITCH_INTEGER: {
-                return { ...new BBSwitchInteger(), ...element };
+                return BBSwitchInteger.fromJSON(element);
             }
         }
     }
