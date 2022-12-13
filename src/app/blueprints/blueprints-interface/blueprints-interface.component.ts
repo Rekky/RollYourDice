@@ -70,6 +70,9 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     saveBlueprint(): void {
         this.actor.blueprint = new BlueprintModel().fromRendered(this.blueprint);
+        console.log('----------- saving ---------');
+        console.log(this.blueprint);
+        console.log(this.actor.blueprint);
         this.mouseInteractor.updateObject(this.actor);
     }
 

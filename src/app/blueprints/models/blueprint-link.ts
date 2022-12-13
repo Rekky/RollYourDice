@@ -48,7 +48,7 @@ export class BlueprintNode {
 
     static fromJSON(json: any): BlueprintNode {
         const node = new BlueprintNode();
-        node.id = json.id;
+        node.id = json.id ? json.id : node.id;
         node.boxId = json.boxId;
         if (json.position) {
             node.position = Coords.fromJSON(json.position);
