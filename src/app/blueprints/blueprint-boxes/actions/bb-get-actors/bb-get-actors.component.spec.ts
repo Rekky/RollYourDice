@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BbAreaComponent } from './bb-area.component';
+import { BbGetActorsComponent } from './bb-get-actors.component';
 
-describe('BbAreaComponent', () => {
-  let component: BbAreaComponent;
-  let fixture: ComponentFixture<BbAreaComponent>;
+describe('BbGetActorsComponent', () => {
+  let component: BbGetActorsComponent;
+  let fixture: ComponentFixture<BbGetActorsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BbAreaComponent ]
+      declarations: [ BbGetActorsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BbAreaComponent);
+    fixture = TestBed.createComponent(BbGetActorsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

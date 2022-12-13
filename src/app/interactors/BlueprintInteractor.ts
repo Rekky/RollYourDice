@@ -28,7 +28,6 @@ export class BlueprintInteractor {
     }
 
     loadBlueprintOnInit(blueprint: any): void {
-        console.log('loadBlueprint');
         if (!blueprint.blueprintBoxes) {
             throw new Error('no blueprints to load');
         }
@@ -50,16 +49,24 @@ export class BlueprintInteractor {
     }
 
     boxReader(box: any, data: any): void {
-        if (box.kind === BoxKindEnum.GET_ALL_ACTORS) {
-            data.result = new ExecuteGetAllActors().execute(this.mapInteractor.getCurrentMap());
+        if (box.kind === BoxKindEnum.ON_INIT) {
+            if (box.func) { this.boxReader(box.func, data); }
         }
-        if (box.kind === BoxKindEnum.GET) {
-            data.result = new ExecuteGet().execute(data, box.param.index);
+        if (box.kind === BoxKindEnum.GET_ACTORS) {
+            data.result = new ExecuteGetActors().execute(this.mapInteractor.getCurrentMap(), box.filters);
+            console.error('----------- GET ACTORS ----------');
+            console.log(data.result);
+            if (box.func) { this.boxReader(box.func, data); }
         }
-        if (box.kind === BoxKindEnum.MOVE_ACTOR_TO_LOCATION) {
-            data.result = new ExecuteMoveActorToLocation().execute(data.actionActor, data.result);
-            this.mouseInteractor.updateObjectOnMap(data.result);
-        }
+        // if (box.kind === BoxKindEnum.GET) {
+        //     data.result = new ExecuteGet().execute(data, box.param.index);
+        //     this.boxReader(box.func, data);
+        // }
+        // if (box.kind === BoxKindEnum.MOVE_ACTOR_TO_LOCATION) {
+        //     data.result = new ExecuteMoveActorToLocation().execute(data.actionActor, data.result);
+        //     this.mouseInteractor.updateObjectOnMap(data.result);
+        //     this.boxReader(box.func, data);
+        // }
         if (box.kind === BoxKindEnum.COUNTDOWN) {
             new ExecuteCountdown().execute(box.seconds, box.isLoop).pipe(
                 tap((trigger: any) => {
@@ -71,23 +78,26 @@ export class BlueprintInteractor {
                 }),
                 finalize(() => {
                     data.result = true;
+                    if (box.func) { this.boxReader(box.func, data); }
                 })
             ).subscribe();
         }
         if (box.kind === BoxKindEnum.SWITCH_INTEGER) {
             new ExecuteSwitchInteger().execute(box.integer);
-        }
-        if (box.func && box.kind !== BoxKindEnum.COUNTDOWN) {
-            this.boxReader(box.func, data);
+            if (box.func) { this.boxReader(box.func, data); }
         }
     }
 }
 
 
-class ExecuteGetAllActors {
+class ExecuteGetActors {
 
-    public execute(map: any): OurKonvaActor[] {
-        return map.objects.filter((obj: any) => obj.state === 'actor');
+    public execute(map: any, filters: any): OurKonvaActor[] {
+        let actors = map.objects.filter((obj: any) => obj.state === 'actor');
+        if (filters.type) {
+            actors = actors.filter((obj: any) => obj.type === filters.type);
+        }
+        return actors;
     }
 }
 

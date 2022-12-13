@@ -1,0 +1,10 @@
+
+<div class="form-group">
+    <label for="bb-get-actors-filter-type">Filter Type</label>
+    <select id="bb-get-actors-filter-type" class="form-control" name="status" [(ngModel)]="bb.filters.type">
+        <option [value]="null"></option>
+        <option *ngFor="let type of typeOptions | keyvalue" [value]="type.key">
+            {{type.value}}
+        </option>
+    </select>
+</div>

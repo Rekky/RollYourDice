@@ -15,13 +15,8 @@ import {Coords} from '../../classes/Coords';
 import {Subscription} from 'rxjs';
 import {ulid} from 'ulid';
 import {
-    BaseBlueprintBox,
-    BBArea,
-    BBCountdown,
-    BBEquals,
-    BBGet,
-    BBGetAllActors,
-    BBMoveActorToLocation, BBOnInit,
+    BaseBlueprintBox, BBCountdown, BBGetActors,
+    BBOnInit,
     BBOnOverlap, BBSwitchInteger
 } from '../models/blueprint-boxes';
 import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
@@ -284,28 +279,12 @@ export class BlueprintsInterfaceComponent implements OnInit {
         this.blueprint.blueprintBoxes.push(new BBCountdown());
     }
 
+    addBBGetActors(): void {
+        this.blueprint.blueprintBoxes.push(new BBGetActors());
+    }
+
     addSwitchInteger(): void {
         this.blueprint.blueprintBoxes.push(new BBSwitchInteger());
-    }
-
-    addBBArea(): void {
-        this.blueprint.blueprintBoxes.push(new BBArea());
-    }
-
-    addBBGetAllActors(): void {
-        this.blueprint.blueprintBoxes.push(new BBGetAllActors());
-    }
-
-    addBBEquals(): void {
-        this.blueprint.blueprintBoxes.push(new BBEquals());
-    }
-
-    addBBGet(): void {
-        this.blueprint.blueprintBoxes.push(new BBGet());
-    }
-
-    addBBMoveActorToLocation(): void {
-        this.blueprint.blueprintBoxes.push(new BBMoveActorToLocation());
     }
 
     addBBOnOverlap(): void {

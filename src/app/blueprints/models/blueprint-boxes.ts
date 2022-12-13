@@ -1,6 +1,7 @@
 import {BlueprintNode} from './blueprint-link';
 import {Coords} from '../../classes/Coords';
 import {ulid} from 'ulid';
+import {ActorTypesEnum} from '../../classes/Actor';
 
 export type StaticThis<T> = new () => T;
 
@@ -61,73 +62,6 @@ export class BBOnOverlap extends BaseBlueprintBox {
     }
 }
 
-export class BBArea extends BaseBlueprintBox {
-    name: string;
-
-    constructor() {
-        super();
-        this.name = 'namesito';
-        this.type = BoxTypeEnum.FUNCTION;
-        this.kind = BoxKindEnum.AREA;
-    }
-}
-
-export class BBGetAllActors extends BaseBlueprintBox {
-
-    constructor() {
-        super();
-        this.type = BoxTypeEnum.FUNCTION;
-        this.kind = BoxKindEnum.GET_ALL_ACTORS;
-        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
-            boxId: this.id,
-        }));
-        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
-            boxId: this.id,
-        }));
-    }
-
-
-}
-
-export class BBEquals extends BaseBlueprintBox {
-
-    constructor() {
-        super();
-        this.type = BoxTypeEnum.FUNCTION;
-        this.kind = BoxKindEnum.EQUALS;
-    }
-}
-
-export class BBMoveActorToLocation extends BaseBlueprintBox {
-
-    constructor() {
-        super();
-        this.type = BoxTypeEnum.FUNCTION;
-        this.kind = BoxKindEnum.MOVE_ACTOR_TO_LOCATION;
-        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
-            boxId: this.id,
-        }));
-        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
-            boxId: this.id,
-        }));
-    }
-}
-
-export class BBGet extends BaseBlueprintBox {
-
-    constructor() {
-        super();
-        this.type = BoxTypeEnum.FUNCTION;
-        this.kind = BoxKindEnum.GET;
-        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
-            boxId: this.id,
-        }));
-        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
-            boxId: this.id,
-        }));
-    }
-}
-
 export class BBCountdown extends BaseBlueprintBox {
     seconds: number;
     isLoop: boolean;
@@ -138,6 +72,29 @@ export class BBCountdown extends BaseBlueprintBox {
         this.kind = BoxKindEnum.COUNTDOWN;
         this.seconds = 0;
         this.isLoop = false;
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+    }
+}
+
+export class BBGetActors extends BaseBlueprintBox {
+    filters: {
+        type: ActorTypesEnum,
+        tag: string[],
+    };
+
+    constructor() {
+        super();
+        this.type = BoxTypeEnum.FUNCTION;
+        this.kind = BoxKindEnum.GET_ACTORS;
+        this.filters = {
+            type: null,
+            tag: []
+        };
         this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
         }));
@@ -174,13 +131,9 @@ export enum BoxTypeEnum {
 }
 
 export enum BoxKindEnum {
-    AREA = 'AREA',
-    GET_ALL_ACTORS = 'GET_ALL_ACTORS',
-    EQUALS = 'EQUALS',
-    MOVE_ACTOR_TO_LOCATION = 'MOVE_ACTOR_TO_LOCATION',
-    GET = 'GET',
-    COUNTDOWN = 'COUNTDOWN',
     ON_INIT = 'ON_INIT',
     ON_OVERLAP = 'ON_OVERLAP',
+    COUNTDOWN = 'COUNTDOWN',
+    GET_ACTORS = 'GET_ACTORS',
     SWITCH_INTEGER = 'SWITCH_INTEGER'
 }

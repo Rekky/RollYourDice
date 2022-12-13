@@ -1,11 +1,8 @@
 import {BlueprintLink} from './blueprint-link';
 import {ulid} from 'ulid';
 import {
-    BaseBlueprintBox, BBArea, BBCountdown,
-    BBEquals,
-    BBGet,
-    BBGetAllActors,
-    BBMoveActorToLocation,
+    BaseBlueprintBox,
+    BBCountdown, BBGetActors,
     BBOnInit, BBOnOverlap, BBSwitchInteger,
     BoxKindEnum,
     BoxTypeEnum
@@ -92,23 +89,11 @@ export class BlueprintRenderedModel {
 
     switchGetBBoxFunction(element: any): any {
         switch (element.kind) {
-            case BoxKindEnum.GET_ALL_ACTORS: {
-                return { ...new BBGetAllActors(), ...element };
-            }
-            case BoxKindEnum.GET: {
-                return { ...new BBGet(), ...element };
-            }
-            case BoxKindEnum.EQUALS: {
-                return { ...new BBEquals(), ...element };
-            }
-            case BoxKindEnum.MOVE_ACTOR_TO_LOCATION: {
-                return { ...new BBMoveActorToLocation(), ...element };
-            }
-            case BoxKindEnum.AREA: {
-                return { ...new BBArea(), ...element };
-            }
             case BoxKindEnum.COUNTDOWN: {
                 return { ...new BBCountdown(), ...element };
+            }
+            case BoxKindEnum.GET_ACTORS: {
+                return { ...new BBGetActors(), ...element };
             }
         }
     }
