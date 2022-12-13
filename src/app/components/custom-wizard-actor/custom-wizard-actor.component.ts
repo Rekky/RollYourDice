@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AssetService} from '../../services/asset.service';
-import {Actor, ActorTypesEnum, CHARACTER, MONSTER, NPC, OBJECT, PET, SPELL} from '../../classes/Actor';
+import {Actor, ActorTypesEnum, CARD, CHARACTER, MONSTER, NPC, OBJECT, PET, SPELL} from '../../classes/Actor';
 import {LibraryInteractor} from '../../interactors/LibraryInteractor';
 
 
@@ -72,6 +72,10 @@ export class CustomWizardActorComponent implements OnInit {
                     break;
                 case ActorTypesEnum.PET:
                     actor = new PET();
+                    break;
+                case ActorTypesEnum.CARD:
+                    const card = new CARD();
+                    actor = {...this.fg.value, ...card};
                     break;
                 default:
                     break;
