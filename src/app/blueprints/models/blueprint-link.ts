@@ -18,6 +18,17 @@ export class BlueprintLink {
         this.strokeWidth = 2;
     }
 
+    static fromJSON(json: any): BlueprintLink {
+        const link = new BlueprintLink();
+        link.id = json.id;
+        link.position = json.position;
+        link.stroke = json.stroke;
+        link.strokeWidth = json.strokeWidth;
+        link.startingNode = BlueprintNode.fromJSON(json.startingNode);
+        link.endingNode = BlueprintNode.fromJSON(json.endingNode);
+        return link;
+    }
+
     controlLinkPosition(): void {
         this.position.x = Math.min(this.startingNode.position.x, this.endingNode.position.x);
         this.position.y = Math.min(this.startingNode.position.y, this.endingNode.position.y);
@@ -36,6 +47,12 @@ export class BlueprintNode {
     }
 
     static fromJSON(json: any): BlueprintNode {
-        return {... new BlueprintNode(), ...json};
+        const node = new BlueprintNode();
+        node.id = json.id;
+        node.boxId = json.boxId;
+        if (json.position) {
+            node.position = Coords.fromJSON(json.position);
+        }
+        return node;
     }
 }

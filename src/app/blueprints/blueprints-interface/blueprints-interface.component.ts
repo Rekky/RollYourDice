@@ -49,6 +49,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     ngOnInit(): void {
         this.blueprint = new BlueprintRenderedModel().toRendered(this.actor.blueprint);
+        console.log(this.blueprint.blueprintLinks[0]);
         this.cdr.detectChanges();
     }
 
@@ -173,6 +174,8 @@ export class BlueprintsInterfaceComponent implements OnInit {
     endsNewLinkNodeOut(node: BlueprintNode): void {
         this.temporalLink.startingNode = node;
         this.blueprint.blueprintLinks.push(this.temporalLink);
+        const blueprintBox = this.blueprint.blueprintBoxes.find(box => box.id === this.temporalLink.startingNode.boxId);
+        blueprintBox.render.links.push(this.temporalLink);
         this.temporalLink = null;
         this.droppable.nativeElement.removeEventListener('mousemove', this.droppableMouseMoveListener, false);
     }
@@ -218,6 +221,9 @@ export class BlueprintsInterfaceComponent implements OnInit {
     endsNewLinkNodeIn(node: BlueprintNode): void {
         this.temporalLink.endingNode = node;
         this.blueprint.blueprintLinks.push(this.temporalLink);
+        const blueprintBox = this.blueprint.blueprintBoxes.find(box => box.id === this.temporalLink.startingNode.boxId);
+        blueprintBox.render.links.push(this.temporalLink);
+        console.log(this.temporalLink);
         this.temporalLink = null;
         this.droppable.nativeElement.removeEventListener('mousemove', this.droppableMouseMoveListener, false);
     }

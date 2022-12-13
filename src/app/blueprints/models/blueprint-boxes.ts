@@ -9,7 +9,7 @@ export class BaseBlueprintBox {
     id: string;
     type: string;
     kind: string;
-    func?: any;
+    func: any[];
     param?: any;
     render: {
         position: Coords;
@@ -17,16 +17,19 @@ export class BaseBlueprintBox {
             startingNodes: BlueprintNode[];
             endingNodes: BlueprintNode[];
         }
+        links: any[];
     };
 
     constructor() {
         this.id = ulid();
+        this.func = [];
         this.render = {
             position: new Coords(),
             nodes: {
                 startingNodes: [],
                 endingNodes: [],
-            }
+            },
+            links: [],
         };
     }
 

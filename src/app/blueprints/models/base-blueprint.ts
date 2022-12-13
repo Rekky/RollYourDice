@@ -57,8 +57,8 @@ export class BlueprintRenderedModel {
 
     public buildBoxesToRender(blueprint): BlueprintRenderedModel {
         const rendered = new BlueprintRenderedModel();
-        const boxes = [];
-        const links = [];
+        const boxes: BaseBlueprintBox[] = [];
+        const links: BlueprintLink[] = [];
         blueprint.blueprintBoxes.onInit.forEach(element => {
             this.buildRenderedBoxes(element, boxes, links);
         });
@@ -67,7 +67,7 @@ export class BlueprintRenderedModel {
         return rendered;
     }
 
-    buildRenderedBoxes(element, boxes, links): void {
+    buildRenderedBoxes(element, boxes: BaseBlueprintBox[], links: BlueprintLink[]): void {
         if (element.type === BoxTypeEnum.FUNCTION) {
             boxes.push(this.switchGetBBoxFunction(element));
         }
@@ -77,13 +77,9 @@ export class BlueprintRenderedModel {
         if (element.type === BoxTypeEnum.OPERATOR) {
             boxes.push(this.switchGetBBoxOperator(element));
         }
-        if (element.func) {
-            const link = new BlueprintLink();
-            link.position = element.render.nodes.endingNodes[0].position;
-            link.startingNode = element.render.nodes.endingNodes[0];
-            link.endingNode = element.func.render.nodes.startingNodes[0];
-            links.push(link);
-            this.buildRenderedBoxes(element.func, boxes, links);
+        if (element.render.links.length > 0) {
+            element.render.links.forEach(link => links.push(BlueprintLink.fromJSON(link)));
+            element.func.forEach(func => this.buildRenderedBoxes(func, boxes, links));
         }
     }
 
@@ -120,7 +116,7 @@ export class BlueprintRenderedModel {
     buildBoxesPath(currentBox: BaseBlueprintBox): void {
         const nextBox = this.getNextBox(currentBox);
         if (!nextBox) { return; }
-        currentBox.func = nextBox;
+        currentBox.func.length > 0 ? currentBox.func.push(nextBox) : currentBox.func = [nextBox];
         this.buildBoxesPath(nextBox);
     }
 
