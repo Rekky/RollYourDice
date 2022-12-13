@@ -6,7 +6,7 @@ import {
     BBGet,
     BBGetAllActors,
     BBMoveActorToLocation,
-    BBOnInit, BBOnOverlap,
+    BBOnInit, BBOnOverlap, BBSwitchInteger,
     BoxKindEnum,
     BoxTypeEnum
 } from './blueprint-boxes';
@@ -77,6 +77,9 @@ export class BlueprintRenderedModel {
         if (element.type === BoxTypeEnum.EVENT) {
             boxes.push(this.switchGetBBoxEvent(element));
         }
+        if (element.type === BoxTypeEnum.OPERATOR) {
+            boxes.push(this.switchGetBBoxOperator(element));
+        }
         if (element.func) {
             const link = new BlueprintLink();
             link.position = element.render.nodes.endingNodes[0].position;
@@ -117,6 +120,14 @@ export class BlueprintRenderedModel {
             }
             case BoxKindEnum.ON_OVERLAP: {
                 return { ...new BBOnOverlap(), ...element };
+            }
+        }
+    }
+
+    switchGetBBoxOperator(element: any): any {
+        switch (element.kind) {
+            case BoxKindEnum.SWITCH_INTEGER: {
+                return { ...new BBSwitchInteger(), ...element };
             }
         }
     }

@@ -11,19 +11,8 @@ import {Coords} from '../../../../classes/Coords';
 export class BbOnInitComponent implements OnInit {
     @Input() bb: any;
 
-    form: FormGroup;
+    constructor() { }
 
-    constructor(private fb: FormBuilder) { }
-
-    ngOnInit(): void {
-        this.initForm();
-    }
-
-    initForm(): void {
-    }
-
-    submit(): void {
-
-    }
+    ngOnInit(): void {}
 
 }

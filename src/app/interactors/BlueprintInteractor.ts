@@ -62,14 +62,12 @@ export class BlueprintInteractor {
             this.mouseInteractor.updateObjectOnMap(data.result);
         }
         if (box.kind === BoxKindEnum.COUNTDOWN) {
-            console.log('-----------------------------');
             new ExecuteCountdown().execute(box.seconds, box.isLoop).pipe(
                 tap((t: any) => {
                     console.log(t);
                 }),
                 finalize(() => {
                     data.result = true;
-                    console.log('end');
                 })
             ).subscribe();
         }

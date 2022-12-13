@@ -22,7 +22,7 @@ import {
     BBGet,
     BBGetAllActors,
     BBMoveActorToLocation, BBOnInit,
-    BBOnOverlap
+    BBOnOverlap, BBSwitchInteger
 } from '../models/blueprint-boxes';
 import {OurKonvaActor} from '../../classes/ourKonva/OurKonvaActor';
 import {BlueprintInteractor} from '../../interactors/BlueprintInteractor';
@@ -112,6 +112,12 @@ export class BlueprintsInterfaceComponent implements OnInit {
         C${(link.endingNode.position.x - link.position.x) / 2},${(link.startingNode.position.y - link.position.y) + 10}
         ${(link.endingNode.position.x - link.position.x) / 2},${link.endingNode.position.y - link.position.y + 10}
         ${link.endingNode.position.x - link.position.x},${link.endingNode.position.y - link.position.y + 10}`;
+    }
+
+    addNodeOut(bb: any): void {
+        bb.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: bb.id,
+        }));
     }
 
     getLinkWidth(link: BlueprintLink): number {
@@ -276,6 +282,10 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     addBBCountdown(): void {
         this.blueprint.blueprintBoxes.push(new BBCountdown());
+    }
+
+    addSwitchInteger(): void {
+        this.blueprint.blueprintBoxes.push(new BBSwitchInteger());
     }
 
     addBBArea(): void {

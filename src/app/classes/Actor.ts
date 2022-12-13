@@ -23,6 +23,7 @@ export class Actor {
     type: ActorTypesEnum;
     asset: AssetModel;
     author: Player;
+    tag: string;
 
     blueprint: BlueprintModel;
     mapRepresentation: OurKonvaActor;

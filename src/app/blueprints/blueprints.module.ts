@@ -15,6 +15,7 @@ import { BbOnInitComponent } from './blueprint-boxes/events/bb-on-init/bb-on-ini
 import { BbOnOverlapComponent } from './blueprint-boxes/events/bb-on-overlap/bb-on-overlap.component';
 import { BbWrappingComponent } from './blueprint-boxes/bb-wrapping/bb-wrapping.component';
 import { BbCountdownComponent } from './blueprint-boxes/actions/bb-countdown/bb-countdown.component';
+import { BbSwitchIntegerComponent } from './blueprint-boxes/operators/bb-switch-integer/bb-switch-integer.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { BbCountdownComponent } from './blueprint-boxes/actions/bb-countdown/bb-
         BbOnOverlapComponent,
         BbWrappingComponent,
         BbCountdownComponent,
+        BbSwitchIntegerComponent,
     ],
     imports: [
         CommonModule,

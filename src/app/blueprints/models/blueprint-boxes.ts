@@ -147,9 +147,30 @@ export class BBCountdown extends BaseBlueprintBox {
     }
 }
 
+export class BBSwitchInteger extends BaseBlueprintBox {
+    integer: number;
+
+    constructor() {
+        super();
+        this.type = BoxTypeEnum.OPERATOR;
+        this.kind = BoxKindEnum.SWITCH_INTEGER;
+        this.integer = 0;
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+    }
+}
+
 export enum BoxTypeEnum {
     FUNCTION = 'FUNCTION',
     EVENT = 'EVENT',
+    OPERATOR = 'OPERATOR'
 }
 
 export enum BoxKindEnum {
@@ -161,4 +182,5 @@ export enum BoxKindEnum {
     COUNTDOWN = 'COUNTDOWN',
     ON_INIT = 'ON_INIT',
     ON_OVERLAP = 'ON_OVERLAP',
+    SWITCH_INTEGER = 'SWITCH_INTEGER'
 }

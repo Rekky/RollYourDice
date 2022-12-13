@@ -12,6 +12,8 @@
                 (click)="addBBOnInit()">OnInit</button>
         <button type="button" class="btn btn-white px-3 my-2"
                 (click)="addBBCountdown()">Countdown</button>
+        <button type="button" class="btn btn-white px-3 my-2"
+                (click)="addSwitchInteger()">Switch Int</button>
 <!--        <button type="button" class="btn btn-white px-3 my-2"-->
 <!--                (click)="addBBOnOverlap()">OnOverlap</button>-->
 <!--        <button type="button" class="btn btn-white px-3 my-2"-->
@@ -90,12 +92,10 @@
                                  (nodeOutHasBeenTouched)="touchedNodeOut($event)"
                                  (draggableClick)="clickedBB($event)"
                                  (dragging)="modifyBBPosition($event, bb)">
-                    <app-bb-on-init *ngIf="bb.kind === 'ON_INIT'"
-                                    [bb]="bb">
-                    </app-bb-on-init>
-                    <app-bb-countdown *ngIf="bb.kind === 'COUNTDOWN'"
-                                    [bb]="bb">
-                    </app-bb-countdown>
+                    <app-bb-on-init *ngIf="bb.kind === 'ON_INIT'"[bb]="bb"></app-bb-on-init>
+                    <app-bb-countdown *ngIf="bb.kind === 'COUNTDOWN'"[bb]="bb"></app-bb-countdown>
+                    <app-bb-switch-integer *ngIf="bb.kind === 'SWITCH_INTEGER'"
+                                           [bb]="bb" (addNodeOut)="addNodeOut(bb)"></app-bb-switch-integer>
                 </app-bb-wrapping>
 <!--                <app-bb-on-overlap *ngIf="bb.kind === 'ON_OVERLAP'"-->
 <!--                                   appDraggable-->
