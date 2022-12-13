@@ -2,6 +2,7 @@ import {BlueprintNode} from './blueprint-link';
 import {Coords} from '../../classes/Coords';
 import {ulid} from 'ulid';
 import {ActorTypesEnum} from '../../classes/Actor';
+import {render} from 'ngx-color';
 
 export type StaticThis<T> = new () => T;
 
@@ -48,6 +49,13 @@ export class BBOnInit extends BaseBlueprintBox {
             boxId: this.id,
         }));
     }
+
+    static fromJSON(json): BBOnInit {
+        const bb = new BBOnInit();
+        bb.id = json.id;
+        bb.render = json.render;
+        return bb;
+    }
 }
 
 export class BBOnOverlap extends BaseBlueprintBox {
@@ -81,6 +89,15 @@ export class BBCountdown extends BaseBlueprintBox {
         this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
         }));
+    }
+
+    static fromJSON(json): BBCountdown {
+        const countdown = new BBCountdown();
+        countdown.id = json.id;
+        countdown.seconds = json.seconds;
+        countdown.isLoop = json.isLoop;
+        countdown.render = json.render;
+        return countdown;
     }
 }
 

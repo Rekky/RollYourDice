@@ -49,7 +49,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     ngOnInit(): void {
         this.blueprint = new BlueprintRenderedModel().toRendered(this.actor.blueprint);
-        console.log(this.blueprint.blueprintLinks[0]);
+        console.log(this.blueprint);
         this.cdr.detectChanges();
     }
 
@@ -80,11 +80,16 @@ export class BlueprintsInterfaceComponent implements OnInit {
                 link.startingNode.position.x += coords.x;
                 link.startingNode.position.y += coords.y;
                 link.controlLinkPosition();
+                const index = bb.render.links.findIndex(l => l.id === link.id);
+                bb.render.links[index] = link;
             }
             if (link.endingNode.boxId === bb.id) {
                 link.endingNode.position.x += coords.x;
                 link.endingNode.position.y += coords.y;
                 link.controlLinkPosition();
+                const boxIndex = this.blueprint.blueprintBoxes.findIndex(box => box.id === link.startingNode.boxId);
+                const index = this.blueprint.blueprintBoxes[boxIndex].render.links.findIndex(l => l.id === link.id);
+                this.blueprint.blueprintBoxes[boxIndex].render.links[index] = link;
             }
         });
         bb.render.position = newPos;

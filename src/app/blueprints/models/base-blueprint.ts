@@ -86,7 +86,7 @@ export class BlueprintRenderedModel {
     switchGetBBoxFunction(element: any): any {
         switch (element.kind) {
             case BoxKindEnum.COUNTDOWN: {
-                return { ...new BBCountdown(), ...element };
+                return BBCountdown.fromJSON(element);
             }
             case BoxKindEnum.GET_ACTORS: {
                 return { ...new BBGetActors(), ...element };
@@ -97,7 +97,7 @@ export class BlueprintRenderedModel {
     switchGetBBoxEvent(element: any): any {
         switch (element.kind) {
             case BoxKindEnum.ON_INIT: {
-                return { ...new BBOnInit(), ...element };
+                return BBOnInit.fromJSON(element);
             }
             case BoxKindEnum.ON_OVERLAP: {
                 return { ...new BBOnOverlap(), ...element };
