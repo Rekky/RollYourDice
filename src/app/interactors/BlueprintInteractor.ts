@@ -7,7 +7,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {CurrentSelectedKonvaObject} from '../classes/ourKonva/OurKonvaObject';
 import {BlueprintModel} from '../blueprints/models/base-blueprint';
 import {BoxKindEnum} from '../blueprints/models/blueprint-boxes';
-import {finalize, take, tap} from 'rxjs/operators';
+import {finalize, map, switchMap, take, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -50,13 +50,15 @@ export class BlueprintInteractor {
 
     boxReader(box: any, data: any): void {
         if (box.kind === BoxKindEnum.ON_INIT) {
-            if (box.func) { this.boxReader(box.func, data); }
+            if (box.func.length > 0) {
+                box.func.forEach(fun => this.boxReader(fun, data));
+            }
         }
         if (box.kind === BoxKindEnum.GET_ACTORS) {
             data.result = new ExecuteGetActors().execute(this.mapInteractor.getCurrentMap(), box.filters);
-            console.error('----------- GET ACTORS ----------');
-            console.log(data.result);
-            if (box.func) { this.boxReader(box.func, data); }
+            if (box.func.length > 0) {
+                box.func.forEach(fun => this.boxReader(fun, data));
+            }
         }
         // if (box.kind === BoxKindEnum.GET) {
         //     data.result = new ExecuteGet().execute(data, box.param.index);
@@ -68,23 +70,17 @@ export class BlueprintInteractor {
         //     this.boxReader(box.func, data);
         // }
         if (box.kind === BoxKindEnum.COUNTDOWN) {
-            new ExecuteCountdown().execute(box.seconds, box.isLoop).pipe(
-                tap((trigger: any) => {
-                    if (box.func) {
-                        this.boxReader(box.func, data);
-                        box.func.integer++; // TODO en un futur no ha de ser així, el valor ha de ser una variable blueprint
-                        if (box.func.integer === 4) { box.func.integer = 0; }
-                    }
-                }),
-                finalize(() => {
-                    data.result = true;
-                    if (box.func) { this.boxReader(box.func, data); }
-                })
-            ).subscribe();
+            new ExecuteCountdown().execute(box.seconds, box.isLoop).subscribe(() => {
+                if (box.func.length > 0) {
+                    box.func.forEach(fun => this.boxReader(fun, data));
+                    box.func[0].integer === box.func[0].func.length - 1 ? box.func[0].integer = 0 : box.func[0].integer++; // TODO en un futur no ha de ser així, el valor ha de ser una variable blueprint
+                }
+            });
         }
         if (box.kind === BoxKindEnum.SWITCH_INTEGER) {
-            new ExecuteSwitchInteger().execute(box.integer);
-            if (box.func) { this.boxReader(box.func, data); }
+            console.log('integer =', box.integer);
+            // new ExecuteSwitchInteger().execute(box.integer);
+            this.boxReader(box.func[box.integer], data);
         }
     }
 }
@@ -93,6 +89,7 @@ export class BlueprintInteractor {
 class ExecuteGetActors {
 
     public execute(map: any, filters: any): OurKonvaActor[] {
+        console.log('actors of type =', filters.type);
         let actors = map.objects.filter((obj: any) => obj.state === 'actor');
         if (filters.type) {
             actors = actors.filter((obj: any) => obj.type === filters.type);
@@ -119,7 +116,7 @@ class ExecuteMoveActorToLocation {
 
 class ExecuteCountdown {
 
-    public execute(time: number, loop: boolean): Observable<boolean> {
+    public execute(time: number, loop: boolean): Observable<void> {
         return new Observable(obs => {
             let t = time;
             const interval = setInterval(() => {
@@ -131,7 +128,7 @@ class ExecuteCountdown {
                         obs.complete();
                     }
                     t = time;
-                    obs.next(true);
+                    obs.next();
                 }
             }, 1000);
         });
@@ -141,7 +138,6 @@ class ExecuteCountdown {
 class ExecuteSwitchInteger {
 
     public execute(int: number): void {
-        console.log('execute switch integer');
         console.log('integer =', int);
     }
 }
