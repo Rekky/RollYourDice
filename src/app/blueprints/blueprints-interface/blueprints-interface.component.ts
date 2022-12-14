@@ -50,6 +50,7 @@ export class BlueprintsInterfaceComponent implements OnInit {
     ngOnInit(): void {
         this.blueprint = new BlueprintRenderedModel().toRendered(this.actor.blueprint);
         console.log(this.blueprint);
+        console.log(this.actor.blueprint);
         this.cdr.detectChanges();
     }
 

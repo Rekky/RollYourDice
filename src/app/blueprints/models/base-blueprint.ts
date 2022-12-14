@@ -114,10 +114,12 @@ export class BlueprintRenderedModel {
     }
 
     buildBoxesPath(currentBox: BaseBlueprintBox): void {
-        const nextBox = this.getNextBox(currentBox);
-        if (!nextBox) { return; }
-        currentBox.func.length > 0 ? currentBox.func.push(nextBox) : currentBox.func = [nextBox];
-        this.buildBoxesPath(nextBox);
+        if (currentBox.render.links.length === 0) { return; }
+        const nextBoxes = this.getNextBoxes(currentBox);
+        nextBoxes.forEach(nextBox => {
+            currentBox.func.length > 0 ? currentBox.func.push(nextBox) : currentBox.func = [nextBox];
+            this.buildBoxesPath(nextBox);
+        });
     }
 
     getOnInit(): BBOnInit {
@@ -137,13 +139,10 @@ export class BlueprintRenderedModel {
         return !!linkedNode;
     }
 
-    getNextBox(currentBox: BaseBlueprintBox): BaseBlueprintBox {
-        const linkedNode = this.blueprintLinks.find(link => {
-            return link.startingNode.boxId === currentBox.id;
-        });
-        if (!linkedNode) { return; }
-        return this.blueprintBoxes.find(box => {
-            return box.id === linkedNode.endingNode.boxId;
+    getNextBoxes(currentBox: BaseBlueprintBox): BaseBlueprintBox[] {
+        if (currentBox.render.links.length === 0) { return; }
+        return currentBox.render.links.map(link => {
+            return this.blueprintBoxes.find(box => box.id === link.endingNode.boxId);
         });
     }
 }
