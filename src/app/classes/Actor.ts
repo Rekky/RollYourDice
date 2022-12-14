@@ -5,6 +5,7 @@ import {AssetModel} from './AssetModel';
 import {Coords} from './Coords';
 import { BlueprintModel } from '../blueprints/models/base-blueprint';
 import {OurKonvaActor} from './ourKonva/OurKonvaActor';
+import {ulid} from 'ulid';
 
 export class Actor {
     id: string;
@@ -20,6 +21,7 @@ export class Actor {
 
     constructor() {
         this.blueprint = new BlueprintModel();
+        this.id = ulid();
     }
 }
 

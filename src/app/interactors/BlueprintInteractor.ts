@@ -71,6 +71,7 @@ export class BlueprintInteractor {
         // }
         if (box.kind === BoxKindEnum.COUNTDOWN) {
             new ExecuteCountdown().execute(box.seconds, box.isLoop).subscribe(() => {
+                console.log('now');
                 if (box.func.length > 0) {
                     box.func.forEach(fun => this.boxReader(fun, data));
                     box.func[0].integer === box.func[0].func.length - 1 ? box.func[0].integer = 0 : box.func[0].integer++; // TODO en un futur no ha de ser així, el valor ha de ser una variable blueprint
@@ -118,19 +119,13 @@ class ExecuteCountdown {
 
     public execute(time: number, loop: boolean): Observable<void> {
         return new Observable(obs => {
-            let t = time;
             const interval = setInterval(() => {
-                console.log(t);
-                t = t - 1;
-                if (t === 0) {
-                    if (!loop) {
-                        clearInterval(interval);
-                        obs.complete();
-                    }
-                    t = time;
-                    obs.next();
+                if (!loop) {
+                    clearInterval(interval);
+                    obs.complete();
                 }
-            }, 1000);
+                obs.next();
+            }, time * 1000);
         });
     }
 }
