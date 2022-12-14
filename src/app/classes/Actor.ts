@@ -1,8 +1,6 @@
 import { Health } from './character-properties/health';
 import {Player} from './User';
-import {OurKonvaImage} from './ourKonva/OurKonvaImage';
 import {AssetModel} from './AssetModel';
-import {Coords} from './Coords';
 import { BlueprintModel } from '../blueprints/models/base-blueprint';
 import {OurKonvaActor} from './ourKonva/OurKonvaActor';
 import {ulid} from 'ulid';

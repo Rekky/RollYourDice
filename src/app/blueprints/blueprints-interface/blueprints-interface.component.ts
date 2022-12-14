@@ -15,7 +15,7 @@ import {Coords} from '../../classes/Coords';
 import {Subscription} from 'rxjs';
 import {ulid} from 'ulid';
 import {
-    BaseBlueprintBox, BBCountdown, BBGetActors,
+    BaseBlueprintBox, BBCountdown, BBGetActors, BBGetPlayers,
     BBOnInit,
     BBOnOverlap, BBSwitchInteger
 } from '../models/blueprint-boxes';
@@ -50,7 +50,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
     ngOnInit(): void {
         this.blueprint = new BlueprintRenderedModel().toRendered(this.actor.blueprint);
         console.log(this.blueprint);
-        console.log(this.actor.blueprint);
         this.cdr.detectChanges();
     }
 
@@ -71,9 +70,6 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     saveBlueprint(): void {
         this.actor.blueprint = new BlueprintModel().fromRendered(this.blueprint);
-        console.log('----------- saving ---------');
-        console.log(this.blueprint);
-        console.log(this.actor.blueprint);
         this.mouseInteractor.updateObject(this.actor);
     }
 
@@ -296,6 +292,10 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     addBBGetActors(): void {
         this.blueprint.blueprintBoxes.push(new BBGetActors());
+    }
+
+    addBBGetPlayers(): void {
+        this.blueprint.blueprintBoxes.push(new BBGetPlayers());
     }
 
     addSwitchInteger(): void {

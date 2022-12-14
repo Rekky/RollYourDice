@@ -12,6 +12,8 @@
                 (click)="addBBCountdown()">Countdown</button>
         <button type="button" style="background-color: dodgerblue" class="btn px-3 my-2"
                 (click)="addBBGetActors()">Get Actors</button>
+        <button type="button" style="background-color: dodgerblue" class="btn px-3 my-2"
+                (click)="addBBGetPlayers()">Get Players</button>
         <button type="button" style="background-color: orange" class="btn px-3 my-2"
                 (click)="addSwitchInteger()">Switch Int</button>
         <button type="button" style="background-color: limegreen" class="btn px-3 my-5"
@@ -83,6 +85,7 @@
                     <app-bb-on-init *ngIf="bb.kind === 'ON_INIT'" [bb]="bb"></app-bb-on-init>
                     <app-bb-countdown *ngIf="bb.kind === 'COUNTDOWN'" [bb]="bb"></app-bb-countdown>
                     <app-bb-get-actors *ngIf="bb.kind === 'GET_ACTORS'" [bb]="bb"></app-bb-get-actors>
+                    <app-bb-get-players *ngIf="bb.kind === 'GET_PLAYERS'" [bb]="bb"></app-bb-get-players>
                     <app-bb-switch-integer *ngIf="bb.kind === 'SWITCH_INTEGER'"
                                            [bb]="bb" (addNodeOut)="addNodeOut(bb)"></app-bb-switch-integer>
                 </app-bb-wrapping>

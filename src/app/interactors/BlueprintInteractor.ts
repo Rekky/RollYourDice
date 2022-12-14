@@ -8,6 +8,8 @@ import {CurrentSelectedKonvaObject} from '../classes/ourKonva/OurKonvaObject';
 import {BlueprintModel} from '../blueprints/models/base-blueprint';
 import {BoxKindEnum} from '../blueprints/models/blueprint-boxes';
 import {finalize, map, switchMap, take, tap} from 'rxjs/operators';
+import {Player} from '../classes/User';
+import {GameInteractor} from './GameInteractor';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +18,7 @@ export class BlueprintInteractor {
     private displayedBlueprintActor: BehaviorSubject<Actor> = new BehaviorSubject<Actor>(null);
 
     constructor(protected mapInteractor: MapInteractor,
+                protected gameInteractor: GameInteractor,
                 protected mouseInteractor: MouseInteractor) {
     }
 
@@ -60,6 +63,13 @@ export class BlueprintInteractor {
                 box.func.forEach(fun => this.boxReader(fun, data));
             }
         }
+        if (box.kind === BoxKindEnum.GET_PLAYERS) {
+            console.log(this.gameInteractor.getCurrentGame());
+            data.result = new ExecuteGetPlayers().execute(this.gameInteractor.getCurrentGame().players);
+            if (box.func.length > 0) {
+                box.func.forEach(fun => this.boxReader(fun, data));
+            }
+        }
         // if (box.kind === BoxKindEnum.GET) {
         //     data.result = new ExecuteGet().execute(data, box.param.index);
         //     this.boxReader(box.func, data);
@@ -71,7 +81,6 @@ export class BlueprintInteractor {
         // }
         if (box.kind === BoxKindEnum.COUNTDOWN) {
             new ExecuteCountdown().execute(box.seconds, box.isLoop).subscribe(() => {
-                console.log('now');
                 if (box.func.length > 0) {
                     box.func.forEach(fun => this.boxReader(fun, data));
                     box.func[0].integer === box.func[0].func.length - 1 ? box.func[0].integer = 0 : box.func[0].integer++; // TODO en un futur no ha de ser així, el valor ha de ser una variable blueprint
@@ -86,16 +95,22 @@ export class BlueprintInteractor {
     }
 }
 
-
 class ExecuteGetActors {
 
     public execute(map: any, filters: any): OurKonvaActor[] {
-        console.log('actors of type =', filters.type);
-        let actors = map.objects.filter((obj: any) => obj.state === 'actor');
+        let actors = map.objects.filter((obj: any) => obj.blueprint);
         if (filters.type) {
             actors = actors.filter((obj: any) => obj.type === filters.type);
         }
         return actors;
+    }
+}
+
+class ExecuteGetPlayers {
+
+    public execute(players: Player[]): Player[] {
+        console.log(players);
+        return players;
     }
 }
 
@@ -133,7 +148,6 @@ class ExecuteCountdown {
 class ExecuteSwitchInteger {
 
     public execute(int: number): void {
-        console.log('integer =', int);
     }
 }
 

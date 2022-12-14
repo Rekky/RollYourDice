@@ -11,6 +11,7 @@ import { BbWrappingComponent } from './blueprint-boxes/bb-wrapping/bb-wrapping.c
 import { BbCountdownComponent } from './blueprint-boxes/actions/bb-countdown/bb-countdown.component';
 import { BbSwitchIntegerComponent } from './blueprint-boxes/operators/bb-switch-integer/bb-switch-integer.component';
 import { BbGetActorsComponent } from './blueprint-boxes/actions/bb-get-actors/bb-get-actors.component';
+import { BbGetPlayersComponent } from './blueprint-boxes/actions/bb-get-players/bb-get-players.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { BbGetActorsComponent } from './blueprint-boxes/actions/bb-get-actors/bb
         BbCountdownComponent,
         BbSwitchIntegerComponent,
         BbGetActorsComponent,
+        BbGetPlayersComponent,
     ],
     imports: [
         CommonModule,

@@ -2,7 +2,7 @@ import {BlueprintLink} from './blueprint-link';
 import {ulid} from 'ulid';
 import {
     BaseBlueprintBox,
-    BBCountdown, BBGetActors,
+    BBCountdown, BBGetActors, BBGetPlayers,
     BBOnInit, BBOnOverlap, BBSwitchInteger,
     BoxKindEnum,
     BoxTypeEnum
@@ -90,6 +90,9 @@ export class BlueprintRenderedModel {
             }
             case BoxKindEnum.GET_ACTORS: {
                 return BBGetActors.fromJSON(element);
+            }
+            case BoxKindEnum.GET_PLAYERS: {
+                return BBGetPlayers.fromJSON(element);
             }
         }
     }
