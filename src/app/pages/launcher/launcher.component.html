@@ -5,9 +5,10 @@
     <div class="bg-blur"></div>
     <div id="particles-js-2"></div>
     <div id="particles-js-3"></div>
-    <div class="absolute top-0 right-0 p-4" style="z-index: 99999">
-        <img class="w-[40px] h-[40px] rounded-full" src="https://picsum.photos/200/300" alt="avatar">
-        <div class="text-white">User</div>
+    <div class="absolute top-0 right-0 p-4 flex justify-items-center justify-content-center align-content-center align-items-center flex-column" style="z-index: 99999">
+        <img class="w-[40px] h-[40px] rounded-full" src="https://picsum.photos/200/300" alt="avatar" *ngIf="!user.avatar">
+        <img class="w-[40px] h-[40px] rounded-full" [src]="user.avatar" alt="avatar" *ngIf="user.avatar">
+        <div class="text-white">{{user.username ? user.username : 'User'}}<div>{{user.avatar}}</div></div>
     </div>
     <router-outlet></router-outlet>
     <img src="./assets/svg/music.svg" alt="sound" class="invert sound-icon cursor-pointer" (click)="handleMusic()" [class.invert]="storageService.settings$.value.music">
