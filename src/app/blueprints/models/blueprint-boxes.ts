@@ -1,4 +1,4 @@
-import {BlueprintNode} from './blueprint-link';
+import {BlueprintNode, BlueprintNodeType} from './blueprint-link';
 import {Coords} from '../../classes/Coords';
 import {ulid} from 'ulid';
 import {ActorTypesEnum} from '../../classes/Actor';
@@ -174,6 +174,7 @@ export class BBSwitchInteger extends BaseBlueprintBox {
         }));
         this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
+            type: BlueprintNodeType.DATA,
         }));
         this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
@@ -185,6 +186,38 @@ export class BBSwitchInteger extends BaseBlueprintBox {
         bb.id = json.id;
         bb.render = json.render;
         bb.integer = json.integer;
+        return bb;
+    }
+}
+
+export class BBForEachLoop extends BaseBlueprintBox {
+    nTimes: number;
+
+    constructor() {
+        super();
+        this.type = BoxTypeEnum.OPERATOR;
+        this.kind = BoxKindEnum.FOR_EACH_LOOP;
+        this.nTimes = 0;
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+            type: BlueprintNodeType.DATA,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+        this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
+            boxId: this.id,
+        }));
+    }
+
+    static fromJSON(json): BBForEachLoop {
+        const bb = new BBForEachLoop();
+        bb.id = json.id;
+        bb.render = json.render;
+        bb.nTimes = json.nTimes;
         return bb;
     }
 }
@@ -201,5 +234,6 @@ export enum BoxKindEnum {
     COUNTDOWN = 'COUNTDOWN',
     GET_ACTORS = 'GET_ACTORS',
     GET_PLAYERS = 'GET_PLAYERS',
-    SWITCH_INTEGER = 'SWITCH_INTEGER'
+    SWITCH_INTEGER = 'SWITCH_INTEGER',
+    FOR_EACH_LOOP = 'FOR_EACH_LOOP',
 }

@@ -16,6 +16,8 @@
                 (click)="addBBGetPlayers()">Get Players</button>
         <button type="button" style="background-color: orange" class="btn px-3 my-2"
                 (click)="addSwitchInteger()">Switch Int</button>
+        <button type="button" style="background-color: orange" class="btn px-3 my-2"
+                (click)="addForEachLoop()">For Each Loop</button>
         <button type="button" style="background-color: limegreen" class="btn px-3 my-5"
                 (click)="saveBlueprint()">SAVE</button>
     </div>
@@ -88,6 +90,7 @@
                     <app-bb-get-players *ngIf="bb.kind === 'GET_PLAYERS'" [bb]="bb"></app-bb-get-players>
                     <app-bb-switch-integer *ngIf="bb.kind === 'SWITCH_INTEGER'"
                                            [bb]="bb" (addNodeOut)="addNodeOut(bb)"></app-bb-switch-integer>
+                    <app-bb-for-each-loop *ngIf="bb.kind === 'FOR_EACH_LOOP'" [bb]="bb"></app-bb-for-each-loop>
                 </app-bb-wrapping>
             </ng-container>
         </div>

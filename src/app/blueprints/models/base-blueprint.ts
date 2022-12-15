@@ -2,7 +2,7 @@ import {BlueprintLink} from './blueprint-link';
 import {ulid} from 'ulid';
 import {
     BaseBlueprintBox,
-    BBCountdown, BBGetActors, BBGetPlayers,
+    BBCountdown, BBForEachLoop, BBGetActors, BBGetPlayers,
     BBOnInit, BBOnOverlap, BBSwitchInteger,
     BoxKindEnum,
     BoxTypeEnum
@@ -112,6 +112,9 @@ export class BlueprintRenderedModel {
         switch (element.kind) {
             case BoxKindEnum.SWITCH_INTEGER: {
                 return BBSwitchInteger.fromJSON(element);
+            }
+            case BoxKindEnum.FOR_EACH_LOOP: {
+                return BBForEachLoop.fromJSON(element);
             }
         }
     }

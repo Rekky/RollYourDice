@@ -92,6 +92,13 @@ export class BlueprintInteractor {
             // new ExecuteSwitchInteger().execute(box.integer);
             this.boxReader(box.func[box.integer], data);
         }
+        if (box.kind === BoxKindEnum.FOR_EACH_LOOP) {
+            console.log('FOR_EACH_LOOP =', box);
+            // data.result = new ExecuteForEachLoop().execute(box.nTimes);
+            if (box.func.length > 0) {
+                box.func.forEach(fun => this.boxReader(fun, data));
+            }
+        }
     }
 }
 
@@ -146,6 +153,12 @@ class ExecuteCountdown {
 }
 
 class ExecuteSwitchInteger {
+
+    public execute(int: number): void {
+    }
+}
+
+class ExecuteForEachLoop {
 
     public execute(int: number): void {
     }

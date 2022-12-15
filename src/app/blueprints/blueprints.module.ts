@@ -12,6 +12,7 @@ import { BbCountdownComponent } from './blueprint-boxes/actions/bb-countdown/bb-
 import { BbSwitchIntegerComponent } from './blueprint-boxes/operators/bb-switch-integer/bb-switch-integer.component';
 import { BbGetActorsComponent } from './blueprint-boxes/actions/bb-get-actors/bb-get-actors.component';
 import { BbGetPlayersComponent } from './blueprint-boxes/actions/bb-get-players/bb-get-players.component';
+import { BbForEachLoopComponent } from './blueprint-boxes/operators/bb-for-each-loop/bb-for-each-loop.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { BbGetPlayersComponent } from './blueprint-boxes/actions/bb-get-players/
         BbSwitchIntegerComponent,
         BbGetActorsComponent,
         BbGetPlayersComponent,
+        BbForEachLoopComponent,
     ],
     imports: [
         CommonModule,

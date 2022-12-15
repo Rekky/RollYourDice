@@ -15,7 +15,7 @@ import {Coords} from '../../classes/Coords';
 import {Subscription} from 'rxjs';
 import {ulid} from 'ulid';
 import {
-    BaseBlueprintBox, BBCountdown, BBGetActors, BBGetPlayers,
+    BaseBlueprintBox, BBCountdown, BBForEachLoop, BBGetActors, BBGetPlayers,
     BBOnInit,
     BBOnOverlap, BBSwitchInteger
 } from '../models/blueprint-boxes';
@@ -300,6 +300,10 @@ export class BlueprintsInterfaceComponent implements OnInit {
 
     addSwitchInteger(): void {
         this.blueprint.blueprintBoxes.push(new BBSwitchInteger());
+    }
+
+    addForEachLoop(): void {
+        this.blueprint.blueprintBoxes.push(new BBForEachLoop());
     }
 
     addBBOnOverlap(): void {

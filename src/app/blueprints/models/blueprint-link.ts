@@ -39,20 +39,28 @@ export class BlueprintNode {
     position: Coords;
     boxId: string;
     id: string;
+    type: BlueprintNodeType;
 
     constructor() {
         this.position = new Coords();
         this.boxId = '';
         this.id = ulid();
+        this.type = BlueprintNodeType.LIFE_CYCLE;
     }
 
     static fromJSON(json: any): BlueprintNode {
         const node = new BlueprintNode();
         node.id = json.id ? json.id : node.id;
         node.boxId = json.boxId;
+        node.type = json.type;
         if (json.position) {
             node.position = Coords.fromJSON(json.position);
         }
         return node;
     }
+}
+
+export enum BlueprintNodeType {
+    LIFE_CYCLE = 'LIFE_CYCLE',
+    DATA = 'DATA',
 }
