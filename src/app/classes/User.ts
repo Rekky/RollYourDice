@@ -42,17 +42,20 @@ export class Player {
     id: string;
     name: string;
     hash: string;
+    avatar: string;
 
-    constructor(id?: string, name?: string, hash?: string) {
+    constructor(id?: string, name?: string, hash?: string, avatar?: string) {
         this.id = id ? id : ulid();
         this.name = name ? name : null;
         this.hash = hash ? hash : null;
+        this.avatar = avatar ? avatar : null;
     }
 
     public fromJSON(json: any): void {
         this.id = json.id;
         this.name = json.username;
         this.hash = json.hash;
+        this.avatar = json.avatar;
     }
 
     toJSON(): any {
@@ -60,6 +63,7 @@ export class Player {
         json.id = this.id;
         json.username = this.name;
         json.hash = this.hash;
+        json.avatar = this.avatar;
         return json;
     }
 
@@ -67,5 +71,6 @@ export class Player {
         this.id = user.id;
         this.name = user.username;
         this.hash = user.hash;
+        this.avatar = user.avatar;
     }
 }
