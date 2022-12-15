@@ -1,3 +1,10 @@
-<div class="bg-white rounded p-4 w-[200px] h-[48px]">
-    <div *ngFor="let player of players">{{player.name}} player</div>
+<div class="bg-white rounded p-1 w-[auto] h-[48px] grid grid-flow-col auto-cols-max gap-3 overflow-hidden">
+    <div *ngFor="let player of players" class="cursor-pointer flex flex-column justify-content-center align-items-center w-[50px] h-full overflow-hidden">
+        <div class="w-full flex align-items-center justify-content-center">
+            <img class="w-[25px] h-[25px] rounded-full" [src]="player.avatar ? player.avatar : 'https://picsum.photos/200/300'" alt="avatar">
+        </div>
+        <div class="w-full flex align-items-center justify-content-center">
+            <div class="text-xs text-ellipsis ">{{player.name}}</div>
+        </div>
+    </div>
 </div>
