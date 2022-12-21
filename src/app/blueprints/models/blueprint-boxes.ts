@@ -200,16 +200,20 @@ export class BBForEachLoop extends BaseBlueprintBox {
         this.nTimes = 0;
         this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
+            title: 'Exec',
         }));
         this.render.nodes.startingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
             type: BlueprintNodeType.DATA,
+            title: 'Array',
         }));
         this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
+            title: 'Loop',
         }));
         this.render.nodes.endingNodes.push(BlueprintNode.fromJSON({
             boxId: this.id,
+            title: 'Completed',
         }));
     }
 

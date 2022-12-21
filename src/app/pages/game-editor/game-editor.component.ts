@@ -316,6 +316,7 @@ export class GameEditorComponent implements OnInit, OnDestroy {
             this.currentMap.objects.forEach((obj: AssetModel | Actor) => {
                 const actor = obj as Actor;
                 if (!actor.blueprint) { return; }
+                console.log('load blueprints');
                 this.blueprintInteractor.loadBlueprintOnInit(actor.blueprint);
             });
         }

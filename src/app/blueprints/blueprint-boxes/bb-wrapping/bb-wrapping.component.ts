@@ -17,16 +17,16 @@ export class BbWrappingComponent {
 
     nodeInClicked(ev, i): void {
         ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
-        const left = ev.target.offsetLeft + this.bb.render.position.x;
+        const top = 14 + (25 * (i + 1)) + this.bb.render.position.y;
+        const left = 10 + this.bb.render.position.x;
         this.bb.render.nodes.startingNodes[i].position = new Coords(left, top);
         this.nodeInHasBeenTouched.emit(this.bb.render.nodes.startingNodes[i]);
     }
 
     nodeOutClicked(ev, i: number): void {
         ev.stopPropagation();
-        const top = ev.target.offsetTop + 30 + this.bb.render.position.y;
-        const left = ev.target.offsetLeft + this.bb.render.position.x;
+        const top = 14 + (25 * (i + 1)) + this.bb.render.position.y;
+        const left = 250 + this.bb.render.position.x;
         this.bb.render.nodes.endingNodes[i].position = new Coords(left, top);
         this.nodeOutHasBeenTouched.emit(this.bb.render.nodes.endingNodes[i]);
     }

@@ -37,12 +37,14 @@ export class BlueprintLink {
 
 export class BlueprintNode {
     position: Coords;
+    title: string;
     boxId: string;
     id: string;
     type: BlueprintNodeType;
 
     constructor() {
         this.position = new Coords();
+        this.title = '';
         this.boxId = '';
         this.id = ulid();
         this.type = BlueprintNodeType.LIFE_CYCLE;
@@ -51,6 +53,7 @@ export class BlueprintNode {
     static fromJSON(json: any): BlueprintNode {
         const node = new BlueprintNode();
         node.id = json.id ? json.id : node.id;
+        node.title = json.title ? json.title : node.title;
         node.boxId = json.boxId;
         node.type = json.type;
         if (json.position) {

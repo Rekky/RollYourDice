@@ -57,9 +57,45 @@ input[type='checkbox'] {
         position: relative;
 
         .connectors {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+
             position: relative;
             width: 100%;
-            height: 50px;
+            padding: 5px;
+
+            .nodes-in-box {
+                display: flex;
+                flex-flow: column nowrap;
+                justify-content: flex-start;
+                align-items: flex-start;
+
+                position: relative;
+                width: 50%;
+            }
+
+            .nodes-out-box {
+                display: flex;
+                flex-flow: column nowrap;
+                justify-content: flex-start;
+                align-items: flex-end;
+
+                position: relative;
+                width: 50%;
+            }
+
+            .node-box {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-start;
+                align-items: center;
+
+                position: relative;
+                min-height: 10px;
+                padding: 5px 15px;
+            }
 
             .node {
                 position: absolute;
@@ -71,20 +107,25 @@ input[type='checkbox'] {
 
             .node-in {
                 @extend .node;
-                top: 10px;
-                left: -10px;
+                left: -15px;
                 background-color: $c-pale-yellow;
             }
 
             .node-out {
                 @extend .node;
-                top: 10px;
-                right: -10px;
+                right: -15px;
                 background-color: $c-pale-blue;
             }
 
             .node-data {
                 background-color: $c-red-bluish;
+            }
+
+            .node-title {
+                position: relative;
+                min-height: 15px;
+                width: 100%;
+                font-size: 12px;
             }
         }
     }

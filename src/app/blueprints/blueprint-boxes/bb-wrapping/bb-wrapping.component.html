@@ -9,16 +9,22 @@
     </div>
     <div class="body col-lg-12">
         <div class="connectors">
-            <div *ngFor="let nodeIn of bb.render.nodes.startingNodes; let i = index;"
-                 class="node-in cursor-pointer"
-                 [ngClass]="{'node-data': nodeIn.type === 'DATA'}"
-                 [style.top]="10 + 30 * i + 'px'"
-                 (click)="nodeInClicked($event, i)"></div>
-            <div *ngFor="let nodeOut of bb.render.nodes.endingNodes; let i = index;"
-                 class="node-out cursor-pointer"
-                 [ngClass]="{'node-data': nodeOut.type === 'DATA'}"
-                 [style.top]="10 + 30 * i + 'px'"
-                 (click)="nodeOutClicked($event, i)"></div>
+            <div class="nodes-in-box">
+                <div *ngFor="let nodeIn of bb.render.nodes.startingNodes; let i = index;" class="node-box">
+                    <div class="node-in cursor-pointer"
+                         [ngClass]="{'node-data': nodeIn.type === 'DATA'}"
+                         (click)="nodeInClicked($event, i)"></div>
+                    <div class="node-title">{{nodeIn.title}}</div>
+                </div>
+            </div>
+            <div class="nodes-out-box">
+                <div *ngFor="let nodeOut of bb.render.nodes.endingNodes; let i = index;" class="node-box">
+                    <div class="node-out cursor-pointer"
+                         [ngClass]="{'node-data': nodeOut.type === 'DATA'}"
+                         (click)="nodeOutClicked($event, i)"></div>
+                    <div class="node-title">{{nodeOut.title}}</div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-12 px-4 pt-2 pb-3">
             <ng-content></ng-content>

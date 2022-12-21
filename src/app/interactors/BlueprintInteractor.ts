@@ -40,6 +40,7 @@ export class BlueprintInteractor {
     }
 
     readerOnInit(boxes: any): void {
+        console.log('on init');
         boxes.forEach(box => {
             this.boxReader(box, {mainActor: null, actionActor: null, result: null});
         });
@@ -52,6 +53,7 @@ export class BlueprintInteractor {
     }
 
     boxReader(box: any, data: any): void {
+        console.log('hello');
         if (box.kind === BoxKindEnum.ON_INIT) {
             if (box.func.length > 0) {
                 box.func.forEach(fun => this.boxReader(fun, data));
@@ -64,7 +66,7 @@ export class BlueprintInteractor {
             }
         }
         if (box.kind === BoxKindEnum.GET_PLAYERS) {
-            console.log(this.gameInteractor.getCurrentGame());
+            console.log('players =', this.gameInteractor.getCurrentGame());
             data.result = new ExecuteGetPlayers().execute(this.gameInteractor.getCurrentGame().players);
             if (box.func.length > 0) {
                 box.func.forEach(fun => this.boxReader(fun, data));
